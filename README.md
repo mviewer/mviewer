@@ -1,4 +1,4 @@
-mviewer
-=======
+middle viewer
+=============
 
-Middle viewer coucou enlever coucou
+Visualiseur géographique basé sur OpenLayers et Jquery mobile
