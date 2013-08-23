@@ -1,4 +1,4 @@
-middle viewer
-=============
+mviewer
+=======
 
-Visualiseur géographique basé sur OpenLayers et Jquery mobile
+Middle viewer
