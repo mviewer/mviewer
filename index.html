@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr-fr" lang="fr-fr" dir="ltr" >
+<head>
+	<title>Kartenn</title>	
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />	
+	<meta name="description" content="Visualiseur géographique de la Région Bretagne" /> 
+	
+	<link rel="icon" type="image/png" href="favicon.png" />	
+	<link rel="stylesheet" href="lib/jquery/mobile/1.3.2/jquery.mobile-1.3.2.min.css" type="text/css" />
+	<link rel="stylesheet" href="lib/openlayers/2.13.1/theme/default/style.css" type="text/css" />	
+	<link rel="stylesheet" href="css/mviewer.css" type="text/css" />
+	<link rel="stylesheet" href="css/mobile-panel-size.less.css" type="text/css" />
+	<link rel="stylesheet" href="lib/jquery/base/plugins/scrollbar/jquery.jscrollpane.css" type="text/css" media="all" />	
+
+	<script type="text/javascript" src="lib/proj4js/1.1.0/proj4js-compressed.js"></script>	
+	<script type="text/javascript" src="lib/jquery/base/1.9.1/jquery-1.9.1.min.js"></script>
+	<script>
+        $(document).bind("mobileinit", function(){
+			// no hashchange in url needed par the API       
+			$.mobile.ajaxEnabled = false;
+	        $.mobile.hashListeningEnabled = false;			
+        });
+    </script>
+	<script type="text/javascript" src="lib/jquery/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>	
+	<script type="text/javascript" src="lib/openlayers/2.13.1/OpenLayers.js"></script>
+    <script type="text/javascript" src="lib/LoadingPanel.js"></script>	
+	<script type="text/javascript" src="lib/jquery/base/plugins/scrollbar/jquery.mousewheel.js"></script>
+	<script type="text/javascript" src="lib/jquery/base/plugins/scrollbar/jquery.jscrollpane.js"></script>
+	<script type="text/javascript" src="lib/jquery/base/plugins/validate/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="lib/jquery/base/plugins/easyshare/jquery.easyShare.js"></script>	
+	<script type="text/javascript" src="lib/jquery.extend.js"></script>    
+	<script type="text/javascript" src="lib/mviewer.js"></script>  
+				
+<script type="text/javascript">
+var map;
+var config = {};
+var widgets = {};
+$("#main").fadeOut();
+$(document).ready(function () {
+	"use strict";	
+    $.mobile.loading('show', {
+        text: 'Chargement du visualiseur Kartenn.',
+		textonly: true,
+        textVisible: true,
+        theme: 'a',        
+		html: ''
+    });
+	
+	if (window.location.search) {
+		$.extend(config, $.parseJSON('{"' + decodeURI(window.location.search.substring(1)
+			.replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}'));    
+	}
+    var configFile = (config.config) ? config.config : "config.xml";
+
+    $.ajax({
+        url: configFile + '?_dc=' + $.getTime(),
+        dataType: "xml",
+        success: function (xml) {
+            map = mviewer.init(xml);
+            setTimeout(function () {
+                $.mobile.loading('hide');
+                $("#main").css("opacity", 1).hide();
+                $("#main").fadeIn(2000);
+            }, 3000);
+        }, // fin success config
+        error: function (request, status, error) {
+            $.mobile.loading('hide');			
+			alert("Fichier de configuration : " + configFile + " non trouvé ou incorrect !");	           
+        }
+    });
+
+});
+</script>  
+</head>
+<body>
+	<div id="description">
+		<h1>Middle viewer</h1>
+		<p>Portail cartographique de la Région Bretagne - Plans et cartes interactifs</p>
+	</div>    
+	<div id="main" data-role="page" style="opacity: 0;">
+		<!-- THEME PANEL LEFT OVERLAY  -->
+		<div id="themepanel" data-role="panel" data-position="left" data-display="overlay" data-theme="a">			
+			<div data-role="header">
+				<h1>Les données</h1>
+			</div>			
+			<div id="themeblock">
+				<div id="themelist">
+					<ul id="themeaccordeon" data-role="listview" data-inset="true" data-divider-theme="a"></ul>		
+				</div>
+			</div>
+			<div id="datablock">
+				<div id="datalist">
+					<div id="over">
+						<div data-role="fieldcontain">								
+							<div id="overlayers" data-role="collapsible-set" data-theme="c" data-content-theme="c" 
+								data-mini="true"></div>
+						</div>
+					</div>						
+				</div>					
+			</div>			
+		</div>
+		<!-- LOGO  -->
+		<div id="logo"></div>
+		<!-- MAP  -->
+		<div id="map"></div>
+		<!-- TOP MENU BAR  -->
+		<div id="searchtool" class="ui-btn-leftt">
+			<input type="search" id="searchfield" title="Localiser une adresse" data-mini="true" data-theme="a" />
+			<ul id="searchresults" data-role="listview" data-inset="true" data-mini="true" data-theme="a" 
+				data-type="vertical"></ul>
+		</div>
+		<div id="extras"><a id="data_btn" data-mini="true" class="ui-btn-leftt" href="#themepanel" 
+			title="Liste des données disponibles" data-theme="a" data-rel="panel" data-role="button" 
+			data-icon="grid">Les données</a></div>		
+		<div id="baselayerstoolbar"  data-role="controlgroup" data-mini="true" data-type="horizontal" 
+			style="display:none;"></div>
+		<div id="basemapstoolbar" data-role="collapsible" data-mini="true" data-theme="a" data-content-theme="a" 
+			style="display:none;" ><h4>Fonds de plan</h4><ul id="basemapslist" data-role="listview"></ul></div>
+		<!-- BOTTOM RIGHT MENTIONS -->
+		<div id="mentionstoolbar">
+			<a href="#usagepanel" data-rel="popup" data-position-to="window" 
+				title="Conditions d'utilisation">conditions d'utilisation</a> - 
+			<a href="#legalpanel" data-rel="popup" data-position-to="window" 
+				title="Mentions Légales">mentions légales</a> - 
+			<a href="#creditspanel" data-rel="popup" data-position-to="window" 
+				title="Crédits">crédits</a> - 
+			<a href="#contactpanel" data-rel="popup" data-position-to="window" 
+				title="Nous contacter">contact</a> - Région Bretagne 2013
+		</div>
+		<!-- VERTICAL LEFT TOOLBAR -->
+		<div id="zoomtoolbar" data-role="controlgroup" data-mini="true">
+			<a href="#" onclick="map.zoomIn();" title="Zoom avant (zoom fenêtre : shift + clic sur la carte)" 
+				data-role="button" data-icon="plus" data-iconpos="notext" data-theme="a"></a>
+			<a href="#" onclick="map.zoomToExtent(map.mviewer.getInitialExtent());" 
+				title="Revenir à l'étendue géographique de départ" data-role="button" data-icon="home" 
+				data-iconpos="notext" data-theme="a"></a>
+			<a href="#" onclick="map.zoomOut();" title="Zoom arrière" data-role="button" 
+				data-icon="minus" data-iconpos="notext" data-theme="a"></a>
+		</div>		
+		<!-- VERTICAL RIGHT TOOLBAR -->
+		<div id="toolstoolbar" data-role="controlgroup"  data-mini="true">
+			<a href="#" onclick="map.mviewer.setTool('info');" id="infobtn" title="Information sur la carte" 
+				data-role="button" data-icon="info" data-iconpos="notext" data-theme="b"></a>
+			<a href="#" onclick="map.mviewer.setTool('measureline');" id="measurelinebtn" title="Mesure linéaire" 
+				data-role="button" data-icon="custom" data-iconpos="notext" data-theme="a"></a>
+			<a href="#" onclick="map.mviewer.setTool('measurearea');" id="measureareabtn" title="Mesure surfacique" 
+				data-role="button" data-icon="custom" data-iconpos="notext" data-theme="a"></a>
+			<a href="#sharepanel" onclick="map.mviewer.mapShare();" id="sharebtn" title="Partager cette carte" 
+				data-rel="popup" data-transition="flip" data-position-to="window" data-role="button" 
+				data-icon="custom" data-iconpos="notext" data-theme="a"></a>			
+		</div>
+		<!-- MEASURES INFOS BOXES -->		
+		<div id="measurelinebar" data-role="controlgroup" data-type="horizontal" data-mini="true" data-theme="b">
+			<a href="#" onclick="map.mviewer.resetLineMeasure();" id="distancebtn" title="Réinitialiser" data-role="button" 
+				data-mini="true" data-iconpos="right" data-icon="delete" data-theme="b" >Distance : 0.0 m</a>
+		</div>
+		<div id="measureareabar" data-role="controlgroup" data-type="horizontal" data-mini="true" data-theme="b">
+			<a href="#" onclick="map.mviewer.resetAreaMeasure();" id="areabtn" title="Réinitialiser" data-role="button" 
+				data-mini="true" data-iconpos="right" data-icon="delete" data-theme="b" >Surface : 0.0 m²</a>
+		</div>
+		<!-- APPLICATION MESSAGEBOX -->
+		<a id='lnkmsg' href="#msgpanel" data-rel="popup" data-position-to="window" style='display:none;'></a>
+		<div id="msgpanel" data-role="popup" data-theme="a">
+			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" 
+				class="ui-btn-right">Fermer</a>
+			<div data-role="content">
+				<div id="msg">Envoi du message en cours ...</div>
+			</div>
+		</div>
+		<!-- USAGE PANEL -->
+		<div id="usagepanel" data-role="popup" data-theme="a">
+			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" 
+				class="ui-btn-right">Fermer</a>
+			<div data-role="header">
+				<h1>Conditions d'utilisation</h1>
+			</div>
+			<div data-role="content">
+				<div id="usage"></div>
+			</div>
+		</div>
+		<!-- LEGAL PANEL -->
+		<div id="legalpanel" data-role="popup" data-theme="a">
+			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" 
+				class="ui-btn-right">Fermer</a>
+			<div data-role="header">
+				<h1>Mentions Légales</h1>
+			</div>
+			<div data-role="content">	
+				<div id="mentionslegales" >
+				</div>
+			</div>
+		</div>
+		<!-- CREDITS PANEL -->
+		<div id="creditspanel" data-role="popup" data-theme="a">
+			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" 
+				class="ui-btn-right">Fermer</a>
+			<div data-role="header">
+				<h1>Crédits</h1>
+			</div>
+			<div data-role="content">
+				<div id="credits">			
+				</div>
+			</div>
+		</div>
+		<!-- CONTACT PANEL -->
+		<div id="contactpanel" data-role="popup" data-theme="a">
+			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" 
+				class="ui-btn-right">Fermer</a>
+			<div data-role="header">
+				<h1>Nous contacter</h1>
+			</div>
+			<div data-role="content">
+				<div id="contact">			
+				</div>
+			</div>
+		</div>
+		<!-- SHARE PANEL -->
+		<div id="sharepanel" data-role="popup" data-theme="a">
+			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" 
+				class="ui-btn-right">Fermer</a>
+			<div data-role="header">
+				<h1>Partager cette carte</h1>
+			</div>
+			<div data-role="content">
+				<div id='share' class="ui-block-a">					
+					<div>
+						<p class="" >
+			                <a id="permalinklink" href="#" data-theme="a" data-role="button" data-mini="true" 
+								title="lien permanent vers la carte">lien vers la carte</a>
+			                <br>
+							<img id="permaqr" src="img/loading.gif" title="QR code vers la carte" alt="QR code" />
+			            </p>
+					</div>					
+				</div>
+				<div id="simpleshare" class="ui-block-b">				
+					<h3>Partager !</h3>
+					<div id="shareeasy"></div>
+				</div>
+			</div>
+		</div>
+		<!-- WIDGETS DOCK FOR THE FUTURE -->
+		<div id='jqxWidget'>
+	        <div id="docking">
+	            <div id="widgetcontainer"></div>
+	        </div>
+	    </div>		
+	</div>
+</body>
+</html>

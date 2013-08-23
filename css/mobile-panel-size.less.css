@@ -1,0 +1,64 @@
+
+.ui-panel {
+    width: 28em;
+}
+
+.ui-panel.ui-panel-position-right {
+    width: 20em;
+}
+
+.ui-panel.ui-panel-closed {
+    width: 0;
+}
+
+.ui-panel-position-left {
+    left: -28em
+}
+
+.ui-panel-animate.ui-panel-position-left.ui-panel-display-overlay, .ui-panel-animate.ui-panel-position-left.ui-panel-display-push {
+    -webkit-transform: translate3d(-28em, 0, 0);
+    -moz-transform: translate3d(-28em, 0, 0);
+    transform: translate3d(-28em, 0, 0)
+}
+
+.ui-panel-position-right {
+    right: -20em
+}
+
+.ui-panel-animate.ui-panel-position-right.ui-panel-display-overlay, .ui-panel-animate.ui-panel-position-right.ui-panel-display-push {
+    -webkit-transform: translate3d(20em, 0, 0);
+    -moz-transform: translate3d(20em, 0, 0);
+    transform: translate3d(20em, 0, 0)
+}
+
+.ui-panel-content-fixed-toolbar-position-left.ui-panel-content-fixed-toolbar-open, .ui-panel-content-wrap-position-left.ui-panel-content-wrap-open, .ui-panel-dismiss-position-left.ui-panel-dismiss-open {
+    left: 28em;
+    right: -20em
+}
+
+.ui-panel-animate.ui-panel-content-fixed-toolbar-position-left.ui-panel-content-fixed-toolbar-open.ui-panel-content-fixed-toolbar-display-reveal, .ui-panel-animate.ui-panel-content-fixed-toolbar-position-left.ui-panel-content-fixed-toolbar-open.ui-panel-content-fixed-toolbar-display-push, .ui-panel-animate.ui-panel-content-wrap-position-left.ui-panel-content-wrap-open.ui-panel-content-wrap-display-reveal, .ui-panel-animate.ui-panel-content-wrap-position-left.ui-panel-content-wrap-open.ui-panel-content-wrap-display-push {
+    -webkit-transform: translate3d(28em, 0, 0);
+    -moz-transform: translate3d(28em, 0, 0);
+    transform: translate3d(28em, 0, 0)
+}
+
+.ui-panel-content-fixed-toolbar-position-right.ui-panel-content-fixed-toolbar-open, .ui-panel-content-wrap-position-right.ui-panel-content-wrap-open, .ui-panel-dismiss-position-right.ui-panel-dismiss-open {
+    left: -28em;
+    right: 20em
+}
+
+.ui-panel-animate.ui-panel-content-fixed-toolbar-position-right.ui-panel-content-fixed-toolbar-open.ui-panel-content-fixed-toolbar-display-reveal, .ui-panel-animate.ui-panel-content-fixed-toolbar-position-right.ui-panel-content-fixed-toolbar-open.ui-panel-content-fixed-toolbar-display-push, .ui-panel-animate.ui-panel-content-wrap-position-right.ui-panel-content-wrap-open.ui-panel-content-wrap-display-reveal, .ui-panel-animate.ui-panel-content-wrap-position-right.ui-panel-content-wrap-open.ui-panel-content-wrap-display-push {
+    -webkit-transform: translate3d(-20em, 0, 0);
+    -moz-transform: translate3d(-20em, 0, 0);
+    transform: translate3d(-20em, 0, 0)
+}
+
+@media (min-width:55em) {
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-display-push.ui-panel-content-fixed-toolbar-position-left, .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-display-reveal.ui-panel-content-fixed-toolbar-position-left, .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-display-push.ui-panel-content-wrap-position-left, .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-display-reveal.ui-panel-content-wrap-position-left {
+        margin-right: 20em
+    }
+
+    .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-display-push.ui-panel-content-fixed-toolbar-position-right, .ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-display-reveal.ui-panel-content-fixed-toolbar-position-right, .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-display-push.ui-panel-content-wrap-position-right, .ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-display-reveal.ui-panel-content-wrap-position-right {
+        margin-left: 28em
+    }
+}
