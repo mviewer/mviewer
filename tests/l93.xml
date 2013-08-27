@@ -34,7 +34,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 			url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite" format="image/jpeg" visible="false" 
 			attribution="partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver"/>
         <baselayer  type="WMS" id="plan1" label="Plan" title="Plan OSM Géobretagne" thumbgallery="img/basemap/osm-map-bing.png" 
-			url="http://geobretagne.fr/geoserver/osm/wms" layers="map-bing" format="image/png" visible="false" 
+			url="http://geobretagne.fr/geoserver/osm/wms" layers="map-bing" format="image/png" visible="true" 
 			attribution="OpenStreetMap CC-by-SA"/>   
 		<baselayer  type="WMS" id="photo2" label="Bretagne 1950" title="Photographie aérienne de 1952" thumbgallery="img/basemap/ortho-ancien.jpg" 
 			url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite-ancien" format="image/jpeg" visible="false" 
