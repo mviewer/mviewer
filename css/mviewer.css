@@ -180,11 +180,12 @@ p.center { text-align: center; }
 .olControlLoadingPanel {
             background-image:url(../img/loading.gif);
             position: relative;
-            width: 100%;
-            height: 100%;
-            background-position:center;
-            background-repeat:no-repeat;
-            display: none;
+            bottom: 50px;
+			left: 10px;
+			width: 32px;
+			height: 32px;
+			display: none;
+			opacity: 1;
 }
 
 #baselayerstoolbar, #zoomtoolbar, #toolstoolbar {
