@@ -64,7 +64,6 @@ L'attribut composite = "false" n'autorise q'un affichage exclusif de chaque thè
 					url="http://kartenn.region-bretagne.fr/geoserver/rb/wms" 
 					attribution="Service de l'inventaire : Région Bretagne" 
 					metadata="http://geobretagne.fr/geonetwork/srv/fr/main.home?uuid=0cf6de5d-9746-44d8-b003-a2dae2e7e585" />
-					
             </map>
         </theme>
         <theme name="Urbanisme">
@@ -89,12 +88,12 @@ L'attribut composite = "false" n'autorise q'un affichage exclusif de chaque thè
 		<theme name="Education">
             <map id="etablissements" name="Etablissements" default="false">
                 <layer id="rb:site_cfa_rb" name="CFA" default="false" scalemin="0" scalemax="5000000" visible="true" 
-					queryable="true" fields="CFA,Secteurs_P,METIERS,diplome" aliases="Nom,Secteur,Métier,Diplôme" 
+					queryable="true" fields="cfa,secteurs_p,metiers,diplome" aliases="Nom,Secteur,Métier,Diplôme" 
 					url="http://kartenn.region-bretagne.fr/geoserver/rb/wms" 
 					style="" 
 					attribution="Région Bretagne" 
 					metadata="http://geobretagne.fr/geonetwork/srv/fr/main.home?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25" />                
-                <layer id="rb:lycee_rb" name="Lycées" default="true" scalemin="0" scalemax="5000000" visible="true" 
+                <layer id="rb:lycee_rb" name="Lycées" default="false" scalemin="0" scalemax="5000000" visible="true" 
 					queryable="true" fields="photo,nom,libelle,secteur_li,reseau_lib" aliases="Photo,Nom,Commune,Secteur,Réseau" 
 					style="" 
 					url="http://kartenn.region-bretagne.fr/geoserver/rb/wms" 
