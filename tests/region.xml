@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <config>
     <mapoptions projection="EPSG:2154" displayprojection="EPSG:2154" extent="145518,6726671,372058,6868691" restrictedextent="45518,6626671,472058,6968691" maxextent="-357823.2365,6037008.6939,2146865.3059,8541697.2363" maxresolution="156543.0339" />
     <!--<mapoptions projection="EPSG:3857" displayprojection="EPSG:3857" extent="-558027.626233,5964062.823859,-27249.016858,6291824.730109" restrictedextent="-700000,5700000,100000,6500000" maxextent="-20037508.34,-20037508.34,20037508.34,20037508.34" maxresolution="156543.03390625" />-->
@@ -53,14 +53,14 @@ L'attribut composite = "false" n'autorise q'un affichage exclusif de chaque thè
         <theme name="Culture">
             <map id="patrimoine" name="Patrimoine culturel">
                 <layer id="rb:patrimoine_rb" name="Patrimoine" scalemin="0" scalemax="5000000" visible="false" 
-					queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad" 
-					style="" 
+					queryable="true" fields="denominati,titre,url,vignette_url" aliases="Nom,Description,Glad,Photo" 
+					style="patrimoine_type_simple" 
 					url="http://kartenn.region-bretagne.fr/geoserver/rb/wms" 
 					attribution="Service de l'inventaire : Région Bretagne" 
 					metadata="http://geobretagne.fr/geonetwork/srv/fr/main.home?uuid=a7f46b47-42fc-49b7-9b49-c7c11aee0932" />
 				<layer id="rb:ipc_recensement_rb" name="Recensement" scalemin="0" scalemax="5000000" visible="false" 
 					queryable="true" fields="titre,localisati,datation,photo_1" aliases="Titre,Localisation,Datation,Photo" 
-					style="" 
+					style="recensement_type_simple" 
 					url="http://kartenn.region-bretagne.fr/geoserver/rb/wms" 
 					attribution="Service de l'inventaire : Région Bretagne" 
 					metadata="http://geobretagne.fr/geonetwork/srv/fr/main.home?uuid=0cf6de5d-9746-44d8-b003-a2dae2e7e585" />
@@ -92,13 +92,13 @@ L'attribut composite = "false" n'autorise q'un affichage exclusif de chaque thè
 					url="http://kartenn.region-bretagne.fr/geoserver/rb/wms" 
 					style="" 
 					attribution="Région Bretagne" 
-					metadata="http://geobretagne.fr/geonetwork/srv/fr/main.home?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25" />                
+					metadata="http://geobretagne.fr/geonetwork/srv/fr/main.home?uuid=f713de6d-1269-40b2-8bd4-3704c106fde6" />                
                 <layer id="rb:lycee_rb" name="Lycées" default="false" scalemin="0" scalemax="5000000" visible="true" 
 					queryable="true" fields="photo,nom,libelle,secteur_li,reseau_lib" aliases="Photo,Nom,Commune,Secteur,Réseau" 
 					style="" 
 					url="http://kartenn.region-bretagne.fr/geoserver/rb/wms" 
 					attribution="Région Bretagne" 
-					metadata="http://geobretagne.fr/geonetwork/srv/fr/main.home?uuid=f713de6d-1269-40b2-8bd4-3704c106fde6" />  
+					metadata="http://geobretagne.fr/geonetwork/srv/fr/main.home?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25" />  
             </map>
         </theme>
 		<theme name="Transport">
