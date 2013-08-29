@@ -53,7 +53,7 @@ L'attribut composite = "true" permet d'afficher les couches de thèmes différen
 L'attribut composite = "false" n'autorise q'un affichage exclusif de chaque thème
 ]]>	
     <themes composite="true">		
-        <theme name="Culture">
+        <theme name="Culture" showtheme="false">
             <map id="patrimoine" name="Patrimoine culturel">
                 <layer id="rb:patrimoine_rb" name="Patrimoine" scalemin="0" scalemax="5000000" visible="false" 
 					queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad" 
@@ -63,7 +63,7 @@ L'attribut composite = "false" n'autorise q'un affichage exclusif de chaque thè
 					metadata="http://geobretagne.fr/geonetwork/srv/fr/main.home?uuid=a7f46b47-42fc-49b7-9b49-c7c11aee0932" />
             </map>
         </theme>
-        <theme name="Urbanisme">
+        <theme name="Urbanisme" showtheme="false">
             <map id="cadastre" name="Cadastre">
                 <layer id="cadastre:CP.CadastralParcel" name="Parcelles" scalemin="0" scalemax="15000" visible="true"
 					queryable="true" fields="nom_commune,label,areavalue" aliases="Commune,parcelle,surface" 
@@ -82,7 +82,7 @@ L'attribut composite = "false" n'autorise q'un affichage exclusif de chaque thè
                 </logos>
             </map>			       
         </theme>
-		<theme name="Territoires">
+		<theme name="Territoires" showtheme="false">
             <map id="admin" name="Limites administratives" default="true">
                 <layer id="bzh:FDepartement" name="Départements" scalemin="0" scalemax="5000000" visible="false" 
 					queryable="true" fields="CODE,LIBELLE" aliases="Code, Nom" 
@@ -110,7 +110,7 @@ L'attribut composite = "false" n'autorise q'un affichage exclusif de chaque thè
 					metadata="http://geobretagne.fr/geonetwork/srv/fr/main.home?uuid=b08e6cb1-236c-49b7-88f9-42b500d274d5" />
            </map>
 		</theme>
-		<theme name="Education">
+		<theme name="Education" showtheme="true">
             <map id="education" name="CFA" default="false">
                 <layer id="rb:site_cfa_rb" name="CFA" default="false" scalemin="0" scalemax="5000000" visible="true" 
 					queryable="true" fields="CFA,Secteurs_P,METIERS,diplome" aliases="Nom,Secteur,Métier,Diplôme" 
