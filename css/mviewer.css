@@ -377,6 +377,14 @@ p.center { text-align: center; }
 	font-family: "Trebuchet MS",Helvetica,Arial,sans-serif;
 }
 
+#themepanel .ui-title {
+font-size: 25px;
+}
+
+#themepanel .ui-li-divider {
+font-size: 20px;
+}
+
 #themelist a {	
 	text-align: left !important;
 }
