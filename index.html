@@ -19,7 +19,7 @@
 	<script>
         $(document).bind("mobileinit", function(){
 			// no hashchange in url needed par the API       
-			$.mobile.ajaxEnabled = false;
+			$.mobile.ajaxEnabled = false;			
 	        $.mobile.hashListeningEnabled = false;			
         });
     </script>
@@ -181,7 +181,7 @@ $(document).ready(function () {
 			</div>
 		</div>
 		<!-- IMAGE POPUP -->
-		<div data-role="popup" id="imagepopup" data-overlay-theme="a" data-theme="d" data-corners="false">
+		<div data-role="popup" id="imagepopup" data-overlay-theme="a" data-theme="d" data-corners="false" data-transition="flip" data-history="false">
             <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
 			<img class="popphoto" src="" style="max-height:512px;" alt="image">
         </div>

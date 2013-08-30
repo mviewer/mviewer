@@ -455,5 +455,8 @@ font-family: "Trebuchet MS",Helvetica,Arial,sans-serif;
 .ui-btn-up-c, .ui-btn-hover-c, .ui-btn-down-c {
 font-family: "Trebuchet MS",Helvetica,Arial,sans-serif;
 }
+.popphoto {
+cursor: pointer;
+}
 
 
