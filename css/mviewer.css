@@ -176,6 +176,12 @@ label.error {
 	margin-right: 10px;
 }
 
+.popupitem h3 {
+	background-color: #f7f7f7;	
+	padding-left: 10px;
+	border-radius: 15px;
+}
+
 p.center { text-align: center; }
 
 .olControlLoadingPanel {
@@ -457,6 +463,7 @@ font-family: "Trebuchet MS",Helvetica,Arial,sans-serif;
 }
 .popphoto {
 cursor: pointer;
+max-width: 150px;
 }
 
 
