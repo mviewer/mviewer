@@ -84,7 +84,7 @@ $(document).ready(function () {
 		<!-- MAP  -->
 		<div id="map"></div>
 		<!-- THEME PANEL LEFT OVERLAY  -->
-		<div id="themepanel" data-role="panel" data-position="left" data-display="overlay" data-theme="a">			
+		<div id="themepanel" data-role="panel" data-position="left" data-display="overlay" data-theme="a" data-dismissible="false" data-swipe-close="false">			
 			<div data-role="header">
 				<h1>Les données</h1>
 			</div>			
@@ -102,7 +102,10 @@ $(document).ready(function () {
 						</div>
 					</div>						
 				</div>					
-			</div>			
+			</div>
+			<div class="close-panel-wrapper">			
+				<a href="#main" data-mini="true" data-rel="close" data-role="button" data-theme="a" data-icon="delete" data-iconpos="right" data-inline="true" data-corners="true" style="width:100%;">Fermer le panneau</a>
+			</div>
 		</div>
 		<!-- LOGO  -->
 		<div id="logo"></div>		

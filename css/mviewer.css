@@ -466,4 +466,11 @@ cursor: pointer;
 max-width: 150px;
 }
 
+.close-panel-wrapper{
+text-align: center;
+margin-top: 25px;
+}
+.close-panel-wrapper * {
+margin: 0 auto;
+}
 
