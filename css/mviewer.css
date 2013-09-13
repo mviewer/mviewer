@@ -474,3 +474,29 @@ margin-top: 25px;
 margin: 0 auto;
 }
 
+#toolbar {
+
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+}
+::-webkit-scrollbar-button {
+	width: 8px;
+	height:5px;
+}
+::-webkit-scrollbar-track {
+	background:
+	border: skinny plain red;
+	box-shadow: 0px 0px 3px #blue inset;
+	border-radius:10px;
+}
+::-webkit-scrollbar-thumb {
+	background:
+	border: skinny plain black;
+	border-radius:10px;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: green;
+}
+

@@ -81,7 +81,7 @@ $(document).ready(function () {
 		<p>Portail cartographique de la Région Bretagne - Plans et cartes interactifs</p>
 	</div>    
 	<div id="main" data-role="page" style="opacity: 0;">
-		<!-- MAP  -->
+		<!--  MAP  -->
 		<div id="map"></div>
 		<!-- THEME PANEL LEFT OVERLAY  -->
 		<div id="themepanel" data-role="panel" data-position="left" data-display="overlay" data-theme="a" data-dismissible="false" data-swipe-close="false">			
@@ -109,17 +109,19 @@ $(document).ready(function () {
 		</div>
 		<!-- LOGO  -->
 		<div id="logo"></div>		
-		<!-- TOP MENU BAR  -->
-		<div id="searchtool" class="ui-btn-leftt">
+		<!-- TOP MENU BAR  -->		
+		<div id="searchtool" class="ui-btn-leftt" data-inline="true">
 			<input type="search" id="searchfield" placeholder="Localiser..." title="Localiser une adresse" data-mini="true" data-theme="a" />
 			<ul id="searchresults" data-role="listview" data-inset="true" data-mini="true" data-theme="a" 
 				data-type="vertical"></ul>
 		</div>
-		<div id="extras"><a id="data_btn" data-mini="true" class="ui-btn-leftt" href="#themepanel" 
+		<div id="extras" data-inline="true"><a id="data_btn" data-mini="true" class="ui-btn-leftt" href="#themepanel" 
 			title="Liste des données disponibles" data-theme="a" data-rel="panel" data-role="button" 
-			data-icon="grid">Les données</a></div>		
-		<div id="baselayerstoolbar"  data-role="controlgroup" data-mini="true" data-type="horizontal" 
-			style="display:none;"></div>
+			data-icon="grid">Les données</a>
+		</div>		
+		<div id="baselayerstoolbar"  data-mini="true" data-type="horizontal" data-iconpos="left" 
+			style="display:none;">			
+		</div>
 		<div id="basemapstoolbar" data-role="collapsible" data-mini="true" data-theme="a" data-content-theme="a" 
 			style="display:none;" ><h4>Fonds de plan</h4><ul id="basemapslist" data-role="listview"></ul></div>
 		<!-- BOTTOM RIGHT MENTIONS -->
@@ -187,7 +189,7 @@ $(document).ready(function () {
 		<!-- IMAGE POPUP -->
 		<div data-role="popup" id="imagepopup" data-overlay-theme="a" data-theme="d" data-corners="false" data-transition="flip" data-history="false">
             <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
-			<img class="popphoto" src="" style="max-height:512px;" alt="image">
+			<img class="popphoto" src="path" style="max-height:512px;" alt="image">
         </div>
 		<!-- LEGAL PANEL -->
 		<div id="legalpanel" data-role="popup" data-theme="a">
