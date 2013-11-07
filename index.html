@@ -33,6 +33,7 @@
 	<script type="text/javascript" src="lib/jquery/base/plugins/easyshare/jquery.easyShare.js"></script>	
 	<script type="text/javascript" src="lib/jquery.extend.js"></script>    
 	<!--<script type="text/javascript" src="dist/mviewer-min.js"></script>-->
+	<script type="text/javascript" src="lib/jqm-templates.js"></script>
 	<script type="text/javascript" src="lib/mviewer.js"></script>
 				
 <script type="text/javascript">
@@ -81,44 +82,34 @@ $(document).ready(function () {
 		<h1>Middle viewer</h1>
 		<p>Portail cartographique de la Région Bretagne - Plans et cartes interactifs</p>
 	</div>    
-	<div id="main" data-role="page" style="opacity: 0;">
-		<!--  MAP  -->
-		<div id="map"></div>
+	<div id="main" data-role="page" style="opacity: 0;">		
 		<!-- THEME PANEL LEFT OVERLAY  -->
 		<div id="themepanel" data-role="panel" data-position="left" data-display="overlay" data-theme="a" data-dismissible="false" data-swipe-close="false">			
-			<div data-role="header">
-				<h1>Les données</h1>
-			</div>			
-			<div id="themeblock">
-				<div id="themelist">
-					<ul id="themeaccordeon" data-role="listview" data-inset="true" data-divider-theme="a"></ul>		
-				</div>
+			<div class="ui-grid-a">
+				<div class="ui-block-a"><h1>Les données</h1></div>
+				<div class="ui-block-b"><img src="img/boussole.png" style="float: right;" alt="Nord de la carte" /></div>
 			</div>
-			<div id="datablock">
-				<div id="datalist">
-					<div id="over">
-						<div data-role="fieldcontain">								
-							<div id="overlayers" data-role="collapsible-set" data-theme="c" data-content-theme="c" 
-								data-mini="true"></div>
-						</div>
-					</div>						
-				</div>					
-			</div>
-			<div class="close-panel-wrapper">			
+			</br>
+			<div id="datalist" data-role="collapsible-set" data-theme="a" data-content-theme="a" data-inset="false" ></div>			
+			<fieldset id="abc" >
+				<img src="img/info/info.png">
+				<div class="infoicon-explanation" >Information disponible en cliquant sur la carte</div>
+			</fieldset>			
+			<!--<div class="close-panel-wrapper">			
 				<a href="#main" data-mini="true" data-rel="close" data-role="button" data-theme="a" data-icon="delete" data-iconpos="right" data-inline="true" data-corners="true" style="width:100%;">Fermer le panneau</a>
-			</div>
+			</div>-->
 		</div>
+		<!--  MAP  -->
+		<div id="map"></div>
 		<!-- LOGO  -->
-		<div id="logo"></div>		
+		<div id="logo">
+			<a href="http://www.bretagne.fr" target="_blank" title="Accéder au site de Bretagne.fr"><img src="img/logo/RB_NB.png" /></a>
+		</div>		
 		<!-- TOP MENU BAR  -->		
 		<div id="searchtool" class="ui-btn-leftt" data-inline="true">
 			<input type="search" id="searchfield" placeholder="Localiser..." title="Localiser une adresse" data-mini="true" data-theme="a" />
 			<ul id="searchresults" data-role="listview" data-inset="true" data-mini="true" data-theme="a" 
 				data-type="vertical"></ul>
-		</div>
-		<div id="extras" data-inline="true"><a id="data_btn" data-mini="true" class="ui-btn-leftt" href="#themepanel" 
-			title="Liste des données disponibles" data-theme="a" data-rel="panel" data-role="button" 
-			data-icon="grid">Les données</a>
 		</div>		
 		<div id="baselayerstoolbar"  data-mini="true" data-type="horizontal" data-iconpos="left" 
 			style="display:none;">			
@@ -148,6 +139,8 @@ $(document).ready(function () {
 		</div>		
 		<!-- VERTICAL RIGHT TOOLBAR -->
 		<div id="toolstoolbar" data-role="controlgroup"  data-mini="true">
+			<a href="#themepanel" data-rel="panel" id="extra" title="Afficher la table des matières" 
+				data-role="button" data-icon="layers" data-iconpos="notext" data-theme="a"></a>
 			<a href="#" onclick="map.mviewer.setTool('info');" id="infobtn" title="Information sur la carte" 
 				data-role="button" data-icon="info" data-iconpos="notext" data-theme="b"></a>
 			<a href="#" onclick="map.mviewer.setTool('measureline');" id="measurelinebtn" title="Mesure linéaire" 
@@ -252,6 +245,20 @@ $(document).ready(function () {
 				</div>
 			</div>
 		</div>
+		<!-- POPUP OPACITY -->
+		<div data-role="popup" id="opacityLayer-popup" class="ui-content" data-theme="d" data-transition="slideup">
+			<p>Opacité de la couche.</p>
+			<div data-role="fieldcontain" class="ui-hide-label">
+				<label for="opacityLayer-slider" class="ui-hidden-accessible">Slider:</label>
+				<input type="range" name="var-layer-to-control" id="opacityLayer-slider" min="0" max="100" value="50" data-mini="true" class="ui-hidden-accessible" data-highlight="true" onchange="map.mviewer.changeLayerOpacity(this.name,this.value)">
+			</div>
+		</div>
+		<!-- POPUP METADATA -->
+		<div data-role="popup" id="metadataPopup" class="ui-content" data-theme="a" data-transition="slidedown" >
+			<strong id="metadata-title"></strong>
+			<p id="metadata-abstract"></p>			
+			<p><a id="metadata-target" href="#" target="_blank">En savoir plus</a></p>
+		</div>        
 		<!-- WIDGETS DOCK FOR THE FUTURE -->
 		<div id='jqxWidget'>
 	        <div id="docking">
