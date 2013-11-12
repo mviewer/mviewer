@@ -88,7 +88,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw=""
 				metadata="http://geobretagne.fr/geonetwork/srv/fr/main.home?uuid=f713de6d-1269-40b2-8bd4-3704c106fde6" />                
 			<layer id="rb:lycee_rb" name="Lycées" default="false" scalemin="0" scalemax="5000000" visible="false" 
-				queryable="true" fields="photo,nom,libelle,secteur_li,reseau_lib" aliases="Photo,Nom,Commune,Secteur,Réseau" 
+				queryable="true" fields="nom,photo,libelle,secteur_li,reseau_lib" aliases="Nom,Photo,Commune,Secteur,Réseau"  
 				style="" 
 				url="http://kartenn.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Région Bretagne" 
