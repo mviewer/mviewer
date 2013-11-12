@@ -404,7 +404,7 @@ font-size: 20px;
 
 .infoicon {
 	float: right;
-	margin-right: -35px;
+	/*margin-right: -35px;*/
 }
 
 #searchtool {	
