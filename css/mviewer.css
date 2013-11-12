@@ -196,25 +196,18 @@ p.center { text-align: center; }
 			opacity: 1;
 }
 
-#baselayerstoolbar, #zoomtoolbar, #toolstoolbar {
+#backgroundlayerstoolbar, #zoomtoolbar, #toolstoolbar {
 	-webkit-box-shadow: 2px 2px 5px #888;
 	-moz-box-shadow: 2px 2px 5px #888;
 	box-shadow: 2px 2px 5px #888;
 	background: #000000;
 }
 
-#baselayerstoolbar {
+#backgroundlayerstoolbar {
+	top: 3px;
+	right: 50px;
+	float: right;
 	position: absolute;
-	top: 5px;
-	right: 10px;
-	float: right;
-}
-
-#extras {
-	position: relative;
-	top: 5px;
-	right: 50%;
-	float: right;
 }
 
 #zoomtoolbar {
@@ -426,19 +419,6 @@ font-size: 20px;
 
 #metadataPopup {
 	max-width: 75%;
-}
-
-#basemaps-selector {
-	width: 250px;
-	top: 8px;
-	right: 20px;
-	float: right;
-}
-#basemapstoolbar {
-	top: -1px;
-	right: 50px;
-	float: right;
-	position: absolute;
 }
 
 .ui-loader-verbose {
