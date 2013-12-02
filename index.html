@@ -37,7 +37,6 @@
 	<script type="text/javascript" src="lib/mviewer.js"></script>
 				
 <script type="text/javascript">
-var map;
 var config = {};
 var widgets = {};
 $("#main").fadeOut();
@@ -61,7 +60,7 @@ $(document).ready(function () {
         url: configFile + '?_dc=' + $.getTime(),
         dataType: "xml",
         success: function (xml) {
-            map = mviewer.init(xml);
+            var map = mviewer.init(xml);
             setTimeout(function () {
                 $.mobile.loading('hide');
                 $("#main").css("opacity", 1).hide();
@@ -126,35 +125,35 @@ $(document).ready(function () {
 		</div>
 		<!-- VERTICAL LEFT TOOLBAR -->
 		<div id="zoomtoolbar" data-role="controlgroup" data-mini="true">
-			<a href="#" onclick="map.zoomIn();" title="Zoom avant (zoom fenêtre : shift + clic sur la carte)" 
+			<a href="#" onclick="mviewer.zoomIn();" title="Zoom avant (zoom fenêtre : shift + clic sur la carte)" 
 				data-role="button" data-icon="plus" data-iconpos="notext" data-theme="a"></a>
-			<a href="#" onclick="map.zoomToExtent(map.mviewer.getInitialExtent());" 
+			<a href="#" onclick="mviewer.zoomToInitialExtent();" 
 				title="Revenir à l'étendue géographique de départ" data-role="button" data-icon="home" 
 				data-iconpos="notext" data-theme="a"></a>
-			<a href="#" onclick="map.zoomOut();" title="Zoom arrière" data-role="button" 
+			<a href="#" onclick="mviewer.zoomOut();" title="Zoom arrière" data-role="button" 
 				data-icon="minus" data-iconpos="notext" data-theme="a"></a>
 		</div>		
 		<!-- VERTICAL RIGHT TOOLBAR -->
 		<div id="toolstoolbar" data-role="controlgroup"  data-mini="true">
 			<a href="#themepanel" data-rel="panel" id="extra" title="Afficher la table des matières" 
 				data-role="button" data-icon="layers" data-iconpos="notext" data-theme="a"></a>
-			<a href="#" onclick="map.mviewer.setTool('info');" id="infobtn" title="Information sur la carte" 
+			<a href="#" onclick="mviewer.setTool('info');" id="infobtn" title="Information sur la carte" 
 				data-role="button" data-icon="info" data-iconpos="notext" data-theme="b"></a>
-			<a href="#" onclick="map.mviewer.setTool('measureline');" id="measurelinebtn" title="Mesure linéaire" 
+			<a href="#" onclick="mviewer.setTool('measureline');" id="measurelinebtn" title="Mesure linéaire" 
 				data-role="button" data-icon="custom" data-iconpos="notext" data-theme="a"></a>
-			<a href="#" onclick="map.mviewer.setTool('measurearea');" id="measureareabtn" title="Mesure surfacique" 
+			<a href="#" onclick="mviewer.setTool('measurearea');" id="measureareabtn" title="Mesure surfacique" 
 				data-role="button" data-icon="custom" data-iconpos="notext" data-theme="a"></a>
-			<a href="#sharepanel" onclick="map.mviewer.mapShare();" id="sharebtn" title="Partager cette carte" 
+			<a href="#sharepanel" onclick="mviewer.mapShare();" id="sharebtn" title="Partager cette carte" 
 				data-rel="popup" data-transition="flip" data-position-to="window" data-role="button" 
 				data-icon="custom" data-iconpos="notext" data-theme="a"></a>			
 		</div>
 		<!-- MEASURES INFOS BOXES -->		
 		<div id="measurelinebar" data-role="controlgroup" data-type="horizontal" data-mini="true" data-theme="b">
-			<a href="#" onclick="map.mviewer.resetLineMeasure();" id="distancebtn" title="Réinitialiser" data-role="button" 
+			<a href="#" onclick="mviewer.resetLineMeasure();" id="distancebtn" title="Réinitialiser" data-role="button" 
 				data-mini="true" data-iconpos="right" data-icon="delete" data-theme="b" >Distance : 0.0 m</a>
 		</div>
 		<div id="measureareabar" data-role="controlgroup" data-type="horizontal" data-mini="true" data-theme="b">
-			<a href="#" onclick="map.mviewer.resetAreaMeasure();" id="areabtn" title="Réinitialiser" data-role="button" 
+			<a href="#" onclick="mviewer.resetAreaMeasure();" id="areabtn" title="Réinitialiser" data-role="button" 
 				data-mini="true" data-iconpos="right" data-icon="delete" data-theme="b" >Surface : 0.0 m²</a>
 		</div>
 		<!-- APPLICATION MESSAGEBOX -->
@@ -247,7 +246,7 @@ $(document).ready(function () {
 			<p>Opacité de la couche.</p>
 			<div data-role="fieldcontain" class="ui-hide-label">
 				<label for="opacityLayer-slider" class="ui-hidden-accessible">Slider:</label>
-				<input type="range" name="var-layer-to-control" id="opacityLayer-slider" min="0" max="100" value="50" data-mini="true" class="ui-hidden-accessible" data-highlight="true" onchange="map.mviewer.changeLayerOpacity(this.name,this.value)">
+				<input type="range" name="var-layer-to-control" id="opacityLayer-slider" min="0" max="100" value="50" data-mini="true" class="ui-hidden-accessible" data-highlight="true" onchange="mviewer.changeLayerOpacity(this.name,this.value)">
 			</div>
 		</div>
 		<!-- POPUP METADATA -->
