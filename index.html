@@ -86,7 +86,7 @@ $(document).ready(function () {
 		<div id="themepanel" data-role="panel" data-position="left" data-display="overlay" data-theme="a" data-dismissible="false" data-swipe-close="false">			
 			<div class="ui-grid-a">
 				<div class="ui-block-a"><h1>Les données</h1></div>
-				<div class="ui-block-b"><img src="img/boussole.png" style="float: right;" alt="Nord de la carte" /></div>
+				<div class="ui-block-b"><img src="img/boussole.png" style="float: right;" alt="Nord de la carte" onclick="$('#themepanel').panel('close');"/></div>
 			</div>
 			<br>
 			<div id="datalist" data-role="collapsible-set" data-theme="a" data-content-theme="a" data-inset="false" ></div>			
