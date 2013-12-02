@@ -180,7 +180,10 @@ label.error {
 .popupitem h3 {
 	background-color: #f7f7f7;	
 	padding-left: 10px;
-	border-radius: 15px;
+	color: white;
+    text-shadow: none;
+    margin-left: -10px;
+    background-color: #333;
 }
 
 p.center { text-align: center; }
