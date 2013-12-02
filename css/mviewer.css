@@ -468,6 +468,9 @@ margin: 0 auto;
 #toolbar {
 
 }
+.layer-display  .ui-btn-inner {
+    padding-right: 5px!important;
+}
 
 .ui-icon-layers {	
 	background:  url(../img/btn/layers.png) 50% 50% no-repeat; 
