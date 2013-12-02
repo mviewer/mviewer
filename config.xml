@@ -45,8 +45,15 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 		<baselayer  type="WMS" id="photo2" label="Bretagne 1950" title="Photographie aérienne de 1952" thumbgallery="img/basemap/ortho-ancien.jpg" 
 			url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite-ancien" format="image/jpeg" visible="false" 
 			attribution="partenaires GéoBretagne - IGN"/>
+        <baselayer  type="WMTS" id="ortho2" label="WMTS ORTHO GEOB" title="Ortho WMTS Géobretagne" thumbgallery="img/basemap/ortho.jpg" 
+            url="http://tile.geobretagne.fr/gwc02/service/wmts" layers="satellite" format="image/jpeg" visible="false" 
+            attribution="GéoBretagne" style="_null" matrixset="EPSG:3857" minresolution="0.4"/>
+        <baselayer  type="WMTS" id="scan2" label="Cartes IGN" title="Cartes IGN du Géoportail" maxscale="2000" thumbgallery="img/basemap/osm-france.png"
+            url="http://kartenn.region-bretagne.fr/cgi-bin/wmts" layers="GEOGRAPHICALGRIDSYSTEMS.MAPS" format="image/jpeg" visible="false" 
+            attribution="IGN" style="normal" matrixset="PM" minresolution="0.4"/>
     </baselayers>    
-    <proxy url="../cgi-bin/proxy.cgi?url="/>   
+    <!--<proxy url="../cgi-bin/proxy.cgi?url="/>-->
+    <proxy url="../proxy/?url="/>
     <olscompletion url="http://gpp3-wxs.ign.fr/5kiwvtkb2v23y0x8chidxbij/ols/apis/completion"/>
 	<widgets>
        <!--<widget name="gauge"/>-->       
