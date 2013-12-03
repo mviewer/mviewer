@@ -9,7 +9,7 @@
 	
 	<link rel="icon" type="image/png" href="favicon.png" />	
 	<link rel="stylesheet" href="lib/jquery/mobile/1.3.2/jquery.mobile-1.3.2.min.css" type="text/css" />
-	<link rel="stylesheet" href="lib/openlayers/2.14-dev/theme/default/style.css" type="text/css" />	
+	<link rel="stylesheet" href="lib/openlayers/3/ol.css" type="text/css" />	
 	<link rel="stylesheet" href="css/mviewer.css" type="text/css" />
 	<link rel="stylesheet" href="css/mobile-panel-size.less.css" type="text/css" />
 	<link rel="stylesheet" href="lib/jquery/base/plugins/scrollbar/jquery.jscrollpane.css" type="text/css" media="all" />	
@@ -24,8 +24,7 @@
         });
     </script>
 	<script type="text/javascript" src="lib/jquery/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>	
-	<script type="text/javascript" src="lib/openlayers/2.14-dev/OpenLayers.js"></script>
-    <script type="text/javascript" src="lib/LoadingPanel.js"></script>	
+	<script type="text/javascript" src="lib/openlayers/3/ol-whitespace.js"></script>    
 	<script type="text/javascript" src="lib/jquery/base/plugins/scrollbar/jquery.mousewheel.js"></script>
 	<script type="text/javascript" src="lib/jquery/base/plugins/scrollbar/jquery.jscrollpane.js"></script>
 	<script type="text/javascript" src="lib/jquery/base/plugins/nicescroll/jquery.nicescroll.min.js"></script>
@@ -125,14 +124,15 @@ $(document).ready(function () {
 		</div>
 		<!-- VERTICAL LEFT TOOLBAR -->
 		<div id="zoomtoolbar" data-role="controlgroup" data-mini="true">
-			<a href="#" onclick="mviewer.zoomIn();" title="Zoom avant (zoom fenêtre : shift + clic sur la carte)" 
+			<!--<a href="#" onclick="mviewer.zoomIn();" title="Zoom avant (zoom fenêtre : shift + clic sur la carte)" 
 				data-role="button" data-icon="plus" data-iconpos="notext" data-theme="a"></a>
-			<a href="#" onclick="mviewer.zoomToInitialExtent();" 
+			<a href="#" id="toto" onclick="mviewer.zoomToInitialExtent();" 
 				title="Revenir à l'étendue géographique de départ" data-role="button" data-icon="home" 
 				data-iconpos="notext" data-theme="a"></a>
+                
 			<a href="#" onclick="mviewer.zoomOut();" title="Zoom arrière" data-role="button" 
-				data-icon="minus" data-iconpos="notext" data-theme="a"></a>
-		</div>		
+				data-icon="minus" data-iconpos="notext" data-theme="a"></a>-->
+		</div>	
 		<!-- VERTICAL RIGHT TOOLBAR -->
 		<div id="toolstoolbar" data-role="controlgroup"  data-mini="true">
 			<a href="#themepanel" data-rel="panel" id="extra" title="Afficher la table des matières" 

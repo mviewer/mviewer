@@ -37,17 +37,14 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 			url="http://gpp3-wxs.ign.fr/5kiwvtkb2v23y0x8chidxbij/wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS2000-2005" format="image/jpeg" visible="false" 
 			attribution="IGN" style="normal" matrixset="PM" minresolution="0.4"/>
         <baselayer  type="OSM" id="osm1" label="OSM" title="OSM france" thumbgallery="img/basemap/osm-france.png" 
-			url="http://a.tile.openstreetmap.fr/osmfr/${z}/${x}/${y}.png,http://b.tile.openstreetmap.fr/osmfr/${z}/${x}/${y}.png,http://c.tile.openstreetmap.fr/osmfr/${z}/${x}/${y}.png" 
+			url="http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
 			attribution="OpenStreetMap CC-by-SA" visible="true"/>
         <baselayer  type="OSM" id="stamen2" label="Stamen" title="OSM Stamen Watercolor" thumbgallery="img/basemap/aqua.png" 
-			url="http://a.tile.stamen.com/watercolor/${z}/${x}/${y}.jpg,http://b.tile.stamen.com/watercolor/${z}/${x}/${y}.jpg,http://c.tile.stamen.com/watercolor/${z}/${x}/${y}.jpg" 
+			url="http://{a-c}.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg" 
 			visible="false" attribution="OpenStreetMap CC-by-SA"/>       
 		<baselayer  type="WMS" id="photo2" label="Bretagne 1950" title="Photographie aérienne de 1952" thumbgallery="img/basemap/ortho-ancien.jpg" 
 			url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite-ancien" format="image/jpeg" visible="false" 
-			attribution="partenaires GéoBretagne - IGN"/>
-        <baselayer  type="WMTS" id="ortho2" label="WMTS ORTHO GEOB" title="Ortho WMTS Géobretagne" thumbgallery="img/basemap/ortho.jpg" 
-            url="http://tile.geobretagne.fr/gwc02/service/wmts" layers="satellite" format="image/jpeg" visible="false" 
-            attribution="GéoBretagne" style="_null" matrixset="EPSG:3857" minresolution="0.4"/>
+			attribution="partenaires GéoBretagne - IGN"/>        
         <baselayer  type="WMTS" id="scan2" label="Cartes IGN" title="Cartes IGN du Géoportail" maxscale="2000" thumbgallery="img/basemap/osm-france.png"
             url="http://kartenn.region-bretagne.fr/cgi-bin/wmts" layers="GEOGRAPHICALGRIDSYSTEMS.MAPS" format="image/jpeg" visible="false" 
             attribution="IGN" style="normal" matrixset="PM" minresolution="0.4"/>
