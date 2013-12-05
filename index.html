@@ -83,8 +83,11 @@ $(document).ready(function () {
 	<div id="main" data-role="page" style="opacity: 0;">		
 		<!-- THEME PANEL LEFT OVERLAY  -->
 		<div id="themepanel" data-role="panel" data-position="left" data-display="overlay" data-theme="a" data-dismissible="false" data-swipe-close="false">			
-			<div class="ui-grid-a">
-				<div class="ui-block-a"><h1>Les données</h1></div>
+			<div id="panel-header">
+                 <img src="img/logo/bandeau_region.png" alt="bandeau région"/>
+            </div>
+            <div class="ui-grid-a">
+				<div class="ui-block-a"><h2>Les données</h2></div>
 				<div class="ui-block-b"><img src="img/boussole.png" style="float: right;" alt="Nord de la carte" onclick="$('#themepanel').panel('close');"/></div>
 			</div>
 			<br>
@@ -92,17 +95,27 @@ $(document).ready(function () {
 			<fieldset id="abc" >
 				<img src="img/info/info.png" alt="information legend">
 				<div class="infoicon-explanation" >Information disponible en cliquant sur la carte</div>
-			</fieldset>			
-			<!--<div class="close-panel-wrapper">			
-				<a href="#main" data-mini="true" data-rel="close" data-role="button" data-theme="a" data-icon="delete" data-iconpos="right" data-inline="true" data-corners="true" style="width:100%;">Fermer le panneau</a>
-			</div>-->
+			</fieldset>
+            <div id="panel-footer">
+                <div id="mentionstoolbar">
+                    <a href="#usagepanel" data-rel="popup" data-position-to="window" 
+                        title="Conditions d'utilisation">conditions d'utilisation</a> | 
+                    <a href="#legalpanel" data-rel="popup" data-position-to="window" 
+                        title="Mentions Légales">mentions légales</a> | 
+                    <a href="#creditspanel" data-rel="popup" data-position-to="window" 
+                        title="Crédits">crédits</a> | 
+                    <a href="#contactpanel" data-rel="popup" data-position-to="window" 
+                        title="Nous contacter">contact</a>
+                </div>
+                <img src="img/panel-footer.png" alt="Les 9 missions principales de la région Bretagne"/>
+            </div>			
 		</div>
 		<!--  MAP  -->
 		<div id="map"></div>
 		<!-- LOGO  -->
-		<div id="logo">
+		<!--<div id="logo">
 			<a href="http://www.bretagne.fr" target="_blank" title="Accéder au site de Bretagne.fr"><img src="img/logo/RB_NB.png" alt="Lien site bretagne.fr"/></a>
-		</div>		
+		</div>	-->	
 		<!-- TOP MENU BAR  -->		
 		<div id="searchtool" class="ui-btn-leftt" data-inline="true">
 			<input type="search" id="searchfield" placeholder="Localiser..." title="Localiser une adresse" data-mini="true" data-theme="a" />
@@ -112,7 +125,7 @@ $(document).ready(function () {
 		<div id="backgroundlayerstoolbar"  data-mini="true" data-theme="a">			
 		</div>		
 		<!-- BOTTOM RIGHT MENTIONS -->
-		<div id="mentionstoolbar">
+		<!--<div id="mentionstoolbar">
 			<a href="#usagepanel" data-rel="popup" data-position-to="window" 
 				title="Conditions d'utilisation">conditions d'utilisation</a> - 
 			<a href="#legalpanel" data-rel="popup" data-position-to="window" 
@@ -121,7 +134,7 @@ $(document).ready(function () {
 				title="Crédits">crédits</a> - 
 			<a href="#contactpanel" data-rel="popup" data-position-to="window" 
 				title="Nous contacter">contact</a> - Région Bretagne 2013
-		</div>
+		</div>-->
 		<!-- VERTICAL LEFT TOOLBAR -->
 		<div id="zoomtoolbar" data-role="controlgroup" data-mini="true">
 			<!--<a href="#" onclick="mviewer.zoomIn();" title="Zoom avant (zoom fenêtre : shift + clic sur la carte)" 

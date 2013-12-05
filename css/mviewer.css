@@ -270,21 +270,21 @@ p.center { text-align: center; }
 }
 
 #mentionstoolbar {
-	position: fixed;
+	position: relative;
 	text-align: right;
-	bottom: 0px;
+	top: 50px;
 	right: 0px;
 	height: 14px;
 	padding: 0px 5px;
 	/*background: rgba(255, 255, 255, 0.5);*/
 	z-index: 10000;
 	font-size: 10px;
-	color: #555555;
+	color: #fff;
 }
 
 #mentionstoolbar a {
 	font-size: 10px;
-	color: #555555;
+	color: #fff;
 }
 
 #usage, #mentionslegales, #credits {
@@ -471,6 +471,26 @@ margin: 0 auto;
 #toolbar {
 
 }
+
+#panel-footer {
+    height: 125px;
+}
+
+#panel-footer img {
+    width: 320px;
+    bottom: 10px;
+    position: fixed;
+}
+
+#panel-header img {
+margin-left: -20px;
+margin-top: -20px;
+}
+
+#themepanel .ui-block-a h2 {
+padding-top: 50px;
+}
+
 .layer-display  .ui-btn-inner {
     padding-right: 5px!important;
 }
