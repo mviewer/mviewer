@@ -29,7 +29,8 @@
 	<script type="text/javascript" src="lib/jquery/base/plugins/scrollbar/jquery.jscrollpane.js"></script>
 	<script type="text/javascript" src="lib/jquery/base/plugins/nicescroll/jquery.nicescroll.min.js"></script>
 	<script type="text/javascript" src="lib/jquery/base/plugins/validate/jquery.validate.min.js"></script>
-	<script type="text/javascript" src="lib/jquery/base/plugins/easyshare/jquery.easyShare.js"></script>	
+	<script type="text/javascript" src="lib/jquery/base/plugins/easyshare/jquery.easyShare.js"></script>
+    <script type="text/javascript" src="lib/jquery/base/plugins/xml2json/jquery.xml2json.js"></script>	
 	<script type="text/javascript" src="lib/jquery.extend.js"></script>    
 	<!--<script type="text/javascript" src="dist/mviewer-min.js"></script>-->
 	<script type="text/javascript" src="lib/jqm-templates.js"></script>
@@ -111,7 +112,12 @@ $(document).ready(function () {
             </div>			
 		</div>
 		<!--  MAP  -->
-		<div id="map"></div>
+		<div id="map" class="map">
+            <div id="popup" class="ol-popup">
+                <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+                <div id="popup-content"></div>
+            </div>
+        </div>
 		<!-- LOGO  -->
 		<!--<div id="logo">
 			<a href="http://www.bretagne.fr" target="_blank" title="Accéder au site de Bretagne.fr"><img src="img/logo/RB_NB.png" alt="Lien site bretagne.fr"/></a>
