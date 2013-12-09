@@ -399,6 +399,8 @@ margin-top: -10px;
     border: 1px solid #cccccc;
     bottom: 12px;
     left: -50px;
+    min-width: 250px;
+    min-height: 100px;
 }
 .ol-popup:after, .ol-popup:before {
     top: 100%;
@@ -434,6 +436,17 @@ margin-top: -10px;
     content: "✖";   
 }
 
+.popupitem h3 {
+color: white;
+background-color: #333;
+text-shadow: none;
+}
+
+code {
+		padding: 2px 4px;
+		color: #d14;
+		white-space: nowrap;		
+}
 
 ::-webkit-scrollbar {
 	width: 8px;
