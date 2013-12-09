@@ -131,7 +131,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 		<theme name="Education"  id="lycees" collapsed="false">            
 			<layer id="lycee_rb" name="Lycées" default="true" scalemin="0" scalemax="5000000" visible="true" 
 				queryable="true" fields="nom,photo,libelle,secteur_li,reseau_lib" aliases="Nom,Photo,Commune,Secteur,Réseau" 
-                infoformat="text/html"
+                infoformat="application/vnd.ogc.gml"
 				style="lycee_secteur_mob" 
 				url="http://kartenn.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Région Bretagne" 

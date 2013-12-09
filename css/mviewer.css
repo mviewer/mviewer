@@ -399,7 +399,7 @@ margin-top: -10px;
     border: 1px solid #cccccc;
     bottom: 12px;
     left: -50px;
-    min-width: 250px;
+    min-width: 225px;
     min-height: 100px;
 }
 .ol-popup:after, .ol-popup:before {
