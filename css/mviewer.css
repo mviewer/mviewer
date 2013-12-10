@@ -81,10 +81,11 @@ p.center { text-align: center; }
 }
 
 #backgroundlayerstoolbar {
-	top: 3px;
-	right: 50px;
+	bottom: 3px;
+	right: 10px;
 	float: right;
 	position: absolute;
+    margin-bottom: 0;
 }
 
 #zoomtoolbar {
@@ -283,8 +284,18 @@ font-size: 20px;
 #searchtool {	
 	max-width:300px;	
 	position: absolute;
-	left: 3em;
+	right:10px;
 	top: 3px;
+}
+
+.ol-attribution {
+    right: 150px!important;
+    background: rgba(51,51,51,0.5)!important;
+    text-shadow: none;
+}
+
+.ol-scale-line {
+    background: rgba(51,51,51,0.5)!important;
 }
 
 #searchtool input:hover,#searchtool input:focus,#searchtool input:active{    
@@ -427,10 +438,14 @@ margin-top: -10px;
 .ol-popup-closer {
     text-decoration: none;
     position: absolute;    
-    right: 8px;
+    right: 8px;    
 }
 .ol-popup-closer:after {
     content: "✖";   
+}
+
+#popup-closer {
+    color: #333;
 }
 
 .popupitem h3 {
