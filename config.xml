@@ -27,18 +27,21 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 			url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite" format="image/png" visible="false" 
 			attribution="partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver"/>
 		<baselayer  type="WMTS" id ="ortho3" label="Photo aérienne 2000" title="Ortho Géoportail" thumbgallery="img/basemap/ortho.jpg" 
-			url="http://gpp3-wxs.ign.fr/5kiwvtkb2v23y0x8chidxbij/wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS2000-2005" format="image/jpeg" visible="false" 
+			url="http://kartenn.region-bretagne.fr/cgi-bin/wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS2000-2005" format="image/jpeg" visible="false" 
 			attribution="IGN" style="normal" matrixset="PM" minresolution="0.4"/>
-        <baselayer  type="OSM" id="osm1" label="OSM" title="OSM france" thumbgallery="img/basemap/osm-france.png" 
+        <baselayer  type="OSM" id="osm1" label="OSM" title="OSM france" thumbgallery="img/basemap/osm.png" 
 			url="http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
 			attribution="Data &lt;a href='http://www.openstreetmap.org/'>OpenStreetMap &lt;/a> contributors,  &lt;a href='http://www.openstreetmap.org/copyright'>ODbL &lt;/a>" visible="true"/>
-        <baselayer  type="OSM" id="stamen2" label="Stamen" title="OSM Stamen Watercolor" thumbgallery="img/basemap/aqua.png" 
+        <baselayer  type="OSM" id="stamen2" label="Stamen" title="OSM Stamen Watercolor" thumbgallery="img/basemap/watercolor.jpg" 
 			url="http://{a-c}.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg" maxzoom="20" 
-			visible="false" attribution="Map tiles by  &lt;a href='http://stamen.com/'>Stamen Design &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />       
+			visible="false" attribution="Map tiles by  &lt;a href='http://stamen.com/'>Stamen Design &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="OSM" id="stamen1" label="Toner Stamen" title="OSM Stamen Toner" thumbgallery="img/basemap/toner.png" 
+			url="http://{a-d}.tile.stamen.com/toner/{z}/{x}/{y}.png" maxzoom="20" 
+			visible="false" attribution="Map tiles by  &lt;a href='http://stamen.com/'>Stamen Design &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
 		<baselayer  type="WMS" id="photo2" label="Bretagne 1950" title="Photographie aérienne de 1952" thumbgallery="img/basemap/ortho-ancien.jpg" 
 			url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite-ancien" format="image/jpeg" visible="false" 
 			attribution="partenaires GéoBretagne - IGN"/>        
-        <baselayer  type="WMTS" id="scan2" label="Cartes IGN" title="Cartes IGN du Géoportail" maxscale="2000" thumbgallery="img/basemap/osm-france.png"
+        <baselayer  type="WMTS" id="scan2" label="Cartes IGN" title="Cartes IGN du Géoportail" maxscale="2000" thumbgallery="img/basemap/scan.jpg"
             url="http://kartenn.region-bretagne.fr/cgi-bin/wmts" layers="GEOGRAPHICALGRIDSYSTEMS.MAPS" format="image/jpeg" visible="false" 
             attribution="&lt;a href='http://www.geoportail.fr/' target='_blank'>&lt;img src='http://api.ign.fr/geoportail/api/js/latest/theme/geoportal/img/logo_gp.gif'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
     </baselayers>    
