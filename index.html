@@ -59,12 +59,13 @@ $(document).ready(function () {
         url: configFile + '?_dc=' + $.getTime(),
         dataType: "xml",
         success: function (xml) {
-            var map = mviewer.init(xml);
+            var map = mviewer.init(xml);            
             setTimeout(function () {
                 $.mobile.loading('hide');
                 $("#main").css("opacity", 1).hide();
                 $("#main").fadeIn(2000);
             }, 3000);
+            $( "#map" ).focus();
         }, // fin success config
         error: function (request, status, error) {
             $.mobile.loading('hide');			
@@ -111,7 +112,7 @@ $(document).ready(function () {
             </div>			
 		</div>
 		<!--  MAP  -->
-		<div id="map" class="map">
+		<div id="map" class="map" tabindex="1" accesskey="1">
             <div id="popup" class="ol-popup">
                 <div id="popuptitle" class="ol-popup-title"><code id="hdms">position</code><a href="#" id="popup-closer" class="ol-popup-closer"></a></div>                
                 <div id="popup-content"></div>
@@ -123,35 +124,35 @@ $(document).ready(function () {
 		</div>	-->	
 		<!-- TOP MENU BAR  -->		
 		<div id="searchtool" class="ui-btn-leftt" data-inline="true">
-			<input type="search" id="searchfield" placeholder="Localiser..." title="Localiser une adresse" data-mini="true" data-theme="a" />
+			<input type="search" id="searchfield" placeholder="Localiser..." title="Localiser une adresse" data-mini="true" data-theme="a" tabindex="2" accesskey="2" />
 			<ul id="searchresults" data-role="listview" data-inset="true" data-mini="true" data-theme="a" 
 				data-type="vertical"></ul>
 		</div>
-		<div id="backgroundlayerstoolbar"  data-mini="true" data-theme="a">			
+		<div id="backgroundlayerstoolbar"  data-mini="true" data-theme="a" >			
 		</div>				
 		<!-- VERTICAL LEFT TOOLBAR -->
 		<div id="zoomtoolbar" data-role="controlgroup" data-mini="true">
 			<a href="#" onclick="mviewer.zoomIn();" title="Zoom avant (zoom fenêtre : shift + clic sur la carte)" 
-				data-role="button" data-icon="plus" data-iconpos="notext" data-theme="a"></a>
+				data-role="button" data-icon="plus" data-iconpos="notext" data-theme="a" tabindex="104" accesskey="4" ></a>
 			<a href="#" id="toto" onclick="mviewer.zoomToInitialExtent();" 
 				title="Revenir à l'étendue géographique de départ" data-role="button" data-icon="home" 
-				data-iconpos="notext" data-theme="a"></a>                
+				data-iconpos="notext" data-theme="a" tabindex="105" accesskey="5"></a>                
 			<a href="#" onclick="mviewer.zoomOut();" title="Zoom arrière" data-role="button" 
-				data-icon="minus" data-iconpos="notext" data-theme="a"></a>
+				data-icon="minus" data-iconpos="notext" data-theme="a" tabindex="106" accesskey="6"></a>
 		</div>	
 		<!-- VERTICAL RIGHT TOOLBAR -->
 		<div id="toolstoolbar" data-role="controlgroup"  data-mini="true">
 			<a href="#themepanel" data-rel="panel" id="extra" title="Afficher la table des matières" 
-				data-role="button" data-icon="layers" data-iconpos="notext" data-theme="a"></a>
+				data-role="button" data-icon="layers" data-iconpos="notext" data-theme="a" tabindex="107" accesskey="7"></a>
 			<a href="#" onclick="mviewer.setTool('info');" id="infobtn" title="Information sur la carte" 
-				data-role="button" data-icon="info" data-iconpos="notext" data-theme="b"></a>
+				data-role="button" data-icon="info" data-iconpos="notext" data-theme="b" tabindex="108" accesskey="8"></a>
 			<!--<a href="#" onclick="mviewer.setTool('measureline');" id="measurelinebtn" title="Mesure linéaire" 
 				data-role="button" data-icon="custom" data-iconpos="notext" data-theme="a"></a>
 			<a href="#" onclick="mviewer.setTool('measurearea');" id="measureareabtn" title="Mesure surfacique" 
 				data-role="button" data-icon="custom" data-iconpos="notext" data-theme="a"></a>-->
 			<a href="#sharepanel" onclick="mviewer.mapShare();" id="sharebtn" title="Partager cette carte" 
 				data-rel="popup" data-transition="flip" data-position-to="window" data-role="button" 
-				data-icon="custom" data-iconpos="notext" data-theme="a"></a>			
+				data-icon="custom" data-iconpos="notext" data-theme="a" tabindex="109" accesskey="9"></a>			
 		</div>
 		<!-- MEASURES INFOS BOXES -->		
 		<div id="measurelinebar" data-role="controlgroup" data-type="horizontal" data-mini="true" data-theme="b">
