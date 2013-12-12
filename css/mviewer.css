@@ -435,6 +435,10 @@ margin-top: -10px;
     padding-top: 20px;
     font-family: "Trebuchet MS",Helvetica,Arial,sans-serif;
 }
+
+#popup-content a {
+color: #333;
+}
 .ol-popup-closer {
     text-decoration: none;
     position: absolute;    
