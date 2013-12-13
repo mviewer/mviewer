@@ -229,6 +229,10 @@ p.center { text-align: center; }
 	
 }
 
+#metadata-abstract a {
+color: #2489ce;
+}
+
 
 #themelist {	
 	padding: 10px 10px 10px 10px;
