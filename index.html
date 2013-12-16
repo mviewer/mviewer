@@ -251,11 +251,10 @@ $(document).ready(function () {
 		</div>
 		<!-- POPUP OPACITY -->
 		<div data-role="popup" id="opacityLayer-popup" class="ui-content" data-theme="d" data-transition="slideup">
-			<p>Opacité de la couche.</p>
-			<div data-role="fieldcontain" class="ui-hide-label">
-				<label for="opacityLayer-slider" class="ui-hidden-accessible">Slider:</label>
-				<input type="range" name="var-layer-to-control" id="opacityLayer-slider" min="0" max="100" value="50" data-mini="true" class="ui-hidden-accessible" data-highlight="true" onchange="mviewer.changeLayerOpacity(this.name,this.value)">
-			</div>
+			<form>
+				<label for="opacityLayer-slider">Opacité:</label>
+				<input type="range" name="var-layer-to-control" id="opacityLayer-slider" data-highlight="true" min="0" max="100" value="50" data-mini="true"  onchange="mviewer.changeLayerOpacity(this.name,this.value)">
+			</form>
 		</div>
 		<!-- POPUP METADATA -->
 		<div data-role="popup" id="metadataPopup" class="ui-content" data-theme="a" data-transition="slidedown" >
