@@ -369,6 +369,13 @@ margin-left: -20px;
 margin-top: -20px;
 }
 
+#panel-closer 
+{
+	position: absolute;
+	right:10px;
+	top:10px;
+}
+
 #themepanel .ui-block-a h2 {
 padding-top: 50px;
 }
