@@ -151,7 +151,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="GéoBretagne" 
 				metadata-csw=""
 				metadata="http://geobretagne.fr/geonetwork/srv/fr/main.home?uuid=9722d181-75f9-40ab-a136-a9f9ed6f29a5" />
-			<layer id="bzh:EPCI" name="EPCI" scalemin="0" scalemax="5000000" visible="false" 
+			<layer id="bzh:EPCI" name="Intercommunalité" scalemin="0" scalemax="5000000" visible="false" 
 				queryable="true" fields="SIREN_EPCI,NOM_EPCI" aliases="Code, Nom" 
 				style="" 
 				url="http://geobretagne.fr/geoserver/bzh/wms" 
