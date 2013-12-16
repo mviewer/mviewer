@@ -469,6 +469,15 @@ code {
 		white-space: nowrap;		
 }
 
+#opacityLayer-popup {
+	width: 200px;
+}
+
+#opacityLayer-popup label {
+	font-size: 12px;
+	font-family: "Trebuchet MS",Helvetica,Arial,sans-serif;
+}
+
 ::-webkit-scrollbar {
 	width: 8px;
 }
