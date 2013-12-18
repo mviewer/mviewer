@@ -244,10 +244,15 @@ $(document).ready(function () {
 			            </p>
 					</div>					
 				</div>
+                <!-- to georchestra viewer -->
+                <form id="georchestraForm" target="_blank" method="post" action="http://geobretagne.fr/mapfishapp/" style="display:none;">
+                    <input type="hidden" id="georchestraFormData" name="data" value="" />
+                    <input type="submit" data-role="button" data-mini="true" data-iconpos="right" value="geOrchestra" />
+                </form>
 				<div id="simpleshare" class="ui-block-b">				
 					<h3>Partager !</h3>
 					<div id="shareeasy"></div>
-				</div>
+				</div>                
 			</div>
 		</div>
 		<!-- POPUP OPACITY -->
