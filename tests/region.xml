@@ -51,7 +51,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 
     <themes>
         <theme name="Formation"  id="formation" collapsed="true">
-            <layer id="lycee_rb" name="Lycée" scalemin="0" scalemax="5000000" visible="false" tiled="false"
+            <layer id="lycee_rb" name="Lycée" scalemin="0" scalemax="5000000" visible="false" tiled="false" namespace="rb"
 				queryable="true" fields="nom,photo,libelle,secteur_li,reseau_lib" aliases="Nom,Photo,Commune,Secteur,Réseau" 
                 infoformat="application/vnd.ogc.gml" featurecount="1"
 				style="lycee_secteur_mob" 
@@ -59,7 +59,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Région Bretagne" 
 				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25" 
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25" />
-			<layer id="site_cfa_rb" name="Centre de formation d'apprentis" scalemin="0" scalemax="5000000" visible="false" tiled="false"
+			<layer id="site_cfa_rb" name="Centre de formation d'apprentis" scalemin="0" scalemax="5000000" visible="false" tiled="false" namespace="rb"
 				queryable="true" fields="cfa,secteurs_p,metiers,diplome" aliases="Nom,Secteur,Métier,Diplôme"
                 infoformat="application/vnd.ogc.gml" featurecount="2"               
 				url="http://kartenn.region-bretagne.fr/geoserver/rb/wms" 
@@ -69,7 +69,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=f713de6d-1269-40b2-8bd4-3704c106fde6" />           
 		</theme>		
         <theme name="Transport TER"  collapsed="true" id="transport">
-            <layer id="point_arret_ter_bretagne_rb" name="Point d'arrêt TER" scalemin="0" scalemax="5000000" visible="false" 
+            <layer id="point_arret_ter_bretagne_rb" name="Point d'arrêt TER" scalemin="0" scalemax="5000000" visible="false" tiled="false" namespace="rb" 
 				queryable="true" fields="nom_pa,type_p" aliases="Nom,Type" 
                 infoformat="application/vnd.ogc.gml" featurecount="1"                
 				url="http://kartenn.region-bretagne.fr/geoserver/rb/wms" 
@@ -77,7 +77,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Région Bretagne" 
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=f713de6d-1269-40b2-8bd4-3704c106fde6"
 				metadata="http://geobretagne.fr/geonetwork/srv/fr/main.home?uuid=a856d070-c900-44db-8020-7892a3071293" />                
-			<layer id="reseau_ter_bretagne_rb" name="Ligne TER" visible="false" scalemin="0" scalemax="5000000"  
+			<layer id="reseau_ter_bretagne_rb" name="Ligne TER" visible="false" scalemin="0" scalemax="5000000" tiled="false" namespace="rb" 
 				queryable="true" fields="libelle,code,type" aliases="Nom,Code,type" 
                 infoformat="application/vnd.ogc.gml" featurecount="1"
 				url="http://kartenn.region-bretagne.fr/geoserver/rb/wms" 
@@ -87,7 +87,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata="http://geobretagne.fr/geonetwork/srv/fr/main.home?uuid=9d19c331-3941-4545-8409-ec18cf88a544" />
         </theme>    
         <theme name="Transport maritime et fluvial"  collapsed="true" id="maritime"> 
-             <layer id="port_rb" name="Port" scalemin="0" scalemax="5000000" visible="false" 
+             <layer id="port_rb" name="Port" scalemin="0" scalemax="5000000" visible="false" tiled="false" namespace="rb" 
 					queryable="true" fields="libelle_po,statut" aliases="Nom,Statut"
                     infoformat="application/vnd.ogc.gml" featurecount="1"                    
 					url="http://kartenn.region-bretagne.fr/geoserver/rb/wms" 
@@ -95,7 +95,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					attribution="Région Bretagne" 
 					metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=c55c4fba-6a37-48ea-8754-a1bf770a684b"
 					metadata="http://geobretagne.fr/geonetwork/srv/fr/main.home?uuid=c55c4fba-6a37-48ea-8754-a1bf770a684b" />                
-                <layer id="voie_navigable_rb" name="Voie navigable" scalemin="0" scalemax="5000000" visible="false" 
+                <layer id="voie_navigable_rb" name="Voie navigable" scalemin="0" scalemax="5000000" visible="false" tiled="false" namespace="rb"
 					queryable="true" fields="proprietaire,concession,gestionnaire" aliases="Propriétaire,Concessionnaire,Gestionnaire"
                     infoformat="application/vnd.ogc.gml" featurecount="1"
 					url="http://kartenn.region-bretagne.fr/geoserver/rb/wms" 
@@ -105,7 +105,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					metadata="http://geobretagne.fr/geonetwork/srv/fr/main.home?uuid=7cab44b0-4639-43f2-a824-3eecb7d3bf66" />  
         </theme> 
         <theme name="Inventaire du patrimoine"  collapsed="true" id="patrimoine">           
-			<layer id="patrimoine_rb" name="Patrimoine régional" scalemin="0" scalemax="5000000" visible="false" tiled="true"
+			<layer id="patrimoine_rb" name="Patrimoine régional" scalemin="0" scalemax="5000000" visible="false" tiled="true" namespace="rb"
 				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
                 infoformat="text/html" featurecount="1"
 				style="patrimoine_gros" 
@@ -113,7 +113,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=a7f46b47-42fc-49b7-9b49-c7c11aee0932"
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=a7f46b47-42fc-49b7-9b49-c7c11aee0932" />
-            <layer id="ipc_recensement_rb" name="Recensement local" scalemin="0" scalemax="5000000" visible="false" tiled="false" 
+            <layer id="ipc_recensement_rb" name="Recensement local" scalemin="0" scalemax="5000000" visible="false" tiled="false" namespace="rb" 
 				queryable="true" fields="titre,localisati,datation,photo_1" aliases="Titre,Localisation,Datation,Photo" 
 				infoformat="application/vnd.ogc.gml" featurecount="1"
                 style="recensement_etoile" 
@@ -123,7 +123,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata="http://geobretagne.fr/geonetwork/srv/fr/main.home?uuid=0cf6de5d-9746-44d8-b003-a2dae2e7e585" /> 
         </theme>
         <theme name="Espaces naturels"  collapsed="true" id="nature"> 
-            <layer id="reserve_naturelle_regionale_rb" name="Réserve Naturelle Régionale" scalemin="0" scalemax="5000000" visible="false" 
+            <layer id="reserve_naturelle_regionale_rb" name="Réserve Naturelle Régionale" scalemin="0" scalemax="5000000" visible="false" tiled="false" namespace="rb"
 				queryable="true" fields="rnr_nom,image,surface,dt_creation" aliases="Nom,photo,surface,date de création"
                 infoformat="application/vnd.ogc.gml" featurecount="1"
 				url="http://kartenn.region-bretagne.fr/geoserver/rb/wms" 
