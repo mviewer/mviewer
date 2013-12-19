@@ -377,7 +377,9 @@ margin-top: -20px;
 }
 
 #themepanel .ui-block-a h2 {
-padding-top: 50px;
+    padding-top: 30px;
+    display: inline-block;
+    font-size: 14px;
 }
 
 .layer-display  .ui-btn-inner {

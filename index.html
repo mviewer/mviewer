@@ -90,7 +90,9 @@ $(document).ready(function () {
                  <a href="#" id="panel-closer" data-role="button" data-icon="delete" data-iconpos="notext" data-theme="a" data-inline="true" onclick="$('#themepanel').panel('close');" >Fermer ce panneau</a>
             </div>
             <div class="ui-grid-a">
-				<div class="ui-block-a"><h2>Les thématiques</h2></div>
+				<div class="ui-block-a">
+                    <h2>Les thématiques</h2>
+                    <a href="#" id="panel-back" data-role="button" data-icon="back" data-iconpos="notext" data-theme="a" data-inline="true" onclick="mviewer.restoreInitialDisplay();" >Réinitialisation de l'affichage</a></div>
 				<div class="ui-block-b"><img src="img/boussole.png" style="float: right;" alt="Nord de la carte" onclick="$('#themepanel').panel('close');"/></div>
 			</div>
 			<br>
