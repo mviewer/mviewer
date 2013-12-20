@@ -162,22 +162,22 @@ p.center { text-align: center; }
 	color: #fff;
 }
 
-#usage, #mentionslegales, #credits {
+#usage, #mentionslegales, #credits , #accessibility{
 	width: 600px;
 	height: 400px;
 	overflow: auto;
 }
 
-#usage a, #mentionslegales a, #credits a {
+#usage a, #mentionslegales a, #credits a , #accessibility a {
 	color: #ffffff;
 	font-weight: normal;
 }
 
-#usage h3, #mentionslegales h3, #credits h3 {
+#usage h3, #mentionslegales h3, #credits h3 , #accessibility h3{
 	border-bottom: solid 1px #ffffff;
 }
 
-#usage p, #mentionslegales p, #credits p {
+#usage p, #mentionslegales p, #credits p , #accessibility p{
 	margin-left: 20px;
 }
 
