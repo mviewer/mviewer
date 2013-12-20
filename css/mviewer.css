@@ -511,10 +511,10 @@ code {
     overflow: visible;
 }
 
-.ui-panel-closed  .ui-panel-inner {
+.ui-panel-closed  {
     visibility: visible !important;  
-    width: 100px !important; 
-    left: 160px !important;
+    width: 85px !important; 
+    left: 260px !important;
     overflow: visible !important;
 }
 
