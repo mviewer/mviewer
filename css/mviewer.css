@@ -147,11 +147,10 @@ p.center { text-align: center; }
 #mentionstoolbar {
 	position: relative;
 	text-align: right;
-	top: 50px;
+	top: 40px;
 	right: 0px;
 	height: 14px;
-	padding: 0px 5px;
-	/*background: rgba(255, 255, 255, 0.5);*/
+	padding: 0px 5px;	   
 	z-index: 10000;
 	font-size: 10px;
 	color: #fff;
@@ -356,6 +355,9 @@ margin: 0 auto;
 
 #panel-footer {
     height: 125px;
+    background-image: url("../img/panel-footer.png");
+    background-repeat:no-repeat;
+    background-position:right bottom;    
 }
 
 #panel-footer img {
@@ -489,7 +491,7 @@ code {
 
 #tick-button {
     position: absolute;
-    top: 100px;
+    top: 75px;
     overflow:visible;
     right: -27px;    
     width: 25px;
@@ -500,11 +502,26 @@ code {
 
 #tick-button .ui-btn-inner {
     padding: 0 0 !important;
-    height: 100% !important;
-    font:10px "Trebuchet MS",Helvetica,Arial,sans-serif;    
+    height: 100% !important;     
     line-height: 100px;
-    color: #555;
-    text-shadow: 1px 1px #fff;   
+    color: #fff;      
+}
+
+.ui-icon-paneltick {
+	background-image: url(../img/btn/tick.png);
+    margin-left: -7px;
+}
+
+.ui-panel-closed .ui-icon-paneltick {
+    background-position: -38px 0px;
+}
+
+.ui-panel-open .ui-icon-paneltick {
+    background-position: -2px 0px;
+}
+
+#themepanel .ui-block-a {
+    margin-left: -5px;
 }
 
 #panel-header {
@@ -521,6 +538,15 @@ code {
 .ui-panel-closed #tick-button {
      visibility: visible !important;  
    
+}
+
+.ui-panel-closed #tick-button :after {
+      /*content: ">>";  
+      text-overflow: clip;*/
+}
+
+.ui-panel-open #tick-button :after {
+     /* content: "✖";   */   
 }
 
 .ui-panel-closed #panel-header {

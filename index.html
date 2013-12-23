@@ -87,12 +87,13 @@ $(document).ready(function () {
 		<div id="themepanel" data-role="panel" data-position="left" data-display="overlay" data-theme="a" data-dismissible="false" data-swipe-close="false">			
 			<div id="panel-header">
                  <img src="img/logo/bandeau_region.png" alt="bandeau région"/>
-                 <a href="#" id="panel-closer" data-role="button" data-icon="delete" data-iconpos="notext" data-theme="a" data-inline="true" onclick="$('#themepanel').panel('close');" >Fermer ce panneau</a>
+                 <!--<a href="#" id="panel-closer" data-role="button" data-icon="delete" data-iconpos="notext" data-theme="a" data-inline="true" onclick="$('#themepanel').panel('close');" >Fermer ce panneau</a>-->
             </div>
             <div class="ui-grid-a">
 				<div class="ui-block-a">
-                    <h2>Les thématiques</h2>
-                    <a href="#" id="panel-back" data-role="button" data-icon="back" data-iconpos="notext" data-theme="a" data-inline="true" onclick="mviewer.restoreInitialDisplay();" >Réinitialisation de l'affichage</a></div>
+                    <a href="#" id="panel-back" data-role="button" data-icon="back" data-iconpos="notext" data-theme="a" data-inline="true" onclick="mviewer.restoreInitialDisplay();" >Réinitialisation de l'affichage</a>
+                    <h2>Les thématiques</h2> 
+                </div>
 				<div class="ui-block-b"><img src="img/rose_vents.png" style="float: right;" alt="Nord de la carte" onclick="$('#themepanel').panel('close');"/></div>
 			</div>
 			<br>
@@ -112,9 +113,9 @@ $(document).ready(function () {
                     <a href="#contactpanel" data-rel="popup" data-position-to="window" 
                         title="Nous contacter">Nous contacter</a>
                 </div>
-                <img src="img/panel-footer.png" alt="Les 9 missions principales de la région Bretagne"/>
+                <!--<img src="img/panel-footer.png" alt="Les 9 missions principales de la région Bretagne"/>-->
             </div>  
-            <div data-role="button" id="tick-button" data-theme="a">>></div>
+            <div data-role="button" id="tick-button" data-theme="a" data-icon="paneltick" onclick="$('#themepanel').panel('toggle');" ></div>
 		</div>        
 		<!--  MAP  -->
 		<div id="map" class="map" tabindex="1" accesskey="1">
@@ -147,8 +148,8 @@ $(document).ready(function () {
 		</div>	
 		<!-- VERTICAL RIGHT TOOLBAR -->
 		<div id="toolstoolbar" data-role="controlgroup"  data-mini="true">
-			<a href="#themepanel" data-rel="panel" id="extra" title="Afficher la table des matières" 
-				data-role="button" data-icon="layers" data-iconpos="notext" data-theme="a" tabindex="107" accesskey="7"></a>
+			<!--<a href="#themepanel" data-rel="panel" id="extra" title="Afficher la table des matières" 
+				data-role="button" data-icon="layers" data-iconpos="notext" data-theme="a" tabindex="107" accesskey="7"></a>-->
 			<a href="#" onclick="mviewer.setTool('info');" id="infobtn" title="Information sur la carte" 
 				data-role="button" data-icon="info" data-iconpos="notext" data-theme="b" tabindex="108" accesskey="8"></a>
 			<!--<a href="#" onclick="mviewer.setTool('measureline');" id="measurelinebtn" title="Mesure linéaire" 
