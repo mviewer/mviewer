@@ -528,6 +528,10 @@ code {
     overflow: visible;
 }
 
+.ui-collapsible-content.ui-body-a {
+    background-color: black;
+}
+
 .ui-panel-closed  {
     visibility: visible !important;  
     width: 85px !important; 
@@ -538,6 +542,14 @@ code {
 .ui-panel-closed #tick-button {
      visibility: visible !important;  
    
+}
+
+#zoomtoolbar a, #toolstoolbar a{
+    height: 8px;
+}
+
+#backgroundlayerstoolbar h4 a {
+    font-size: 12px;
 }
 
 .ui-panel-closed #tick-button :after {
