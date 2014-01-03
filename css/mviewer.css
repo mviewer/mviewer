@@ -323,6 +323,9 @@ font-size: 20px;
 #metadataPopup {
 	max-width: 75%;
 }
+#contactform {
+    padding-left: 10px;
+}
 
 .ui-loader-verbose {
 width: 200px !important;
