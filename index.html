@@ -113,9 +113,8 @@ $(document).ready(function () {
                     <a href="#contactpanel" data-rel="popup" data-position-to="window" 
                         title="Nous contacter">Nous contacter</a>
                 </div>
-                <!--<img src="img/panel-footer.png" alt="Les 9 missions principales de la région Bretagne"/>-->
-            </div>  
-            <div data-role="button" id="tick-button" data-theme="b" data-icon="paneltick" onclick="$('#themepanel').panel('toggle');" ></div>
+                <!--<img src="img/panel-footer.png" alt="Les 9 missions principales de la région Bretagne"/>-->            </div>
+        <button class="ui-shadow ui-nodisc-icon ui-icon-carat-l ui-btn ui-btn-b ui-btn-icon-notext" id="tick-button" onclick="$('#themepanel').panel('toggle');" ></button>    
 		</div>        
 		<!--  MAP  -->
 		<div id="map" class="map" tabindex="1" accesskey="1">
@@ -123,7 +122,8 @@ $(document).ready(function () {
                 <div id="popuptitle" class="ol-popup-title"><code id="hdms">position</code><a href="#" id="popup-closer" class="ol-popup-closer"></a></div>                
                 <div id="popup-content"></div>
             </div>
-        </div>
+        </div>   
+        <button class="ui-shadow ui-nodisc-icon ui-icon-carat-r ui-btn ui-btn-b ui-btn-icon-notext" id="tick-button2" onclick="$('#themepanel').panel('toggle');" ></button>
 		<!-- LOGO  -->
 		<!--<div id="logo">
 			<a href="http://www.bretagne.fr" target="_blank" title="Accéder au site de Bretagne.fr"><img src="img/logo/RB_NB.png" alt="Lien site bretagne.fr"/></a>
@@ -271,7 +271,7 @@ $(document).ready(function () {
 			</div>
 		</div>
 		<!-- POPUP OPACITY -->
-		<div data-role="popup" id="opacityLayer-popup" class="ui-content" data-theme="d" data-transition="slideup">
+		<div data-role="popup" id="opacityLayer-popup" class="ui-content" data-theme="a" data-transition="slideup">
 			<form>
 				<label for="opacityLayer-slider">Opacité:</label>
 				<input type="range" name="var-layer-to-control" id="opacityLayer-slider" data-highlight="true" min="0" max="100" value="50" data-mini="true"  onchange="mviewer.changeLayerOpacity(this.name,this.value)">

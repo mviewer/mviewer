@@ -250,9 +250,18 @@ color: #2489ce;
 	padding: 0px !important;
 }
 
-#themepanel .ui-link-inherit {
-	padding: 5px 5px 5px 10px !important;
+#themepanel .ui-btn.ui-btn-a {	
 	font-family: "Trebuchet MS",Helvetica,Arial,sans-serif;
+    font-size: 12px!important;    
+    padding-right: 5px;
+}
+#datalist h2 a {
+    font-family: "Trebuchet MS",Helvetica,Arial,sans-serif;
+}
+
+.layerdisplay-title td {
+height: 31px!important;
+vertical-align: bottom!important;
 }
 
 #themepanel .ui-title {
@@ -387,6 +396,9 @@ margin-top: -20px;
 .layer-display  .ui-btn-inner {
     padding-right: 5px!important;
 }
+.layer-display {
+    /*padding-top: 7px;*/
+}
 
 .ui-icon-layers {	
 	background:  url(../img/btn/layers.png) 50% 50% no-repeat; 
@@ -491,25 +503,32 @@ code {
 
 #tick-button {
     position: absolute;
-    top: 75px;
-    overflow:visible;
-    right: -27px;    
-    width: 25px;
-    height: 100px;
+    top: 20px;
+    /*overflow:visible;*/
+    right: -27px;
+    /*width: 25px;
+    height: 30px;*/
     margin: 0 0 !important;
-    border-radius: 0 1em 1em 0;
+    /*border-radius: 0 1em 1em 0;*/
+    background-repeat: no-repeat;
+}
+
+#tick-button2 {
+    position: absolute;
+    top: 20px;
+    margin: 0 0!important;
 }
 
 #tick-button .ui-btn-inner {
-    padding: 0 0 !important;
+   /* padding: 0 0 !important;
     height: 100% !important;     
     line-height: 100px;
-    color: #fff;      
+    color: #fff;      */
 }
 
 .ui-icon-paneltick {
-	background-image: url(../img/btn/tick.png);
-    margin-left: -7px;
+	background-image: url(../img/btn/tick.png)!important;
+    /*margin-left: -7px;*/
 }
 
 .ui-panel-closed .ui-icon-paneltick {
@@ -517,7 +536,7 @@ code {
 }
 
 .ui-panel-open .ui-icon-paneltick {
-    background-position: -2px 0px;
+    background-position: 2px 5px!important;
 }
 
 #themepanel .ui-block-a {
@@ -533,15 +552,16 @@ code {
 }
 
 .ui-panel-closed  {
-    visibility: visible !important;  
-    width: 85px !important; 
-    left: 260px !important;
-    overflow: visible !important;
+    /*visibility: visible !important;  
+    /*width: 85px !important; 
+    /*left: 260px !important;
+    left:0px!important;
+    overflow: visible !important;*/
 }
 
 .ui-panel-closed #tick-button {
-     visibility: visible !important;  
-   
+    visibility: visible !important; 
+    background-position: -36px 6px!important;   
 }
 
 #zoomtoolbar a, #toolstoolbar a{
@@ -552,14 +572,7 @@ code {
     font-size: 12px;
 }
 
-.ui-panel-closed #tick-button :after {
-      /*content: ">>";  
-      text-overflow: clip;*/
-}
 
-.ui-panel-open #tick-button :after {
-     /* content: "✖";   */   
-}
 
 .ui-panel-closed #panel-header {
     overflow: hidden;
