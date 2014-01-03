@@ -260,8 +260,15 @@ color: #2489ce;
 }
 
 .layerdisplay-title td {
-height: 31px!important;
-vertical-align: bottom!important;
+/*height: 31px!important;
+vertical-align: bottom!important;*/
+    text-shadow:none;
+}
+.layerdisplay-title {
+    margin: 0px 0px 0px 0px!important;    
+}
+.ui-checkbox.ui-mini {
+margin: 0 0 0 0;
 }
 
 #themepanel .ui-title {
@@ -505,7 +512,7 @@ code {
     position: absolute;
     top: 20px;
     /*overflow:visible;*/
-    right: -27px;
+    right: -28px;
     /*width: 25px;
     height: 30px;*/
     margin: 0 0 !important;
