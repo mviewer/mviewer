@@ -205,7 +205,7 @@ p.center { text-align: center; }
 
 #sharepanel {
 	min-width: 300px;
-	min-height: 270px;
+	min-height: 300px;
 }
 
 #share h3 {
