@@ -1,6 +1,4 @@
 ﻿mviewer
 =============
 
-Visualiseur géographique basé sur OpenLayers et Jquery mobile inspiré d'un travail réalisé par Metz Métropole.
-
-Bonjour
+Visualiseur géographique basé sur OpenLayers 3 beta1 et Jquery mobile 1.4.0 inspiré d'un travail réalisé par Metz Métropole.
