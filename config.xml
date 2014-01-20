@@ -131,7 +131,17 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Région Bretagne" 
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=77f8fc52-ae57-41d1-8f08-7b121b013f51"
 				metadata="http://geobretagne.fr/geonetwork/srv/fr/main.home?uuid=77f8fc52-ae57-41d1-8f08-7b121b013f51" />	
-        </theme>			
+        </theme>
+        <theme name="Sites régionaux"  collapsed="true" id="sites"> 
+            <layer id="sites_region" name="Sites région" scalemin="0" scalemax="5000000" visible="false" tiled="false" namespace="rb"
+				queryable="true" fields="nom_batiment,adresse,code_postal,ville,telephone" aliases="Batiment,Adresse,Code Postal,Ville,Téléphone"
+                infoformat="text/html" featurecount="1" 
+				url="http://kartenn.region-bretagne.fr/geoserver/rb/wms" 
+				style=""
+				attribution="Région Bretagne" 
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=a6dde882-4334-4ce0-909f-adb8597ada97"
+				metadata="http://geobretagne.fr/geonetwork/srv/fr/main.home?uuid=a6dde882-4334-4ce0-909f-adb8597ada97" />	
+        </theme>
         <theme name="Limites administratives"  collapsed="true" id="territoire">  
 			<layer id="commune_bdcarto" name="Commune" scalemin="0" scalemax="5000000" visible="false" tiled="false"
 				queryable="true" fields="COMMUNE,INSEE_COM,SUPERFICIE" aliases="Nom,Code INSEE,Superficie"
