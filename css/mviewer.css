@@ -263,6 +263,11 @@ color: #2489ce;
 /*height: 31px!important;
 vertical-align: bottom!important;*/
     text-shadow:none;
+    max-width: 199px!important;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    
 }
 .layerdisplay-title {
     margin: 0px 0px 0px 0px!important;    
