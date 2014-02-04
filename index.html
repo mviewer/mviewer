@@ -248,12 +248,13 @@ $(document).ready(function () {
 				<h1>Partager cette carte</h1>
 			</div>
 			<div data-role="content">
+                <p class="" >
+                    <a id="permalinklink" href="#" data-theme="a" data-role="button" data-mini="true" 
+                        title="lien permanent vers la carte">lien vers la carte</a>			                
+			    </p>
 				<div id='share' class="ui-block-a">					
 					<div>
-						<p class="" >
-			                <a id="permalinklink" href="#" data-theme="b" data-role="button" data-mini="true" 
-								title="lien permanent vers la carte">lien vers la carte</a>
-			                <br>
+						<p class="" >			                
 							<img id="permaqr" src="img/loading.gif" title="QR code vers la carte" alt="QR code" />
 			            </p>
 					</div>					
@@ -263,8 +264,7 @@ $(document).ready(function () {
                     <input type="hidden" id="georchestraFormData" name="data" value="" />
                     <input type="submit" data-role="button" data-mini="true" data-iconpos="right" value="geOrchestra" />
                 </form>
-				<div id="simpleshare" class="ui-block-b">				
-					<h3>Partager !</h3>
+				<div id="simpleshare" class="ui-block-b">					
 					<div id="shareeasy"></div>
 				</div>                
 			</div>

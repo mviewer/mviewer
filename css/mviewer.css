@@ -69,7 +69,8 @@ label.error {
 .easyShareContent ul li a {font-weight:bold}
 .easyShareContent ul li a:hover {background:#a60000;color:#fff}
 .easyShareBox {padding-left: 0px !important;display:block;list-style:none;overflow:hidden;}
-.easyShareBox li {float:left;margin:0 5px}
+/*.easyShareBox li {float:left;margin:0 5px}*/
+.easyShareBox li {margin:0 5px}
 
 p.center { text-align: center; }
 
@@ -204,7 +205,8 @@ p.center { text-align: center; }
 }
 
 #sharepanel {
-	min-width: 300px;
+	/*min-width: 300px;*/
+    width:250px;
 	min-height: 300px;
 }
 
@@ -213,7 +215,7 @@ p.center { text-align: center; }
 }
 
 #simpleshare {
-	width: 300px;
+	width: 80px;
 	padding-left: 20px;
 }
 
