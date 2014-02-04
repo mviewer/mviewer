@@ -70,7 +70,7 @@ label.error {
 .easyShareContent ul li a:hover {background:#a60000;color:#fff}
 .easyShareBox {padding-left: 0px !important;display:block;list-style:none;overflow:hidden;}
 /*.easyShareBox li {float:left;margin:0 5px}*/
-.easyShareBox li {margin:0 5px}
+.easyShareBox li {margin:5px 10px}
 
 p.center { text-align: center; }
 
@@ -207,7 +207,7 @@ p.center { text-align: center; }
 #sharepanel {
 	/*min-width: 300px;*/
     width:250px;
-	min-height: 300px;
+	min-height: 275px;
 }
 
 #share h3 {
@@ -316,7 +316,8 @@ font-size: 20px;
 
 .ol-attribution {
     right: 200px!important;
-    background: rgba(51,51,51,0.5)!important;
+    /*background: rgba(51,51,51,0.5)!important;*/
+    background: none;
     text-shadow: none;
 }
 
@@ -562,6 +563,11 @@ code {
 
 #panel-header {
     overflow: visible;
+}
+
+#permaqr {
+-moz-border-radius: 10px;
+border-radius: 10px;
 }
 
 .ui-collapsible-content.ui-body-a {
