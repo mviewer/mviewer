@@ -322,6 +322,10 @@ font-size: 20px;
     text-shadow: 0 0 0.2em #000, 0 0 0.2em #000, 0 0 0.2em #000;
 }
 
+.ol-attribution  a{
+text-shadow: 0 0 0.2em #fff, 0 0 0.2em #fff, 0 0 0.2em #fff;
+}
+
 .ol-attribution a:hover {
     color: #ffffff;
     text-shadow: 0 0 0.2em #059, 0 0 0.2em #059, 0 0 0.2em #059;
