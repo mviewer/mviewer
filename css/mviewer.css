@@ -318,7 +318,13 @@ font-size: 20px;
     right: 200px!important;
     /*background: rgba(51,51,51,0.5)!important;*/
     background: none;
-    text-shadow: none;
+    /*text-shadow: none;*/
+    text-shadow: 0 0 0.2em #000, 0 0 0.2em #000, 0 0 0.2em #000;
+}
+
+.ol-attribution a:hover {
+    color: #ffffff;
+    text-shadow: 0 0 0.2em #059, 0 0 0.2em #059, 0 0 0.2em #059;
 }
 
 .ol-scale-line {
