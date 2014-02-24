@@ -339,6 +339,11 @@ text-shadow: 0 0 0.2em #fff, 0 0 0.2em #fff, 0 0 0.2em #fff;
     border-top-left-radius: 4px;
 }
 
+.ol-attribution a {
+    color: #38C;
+    text-decoration: none;
+}
+
 .ol-scale-line-inner {
     color: #333333;
     border-color: #333333;
