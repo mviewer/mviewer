@@ -23,9 +23,12 @@ L'attribut style = "gallery" permet d'afficher les fonds de carte dans une liste
 L'attribut style = "default" permet d'afficher la liste des couches de fond sous forme d'un groupe de boutons.
 ]]>	
 	<baselayers style="gallery"><!-- style="default"||gallery" -->            		
-        <baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoBretagne" thumbgallery="img/basemap/ortho.jpg" 
+        <baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoPortail" maxscale="1000" thumbgallery="img/basemap/ortho.jpg"
+            url="http://gpp3-wxs.ign.fr/5kiwvtkb2v23y0x8chidxbij/wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" format="image/jpeg" visible="false" fromcapacity="true"
+            attribution="&lt;a href='http://www.geoportail.fr/' target='_blank'>&lt;img src='http://api.ign.fr/geoportail/api/js/latest/theme/geoportal/img/logo_gp.gif'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
+        <!--<baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoBretagne" thumbgallery="img/basemap/ortho.jpg" 
             url="http://tile.geobretagne.fr/gwc02/service/wmts" layers="satellite" format="image/png" visible="false"
-            attribution="&lt;a href='http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=3a0ac2e3-7af1-4dec-9f36-dae6b5a8c731' target='_blank' >partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver&lt;/a>" style="_null" matrixset="EPSG:3857" fromcapacity="false"/>
+            attribution="&lt;a href='http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=3a0ac2e3-7af1-4dec-9f36-dae6b5a8c731' target='_blank' >partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver&lt;/a>" style="_null" matrixset="EPSG:3857" fromcapacity="false"/>-->
         <baselayer  type="WMS" id="photo2" label="Photo aérienne 1950" title="GéoBretagne" thumbgallery="img/basemap/ortho-ancien.jpg" 
 			url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite-ancien" format="image/jpeg" visible="false" 
 			attribution="&lt;a href='http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=048622c5-b333-4c2b-94ec-40a41608dc06' target='_blank' >Partenaires GéoBretagne - IGN&lt;/a>"/>      
@@ -147,7 +150,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				queryable="true" fields="COMMUNE,INSEE_COM,SUPERFICIE" aliases="Nom,Code INSEE,Superficie"
                 infoformat="text/html" featurecount="1"                
 				style="commune_region" 
-				url="http://geobretagne.fr/geoserver/bzh/wms" 
+				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
 				attribution="IGN - BDCARTO" 
 				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=b08e6cb1-236c-49b7-88f9-42b500d274d5"
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=b08e6cb1-236c-49b7-88f9-42b500d274d5" />			
@@ -155,7 +158,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				queryable="true" fields="NOM_EPCI,SIREN_EPCI" aliases="Nom,SIREN"
                 infoformat="text/html" featurecount="1"
 				style="epci_region" 
-				url="http://geobretagne.fr/geoserver/bzh/wms" 
+				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
 				attribution="GéoBretagne" 
 				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=2298d744-49cb-4fcb-9487-26f916fecdff" 
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=2298d744-49cb-4fcb-9487-26f916fecdff" />			
@@ -163,7 +166,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				queryable="true" fields="LIBELLE" aliases="Nom"
                 infoformat="text/html" featurecount="1"             
 				style="pays_region" 
-				url="http://geobretagne.fr/geoserver/bzh/wms" 
+				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
 				attribution="GéoBretagne" 
 				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=9722d181-75f9-40ab-a136-a9f9ed6f29a5" 
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=9722d181-75f9-40ab-a136-a9f9ed6f29a5" />
@@ -171,7 +174,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				queryable="true" fields="NOM_PAYS" aliases="Nom"
                 infoformat="text/html" featurecount="1"
 				style="" 
-				url="http://geobretagne.fr/geoserver/bzh/wms" 
+				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
 				attribution="IGN - BDCARTO" 
 				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=e16d50d4-746d-44e3-a5e7-5fc000f97665" 
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=e16d50d4-746d-44e3-a5e7-5fc000f97665" />
