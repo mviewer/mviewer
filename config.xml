@@ -24,7 +24,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 ]]>	
 	<baselayers style="gallery"><!-- style="default"||gallery" -->            		
         <baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoPortail" maxscale="1000" thumbgallery="img/basemap/ortho.jpg"
-            url="../cgi-bin/wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" format="image/jpeg" visible="false" fromcapacity="false"
+            url="../wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" format="image/jpeg" visible="false" fromcapacity="false"
             attribution="&lt;a href='http://www.geoportail.fr/' target='_blank'>&lt;img src='http://api.ign.fr/geoportail/api/js/latest/theme/geoportal/img/logo_gp.gif'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
         <!--<baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoBretagne" thumbgallery="img/basemap/ortho.jpg" 
             url="http://tile.geobretagne.fr/gwc02/service/wmts" layers="satellite" format="image/png" visible="false"
@@ -42,13 +42,12 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 			url="http://{a-d}.tile.stamen.com/toner-lite/{z}/{x}/{y}.png" maxzoom="20" 
 			visible="false" attribution="Map tiles by  &lt;a href='http://stamen.com/'>Stamen Design &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />		  
         <baselayer  type="WMTS" id="scan2" label="Cartes IGN" title="GéoPortail" maxscale="2000" thumbgallery="img/basemap/scan.jpg"
-            url="../cgi-bin/wmts" layers="GEOGRAPHICALGRIDSYSTEMS.MAPS" format="image/jpeg" visible="false" fromcapacity="false"
+            url="../wmts" layers="GEOGRAPHICALGRIDSYSTEMS.MAPS" format="image/jpeg" visible="false" fromcapacity="false"
             attribution="&lt;a href='http://www.geoportail.fr/' target='_blank'>&lt;img src='http://api.ign.fr/geoportail/api/js/latest/theme/geoportal/img/logo_gp.gif'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
     </baselayers>    
-    <!--<proxy url="../cgi-bin/proxy.cgi?url="/>-->
     <proxy url="../proxy/?url="/>
     <!--<olscompletion url="http://gpp3-wxs.ign.fr/5kiwvtkb2v23y0x8chidxbij/ols/apis/completion"/>-->
-    <olscompletion url="http://kartensig/olscompletion"/>
+    <olscompletion url="../olscompletion"/>
 	<widgets>
        <!--<widget name="gauge"/>-->       
     </widgets> 
