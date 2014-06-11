@@ -170,7 +170,33 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Région Bretagne" 
 				metadata-csw="http://applications.region-bretagne.fr/geosource/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=a6dde882-4334-4ce0-909f-adb8597ada97"
 				metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=a6dde882-4334-4ce0-909f-adb8597ada97" />	
-        </theme>        
+        </theme>
+        <theme name="Cadastre"  collapsed="true" id="cadastre">  
+			<layer id="CP.CadastralBuilding" name="Bâti" scalemin="0" scalemax="25000" visible="false" tiled="true"
+				queryable="false" fields="" aliases=""
+                infoformat="application/vnd.ogc.gml" featurecount="1"                
+				style="cadastre_bati" 
+				url="http://geobretagne.fr/geoserver/cadastre/wms" 
+				attribution="DGFIP" 
+				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=0ca82e1d-b487-4879-8185-56b7c4e1a948"
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0ca82e1d-b487-4879-8185-56b7c4e1a948" />	
+            <layer id="CP.CadastralParcel" name="Parcelle cadastrale" scalemin="0" scalemax="50000" visible="false" tiled="true"
+				queryable="true" fields="label,nom_commune,areavalue" aliases="Parcelle,Commune,Surface"
+                infoformat="application/vnd.ogc.gml" featurecount="1"             
+				style="CP.CadastralParcel.Default" 
+				url="http://geobretagne.fr/geoserver/cadastre/wms" 
+				attribution="DGFIP" 
+				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=0ca82e1d-b487-4879-8185-56b7c4e1a948" 
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0ca82e1d-b487-4879-8185-56b7c4e1a948" />
+			<layer id="CP.CadastralZoning" name="Sections" scalemin="0" scalemax="50000" visible="false" tiled="true"
+				queryable="true" fields="label,nom_commune" aliases="Section,Commune"
+                infoformat="application/vnd.ogc.gml" featurecount="1"
+				style="CP.CadastralZoning.Default" 
+				url="http://geobretagne.fr/geoserver/cadastre/wms" 
+				attribution="DGFIP" 
+				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=0ca82e1d-b487-4879-8185-56b7c4e1a948" 
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0ca82e1d-b487-4879-8185-56b7c4e1a948" />                        
+        </theme>
         <theme name="Limites administratives"  collapsed="true" id="territoire">  
 			<layer id="commune_bdcarto" name="Commune" scalemin="0" scalemax="50000000" visible="false" tiled="false"
 				queryable="true" fields="COMMUNE,INSEE_COM,SUPERFICIE" aliases="Nom,Code INSEE,Superficie"
