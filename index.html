@@ -2,12 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr-fr" lang="fr-fr" dir="ltr" >
 <head>
 	<title>Kartenn</title>	
+
+<!-- Une instruction pour forcer IE à aller vers le mode de compatibilité le plus élevé -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />	
 	<meta name="description" content="Visualiseur géographique de la Région Bretagne" /> 
 	
-	<link rel="icon" type="image/png" href="favicon.png" />	
+	<link rel="icon" type="image/png" href="img/kartenn.png" />	
 	<link rel="stylesheet" href="lib/jquery/mobile/1.4.0/jquery.mobile-1.4.0.min.css" type="text/css" />
 	<link rel="stylesheet" href="lib/openlayers/3/ol.css" type="text/css" />	
 	<link rel="stylesheet" href="css/mviewer.css" type="text/css" />
@@ -22,16 +26,14 @@
 			$.mobile.ajaxEnabled = false;			
 	        $.mobile.hashListeningEnabled = false;			
         });
-    </script>
+    	</script>
 	<script type="text/javascript" src="lib/jquery/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>	
 	<script type="text/javascript" src="lib/openlayers/3/ol.js"></script>    
 	<script type="text/javascript" src="lib/jquery/base/plugins/scrollbar/jquery.mousewheel.js"></script>
 	<script type="text/javascript" src="lib/jquery/base/plugins/scrollbar/jquery.jscrollpane.js"></script>
-	<script type="text/javascript" src="lib/jquery/base/plugins/xml2json/jquery.xml2json.js"></script>
 	<script type="text/javascript" src="lib/jquery/base/plugins/validate/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="lib/jquery/base/plugins/easyshare/jquery.easyShare.js"></script>    	
 	<script type="text/javascript" src="lib/jquery.extend.js"></script>    
-	<!--<script type="text/javascript" src="dist/m.js"></script>-->
 	<script type="text/javascript" src="lib/jqm-templates.js"></script>
 	<script type="text/javascript" src="lib/mviewer.js"></script>
 				
@@ -40,26 +42,27 @@ var config = {};
 var widgets = {};
 $("#main").fadeOut();
 $(document).ready(function () {
-	"use strict";	
+    "use strict";	
     $.mobile.loading('show', {
-        text: 'Chargement de Kartenn.',
-		textonly: true,
+        text: 'Chargement de Kartenn',
+	textonly: true,
         textVisible: true,
         theme: 'b',        
-		html: ''
+	html: ''
     });
 	
-	if (window.location.search) {
-		$.extend(config, $.parseJSON('{"' + decodeURIComponent(window.location.search.substring(1)
-			.replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}'));    
-	}
-    var configFile = (config.config) ? config.config : "config.xml";
+    if (window.location.search) {
+	$.extend(config, $.parseJSON('{"' + decodeURIComponent(window.location.search.substring(1)
+		.replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}'));    
+    }
+    /* Un fichier de config par défaut */
+    if (!(config.config)) $.extend(config,$.parseJSON('{"config" : "config/default.xml"}'));
 
     $.ajax({
-        url: configFile + '?_dc=' + $.getTime(),
+        url: config.config + '?_dc=' + $.getTime(),
         dataType: "xml",
         success: function (xml) {
-            var map = mviewer.init(xml);            
+            var map = mviewer.init(xml);
             setTimeout(function () {
                 $.mobile.loading('hide');
                 $("#main").css("opacity", 1).hide();
@@ -69,18 +72,17 @@ $(document).ready(function () {
             $( "#map" ).focus();
         }, // fin success config
         error: function (request, status, error) {
-            $.mobile.loading('hide');			
-			alert("Fichier de configuration : " + configFile + " non trouvé ou incorrect !");	           
+            $.mobile.loading('hide');
+            alert("Fichier de configuration : " + config.config + " non trouvé ou incorrect !");
         }
     });
-
 });
 </script>  
 </head>
 <body>
 	<div id="description">
 		<h1>Middle viewer</h1>
-		<p>Portail cartographique de la Région Bretagne - Plans et cartes interactifs</p>
+		<p>Portail cartographique de la Lorient agglom&eacute;ration - Plans et cartes interactifs</p>
 	</div>    
 	<div id="main" data-role="page" style="opacity: 0;">		
 		<!-- THEME PANEL LEFT OVERLAY  -->
@@ -100,7 +102,7 @@ $(document).ready(function () {
 			<div id="datalist" data-role="collapsible-set" data-theme="b" data-content-theme="a" data-inset="false" ></div>				
             <div id="panel-footer">
                 <div id="mentionstoolbar">
-                    <a href="http://kartenn.region-bretagne.fr/mviewer/aide_kartenn.pdf"  
+                    <a href="https://docs.google.com/document/d/1HaYqUaLzKJwo68DJ5qtYyiunnMue9YtcgZZxu7tIumA/edit?usp=sharing"  
                         title="Aide à l'utilisation" target="_blank" >Aide</a> | 
                     <a href="#legalpanel" data-rel="popup" data-position-to="window" 
                         title="Mentions Légales">Mentions légales</a> | 

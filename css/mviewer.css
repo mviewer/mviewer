@@ -1,4 +1,4 @@
-html, body {
+﻿html, body {
 	width: 100%;
 	height: 100%;
 	margin: 0;
@@ -82,7 +82,7 @@ p.center { text-align: center; }
 }
 
 #backgroundlayerstoolbar {
-	bottom: 30px;
+	bottom: 3px;
 	right: 50px;
 	float: right;
 	position: fixed;
@@ -314,9 +314,11 @@ font-size: 20px;
 	top: 3px;
 }
 
-/*.ol-attribution {
-    right: 200px!important;    
-    background: none;   
+.ol-attribution {
+    right: 200px!important;
+    /*background: rgba(51,51,51,0.5)!important;*/
+    background: none;
+    /*text-shadow: none;*/
     text-shadow: 0 0 0.2em #000, 0 0 0.2em #000, 0 0 0.2em #000;
 }
 
@@ -331,26 +333,6 @@ text-shadow: 0 0 0.2em #fff, 0 0 0.2em #fff, 0 0 0.2em #fff;
 
 .ol-scale-line {
     background: rgba(51,51,51,0.5)!important;
-}*/
-
-.ol-attribution {
-    color: #333333;
-    background-color: rgba(255,255,255,0.7);
-    border-top-left-radius: 4px;
-}
-
-.ol-attribution a {
-    color: #38C;
-    text-decoration: none;
-}
-
-.ol-scale-line-inner {
-    color: #333333;
-    border-color: #333333;
-}
-
-.ol-scale-line {
-    background-color: rgba(255,255,255,0.7);
 }
 
 #searchtool input:hover,#searchtool input:focus,#searchtool input:active{    
