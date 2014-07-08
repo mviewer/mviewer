@@ -54,10 +54,14 @@ $(document).ready(function () {
 		$.extend(config, $.parseJSON('{"' + decodeURIComponent(window.location.search.substring(1)
 			.replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}'));    
 	}
-    var configFile = (config.config) ? config.config : "config/default.xml";
+    /* Un fichier de config par défaut */
+    if (!(config.config)) $.extend(config,$.parseJSON('{"config" : "config/default.xml"}'));
+
+    /* Un style par défaut pour le panneau des fonds de plan */
+    if (!(config.blstyle)) $.extend(config,$.parseJSON('{"blstyle" : "config"}'));
 
     $.ajax({
-        url: configFile + '?_dc=' + $.getTime(),
+        url: config.config + '?_dc=' + $.getTime(),
         dataType: "xml",
         success: function (xml) {
             var map = mviewer.init(xml);            
@@ -71,7 +75,7 @@ $(document).ready(function () {
         }, // fin success config
         error: function (request, status, error) {
             $.mobile.loading('hide');			
-			alert("Fichier de configuration : " + configFile + " non trouvé ou incorrect !");	           
+			alert("Fichier de configuration : " + config.config + " non trouvé ou incorrect !");	           
         }
     });
 
@@ -98,7 +102,13 @@ $(document).ready(function () {
 				<div class="ui-block-b"><img src="img/rose_vents.png" style="float: right;" alt="Nord de la carte" onclick="$('#themepanel').panel('close');"/></div>
 			</div>
 			<br>
-			<div id="datalist" data-role="collapsible-set" data-theme="b" data-content-theme="a" data-inset="false" ></div>				
+			<div data-role="navbar" id='tab_selec_mixed'>
+				<ul>
+				  <li><a href="javascript:;" id='myButtonFond' onclick="document.getElementById('datalist').style.display = 'none';  document.getElementById('holderRep').style.display = 'block';  return false;" >Fond de plan</a></li>
+				  <li><a href="javascript:;" id='myButtonTheme' onclick="document.getElementById('datalist').style.display = 'block';  document.getElementById('holderRep').style.display = 'none';  return false;" >Thématiques</a></li>
+				</ul>
+			</div>
+			<div id='holderRep' data-role="collapsible-set" data-theme="b" data-position-fixed="true" data-content-theme="a" data-inset="false"  style="display : none;"></div>			<div id="datalist" data-role="collapsible-set" data-theme="b" data-content-theme="a" data-inset="false" ></div>				
             <div id="panel-footer">
                 <div id="mentionstoolbar">
                     <a href="http://kartenn.region-bretagne.fr/mviewer/doc/aide_kartenn.pdf"  
@@ -134,7 +144,7 @@ $(document).ready(function () {
 			<ul id="searchresults" data-role="listview" data-inset="true" data-mini="true" data-theme="b" 
 				data-type="vertical"></ul>
 		</div>
-		<div id="backgroundlayerstoolbar"  data-mini="true" data-theme="b" >			
+		<div id="backgroundlayerstoolbar"  style='display:none;' data-mini="true" data-theme="b" >			
 		</div>				
 		<!-- VERTICAL LEFT TOOLBAR -->
 		<div id="zoomtoolbar" data-role="controlgroup" data-mini="true">
