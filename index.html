@@ -53,7 +53,7 @@ $(document).ready(function () {
 		$.extend(config, $.parseJSON('{"' + decodeURIComponent(window.location.search.substring(1)
 			.replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}'));    
 	}
-    var configFile = (config.config) ? config.config : "config.xml";
+    var configFile = (config.config) ? config.config : "config/default.xml";
 
     $.ajax({
         url: configFile + '?_dc=' + $.getTime(),
@@ -100,7 +100,7 @@ $(document).ready(function () {
 			<div id="datalist" data-role="collapsible-set" data-theme="b" data-content-theme="a" data-inset="false" ></div>				
             <div id="panel-footer">
                 <div id="mentionstoolbar">
-                    <a href="http://kartenn.region-bretagne.fr/mviewer/aide_kartenn.pdf"  
+                    <a href="http://kartenn.region-bretagne.fr/mviewer/doc/aide_kartenn.pdf"  
                         title="Aide à l'utilisation" target="_blank" >Aide</a> | 
                     <a href="#legalpanel" data-rel="popup" data-position-to="window" 
                         title="Mentions Légales">Mentions légales</a> | 
