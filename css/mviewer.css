@@ -669,6 +669,7 @@ border-radius: 10px;
                 right : 10px;
                 bottom : 60px;
                 width : 350px;
+                z-index:1500;
 }
 #holderRep{
                 overflow-y : auto;
