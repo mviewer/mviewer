@@ -60,6 +60,9 @@ $(document).ready(function () {
     /* Un style par défaut pour le panneau des fonds de plan */
     if (!(config.blstyle)) $.extend(config,$.parseJSON('{"blstyle" : "config"}'));
 
+    /* Un controle global sur l'affichage des légendes */
+    if (!(config.legend)) $.extend(config,$.parseJSON('{"legend" : "true"}'));
+
     $.ajax({
         url: config.config + '?_dc=' + $.getTime(),
         dataType: "xml",

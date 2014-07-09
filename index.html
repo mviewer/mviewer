@@ -14,16 +14,15 @@
 	<link rel="stylesheet" href="css/mviewer.css" type="text/css" />
 	<link rel="stylesheet" href="css/mobile-panel-size.less.css" type="text/css" />
 	<link rel="stylesheet" href="lib/jquery/base/plugins/scrollbar/jquery.jscrollpane.css" type="text/css" media="all" />	
-
 	<script type="text/javascript" src="lib/proj4js/1.1.0/proj4js-compressed.js"></script>	
 	<script type="text/javascript" src="lib/jquery/base/1.10.2/jquery-1.10.2.min.js"></script>
 	<script>
         $(document).bind("mobileinit", function(){
-			// no hashchange in url needed par the API       
-			$.mobile.ajaxEnabled = false;			
+		// no hashchange in url needed par the API       
+		$.mobile.ajaxEnabled = false;			
 	        $.mobile.hashListeningEnabled = false;			
         });
-    </script>
+        </script>
 	<script type="text/javascript" src="lib/jquery/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>	
 	<script type="text/javascript" src="lib/openlayers/3/ol.js"></script>    
 	<script type="text/javascript" src="lib/jquery/base/plugins/scrollbar/jquery.mousewheel.js"></script>
@@ -32,7 +31,6 @@
 	<script type="text/javascript" src="lib/jquery/base/plugins/validate/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="lib/jquery/base/plugins/easyshare/jquery.easyShare.js"></script>    	
 	<script type="text/javascript" src="lib/jquery.extend.js"></script>    
-	<!--<script type="text/javascript" src="dist/m.js"></script>-->
 	<script type="text/javascript" src="lib/jqm-templates.js"></script>
 	<script type="text/javascript" src="lib/mviewer.js"></script>
 				
@@ -41,13 +39,13 @@ var config = {};
 var widgets = {};
 $("#main").fadeOut();
 $(document).ready(function () {
-	"use strict";	
+    "use strict";	
     $.mobile.loading('show', {
         text: 'Chargement de Kartenn.',
-		textonly: true,
+	textonly: true,
         textVisible: true,
         theme: 'b',        
-		html: ''
+	html: ''
     });
 	
 	if (window.location.search) {
@@ -59,6 +57,9 @@ $(document).ready(function () {
 
     /* Un style par défaut pour le panneau des fonds de plan */
     if (!(config.blstyle)) $.extend(config,$.parseJSON('{"blstyle" : "config"}'));
+
+    /* Un controle global sur l'affichage des légendes */
+    if (!(config.legend)) $.extend(config,$.parseJSON('{"legend" : "true"}'));
 
     $.ajax({
         url: config.config + '?_dc=' + $.getTime(),
