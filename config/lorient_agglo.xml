@@ -57,21 +57,21 @@
     <themes>
         <theme name="Collecte"  id="collecte" collapsed="true">
             <layer id="collecte_bio" name="Collecte Poubelle Verte" scalemin="0" scalemax="200000" visible="false"
-                queryable="false" fields="" aliases=""
+                queryable="true" fields="" aliases=""
                 style=""
                 url="http://geoservices.lorient-agglo.fr/wms"
                 attribution="Lorient Agglomération"
                 metadata-local="http://geoservices.lorient-agglo.fr/mviewer/metadata/collecte.tmpl" />
 				
             <layer id="collecte_emb" name="Collecte Poubelle Jaune" scalemin="0" scalemax="200000" visible="false"
-		queryable="false" fields="" aliases=""
+		queryable="true" fields="" aliases=""
                 style=""
                 url="http://geoservices.lorient-agglo.fr/wms"
                 attribution="Lorient Agglomération"
                 metadata-local="http://geoservices.lorient-agglo.fr/mviewer/metadata/collecte.tmpl" />
 
             <layer id="collecte_dmr" name="Collecte Poubelle Bleue" scalemin="0" scalemax="200000" visible="false"
-                queryable="false" fields="" aliases=""
+                queryable="true" fields="" aliases=""
                 style=""
                 url="http://geoservices.lorient-agglo.fr/wms"
                 attribution="Lorient Agglomération"
