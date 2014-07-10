@@ -683,6 +683,7 @@ border-radius: 10px;
                 padding-right : 3px;
                 bottom : 60px;
                 width : 356px;
+                z-index:1500;
 }
 #panel-footer{
                 position : fixed; 
