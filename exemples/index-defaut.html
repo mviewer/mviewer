@@ -53,7 +53,7 @@ $(document).ready(function () {
 			.replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}'));    
 	}
     /* Un fichier de config par défaut */
-    if (!(config.config)) $.extend(config,$.parseJSON('{"config" : "config/default.xml"}'));
+    if (!(config.config)) $.extend(config,$.parseJSON('{"config" : "../config/default.xml"}'));
 
     /* Un style par défaut pour le panneau des fonds de plan */
     if (!(config.blstyle)) $.extend(config,$.parseJSON('{"blstyle" : "config"}'));
@@ -208,7 +208,7 @@ $(document).ready(function () {
 		<!-- IMAGE POPUP -->
 		<div data-role="popup" id="imagepopup" data-overlay-theme="a" data-theme="d" data-corners="false" data-transition="flip" data-history="false">
             <a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
-			<img class="popphoto" src="img/blank.gif" style="max-height:512px;" alt="image">
+			<img class="popphoto" src="../img/blank.gif" style="max-height:512px;" alt="image">
         </div>
 		<!-- LEGAL PANEL -->
 		<div id="legalpanel" data-role="popup" data-theme="b">
@@ -261,7 +261,7 @@ $(document).ready(function () {
 				<div id='share' class="ui-block-a">					
 					<div>
 						<p class="" >			                
-							<img id="permaqr" src="img/loading.gif" title="QR code vers la carte" alt="QR code" />
+							<img id="permaqr" src="../img/loading.gif" title="QR code vers la carte" alt="QR code" />
 			            </p>
 					</div>					
 				</div>
