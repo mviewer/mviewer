@@ -55,6 +55,25 @@
     </widgets> 
 
     <themes>
+        <theme name="Formation"  id="formation" collapsed="true">
+            <layer id="lycee_rb" name="Lycée" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+                                queryable="true" fields="nom,photo,libelle,secteur_li,reseau_lib" aliases="Nom,Photo,Commune,Secteur,Réseau"
+                infoformat="application/vnd.ogc.gml" featurecount="1"
+                                style=""
+                                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+                                attribution="Région Bretagne"
+                                metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25"
+                                metadata-csw="http://applications.region-bretagne.fr/geosource/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25" />
+                        <layer id="site_cfa_rb" name="Centre de formation d'apprentis" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+                                queryable="true" fields="cfa,site_adr1,site_cp,site_ville,site_inter" aliases="Nom,Adresse,CP,Ville, Site Web"
+                infoformat="text/html" featurecount="2"
+                                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+                                style=""
+                                attribution="Région Bretagne"
+                                metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=f713de6d-1269-40b2-8bd4-3704c106fde6"
+                                metadata-csw="http://applications.region-bretagne.fr/geosource/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=f713de6d-1269-40b2-8bd4-3704c106fde6" />                   
+        </theme>
+
         <theme name="Collecte"  id="collecte" collapsed="true">
             <layer id="collecte_bio" name="Collecte Poubelle Verte" scalemin="0" scalemax="200000" visible="false"
                 queryable="true" fields="" aliases=""

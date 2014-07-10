@@ -36,20 +36,9 @@
 	<script type="text/javascript" src="lib/jqm-templates.js"></script>
 	<script type="text/javascript" src="lib/mviewer.js"></script>
 
-<!--
---
---     Grâce à ce commentaire, je peux cumuler les deux comportements
---     * si la seule couche active est une couche pour laquelle il existe
---     un Hook, alors c'est lui qui sera lancé
---     * si aucune couche avec Hook n'est active, on a le comprtement par défaut
---     c'est à dire qu'on lance un getFeatureInfo sur la couche
---     si on a un mix des deux, le comportement dépend de l'ordre des layers
---
---     Si on enlève le commentaire, on inhibte le comportement par défaut
---     les layers qui n'ont pas de Hook basculent vers une Hook par défaut
----->
-<!--        <script type="text/javascript" src="lib/Hooks/LA_Hook_Defaut.js"></script> -->
+        <script type="text/javascript" src="lib/Hooks/LA_Hook_Defaut.js"></script>
         <script type="text/javascript" src="lib/Hooks/LA_Hook_Collecte.js"></script>
+
 				
 <script type="text/javascript">
 var config = {};
