@@ -14,3 +14,16 @@
 .ui-checkbox-on:after,.ui-btn.ui-checkbox-on.ui-btn-b:after,.ui-page-theme-b .ui-flipswitch-active,html .ui-bar-b .ui-flipswitch-active,html .ui-body-b .ui-flipswitch-active,html body .ui-group-theme-b .ui-flipswitch-active,html body .ui-flipswitch.ui-bar-b.ui-flipswitch-active,.ui-page-theme-b .ui-slider-track .ui-btn-active,html .ui-bar-b .ui-slider-track .ui-btn-active,html .ui-body-b .ui-slider-track .ui-btn-active,html body .ui-group-theme-b .ui-slider-track .ui-btn-active,html body div.ui-slider-track.ui-body-b .ui-btn-active{background-color:#2ad;border-color:#2ad;color:#fff;text-shadow:0 1px 0 #08b}
 .ui-page-theme-b .ui-radio-on:after,html .ui-bar-b .ui-radio-on:after,html .ui-body-b .ui-radio-on:after,html body .ui-group-theme-b .ui-radio-on:after,.ui-btn.ui-radio-on.ui-btn-b:after{border-color:#2ad}
 .ui-page-theme-b .ui-btn:focus,html .ui-bar-b .ui-btn:focus,html .ui-body-b .ui-btn:focus,html body .ui-group-theme-b .ui-btn:focus,html head+body .ui-btn.ui-btn-b:focus,.ui-page-theme-b .ui-focus,html .ui-bar-b .ui-focus,html .ui-body-b .ui-focus,html body .ui-group-theme-b .ui-focus,html head+body .ui-btn-b.ui-focus,html head+body .ui-body-b.ui-focus{-webkit-box-shadow:0 0 0 #2ad;-moz-box-shadow:0 0 0 #2ad;box-shadow:0 0 0 #2ad}
+#basemapslist .ui-btn-icon-left:after, 
+#basemapslist .ui-btn-icon-right:after, 
+#basemapslist .ui-btn-icon-top:after, 
+#basemapslist .ui-btn-icon-bottom:after, 
+#basemapslist .ui-btn-icon-notext:after {
+    background-color: rgba(0, 0, 0, 0);
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-radius: 1em;
+}
+#basemapslist .ui-icon-carat-r:after {
+    background-image: none;
+}
