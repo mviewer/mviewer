@@ -1,4 +1,4 @@
-ï»¿mviewer
+mviewer
 =============
 
-Visualiseur gÃ©ographique basÃ© sur OpenLayers 3 beta1 et Jquery mobile 1.4.0 inspirÃ© d'un travail rÃ©alisÃ© par Metz MÃ©tropole.
+Visualiseur géographique basé sur OpenLayers 3.0.0 et Jquery mobile 1.4.0 inspiré d'un travail réalisé par Metz Métropole.
