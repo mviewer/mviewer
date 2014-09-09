@@ -1,4 +1,4 @@
 mviewer
 =============
 
-Visualiseur géographique basé sur OpenLayers 3.0.0 et Jquery mobile 1.4.0 inspiré d'un travail réalisé par Metz Métropole.
+Visualiseur gÃ©ographique [Kartenn](http://kartenn.region-bretagne.fr/mviewer/) basÃ© sur OpenLayers 3.0.0 et Jquery mobile 1.4.0 inspirÃ© d'un travail rÃ©alisÃ© par Metz MÃ©tropole.
