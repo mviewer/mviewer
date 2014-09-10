@@ -20,9 +20,10 @@
     Faites l'extraction via la commande "<b><i>git clone https://github.com/loragglo/mviewer</i></b>".<br>
     <br>Vous devez disposer d'un serveur WEB, avec un moteur PHP si vous souhaitez mettre en oeuvre notre fichier pour la mise en oeuvre d'un proxy. Pas besoin de base de données.La suite de mon tuto suppose que vous êtes sous apache, mais cela peut s'adapter à tout autre contexte avec très peu de modification.
  
-    <br>Vous devez éventuellement connaître le paramétrgae de votre proxy sortant pour permettre à votre application de se connecter à d'autres serveurs.
+    <br>Vous devez éventuellement connaître le paramétrage de votre proxy sortant pour permettre à votre application de se connecter à d'autres serveurs.
     <br>Vous devez disposer d'un nom de domaine.
-    <br>Pour que la localisation sur adresse fonctionne, vous devez disposer d'une clé IGN vous permettant de vous connecter à leur service OLS. Et non ... ma clé ne foncitonnera pas avec votre nom de domaine ...
+    <br>Pour que la localisation sur adresse fonctionne, vous devez disposer d'une clé IGN vous permettant de vous connecter à leur service OLS. <br>
+    Et : NON ... ma clé ne fonctionnera pas avec votre nom de domaine ...
 
     <br>Quelques notions sur les technos WEB sont nécessaires : feuilles de style, javascript, php (un tout petit peu).
     
@@ -33,8 +34,8 @@
     Téléchargez mon archive et décompressez-là à la racine de votre serveur WEB.<br>
     <br>Lancez un navigateur à l'adresse http://VOTRE_DOMAINE/mviewer.<br>
     Vous devez voir s'afficher ... la version classique du mviewer !<br>
-    Comme <a target="demo" href="mviewer/index.html">ceci</a><br>
-    <br>En plus, il y a sûrement des choses qui ne marchent pas !<br>
+    Comme <a target="demo" href="../index.html">ceci</a><br>
+    <br>Il y a sûrement des choses qui ne marchent pas !<br>
     La localisation sur adresse par exemple...<br>
     Et l'interrogation des couches thématiques ...<br>
     Et l'accès aux métadonnées de ces couches non plus !<br>
@@ -51,23 +52,38 @@
     <li>DOMAINE :  nom de domaine de votre serveur</li>
     <li>XXX.XXX.XXX.XXX :  adresse ip de votre serveur mandataire</li>
     <li>YYYY :  port du service de proxy de votre serveur mandataire</li>
+    <li>LOCALPATH :  chemin local des fichiers sur votre serveur</li>
     </ul>
-    Placez-vous dans le dossier <b>mviewer</b><br><br>
-    Pour faire fonctionner localisation sur adresse, ouvrez le fichier <b>config.xml</b> qui se trouve dans le dossier <b>mviewer/config</b>.<br>
-    Remplacez l'expression VOTRE_CLE_IGN par la clé que vous avez récupéré en vous inscrivant sur le site de l'IGN.<br>
+    Vous pouvez bien entendu remplacer mon proxy très basique par quelque chose de plus élaboré.<br>
+    <br>
+    Placez-vous dans le dossier <b>mviewer/config</b><br>
+    Faites une copie du fichier <b>default.xml</b>.<br>
+    Chez moi, sous unix :<br>
+    <i>cp mviewer/config/default.xml mviewer/config/tutorial/etape2.xml</i><br>
+    Editez cette copie.<br>
+    Pour faire fonctionner localisation sur adresse, remplacez l'expression VOTRE_CLE_IGN par la clé que vous avez récupéré en vous inscrivant sur le site de l'IGN.<br>
+    Changez l'url de la balise <b>proxy</b> si vous disposez d'un autre script que le mien.<br>
+    Pour prendre en compte votre fichier, la premiere méthode consiste à modifier le fichier mviewer/index.hml en conséquence.<br>
+    Mais la méthode la plus souple consiste à rajouter un paramètre <b>config</b> dans votre URL.<br>
+    Comme ceci : <a target="demo" href="../index.html?config=config/tutorial/etape2.xml">index.html?config=config/tutorial/etape2.xml</a><br>
 
-    <br>Lancez un navigateur à l'adresse http://VOTRE_DOMAINE/mviewer.<br>
     C'est toujours la version classique du mviewer, mais toutes les fonctionnalités doivent marcher.<br>
-    Comme <a target="demo" href="mviewer/index.html?config=config/config_1.xml">ceci</a><br>
 
     <h3>&Eacute;tape 3 : personnalisez vos couches de données.</h3>
-    Cela se fait toutjours à partir du fichier <b>config.xml</b>.<br>
-    Editez-le.<br>
+    Cela se fait toutjours à partir du fichier de configuration xml.<br>
+    Faites une copie de ce fichier.<br>
+    Chez moi, sous unix :<br>
+    <i>cp mviewer/config/tutorial/etape2.xml mviewer/config/tutorial/etape3.xml</i><br>
+    Editez votre copie.<br>
     Dans la section <b>baselayers</b> enlevez ou rajoutez des entrées <b>baselayer</b>.<br>
     Dans la section <b>themes</b> enlevez ou rajoutez des entrées <b>theme</b>.<br>
     Dans chaque section <b>theme</b> enlevez ou rajoutez des entrées <b>layer</b>.<br>
+    Pour remplir ces lignes inspirez vous des autres balises déjà présentes.<br>
+    Vous devez savoir ce que sont des <b>flux OGC</b> : WMS, WMTS, WFS, ...<br>
+    <br>
+    Rechargez en précisant le nouveau fichier de configuration, d'autres paramétres sont possibles : <b>x</b> et <b>y</b> pour le centre de la carte, <b>z</b> pour un niveau de zoom, <b>l</b> pour forcer le layer actif, <b>lb</b> pour préciser un fond de plan actif.<br>
 
-    Par exemple moi j'ai fait <a target="demo" href="mviewer/index.html?x=-381764&y=6058271&z=12&l=Zonages&lb=ortho1&config=config%2Fconfig_2.xml">ceci</a><br>
+    Par exemple moi j'ai <a target="demo" href="../index.html?x=-374032&y=6058433&z=16&l=Zonages&lb=ortho1953&config=config/tutorial/etape3.xml">mis les zonages du PLU actuel sur la photo aérienne de 1953</a><br>
 
    <h3>&Eacute;tape 4 : passez à la version Lorient agglom&eacute;ration du mviewer.</h3>
     Je ne détaillerai pas les différentes étapes de la personnalisation de la charte graphique.<br>
@@ -75,13 +91,11 @@
     J'ai confié ce travail à ceux qui savent : notre webmaster (Emmanuel) et un développeur de la DSI (Bruno).<br>
     <i>Merci à eux ...</i><br>
     Ce que je peux dire, c'est qu'il faut surcharger des CSS, faire des logos, des images de fond, etc. et changer le fichier index.html pour prendre tout ça en compte.<br>
-    Mais le résultat est présenté dans le tutoriel avec le nom index-agglo-1.html.<br>
+    Mais le résultat est présenté dans cette version avec le nom index-agglo.html.<br>
     Libre à vous de vous en inspirer en consultant notre source.<br>
     Vous pouvez aussi nous contacter pour plus d'explication.<br> 
-    Editez le fichier index-agglo-1.html<br>
-    Remplacez la référence à mviewer.js par mviewer.agglo.js</br>
 
-    Au final cela donne <a target="demo" href="mviewer/index-agglo-1.html?x=-381764&y=6058271&z=12&l=Zonages&lb=ortho1&config=config%2Fconfig_2.xml">ceci</a>.<br>
+    Au final cela donne <a target="demo" href="../index-agglo.html?x=-381764&y=6058271&z=12&l=Zonages&lb=ortho1&config=config/lorient_agglo.xml">ceci</a>.<br>
     <br>Voilà, vous travaillez avec la version Lorient agglomération !<br><br>
     Les principaux changements :
     <ul>
@@ -111,14 +125,14 @@
     <br>De cette façon, une meême liste de couches et de fonds de plan peut être mise en forme de plusieurs façons.<br>
     Cela donne ceci : 
     <ul>
-    <li>Mode <a target="demo" href="mviewer/index-agglo-1.html?x=-381764&y=6058271&z=12&l=Zonages&lb=ortho1&config=config%2Fconfig_2.xml&blstyle=default">default</a> où le menu est une barre de boutons</li>
-    <li>Mode <a target="demo" href="mviewer/index-agglo-1.html?x=-381764&y=6058271&z=12&l=Zonages&lb=ortho1&config=config%2Fconfig_2.xml&blstyle=gallery">gallery</a> où le menu est un panneau à part '<i>repliable</i>'</li>
-    <li>Mode <a target="demo" href="mviewer/index-agglo-1.html?x=-381764&y=6058271&z=12&l=Zonages&lb=ortho1&config=config%2Fconfig_2.xml&blstyle=integrated">integrated</a> où le menu est intégré dans la liste des thèmatiques</li>
-    <li>Mode <a target="demo" href="mviewer/index-agglo-1.html?x=-381764&y=6058271&z=12&l=Zonages&lb=ortho1&config=config%2Fconfig_2.xml&blstyle=tab">tab</a> où le menu est dans le panneau, mais dans un onglet à part</li>
-    <li>Mode <a target="demo" href="mviewer/index-agglo-1.html?x=-381764&y=6058271&z=12&l=Zonages&lb=ortho1&config=config%2Fconfig_2.xml&blstyle=gallery_simple">gallery_simple</a> où le menu est seul dans le panneau. Les thématiques sont présentes mais l'utilisateur ne peut pas choisir des les activer ou pas.</li>
+    <li>Mode <a target="demo" href="../index-agglo.html?x=-381764&y=6058271&z=12&l=Zonages&lb=ortho1&config=config/lorient_agglo.xml&blstyle=default">default</a> où le menu est une barre de boutons</li>
+    <li>Mode <a target="demo" href="../index-agglo.html?x=-381764&y=6058271&z=12&l=Zonages&lb=ortho1&config=config/lorient_agglo.xml&blstyle=gallery">gallery</a> où le menu est un panneau à part '<i>repliable</i>'</li>
+    <li>Mode <a target="demo" href="../index-agglo.html?x=-381764&y=6058271&z=12&l=Zonages&lb=ortho1&config=config/lorient_agglo.xml&blstyle=integrated">integrated</a> où le menu est intégré dans la liste des thèmatiques</li>
+    <li>Mode <a target="demo" href="../index-agglo.html?x=-381764&y=6058271&z=12&l=Zonages&lb=ortho1&config=config/lorient_agglo.xml&blstyle=tab">tab</a> où le menu est dans le panneau, mais dans un onglet à part</li>
+    <li>Mode <a target="demo" href="../index-agglo.html?x=-381764&y=6058271&z=12&l=Zonages&lb=ortho1&config=config/lorient_agglo.xml&blstyle=gallery_simple">gallery_simple</a> où le menu est seul dans le panneau. Les thématiques sont présentes mais l'utilisateur ne peut pas choisir des les activer ou pas.</li>
     </ul>
-    NB : En enlevant le div adéquat dans la page HTML, il est également possible de supprimer l'accès à la gestion des fonds de plans.<br>
-    Cela peut être utile lorsqu'on veut imposer un fond d eplan et laisser l'internaute gérer ses thématiques.<br>
+
+ICI, ICI, ICI, ICI<br>
 
     <h3>&Eacute;tape 6 : personnalisation des métadonnées.</h3>
     L'outil permet de consulter des informations sur les couches qu'il présente.<br>
