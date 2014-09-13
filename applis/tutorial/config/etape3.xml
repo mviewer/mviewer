@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <mapoptions 
+        maxzoom="18" 
+        projection="EPSG:3857" 
+        center="-403013.39038929436,6128402.399153711" 
+        zoom="8" 
+        projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
+
+    <baselayers style="default">
+
+        <baselayer  
+            type="WMTS" 
+            id="ortho1" 
+            label="Photo aérienne actuelle" 
+            title="GéoPortail" maxscale="1000" 
+            thumbgallery="/mviewer/img/basemap/ortho.jpg"
+            url="../wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" 
+            format="image/jpeg" 
+            visible="false" 
+            fromcapacity="false"
+            attribution="&lt;a href='http://www.geoportail.fr/' target='_blank'>&lt;img src='http://api.ign.fr/geoportail/api/js/latest/theme/geoportal/img/logo_gp.gif'>&lt;/a>" 
+            style="normal" 
+            matrixset="PM" 
+            maxzoom="22"/>
+
+        <baselayer  
+            type="WMS" 
+            id="photo2" 
+            label="Photo aérienne 1950" 
+            title="GéoBretagne" 
+            thumbgallery="/mviewer/img/basemap/ortho-ancien.jpg" 
+            url="http://tile.geobretagne.fr/gwc02/service/wms" 
+            layers="satellite-ancien" format="image/jpeg" visible="false" 
+	    attribution="&lt;a href='http://applications.region-bretagne.fr/geosource/apps/search/?uuid=048622c5-b333-4c2b-94ec-40a41608dc06' target='_blank' >Partenaires GéoBretagne - IGN&lt;/a>"/>      
+
+        <baselayer  
+            type="WMS" 
+            id="ortho1953" 
+            label="Photo aérienne 1953" 
+            title="Lorient Agglomération"
+            thumbgallery="/mviewer/img/basemap/ortho-ancien.jpg"
+            url="http://geoservices.lorient-agglo.fr/wms" 
+            layers="fond_ortho_1953" 
+            format="image/jpeg" visible="false"
+            attribution="Lorient Agglomération"/>
+
+    </baselayers>    
+
+    <proxy url="/proxy/simple.php?url="/>
+
+    <olscompletion url="http://gpp3-wxs.ign.fr/8sddvtuzc7c8valkvq19izia/ols/apis/completion"/>
+
+    <themes>
+        <theme name="Urbanisme"  id="urbanisme" collapsed="true">
+            <layer 
+                id="dossiers_encours" 
+                name="Dossiers en cours d'instruction" 
+                scalemin="0" 
+                scalemax="200000" 
+                visible="false"
+                queryable="false"
+                style=""
+                url="http://geoservices.lorient-agglo.fr/wms"
+                attribution="Lorient Agglomération"
+                metadata="metadata/todo.html" />
+            <layer 
+                id="dossiers_annee" 
+                name="Dossiers déposés dans l'année" 
+                scalemin="0" 
+                scalemax="200000" 
+                visible="false"
+                queryable="false"
+                style=""
+                url="http://geoservices.lorient-agglo.fr/wms"
+                attribution="Lorient Agglomération"
+                metadata="metadata/todo.html" />
+            <layer 
+                id="zonage" 
+                name="Zonages" 
+                scalemin="0" 
+                scalemax="200000" 
+                visible="false"
+                queryable="false"
+                style=""
+                url="http://geoservices.lorient-agglo.fr/wms"
+                attribution="Lorient Agglomération"
+                metadata="metadata/todo.html" />
+        </theme>
+    </themes>
+</config>
