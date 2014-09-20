@@ -652,4 +652,57 @@ border-radius: 10px;
 ::-webkit-scrollbar-thumb:hover {
 	background: #5393c5;
 }
+#datalist .ui-btn { text-align: left;}
+#panel-footer{ height: 54px;}
+#tab_selec_mixed{ margin-top : 35px !important; margin-bottom : 10px !important; }
+#holderRep{z-index : 1500; position : relative; }
+#tab_selec_mixed{ z-index : 1500; position : relative; margin-top:5px;}
+#holderRep #backgroundlayerstoolbar, #datalist #backgroundlayerstoolbar, #holderRep  #zoomtoolbar,#holderRep  #toolstoolbar { -webkit-box-shadow: 0px 0px 0px #888; -moz-box-shadow: 0px 0px 0px #888; box-shadow: 0px 0px 0px #888; }
+#backgroundlayerstoolbar{float: left !important;}
+#panel-footer { background-image: none !important;}
+.ui-collapsible-content.ui-body-a {background-color: #172370;!important}
+#datalist{
+                overflow-y : auto;
+                overflow-x : hidden;
+                position : absolute; 
+                top : 145px;
+                left : 0px;
+                right : 10px;
+                bottom : 60px;
+                width : 350px;
+                z-index:1500;
+}
+#holderRep{
+                overflow-y : auto;
+                overflow-x : hidden;
+                position : absolute; 
+                top : 195px;
+                right : 10px;
+                left : 0px;
+                right : 0px;
+                padding-left : 3px;
+                padding-right : 3px;
+                bottom : 60px;
+                width : 356px;
+                z-index:1500;
+}
+#panel-footer{
+                position : fixed; 
+                left : 0px;
+                bottom : 0px;
+                height : 20px;
+                line-height : 20px;
+}
+#panel-footer #mentionstoolbar{
+                height : 20px;
+                line-height : 20px;
+                top : 0px;
+                margin-left : 5px;
+}
+#holderRep #basemapslist{
+                width : 360px;
+}
+#holderRep #basemapslist li {
+                padding-right : 15px;
+}
 

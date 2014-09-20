@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <mapoptions maxzoom="24" projection="EPSG:3857" center="-403013.39038929436,6128402.399153711" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
+	<baselayers style="tab"><!-- style="default"||gallery||integrated||gallery_simple||tab" -->            		
+        <baselayer  type="OSM" id="osm1" label="MapQuest" title="open.mapquest.com" thumbgallery="/mviewer/img/basemap/mapquest.png" 
+			url="http://otile{1-3}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png" 
+			attribution="© MapQuest. Données : les contributeurs d'&lt;a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='http://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" visible="true"/>
+
+        <baselayer  type="WMS" id="ortho" label="Photo aérienne" title="Lorient Agglomération"
+            thumbgallery="/mviewer/img/basemap/ortho.jpg"
+            url="http://geoservices.lorient-agglo.fr/wms" layers="fond_ortho2005" format="image/jpeg" visible="false"
+			attribution="Lorient Agglomération"/>
+			
+   </baselayers>
+   
+    <proxy url="../proxy/simple.php?url="/>
+    <olscompletion url="http://gpp3-wxs.ign.fr/8sddvtuzc7c8valkvq19izia/ols/apis/completion"/>
+    <widgets>
+       <!--<widget name="gauge"/>-->       
+    </widgets> 
+
+    <themes>
+        <theme name="Formation"  id="formation" collapsed="true">
+            <layer 
+                id="lycee_rb" 
+                name="Lycée" 
+                scalemin="0" 
+                scalemax="50000000" 
+                visible="false" 
+                tiled="false" 
+                namespace="rb"
+                queryable="true" 
+                fields="nom,photo,libelle,secteur_li,reseau_lib" 
+                aliases="Nom,Photo,Commune,Secteur,Réseau"
+                infoformat="application/vnd.ogc.gml" featurecount="1"
+                style=""
+                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+                attribution="Région Bretagne"
+                metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25"
+                metadata-csw="http://applications.region-bretagne.fr/geosource/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25" />
+
+            <layer 
+                id="site_cfa_rb" 
+                name="Centre de formation d'apprentis" 
+                scalemin="0" 
+                scalemax="50000000" 
+                visible="false" 
+                tiled="false" 
+                namespace="rb"
+                queryable="true" fields="cfa,site_adr1,site_cp,site_ville,site_inter" aliases="Nom,Adresse,CP,Ville, Site Web"
+                infoformat="text/html" featurecount="2"
+                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+                style=""
+                attribution="Région Bretagne"
+                metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=f713de6d-1269-40b2-8bd4-3704c106fde6"
+                metadata-csw="http://applications.region-bretagne.fr/geosource/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=f713de6d-1269-40b2-8bd4-3704c106fde6" />                   
+
+            <layer id="cadastre:CP.CadastralParcel" name="Parcelles" scalemin="0" scalemax="15000" visible="false"
+                queryable="false"
+                style=""
+                url="http://geobretagne.fr/geoserver/cadastre/wms"
+                attribution="DGFIP"
+                metadata-csw="http://geobretagne.fr/geonetwork/srv/fr/main.home?uuid=0ca82e1d-b487-4879-8185-56b7c4e1a948"
+                metadata="http://geobretagne.fr/geonetwork/srv/fr/main.home?uuid=0ca82e1d-b487-4879-8185-56b7c4e1a948" />
+
+            <layer id="cadastre:CP.CadastralBuilding" name="Bati" scalemin="0" scalemax="15000" visible="false"
+                queryable="false"
+                style=""
+                url="http://geobretagne.fr/geoserver/cadastre/wms"
+                attribution="DGFIP"
+                metadata-csw="http://geobretagne.fr/geonetwork/srv/fr/main.home?uuid=0ca82e1d-b487-4879-8185-56b7c4e1a948"
+                metadata="http://geobretagne.fr/geonetwork/srv/fr/main.home?uuid=0ca82e1d-b487-4879-8185-56b7c4e1a948" />
+
+	</theme>
+        <theme name="Transports"  id="transport" collapsed="true">
+            <layer id="arrets_ctrl" name="Arrêts CTRL" scalemin="0" scalemax="1000000" visible="false"
+                queryable="false"
+                style=""
+                url="http://geoservices.lorient-agglo.fr/wms"
+                attribution="Lorient Agglomération"
+                metadata="todo.tmpl" />
+            <layer id="lignes_ctrl" name="Lignes CTRL" scalemin="0" scalemax="1000000" visible="false"
+                queryable="false"
+                style=""
+                url="http://geoservices.lorient-agglo.fr/wms"
+                attribution="Lorient Agglomération"
+                metadata="todo.tmpl" />
+        </theme>
+
+        <theme name="Urbanisme"  id="urbanisme" collapsed="true">
+            <layer id="dossiers_encours" name="Dossiers en cours d'instruction" scalemin="0" scalemax="200000" visible="false"
+		queryable="false"
+		style=""
+		url="http://geoservices.lorient-agglo.fr/wms"
+		attribution="Lorient Agglomération"
+		metadata="metadata/todo.tmpl" />	
+            <layer id="dossiers_annee" name="Dossiers déposés dans l'année" scalemin="0" scalemax="200000" visible="false"
+                queryable="false"
+                style=""
+		url="http://geoservices.lorient-agglo.fr/wms"
+                attribution="Lorient Agglomération"
+		metadata="metadata/todo.tmpl" />	
+            <layer id="zonage" name="Zonages" scalemin="0" scalemax="200000" visible="false"
+                queryable="false"
+                style=""
+		url="http://geoservices.lorient-agglo.fr/wms"
+                attribution="Lorient Agglomération"
+		metadata="metadata/todo.tmpl" />	
+	</theme>
+    </themes>
+</config>
