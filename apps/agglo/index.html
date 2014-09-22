@@ -8,15 +8,15 @@
 	<meta name="apple-mobile-web-app-capable" content="yes" />	
 	<meta name="description" content="Visualiseur géographique de la Région Bretagne" /> 
 	
-	<link rel="icon" type="image/png" href="/mviewer/img/lorient.png" />	
-	<link rel="stylesheet" href="/mviewer/lib/jquery/mobile/1.4.0/jquery.mobile-1.4.0.min.css" type="text/css" />
-	<link rel="stylesheet" href="/mviewer/lib/openlayers/3/ol.css" type="text/css" />	
-	<link rel="stylesheet" href="/mviewer/css/mviewer.css" type="text/css" />
-	<link rel="stylesheet" href="/mviewer/css/mobile-panel-size.less.css" type="text/css" />
+	<link rel="icon" type="image/png" href="img/lorient.png" />	
+	<link rel="stylesheet" href="../../lib/jquery/mobile/1.4.0/jquery.mobile-1.4.0.min.css" type="text/css" />
+	<link rel="stylesheet" href="../../lib/openlayers/3/ol.css" type="text/css" />	
+	<link rel="stylesheet" href="../../css/mviewer.css" type="text/css" />
+	<link rel="stylesheet" href="../../css/mobile-panel-size.less.css" type="text/css" />
         <link rel="stylesheet" href="css/surcharge-agglo.css" type="text/css" />
 
-	<script type="text/javascript" src="/mviewer/lib/proj4js/1.1.0/proj4js-compressed.js"></script>	
-	<script type="text/javascript" src="/mviewer/lib/jquery/base/1.10.2/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="../../lib/proj4js/1.1.0/proj4js-compressed.js"></script>	
+	<script type="text/javascript" src="../../lib/jquery/base/1.10.2/jquery-1.10.2.min.js"></script>
 	<script>
         $(document).bind("mobileinit", function(){
 			// no hashchange in url needed par the API       
@@ -24,16 +24,16 @@
 	        $.mobile.hashListeningEnabled = false;			
         });
     	</script>
-	<script type="text/javascript" src="/mviewer/lib/jquery/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>	
-	<script type="text/javascript" src="/mviewer/lib/openlayers/3/ol.js"></script>    
-	<script type="text/javascript" src="/mviewer/lib/jquery/base/plugins/scrollbar/jquery.mousewheel.js"></script>
-	<script type="text/javascript" src="/mviewer/lib/jquery/base/plugins/scrollbar/jquery.jscrollpane.js"></script>
-	<script type="text/javascript" src="/mviewer/lib/jquery/base/plugins/xml2json/jquery.xml2json.js"></script>
-	<script type="text/javascript" src="/mviewer/lib/jquery/base/plugins/validate/jquery.validate.min.js"></script>
-	<script type="text/javascript" src="/mviewer/lib/jquery/base/plugins/easyshare/jquery.easyShare.js"></script>    	
-	<script type="text/javascript" src="/mviewer/lib/jquery.extend.js"></script>    
-	<script type="text/javascript" src="/mviewer/lib/jqm-templates.js"></script>
-	<script type="text/javascript" src="/mviewer/lib/mviewer.js"></script>
+	<script type="text/javascript" src="../../lib/jquery/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>	
+	<script type="text/javascript" src="../../lib/openlayers/3/ol.js"></script>    
+	<script type="text/javascript" src="../../lib/jquery/base/plugins/scrollbar/jquery.mousewheel.js"></script>
+	<script type="text/javascript" src="../../lib/jquery/base/plugins/scrollbar/jquery.jscrollpane.js"></script>
+	<script type="text/javascript" src="../../lib/jquery/base/plugins/xml2json/jquery.xml2json.js"></script>
+	<script type="text/javascript" src="../../lib/jquery/base/plugins/validate/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="../../lib/jquery/base/plugins/easyshare/jquery.easyShare.js"></script>    	
+	<script type="text/javascript" src="../../lib/jquery.extend.js"></script>    
+	<script type="text/javascript" src="../../lib/jqm-templates.js"></script>
+	<script type="text/javascript" src="../../lib/mviewer.js"></script>
 
 <!--
 --
@@ -118,13 +118,15 @@ $(document).ready(function () {
 			</div>
 			<div id='holderRep' data-role="collapsible-set" data-theme="b" data-position-fixed="true" data-content-theme="a" data-inset="false"  style="display : none;"></div>			<div id="datalist" data-role="collapsible-set" data-theme="b" data-content-theme="a" data-inset="false" ></div>				
             <div id="panel-footer">
-                <div id="mentionstoolbar">
-                    <a href="/mviewer/doc/aide_kartenn.pdf"  
+                <div id="mentionstoolbar" align="center">
+                    <a href="../../doc/index.html"  
                         title="Aide à l'utilisation" target="_blank" >Aide</a> | 
                     <a href="#legalpanel" data-rel="popup" data-position-to="window" 
                         title="Mentions Légales">Mentions légales</a> | 
+<!--
                     <a href="#accessibilitypanel" data-rel="popup" data-position-to="window" 
                         title="Acessibilité">Accessibilité</a> | 
+-->
                     <a href="#contactpanel" data-rel="popup" data-position-to="window" 
                         title="Nous contacter">Nous contacter</a>
                 </div>
@@ -221,7 +223,7 @@ $(document).ready(function () {
 		<!-- IMAGE POPUP -->
 		<div data-role="popup" id="imagepopup" data-overlay-theme="a" data-theme="d" data-corners="false" data-transition="flip" data-history="false">
             <a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
-			<img class="popphoto" src="/mviewer/img/blank.gif" style="max-height:512px;" alt="image">
+			<img class="popphoto" src="../../img/blank.gif" style="max-height:512px;" alt="image">
         </div>
 		<!-- LEGAL PANEL -->
 		<div id="legalpanel" data-role="popup" data-theme="b">
@@ -274,7 +276,7 @@ $(document).ready(function () {
 				<div id='share' class="ui-block-a">					
 					<div>
 						<p class="" >			                
-							<img id="permaqr" src="/mviewer/img/loading.gif" title="QR code vers la carte" alt="QR code" />
+							<img id="permaqr" src="../../img/loading.gif" title="QR code vers la carte" alt="QR code" />
 			            </p>
 					</div>					
 				</div>
@@ -325,7 +327,7 @@ $(document).ready(function () {
 	    </div>        
 	</div>    
 
-<script type="text/javascript" src=/mviewer/lib/compact-gauche.js></script>
+<script type="text/javascript" src=../../lib/compact-gauche.js></script>
 
 </body>
 </html>
