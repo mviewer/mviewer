@@ -1,7 +1,7 @@
 /*
  * Fonctions pour afficher les jours de collecte en un point
  */
-Layers_Hooks['Collecte Poubelle'] = function(coordinate, projection, layer) {
+Layers_Hooks['collecte'] = function(coordinate, projection, layer) {
   /*
    * Récupération des coordonnées du clic
    *     reprojection si nécessaire
@@ -45,9 +45,9 @@ Layers_Hooks['Collecte Poubelle'] = function(coordinate, projection, layer) {
 };
 
 /* Je recopie ce même comportement pour plusieurs couches */
-Layers_Hooks['Collecte Poubelle Verte'] = Layers_Hooks['Collecte Poubelle'];
-Layers_Hooks['Collecte Poubelle Jaune'] = Layers_Hooks['Collecte Poubelle'];
-Layers_Hooks['Collecte Poubelle Bleue'] = Layers_Hooks['Collecte Poubelle'];
+Layers_Hooks['collecte_bio'] = Layers_Hooks['collecte'];
+Layers_Hooks['collecte_emb'] = Layers_Hooks['collecte'];
+Layers_Hooks['collecte_dmr'] = Layers_Hooks['collecte'];
 
 function afficher_jours_collecte(valeur, coordinate)
 {
