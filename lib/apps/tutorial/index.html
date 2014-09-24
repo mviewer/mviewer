@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr-fr" lang="fr-fr" dir="ltr" >
+  <head>
+    <title>tutorial- Lorient agglom&eacute;ration</title>
+  </head>
+  <body>
+    <h1>Tutorial</h1>
+    <h2>Retour d'exp&eacute;rience sur l'adaptation du <b>mviewer</b> en applications m&eacute;tiers</h2>
+    <h3>Contexte</h3>
+    Notre collectivit&eacute; a d&eacute;cid&eacute; de mettre en ligne une d&eacute;clinaison du mviewer du g&eacute;oBretagne. 
+    Nous avons pris le parti de capitaliser la réalisation de notre partenaire, toutefois un besoin de spécialisation est vite apparu. 
+    Je décrirai ici les différentes étapes qui nous ont permis d'arriver à nos fins.
+
+    <br><br>Toutefois, ce qui est décrit ici n'est peut-être plus tout à fait vrai dans la mesure où nous souhaitons faire intégrer nos spécificités dans la version standard du produit.
+  
+    <br><br>En espérant que ce texte pourra servir à toute personne ou orgnisme qui aurait une démarche similaire.
+  
+    <h3>T&eacute;l&eacute;chargements -  Pr&eacute;requis</h3>
+    Tout le matériel de ce tutorial est disponible sur github <br>
+    Faites l'extraction via la commande "<b><i>git clone https://github.com/loragglo/mviewer</i></b>".<br>
+    <br>Vous devez disposer d'un serveur WEB, avec un moteur PHP si vous souhaitez mettre en oeuvre notre fichier pour la mise en oeuvre d'un proxy. Pas besoin de base de données.La suite de mon tuto suppose que vous êtes sous apache, mais cela peut s'adapter à tout autre contexte avec très peu de modification.
+ 
+    <br>Vous devez éventuellement connaître le paramétrage de votre proxy sortant pour permettre à votre application de se connecter à d'autres serveurs.
+    <br>Vous devez disposer d'un nom de domaine.
+    <br>Pour que la localisation sur adresse fonctionne, vous devez disposer d'une clé IGN vous permettant de vous connecter à leur service OLS. <br>
+    Et : NON ... ma clé ne fonctionnera pas avec votre nom de domaine ...
+
+    <br>Quelques notions sur les technos WEB sont nécessaires : feuilles de style, javascript, php (un tout petit peu).
+    
+    <br><br>Enfin dans l'idéal vous disposez d'une IDS complete pour diffuser vos données cartographiques.
+    <br>Si ce n'est pas le cas, pointez vers celles des autres dans vos fichiers de configuration !
+    
+    <h3>&Eacute;tape 1 : Mise en route</h3>
+    Téléchargez mon archive et décompressez-là à la racine de votre serveur WEB.<br>
+    <br>Lancez un navigateur à l'adresse http://VOTRE_DOMAINE/mviewer.<br>
+    Vous devez voir s'afficher ... la version classique du mviewer !<br>
+    Comme <a target="demo" href="mviewer.html">ceci</a><br>
+    <br>Il y a sûrement des choses qui ne marchent pas !<br>
+    La localisation sur adresse par exemple...<br>
+    Et l'interrogation des couches thématiques ...<br>
+    Et l'accès aux métadonnées de ces couches non plus !<br>
+  
+    <br>Normal : à ce stade on n'a encore rien fait. Juste rajouté une balise "meta" pour forcer IE à se mettre dans le mode de compatibilite maximum qu'il connait.
+    
+    <h3>&Eacute;tape 2 : tout faire marcher.</h3>
+    Placez-vous dans le dossier <b>proxy</b>.<br><br>
+    Editez le fichier <b>simple.php</b><br>
+    Ce fichier permet à l'application de se connecter à des sites distants.<br>
+    Un peu d'intelligence a été rajoutée : si d'aventure l'application s'appelle elle-même on passe à travers un accès fichier.<br>
+    Remplacez les informations de proxy par celles de votre infrastructure : 
+    <ul>
+    <li>DOMAINE :  nom de domaine de votre serveur</li>
+    <li>XXX.XXX.XXX.XXX :  adresse ip de votre serveur mandataire</li>
+    <li>YYYY :  port du service de proxy de votre serveur mandataire</li>
+    <li>LOCALPATH :  chemin local des fichiers sur votre serveur</li>
+    </ul>
+    Vous pouvez bien entendu remplacer mon proxy très basique par quelque chose de plus élaboré.<br>
+    <br>
+    Placez-vous dans le dossier <b>mviewer/config</b><br>
+    Faites une copie du fichier <b>default.xml</b>.<br>
+    Chez moi, sous unix :<br>
+    <i>cp mviewer/config/default.xml mviewer/config/etape2.xml</i><br>
+    Editez cette copie.<br>
+    Pour faire fonctionner localisation sur adresse, remplacez l'expression VOTRE_CLE_IGN par la clé que vous avez récupéré en vous inscrivant sur le site de l'IGN.<br>
+    Changez l'url de la balise <b>proxy</b> si vous disposez d'un autre script que le mien.<br>
+    Pour prendre en compte votre fichier, la premiere méthode consiste à modifier le fichier mviewer/index.hml en conséquence.<br>
+    Mais la méthode la plus souple consiste à rajouter un paramètre <b>config</b> dans votre URL.<br>
+    Comme ceci : <a target="demo" href="mviewer.html?config=config/etape2.xml">index.html?config=config/etape2.xml</a><br>
+
+    C'est toujours la version classique du mviewer, mais toutes les fonctionnalités doivent marcher.<br>
+
+    <h3>&Eacute;tape 3 : personnalisez vos couches de données.</h3>
+    Cela se fait toutjours à partir du fichier de configuration xml.<br>
+    Faites une copie de ce fichier.<br>
+    Chez moi, sous unix :<br>
+    <i>cp mviewer/config/etape2.xml mviewer/config/etape3.xml</i><br>
+    Editez votre copie.<br>
+    Dans la section <b>baselayers</b> enlevez ou rajoutez des entrées <b>baselayer</b>.<br>
+    Dans la section <b>themes</b> enlevez ou rajoutez des entrées <b>theme</b>.<br>
+    Dans chaque section <b>theme</b> enlevez ou rajoutez des entrées <b>layer</b>.<br>
+    Pour remplir ces lignes inspirez vous des autres balises déjà présentes.<br>
+    Vous devez savoir ce que sont des <b>flux OGC</b> : WMS, WMTS, WFS, ...<br>
+    <br>
+    Rechargez en précisant le nouveau fichier de configuration, d'autres paramétres sont possibles : <b>x</b> et <b>y</b> pour le centre de la carte, <b>z</b> pour un niveau de zoom, <b>l</b> pour forcer le layer actif, <b>lb</b> pour préciser un fond de plan actif.<br>
+
+    Par exemple moi j'ai <a target="demo" href="mviewer.html?x=-374032&y=6058433&z=16&l=Zonages&lb=ortho1953&config=config/etape3.xml">mis les zonages du PLU actuel sur la photo aérienne de 1953</a><br>
+
+   <h3>&Eacute;tape 4 : passez à la version Lorient agglom&eacute;ration du mviewer.</h3>
+    <h4>Organisation de la distribution</h4>
+    Malgrès quelques "aménagements" de la bibliothèque <i><b>mviewer.js</b></i>, nous avons décidé de procéder principalement par surcharge de l'application existante.<br>
+    A cet effet, nous avons rajouté un répertoire <b>apps</b> dans lequel nous plaçons un répertoire par application (dont ce tutorial).<br>
+    Dans chaque répertoire, nous dupliquons les fichiers que nous modifions, et nous ajoutons ce dont nous avons besoin en plus.
+    <h4>Mise en oeuvre</h4>
+    Je ne détaillerai pas les différentes étapes de la personnalisation de la charte graphique.<br>
+    En fait, je ne l'ai pas faite moi même !<br>
+    J'ai confié ce travail à ceux qui savent : notre webmaster (Emmanuel) et un développeur de la DSI (Bruno).<br>
+    <i>Merci à eux ...</i><br>
+    Ce que je peux dire, c'est qu'il faut surcharger des CSS, faire des logos, des images de fond, etc. et changer le fichier index.html pour prendre tout ça en compte.<br>
+    Mais le résultat est présenté dans cette version avec le nom index-agglo.html.<br>
+    Libre à vous de vous en inspirer en consultant notre source.<br>
+    Vous pouvez aussi nous contacter pour plus d'explication.<br> 
+
+    Au final cela donne <a target="demo" href="mviewer-agglo.html?x=-381764&y=6058271&z=12&l=Zonages&lb=ortho1&config=config/etape4.xml">ceci</a>.<br>
+    <br>Voilà, vous travaillez avec la version Lorient agglomération !<br><br>
+    Les principaux changements :
+    <ul>
+    <li>Charte graphique : logo, couleurs de fond, etc.</li>
+    <li>La barre de localisation est intégrée au paneau de droite</li>
+    <li>Les pictos d'action sont accolés au paneau de droite</li>
+    </ul>
+    Une fois le panneau de droite fermé, toute la place est allouée à la carte.<br><br>
+    A ce stade, la charte graphique est différente, mais tout le reste est identique ...<br>
+    <br>Cependant de nouvelles possibilités s'offrent maintenant à vous !<br>
+    
+    <h3>&Eacute;tape 5 : personnalisation de l'interface.</h3>
+    Le mviewer du géoBretgane vous propose 2 modes d'affichages pour le menu "fonds de plan".<br>
+    Ce modes sont paramétrables dans le XML de configuration.<br>
+    C'est l'attribut <i>style</i> de la balise <b>baselayers</b>.<br>
+    Nous avons souhaité étendre ces modes pour proposer :
+    <ul>
+    <li>Un mode <b>integrated</b> où le menu est intégré dans la liste des thèmatiques</li>
+    <li>Un mode <b>tab</b> où le menu est dans le panneau, mais dans un onglet à part</li>
+    <li>Un mode <b>gallery_simple</b> où le menu est seul dans le panneau</li>
+    </ul>
+
+    De notre point de vue, la valorisation de cet attribut dans un fichier de configuration n'est pas satisfaisant.<br>
+    Il nous paraît nécessaire de pouvoir jongler entre les différents modes depuis la page appelante.<br>
+    En conséquence, nous avons modifié le source pour que cette information puisse être surchargée en passant un paramétre supplémentaire depuis l'URL. Il s'agit alors de préciser une valeur pour le paramétre <b>blstyle</b>.<br>
+
+    <br>De cette façon, une meême liste de couches et de fonds de plan peut être mise en forme de plusieurs façons.<br>
+    Cela donne ceci : 
+    <ul>
+    <li>Mode <a target="demo" href="mviewer-agglo.html?x=-381764&y=6058271&z=12&l=Zonages&lb=ortho1&config=config/etape5.xml&blstyle=default">default</a> où le menu est une barre de boutons</li>
+    <li>Mode <a target="demo" href="mviewer-agglo.html?x=-381764&y=6058271&z=12&l=Zonages&lb=ortho1&config=config/etape5.xml&blstyle=gallery">gallery</a> où le menu est un panneau à part '<i>repliable</i>'</li>
+    <li>Mode <a target="demo" href="mviewer-agglo.html?x=-381764&y=6058271&z=12&l=Zonages&lb=ortho1&config=config/etape5.xml&blstyle=integrated">integrated</a> où le menu est intégré dans la liste des thèmatiques</li>
+    <li>Mode <a target="demo" href="mviewer-agglo.html?x=-381764&y=6058271&z=12&l=Zonages&lb=ortho1&config=config/etape5.xml&blstyle=tab">tab</a> où le menu est dans le panneau, mais dans un onglet à part</li>
+    <li>Mode <a target="demo" href="mviewer-agglo.html?x=-381764&y=6058271&z=12&l=Zonages&lb=ortho1&config=config/etape5.xml&blstyle=gallery_simple">gallery_simple</a> où le menu est seul dans le panneau. Les thématiques sont présentes mais l'utilisateur ne peut pas choisir des les activer ou pas.</li>
+    </ul>
+
+    <h3>&Eacute;tape 6 : personnalisation des métadonnées.</h3>
+    L'outil permet de consulter des informations sur les couches qu'il présente.<br>
+    En cliquant sur le bouton qui se trouve en face du nom de la couche, on lance une requête sur un service de métadonnées, et on affiche un résumé.<br>
+    Le service de métadonnées associé à chaque couche est précisé dans la balise layer du fichier de configuration XML.<br>
+    Nous avons souhaité affiner ce comportement.<br>
+    <ul>
+      <li>D'une part parce que nous n'avons pas toujours de service de métadonnées disponible pour la couche (c'est pas bien, pas <i><b>Inspiro compatible</b></i> et tout ça mais c'est notre réalité...)</li>
+      <li>D'autre part parce que nous pouvons souhaiter aller au delà du comprotemnt par défaut pour améliorer la qualité de l'information donnée sur uen couche : avec une légende mise en forme par un graphiste, avec un schéma expliquant la façon dont la couche est produite, etc.</li>
+    </ul>
+    Nous avons donc rajouté la prise en charge d'un nouvel attribut sur la balise layer.<br>
+    Cet attribut se nomme <b>metadata-local</b>. <br>
+    Il permet de préciser un fichier contenant un bout de code HTML.<br>
+    Par convention nous plaçons ces fichiers dans le dossier metadata, et nous leur donnons l'extension '.tmpl'<br>
+    <br>C'est en exemple sur <a target="demo" href="mviewer-agglo.html?x=-381764&y=6058271&z=12&l=Zonages&lb=ortho1&config=config%2Fetape6.xml">la configuration suivante</a>.<br>
+    <i>Cliquez sur le bouton d'information en face de la couche <b>urbanisme</b> pour voir l'effet</i>.<br>
+
+ICI, ICI, <br>
+
+    <h3>&Eacute;tape 7 : personnalisation du clic dans la carte.</h3>
+    Nous avons également souhaité pouvoir personnaliser le résultat d'un clic dans la carte.<br>
+    Par défaut l'outil prend la liste des couches interrogeables et réalise une requête <b>getFeatureInfo</b> sur chacune d'elles. Il présente ensuite le résultat de façon générique.<br>
+    <br><a target="demo" href="mviewer/index-agglo-1.html?x=-381764&y=6058271&z=12&lb=ortho1&l=Lyc%25C3%25A9e&config=config%2Fconfig_4.xml">Dans la configuration suivante</a>, c'est ce qui se passe lorsqu'on active la couche des Lycées et que l'on clique sur un rond de couleur dans la carte.
+    <br><br>Notre besoin est de court-circuiter ce mécanisme.<br>
+    Par exemple, nous souhaitons pouvoir présenter un formulaire qui permettrait de modifer la données ou d'envoyer un mail ou d'enregistrer une demande d'intervention.<br>
+    <br><br>C'est en oeuvre <a target="demo" href="mviewer/index-agglo-2.html?x=-381764&y=6058271&z=12&l=Collecte%2520Poubelle%2520Verte&lb=ortho1&config=config%2Fconfig_3.xml">ici</a> sur les couches de collecte</br>
+
+     <br>
+     La méthode retenue est la prise en compte d'un tableau de fonctions.<br>
+     Ce tableau est défini en variable globale dans mviewer.agglo.js <br>
+     Il se nomme <b>LorientAgglo_Hooks</b><br>
+
+     <br>
+On définit ensuite des fonctions en langage javascript. Ces fonctions sont stockées dans un tableau associatif en prenant comme index la valeur de l'attribut <b>id</b> de la balise <b>layer</b>.<br>
+     Ces définitions ne se font pas dans le code du mviewer.<br>
+     On le fait dans des fichiers à part, laissant ainsi la liberté à chaque application d'inclure ou pas des comportements spécifiques.<br>
+     Par convention on place ces fichiers dans le dossier <b>lib</b> en les nommant <b>LA_Hook_XXXXX.js</b><br>
+     Voir par exemple <b>lib/LA_Hook_Collecte.js</b>.<br>
+
+     Nous avons fait le choix de laisser les informations dans la fenêtre venant se positonner dans la carte.<br>
+     Par contre, l'édition d'un objet se fait dans une nouvelle fenêtre qui est modale.<br>
+     Cela suppose l'ajout d'un div supplémentaire dans la page html.
+     C'est une choix de la collectivité, le comportement étant définit par des javascripts spécifiques, chacun est libre de faire comme il le souhaite.<br>
+
+     Lorsqu'on clique dans la carte, on commence par regarder s'il existe une fonction pour les couches affichées.<br>
+     Si c'est le cas pour plusieurs couches, seule la dernière est pris en compte.<br>
+
+     <br>Dans mon exemple, j'occulte complètement l'ancien comportement. Ainsi en cliquant sur les Lycées, j'un message qui me précise que rien n'est définit pour cette couche.<br>
+      Ceci peut être désactivé en enlevant la référence à <b>LA_Hook_Defaut.js</b> dans votre page.<br>
+      De cette façon vous cumulez les deux comportements.<br>
+      Si une couche active possède une fonciton javascript définie, c'ets elle qui est prise en compte.<br>
+      Sinon, on revient au comportement par défaut du mviewer : l'appel à getFeatureInfo ...<br>
+      Un exemple <a target="demo" href="mviewer/index-agglo-3.html?x=-381764&y=6058271&z=12&l=Collecte%2520Poubelle%2520Verte&lb=ortho1&config=config%2Fconfig_3.xml">ici</a>
+     
+
+      <br><br><br>
+    
+  </body>
+</html>
