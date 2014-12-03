@@ -1,0 +1,25 @@
+#!/usr/bin/env python
+ # -*- coding: UTF-8 -*-
+import cgi,os,json
+user = ""
+email = ""
+roles = ""
+proxy= "false"
+try:
+    if os.environ['HTTP_SEC_PROXY']:
+        proxy="true"
+        try:
+            if os.environ['HTTP_SEC_USERNAME']:
+                user=os.environ['HTTP_SEC_USERNAME']
+            if os.environ['HTTP_SEC_EMAIL']:
+                email=os.environ['HTTP_SEC_EMAIL']
+            if os.environ['HTTP_SEC_ROLES']:
+                roles=os.environ['HTTP_SEC_ROLES']
+        except KeyError:
+            pass
+except KeyError:
+    pass
+print "Content-type: application/json"
+print
+response={'proxy':proxy,'user':user,'email':email,'roles':roles}
+print(json.JSONEncoder().encode(response))

@@ -1,0 +1,5 @@
+#Options +ExecCGI
+#AddHandler cgi-script cgi
+<FilesMatch who>
+    SetHandler cgi-script
+</FilesMatch>
