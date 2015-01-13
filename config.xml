@@ -55,7 +55,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 
     <themes>
         <theme name="Formation"  id="formation" collapsed="true">
-            <layer id="lycee_rb" name="Lycée" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+            <layer id="lycee" name="Lycée" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
 				queryable="true" fields="nom,photo,libelle,secteur_li,reseau_lib" aliases="Nom,Photo,Commune,Secteur,Réseau" 
                 infoformat="application/vnd.ogc.gml" featurecount="1"
 				style="" 
@@ -63,7 +63,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Région Bretagne" 
 				metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25" 
 				metadata-csw="http://applications.region-bretagne.fr/geosource/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25" />
-			<layer id="site_cfa_rb" name="Centre de formation d'apprentis" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+			<layer id="site_cfa" name="Centre de formation d'apprentis" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
 				queryable="true" fields="cfa,site_adr1,site_cp,site_ville,site_inter" aliases="Nom,Adresse,CP,Ville, Site Web"
                 infoformat="text/html" featurecount="2"               
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -73,7 +73,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw="http://applications.region-bretagne.fr/geosource/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=f713de6d-1269-40b2-8bd4-3704c106fde6" />                    
 		</theme>		
         <theme name="Transport collectif régional"  collapsed="true" id="transport">
-            <layer id="point_arret_ter_bretagne_rb" name="Point d'arrêt régional" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb" 
+            <layer id="transport_regional_arret" name="Point d'arrêt régional" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb" 
 				queryable="true" fields="nom_pa" aliases="Nom" 
                 infoformat="application/vnd.ogc.gml" featurecount="1"                
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -81,7 +81,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Région Bretagne" 
 				metadata-csw="http://applications.region-bretagne.fr/geosource/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=a856d070-c900-44db-8020-7892a3071293"
 				metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=a856d070-c900-44db-8020-7892a3071293" />                
-			<layer id="reseau_ter_bretagne_rb" name="Ligne régionale" visible="false" scalemin="0" scalemax="50000000" tiled="false" namespace="rb" 
+			<layer id="transport_regional_ligne" name="Ligne régionale" visible="false" scalemin="0" scalemax="50000000" tiled="false" namespace="rb" 
 				queryable="true" fields="libelle" aliases="Nom" 
                 infoformat="application/vnd.ogc.gml" featurecount="1"
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -91,7 +91,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=9d19c331-3941-4545-8409-ec18cf88a544" />
         </theme>    
         <theme name="Transport maritime et fluvial"  collapsed="true" id="maritime"> 
-             <layer id="port_rb" name="Port" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb" 
+             <layer id="port" name="Port" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb" 
 					queryable="true" fields="libelle_po,statut" aliases="Nom,Statut"
                     infoformat="application/vnd.ogc.gml" featurecount="1"                    
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -99,7 +99,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					attribution="Région Bretagne" 
 					metadata-csw="http://applications.region-bretagne.fr/geosource/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=c55c4fba-6a37-48ea-8754-a1bf770a684b"
 					metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=c55c4fba-6a37-48ea-8754-a1bf770a684b" />                
-                <layer id="voie_navigable_rb" name="Voie navigable" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+                <layer id="voie_navigable" name="Voie navigable" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
 					queryable="true" fields="nom,proprietaire,concession,gestionnaire" aliases="Nom,Propriétaire,Concessionnaire,Gestionnaire"
                     infoformat="application/vnd.ogc.gml" featurecount="1"
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -117,7 +117,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=774a2065-339f-4802-a50f-4b84b6ca249f" />  
         </theme> 
         <theme name="Inventaire du patrimoine"  collapsed="true" id="patrimoine">           
-			<layer id="patrimoine_rb" name="Patrimoine régional" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="rb"
+			<layer id="inventaire_patrimoine" name="Patrimoine régional" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="rb"
 				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
                 infoformat="text/html" featurecount="1"
 				style="" 
@@ -125,7 +125,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=a7f46b47-42fc-49b7-9b49-c7c11aee0932"
 				metadata-csw="http://applications.region-bretagne.fr/geosource/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=a7f46b47-42fc-49b7-9b49-c7c11aee0932" />
-            <layer id="ipc_recensement_rb" name="Recensement local" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb" 
+            <layer id="recensement_patrimoine" name="Recensement local" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb" 
 				queryable="true" fields="titre,localisati,datation,photo_1" aliases="Titre,Localisation,Datation,Photo" 
 				infoformat="text/html" featurecount="1"
                 style="recensement_rond" 
@@ -135,7 +135,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=0cf6de5d-9746-44d8-b003-a2dae2e7e585" /> 
         </theme>
         <theme name="Espaces naturels"  collapsed="true" id="nature"> 
-            <layer id="reserve_naturelle_regionale_rb" name="Réserve Naturelle Régionale" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+            <layer id="reserve_naturelle_regionale" name="Réserve Naturelle Régionale" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
 				queryable="true" fields="rnr_nom,image,dt_creation" aliases="Nom,photo,date de création"
                 infoformat="application/vnd.ogc.gml" featurecount="1"
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -144,7 +144,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw="http://applications.region-bretagne.fr/geosource/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=77f8fc52-ae57-41d1-8f08-7b121b013f51"
 				metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=77f8fc52-ae57-41d1-8f08-7b121b013f51" />	
         </theme>
-        <theme name="Solidarité internationale"  collapsed="true" id="solidarite"> 
+       <theme name="Solidarité internationale"  collapsed="true" id="solidarite"> 
             <layer id="acteurs_abcis" name="Acteurs ABCIS" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
 				queryable="true" fields="nom" aliases="Nom"
                 infoformat="text/html" featurecount="1" 
