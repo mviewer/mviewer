@@ -108,7 +108,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					metadata-csw="http://applications.region-bretagne.fr/geosource/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=7cab44b0-4639-43f2-a824-3eecb7d3bf66"
 					metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=7cab44b0-4639-43f2-a824-3eecb7d3bf66" />  
                <layer id="ecluse" name="Ecluse" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
-					queryable="true" fields="nomecluse" aliases="Nom"
+					queryable="true" fields="nomecluse,photo" aliases="Nom,Photo"
                     infoformat="application/vnd.ogc.gml" featurecount="1"
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 					style="" 
