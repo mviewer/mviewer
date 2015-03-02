@@ -511,9 +511,9 @@ font-size:12px;
     font-family: "Trebuchet MS",Helvetica,Arial,sans-serif;
 }
 
-#popup-content a {
+/*#popup-content a {
 color: #333;
-}
+}*/
 .ol-popup-closer {
     text-decoration: none;
     position: absolute;    
