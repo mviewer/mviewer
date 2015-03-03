@@ -119,7 +119,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
         <theme name="Inventaire du patrimoine"  collapsed="true" id="patrimoine">           
 			<layer id="inventaire_patrimoine" name="Patrimoine régional" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="rb"
 				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
-                infoformat="text/html" featurecount="3"
+                infoformat="text/html" featurecount="5"
 				style="" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Service de l'inventaire : Région Bretagne" 

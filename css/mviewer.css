@@ -634,11 +634,14 @@ ul.bjqs-controls.v-centered li a{
 	text-decoration: none;
     margin-left: -15px;
     margin-right: -15px;
+    border-radius: 10px
 }
 
 ul.bjqs-controls.v-centered li a:hover{
-	background:#fff;
+	background:#f7f7f7;
 	color:#000;
+    border: #000;
+    border: 1px solid;
 }
 
 ol.bjqs-markers li a{
