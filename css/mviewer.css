@@ -509,6 +509,8 @@ font-size:12px;
 #popup-content {
     padding-top: 20px;
     font-family: "Trebuchet MS",Helvetica,Arial,sans-serif;
+    font-size: 80%;
+    text-shadow: none;
 }
 
 /*#popup-content a {
@@ -624,6 +626,37 @@ border-radius: 10px;
     font-size: 12px;
 }
 
+ul.bjqs-controls.v-centered li a{
+	display:block;
+	padding:10px;
+	background:#000;
+	color:#fff;
+	text-decoration: none;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+ul.bjqs-controls.v-centered li a:hover{
+	background:#fff;
+	color:#000;
+}
+
+ol.bjqs-markers li a{
+	padding:5px 10px;
+	background:#000;
+	color:#fff;
+	margin:5px;
+	text-decoration: none;
+}
+
+ol.bjqs-markers li.active-marker a,
+ol.bjqs-markers li a:hover{
+	background: #999;
+}
+
+p.bjqs-caption{
+	background: rgba(255,255,255,0.5);
+}
 
 
 .ui-panel-closed #panel-header {
