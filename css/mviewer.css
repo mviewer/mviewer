@@ -626,6 +626,20 @@ border-radius: 10px;
     font-size: 12px;
 }
 
+#selector {
+background: #f7f7f7;
+}
+
+#ulnav {
+background: #333;
+}
+/*#ulnav li>a {
+font-size: 80%;
+}
+#selector li.ui-tabs-active {
+font-size: 150%;
+}*/
+
 ul.bjqs-controls.v-centered li a{
 	display:block;
 	padding:10px;

@@ -127,7 +127,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw="http://applications.region-bretagne.fr/geosource/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=a7f46b47-42fc-49b7-9b49-c7c11aee0932" />
             <layer id="recensement_patrimoine" name="Recensement local" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb" 
 				queryable="true" fields="titre,localisati,datation,photo_1" aliases="Titre,Localisation,Datation,Photo" 
-				infoformat="text/html" featurecount="1"
+				infoformat="text/html" featurecount="3"
                 style="recensement_rond" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Service de l'inventaire : Région Bretagne" 
