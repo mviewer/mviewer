@@ -91,6 +91,14 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=9d19c331-3941-4545-8409-ec18cf88a544" />
         </theme>    
         <theme name="Transport maritime et fluvial"  collapsed="true" id="maritime"> 
+             <layer id="ecluse" name="Ecluse" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+					queryable="true" fields="nomecluse,photo" aliases="Nom,Photo"
+                    infoformat="application/vnd.ogc.gml" featurecount="1"
+					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+					style="" 
+					attribution="Région Bretagne" 
+					metadata-csw="http://applications.region-bretagne.fr/geosource/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=774a2065-339f-4802-a50f-4b84b6ca249f"
+					metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=774a2065-339f-4802-a50f-4b84b6ca249f" />  
              <layer id="port" name="Port" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb" 
 					queryable="true" fields="libelle_po,statut" aliases="Nom,Statut"
                     infoformat="application/vnd.ogc.gml" featurecount="1"                    
@@ -99,22 +107,14 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					attribution="Région Bretagne" 
 					metadata-csw="http://applications.region-bretagne.fr/geosource/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=c55c4fba-6a37-48ea-8754-a1bf770a684b"
 					metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=c55c4fba-6a37-48ea-8754-a1bf770a684b" />                
-                <layer id="voie_navigable" name="Voie navigable" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+             <layer id="voie_navigable" name="Voie navigable" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
 					queryable="true" fields="nom,proprietaire,concession,gestionnaire" aliases="Nom,Propriétaire,Concessionnaire,Gestionnaire"
                     infoformat="application/vnd.ogc.gml" featurecount="1"
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 					style="" 
 					attribution="Région Bretagne" 
 					metadata-csw="http://applications.region-bretagne.fr/geosource/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=7cab44b0-4639-43f2-a824-3eecb7d3bf66"
-					metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=7cab44b0-4639-43f2-a824-3eecb7d3bf66" />  
-               <layer id="ecluse" name="Ecluse" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
-					queryable="true" fields="nomecluse,photo" aliases="Nom,Photo"
-                    infoformat="application/vnd.ogc.gml" featurecount="1"
-					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
-					style="" 
-					attribution="Région Bretagne" 
-					metadata-csw="http://applications.region-bretagne.fr/geosource/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=774a2065-339f-4802-a50f-4b84b6ca249f"
-					metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=774a2065-339f-4802-a50f-4b84b6ca249f" />  
+					metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=7cab44b0-4639-43f2-a824-3eecb7d3bf66" /> 
         </theme> 
         <theme name="Inventaire du patrimoine"  collapsed="true" id="patrimoine">           
 			<layer id="inventaire_patrimoine" name="Patrimoine régional" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="rb"
