@@ -397,6 +397,7 @@ font-family: "Trebuchet MS",Helvetica,Arial,sans-serif;
 .popphoto {
 cursor: pointer;
 max-width:100%;
+max-height: 210px;
 }
 
 .close-panel-wrapper{
