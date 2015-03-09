@@ -40,10 +40,20 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 			visible="false" attribution="Map tiles by  &lt;a href='http://stamen.com/'>Stamen Design &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
         <baselayer  type="OSM" id="stamen1" label="Toner-lite" title="Stamen Design" thumbgallery="img/basemap/toner-lite.png" 
 			url="http://{a-d}.tile.stamen.com/toner-lite/{z}/{x}/{y}.png" maxzoom="20" 
-			visible="false" attribution="Map tiles by  &lt;a href='http://stamen.com/'>Stamen Design &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />		  
-        <baselayer  type="WMTS" id="scan2" label="Cartes IGN" title="GéoPortail" maxscale="2000" thumbgallery="img/basemap/scan.jpg"
-            url="../wmts" layers="GEOGRAPHICALGRIDSYSTEMS.MAPS" format="image/jpeg" visible="false" fromcapacity="false"
-            attribution="&lt;a href='http://www.geoportail.fr/' target='_blank'>&lt;img src='http://api.ign.fr/geoportail/api/js/latest/theme/geoportal/img/logo_gp.gif'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
+			visible="false" attribution="Map tiles by  &lt;a href='http://stamen.com/'>Stamen Design &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />		
+        <baselayer  type="OSM" id="comic" label="Carte Comis Sans" title="MapBox" thumbgallery="img/basemap/comic.png" 
+			url="http://{a-d}.tiles.mapbox.com/v3/examples.bc17bb2a/{z}/{x}/{y}.png" maxzoom="20" 
+			visible="false" attribution="Map tiles by  &lt;a href='http://www.mapbox.com.com/'>Mapbox &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="OSM" id="handdrawn" label="Hand Drawn" title="MapBox" thumbgallery="img/basemap/handdrawn.png" 
+			url="http://{a-d}.tiles.mapbox.com/v3/examples.a4c252ab/{z}/{x}/{y}.png" maxzoom="20" 
+			visible="false" attribution="Map tiles by  &lt;a href='http://www.mapbox.com.com/'>Mapbox &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="OSM" id="pirate" label="Pirate" title="MapBox" thumbgallery="img/basemap/pirate.png" 
+			url="http://{a-d}.tiles.mapbox.com/v3/examples.a3cad6da/{z}/{x}/{y}.png" maxzoom="20" 
+			visible="false" attribution="Map tiles by  &lt;a href='http://www.mapbox.com.com/'>Mapbox &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="OSM" id="darkmatter" label="Dark Matter" title="CartoDb" thumbgallery="img/basemap/darkmatter.png" 
+			url="http://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png" maxzoom="20" 
+			visible="false" attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+       
     </baselayers> 
     <authentification url="who" loginurl="?login" logouturl="../j_spring_security_logout" enabled="true"/>
     <proxy url="../proxy/?url="/>
@@ -91,14 +101,6 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=9d19c331-3941-4545-8409-ec18cf88a544" />
         </theme>    
         <theme name="Transport maritime et fluvial"  collapsed="true" id="maritime"> 
-             <layer id="ecluse" name="Ecluse" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
-					queryable="true" fields="nomecluse,photo" aliases="Nom,Photo"
-                    infoformat="application/vnd.ogc.gml" featurecount="1"
-					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
-					style="" 
-					attribution="Région Bretagne" 
-					metadata-csw="http://applications.region-bretagne.fr/geosource/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=774a2065-339f-4802-a50f-4b84b6ca249f"
-					metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=774a2065-339f-4802-a50f-4b84b6ca249f" />  
              <layer id="port" name="Port" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb" 
 					queryable="true" fields="libelle_po,statut" aliases="Nom,Statut"
                     infoformat="application/vnd.ogc.gml" featurecount="1"                    
@@ -107,14 +109,22 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					attribution="Région Bretagne" 
 					metadata-csw="http://applications.region-bretagne.fr/geosource/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=c55c4fba-6a37-48ea-8754-a1bf770a684b"
 					metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=c55c4fba-6a37-48ea-8754-a1bf770a684b" />                
-             <layer id="voie_navigable" name="Voie navigable" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+                <layer id="voie_navigable" name="Voie navigable" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
 					queryable="true" fields="nom,proprietaire,concession,gestionnaire" aliases="Nom,Propriétaire,Concessionnaire,Gestionnaire"
                     infoformat="application/vnd.ogc.gml" featurecount="1"
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 					style="" 
 					attribution="Région Bretagne" 
 					metadata-csw="http://applications.region-bretagne.fr/geosource/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=7cab44b0-4639-43f2-a824-3eecb7d3bf66"
-					metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=7cab44b0-4639-43f2-a824-3eecb7d3bf66" /> 
+					metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=7cab44b0-4639-43f2-a824-3eecb7d3bf66" />  
+               <layer id="ecluse" name="Ecluse" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+					queryable="true" fields="nomecluse,photo" aliases="Nom,Photo"
+                    infoformat="application/vnd.ogc.gml" featurecount="1"
+					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+					style="" 
+					attribution="Région Bretagne" 
+					metadata-csw="http://applications.region-bretagne.fr/geosource/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=774a2065-339f-4802-a50f-4b84b6ca249f"
+					metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=774a2065-339f-4802-a50f-4b84b6ca249f" />  
         </theme> 
         <theme name="Inventaire du patrimoine"  collapsed="true" id="patrimoine">           
 			<layer id="inventaire_patrimoine" name="Patrimoine régional" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="rb"

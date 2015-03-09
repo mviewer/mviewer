@@ -508,11 +508,13 @@ font-size:12px;
 #popup-content {
     padding-top: 20px;
     font-family: "Trebuchet MS",Helvetica,Arial,sans-serif;
+    font-size: 80%;
+    text-shadow: none;
 }
 
-#popup-content a {
+/*#popup-content a {
 color: #333;
-}
+}*/
 .ol-popup-closer {
     text-decoration: none;
     position: absolute;    
@@ -623,6 +625,54 @@ border-radius: 10px;
     font-size: 12px;
 }
 
+#selector {
+background: #f7f7f7;
+}
+
+#ulnav {
+background: #333;
+}
+/*#ulnav li>a {
+font-size: 80%;
+}
+#selector li.ui-tabs-active {
+font-size: 150%;
+}*/
+
+ul.bjqs-controls.v-centered li a{
+	display:block;
+	padding:10px;
+	background:#000;
+	color:#fff;
+	text-decoration: none;
+    margin-left: -15px;
+    margin-right: -15px;
+    border-radius: 10px
+}
+
+ul.bjqs-controls.v-centered li a:hover{
+	background:#f7f7f7;
+	color:#000;
+    border: #000;
+    border: 1px solid;
+}
+
+ol.bjqs-markers li a{
+	padding:5px 10px;
+	background:#000;
+	color:#fff;
+	margin:5px;
+	text-decoration: none;
+}
+
+ol.bjqs-markers li.active-marker a,
+ol.bjqs-markers li a:hover{
+	background: #999;
+}
+
+p.bjqs-caption{
+	background: rgba(255,255,255,0.5);
+}
 
 
 .ui-panel-closed #panel-header {
