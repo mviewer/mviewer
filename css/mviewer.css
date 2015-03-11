@@ -640,6 +640,14 @@ font-size: 80%;
 font-size: 150%;
 }*/
 
+ul.bjqs-controls.v-centered li.bjqs-prev a {
+  left: -25px!important;
+}
+
+ul.bjqs-controls.v-centered li.bjqs-next a {
+  right: -25px!important;
+}
+
 ul.bjqs-controls.v-centered li a{
 	display:block;
 	padding:10px;
