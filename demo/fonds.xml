@@ -53,6 +53,9 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
         <baselayer  type="OSM" id="darkmatter" label="Dark Matter" title="CartoDb" thumbgallery="img/basemap/darkmatter.png" 
 			url="http://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png" maxzoom="20" 
 			visible="false" attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="OSM" id="positron" label="Positron" title="CartoDb" thumbgallery="img/basemap/positron.png" 
+			url="http://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20" 
+			visible="false" attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
        
     </baselayers> 
     <authentification url="who" loginurl="?login" logouturl="../j_spring_security_logout" enabled="true"/>
@@ -85,7 +88,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
         <theme name="Transport collectif régional"  collapsed="true" id="transport">
             <layer id="transport_regional_arret" name="Point d'arrêt régional" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb" 
 				queryable="true" fields="nom_pa" aliases="Nom" 
-                infoformat="application/vnd.ogc.gml" featurecount="1"                
+                infoformat="text/html" featurecount="3"                
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				style="" 
 				attribution="Région Bretagne" 

@@ -75,7 +75,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
         <theme name="Transport collectif régional"  collapsed="true" id="transport">
             <layer id="transport_regional_arret" name="Point d'arrêt régional" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb" 
 				queryable="true" fields="nom_pa" aliases="Nom" 
-                infoformat="application/vnd.ogc.gml" featurecount="1"                
+                infoformat="text/html" featurecount="3"                
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				style="" 
 				attribution="Région Bretagne" 
