@@ -588,6 +588,18 @@ code {
     background-position: 2px 5px!important;
 }
 
+.ol-control button {
+  color: #fff;
+  background-color: #333;
+  height: 30px;
+  width: 30px;
+}
+
+.ol-control button:focus, .ol-control button:hover {
+  text-decoration: none;
+  background-color: #333;  
+}
+
 #themepanel .ui-block-a {
     margin-left: -5px;
 }
