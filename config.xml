@@ -92,7 +92,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
         </theme>    
         <theme name="Transport maritime et fluvial"  collapsed="true" id="maritime"> 
              <layer id="ecluse" name="Ecluse" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
-					queryable="true" fields="nomecluse,photo" aliases="Nom,Photo"
+					queryable="true" fields="nom_ecluse,photo" aliases="Nom,Photo"
                     infoformat="application/vnd.ogc.gml" featurecount="1"
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 					style="" 
