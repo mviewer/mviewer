@@ -75,7 +75,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
         <theme name="Transport collectif régional"  collapsed="true" id="transport">
             <layer id="transport_regional_arret" name="Point d'arrêt régional" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb" 
 				queryable="true" fields="nom_pa" aliases="Nom" 
-                infoformat="text/html" featurecount="3"                
+                infoformat="application/vnd.ogc.gml" featurecount="3"                
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				style="" 
 				attribution="Région Bretagne" 
@@ -173,22 +173,6 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=a6dde882-4334-4ce0-909f-adb8597ada97" />	
         </theme>
         <theme name="Limites cadastrales"  collapsed="true" id="cadastre">  
-			<layer id="CP.CadastralBuilding" name="Bâti" scalemin="0" scalemax="25000" visible="false" tiled="true"
-				queryable="false" fields="" aliases=""
-                infoformat="application/vnd.ogc.gml" featurecount="1"                
-				style="cadastre_bati_rb" 
-				url="http://geobretagne.fr/geoserver/cadastre/wms" 
-				attribution="DGFIP" 
-				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=0ca82e1d-b487-4879-8185-56b7c4e1a948"
-				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0ca82e1d-b487-4879-8185-56b7c4e1a948" />	
-            <layer id="CP.CadastralParcel" name="Parcelle cadastrale" scalemin="0" scalemax="50000" visible="false" tiled="true"
-				queryable="false" fields="label,nom_commune,areavalue" aliases="Parcelle,Commune,Surface"
-                infoformat="application/vnd.ogc.gml" featurecount="1"             
-				style="cadastre_parcelle_rb" 
-				url="http://geobretagne.fr/geoserver/cadastre/wms" 
-				attribution="DGFIP" 
-				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=0ca82e1d-b487-4879-8185-56b7c4e1a948" 
-				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0ca82e1d-b487-4879-8185-56b7c4e1a948" />
 			<layer id="CP.CadastralZoning" name="Sections" scalemin="0" scalemax="50000" visible="false" tiled="false"
 				queryable="false" fields="label,nom_commune" aliases="Section,Commune"
                 infoformat="application/vnd.ogc.gml" featurecount="1"
@@ -197,7 +181,23 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="DGFIP" 
 				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=0ca82e1d-b487-4879-8185-56b7c4e1a948" 
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0ca82e1d-b487-4879-8185-56b7c4e1a948" />                        
-        </theme>
+            <layer id="CP.CadastralBuilding" name="Bâti" scalemin="0" scalemax="25000" visible="false" tiled="true"
+				queryable="false" fields="" aliases=""
+                infoformat="application/vnd.ogc.gml" featurecount="1"                
+				style="cadastre_bati_rb" 
+				url="http://geobretagne.fr/geoserver/cadastre/wms" 
+				attribution="DGFIP" 
+				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=0ca82e1d-b487-4879-8185-56b7c4e1a948"
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0ca82e1d-b487-4879-8185-56b7c4e1a948" />	
+            <layer id="CP.CadastralParcel" name="Parcelle cadastrale" scalemin="0" scalemax="50000" visible="false" tiled="true"
+				queryable="true" fields="label,nom_commune,areavalue" aliases="Parcelle,Commune,Surface"
+                infoformat="application/vnd.ogc.gml" featurecount="1"             
+				style="cadastre_parcelle_rb" 
+				url="http://geobretagne.fr/geoserver/cadastre/wms" 
+				attribution="DGFIP" 
+				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=0ca82e1d-b487-4879-8185-56b7c4e1a948" 
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0ca82e1d-b487-4879-8185-56b7c4e1a948" />
+		</theme>
         <theme name="Limites administratives"  collapsed="true" id="territoire">  
 			<layer id="commune_bdcarto" name="Commune" scalemin="0" scalemax="50000000" visible="false" tiled="false"
 				queryable="true" fields="COMMUNE,INSEE_COM,SUPERFICIE" aliases="Nom,Code INSEE,Superficie"
