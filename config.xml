@@ -215,7 +215,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="GéoBretagne" 
 				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=2298d744-49cb-4fcb-9487-26f916fecdff" 
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=2298d744-49cb-4fcb-9487-26f916fecdff" />			
-            <layer id="n_pays" name="Pays" scalemin="0" scalemax="50000000" visible="false" tiled="true"
+            <layer id="n_pays" name="Pays" scalemin="0" scalemax="50000000" visible="true" tiled="true"
 				queryable="true" fields="LIBELLE" aliases="Nom"
                 infoformat="text/html" featurecount="1"             
 				style="pays_region" 
