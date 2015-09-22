@@ -132,7 +132,7 @@ p.center { text-align: center; }
 
 #searchresults li a {
 	font-size: 12.5px !important;
-	padding: 0.4em 15px !important;
+	/*padding: 0.4em 15px !important;*/
 }
 
 #measurelinebar , #measureareabar{
