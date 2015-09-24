@@ -132,7 +132,7 @@ $(document).ready(function () {
 		<!--<div id="logo">
 			<a href="http://www.bretagne.fr" target="_blank" title="Accéder au site de Bretagne.fr"><img src="img/logo/RB_NB.png" alt="Lien site bretagne.fr"/></a>
 		</div>	-->	
-		<!-- TOP MENU BAR  -->		
+		<!-- TOP MENU BAR  -->        
 		<div id="searchtool" class="ui-btn-leftt" data-inline="true">
 			<input type="search" id="searchfield" placeholder="Localiser..." title="Localiser une adresse" data-mini="true" data-theme="b" tabindex="2" accesskey="2" />
 			<ul id="searchresults" data-role="listview" data-inset="true" data-mini="true" data-theme="b" 
@@ -162,7 +162,9 @@ $(document).ready(function () {
 				data-role="button" data-icon="lock" data-iconpos="notext" data-theme="b" style="display:none;"></a>
 			<a href="#sharepanel" onclick="mviewer.mapShare();" id="sharebtn" title="Partager cette carte" 
 				data-rel="popup" data-transition="flip" data-position-to="window" data-role="button" data-enhanced="true" data-iconshadow="false"
-				data-icon="action" data-iconpos="notext" data-theme="b" tabindex="109" accesskey="9"></a>			
+				data-icon="action" data-iconpos="notext" data-theme="b" tabindex="109" accesskey="9"></a>
+            <a href="#parameterspanel" id="searchparams" title="Paramètres de recherche" data-position-to="window" 
+				data-role="button" data-rel="popup" data-icon="gear" data-iconpos="notext" data-theme="b" ></a>
 		</div>
 		<!-- MEASURES INFOS BOXES -->		
 		<div id="measurelinebar" data-role="controlgroup" data-type="horizontal" data-mini="true" data-theme="b">
@@ -191,6 +193,26 @@ $(document).ready(function () {
 			</div>
 			<div data-role="content">
 				<div id="usage"></div>
+			</div>
+		</div>
+        <!-- USAGE PANEL -->
+		<div id="parameterspanel" data-role="popup" data-theme="b">
+			<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" 
+				class="ui-btn-right">Fermer</a>
+			<div data-role="header">
+				<h2>paramètres de recherche</h2>
+			</div>
+			<div data-role="content">
+				<form>
+                    <fieldset data-role="controlgroup" data-mini="true" id="searchparameters">                        
+                        <input type="checkbox" name="param_search_bbox" id="param_search_bbox" checked="true">
+                        <label for="param_search_bbox">Rechercher dans l'emprise de la carte</label>
+                        <input type="checkbox" name="param_search_localities" id="param_search_localities">
+                        <label for="param_search_localities">Rechercher des adresses</label>
+                        <input class="searchfeatures" type="checkbox" name="param_search_features" id="param_search_features">
+                        <label class="searchfeatures" for="param_search_features">Rechercher des entités</label>
+                    </fieldset>
+                </form>
 			</div>
 		</div>
         <!-- ACCESSIBILITY PANEL -->
