@@ -126,8 +126,11 @@ Représente les fonds de plan.
 
 Lien vers votre proxy permmettant l'interrogation des couches.
 
-####Prototype 
- <proxy url=""/>
+####Prototype
+
+ 
+	<proxy url="" />
+ 
 
 ####Attributs
 
@@ -140,7 +143,9 @@ Liens vers service d'autocomplétion et de géocodage.
 
 ####Prototype
 
- <olscompletion url="" [type=""]/>
+
+	<olscompletion url="" [type=""] />
+ 
 
 ####Attributs
 
@@ -153,7 +158,7 @@ Liens vers un index elasticsearch.
 
 ####Prototype
 
- <elasticsearch url="" geometryfield="" [querymode=""]/>
+	<elasticsearch url="" geometryfield="" [querymode=""] />
 
 ####Attributs
 
@@ -167,7 +172,7 @@ Options liées à à la recherche d'adresse (olscompletion) et à la recherche d
 
 ####Prototype
 
- <searchparameters [bbox=""] [localities=""] [features=""]/>
+	<searchparameters [bbox=""] [localities=""] [features=""]/>
 
 ####Attributs
 
