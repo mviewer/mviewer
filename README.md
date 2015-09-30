@@ -35,7 +35,9 @@ Le fichier de config permet la personnalisation des thèmes/couches du visualise
 
     <proxy url="../proxy/?url="/>
 
-    <olscompletion url="../olscompletion"/>
+    <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban"/>     
+    <elasticsearch url="http://ows.region-bretagne.fr/kartenn/_search" geometryfield="geometry" querymode="fussy_like_this"/>
+    <searchparameters bbox="true" localities="false" features="true"/>
 
     <themes> 
         <theme name="Inventaire du patrimoine"  collapsed="true" id="patrimoine">           
@@ -134,15 +136,44 @@ Lien vers votre proxy permmettant l'interrogation des couches.
 
 ###olscompletion
 
-Liens vers votre plugin d'autocomplétion et de géo-codage.
+Liens vers service d'autocomplétion et de géocodage.
 
 ####Prototype
 
- <olscompletion url=""/>
+ <olscompletion url="" [type=""]/>
 
 ####Attributs
 
-* **url**: Url vers votre plugin
+* **url**: Url du service d'autocomplétion d'adresse
+* **type**: Optional - Type de service utilisé geoportail ou ban - defaut = geoportail
+
+###elasticsearch
+
+Liens vers un index elasticsearch.
+
+####Prototype
+
+ <elasticsearch url="" geometryfield="" [querymode=""]/>
+
+####Attributs
+
+* **url**: Url de l'API Search
+* **geometryfield**: Nom du champ utilisé par l'instance elasticsearch pour stocker la géométrie
+* **querymode**: Optional - Query mode used by elasticsearch to find results : fuzzy_like_this ou fussy - default = fuzzy_like_this.
+
+###searchparameters
+
+Options liées à à la recherche d'adresse (olscompletion) et à la recherche d'entités (elasticsearch).
+
+####Prototype
+
+ <searchparameters [bbox=""] [localities=""] [features=""]/>
+
+####Attributs
+
+* **bbox**: Optional - Recherche d'adresse et/ou d'entités dans l'emprise de la carte : true ou false - defaut = false
+* **localities**: Optional - Utilisation du service d'adresse olscompletion : true ou false - defaut = true
+* **features**: Optional - Utilisation du service de recherche d'entités elasticsearch : true ou false - defaut = true.
 
 ###Noeud themes
 
