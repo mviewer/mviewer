@@ -164,7 +164,7 @@ Liens vers un index elasticsearch.
 
 * **url**: Url de l'API Search
 * **geometryfield**: Nom du champ utilisé par l'instance elasticsearch pour stocker la géométrie
-* **querymode**: Optional - Query mode used by elasticsearch to find results : fuzzy_like_this ou fussy - default = fuzzy_like_this.
+* **querymode**: Optional - Query mode used by elasticsearch to find results : fuzzy_like_this ou term - default = fuzzy_like_this.
 
 ###searchparameters
 
