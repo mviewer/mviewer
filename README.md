@@ -21,6 +21,7 @@ Le fichier de config permet la personnalisation des thèmes/couches du visualise
 
 	<?xml version="1.0" encoding="UTF-8"?>
 	<config>
+    <application title="" logo="" help="" />
     <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
     <mapoptions maxzoom="18" projection="EPSG:3857" center="-403013.39038929436,6128402.399153711" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
    
@@ -61,6 +62,20 @@ Le fichier de config permet la personnalisation des thèmes/couches du visualise
 
 
 
+
+###Noeud application
+
+Personnalisation de l'application (overriding)
+
+####Prototype 
+
+	 <application title="" logo=""  help="" />
+
+####Attributs 
+
+* **title**: Titre de l'application || Kartenn.
+* **logo**: Url du logo || img/logo/bandeau_region.png.
+* **help**: Url du fichier d'aide || aide_kartenn.pdf.
 
 ###Noeud mapoptions
 
