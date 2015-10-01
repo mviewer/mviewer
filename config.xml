@@ -48,7 +48,10 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
     <authentification url="who" loginurl="?login" logouturl="../j_spring_security_logout" enabled="true"/>
     <proxy url="../proxy/?url="/>
     <!--<olscompletion url="http://gpp3-wxs.ign.fr/5kiwvtkb2v23y0x8chidxbij/ols/apis/completion"/>-->
-    <olscompletion url="../olscompletion"/>
+    <olscompletion url="../olscompletion" type="geoportail"/>
+    <!--<olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban"/>-->
+    <elasticsearch url="" geometryfield="geometry" querymode="fussy_like_this"/>
+    <searchparameters bbox="false" localities="true" features="false"/>
 	<widgets>
        <!--<widget name="gauge"/>-->       
     </widgets> 
