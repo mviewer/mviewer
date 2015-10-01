@@ -76,7 +76,7 @@ Personnalisation de l'application (overriding)
 * **title**: Titre de l'application || Kartenn.
 * **logo**: Url du logo || img/logo/bandeau_region.png.
 * **help**: Url du fichier d'aide || aide_kartenn.pdf.
-* **exportpng**: Enables map export as png file  true/false || false.
+* **exportpng**: Enables map export as png file  true/false || false. Export is possible only with local layers (same origin) or with layers served with CORS
 
 ###Noeud mapoptions
 
