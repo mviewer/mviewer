@@ -154,10 +154,12 @@ $(document).ready(function () {
 		<div id="toolstoolbar" data-role="controlgroup"  data-mini="true">
 			<!--<a href="#themepanel" data-rel="panel" id="extra" title="Afficher la table des matières" 
 				data-role="button" data-icon="layers" data-iconpos="notext" data-theme="b" tabindex="107" accesskey="7"></a>-->
-			<!--<a href="#" onclick="mviewer.setTool('info');" id="infobtn" title="Information sur la carte" 
-				data-role="button" data-icon="info" data-iconpos="notext" data-theme="b" tabindex="108" accesskey="8"></a>-->
-			<!--<a href="#" onclick="mviewer.setTool('measureline');" id="measurelinebtn" title="Mesure linéaire" 
-				data-role="button" data-icon="custom" data-iconpos="notext" data-theme="b"></a>-->
+			<a href="#" onclick="mviewer.setTool('info');" id="infobtn" title="Interroger la carte" 
+				data-role="button" data-icon="info" data-iconpos="notext" data-theme="b" tabindex="108" accesskey="8"></a>
+			<a href="#" onclick="mviewer.setTool('measureline');" id="measurelinebtn" title="Mesure linéaire" 
+				data-role="button" data-icon="edit" data-iconpos="notext" data-theme="b"></a>
+            <a href="#" onclick="mviewer.setTool('measurearea');" id="measureareabtn" title="Mesure surfacique" 
+				data-role="button" data-icon="tag" data-iconpos="notext" data-theme="b"></a>
 			<a href="?login" id="login" title="Se connecter" 
 				data-role="button" data-icon="lock" data-iconpos="notext" data-theme="b" style="display:none;"></a>
 			<a href="#sharepanel" onclick="mviewer.mapShare();" id="sharebtn" title="Partager cette carte" 
