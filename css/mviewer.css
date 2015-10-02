@@ -756,3 +756,19 @@ p.bjqs-caption{
   border-top-color: #ffcc33;
 }
 
+.theme-layers-btn {
+    position: absolute;
+    right: 3px;
+}
+
+.theme-layers-status-2 {
+  background-color: red!important;
+}
+
+.theme-layers-status-1 {
+  background-color: yellow!important;
+}
+
+.theme-layers-status- {
+  background-color: white!important;
+}
