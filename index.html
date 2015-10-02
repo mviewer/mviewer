@@ -90,8 +90,7 @@ $(document).ready(function () {
 		<!-- THEME PANEL LEFT OVERLAY  -->
 		<div id="themepanel" data-role="panel" data-position="left"  data-display="overlay" data-theme="b" data-dismissible="false" data-swipe-close="false">			
 			<div id="panel-header">
-                 <img src="img/logo/bandeau_region.png" alt="bandeau région"/>
-                 <!--<a href="#" id="panel-closer" data-role="button" data-icon="delete" data-iconpos="notext" data-theme="b" data-inline="true" onclick="$('#themepanel').panel('close');" >Fermer ce panneau</a>-->
+                 <img src="img/logo/bandeau_region.png" alt="bandeau région"/>                 
             </div>
             <div class="ui-grid-a">
 				<div class="ui-block-a">
@@ -113,7 +112,7 @@ $(document).ready(function () {
                     <a href="#contactpanel" data-rel="popup" data-position-to="window" 
                         title="Nous contacter">Nous contacter</a>
                 </div>
-                <!--<img src="img/panel-footer.png" alt="Les 9 missions principales de la région Bretagne"/>-->            </div>
+            </div>
         <button class="ui-shadow ui-nodisc-icon ui-icon-carat-l ui-btn ui-btn-b ui-btn-icon-notext" id="tick-button" onclick="$('#themepanel').panel('toggle');" ></button>    
 		</div>        
 		<!--  MAP  -->
@@ -123,15 +122,9 @@ $(document).ready(function () {
                 <div id="popup-content"></div>
             </div>
         </div>
-        <img id="marker" src="img/marker2.svg" />
-        <!--<div data-role="footer" data-position="fixed">
-            <h4>Powered by jQuery Mobile</h4>
-        </div>-->
-        <button class="ui-shadow ui-nodisc-icon ui-icon-carat-r ui-btn ui-btn-b ui-btn-icon-notext" id="tick-button2" onclick="$('#themepanel').panel('toggle');" ></button>
-		<!-- LOGO  -->
-		<!--<div id="logo">
-			<a href="http://www.bretagne.fr" target="_blank" title="Accéder au site de Bretagne.fr"><img src="img/logo/RB_NB.png" alt="Lien site bretagne.fr"/></a>
-		</div>	-->	
+        <!-- MARKER USED BY SEARCH IN FEATURES FUNCTIONNALITY, TO LOCATE SELECTED FEATURE ON THE MAP-->
+        <img id="els_marker" src="img/marker2.svg" />        
+        <button class="ui-shadow ui-nodisc-icon ui-icon-carat-r ui-btn ui-btn-b ui-btn-icon-notext" id="tick-button2" onclick="$('#themepanel').panel('toggle');" ></button>		
 		<!-- TOP MENU BAR  -->        
 		<div id="searchtool" class="ui-btn-leftt" data-inline="true">
 			<input type="search" id="searchfield" placeholder="Localiser..." title="Localiser une adresse" data-mini="true" data-theme="b" tabindex="2" accesskey="2" />
@@ -140,7 +133,7 @@ $(document).ready(function () {
 		</div>
 		<div id="backgroundlayerstoolbar"  data-mini="true" data-theme="b" >			
 		</div>				
-		<!-- VERTICAL LEFT TOOLBAR -->
+		<!-- FIRST VERTICAL RIGHT TOOLBAR -->
 		<div id="zoomtoolbar" data-role="controlgroup" data-mini="true">
 			<a href="#" onclick="mviewer.zoomIn();" title="Zoom avant (zoom fenêtre : shift + clic sur la carte)" 
 				data-role="button" data-icon="plus" data-iconpos="notext" data-theme="b" tabindex="104" accesskey="4" ></a>
@@ -150,42 +143,30 @@ $(document).ready(function () {
 			<a href="#" onclick="mviewer.zoomOut();" title="Zoom arrière" data-role="button" 
 				data-icon="minus" data-iconpos="notext" data-theme="b" tabindex="106" accesskey="6"></a>
 		</div>	
-		<!-- VERTICAL RIGHT TOOLBAR -->
-		<div id="toolstoolbar" data-role="controlgroup"  data-mini="true">
-			<!--<a href="#themepanel" data-rel="panel" id="extra" title="Afficher la table des matières" 
-				data-role="button" data-icon="layers" data-iconpos="notext" data-theme="b" tabindex="107" accesskey="7"></a>-->
+		<!-- SECOND VERTICAL RIGHT TOOLBAR -->
+		<div id="toolstoolbar" data-role="controlgroup"  data-mini="true">			
 			<a href="#" onclick="mviewer.setTool('info');" id="infobtn" title="Interroger la carte" 
-				data-role="button" data-icon="info" data-iconpos="notext" data-theme="b" tabindex="108" accesskey="8"></a>
+				data-role="button" data-icon="info" data-iconpos="notext" data-theme="b" tabindex="107" accesskey="7"></a>
 			<a href="#" onclick="mviewer.setTool('measureline');" id="measurelinebtn" title="Mesure linéaire" 
-				data-role="button" data-icon="edit" data-iconpos="notext" data-theme="b"></a>
+				data-role="button" data-icon="edit" data-iconpos="notext" data-theme="b" tabindex="108" accesskey="8"></a>
             <a href="#" onclick="mviewer.setTool('measurearea');" id="measureareabtn" title="Mesure surfacique" 
-				data-role="button" data-icon="tag" data-iconpos="notext" data-theme="b"></a>
-			<a href="?login" id="login" title="Se connecter" 
+				data-role="button" data-icon="tag" data-iconpos="notext" data-theme="b" tabindex="109" accesskey="9"></a>
+			<a href="?login" id="login" title="Se connecter" tabindex="110" accesskey="10"
 				data-role="button" data-icon="lock" data-iconpos="notext" data-theme="b" style="display:none;"></a>
 			<a href="#sharepanel" onclick="mviewer.mapShare();" id="sharebtn" title="Partager cette carte" 
 				data-rel="popup" data-transition="flip" data-position-to="window" data-role="button" data-enhanced="true" data-iconshadow="false"
-				data-icon="action" data-iconpos="notext" data-theme="b" tabindex="109" accesskey="9"></a>
+				data-icon="action" data-iconpos="notext" data-theme="b" tabindex="111" accesskey="11"></a>
             <a href="#parameterspanel" id="searchparams" title="Paramètres de recherche" data-position-to="window" 
-				data-role="button" data-rel="popup" data-icon="gear" data-iconpos="notext" data-theme="b" ></a>
-            <a href="#" id="exportpng" title="Export de la carte" download="map.png"
+				data-role="button" data-rel="popup" data-icon="gear" data-iconpos="notext" data-theme="b" tabindex="112" accesskey="12"></a>
+            <a href="#" id="exportpng" title="Export de la carte" download="map.png" tabindex="113" accesskey="13"
 				data-role="button" data-icon="arrow-d" data-iconpos="notext" data-theme="b" ></a>
-		</div>
-		<!-- MEASURES INFOS BOXES -->		
-		<div id="measurelinebar" data-role="controlgroup" data-type="horizontal" data-mini="true" data-theme="b">
-			<a href="#" onclick="mviewer.resetLineMeasure();" id="distancebtn" title="Réinitialiser" data-role="button" 
-				data-mini="true" data-iconpos="right" data-icon="delete" data-theme="b" >Distance : 0.0 m</a>
-		</div>
-		<div id="measureareabar" data-role="controlgroup" data-type="horizontal" data-mini="true" data-theme="b">
-			<a href="#" onclick="mviewer.resetAreaMeasure();" id="areabtn" title="Réinitialiser" data-role="button" 
-				data-mini="true" data-iconpos="right" data-icon="delete" data-theme="b" >Surface : 0.0 m²</a>
-		</div>
-		<!-- APPLICATION MESSAGEBOX -->
-		<a id='lnkmsg' href="#msgpanel" data-rel="popup" data-position-to="window" style='display:none;'></a>
-		<div id="msgpanel" data-role="popup" data-theme="b">
+		</div>		
+		<!-- APPLICATION MESSAGEBOX -->		
+		<div id="msgpanel" data-role="popup" data-theme="b" data-position-to="window">
 			<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" 
 				class="ui-btn-right">Fermer</a>
 			<div data-role="content">
-				<div id="msg">Envoi du message en cours ...</div>
+				<div id="msg">Information</div>
 			</div>
 		</div>
 		<!-- USAGE PANEL -->
@@ -199,7 +180,7 @@ $(document).ready(function () {
 				<div id="usage"></div>
 			</div>
 		</div>
-        <!-- USAGE PANEL -->
+        <!-- SEARCH PARAMETERS PANEL -->
 		<div id="parameterspanel" data-role="popup" data-theme="b">
 			<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" 
 				class="ui-btn-right">Fermer</a>
