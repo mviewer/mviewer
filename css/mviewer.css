@@ -101,20 +101,10 @@ p.center { text-align: center; }
 	right: 10px;
 }
 
-#measurelinebtn .ui-icon {
-	background:  url(../img/btn/measureline.png) 50% 50% no-repeat; 
-	background-size: 18px 18px; 
-}
-
-#measureareabtn .ui-icon {
-	background:  url(../img/btn/measurearea.png) 50% 50% no-repeat; 
-	background-size: 18px 18px; 
-}
-
-#sharebtn .ui-icon {
+/*#sharebtn .ui-icon {
 	background:  url(../img/btn/share.png) 50% 50% no-repeat; 
 	background-size: 18px 18px; 
-}
+}*/
 
 
 #themepanel .ui-content{
@@ -774,3 +764,13 @@ p.bjqs-caption{
 .theme-layers-status- {
   background-color: white!important;
 }
+
+.ui-icon-measureline:after {
+	background-image: url(../img/btn/measureline.svg)
+}
+
+.ui-icon-measurearea:after {
+	background-image: url(../img/btn/measurearea.svg)
+}
+
+
