@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"  width="14px" height="14px" viewBox="0 0 14 14" style="enable-background:new 0 0 14 14;" xml:space="preserve">>
-  <polyline points="0,0 7,12 14,7" style="fill:none;stroke:white;stroke-width:2" /> 
+  <polyline points="1,1 6.5,10 13,6.5" style="fill:none;stroke:white;stroke-width:2" /> 
+  <!-- Points -->
+  <!-- <circle cx="1" cy="1" r="2" fill="white"/>
+  <circle cx="6.5" cy="10" r="2" fill="white"/>
+  <circle cx="13" cy="6.5" r="2" fill="white"/> -->
 </svg>
