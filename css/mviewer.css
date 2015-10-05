@@ -725,25 +725,26 @@ p.bjqs-caption{
 
 .tooltip {
   position: relative;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 1);
   border-radius: 4px;
   color: white;
   padding: 4px 8px;
-  opacity: 0.7;
+  opacity: 1;
   white-space: nowrap;
+  text-shadow: none;
 }
 .tooltip-measure {
   opacity: 1;
-  font-weight: bold;
+  font-weight: bold; 
 }
 .tooltip-static {
-  background-color: #ffcc33;
+  background-color: rgba(34, 170, 221, 0.5);
   color: black;
   border: 1px solid white;
 }
 .tooltip-measure:before,
 .tooltip-static:before {
-  border-top: 6px solid rgba(0, 0, 0, 0.5);
+  border-top: 6px solid rgba(0, 0, 0, 1);
   border-right: 6px solid transparent;
   border-left: 6px solid transparent;
   content: "";
@@ -753,12 +754,13 @@ p.bjqs-caption{
   left: 50%;
 }
 .tooltip-static:before {
-  border-top-color: #ffcc33;
+  border-top-color: rgba(34, 170, 221, 0.5);
 }
 
 .theme-layers-btn {
     position: absolute;
     right: 3px;
+    padding-right: 1px;
 }
 
 .theme-layers-status-2 {
