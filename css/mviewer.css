@@ -751,6 +751,7 @@ p.bjqs-caption{
     position: absolute;
     right: 3px;
     padding-right: 1px;
+    border-width: 0px!important;
 }
 
 .theme-layers-status-2 {
