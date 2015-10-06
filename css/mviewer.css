@@ -775,12 +775,15 @@ p.bjqs-caption{
 }
 
 .ui-icon-layerstatus0:after {
-	background-image: url(../img/btn/layerstatus0.svg)
+	background-image: url(../img/btn/layerstatus0.svg);
+    background-color: rgba(0,0,0,0)!important;
 }
 
 .ui-icon-layerstatus1:after {
-	background-image: url(../img/btn/layerstatus1.svg)
+	background-image: url(../img/btn/layerstatus1.svg);
+    background-color: rgba(0,0,0,0)!important;
 }
 .ui-icon-layerstatus2:after {
-	background-image: url(../img/btn/layerstatus2.svg)
+	background-image: url(../img/btn/layerstatus2.svg);
+    background-color: rgba(0,0,0,0)!important;
 }
