@@ -44,6 +44,7 @@ Le fichier de config permet la personnalisation des thèmes/couches du visualise
         <theme name="Inventaire du patrimoine"  collapsed="true" id="patrimoine">           
 			<layer id="inventaire_patrimoine" name="Patrimoine régional" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="rb"
 				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+                useproxy="false"
                 infoformat="text/html" featurecount="1"
 				style="" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -69,7 +70,7 @@ Personnalisation de l'application (overriding)
 
 ####Prototype 
 
-	 <application title="" logo=""  help="" />
+	 <application title="" logo=""  help="" exportpng="" measuretools=""/>
 
 ####Attributs 
 
@@ -226,6 +227,7 @@ Noeud enfant de theme décrivant une couche.
 
 	<layer id="" name="" scalemin="" scalemax="" visible="" tiled="" namespace=""
 	queryable="" fields="" aliases=""
+    useproxy=""
 	infoformat="" featurecount=""
 	style=""
 	url=""
@@ -244,6 +246,7 @@ Noeud enfant de theme décrivant une couche.
 * **tiled**: Booléen stipluant est ce que la couche est tuilée
 * **namespace**: Namespace où est située la couche
 * **queryable**: Booléen stipulant est ce que la couche est intérrogeable via un GetFeatureInfo
+* **useproxy**: Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de de crossOrigin lorsque CORS n'est pas activé sur le serveur distant.
 * **fields**: Si les informations retournées par l'interrogation est au format GML, fields représente les attributs à parser pour générer la vignette
 * **aliases**: Si les informations retournées par l'interrogation est au format GML, aliasess représente le renommage des fields parsés.
 * **infoformat**: Format du GetFeatureInfo.
