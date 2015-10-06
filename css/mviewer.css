@@ -774,4 +774,13 @@ p.bjqs-caption{
 	background-image: url(../img/btn/measurearea.svg)
 }
 
+.ui-icon-layerstatus0:after {
+	background-image: url(../img/btn/layerstatus0.svg)
+}
 
+.ui-icon-layerstatus1:after {
+	background-image: url(../img/btn/layerstatus1.svg)
+}
+.ui-icon-layerstatus2:after {
+	background-image: url(../img/btn/layerstatus2.svg)
+}
