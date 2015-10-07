@@ -147,10 +147,8 @@ $(document).ready(function () {
 		<div id="toolstoolbar" data-role="controlgroup"  data-mini="true">			
 			<a class="mv-modetools" href="#" onclick="mviewer.setTool('info');" id="infobtn" title="Interroger la carte" 
 				data-role="button" data-icon="info" data-iconpos="notext" data-theme="b" tabindex="107" accesskey="7"></a>
-			<a class="mv-modetools" href="#" onclick="mviewer.setTool('measureline');" id="measurelinebtn" title="Mesure linéaire" 
-				data-role="button" data-icon="measureline" data-iconpos="notext" data-theme="b" tabindex="108" accesskey="8"></a>
-            <a class="mv-modetools" href="#" onclick="mviewer.setTool('measurearea');" id="measureareabtn" title="Mesure surfacique"  
-				data-role="button" data-icon="measurearea" data-iconpos="notext" data-theme="b" tabindex="109" accesskey="9"></a>
+			<a class="mv-modetools" href="#" onclick="mviewer.setTool('measureline');" id="measurebtn" title="Mesures linéaires ou surfaciques" 
+				data-role="button" data-icon="measure" data-iconpos="notext" data-theme="b" tabindex="108" accesskey="8"></a>            
 			<a href="?login" id="login" title="Se connecter" tabindex="110" accesskey="10"
 				data-role="button" data-icon="lock" data-iconpos="notext" data-theme="b" style="display:none;"></a>
 			<a href="#sharepanel" onclick="mviewer.mapShare();" id="sharebtn" title="Partager cette carte" 
@@ -160,7 +158,13 @@ $(document).ready(function () {
 				data-role="button" data-rel="popup" data-icon="gear" data-iconpos="notext" data-theme="b" tabindex="112" accesskey="12"></a>
             <a href="#" id="exportpng" title="Export de la carte" download="map.png" tabindex="113" accesskey="13"
 				data-role="button" data-icon="arrow-d" data-iconpos="notext" data-theme="b" ></a>
-		</div>		
+		</div>
+        <div data-role="controlgroup" data-type="horizontal" data-theme="b" id="drawtoolsoptions" data-mini="true" style="display:none;"> 
+            <a href="#" id="measurelinebtn" title="Mesure linéaire" onclick="mviewer.setTool('measureline');" data-icon="measureline"
+                data-role="button" data-iconpos="notext" data-theme="b" class="ui-btn-active" ></a>
+            <a href="#" id="measureareabtn" title="Mesure surfacique" onclick="mviewer.setTool('measurearea');" data-icon="measurearea" 
+                data-role="button" data-iconpos="notext" data-theme="b"></a>
+        </div>
 		<!-- APPLICATION MESSAGEBOX -->		
 		<div id="msgpanel" data-role="popup" data-theme="b" data-position-to="window">
 			<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" 

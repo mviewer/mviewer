@@ -101,6 +101,12 @@ p.center { text-align: center; }
 	right: 10px;
 }
 
+#drawtoolsoptions {
+    position: fixed;
+	top: 180px;
+	right: 40px;
+}
+
 /*#sharebtn .ui-icon {
 	background:  url(../img/btn/share.png) 50% 50% no-repeat; 
 	background-size: 18px 18px; 
@@ -774,6 +780,9 @@ p.bjqs-caption{
 	background-image: url(../img/btn/measurearea.svg)
 }
 
+.ui-icon-measure:after {
+	background-image: url(../img/btn/set.png)
+}
 .ui-icon-layerstatus0:after {
 	background-image: url(../img/btn/layerstatus0.svg);
     background-color: rgba(0,0,0,0)!important;
