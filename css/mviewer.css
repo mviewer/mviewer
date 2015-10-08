@@ -783,6 +783,10 @@ p.bjqs-caption{
 .ui-icon-measure:after {
 	background-image: url(../img/btn/set.png)
 }
+
+.ui-icon-exportpng:after {
+	background-image: url(../img/btn/picture.svg)
+}
 .ui-icon-layerstatus0:after {
 	background-image: url(../img/btn/layerstatus0.svg);
     background-color: rgba(0,0,0,0)!important;
