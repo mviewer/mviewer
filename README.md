@@ -230,6 +230,7 @@ Noeud enfant de theme décrivant une couche.
     useproxy=""
 	infoformat="" featurecount=""
 	style=""
+    legendurl=""
 	url=""
 	attribution=""
 	metadata=""
@@ -252,6 +253,7 @@ Noeud enfant de theme décrivant une couche.
 * **infoformat**: Format du GetFeatureInfo.
 * **featurecount**: Nombre d'élèments retournés lors de l'intérrogation
 * **style**: Style de la couche
+* **legendurl**: url premettant de récupérer la légende. Si non défini, c'est un getFeatureLegend qui est effectué.
 * **url**: URL de la couche
 * **attribution**: Copyright de la couche.
 * **metadata**: Lien vers la fiche de metadonnées complète

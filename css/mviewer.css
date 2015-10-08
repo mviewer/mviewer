@@ -800,3 +800,7 @@ p.bjqs-caption{
 	background-image: url(../img/btn/layerstatus2.svg);
     background-color: rgba(0,0,0,0)!important;
 }
+
+img.mv-legend {
+  max-width: 275px;
+}
