@@ -602,6 +602,8 @@ code {
 
 #panel-header {
     overflow: visible;
+    background: #2a2a2a;
+    border-color: #2a2a2a;
 }
 
 #permaqr {
@@ -803,4 +805,12 @@ p.bjqs-caption{
 
 img.mv-legend {
   max-width: 275px;
+}
+
+.mv-title {
+  background-image: url(../img/logo/logo.svg);
+  background-repeat:no-repeat;
+  background-position-y: center;  
+  text-align: left!important;
+  padding-left: 100px!important;
 }

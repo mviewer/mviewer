@@ -90,8 +90,8 @@ $(document).ready(function () {
 	<div id="main" data-role="page" style="opacity: 0;">		
 		<!-- THEME PANEL LEFT OVERLAY  -->
 		<div id="themepanel" data-role="panel" data-position="left"  data-display="overlay" data-theme="b" data-dismissible="false" data-swipe-close="false">			
-			<div id="panel-header">
-                 <img src="img/logo/bandeau_region.png" alt="bandeau région"/>                 
+			<div id="panel-header" data-role="header">                   
+                 <h1 class="mv-title">Kartenn</h1>
             </div>
             <div class="ui-grid-a">
 				<div class="ui-block-a">
@@ -104,7 +104,7 @@ $(document).ready(function () {
 			<div id="datalist" data-role="collapsible-set" data-theme="b" data-content-theme="a" data-inset="false" ></div>				
             <div id="panel-footer">
                 <div id="mentionstoolbar">
-                    <a href="http://kartenn.region-bretagne.fr/mviewer/aide_kartenn.pdf"  
+                    <a href="http://kartenn.region-bretagne.fr/mviewer/aide_kartenn.pdf" class="mv-help"  
                         title="Aide à l'utilisation" target="_blank" >Aide</a> | 
                     <a href="#legalpanel" data-rel="popup" data-position-to="window" 
                         title="Mentions Légales">Mentions légales</a> | 
