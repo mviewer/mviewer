@@ -47,7 +47,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
     <proxy url="../proxy/?url="/>
     <!--<olscompletion url="../olscompletion" type="geoportail"/>-->
     <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban"/>     
-    <elasticsearch url="http://ows.region-bretagne.fr/kartenn/_search" geometryfield="geometry" querymode="fussy_like_this"/>
+    <elasticsearch url="http://ows.region-bretagne.fr/kartenn/_search" geometryfield="geometry" linkid="search_id" querymode="fussy_like_this" />
     <searchparameters bbox="true" localities="false" features="true"/>
 	<widgets>
        <!--<widget name="gauge"/>-->       

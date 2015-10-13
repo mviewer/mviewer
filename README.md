@@ -37,7 +37,7 @@ Le fichier de config permet la personnalisation des thèmes/couches du visualise
     <proxy url="../proxy/?url="/>
 
     <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban"/>     
-    <elasticsearch url="http://ows.region-bretagne.fr/kartenn/_search" geometryfield="geometry" querymode="fussy_like_this"/>
+    <elasticsearch url="http://ows.region-bretagne.fr/kartenn/_search" geometryfield="geometry" linkid="search_id" querymode="fussy_like_this"/>
     <searchparameters bbox="true" localities="false" features="true"/>
 
     <themes> 
@@ -172,16 +172,19 @@ Liens vers service d'autocomplétion et de géocodage.
 
 ###elasticsearch
 
-Liens vers un index elasticsearch.
+Liens vers un index elasticsearch. Cette fonctionnalité permet d'interroger un index Elasticsearch à partir d'une saisie libre example
+"Port de Brest". Le résultat retourné est une collection de documents disposant d'un champ commun avec les entités géographiques servies par l'instance
+WMS/WFS. Par convention les types elasticsearch ont le même nom que les couches wms/wfs.
 
 ####Prototype
 
-	<elasticsearch url="" geometryfield="" [querymode=""] />
+	<elasticsearch url="" geometryfield="" linkid="" [querymode=""] />
 
 ####Attributs
 
 * **url**: Url de l'API Search
 * **geometryfield**: Nom du champ utilisé par l'instance elasticsearch pour stocker la géométrie
+* **linkid**: Nom du champ  à utiliser côté serveur wms/wfs pour faire le lien avec la propriété _id des documents elasticsearch.
 * **querymode**: Optional - Query mode used by elasticsearch to find results : fuzzy_like_this ou term - default = fuzzy_like_this.
 
 ###searchparameters
