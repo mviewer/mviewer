@@ -825,3 +825,13 @@ img.mv-legend {
   text-align: left!important;
   padding-left: 100px!important;
 }
+
+#source-content {
+    font-size: 10px;
+    max-width: 300px;
+}
+
+#source-content:before {
+    content:"\00a9";
+    font-size: 13px;    
+}
