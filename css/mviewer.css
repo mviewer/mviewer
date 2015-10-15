@@ -786,6 +786,10 @@ p.bjqs-caption{
 	background-image: url(../img/btn/set.png)
 }
 
+.ui-icon-legend:after {
+	background-image: url(../img/btn/legend2.png)
+}
+
 .ui-icon-exportpng:after {
 	background-image: url(../img/btn/picture.svg)
 }
@@ -805,6 +809,13 @@ p.bjqs-caption{
 
 img.mv-legend {
   max-width: 275px;
+}
+
+.mv-all-legend label { 
+  /*font-size: 12px;*/
+  text-decoration: none;
+  text-shadow: none;
+  padding-top: 10px;
 }
 
 .mv-title {

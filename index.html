@@ -148,17 +148,19 @@ $(document).ready(function () {
 		<div id="toolstoolbar" data-role="controlgroup"  data-mini="true">			
 			<a class="mv-modetools" href="#" onclick="mviewer.setTool('info');" id="infobtn" title="Interroger la carte" 
 				data-role="button" data-icon="info" data-iconpos="notext" data-theme="b" tabindex="107" accesskey="7"></a>
-			<a class="mv-modetools" href="#" onclick="mviewer.setTool('measureline');" id="measurebtn" title="Mesures linéaires ou surfaciques" 
+			<a class="mv-modetools" href="#" onclick="mviewer.setTool('measureline');" id="measurebtn" title="Mesurer" 
 				data-role="button" data-icon="measure" data-iconpos="notext" data-theme="b" tabindex="108" accesskey="8"></a>            
 			<a href="?login" id="login" title="Se connecter" tabindex="110" accesskey="10"
 				data-role="button" data-icon="lock" data-iconpos="notext" data-theme="b" style="display:none;"></a>
 			<a href="#sharepanel" onclick="mviewer.mapShare();" id="sharebtn" title="Partager cette carte" 
 				data-rel="popup" data-transition="flip" data-position-to="window" data-role="button" data-enhanced="true" data-iconshadow="false"
 				data-icon="action" data-iconpos="notext" data-theme="b" tabindex="111" accesskey="11"></a>
-            <a href="#parameterspanel" id="searchparams" title="Paramètres de recherche" data-position-to="window" 
+            <a href="#parameterspanel" id="searchparams" title="Modifier les paramètres de recherche" data-position-to="window" 
 				data-role="button" data-rel="popup" data-icon="gear" data-iconpos="notext" data-theme="b" tabindex="112" accesskey="12"></a>
-            <a href="#" id="exportpng" title="Export image de la carte" download="carte.png" tabindex="113" accesskey="13"
+            <a href="#" id="exportpng" title="Exporter carte au format image" download="carte.png" tabindex="113" accesskey="13"
 				data-role="button" data-icon="exportpng" data-iconpos="notext" data-theme="b" ></a>
+            <a href="#" onclick="mviewer.getLegend()" id="legendbtn" title="Afficher la légende de la carte" tabindex="114" accesskey="14"
+				data-role="button" data-icon="legend" data-iconpos="notext" data-theme="b" ></a>
 		</div>
         <div data-role="controlgroup" data-type="horizontal" data-theme="b" id="drawtoolsoptions" data-mini="true" style="display:none;"> 
             <a href="#" id="measurelinebtn" title="Mesure linéaire" onclick="mviewer.setTool('measureline');" data-icon="measureline"
@@ -203,6 +205,16 @@ $(document).ready(function () {
                         <label class="searchfeatures" for="param_search_features">Rechercher des entités</label>
                     </fieldset>
                 </form>
+			</div>
+		</div>
+         <!-- LEGEND PANEL -->
+		<div id="maplegend" data-role="popup" data-theme="b">
+			<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" 
+				class="ui-btn-right">Fermer</a>
+			<div data-role="header">
+				<h2>Légende</h2>
+			</div>
+			<div data-role="content" id="legend-content" data-theme="a">				
 			</div>
 		</div>
         <!-- ACCESSIBILITY PANEL -->
