@@ -812,7 +812,7 @@ img.mv-legend {
 }
 
 .mv-all-legend label { 
-  /*font-size: 12px;*/
+  font-size: 12px;
   text-decoration: none;
   text-shadow: none;
   padding-top: 10px;
@@ -834,4 +834,10 @@ img.mv-legend {
 #source-content:before {
     content:"\00a9";
     font-size: 13px;    
+}
+
+#maplegend {
+  position: fixed;
+  right: 50px;
+  top: 55px;
 }
