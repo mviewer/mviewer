@@ -365,7 +365,7 @@ width: 200px !important;
 }
 
 /* enables map control behind popup */
-#sharepanel-screen, #usagepanel-screen, #maplegend-screen {
+#sharepanel-screen, #usagepanel-screen {
     display: none;
 }
 
