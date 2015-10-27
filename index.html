@@ -159,7 +159,7 @@ $(document).ready(function () {
 				data-role="button" data-rel="popup" data-icon="gear" data-iconpos="notext" data-theme="b" tabindex="112" accesskey="12"></a>
             <a href="#" id="exportpng" title="Exporter carte au format image" download="carte.png" tabindex="113" accesskey="13"
 				data-role="button" data-icon="exportpng" data-iconpos="notext" data-theme="b" ></a>
-            <a href="#" onclick="mviewer.getLegend()" id="legendbtn" title="Afficher la légende de la carte" tabindex="114" accesskey="14"
+            <a href="#" onclick="mviewer.getLegend('canvas')" id="legendbtn" title="Afficher la légende de la carte" tabindex="114" accesskey="14"
 				data-role="button" data-icon="legend" data-iconpos="notext" data-theme="b" ></a>
 		</div>
         <div data-role="controlgroup" data-type="horizontal" data-theme="b" id="drawtoolsoptions" data-mini="true" style="display:none;"> 
@@ -214,7 +214,7 @@ $(document).ready(function () {
 			<div data-role="header">
 				<h2>Légende</h2>
 			</div>
-			<div data-role="content" id="legend-content" data-theme="a"></div>
+			<div data-role="content" id="legend-content" class="legend-area" data-theme="a"></div>
             <div data-role="content" id="source-content" data-theme="b"></div>			
 		</div>
         <!-- ACCESSIBILITY PANEL -->
