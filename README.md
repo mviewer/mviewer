@@ -143,7 +143,10 @@ Représente les fonds de plan.
 
 ###Proxy 
 
-Lien vers votre proxy permmettant l'interrogation des couches.
+Lien vers votre proxy permmettant l'interrogation CROSS DOMAIN des couches.
+Il n'y a pas besoin d'utiliser de proxy pour les données servies par GéoBretagne car CORS est activé (http://enable-cors.org/server.html)
+Mviewer n'est pas fourni avec un proxy Ajax. L'application peut fonctionner avec le proxy de GeorChestra.
+Un proxy cgi peut être utilisé. Plus de détail ici : [proxy] (https://trac.osgeo.org/openlayers/wiki/FrequentlyAskedQuestions#WhydoIneedaProxyHost)
 
 ####Prototype
 
@@ -253,9 +256,9 @@ Noeud enfant de theme décrivant une couche.
 * **queryable**: Booléen stipulant est ce que la couche est intérrogeable via un GetFeatureInfo
 * **useproxy**: Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de de crossOrigin lorsque CORS n'est pas activé sur le serveur distant.
 * **fields**: Si les informations retournées par l'interrogation est au format GML, fields représente les attributs à parser pour générer la vignette
-* **aliases**: Si les informations retournées par l'interrogation est au format GML, aliasess représente le renommage des fields parsés.
-* **infoformat**: Format du GetFeatureInfo.
-* **featurecount**: Nombre d'élèments retournés lors de l'intérrogation
+* **aliases**: Si les informations retournées par l'interrogation est au format GML, aliases représente le renommage des champs parsés.
+* **infoformat**: Format du GetFeatureInfo. 2 formats sont supportés : text/html et application/vnd.ogc.gml
+* **featurecount**: Nombre d'éléments retournés lors de l'intérrogation
 * **style**: Style de la couche
 * **legendurl**: url premettant de récupérer la légende. Si non défini, c'est un getFeatureLegend qui est effectué.
 * **url**: URL de la couche
