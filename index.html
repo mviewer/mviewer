@@ -127,11 +127,14 @@ $(document).ready(function () {
         <img id="els_marker" src="img/marker2.svg" />        
         <button class="ui-shadow ui-nodisc-icon ui-icon-carat-r ui-btn ui-btn-b ui-btn-icon-notext" id="tick-button2" onclick="$('#themepanel').panel('toggle');" ></button>		
 		<!-- TOP MENU BAR  -->        
-		<div id="searchtool" class="ui-btn-leftt" data-inline="true">
-			<input type="search" id="searchfield" placeholder="Localiser..." title="Localiser une adresse" data-mini="true" data-theme="b" tabindex="2" accesskey="2" />
-			<ul id="searchresults" data-role="listview" data-inset="true" data-mini="true" data-theme="b" 
-				data-type="vertical"></ul>
-		</div>
+        <a href="#parameterspanel" id="searchparams" title="Modifier les paramètres de recherche" data-position-to="window" data-mini="true" 
+                data-role="button" data-rel="popup" data-icon="gear" data-iconpos="notext"  data-theme="b" tabindex="112" accesskey="12"></a>
+        <div id="searchtool"  data-mini="true" >
+            <input type="search" id="searchfield" placeholder="Localiser..." title="Localiser une adresse" data-mini="true" data-theme="b" 
+                tabindex="2" accesskey="2" />
+        </div>
+        <ul id="searchresults" data-role="listview" data-inset="true" data-mini="true" data-theme="b" 
+                data-type="vertical"></ul>        
 		<div id="backgroundlayerstoolbar"  data-mini="true" data-theme="b" >			
 		</div>				
 		<!-- FIRST VERTICAL RIGHT TOOLBAR -->
@@ -154,9 +157,7 @@ $(document).ready(function () {
 				data-role="button" data-icon="lock" data-iconpos="notext" data-theme="b" style="display:none;"></a>
 			<a href="#sharepanel" onclick="mviewer.mapShare();" id="sharebtn" title="Partager cette carte" 
 				data-rel="popup" data-transition="flip" data-position-to="window" data-role="button" data-enhanced="true" data-iconshadow="false"
-				data-icon="action" data-iconpos="notext" data-theme="b" tabindex="111" accesskey="11"></a>
-            <a href="#parameterspanel" id="searchparams" title="Modifier les paramètres de recherche" data-position-to="window" 
-				data-role="button" data-rel="popup" data-icon="gear" data-iconpos="notext" data-theme="b" tabindex="112" accesskey="12"></a>
+				data-icon="action" data-iconpos="notext" data-theme="b" tabindex="111" accesskey="11"></a>            
             <a href="#" id="exportpng" title="Exporter carte au format image" download="carte.png" tabindex="113" accesskey="13"
 				data-role="button" data-icon="exportpng" data-iconpos="notext" data-theme="b" ></a>
             <a href="#" onclick="mviewer.getLegend('canvas')" id="legendbtn" title="Afficher la légende de la carte" tabindex="114" accesskey="14"

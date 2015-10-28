@@ -303,12 +303,7 @@ font-size: 20px;
 	/*margin-right: -35px;*/
 }
 
-#searchtool {	
-	max-width:300px;	
-	position: fixed;
-	right:50px;
-	top: 3px;
-}
+
 
 /*.ol-attribution {
     right: 200px!important;    
@@ -840,4 +835,27 @@ img.mv-legend {
   position: fixed;
   right: 50px;
   top: 55px;
+}
+
+a#searchparams {
+  position: fixed;
+  right: 267px;
+  top: .05em;
+  border-radius: 4px;
+  padding-top: .1em;
+  padding-bottom: .1em;
+}
+
+#searchresults {
+    max-width:300px;	
+	position: fixed;
+	right:50px;
+	top: 45px;
+}
+
+#searchtool {	
+	width:220px;
+	position: fixed;
+	right:50px;    
+	top: 3px;
 }
