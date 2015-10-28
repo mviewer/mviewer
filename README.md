@@ -21,7 +21,7 @@ Le fichier de config permet la personnalisation des thèmes/couches du visualise
 
 	<?xml version="1.0" encoding="UTF-8"?>
 	<config>
-    <application title="" logo="" help="" exportpng="" measuretools="" legend"" />
+    <application title="" logo="" help="" exportpng="" measuretools="" legend="" legendasimage=""/>
     <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
     <mapoptions maxzoom="18" projection="EPSG:3857" center="-403013.39038929436,6128402.399153711" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
    
@@ -70,7 +70,7 @@ Personnalisation de l'application (overriding)
 
 ####Prototype 
 
-	 <application title="" logo=""  help="" exportpng="" measuretools=""/>
+	 <application title="" logo=""  help="" exportpng="" measuretools="" legend="" legendasimage=""/>
 
 ####Attributs 
 
@@ -79,6 +79,7 @@ Personnalisation de l'application (overriding)
 * **help**: Url du fichier d'aide || aide_kartenn.pdf.
 * **exportpng**: Enables map export as png file  true/false || false. Export is possible only with local layers (same origin) or with layers served with CORS.
 * **legend**: Add button to show legend panel : true || false.
+* **legendasimage**: if true, render the legend in canvas. By this way, it's possible export legend as png file : true/flase || false.
 * **measuretools**: Enables measure tools and tools mode  true/false || false.
 
 ###Noeud mapoptions
