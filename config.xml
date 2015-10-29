@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
-    <application title="" logo="" help="" exportpng="false" legend="false"/>
+    <application title="" logo="" help="" exportpng="false" legend="true" legendasimage="true"/>
     <mapoptions maxzoom="18" projection="EPSG:3857" center="-403013.39038929436,6128402.399153711" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
     <![CDATA[<baselayers style="gallery"><!-- style="default"||gallery" -->        
         <baselayer  type="WMS" id="plan1" label="Plan" title="Plan OSM Géobretagne" thumbgallery="img/basemap/osm-map-bing.png" url="http://geobretagne.fr/geoserver/osm/wms" layers="map-bing" format="image/png" visible="false" attribution="OpenStreetMap CC-by-SA"/>
