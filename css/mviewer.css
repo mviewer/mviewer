@@ -360,7 +360,7 @@ width: 200px !important;
 }
 
 /* enables map control behind popup */
-#sharepanel-screen, #usagepanel-screen {
+#sharepanel-screen, #usagepanel-screen, #maplegend-screen {
     display: none;
 }
 
@@ -823,12 +823,12 @@ img.mv-legend {
 }
 
 #source-content:before {
-    content:"\00a9";
+    content:"\00a9  ";
     font-size: 13px;    
 }
 
 #maplegend {
-  position: fixed;
+  position: relative;
   right: 50px;
   top: 55px;
 }
@@ -898,12 +898,13 @@ a#tabThemes , a#tabInfos{
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  max-width: 50px;
+  max-width: 50px;  
 }
 
 .mv-legend-title {
-  background-image: url(../img/btn/floppy.svg);
+  /*background-image: url(../img/btn/floppy.svg);
   background-repeat:no-repeat;
   background-position-y: center;
   background-size: 25px 25px;
+  background-position-x: 10px;*/
 }
