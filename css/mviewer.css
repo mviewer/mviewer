@@ -774,7 +774,7 @@ p.bjqs-caption{
 }
 
 .ui-icon-measure:after {
-	background-image: url(../img/btn/set.png)
+	background-image: url(../img/btn/measure.svg)
 }
 
 .ui-icon-legend:after {
@@ -796,6 +796,10 @@ p.bjqs-caption{
 .ui-icon-layerstatus2:after {
 	background-image: url(../img/btn/layerstatus2.svg);
     background-color: rgba(0,0,0,0)!important;
+}
+
+.ui-icon-save:after {
+	background-image: url(../img/btn/floppy.svg)
 }
 
 img.mv-legend {
@@ -831,6 +835,12 @@ img.mv-legend {
   position: relative;
   right: 50px;
   top: 55px;
+}
+
+a#legend-export-png {
+  position: absolute;
+  left: 10px;
+  top: 0px;
 }
 
 a#searchparams {
