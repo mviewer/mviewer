@@ -114,7 +114,7 @@ p.center { text-align: center; }
 
 
 #themepanel .ui-content{
-	overflow: hidden;	
+	/*overflow: hidden;	*/
 }
 
 #searchpanel {
@@ -235,8 +235,16 @@ color: #2489ce;
 	padding: 10px 10px 10px 10px;
 }
 
-#datalist {	
-	/*margin-top: 35px;*/
+#datalist, #mapinfos {	
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: absolute;
+  top: 160px;
+  left: 0px;
+  right: 10px;
+  bottom: 60px;
+  width: auto;
+  padding-left: 10px;
 }
 
 #datalist .ui-field-contain {
@@ -275,7 +283,9 @@ margin: 0 0 0 0;
 }
 
 #themepanel .ui-title {
-font-size: 40px;
+    font-size: 40px;
+    padding-top: 0px;
+    padding-bottom: 0px;
 }
 
 #themepanel .ui-li-divider {
@@ -404,7 +414,16 @@ margin: 0 auto;
     /*height: 125px;*/
     background-image: url("../img/panel-footer.png");
     background-repeat:no-repeat;
-    background-position:right bottom;    
+    background-position:right bottom;
+    bottom:0; 
+    position:absolute !important;
+    top: auto !important;
+    width: 100%;
+    left:0;
+    height: 80px;
+    background-color: #333;
+    z-index: 3500;
+    padding-top: 10px;
 }
 
 #panel-footer img {
@@ -501,7 +520,8 @@ font-size:12px;
     padding-top: 20px;
     font-family: "Trebuchet MS",Helvetica,Arial,sans-serif;
     font-size: 80%;
-    text-shadow: none;
+    text-shadow: none;    
+    padding-right: 10px;    
 }
 
 /*#popup-content a {
@@ -607,7 +627,7 @@ border-radius: 10px;
 }
 
 .ui-collapsible-content.ui-body-a {
-    background-color: black;
+    background: none;
 }
 
 .ui-panel-closed  {
@@ -673,6 +693,7 @@ ol.bjqs-markers li a{
 	color:#fff;
 	margin:5px;
 	text-decoration: none;
+    border-radius: 10px;
 }
 
 ol.bjqs-markers li.active-marker a,
@@ -803,7 +824,7 @@ p.bjqs-caption{
 }
 
 img.mv-legend {
-  max-width: 275px;
+  /*max-width: 275px;*/
 }
 
 .mv-all-legend label { 
@@ -816,7 +837,7 @@ img.mv-legend {
 .mv-title {
   background-image: url(../img/logo/logo.svg);
   background-repeat:no-repeat;
-  background-position-y: center;  
+  background-position: 0px center; 
   text-align: left!important;
   padding-left: 60px!important;
 }
@@ -874,13 +895,14 @@ a#searchparams {
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
   /*border-color: #2ad!important;*/
   border: 3px solid #2ad!important;  
-  border-radius: 10px 10px 0px 0px;
-  border-bottom-width: 0px!important;
+  /*border-radius: 10px 10px 0px 0px;
+  border-bottom-width: 0px!important;*/
 }
 
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
   border: 1px solid #2ad;
-  border-radius: 10px 10px 0px 0px;
+  border-radius: 10px 10px 10px 10px;
+  border-bottom-width: 3px!important;
   background: none!important;
  }
   
@@ -906,21 +928,16 @@ a#tabThemes , a#tabInfos{
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  max-width: 50px;  
+  max-width: 85px;  
 }
 
-.mv-legend-title {
-  /*background-image: url(../img/btn/floppy.svg);
-  background-repeat:no-repeat;
-  background-position-y: center;
-  background-size: 25px 25px;
-  background-position-x: 10px;*/
+.mv-theme {
+  width: 330px;
 }
 
-.ui-footer {
-    bottom:0; 
-    position:absolute !important;
-    top: auto !important;
-    width: 90%;
-    height: 80px;
+#adresse-attibution {
+  font-size: 10px;
+}
+#tab_panel {
+  padding-top: 15px;
 }

@@ -36,7 +36,7 @@ Le fichier de config permet la personnalisation des thèmes/couches du visualise
 
     <proxy url="../proxy/?url="/>
 
-    <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban"/>     
+    <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban" attribution="API adresse.data.gouv.fr" />     
     <elasticsearch url="http://ows.region-bretagne.fr/kartenn/_search" geometryfield="geometry" linkid="search_id" querymode="fussy_like_this"/>
     <searchparameters bbox="true" localities="false" features="true"/>
 
@@ -167,13 +167,14 @@ Liens vers service d'autocomplétion et de géocodage.
 ####Prototype
 
 
-	<olscompletion url="" [type=""] />
- 
+	<olscompletion url="" [type=""] attribution="" />
+    
 
 ####Attributs
 
 * **url**: Url du service d'autocomplétion d'adresse
 * **type**: Optional - Type de service utilisé geoportail ou ban - defaut = geoportail
+* **attribution**: Attribution du service de geocodage
 
 ###elasticsearch
 
