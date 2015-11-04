@@ -931,6 +931,14 @@ a#tabThemes , a#tabInfos{
   max-width: 85px;  
 }
 
+.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited {
+  color:#9B9898;
+}
+
+.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {
+  color: #222;
+}
+
 .mv-theme {
   width: 330px;
 }
