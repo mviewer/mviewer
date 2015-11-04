@@ -142,10 +142,10 @@ p.center { text-align: center; }
 }
 
 #mentionstoolbar {
-	position: relative;
+	/*position: relative;
 	text-align: right;
 	top: 40px;
-	right: 0px;
+	right: 0px;*/
 	height: 14px;
 	padding: 0px 5px;	   
 	z-index: 10000;
@@ -401,7 +401,7 @@ margin: 0 auto;
 
 
 #panel-footer {
-    height: 125px;
+    /*height: 125px;*/
     background-image: url("../img/panel-footer.png");
     background-repeat:no-repeat;
     background-position:right bottom;    
@@ -832,9 +832,7 @@ img.mv-legend {
 }
 
 #maplegend {
-  position: relative;
-  right: 50px;
-  top: 55px;
+  position: absolute;  
 }
 
 a#legend-export-png {
@@ -917,4 +915,12 @@ a#tabThemes , a#tabInfos{
   background-position-y: center;
   background-size: 25px 25px;
   background-position-x: 10px;*/
+}
+
+.ui-footer {
+    bottom:0; 
+    position:absolute !important;
+    top: auto !important;
+    width: 90%;
+    height: 80px;
 }
