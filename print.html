@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+<link rel="icon" type="image/png" href="favicon.png" />	
+<script type="text/javascript" src="lib/jquery/base/1.10.2/jquery-1.10.2.min.js"></script>
+
+<style>
+    body{ background-color: #fff; }
+    canvas{border:2px solid #000;}
+</style>
+
+<script>
+
+$(function(){
+
+    $.urlParam = function(name){
+        var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+        if (results==null){
+           return null;
+        }
+        else{
+           return results[1] || 0;
+        }
+    };    
+    var job = $.urlParam('job');
+    if (!job) { return false; }
+    var legend = new Image();
+    var map = new Image();
+    var prop = {};
+    map.onload = function(){
+        ctx2.drawImage(map, 0,0);
+        legend.src = "../prints/legend-"+job+".png";
+    };
+    legend.onload = function(){
+        ctx.drawImage(legend, 0,0);
+        prop.width= legend.width;
+        prop.height= legend.height;
+        //window.print();
+    };
+    map.src = "../prints/map-"+job+".png";
+
+    var canvas=document.getElementById("canvas");
+    canvas.width = window.innerWidth -25;
+    canvas.height = window.innerHeight -25;
+    var ctx=canvas.getContext("2d");
+    var canvasOffset=$("#canvas").offset();
+    var offsetX=canvasOffset.left;
+    var offsetY=canvasOffset.top;
+    var canvasWidth=canvas.width;
+    var canvasHeight=canvas.height;
+    //--------------------------------
+    var canvas2=document.getElementById("canvas2");
+    canvas2.width = window.innerWidth -25;
+    canvas2.height = window.innerHeight -25;
+    var ctx2=canvas2.getContext("2d");
+    var canvasOffset2=$("#canvas2").offset();
+    var offsetX2=canvasOffset2.left;
+    var offsetY2=canvasOffset2.top;
+    var canvasWidth2=canvas2.width;
+    var canvasHeight2=canvas2.height;
+    //-----------------------------------
+    var isDragging=false;
+
+    function handleMouseDown(e){
+      canMouseX=parseInt(e.clientX-offsetX);
+      canMouseY=parseInt(e.clientY-offsetY);
+      // set the drag flag
+      isDragging=true;
+    }
+
+    function handleMouseUp(e){
+      canMouseX=parseInt(e.clientX-offsetX);
+      canMouseY=parseInt(e.clientY-offsetY);
+      // clear the drag flag
+      isDragging=false;
+    }
+
+    function handleMouseOut(e){
+      canMouseX=parseInt(e.clientX-offsetX);
+      canMouseY=parseInt(e.clientY-offsetY);
+      // user has left the canvas, so clear the drag flag
+      //isDragging=false;
+    }
+
+    function handleMouseMove(e){
+      canMouseX=parseInt(e.clientX-offsetX);
+      canMouseY=parseInt(e.clientY-offsetY);
+      // if the drag flag is set, clear the canvas and draw the image
+      if(isDragging){
+          ctx.clearRect(0,0,canvasWidth,canvasHeight);
+          ctx.drawImage(legend,canMouseX-prop.width/2,canMouseY-prop.height/2,prop.width,prop.height);
+      }
+    }
+
+    $("#canvas").mousedown(function(e){handleMouseDown(e);});
+    $("#canvas").mousemove(function(e){handleMouseMove(e);});
+    $("#canvas").mouseup(function(e){handleMouseUp(e);});
+    $("#canvas").mouseout(function(e){handleMouseOut(e);});
+
+}); // end $(function(){});
+</script>
+
+</head>
+
+<body>    
+    <canvas id="canvas2" style="position: absolute; left: 0; top: 0; z-index: 0;"></canvas>
+    <canvas id="canvas"  style="position: absolute; left: 0; top: 0; z-index: 1;"></canvas>
+    
+</body>
+</html>

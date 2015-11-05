@@ -107,12 +107,6 @@ p.center { text-align: center; }
 	right: 40px;
 }
 
-/*#sharebtn .ui-icon {
-	background:  url(../img/btn/share.png) 50% 50% no-repeat; 
-	background-size: 18px 18px; 
-}*/
-
-
 #themepanel .ui-content{
 	/*overflow: hidden;	*/
 }
@@ -800,6 +794,10 @@ p.bjqs-caption{
 
 .ui-icon-legend:after {
 	background-image: url(../img/btn/legend2.png)
+}
+
+.ui-icon-print:after {
+	background:  url(../img/btn/print.png) 50% 50% no-repeat;	
 }
 
 .ui-icon-exportpng:after {
