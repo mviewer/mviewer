@@ -565,12 +565,14 @@ code {
     margin: 0 0 !important;
     /*border-radius: 0 1em 1em 0;*/
     background-repeat: no-repeat;
+    border-radius: 0px 4px 4px 0px;
 }
 
 #tick-button2 {
     position: absolute;
     top: 20px;
     margin: 0 0!important;
+    border-radius: 0px 4px 4px 0px;
 }
 
 #tick-button .ui-btn-inner {
