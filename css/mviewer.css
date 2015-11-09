@@ -227,10 +227,19 @@ a#searchparams {
 
 #searchresults {
     max-width:300px;	
+    min-width: 246px;
 	position: fixed;
 	right:50px;
 	top: 45px;
 }
+
+li.geoportail.ui-li-divider, li.elasticsearch.ui-li-divider {
+  color: black;
+  background-color: #fff;
+  text-shadow: none;
+  padding-bottom: 0px;
+}
+
 
 #searchresults li {
 	height: 26px !important;	
