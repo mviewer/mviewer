@@ -58,8 +58,8 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
     </widgets> 
 
     <themes>
-        <theme name="Formation"  id="formation" collapsed="true">
-            <layer id="lycee" name="Lycée" visible="false" tiled="false" namespace="rb"
+        <theme name="Formation"  id="formation" collapsed="false">
+            <layer id="lycee" name="Lycée" visible="true" tiled="false" namespace="rb"
 				queryable="true" fields="nom,photo,libelle,secteur_li,reseau_lib" aliases="Nom,Photo,Commune,Secteur,Réseau" 
                 infoformat="text/html" featurecount="5"
 				style="" 
@@ -67,7 +67,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Région Bretagne" 
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25" 
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25" />
-			<layer id="site_cfa" name="Centre de formation d'apprentis" visible="false" tiled="false" namespace="rb"
+			<layer id="site_cfa" name="Centre de formation d'apprentis" visible="true" tiled="false" namespace="rb"
 				queryable="true" fields="cfa,site_adr1,site_cp,site_ville,site_inter" aliases="Nom,Adresse,CP,Ville, Site Web"
                 infoformat="text/html" featurecount="5"               
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
