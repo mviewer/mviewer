@@ -735,6 +735,10 @@ p.bjqs-caption{
   max-width: 85px;  
 }
 
+.ui-tabs .ui-tabs-nav li.ui-tabs-active .ui-tabs-anchor {
+  cursor: not-allowed;
+}
+
 .ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited {
   color:#9B9898;
 }
