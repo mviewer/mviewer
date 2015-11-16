@@ -100,13 +100,13 @@ $(document).ready(function () {
                 </div>
 				<div class="ui-block-b"><img src="img/rose_vents.png" style="float: right;" alt="Nord de la carte" onclick="$('#themepanel').panel('close');"/></div>
 			</div>-->
-            <div data-role="navbar" id="tab_panel">
-				<ul>
-                  <li><a class="ui-btn-active" href="#" id='tabThemes' onclick="mviewer.panelShowTab('datalist');" >Thématiques</a></li>
-				  <li><a href="#" id='tabInfos' onclick="mviewer.panelShowTab('mapinfos');" >Informations</a></li>				  
-				</ul>
+            <div data-role="controlgroup" data-type="horizontal" id="tab_panel">
+				<!--<ul>
+                  <li>--><a data-icon="legend" data-iconpos="left"  data-theme="b" data-role="button" class="ui-btn-active" href="#" id='tabThemes' onclick="mviewer.panelShowTab('datalist');" >Thématiques</a><!--</li>-->
+				  <!--<li>--><a data-icon="info" data-iconpos="left"  data-theme="b" data-role="button" href="#" id='tabInfos' onclick="mviewer.panelShowTab('mapinfos');" >Informations</a><!--</li>-->		  
+				<!--</ul>-->
 			</div>
-            <div data-role="content">
+            <div data-role="content">                
                 <div class="mv-tab-panel" id="datalist" data-role="collapsible-set" data-theme="b" data-content-theme="a" data-inset="false" ></div>	
                 <div class="mv-tab-panel" id="mapinfos" style="display : none;"></div>
             </div>

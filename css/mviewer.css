@@ -438,7 +438,7 @@ a#legend-export-png {
 a#tabThemes , a#tabInfos{
   text-shadow: none;
   text-decoration: none!important;
-  font-size: 18px;  
+  /*font-size: 18px;  */
 }
 
 #datalist, #mapinfos {	
@@ -503,6 +503,13 @@ a#tabThemes , a#tabInfos{
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;    
+}
+
+.layer-searchable {
+  background-image: url(../img/btn/search.png);
+  background-repeat: no-repeat;  
+  background-position: center right;
+  width: 18px;
 }
 
 .ui-collapsible-content.ui-body-a {
