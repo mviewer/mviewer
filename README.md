@@ -236,6 +236,7 @@ Noeud enfant de theme décrivant une couche.
 
 	<layer id="" name="" scalemin="" scalemax="" visible="" tiled="" namespace=""
 	queryable="" fields="" aliases=""
+    searchable=""
     useproxy=""
 	infoformat="" featurecount=""
 	style=""
@@ -256,6 +257,8 @@ Noeud enfant de theme décrivant une couche.
 * **tiled**: Booléen stipluant est ce que la couche est tuilée
 * **namespace**: Namespace où est située la couche
 * **queryable**: Booléen stipulant est ce que la couche est intérrogeable via un GetFeatureInfo
+* **searchable**: Booléen précisant si la couche est interrogeable via la barre de recherche
+* **iconsearch**: Lien vers l'image utilisée pour illustrer le résultat d'une recherche ElasticSearch
 * **useproxy**: Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de de crossOrigin lorsque CORS n'est pas activé sur le serveur distant.
 * **fields**: Si les informations retournées par l'interrogation est au format GML, fields représente les attributs à parser pour générer la vignette
 * **aliases**: Si les informations retournées par l'interrogation est au format GML, aliases représente le renommage des champs parsés.

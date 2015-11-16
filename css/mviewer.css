@@ -721,13 +721,13 @@ p.bjqs-caption{
 }
 
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {  
-  border: 3px solid #2ad!important;  
+  /*border: 3px solid #2ad!important;  */
 }
 
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
   border: 1px solid #2ad;
   border-radius: 10px 10px 10px 10px;
-  border-bottom-width: 3px!important;
+  border-bottom-width: 1px!important;
   background: none!important;
  }
   
@@ -742,8 +742,13 @@ p.bjqs-caption{
   max-width: 85px;  
 }
 
-.ui-tabs .ui-tabs-nav li.ui-tabs-active .ui-tabs-anchor {
-  cursor: not-allowed;
+.ui-tabs .ui-tabs-nav li.ui-tabs-active {   
+  background-color: #2ad!important;  
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-active .ui-tabs-anchor { 
+  cursor: not-allowed;  
+  color: #fff; 
 }
 
 .ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited {
