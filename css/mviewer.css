@@ -509,7 +509,8 @@ a#tabThemes , a#tabInfos{
   background-image: url(../img/btn/search.png);
   background-repeat: no-repeat;  
   background-position: center right;
-  width: 18px;
+  width: 10px;
+  background-size: 100%;
 }
 
 .ui-collapsible-content.ui-body-a {
