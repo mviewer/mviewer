@@ -51,7 +51,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
     <!--<olscompletion url="http://gpp3-wxs.ign.fr/5kiwvtkb2v23y0x8chidxbij/ols/apis/completion"/>-->
     <olscompletion url="../olscompletion" type="geoportail" attribution="La recherche d'adresse est un service proposé par l'API Géoportail ©"/>
     <!--<olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban"/>-->
-    <elasticsearch url="http://rec-kartensig.cr-bretagne.fr/kartenn/_search" geometryfield="geometry" linkid="search_id" querymode="fussy_like_this" />
+    <elasticsearch url="http://ows.region-bretagne.fr/kartenn/_search" geometryfield="geometry" linkid="search_id" querymode="fussy_like_this" />
     <searchparameters bbox="true" localities="true" features="true"/>
 	<widgets>
        <!--<widget name="gauge"/>-->       
@@ -137,7 +137,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=a7f46b47-42fc-49b7-9b49-c7c11aee0932"
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=a7f46b47-42fc-49b7-9b49-c7c11aee0932" />
-            <layer id="recensement_patrimoine" name="Recensement local" visible="false" tiled="false" namespace="rb" 
+            <layer id="recensement_patrimoine" name="Recensement local" visible="false" tiled="true" namespace="rb" 
 				queryable="true" fields="titre,localisati,datation,photo_1" aliases="Titre,Localisation,Datation,Photo" 
                 searchable="true"
 				infoformat="text/html" featurecount="5"
