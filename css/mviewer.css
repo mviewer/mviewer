@@ -714,6 +714,16 @@ p.bjqs-caption{
 	background: rgba(255,255,255,0.5);
 }
 
+p.counter-slide {
+  position: absolute;
+  bottom: -10px;
+  left: 120px;
+  background-color: #000;
+  color: #fff;
+  border-radius: 5px 5px 5px 5px;
+  padding: 2px 2px 2px 2px;
+}
+
 .ui-widget-header {
   border: none!important;
 }
