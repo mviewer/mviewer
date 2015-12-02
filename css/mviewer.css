@@ -543,9 +543,8 @@ a#tabThemes , a#tabInfos{
 
 /* Panel footer */
 
-#panel-footer {
-    /*height: 125px;*/
-    background-image: url("../img/panel-footer.png");
+#panel-footer {    
+    /*background-image: url("../img/panel-footer.png");*/
     background-repeat:no-repeat;
     background-position:right bottom;
     bottom:0; 
@@ -553,7 +552,7 @@ a#tabThemes , a#tabInfos{
     top: auto !important;
     width: 100%;
     left:0;
-    height: 80px;
+    /*height: 80px;*/
     background-color: #333;
     z-index: 3500;
     padding-top: 10px;
