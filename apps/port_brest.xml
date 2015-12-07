@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
+    <application title="Brest" logo="" help="" exportpng="true" measuretools="true" legend="true" legendasimage="true" popup="false"/>
     <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
     <mapoptions maxzoom="18" projection="EPSG:3857" center="-499572,6170777" zoom="13" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
     <![CDATA[<baselayers style="gallery"><!-- style="default"||gallery" -->        
