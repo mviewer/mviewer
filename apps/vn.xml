@@ -250,7 +250,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					metadata="" />
         </theme> 
         <theme name="Infrastructures Hydrauliques"  collapsed="true" id="hydraulique"> 
-                <layer id="infra_hydrauliques_vn" name="Ouvrages hydrauliques secondaires" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+                <layer id="ouvrage_hydraulique_secondaire" name="Ouvrages hydrauliques secondaires" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
 					queryable="true" fields="type" aliases="Type"
                     infoformat="text/html" featurecount="20"
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
