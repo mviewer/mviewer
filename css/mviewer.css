@@ -407,24 +407,28 @@ a#legend-export-png {
 
 /*Panel Title*/
 
-.mv-title {
-  background-image: url(../img/logo/logo.svg);
-  background-repeat:no-repeat;
-  background-position: 0px center; 
-  text-align: left!important;
-  padding-left: 60px!important;
+.mv-title {    
 }
 
 #panel-header {
     overflow: visible;
     background: #2a2a2a;
     border-color: #2a2a2a;
+    background-image: url(../img/logo/logo-rb.png);
+    background-repeat:no-repeat;
+    background-position: 0px center; 
+    text-align: left!important;    
+    margin-top: -15px!important;  
+    margin-left: -15px!important; 
+    font-size: 25px!important;
+    height: 50px!important;
+    /*border-bottom: 1px solid #fff;*/
 }
 
-#themepanel .ui-title {
-    font-size: 40px;
-    padding-top: 0px;
+#themepanel .ui-title {    
     padding-bottom: 0px;
+    padding-left: 100px;
+    text-align: left;
 }
 
 #themepanel .ui-content{
