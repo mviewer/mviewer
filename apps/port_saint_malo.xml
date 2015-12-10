@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
+    <application title="Saint Malo" logo="" help="" exportpng="true" measuretools="true" legend="true" legendasimage="true" popup="false"/>
     <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
-    <mapoptions maxzoom="18" projection="EPSG:3857" center="-403013.39038929436,6128402.399153711" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
+    <mapoptions maxzoom="18" projection="EPSG:3857" center="-228489,6214781" zoom="13" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
     <![CDATA[<baselayers style="gallery"><!-- style="default"||gallery" -->        
         <baselayer  type="WMS" id="plan1" label="Plan" title="Plan OSM Géobretagne" thumbgallery="img/basemap/osm-map-bing.png" url="http://geobretagne.fr/geoserver/osm/wms" layers="map-bing" format="image/png" visible="false" attribution="OpenStreetMap CC-by-SA"/>
         <baselayer  type="WMS" id="photo1" label="Photo aérienne" title="Ortho Géobretagne" thumbgallery="img/basemap/ortho.jpg" url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite" format="image/jpeg" visible="false" attribution="partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver"/>
@@ -28,10 +29,10 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
             attribution="&lt;a href='http://www.geoportail.fr/' target='_blank'>&lt;img src='http://api.ign.fr/geoportail/api/js/latest/theme/geoportal/img/logo_gp.gif'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
         <!--<baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoBretagne" thumbgallery="img/basemap/ortho.jpg" 
             url="http://tile.geobretagne.fr/gwc02/service/wmts" layers="satellite" format="image/png" visible="false"
-            attribution="&lt;a href='http://applications.region-bretagne.fr/geosource/apps/search/?uuid=3a0ac2e3-7af1-4dec-9f36-dae6b5a8c731' target='_blank' >partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver&lt;/a>" style="_null" matrixset="EPSG:3857" fromcapacity="false"/>-->
+            attribution="&lt;a href='http://applications.region-bretagne.fr/geonetwork/?uuid=3a0ac2e3-7af1-4dec-9f36-dae6b5a8c731' target='_blank' >partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver&lt;/a>" style="_null" matrixset="EPSG:3857" fromcapacity="false"/>-->
         <baselayer  type="WMS" id="photo2" label="Photo aérienne 1950" title="GéoBretagne" thumbgallery="img/basemap/ortho-ancien.jpg" 
 			url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite-ancien" format="image/jpeg" visible="false" 
-			attribution="&lt;a href='http://applications.region-bretagne.fr/geosource/apps/search/?uuid=048622c5-b333-4c2b-94ec-40a41608dc06' target='_blank' >Partenaires GéoBretagne - IGN&lt;/a>"/>      
+			attribution="&lt;a href='http://applications.region-bretagne.fr/geonetwork/?uuid=048622c5-b333-4c2b-94ec-40a41608dc06' target='_blank' >Partenaires GéoBretagne - IGN&lt;/a>"/>      
         <baselayer  type="OSM" id="osm1" label="MapQuest" title="open.mapquest.com" thumbgallery="img/basemap/mapquest.png" 
 			url="http://otile{1-3}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png" 
 			attribution="© MapQuest. Données : les contributeurs d'&lt;a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='http://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" visible="true"/>
@@ -44,7 +45,8 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
         <baselayer  type="WMTS" id="scan2" label="Cartes IGN" title="GéoPortail" maxscale="2000" thumbgallery="img/basemap/scan.jpg"
             url="../wmts" layers="GEOGRAPHICALGRIDSYSTEMS.MAPS" format="image/jpeg" visible="false" fromcapacity="false"
             attribution="&lt;a href='http://www.geoportail.fr/' target='_blank'>&lt;img src='http://api.ign.fr/geoportail/api/js/latest/theme/geoportal/img/logo_gp.gif'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
-    </baselayers>    
+    </baselayers> 
+    <authentification url="who" loginurl="?login" logouturl="../j_spring_security_logout" enabled="true"/>
     <proxy url="../proxy/?url="/>
     <!--<olscompletion url="http://gpp3-wxs.ign.fr/5kiwvtkb2v23y0x8chidxbij/ols/apis/completion"/>-->
     <olscompletion url="../olscompletion"/>
@@ -53,57 +55,41 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
     </widgets> 
 
     <themes>
-        <theme name="Eau"  id="eau" collapsed="true">
-            <layer id="bassins_versants_gp5" name="Bassin Versant GP5" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="dreal_b"
-				queryable="true" fields="Nom_BV" aliases="Nom" 
-                infoformat="application/vnd.ogc.gml" featurecount="1"
-				style="" 
-				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
+        <theme name="Sites régionaux"  collapsed="true" id="sites"> 
+            <layer id="sites_region" name="Sites région" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="rb"
+				queryable="true" fields="nom_batiment,adresse,code_postal,ville,telephone" aliases="Batiment,Adresse,Code Postal,Ville,Téléphone"
+                infoformat="text/html" featurecount="1" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				style="sites_region_select_port"
 				attribution="Région Bretagne" 
-				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=f13ca5d3-56a2-4b8d-9ea0-fefd436b9549" 
-				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=f13ca5d3-56a2-4b8d-9ea0-fefd436b9549" />
-            <layer id="sage_dreal" name="SAGE" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="dreal_b"
-				queryable="true" fields="NOM" aliases="Nom" 
-                infoformat="application/vnd.ogc.gml" featurecount="1"
-				style="" 
-				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
-				attribution="Région Bretagne" 
-				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=e718b2fe-f3d0-4c56-a0c0-bf61d31a857b" 
-				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=e718b2fe-f3d0-4c56-a0c0-bf61d31a857b" />                
-		</theme>		
-        <theme name="Limites administratives"  collapsed="true" id="territoire">  
-			<layer id="commune_bdcarto" name="Commune" scalemin="0" scalemax="50000000" visible="false" tiled="false"
-				queryable="true" fields="COMMUNE,INSEE_COM,SUPERFICIE" aliases="Nom,Code INSEE,Superficie"
-                infoformat="text/html" featurecount="1"                
-				style="commune_region" 
-				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
-				attribution="IGN - BDCARTO" 
-				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=b08e6cb1-236c-49b7-88f9-42b500d274d5"
-				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=b08e6cb1-236c-49b7-88f9-42b500d274d5" />			
-			<layer id="EPCI_053" name="Intercommunalité" scalemin="0" scalemax="50000000" visible="false" tiled="false"
-				queryable="true" fields="NOM_EPCI,SIREN_EPCI" aliases="Nom,SIREN"
-                infoformat="text/html" featurecount="1"
-				style="epci_region" 
-				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
-				attribution="GéoBretagne" 
-				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=2298d744-49cb-4fcb-9487-26f916fecdff" 
-				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=2298d744-49cb-4fcb-9487-26f916fecdff" />			
-            <layer id="Pays_Bzh_44" name="Pays" scalemin="0" scalemax="50000000" visible="true" tiled="true"
-				queryable="true" fields="LIBELLE" aliases="Nom"
-                infoformat="text/html" featurecount="1"             
-				style="pays_region" 
-				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
-				attribution="GéoBretagne" 
-				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=9722d181-75f9-40ab-a136-a9f9ed6f29a5" 
-				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=9722d181-75f9-40ab-a136-a9f9ed6f29a5" />
-            <layer id="FDepartement" name="Département" scalemin="0" scalemax="50000000" visible="false" tiled="false"
-				queryable="true" fields="NOM_PAYS" aliases="Nom"
-                infoformat="text/html" featurecount="1"
-				style="" 
-				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
-				attribution="IGN - BDCARTO" 
-				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=e16d50d4-746d-44e3-a5e7-5fc000f97665" 
-				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=e16d50d4-746d-44e3-a5e7-5fc000f97665" />
+				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=a6dde882-4334-4ce0-909f-adb8597ada97"
+				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=a6dde882-4334-4ce0-909f-adb8597ada97" />	
         </theme>
+        <theme name="Espace portuaire"  id="port" collapsed="true">
+            <layer id="bddom_saint_malo" name="Occupations domaniales" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="port"
+				queryable="true" fields="idu" aliases="idu" 
+                infoformat="application/vnd.ogc.gml" featurecount="1"
+				style="" 
+				url="http://ows.region-bretagne.fr/geoserver/port/wms" 
+				attribution="Région Bretagne" 
+				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=43ce0e25-ef3c-4e88-a546-6197e1f84d99" 
+				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=43ce0e25-ef3c-4e88-a546-6197e1f84d99" />
+            <layer id="concessions_port_saint_malo" name="Concessions" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="port"
+				queryable="true" fields="concession" aliases="Concession" 
+                infoformat="application/vnd.ogc.gml" featurecount="1"
+				style="" 
+				url="http://ows.region-bretagne.fr/geoserver/port/wms" 
+				attribution="Région Bretagne" 
+				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=9ee47f66-a2b2-40a8-a5cf-82f7fae4cbac" 
+				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=9ee47f66-a2b2-40a8-a5cf-82f7fae4cbac" />
+			<layer id="contour_port_saint_malo" name="Contour du port de Saint-Malo" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="port"
+				queryable="false" fields="site" aliases="Site"
+                infoformat="text/html" featurecount="2"               
+				url="http://ows.region-bretagne.fr/geoserver/port/wms" 
+				style="" 
+				attribution="Région Bretagne" 
+				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=ca6d2fd1-68cd-4265-9453-f40d02400e49" 
+				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=ca6d2fd1-68cd-4265-9453-f40d02400e49" />                    
+		</theme>		
     </themes>
 </config>
