@@ -292,6 +292,10 @@ li.geoportail.ui-li-divider, li.elasticsearch.ui-li-divider {
   padding-top: 10px;
 }
 
+.mv-legend {
+    max-width:250px;
+}
+
 
 #source-content {
     font-size: 10px;
