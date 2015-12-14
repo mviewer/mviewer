@@ -309,6 +309,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
                 searchable="true" searchid="SIREN_EPCI" 
                 infoformat="text/html" featurecount="5"
 				style="epci_region" 
+                opacity="0.5" 
 				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
 				attribution="GéoBretagne" 
 				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=2298d744-49cb-4fcb-9487-26f916fecdff" 

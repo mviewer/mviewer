@@ -243,6 +243,7 @@ Noeud enfant de theme décrivant une couche.
     useproxy=""
 	infoformat="" featurecount=""
 	style=""
+    opacity=""
     legendurl=""
 	url=""
 	attribution=""
@@ -269,6 +270,7 @@ Noeud enfant de theme décrivant une couche.
 * **infoformat**: Format du GetFeatureInfo. 2 formats sont supportés : text/html et application/vnd.ogc.gml
 * **featurecount**: Nombre d'éléments retournés lors de l'intérrogation
 * **style**: Style de la couche
+* **opacity**: Opacité de la couche (1 par défaut)
 * **legendurl**: url premettant de récupérer la légende. Si non défini, c'est un getFeatureLegend qui est effectué.
 * **url**: URL de la couche
 * **attribution**: Copyright de la couche.
