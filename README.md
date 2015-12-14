@@ -21,7 +21,7 @@ Le fichier de config permet la personnalisation des thèmes/couches du visualise
 
 	<?xml version="1.0" encoding="UTF-8"?>
 	<config>
-    <application title="" logo="" help="" />
+    <application title="" logo="" help="" panelfooterimage="" panelfooterheight="" exportpng="" measuretools="" legend="" legendasimage=""/>
     <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
     <mapoptions maxzoom="18" projection="EPSG:3857" center="-403013.39038929436,6128402.399153711" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
    
@@ -36,14 +36,15 @@ Le fichier de config permet la personnalisation des thèmes/couches du visualise
 
     <proxy url="../proxy/?url="/>
 
-    <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban"/>     
-    <elasticsearch url="http://ows.region-bretagne.fr/kartenn/_search" geometryfield="geometry" querymode="fussy_like_this"/>
+    <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban" attribution="API adresse.data.gouv.fr" />     
+    <elasticsearch url="http://ows.region-bretagne.fr/kartenn/_search" geometryfield="geometry" linkid="search_id" querymode="fussy_like_this"/>
     <searchparameters bbox="true" localities="false" features="true"/>
 
     <themes> 
         <theme name="Inventaire du patrimoine"  collapsed="true" id="patrimoine">           
 			<layer id="inventaire_patrimoine" name="Patrimoine régional" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="rb"
 				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+                useproxy="false"
                 infoformat="text/html" featurecount="1"
 				style="" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -69,13 +70,19 @@ Personnalisation de l'application (overriding)
 
 ####Prototype 
 
-	 <application title="" logo=""  help="" />
+	 <application title="" logo=""  help="" panelfooterimage="" panelfooterheight="" exportpng="" measuretools="" legend="" legendasimage=""/>
 
 ####Attributs 
 
 * **title**: Titre de l'application || Kartenn.
 * **logo**: Url du logo || img/logo/bandeau_region.png.
 * **help**: Url du fichier d'aide || aide_kartenn.pdf.
+* **panelfooterimage**: Url du fichier image à utiliser en arrière plan du panel footer.
+* **panelfooterheight**: Taille en pixels du footer du panel.
+* **exportpng**: Enables map export as png file  true/false || false. Export is possible only with local layers (same origin) or with layers served with CORS.
+* **legend**: Add button to show legend panel : true || false.
+* **legendasimage**: if true, render the legend in canvas. By this way, it's possible export legend as png file : true/flase || false.
+* **measuretools**: Enables measure tools and tools mode  true/false || false.
 
 ###Noeud mapoptions
 
@@ -139,7 +146,10 @@ Représente les fonds de plan.
 
 ###Proxy 
 
-Lien vers votre proxy permmettant l'interrogation des couches.
+Lien vers votre proxy permmettant l'interrogation CROSS DOMAIN des couches.
+Il n'y a pas besoin d'utiliser de proxy pour les données servies par GéoBretagne car CORS est activé (http://enable-cors.org/server.html)
+Mviewer n'est pas fourni avec un proxy Ajax. L'application peut fonctionner avec le proxy de GeorChestra.
+Un proxy cgi peut être utilisé. Plus de détail ici : [proxy] (https://trac.osgeo.org/openlayers/wiki/FrequentlyAskedQuestions#WhydoIneedaProxyHost)
 
 ####Prototype
 
@@ -159,26 +169,30 @@ Liens vers service d'autocomplétion et de géocodage.
 ####Prototype
 
 
-	<olscompletion url="" [type=""] />
- 
+	<olscompletion url="" [type=""] attribution="" />
+    
 
 ####Attributs
 
 * **url**: Url du service d'autocomplétion d'adresse
 * **type**: Optional - Type de service utilisé geoportail ou ban - defaut = geoportail
+* **attribution**: Attribution du service de geocodage
 
 ###elasticsearch
 
-Liens vers un index elasticsearch.
+Liens vers un index elasticsearch. Cette fonctionnalité permet d'interroger un index Elasticsearch à partir d'une saisie libre example
+"Port de Brest". Le résultat retourné est une collection de documents disposant d'un champ commun avec les entités géographiques servies par l'instance
+WMS/WFS. Par convention les types elasticsearch ont le même nom que les couches wms/wfs.
 
 ####Prototype
 
-	<elasticsearch url="" geometryfield="" [querymode=""] />
+	<elasticsearch url="" geometryfield="" linkid="" [querymode=""] />
 
 ####Attributs
 
 * **url**: Url de l'API Search
 * **geometryfield**: Nom du champ utilisé par l'instance elasticsearch pour stocker la géométrie
+* **linkid**: Nom du champ  à utiliser côté serveur wms/wfs pour faire le lien avec la propriété _id des documents elasticsearch.
 * **querymode**: Optional - Query mode used by elasticsearch to find results : fuzzy_like_this ou term - default = fuzzy_like_this.
 
 ###searchparameters
@@ -224,8 +238,13 @@ Noeud enfant de theme décrivant une couche.
 
 	<layer id="" name="" scalemin="" scalemax="" visible="" tiled="" namespace=""
 	queryable="" fields="" aliases=""
+    searchable=""
+    searchid=""
+    useproxy=""
 	infoformat="" featurecount=""
 	style=""
+    opacity=""
+    legendurl=""
 	url=""
 	attribution=""
 	metadata=""
@@ -242,11 +261,17 @@ Noeud enfant de theme décrivant une couche.
 * **tiled**: Booléen stipluant est ce que la couche est tuilée
 * **namespace**: Namespace où est située la couche
 * **queryable**: Booléen stipulant est ce que la couche est intérrogeable via un GetFeatureInfo
+* **searchable**: Booléen précisant si la couche est interrogeable via la barre de recherche
+* **searchid**: Nom du champ à utiliser côté WMS afin de faire le lien avec l'_id elasticsearch
+* **iconsearch**: Lien vers l'image utilisée pour illustrer le résultat d'une recherche ElasticSearch
+* **useproxy**: Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de de crossOrigin lorsque CORS n'est pas activé sur le serveur distant.
 * **fields**: Si les informations retournées par l'interrogation est au format GML, fields représente les attributs à parser pour générer la vignette
-* **aliases**: Si les informations retournées par l'interrogation est au format GML, aliasess représente le renommage des fields parsés.
-* **infoformat**: Format du GetFeatureInfo.
-* **featurecount**: Nombre d'élèments retournés lors de l'intérrogation
+* **aliases**: Si les informations retournées par l'interrogation est au format GML, aliases représente le renommage des champs parsés.
+* **infoformat**: Format du GetFeatureInfo. 2 formats sont supportés : text/html et application/vnd.ogc.gml
+* **featurecount**: Nombre d'éléments retournés lors de l'intérrogation
 * **style**: Style de la couche
+* **opacity**: Opacité de la couche (1 par défaut)
+* **legendurl**: url premettant de récupérer la légende. Si non défini, c'est un getFeatureLegend qui est effectué.
 * **url**: URL de la couche
 * **attribution**: Copyright de la couche.
 * **metadata**: Lien vers la fiche de metadonnées complète

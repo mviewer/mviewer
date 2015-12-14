@@ -16,7 +16,8 @@
 	<link rel="stylesheet" href="lib/jquery/base/plugins/scrollbar/jquery.jscrollpane.css" type="text/css" media="all" />
     <link rel="stylesheet" href="lib/jquery/base/plugins/bjqs/bjqs.css" type="text/css" />
 
-	<script type="text/javascript" src="lib/proj4js/1.1.0/proj4js-compressed.js"></script>	
+	<!--<script type="text/javascript" src="lib/proj4js/1.1.0/proj4js-compressed.js"></script>-->
+    <script type="text/javascript" src="lib/proj4js/2.3.6/proj4.js"></script>
 	<script type="text/javascript" src="lib/jquery/base/1.10.2/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="lib/jquery/base/1.10.2/jquery-ui.min.js"></script>
 	<script>
@@ -74,7 +75,7 @@ $(document).ready(function () {
         }, // fin success config
         error: function (request, status, error) {
             $.mobile.loading('hide');			
-			alert("Fichier de configuration : " + configFile + " non trouvé ou incorrect !");	           
+			alert("Fichier de configuration : " + configFile + " non trouvé ou incorrect !");
         }
     });
 
@@ -89,32 +90,39 @@ $(document).ready(function () {
 	<div id="main" data-role="page" style="opacity: 0;">		
 		<!-- THEME PANEL LEFT OVERLAY  -->
 		<div id="themepanel" data-role="panel" data-position="left"  data-display="overlay" data-theme="b" data-dismissible="false" data-swipe-close="false">			
-			<div id="panel-header">
-                 <img src="img/logo/bandeau_region.png" alt="bandeau région"/>
-                 <!--<a href="#" id="panel-closer" data-role="button" data-icon="delete" data-iconpos="notext" data-theme="b" data-inline="true" onclick="$('#themepanel').panel('close');" >Fermer ce panneau</a>-->
+			<div id="panel-header" data-role="header">                   
+                 <h1 class="mv-title">Kartenn</h1>
             </div>
-            <div class="ui-grid-a">
+            <!--<div class="ui-grid-a">
 				<div class="ui-block-a">
                     <a href="#" id="panel-back" data-role="button" data-icon="back" data-iconpos="notext" data-theme="b" data-inline="true" onclick="mviewer.restoreInitialDisplay();" title="Réinitialisation de l'affichage des couches"></a>
                     <h2>Les thématiques</h2> 
                 </div>
 				<div class="ui-block-b"><img src="img/rose_vents.png" style="float: right;" alt="Nord de la carte" onclick="$('#themepanel').panel('close');"/></div>
+			</div>-->
+            <div data-role="controlgroup" data-type="horizontal" id="tab_panel">
+				<!--<ul>
+                  <li>--><a data-icon="legend" data-iconpos="left"  data-theme="b" data-role="button" class="ui-btn-active" href="#" id='tabThemes' onclick="mviewer.panelShowTab('datalist');" >Thématiques</a><!--</li>-->
+				  <!--<li>--><a data-icon="info" data-iconpos="left"  data-theme="b" data-role="button" href="#" id='tabInfos' onclick="mviewer.panelShowTab('mapinfos');" >Informations</a><!--</li>-->		  
+				<!--</ul>-->
 			</div>
-			<br>
-			<div id="datalist" data-role="collapsible-set" data-theme="b" data-content-theme="a" data-inset="false" ></div>				
-            <div id="panel-footer">
+            <div data-role="content">                
+                <div class="mv-tab-panel" id="datalist" data-role="collapsible-set" data-theme="b" data-content-theme="a" data-inset="false" ></div>	
+                <div class="mv-tab-panel" id="mapinfos" style="display : none;"></div>
+            </div>
+            <div id="panel-footer" data-role="footer" data-position="fixed">
                 <div id="mentionstoolbar">
-                    <a href="http://kartenn.region-bretagne.fr/mviewer/aide_kartenn.pdf"  
+                    <a href="http://kartenn.region-bretagne.fr/mviewer/aide_kartenn.pdf" class="mv-help"  
                         title="Aide à l'utilisation" target="_blank" >Aide</a> | 
                     <a href="#legalpanel" data-rel="popup" data-position-to="window" 
                         title="Mentions Légales">Mentions légales</a> | 
-                    <a href="#accessibilitypanel" data-rel="popup" data-position-to="window" 
-                        title="Acessibilité">Accessibilité</a> | 
+                    <!--<a href="#accessibilitypanel" data-rel="popup" data-position-to="window" 
+                        title="Acessibilité">Accessibilité</a> | -->
                     <a href="#contactpanel" data-rel="popup" data-position-to="window" 
                         title="Nous contacter">Nous contacter</a>
                 </div>
-                <!--<img src="img/panel-footer.png" alt="Les 9 missions principales de la région Bretagne"/>-->            </div>
-        <button class="ui-shadow ui-nodisc-icon ui-icon-carat-l ui-btn ui-btn-b ui-btn-icon-notext" id="tick-button" onclick="$('#themepanel').panel('toggle');" ></button>    
+            </div>
+        <button class="ui-shadow ui-nodisc-icon ui-icon-delete ui-btn ui-btn-b ui-btn-icon-notext" id="tick-button" onclick="$('#themepanel').panel('toggle');" ></button>    
 		</div>        
 		<!--  MAP  -->
 		<div id="map" class="map" tabindex="1" accesskey="1">
@@ -123,24 +131,21 @@ $(document).ready(function () {
                 <div id="popup-content"></div>
             </div>
         </div>
-        <img id="marker" src="img/marker2.svg" />
-        <!--<div data-role="footer" data-position="fixed">
-            <h4>Powered by jQuery Mobile</h4>
-        </div>-->
-        <button class="ui-shadow ui-nodisc-icon ui-icon-carat-r ui-btn ui-btn-b ui-btn-icon-notext" id="tick-button2" onclick="$('#themepanel').panel('toggle');" ></button>
-		<!-- LOGO  -->
-		<!--<div id="logo">
-			<a href="http://www.bretagne.fr" target="_blank" title="Accéder au site de Bretagne.fr"><img src="img/logo/RB_NB.png" alt="Lien site bretagne.fr"/></a>
-		</div>	-->	
+        <!-- MARKER USED BY SEARCH IN FEATURES FUNCTIONNALITY, TO LOCATE SELECTED FEATURE ON THE MAP-->
+        <img id="els_marker" src="img/pin-red.png" />        
+        <button class="ui-shadow ui-nodisc-icon ui-icon-bars ui-btn ui-btn-b ui-btn-icon-notext" id="tick-button2" onclick="$('#themepanel').panel('toggle');" ></button>		
 		<!-- TOP MENU BAR  -->        
-		<div id="searchtool" class="ui-btn-leftt" data-inline="true">
-			<input type="search" id="searchfield" placeholder="Localiser..." title="Localiser une adresse" data-mini="true" data-theme="b" tabindex="2" accesskey="2" />
-			<ul id="searchresults" data-role="listview" data-inset="true" data-mini="true" data-theme="b" 
-				data-type="vertical"></ul>
-		</div>
+        <a href="#parameterspanel" id="searchparams" title="Modifier les paramètres de recherche" data-position-to="window" data-mini="true" 
+                data-role="button" data-rel="popup" data-icon="gear" data-iconpos="notext"  data-theme="b" tabindex="112" accesskey="12"></a>
+        <div id="searchtool"  data-mini="true" >
+            <input type="search" id="searchfield" placeholder="Localiser..." title="Localiser une adresse" data-mini="true" data-theme="b" 
+                tabindex="2" accesskey="2" />
+        </div>
+        <ul id="searchresults" data-role="listview" data-inset="true" data-mini="true" data-theme="b" 
+                data-type="vertical"></ul>        
 		<div id="backgroundlayerstoolbar"  data-mini="true" data-theme="b" >			
 		</div>				
-		<!-- VERTICAL LEFT TOOLBAR -->
+		<!-- FIRST VERTICAL RIGHT TOOLBAR -->
 		<div id="zoomtoolbar" data-role="controlgroup" data-mini="true">
 			<a href="#" onclick="mviewer.zoomIn();" title="Zoom avant (zoom fenêtre : shift + clic sur la carte)" 
 				data-role="button" data-icon="plus" data-iconpos="notext" data-theme="b" tabindex="104" accesskey="4" ></a>
@@ -150,38 +155,36 @@ $(document).ready(function () {
 			<a href="#" onclick="mviewer.zoomOut();" title="Zoom arrière" data-role="button" 
 				data-icon="minus" data-iconpos="notext" data-theme="b" tabindex="106" accesskey="6"></a>
 		</div>	
-		<!-- VERTICAL RIGHT TOOLBAR -->
-		<div id="toolstoolbar" data-role="controlgroup"  data-mini="true">
-			<!--<a href="#themepanel" data-rel="panel" id="extra" title="Afficher la table des matières" 
-				data-role="button" data-icon="layers" data-iconpos="notext" data-theme="b" tabindex="107" accesskey="7"></a>-->
-			<!--<a href="#" onclick="mviewer.setTool('info');" id="infobtn" title="Information sur la carte" 
-				data-role="button" data-icon="info" data-iconpos="notext" data-theme="b" tabindex="108" accesskey="8"></a>-->
-			<!--<a href="#" onclick="mviewer.setTool('measureline');" id="measurelinebtn" title="Mesure linéaire" 
-				data-role="button" data-icon="custom" data-iconpos="notext" data-theme="b"></a>-->
-			<a href="?login" id="login" title="Se connecter" 
+		<!-- SECOND VERTICAL RIGHT TOOLBAR -->
+		<div id="toolstoolbar" data-role="controlgroup"  data-mini="true">			
+			<!--<a class="mv-modetools" href="#" onclick="mviewer.setTool('info');" id="infobtn" title="Interroger la carte" 
+				data-role="button" data-icon="info" data-iconpos="notext" data-theme="b" tabindex="107" accesskey="7"></a>-->
+			<a class="mv-modetools" href="#" onclick="mviewer.setTool('measureline', this.id);" id="measurebtn" title="Mesurer" 
+				data-role="button" data-icon="measure" data-iconpos="notext" data-theme="b" tabindex="108" accesskey="8"></a>            
+			<a href="?login" id="login" title="Se connecter" tabindex="110" accesskey="10"
 				data-role="button" data-icon="lock" data-iconpos="notext" data-theme="b" style="display:none;"></a>
 			<a href="#sharepanel" onclick="mviewer.mapShare();" id="sharebtn" title="Partager cette carte" 
 				data-rel="popup" data-transition="flip" data-position-to="window" data-role="button" data-enhanced="true" data-iconshadow="false"
-				data-icon="action" data-iconpos="notext" data-theme="b" tabindex="109" accesskey="9"></a>
-            <a href="#parameterspanel" id="searchparams" title="Paramètres de recherche" data-position-to="window" 
-				data-role="button" data-rel="popup" data-icon="gear" data-iconpos="notext" data-theme="b" ></a>
+				data-icon="action" data-iconpos="notext" data-theme="b" tabindex="111" accesskey="11"></a>            
+            <a href="#" id="exportpng" title="Exporter carte au format image" download="carte.png" tabindex="113" accesskey="13"
+				data-role="button" data-icon="exportpng" data-iconpos="notext" data-theme="b" ></a>
+            <a href="#" onclick="mviewer.getLegend(true)" id="legendbtn" title="Afficher la légende de la carte" tabindex="114" accesskey="14"
+				data-role="button" data-icon="legend" data-iconpos="notext" data-theme="b" ></a>
+            <a href="#" onclick="mviewer.print()" id="printbtn" title="Imprimer la carte" tabindex="103" accesskey="3"
+				data-role="button" data-icon="print" data-iconpos="notext" data-theme="b" ></a>
 		</div>
-		<!-- MEASURES INFOS BOXES -->		
-		<div id="measurelinebar" data-role="controlgroup" data-type="horizontal" data-mini="true" data-theme="b">
-			<a href="#" onclick="mviewer.resetLineMeasure();" id="distancebtn" title="Réinitialiser" data-role="button" 
-				data-mini="true" data-iconpos="right" data-icon="delete" data-theme="b" >Distance : 0.0 m</a>
-		</div>
-		<div id="measureareabar" data-role="controlgroup" data-type="horizontal" data-mini="true" data-theme="b">
-			<a href="#" onclick="mviewer.resetAreaMeasure();" id="areabtn" title="Réinitialiser" data-role="button" 
-				data-mini="true" data-iconpos="right" data-icon="delete" data-theme="b" >Surface : 0.0 m²</a>
-		</div>
-		<!-- APPLICATION MESSAGEBOX -->
-		<a id='lnkmsg' href="#msgpanel" data-rel="popup" data-position-to="window" style='display:none;'></a>
-		<div id="msgpanel" data-role="popup" data-theme="b">
+        <div data-role="controlgroup" data-type="horizontal" data-theme="b" id="drawtoolsoptions" data-mini="true" style="display:none;"> 
+            <a href="#" id="measurelinebtn" title="Mesure linéaire" onclick="mviewer.setTool('measureline');" data-icon="measureline"
+                data-role="button" data-iconpos="notext" data-theme="b" class="ui-btn-active" ></a>
+            <a href="#" id="measureareabtn" title="Mesure surfacique" onclick="mviewer.setTool('measurearea');" data-icon="measurearea" 
+                data-role="button" data-iconpos="notext" data-theme="b"></a>
+        </div>
+		<!-- APPLICATION MESSAGEBOX -->		
+		<div id="msgpanel" data-role="popup" data-theme="b" data-position-to="window">
 			<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" 
 				class="ui-btn-right">Fermer</a>
 			<div data-role="content">
-				<div id="msg">Envoi du message en cours ...</div>
+				<div id="msg">Information</div>
 			</div>
 		</div>
 		<!-- USAGE PANEL -->
@@ -195,7 +198,7 @@ $(document).ready(function () {
 				<div id="usage"></div>
 			</div>
 		</div>
-        <!-- USAGE PANEL -->
+        <!-- SEARCH PARAMETERS PANEL -->
 		<div id="parameterspanel" data-role="popup" data-theme="b">
 			<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" 
 				class="ui-btn-right">Fermer</a>
@@ -211,9 +214,20 @@ $(document).ready(function () {
                         <label for="param_search_localities">Rechercher des adresses</label>
                         <input class="searchfeatures" type="checkbox" name="param_search_features" id="param_search_features">
                         <label class="searchfeatures" for="param_search_features">Rechercher des entités</label>
+                        <p id="adresse-attribution"></p>
                     </fieldset>
-                </form>
+                </form>                
 			</div>
+		</div>
+         <!-- LEGEND PANEL -->
+		<div id="maplegend" data-role="popup" data-theme="b" >
+			<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" 
+				class="ui-btn-right">Fermer</a>
+			<div data-role="header">
+				<h2 class="mv-legend-title" >Légende</h2>
+			</div>
+			<div data-role="content" id="legend-content" class="legend-area" data-theme="a"></div>
+            <div data-role="content" id="source-content" data-theme="b"></div>			
 		</div>
         <!-- ACCESSIBILITY PANEL -->
 		<div id="accessibilitypanel" data-role="popup" data-theme="b">

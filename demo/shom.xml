@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <application title="test WGS84" logo="http://data.shom.fr/img/logo.gif" help="http://www.shom.fr/fileadmin/data-www/MIP/GEO/mentions_legales_datashom.pdf" exportpng="false" measuretools="true" />
+    <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
+    <mapoptions maxzoom="18" projection="EPSG:4326" center="-4.46,48.38" zoom="13" projextent=" -180.0000,-90.0000,180.0000,90.0000" />
+    <![CDATA[<baselayers style="gallery"><!-- style="default"||gallery" -->        
+        <baselayer  type="WMS" id="plan1" label="Plan" title="Plan OSM Géobretagne" thumbgallery="img/basemap/osm-map-bing.png" url="http://geobretagne.fr/geoserver/osm/wms" layers="map-bing" format="image/png" visible="false" attribution="OpenStreetMap CC-by-SA"/>
+        <baselayer  type="WMS" id="photo1" label="Photo aérienne" title="Ortho Géobretagne" thumbgallery="img/basemap/ortho.jpg" url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite" format="image/jpeg" visible="false" attribution="partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver"/>
+        <baselayer  type="WMTS" id ="ortho3" label="Photo aérienne 2000" title="Ortho Géoportail" thumbgallery="img/basemap/ortho.jpg" url="http://gpp3-wxs.ign.fr/5kiwvtkb2v23y0x8chidxbij/wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS2000-2005" format="image/jpeg" visible="false" attribution="IGN" style="normal" matrixset="PM" minresolution="0.4"/>
+		<baselayer  type="WMS" id="photo2" label="Bretagne 1950" title="Ortho de 1952 Géobretagne" thumbgallery="img/basemap/ortho-ancien.jpg" url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite-ancien" format="image/jpeg" visible="false" attribution="partenaires GéoBretagne - IGN"/>
+		<baselayer  type="OSM" id="osm1" label="OSM" title="OSM france" thumbgallery="img/basemap/osm-france.png" url="http://a.tile.openstreetmap.fr/osmfr/${z}/${x}/${y}.png,http://b.tile.openstreetmap.fr/osmfr/${z}/${x}/${y}.png,http://c.tile.openstreetmap.fr/osmfr/${z}/${x}/${y}.png" attribution="OpenStreetMap CC-by-SA" visible="true"/>
+        <baselayer  type="OSM" id="stamen1" label="PlanNB" title="OSM Stamen Toner" thumbgallery="img/basemap/nb.png" url="http://a.tile.stamen.com/toner-lite/${z}/${x}/${y}.png,http://b.tile.stamen.com/toner-lite/${z}/${x}/${y}.png,http://c.tile.stamen.com/toner-lite/${z}/${x}/${y}.png" visible="false" attribution="OpenStreetMap CC-by-SA"/>
+		<baselayer  type="OSM" id="stamen2" label="Aqua" title="OSM Stamen Watercolor" thumbgallery="img/basemap/aqua.png" url="http://a.tile.stamen.com/watercolor/${z}/${x}/${y}.jpg,http://b.tile.stamen.com/watercolor/${z}/${x}/${y}.jpg,http://c.tile.stamen.com/watercolor/${z}/${x}/${y}.jpg" visible="false" attribution="OpenStreetMap CC-by-SA"/>
+        <!--<baselayer  type="WMTS" id="scan1" label="Scan IGN" title="Scan express du Géoportail" maxscale="4000" url="http://kartenn.region-bretagne.fr/cgi-bin/wmts" layers="GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN-EXPRESS.STANDARD" format="image/jpeg" visible="false" attribution="IGN" style="normal" matrixset="PM" minresolution="0.4"/>
+		<baselayer  type="WMTS" id="scan2" label="Cartes IGN" title="Cartes IGN du Géoportail" maxscale="2000" url="http://kartenn.region-bretagne.fr/cgi-bin/wmts" layers="GEOGRAPHICALGRIDSYSTEMS.MAPS" format="image/jpeg" visible="false" attribution="IGN" style="normal" matrixset="PM" minresolution="0.4"/>
+		<baselayer  type="WMTS" id="emajor" label="Etat major" title="Carte d'état major du Géoportail" maxscale="4000" url="http://gpp3-wxs.ign.fr/5kiwvtkb2v23y0x8chidxbij/wmts" layers="GEOGRAPHICALGRIDSYSTEMS.ETATMAJOR40" format="image/jpeg" visible="false" attribution="IGN" style="normal" matrixset="PM" minresolution="0.4"/>-->
+        <!--<baselayer  type="WMTS" id="plan2" label="ff2" title="Plan OSM WMTS Géobretagne" maxscale="1000" url="http://geobretagne.fr/gwc01/service/wmts" layers="osm:bing" format="image/png" visible="false" attribution="OSM" style="_null" matrixset="EPSG:3857" minresolution="0.4"/>
+		<baselayer  type="WMTS" id="ortho2" label="ff1" title="Ortho WMTS Géobretagne" maxscale="1000" url="http://tile.geobretagne.fr/gwc02/service/wmts" layers="satellite" format="image/jpeg" visible="false" attribution="GéoBretagne" style="_null" matrixset="EPSG:3857" minresolution="0.4"/>-->
+        <!--<baselayer  type="WMTS" label="wmts" title="Plan OSM WMTS Géobretagne" url="http://geobretagne.fr/gwc01/service/wmts" layers="imposm:default" format="image/png" visible="false" attribution="OSM" style="_null" matrixset="EPSG:3857" minresolution="0.4"/>-->
+    </baselayers>]]>
+	
+<![CDATA[ ------------------------------BASELAYERS ----------------------------------
+L'attribut style = "gallery" permet d'afficher les fonds de carte dans une liste avec incrustation de vignette pour chaque layer
+L'attribut style = "default" permet d'afficher la liste des couches de fond sous forme d'un groupe de boutons.
+]]>	
+	<baselayers style="gallery"><!-- style="default"||gallery" -->  
+        <baselayer  type="WMTS" id="ortho2" label="Ortho" title="Ortho WMTS Géobretagne" maxscale="1000" url="http://tile.geobretagne.fr/gwc02/service/wmts" thumbgallery="img/basemap/ortho.jpg" layers="satellite" format="image/jpeg" visible="false" attribution="GéoBretagne" style="_null" matrixset="EPSG:4326" minresolution="0.4" fromcapacity="false"/>
+        <baselayer  type="WMS" id="plan1" label="Plan" title="Plan OSM Géobretagne" thumbgallery="img/basemap/osm.png" url="http://geobretagne.fr/geoserver/osm/wms" layers="map-bing" format="image/png" visible="true" attribution="OpenStreetMap CC-by-SA"/>
+    </baselayers> 
+    <authentification url="who" loginurl="?login" logouturl="../j_spring_security_logout" enabled="true"/>
+    <proxy url="../proxy/?url="/>
+    <!--<olscompletion url="../olscompletion" type="geoportail"/>-->
+    <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban"/>     
+    <elasticsearch url="http://ows.region-bretagne.fr/kartenn/_search" geometryfield="geometry" querymode="fussy_like_this"/>
+    <searchparameters bbox="true" localities="false" features="true"/>
+	<widgets>
+       <!--<widget name="gauge"/>-->       
+    </widgets> 
+
+    <themes>
+         <theme id="shom" name="SHOM" collapsed="false">            
+            <layer id="EPAVES_PYR-PNG_WLD_WGS84G_WMS" name="Epaves et obstructions" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace=""
+				queryable="false" fields="" aliases="" 
+                useproxy="true" 
+                legendurl="http://services.data.shom.fr/static/legends/EPAVES_ET_OBSTRUCTIONS/legende_epaves_obstn.png"
+                infoformat="text/html" featurecount="1"
+				style="" 
+				url="http://services.data.shom.fr/INSPIRE/wms/r" 
+				attribution="SHOM" 
+				metadata="http://services.data.shom.fr/csw/ISOAP?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=BATHYMETRIE_LITTO3D_FINISTR_2014.xml" 
+				metadata-csw="http://services.data.shom.fr/csw/ISOAP?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=BATHYMETRIE_LITTO3D_FINISTR_2014.xml" />           
+            <layer id="LITTO3D_FINISTR_2014_PYR_4326_WMSR" name="Litto3D® - Finistère 2014" scalemin="0" scalemax="50000000" visible="true" tiled="true" namespace=""
+				queryable="false" fields="" aliases="" 
+                useproxy="true" 
+                infoformat="text/html" featurecount="1"
+				style="" 
+                legendurl="http://services.data.shom.fr/static/legends/MNT_LITTORAL_LITTO3D/legende_litto3d_finistr.png"
+				url="http://services.data.shom.fr/INSPIRE/wms/r" 
+				attribution="SHOM" 
+				metadata="http://services.data.shom.fr/csw/ISOAP?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=BATHYMETRIE_L3D_MAR_FINISTR_2014.xml" 
+				metadata-csw="http://services.data.shom.fr/csw/ISOAP?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;Id=BATHYMETRIE_L3D_MAR_FINISTR_2014.xml" />         
+         </theme>
+         <theme name="Espace portuaire"  id="port" collapsed="true">
+            <layer id="bddom_brest" name="Occupations domaniales" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="port"
+				queryable="true" fields="idu" aliases="idu" 
+                infoformat="application/vnd.ogc.gml" featurecount="1"
+				style="" 
+				url="http://ows.region-bretagne.fr/geoserver/port/wms" 
+				attribution="Région Bretagne" 
+				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=43ce0e25-ef3c-4e88-a546-6197e1f84d99" 
+				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=43ce0e25-ef3c-4e88-a546-6197e1f84d99" />
+            <layer id="concessions_port_brest" name="Concessions" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="port"
+				queryable="true" fields="concession" aliases="Concession" 
+                infoformat="application/vnd.ogc.gml" featurecount="1"
+				style="" 
+				url="http://ows.region-bretagne.fr/geoserver/port/wms" 
+				attribution="Région Bretagne" 
+				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=9ee47f66-a2b2-40a8-a5cf-82f7fae4cbac" 
+				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=9ee47f66-a2b2-40a8-a5cf-82f7fae4cbac" />
+			<layer id="contour_port_brest" name="Contour du port de Brest" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="port"
+				queryable="false" fields="site" aliases="Site"
+                infoformat="text/html" featurecount="2"               
+				url="http://ows.region-bretagne.fr/geoserver/port/wms" 
+				style="" 
+				attribution="Région Bretagne" 
+				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=ca6d2fd1-68cd-4265-9453-f40d02400e49" 
+				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=ca6d2fd1-68cd-4265-9453-f40d02400e49" />                    
+		</theme>		
+    </themes>
+</config>
