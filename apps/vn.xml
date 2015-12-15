@@ -24,9 +24,9 @@ L'attribut style = "gallery" permet d'afficher les fonds de carte dans une liste
 L'attribut style = "default" permet d'afficher la liste des couches de fond sous forme d'un groupe de boutons.
 ]]>	
 	<baselayers style="gallery"><!-- style="default"||gallery" -->            		
-        <baselayer  type="WMS" id="plan2" label="OpenStreetMap" title="GéoBretagne" thumbgallery="img/basemap/osm.png" maxscale="1000" url="http://osm.geobretagne.fr/gwc01/service/wms" layers="osm:google" format="image/png" visible="false" attribution="OSM" style="_null" matrixset="EPSG:3857" minresolution="0.4"/>
+        <baselayer  type="WMS" id="plan2" label="OpenStreetMap" title="GéoBretagne" thumbgallery="img/basemap/osm.png" maxscale="1000" url="http://osm.geobretagne.fr/gwc01/service/wms" layers="osm:google" format="image/png" visible="true" attribution="OSM" style="_null" matrixset="EPSG:3857" minresolution="0.4"/>
         <baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoPortail" maxscale="1000" thumbgallery="img/basemap/ortho.jpg"
-            url="../wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" format="image/jpeg" visible="true" fromcapacity="false"
+            url="../wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" format="image/jpeg" visible="false" fromcapacity="false"
             attribution="&lt;a href='http://www.geoportail.fr/' target='_blank'>&lt;img src='http://api.ign.fr/geoportail/api/js/latest/theme/geoportal/img/logo_gp.gif'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
         <baselayer  type="WMS" id="photo2" label="Photo aérienne 1950" title="GéoBretagne" thumbgallery="img/basemap/ortho-ancien.jpg" 
 			url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite-ancien" format="image/jpeg" visible="false" 
