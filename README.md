@@ -46,7 +46,8 @@ Le fichier de config permet la personnalisation des thèmes/couches du visualise
 				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
                 useproxy="false"
                 infoformat="text/html" featurecount="1"
-				style="" 
+				style=""
+                filter=""
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=a7f46b47-42fc-49b7-9b49-c7c11aee0932"
@@ -238,6 +239,7 @@ Noeud enfant de theme décrivant une couche.
 
 	<layer id="" name="" scalemin="" scalemax="" visible="" tiled="" namespace=""
 	queryable="" fields="" aliases=""
+    filter=""
     searchable=""
     searchid=""
     useproxy=""
@@ -261,6 +263,7 @@ Noeud enfant de theme décrivant une couche.
 * **tiled**: Booléen stipluant est ce que la couche est tuilée
 * **namespace**: Namespace où est située la couche
 * **queryable**: Booléen stipulant est ce que la couche est intérrogeable via un GetFeatureInfo
+* **filter**: Expression CQL permettant de filtrer la couche ex: insee=35000 Ou INTERSECT(the_geom, POINT (-74.817265 40.5296504)) [tutorial] (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial)
 * **searchable**: Booléen précisant si la couche est interrogeable via la barre de recherche
 * **searchid**: Nom du champ à utiliser côté WMS afin de faire le lien avec l'_id elasticsearch
 * **iconsearch**: Lien vers l'image utilisée pour illustrer le résultat d'une recherche ElasticSearch
