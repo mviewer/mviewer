@@ -210,7 +210,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
                     </theme> 
         <theme name="Inventaire du patrimoine"  collapsed="true" id="patrimoine">           
 			<layer id="inventaire_patrimoine" name="Patrimoine régional" visible="false" tiled="true" namespace="rb"
-				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+				queryable="true" fields="" aliases=""                
                 searchable="true"
                 infoformat="text/html" featurecount="20"
 				style="" 
@@ -306,6 +306,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=b08e6cb1-236c-49b7-88f9-42b500d274d5" />			
 			<layer id="EPCI_053" name="Intercommunalité" visible="false" tiled="false"
 				queryable="true" fields="NOM_EPCI,SIREN_EPCI" aliases="Nom,SIREN"
+                filter="" 
                 searchable="true" searchid="SIREN_EPCI" 
                 infoformat="text/html" featurecount="5"
 				style="epci_region" 
