@@ -280,4 +280,13 @@ Noeud enfant de theme décrivant une couche.
 * **metadata**: Lien vers la fiche de metadonnées complète
 * **metadata-csw**: Requête CSW pour l'affiche dans la popup du détail de la couche.
 
+Utilisation		
+-----------
 
+###Paramètres d'URL
+
+Il est possible d'instancer un mviewer avec des paramètres transmis par URL
+
+* **config**: Fichier de configuration à charger ex: mviewer/?config=demo/l93.xml
+* **wmc**: liste des contextes OGC WMC (séparés par des virgules) à charger afin d'alimenter le panel de gauche ex: mviewer/?wmc=demo/hydro.wmc
+* **popup**: true ou false. Si true, Une popup s'affiche sur la carte afin d'afficher le résultat de l'interrogation de couches.
