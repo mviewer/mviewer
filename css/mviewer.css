@@ -731,6 +731,16 @@ p.counter-slide {
   padding: 2px 2px 2px 2px;
 }
 
+.ui-tabs-panel >ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#mapinfos iframe {
+    max-width: 275px;
+}
+
 .ui-widget-header {
   border: none!important;
 }
