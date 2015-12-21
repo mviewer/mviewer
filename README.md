@@ -21,7 +21,7 @@ Le fichier de config permet la personnalisation des thèmes/couches du visualise
 
 	<?xml version="1.0" encoding="UTF-8"?>
 	<config>
-    <application title="" logo="" help="" panelfooterimage="" panelfooterheight="" exportpng="" measuretools="" legend="" legendasimage=""/>
+    <application title="" logo="" help="" style="" panelfooterimage="" panelfooterheight="" exportpng="" measuretools="" legend="" legendasimage=""/>
     <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
     <mapoptions maxzoom="18" projection="EPSG:3857" center="-403013.39038929436,6128402.399153711" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
    
@@ -77,6 +77,7 @@ Personnalisation de l'application (overriding)
 
 * **title**: Titre de l'application || Kartenn.
 * **logo**: Url du logo || img/logo/bandeau_region.png.
+* **style**: style à utiliser || css/themes/default.css [ressource](https://themeroller.jquerymobile.com/)
 * **help**: Url du fichier d'aide || aide_kartenn.pdf.
 * **panelfooterimage**: Url du fichier image à utiliser en arrière plan du panel footer.
 * **panelfooterheight**: Taille en pixels du footer du panel.
@@ -285,7 +286,7 @@ Utilisation
 
 ###Paramètres d'URL
 
-Il est possible d'instancer un mviewer avec des paramètres transmis par URL
+Il est possible d'instancier un mviewer avec des paramètres transmis par URL
 
 * **config**: Fichier de configuration à charger ex: mviewer/?config=demo/l93.xml
 * **wmc**: liste des contextes OGC WMC (séparés par des virgules) à charger afin d'alimenter le panel de gauche ex: mviewer/?wmc=demo/hydro.wmc
