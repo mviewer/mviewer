@@ -85,14 +85,14 @@ p.center { text-align: center; }
 
 .ol-control button {
   color: #fff;
-  background-color: #333;
+  /*background-color: #333;*/
   height: 30px;
   width: 30px;
 }
 
 .ol-control button:focus, .ol-control button:hover {
   text-decoration: none;
-  background-color: #333;  
+  /*background-color: #333;  */
 }
 
 /* Toolsbars */
