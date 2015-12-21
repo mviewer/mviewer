@@ -85,14 +85,14 @@ p.center { text-align: center; }
 
 .ol-control button {
   color: #fff;
-  background-color: #333;
+  /*background-color: #333;*/
   height: 30px;
   width: 30px;
 }
 
 .ol-control button:focus, .ol-control button:hover {
   text-decoration: none;
-  background-color: #333;  
+  /*background-color: #333;  */
 }
 
 /* Toolsbars */
@@ -125,7 +125,7 @@ p.center { text-align: center; }
 	-webkit-box-shadow: 2px 2px 5px #888;
 	-moz-box-shadow: 2px 2px 5px #888;
 	box-shadow: 2px 2px 5px #888;
-	background: #000000;
+	/*background: #000000;*/
 }
 
 #backgroundlayerstoolbar {
@@ -138,6 +138,10 @@ p.center { text-align: center; }
 
 #backgroundlayerstoolbar h4 a {
     font-size: 12px;
+}
+
+ul#basemapslist {
+  font-size: larger;
 }
 
 #zoomtoolbar {
@@ -391,6 +395,7 @@ a#legend-export-png {
     margin: 0 0 !important;   
     background-repeat: no-repeat;
     border-radius: 0px 4px 4px 0px;
+    border-left-width: 0px;
 }
 
 #tick-button2 {
@@ -416,14 +421,15 @@ a#legend-export-png {
 
 #panel-header {
     overflow: visible;
-    background: #2a2a2a;
-    border-color: #2a2a2a;
+    /*background: #2a2a2a;
+    border-color: #2a2a2a;*/
     background-image: url(../img/logo/logo-rb.png);
     background-repeat:no-repeat;
     background-position: 0px center; 
     text-align: left!important;    
     margin-top: -15px!important;  
-    margin-left: -15px!important; 
+    margin-left: -15px!important;
+    margin-right: -12px;
     font-size: 25px!important;
     height: 50px!important;
     /*border-bottom: 1px solid #fff;*/
@@ -441,12 +447,12 @@ a#legend-export-png {
 
 #tab_panel {
   padding-top: 15px;
+  font-size: 16px;
 }
 
 a#tabThemes , a#tabInfos{
   text-shadow: none;
-  text-decoration: none!important;
-  /*font-size: 18px;  */
+  text-decoration: none!important;  
 }
 
 #datalist, #mapinfos {	
@@ -459,6 +465,7 @@ a#tabThemes , a#tabInfos{
   bottom: 60px;
   width: auto;
   padding-left: 10px;
+  font-size: x-small;
 }
 
 
@@ -561,7 +568,7 @@ a#tabThemes , a#tabInfos{
     width: 100%;
     left:0;
     /*height: 80px;*/
-    background-color: #333;
+    /*background-color: #333;*/
     z-index: 3500;
     padding-top: 10px;
 }
