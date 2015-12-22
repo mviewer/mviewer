@@ -67,7 +67,7 @@ $(document).ready(function () {
         dataType: "xml",
         success: function (xml) {
             var style = "css/themes/default.css";
-            if ($(xml).find("application").attr("style").match("css")) {
+            if ($(xml).find("application").attr("style") && $(xml).find("application").attr("style").match("css")) {
                 style = $(xml).find("application").attr("style");
             }
             $('head').prepend('<link rel="stylesheet" href="'+style+'" type="text/css" />');
