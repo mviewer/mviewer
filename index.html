@@ -71,12 +71,15 @@ $(document).ready(function () {
                 style = $(xml).find("application").attr("style");
             }
             $('head').prepend('<link rel="stylesheet" href="'+style+'" type="text/css" />');
-            var map = mviewer.init(xml);            
+            var map = mviewer.init(xml);             
             setTimeout(function () {
                 $.mobile.loading('hide');
                 $("#main").css("opacity", 1).hide();
                 $("#main").fadeIn(2000);
-            }, 3000);
+                //Hack ol3 control color
+                var themecolor = $("#backgroundlayerstoolbar a").css("background-color");
+                $(".ol-control button").css("background-color", themecolor);
+            }, 3000);           
             $("#themepanel").panel("open");
             $( "#map" ).focus();
         }, // fin success config
