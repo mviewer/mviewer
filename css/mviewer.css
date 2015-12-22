@@ -218,11 +218,11 @@ ul#basemapslist {
 
 a#searchparams {
   position: fixed;
-  right: 267px;
-  top: .05em;
+  right: 252px;
+  top: .1em;
   border-radius: 4px;
-  padding-top: .1em;
-  padding-bottom: .1em;
+  /* padding-top: .1em; */
+  padding-bottom: .15em;
 }
 
 #adresse-attribution {
