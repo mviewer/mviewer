@@ -70,6 +70,14 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					style="" 
 					attribution="Région Bretagne" 
 					metadata-csw=""
+					metadata="" />
+                <layer id="riviere_etat_ecologique" name="Rivière etat écologique" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="interne"
+					queryable="true" fields="nom" aliases="nom"
+                    infoformat="text/html" featurecount="5"
+					url="http://ows.region-bretagne.fr/geoserver/interne/wms" 
+					style="" 
+					attribution="Région Bretagne" 
+					metadata-csw=""
 					metadata="" />                      
 		</theme>		
         <theme name="Limites administratives"  collapsed="true" id="territoire">  
