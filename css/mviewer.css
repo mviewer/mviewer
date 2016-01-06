@@ -129,7 +129,7 @@ p.center { text-align: center; }
 }
 
 #backgroundlayerstoolbar {
-	bottom: .5em;
+	bottom: .7em;
 	right: 50px;
 	float: right;
 	position: fixed;
@@ -137,11 +137,16 @@ p.center { text-align: center; }
 }
 
 #backgroundlayerstoolbar h4 a {
-    font-size: 12px;
+    font-size: small;
 }
 
-ul#basemapslist {
-  font-size: larger;
+#backgroundlayerstoolbar >h4.ui-collapsible-heading.ui-collapsible-heading-collapsed a{
+    padding-bottom: 6px;
+    padding-top: 6px;
+}
+
+ul#basemapslist a{
+  font-size: small;
 }
 
 #zoomtoolbar {
@@ -465,7 +470,7 @@ a#tabThemes , a#tabInfos{
   bottom: 60px;
   width: auto;
   padding-left: 10px;
-  font-size: x-small;
+  /*font-size: x-small;*/
 }
 
 
@@ -682,6 +687,7 @@ code {
 
 #ulnav {
     background: #fff;
+    /*font-size: 12px;*/
 }
 
 ul.bjqs-controls.v-centered li.bjqs-prev a {
