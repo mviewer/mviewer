@@ -396,7 +396,7 @@ a#legend-export-png {
 #tick-button {
     position: absolute;
     top: 20px;    
-    right: -28px;   
+    right: 0px;   
     font-size: 1.25em;
     margin: 0 0 !important;   
     background-repeat: no-repeat;
