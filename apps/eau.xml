@@ -82,7 +82,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					metadata-csw=""
 					metadata="" />                      
 		</theme>
-        <theme name="Divers"  id="divers" collapsed="false">
+        <theme name="Divers"  id="divers" collapsed="true">
                 <layer id="passe_poisson_vn" name="Passes à poisson" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
 					queryable="true" fields="ident" aliases="ident"
                     infoformat="text/html" featurecount="20"
