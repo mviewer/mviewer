@@ -80,7 +80,15 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					style="" 
 					attribution="Région Bretagne" 
 					metadata-csw=""
-					metadata="" />                      
+					metadata="" />
+                <layer id="bv_2016" name="bv_2016" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="interne"
+					queryable="true" fields="nom" aliases="nom"
+                    infoformat="text/html" featurecount="5"
+					url="http://ows.region-bretagne.fr/geoserver/interne/wms" 
+					style="" 
+					attribution="Région Bretagne" 
+					metadata-csw=""
+					metadata="" />
 		</theme>
         <theme name="Divers"  id="divers" collapsed="true">
                 <layer id="passe_poisson_vn" name="Passes à poisson" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
