@@ -289,5 +289,6 @@ Utilisation
 Il est possible d'instancier un mviewer avec des paramètres transmis par URL
 
 * **config**: Fichier de configuration à charger ex: mviewer/?config=demo/l93.xml
+* **theme**: Theme css à utiliser ex: ?theme=geobretagne pour charger le theme doit être dans css/themes/geobretagne.css.
 * **wmc**: liste des contextes OGC WMC (séparés par des virgules) à charger afin d'alimenter le panel de gauche ex: mviewer/?wmc=demo/hydro.wmc
 * **popup**: true ou false. Si true, Une popup s'affiche sur la carte afin d'afficher le résultat de l'interrogation de couches.

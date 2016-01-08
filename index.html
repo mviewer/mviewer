@@ -61,6 +61,7 @@ $(document).ready(function () {
 			.replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}'));    
 	}
     var configFile = (config.config) ? config.config : "config.xml";
+    var theme = (config.theme) ? config.theme : null;
 
     $.ajax({
         url: configFile + '?_dc=' + $.getTime(),
@@ -69,6 +70,9 @@ $(document).ready(function () {
             var style = "css/themes/default.css";
             if ($(xml).find("application").attr("style") && $(xml).find("application").attr("style").match("css")) {
                 style = $(xml).find("application").attr("style");
+            }
+            if (theme) {
+                style = "css/themes/" + theme + ".css";
             }
             $('head').prepend('<link rel="stylesheet" href="'+style+'" type="text/css" />');
             var map = mviewer.init(xml);             

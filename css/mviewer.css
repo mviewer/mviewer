@@ -396,12 +396,13 @@ a#legend-export-png {
 #tick-button {
     position: absolute;
     top: 20px;    
-    right: -28px;   
+    right: 0px;   
     font-size: 1.25em;
     margin: 0 0 !important;   
     background-repeat: no-repeat;
-    border-radius: 0px 4px 4px 0px;
-    border-left-width: 0px;
+    /*border-radius: 0px 4px 4px 0px;*/
+    border-width: 0px;
+    background-color: transparent;
 }
 
 #tick-button2 {
@@ -422,16 +423,15 @@ a#legend-export-png {
 
 /*Panel Title*/
 
-.mv-title {    
+.mv-title {
+    background-image: url(../img/logo/logo-rb.png);
+    background-repeat:no-repeat;
+    background-position: 0px center;
+    margin-top: 0px!important;    
 }
 
 #panel-header {
-    overflow: visible;
-    /*background: #2a2a2a;
-    border-color: #2a2a2a;*/
-    background-image: url(../img/logo/logo-rb.png);
-    background-repeat:no-repeat;
-    background-position: 0px center; 
+    overflow: visible;    
     text-align: left!important;    
     margin-top: -15px!important;  
     margin-left: -15px!important;
@@ -443,8 +443,8 @@ a#legend-export-png {
 
 #themepanel .ui-title {    
     padding-bottom: 0px;
-    padding-left: 100px;
-    text-align: left;
+    padding-right: 35px;
+    text-align: right;
 }
 
 #themepanel .ui-content{
