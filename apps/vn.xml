@@ -200,7 +200,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 
         </theme> 
         <theme name="Infrastructures Nautiques"  collapsed="true" id="nautique"> 
-                <layer id="ecluse" name="Ecluse - Trafic annuel" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+                <layer id="ecluse" name="Ecluse - Trafic annuel" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="rb"
 					queryable="true" fields="nom_ecluse,photo" aliases="Nom,Photo"
                     searchable="true" infoformat="text/html" featurecount="20"
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
