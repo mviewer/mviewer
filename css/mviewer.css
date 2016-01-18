@@ -782,7 +782,7 @@ p.counter-slide {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  max-width: 85px;  
+  max-width: 110px;  
 }
 
 .ui-tabs .ui-tabs-nav li.ui-tabs-active {   
