@@ -68,15 +68,30 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Région Bretagne" 
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25" 
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25" />
-         <layer id="lycee2" name="Lycée geojson" visible="true" namespace="rb"
+         <layer id="lycee2" name="geojson" visible="true"
 				queryable="false" fields="nom,photo,libelle,secteur_li,reseau_lib" aliases="Nom,Photo,Commune,Secteur,Réseau"                
-                type="geojson"                
-				style='{"radius":7, "fill":"#CC0000", "stroke":"#000000"}'
+                type="geojson"
+                style="circle1"
                 legendurl="http://kartenn.region-bretagne.fr/img/styles/lyc-leg.png" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wfs?request=getFeature&amp;outputFormat=application/json&amp;typename=rb:lycee&amp;srsName=EPSG:4326" 
 				attribution="Région Bretagne" 
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25" 
-				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25" />			                    
+				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25" />
+         <layer id="test" name="kml" visible="false"
+				queryable="false" fields="name,description" aliases="Nom,Description"                
+                type="kml"                
+                legendurl="http://kartenn.region-bretagne.fr/img/styles/lyc-leg.png" 
+				url="http://openlayers.org/en/v3.13.0/examples/data/kml/2012-02-10.kml" 
+				attribution="Région Bretagne" 
+				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25" 
+				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25" />
+         <layer id="heatmap" name="hook" visible="false" 
+				queryable="false"         
+                type="hook"                
+                legendurl="http://kartenn.region-bretagne.fr/img/styles/lyc-leg.png" 				 
+				attribution="Région Bretagne" 
+				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25" 
+				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25" />	
 		</theme>      
     </themes>
 </config>
