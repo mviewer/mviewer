@@ -84,6 +84,13 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Région Bretagne" 
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25" 
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25" />	
-		</theme>      
+		 <layer id="heatmap2" name="HOOK iris" visible="false" 
+				queryable="false"         
+                type="hook"                
+                legendurl="img/legend/heatmap.png" 				 
+				attribution="Région Bretagne" 
+				metadata="" 
+				metadata-csw="" />	
+        </theme>      
     </themes>
 </config>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <application title="Lambert93" logo="" help="" popup="false" exportpng="false" measuretools="true" description="Exemple de carte Lambert 93"/>    
-    <!-- CONFIGURATION PROJECTION LAMBERT 93 -->
-    <mapoptions maxzoom="20" projection="EPSG:2154" center="147595,6835138" zoom="10" projextent="-357823.2365,6037008.6939,894521.0349243277,7289352.965324328" />
-	<!-- FIN CONFIGURATION PROJECTION LAMBERT 93 -->
+    <application title="Mercator" logo="" help="" popup="false" exportpng="false" measuretools="true" description="Exemple de carte utlisant la projection web mercator (EPSG:3857), également utilisée par les producteurs de tuiles (OpenStreetMap, Mapbox, Stamen, Google, GéoPortail ..."/>    
+    <!-- CONFIGURATION PROJECTION WEB MERCATOR -->
+    <mapoptions maxzoom="20" projection="EPSG:3857" center="-497175,6170494" zoom="14" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
+	<!-- FIN CONFIGURATION PROJECTION WEB MERCATOR -->
     <baselayers style="gallery"><!-- style="default"||gallery" -->         
         <baselayer  type="WMS" id="plan1" label="Plan" title="Plan OSM Géobretagne" thumbgallery="img/basemap/osm.png" url="http://osm.geobretagne.fr/gwc01/service/wms" layers="osm:google" format="image/png" visible="true" attribution="OpenStreetMap CC-by-SA"/>
     </baselayers> 

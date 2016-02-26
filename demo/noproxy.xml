@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <application title="No proxy" logo="" help="" popup="false" exportpng="false" measuretools="false" description="Carte en Lambert 93 et configurée pour ne pas utiliser de proxy AJAX. Les flux utilisés sont ceux de GéoBretagne et de la BAN"/>
+    <mapoptions maxzoom="18" projection="EPSG:2154" center="145469,6835812" zoom="8" projextent="-357823.2365,6037008.6939,894521.0349243277,7289352.965324328" />
+	<baselayers style="gallery"><!-- style="default"||gallery" -->         
+        <baselayer  type="WMS" id="plan1" label="Plan" title="Plan OSM Géobretagne" thumbgallery="img/basemap/osm.png"
+        url="http://osm.geobretagne.fr/gwc01/service/wms" layers="osm:google" format="image/png" 
+        visible="true" attribution="OpenStreetMap CC-by-SA"/>
+    </baselayers> 
+    <authentification url="" loginurl="" logouturl="" enabled="false"/>
+    <!--<proxy url="../proxy/?url="/>-->   
+    <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban" attribution="La recherche d'adresse est un service proposé par l'API adresse.data.gouv.fr"/>
+    <themes>
+        <theme name="Limites administratives"  collapsed="false" id="territoire">
+			<layer id="commune_bdcarto" name="Commune" scalemin="0" scalemax="50000000" visible="true" tiled="false"
+				queryable="true" fields="" aliases=""
+                infoformat="text/html" featurecount="1"                
+				style="" 
+				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
+				attribution="IGN - BDCARTO" 
+				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=b08e6cb1-236c-49b7-88f9-42b500d274d5"
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=b08e6cb1-236c-49b7-88f9-42b500d274d5" />			
+			<layer id="EPCI_053" name="Intercommunalité" scalemin="0" scalemax="50000000" visible="false" tiled="false"
+				queryable="true" fields="" aliases=""
+                infoformat="text/html" featurecount="1"
+				style="" 
+				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
+				attribution="GéoBretagne" 
+				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=2298d744-49cb-4fcb-9487-26f916fecdff" 
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=2298d744-49cb-4fcb-9487-26f916fecdff" />       
+        </theme>
+    </themes>
+</config>

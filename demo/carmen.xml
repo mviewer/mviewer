@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>  
+    <application title="Carmen" logo="" help="" popup="false" exportpng="false" legend="true" description="Exemple de carte utlisant la les flux servis par CARMEN. Attention, l'interrogation des couches Carmen nécessite l'utilisation d'un proxy Ajax."/>    
+    <mapoptions maxzoom="18" projection="EPSG:3857" center="-403013.39038929436,6128402.399153711" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />   
+	<baselayers style="default"><!-- style="default"||gallery" -->            		
+        <baselayer  type="WMS" id="plan2" label="Plan" title="GéoBretagne" thumbgallery="img/basemap/osm.png" maxscale="1000"
+        url="http://osm.geobretagne.fr/gwc01/service/wms" layers="osm:google" format="image/png" 
+        visible="true" attribution="OSM" style="_null" matrixset="EPSG:3857" minresolution="0.4"/>        
+        <baselayer  type="WMS" id="photo1" label="Ortho" title="GéoBretagne" thumbgallery="img/basemap/ortho.jpg" 
+			url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite" format="image/jpeg" visible="false" 
+			attribution="&lt;a href='http://applications.region-bretagne.fr/geonetwork/?uuid=048622c5-b333-4c2b-94ec-40a41608dc06' target='_blank' >Partenaires GéoBretagne - IGN&lt;/a>"/>
+    </baselayers>
+    <proxy url="../proxy/?url="/>
+    <authentification url="" loginurl="" logouturl="" enabled="false"/>
+    <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban" attribution="La recherche d'adresse est un service proposé par la BAN"/>   
+    <themes>
+        <theme name="Patrimoine naturel, sites et paysages"  collapsed="false" id="nature">
+            <layer id="Sites_inscrits__ponctuel_" name="Sites inscrits (ponctuel)" scalemin="0" scalemax="50000000" visible="false" tiled="true"
+				queryable="true" fields="SITE" aliases="Site"
+                infoformat="application/vnd.ogc.gml" featurecount="1"             
+				style="" 
+				url="http://ws.carmen.developpement-durable.gouv.fr/WMS/10/Nature_Paysage?" 
+				attribution="CARMEN" 
+				metadata="http://metadata.carmen.developpement-durable.gouv.fr/geonetwork-10/srv/fre/metadata.show?uuid=7d96886f-29b5-4b93-8ad3-d8722485602c" 
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=7d96886f-29b5-4b93-8ad3-d8722485602c" />
+            <layer id="Sites_inscrits__surfacique_" name="Sites inscrits (surfacique)" scalemin="0" scalemax="50000000" visible="true" tiled="true"
+				queryable="true" fields="SITE" aliases="Site"
+                infoformat="application/vnd.ogc.gml" featurecount="1"             
+				style="" 
+				url="http://ws.carmen.developpement-durable.gouv.fr/WMS/10/Nature_Paysage?" 
+				attribution="CARMEN" 
+				metadata="http://metadata.carmen.developpement-durable.gouv.fr/geonetwork/10/fre/metadata.show?uuid=7d96886f-29b5-4b93-8ad3-d8722485602c" 
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=7d96886f-29b5-4b93-8ad3-d8722485602c" />
+            <layer id="Sites_classes__ponctuel_" name="Sites classés (ponctuel)" scalemin="0" scalemax="50000000" visible="false" tiled="true"
+				queryable="true" fields="SITE" aliases="Site"
+                infoformat="application/vnd.ogc.gml" featurecount="1"             
+				style="" 
+				url="http://ws.carmen.developpement-durable.gouv.fr/WMS/10/Nature_Paysage?" 
+				attribution="CARMEN" 
+				metadata="http://metadata.carmen.developpement-durable.gouv.fr/geonetwork-10/srv/fre/metadata.show?uuid=d42013b5-6c2b-4e18-8ddb-db2677860b2d" 
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=d42013b5-6c2b-4e18-8ddb-db2677860b2d" />
+            <layer id="Sites_classes__surfacique_" name="Sites classés (surfacique)" scalemin="0" scalemax="50000000" visible="true" tiled="true"
+				queryable="true" fields="SITE" aliases="Site"
+                infoformat="application/vnd.ogc.gml" featurecount="1"             
+				style="" 
+				url="http://ws.carmen.developpement-durable.gouv.fr/WMS/10/Nature_Paysage?" 
+				attribution="CARMEN" 
+				metadata="http://metadata.carmen.developpement-durable.gouv.fr/geonetwork-10/srv/fre/metadata.show?uuid=d42013b5-6c2b-4e18-8ddb-db2677860b2d" 
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=d42013b5-6c2b-4e18-8ddb-db2677860b2d" />
+            <layer id="ZNIEFF1" name="ZNIEFF1" scalemin="0" scalemax="50000000" visible="false" tiled="true"
+				queryable="true" fields="LB_ZONE" aliases="Libellé zone"
+                infoformat="application/vnd.ogc.gml" featurecount="1"             
+				style="" 
+				url="http://ws.carmen.developpement-durable.gouv.fr/WMS/10/Nature_Paysage?" 
+				attribution="CARMEN" 
+				metadata="http://metadata.carmen.developpement-durable.gouv.fr/geonetwork/10/fre/metadata.show?uuid=33665796-fb24-4117-91aa-3265c76d8031" 
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=33665796-fb24-4117-91aa-3265c76d8031" />
+            <layer id="ZNIEFF2" name="ZNIEFF2" scalemin="0" scalemax="50000000" visible="false" tiled="true"
+				queryable="true" fields="LB_ZONE" aliases="Libellé zone"
+                infoformat="application/vnd.ogc.gml" featurecount="1"             
+				style="" 
+				url="http://ws.carmen.developpement-durable.gouv.fr/WMS/10/Nature_Paysage?" 
+				attribution="CARMEN" 
+				metadata="http://metadata.carmen.developpement-durable.gouv.fr/geonetwork-10/srv/fre/metadata.show?uuid=ce4d1839-b7a8-4b11-84a6-a3a9f77b1192" 
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=ce4d1839-b7a8-4b11-84a6-a3a9f77b1192" />
+            <layer id="Directive_habitats__ZSC__SIC__pSIC_" name="Directive habitats (Natura 2000)" scalemin="0" scalemax="50000000" visible="false" tiled="true"
+				queryable="true" fields="NOM" aliases="Nom"
+                infoformat="application/vnd.ogc.gml" featurecount="1"             
+				style="" 
+				url="http://ws.carmen.developpement-durable.gouv.fr/WMS/10/Nature_Paysage?" 
+				attribution="CARMEN" 
+				metadata="http://metadata.carmen.developpement-durable.gouv.fr/geonetwork-10/srv/fre/metadata.show?uuid=0b4fe074-5827-47c6-b00e-1c74613ba9cf" 
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0b4fe074-5827-47c6-b00e-1c74613ba9cf" />
+            <layer id="Directive_oiseaux__ZPS_" name="Directive oiseaux (Natura 2000)" scalemin="0" scalemax="50000000" visible="false" tiled="true"
+				queryable="true" fields="ZONE" aliases="Zone"
+                infoformat="application/vnd.ogc.gml" featurecount="1"             
+				style="" 
+				url="http://ws.carmen.developpement-durable.gouv.fr/WMS/10/Nature_Paysage?" 
+				attribution="CARMEN" 
+				metadata="http://metadata.carmen.developpement-durable.gouv.fr/geonetwork-10/srv/fre/metadata.show?uuid=ddd7da8e-8275-40db-ab39-b5a3178ab570" 
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=ddd7da8e-8275-40db-ab39-b5a3178ab570" />
+                <layer id="limite_lot_chasse_vn" name="Limite lot de chasse" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+					queryable="true" fields="type, photo" aliases="Type, Photo"
+                    infoformat="text/html" featurecount="5"
+					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+					style="" 
+					attribution="Région Bretagne" 
+					metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=1ba4c535-4ea5-414a-93ce-acee5f2395fe"
+					metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=1ba4c535-4ea5-414a-93ce-acee5f2395fe" />  
+
+        </theme>
+    </themes>
+</config>
