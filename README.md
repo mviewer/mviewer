@@ -246,6 +246,7 @@ Noeud enfant de theme décrivant une couche.
     searchable=""
     searchid=""
     useproxy=""
+    secure=""
 	infoformat="" featurecount=""
 	style=""
     opacity=""
@@ -275,6 +276,7 @@ Ce fichier js doit être placé dans le répertoire hooks/
 * **useproxy**: Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de de crossOrigin lorsque CORS n'est pas activé sur le serveur distant.
 * **fields**: Si les informations retournées par l'interrogation est au format GML, fields représente les attributs à parser pour générer la vignette
 * **aliases**: Si les informations retournées par l'interrogation est au format GML, aliases représente le renommage des champs parsés.
+* **secure**: Précise si la couche est protégée ( méchanisme geoserver ) auquel cas un test est affectué pour savoir si la couche est accessible. SI ce n'est pas le cas, la couche est retirée du panneau et de la carte.
 * **infoformat**: Format du GetFeatureInfo. 2 formats sont supportés : text/html et application/vnd.ogc.gml
 * **featurecount**: Nombre d'éléments retournés lors de l'intérrogation
 * **style**: Style de la couche.
