@@ -76,21 +76,14 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				url="demo/rhum.kml" 
 				attribution="" 
 				metadata="" 
-				metadata-csw="" />
-         <layer id="heatmap" name="HOOK Lycées" visible="false" 
+				metadata-csw="" />        
+		 <layer id="heatmap2" name="Accidents mortels" visible="false" 
 				queryable="false"         
                 type="hook"                
                 legendurl="img/legend/heatmap.png" 				 
-				attribution="Région Bretagne" 
-				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25" 
-				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25" />	
-		 <layer id="heatmap2" name="HOOK iris" visible="false" 
-				queryable="false"         
-                type="hook"                
-                legendurl="img/legend/heatmap.png" 				 
-				attribution="Région Bretagne" 
-				metadata="" 
-				metadata-csw="" />	
+				attribution="GéoBretagne" 
+				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=9b8bc6b1-324f-4f79-8610-7b69bbc5200f" 
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=9b8bc6b1-324f-4f79-8610-7b69bbc5200f" />	
         </theme>      
     </themes>
 </config>
