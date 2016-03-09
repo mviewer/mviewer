@@ -1,0 +1,242 @@
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <title>Exemples de configuration mviewer</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  
+  
+</head>
+<style>
+body {
+      	width:100%%;
+        height:100%;
+      
+      }
+.well {
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+}
+
+span.label.label-info {
+  margin-left: 5px;
+}
+
+h1 {
+    padding-left: 15px;
+}
+
+</style>
+<body>
+    <div class="page-header">
+        <h1>Examples <small>de configurations mviewer</small></h1>
+    </div>
+    <div id="listeExemples">   
+    <div class="wrap container" id="exemple">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Facile</span><span class="label label-info">geobretagne</span><span class="label label-info">style</span></p>                    
+                    <h3>GéoBretagne</h3>
+                    <hr><strong>Cet exemple exploite uniquement des flux GéoBretagne</strong></br>
+                    <p>Pour les fonds cartographiques et pour les thématiques. EN outre il utilise une feuille de style personnalisée afin de modifier les couleurs par défaut du mviewer.
+                    </p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/geobretagne.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/geobretagne.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>                   
+                </div>
+            </div>
+             <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Facile</span><span class="label label-info">OpenStreetMap</span><span class="label label-info">baselayer</span></p>                    
+                    <h3>Fonds cartographiques</h3>
+                    <hr><strong>Exemples de fonds cartographiques (flux tuilés) utilisés dans le mviewer</strong></br>
+                    <ul>
+                        <li>GéoBretagne</li>
+                        <li>Géoportail</li>
+                        <li>OpenStreetMap - MapQuest, Stamen, CartoDB</li>                        
+                    </ul>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../?config=demo/fonds.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/fonds.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>                   
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Facile</span><span class="label label-info">Cadastre</span></p>                    
+                    <h3>Cadastre</h3>
+                    <hr><strong>Cet exemple illustre l'utilisation de 3 sources différentes du cadastre</strong></br>
+                    <ul>
+                        <li>cadastre.gouv.fr (un flux par commune)</li>
+                        <li>geobretagne.fr (un flux pour le Bretagne - interrogeable)</li>
+                        <li>cadastre.gouv.fr via kartenn (un flux pour la France)</li>                        
+                    </ul>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/cadastre.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/cadastre.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>                   
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Facile</span><span class="label label-info">wmc</span></p>                    
+                    <h3>Contexte</h3>
+                    <hr><strong>Utiliser un contexte de carte WMC</strong></br>
+                    <p>Cet exemple illustre l'utilisation d'un contexte de carte servant de source au panel des thématiques. Les fonds de cartes et les outils sont ceux de la configuration par défaut. Il est possible d'appeler plusieurs <strong>wmc</strong> en utilisant la virgule comme séparateur.</p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/materiaux.wmc" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?wmc=demo/materiaux.wmc" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>                   
+                </div>
+            </div>            
+           <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Facile</span><span class="label label-info">l93</span><span class="label label-info">proxy</span></p>                    
+                    <h3>No proxy</h3>
+                    <hr><strong>Cet exemple illustre l'utilisation du mviewer sans proxy AJAX</strong></br>
+                    <p>Pour plus de souplesse, l'utilisation d'un proxy AJAX est recommandée. Toutefois, il est possible d'exploiter des flux locaux ou des flux externes (si <a href="http://enable-cors.org/server.html" target="_blank" >CORS</a> est activé) - c'est le cas de la BAN et de GéoBretagne.
+                    </p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../?config=demo/noproxy.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/noproxy.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>                   
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-warning">Avancé</span><span class="label label-info">proxy</span></p>                    
+                    <h3>Proxy</h3>
+                    <hr><strong>Cet exemple illustre l'utilisation du mviewer avec proxy AJAX</strong></br>
+                    <p>un proxy cgi peut être utilisé. Ce dernier sert d'intermédiaire pour requêter des serveurs distants. Ce proxy doit être installé sur le même domaine/machine que le mviewer. Plus de détail ici : <a href="https://trac.osgeo.org/openlayers/wiki/FrequentlyAskedQuestions#WhydoIneedaProxyHost" target="_blank" >proxy</a>.
+                    </p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../?config=demo/proxy.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/proxy.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>                   
+                </div>
+            </div>           
+             <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Facile</span><span class="label label-info">ban</span><span class="label label-info">Localisation</span></p>                    
+                    <h3>Base Adresse Nationale</h3>
+                    <hr><strong>Se localiser avec la BAN</strong></br>
+                    <p>Il est possible d'utiliser l'API search de adresse.data.gouv.fr afin de se localiser à partir d'une recherche plein texte saisie dans la zone de recherche. Ce service peut être utilisé sans proxy AJAX et sans clé.</p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/ban.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/ban.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>                   
+                </div>
+            </div>
+             <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Facile</span><span class="label label-info">geoportail</span><span class="label label-info">openls</span><span class="label label-info">Localisation</span></p>                    
+                    <h3>OpenLS</h3>
+                    <hr><strong>Se localiser avec le GéoPortail</strong></br>
+                    <p>Il est possible d'utiliser l'API D'autocompletion du GéoPortail afin de se localiser à partir d'une recherche plein texte saisie dans la zone de recherche. Ce service peut être utilisé sans proxy AJAX mais nécessite l'utilisation d'un clé IGN.</p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../?config=demo/ban.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/ban.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>                   
+                </div>
+            </div>
+             <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Facile</span><span class="label label-info">l93</span><span class="label label-info">projection</span></p>                    
+                    <h3>Lambert 93</h3>
+                    <hr><strong>Lambert 93</strong></br>
+                    <p>Application configurée pour travailler avec la projection Lambert 93. L'intérêt principal de ce type de configuration est de travailler avec des services de données ne servant pas la projection Mercator (ex CARMEN).</p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/l93.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/l93.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>                   
+                </div>
+            </div>
+             <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Facile</span><span class="label label-info">mercator</span><span class="label label-info">projection</span></p>                    
+                    <h3>Mercator</h3>
+                    <hr><strong>Projection web Mercator</strong></br>
+                    <p>Exemple de carte utlisant la projection web mercator (EPSG:3857), également utilisée par les producteurs de tuiles (OpenStreetMap, Mapbox, Stamen, Google, GéoPortail ...</p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/mercator.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/mercator.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>                   
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-warning">Avancé</span><span class="label label-info">kml</span><span class="label label-info">geojson</span><span class="label label-info">wfs</span></p>                    
+                    <h3>Données vectorielles</h3>
+                    <hr><strong>Données vecteur</strong></br>
+                    <p>Cet exemple utilise uniquement des sources de données vecteur, exception faite des fonds de plan. Mviewer exploite notamment les formats geojson et kml.</p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/vector.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/vector.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>                   
+                </div>
+            </div>
+             <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Facile</span><span class="label label-info">Carmen</span></p>                    
+                    <h3>Carmen</h3>
+                    <hr><strong>Carmen</strong></br>
+                    <p>Exemple de carte utlisant les flux WMS servis par CARMEN (http://ws.carmen.developpement-durable.gouv.fr/). Attention, l'interrogation des couches Carmen nécessite l'utilisation d'un proxy.</p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/carmen.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/carmen.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>                   
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-warning">Avancé</span><span class="label label-info">sld</span><span class="label label-info">filter</span></p>                    
+                    <h3>Personnalisation WMS</h3>
+                    <hr><strong>SLD et Filtre</strong></br>
+                    <p>Utilisation d'un style personalisé (SLD) appliqué à une couche WMS. Le fichier sld doit être accessible depuis internet. Cette même couche est filtrée pour n'afficher que les lycées publics.</p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/sld.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/sld.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>                   
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-primary">Réutilisation</span></p>                    
+                    <h3>Réutilisation</h3>
+                    <hr><strong>Pays d'aubigné</strong></br>
+                    <p>Mviewer installé et configuré par le Pays d'aubigné. Cet exemple utilise les flux de GéoBretagne pour afficher les PLU des communes</p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="http://www.mviewer.pays-aubigne.fr/PLU.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="http://www.mviewer.pays-aubigne.fr/?config=PLU.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>                   
+                </div>
+            </div>                        
+        </div><!-- Fin de row -->
+       
+
+    </div><!-- Fin exemple -->
+</div><!-- Fin listExemple -->
+    <script>
+        $(document).ready(function(){
+		/*$('.carousel').carousel({
+		  interval: 2000
+		});*/
+	  });
+    </script>
+
+
+</body>
+</html>

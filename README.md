@@ -241,10 +241,12 @@ Noeud enfant de theme décrivant une couche.
 
 	<layer id="" name="" scalemin="" scalemax="" visible="" tiled="" namespace=""
 	queryable="" fields="" aliases=""
+    type=""
     filter=""
     searchable=""
     searchid=""
     useproxy=""
+    secure=""
 	infoformat="" featurecount=""
 	style=""
     opacity=""
@@ -259,6 +261,8 @@ Noeud enfant de theme décrivant une couche.
 
 * **id**: Id de la couche
 * **name**: Nom de la couche
+* **type**: Type de la couche (wms|geojson|kml|hook) default=wms. Si hook est définit, il faut instancier un Layer OpenLayers dans un fichier javascript ayant pour nom l'id de la couche.
+Ce fichier js doit être placé dans le répertoire hooks/
 * **scalemin**: Echelle minimum de la couche
 * **scalemax**: Echelle maximum de la couche
 * **visible**:  Booléen stipulant est ce que la couche est actuellement visible
@@ -272,9 +276,13 @@ Noeud enfant de theme décrivant une couche.
 * **useproxy**: Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de de crossOrigin lorsque CORS n'est pas activé sur le serveur distant.
 * **fields**: Si les informations retournées par l'interrogation est au format GML, fields représente les attributs à parser pour générer la vignette
 * **aliases**: Si les informations retournées par l'interrogation est au format GML, aliases représente le renommage des champs parsés.
+* **secure**: Précise si la couche est protégée ( méchanisme geoserver ) auquel cas un test est affectué pour savoir si la couche est accessible. SI ce n'est pas le cas, la couche est retirée du panneau et de la carte.
 * **infoformat**: Format du GetFeatureInfo. 2 formats sont supportés : text/html et application/vnd.ogc.gml
 * **featurecount**: Nombre d'éléments retournés lors de l'intérrogation
-* **style**: Style de la couche
+* **style**: Style de la couche.
+Si la couche est de type wms, il faut faire référence à un style sld.
+Si la couche est de type geojson, il faut faire référence à un style définit dans lib/featurestyles.js
+Si la couche est de type hook, le style n'est pas défini ici.
 * **opacity**: Opacité de la couche (1 par défaut)
 * **legendurl**: url premettant de récupérer la légende. Si non défini, c'est un getFeatureLegend qui est effectué.
 * **url**: URL de la couche
