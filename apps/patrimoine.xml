@@ -80,7 +80,17 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Association croix et calvaires de Bretagne" 
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=90468f5b-eef8-452d-9443-060870b51332"
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=90468f5b-eef8-452d-9443-060870b51332" /> 
-        </theme>        
+        </theme> 
+       <theme name="Tourisme"  collapsed="true" id="tourisme"> 
+            <layer id="destinations_touristiques" name="Destinations touristiques" visible="false" tiled="false" namespace="rb"
+				queryable="true" fields="nom" aliases="Nom"
+                infoformat="text/html" featurecount="20" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				style=""
+				attribution="Région Bretagne" 
+				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=677d4e97-82bc-4d64-b11c-167f423900ae"
+				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=677d4e97-82bc-4d64-b11c-167f423900ae" />	
+        </theme>
         <theme name="Limites cadastrales"  collapsed="true" id="cadastre">  
 			<layer id="CP.CadastralZoning" name="Sections" scalemin="0" scalemax="50000" visible="false" tiled="false"
 				queryable="false" fields="label,nom_commune" aliases="Section,Commune"
