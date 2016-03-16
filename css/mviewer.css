@@ -334,32 +334,12 @@ a#legend-export-png {
 }
 
 #contact {
-	min-width: 600px;
+	min-width: 300px;
 }
 
 #contact h3 {
 	border-bottom: solid 1px #ffffff;
 }
-
-#contactmail {
-	width: 300px;
-	border-right: solid 1px #ffffff;
-	padding-right: 20px;
-}
-
-#contactaddr {
-	width: 300px;
-	padding-left: 20px;
-}
-
-#contactform {
-    padding-left: 10px;
-}
-
-#contactform label.error {
-	color: red;
-}
-
 /* enables map control behind popup */
 #sharepanel-screen, #usagepanel-screen, #maplegend-screen {
     display: none;
