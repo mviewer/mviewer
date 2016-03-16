@@ -85,7 +85,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw="" />           
         </theme>  
         <theme name="Cadastre Géobretagne"  collapsed="true" id="cadastre">  
-			<layer id="CP.CadastralZoning" name="Sections" scalemin="0" scalemax="50000" visible="false" tiled="false"
+			<layer id="CP.CadastralZoning" name="Sections" scalemin="0" scalemax="25000" visible="false" tiled="false"
 				queryable="false" fields="label,nom_commune" aliases="Section,Commune"
                 infoformat="application/vnd.ogc.gml" featurecount="5"
 				style="cadastre_section_rb" 
