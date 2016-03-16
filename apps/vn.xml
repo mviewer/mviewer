@@ -310,6 +310,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
             <theme name="Domanialité"  collapsed="true" id="domanialite"> 
                 <layer id="r53_2013_parcelle_publique" name="Parcelles publiques" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
 					queryable="false" fields="nationalca" aliases="nationalca"
+                    secure="true"
                     infoformat="text/html" featurecount="20"
 					url="http://kartenn.region-bretagne.fr/geoserver-proxy/rb/wms" 
 					style="" legendurl="http://kartenn.region-bretagne.fr/img/legend/parcelles_publiques.png"
