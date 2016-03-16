@@ -262,22 +262,22 @@ li.geoportail.ui-li-divider, li.elasticsearch.ui-li-divider {
 
 /* popups */
 
-#usage, #mentionslegales, #credits , #accessibility{
+#usage, #mentionslegales{
 	width: 600px;
 	height: 400px;
 	overflow: auto;
 }
 
-#usage a, #mentionslegales a, #credits a , #accessibility a {
+#usage a, #mentionslegales a {
 	color: #ffffff;
 	font-weight: normal;
 }
 
-#usage h3, #mentionslegales h3, #credits h3 , #accessibility h3{
+#usage h3, #mentionslegales h3{
 	border-bottom: solid 1px #ffffff;
 }
 
-#usage p, #mentionslegales p, #credits p , #accessibility p{
+#usage p, #mentionslegales p{
 	margin-left: 20px;
 }
 
