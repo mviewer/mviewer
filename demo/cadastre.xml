@@ -74,7 +74,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
         <theme name="Couches de cadastre.gouv.fr - Juxtaposées"  id="cadastre_gouv2" collapsed="true">             
              <layer id="AMORCES_CAD,LIEUDIT,CP.CadastralParcel,SUBFISCAL,CLOTURE,DETAIL_TOPO,HYDRO,VOIE_COMMUNICATION,BU.Building,BORNE_REPERE" name="Couches groupées 2"
                 visible="false" tiled="true" namespace=""
-                scalemin="99" scalemax="100000" 
+                scalemin="99" scalemax="25000" 
 				queryable="false" fields="" aliases="" 
                 searchable="false" 
                 infoformat="" featurecount=""
