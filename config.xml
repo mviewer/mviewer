@@ -61,7 +61,8 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
         <theme name="Formation"  id="formation" collapsed="true">
             <layer id="lycee" name="Lycée" visible="false" tiled="false" namespace="rb"
 				queryable="true" fields="nom,photo,libelle,secteur_li,reseau_lib" aliases="Nom,Photo,Commune,Secteur,Réseau" 
-                searchable="true" 
+                searchable="true"
+                customcontrol="true"              
                 infoformat="text/html" featurecount="20"
 				style="" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
