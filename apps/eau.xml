@@ -65,41 +65,6 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					attribution="Région Bretagne" 
 					metadata-csw=""
 					metadata="" />
-
-                <layer id="riviere_etat_ecologique" name="Rivière : état écologique 2011-2013" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="interne"
-					queryable="true" fields="nom" aliases="nom"
-                    infoformat="text/html" featurecount="5"
-					url="http://ows.region-bretagne.fr/geoserver/interne/wms" 
-					style="" 
-					attribution="Région Bretagne" 
-					metadata-csw=""
-					metadata="" />
-
-                <layer id="bv_2016" name="Bassins versants bretons (2016)" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="interne"
-					queryable="true" fields="nom" aliases="nom"
-                    infoformat="text/html" featurecount="5"
-					url="http://ows.region-bretagne.fr/geoserver/interne/wms" 
-					style="" 
-					attribution="Région Bretagne" 
-					metadata-csw=""
-					metadata="" />
-
-            <layer id="bassins_versants_gp5" name="Bassin Versant GP5" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="dreal_b"
-				queryable="true" fields="Nom_BV" aliases="Nom" 
-                infoformat="application/vnd.ogc.gml" featurecount="1"
-				style="" 
-				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
-				attribution="Région Bretagne" 
-				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=f13ca5d3-56a2-4b8d-9ea0-fefd436b9549" 
-				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=f13ca5d3-56a2-4b8d-9ea0-fefd436b9549" />
-                <layer id="sage_informations" name="Avancement SAGE au 01/01/2016" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="interne"
-					queryable="true" fields="nom" aliases="nom"
-                    infoformat="text/html" featurecount="5"
-					url="http://ows.region-bretagne.fr/geoserver/interne/wms" 
-					style="" 
-					attribution="Région Bretagne" 
-					metadata-csw=""
-					metadata="" />
                 <layer id="passe_poisson_vn" name="Passes à poisson" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
 					queryable="true" fields="ident" aliases="ident"
                     infoformat="text/html" featurecount="20"
@@ -116,6 +81,38 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					attribution="Région Bretagne" 
 					metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=403d129b-e8ca-48ff-81a9-77401c1d933b"
 					metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=403d129b-e8ca-48ff-81a9-77401c1d933b" />
+                <layer id="riviere_etat_ecologique" name="Rivière : état écologique 2011-2013" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="interne"
+					queryable="true" fields="nom" aliases="nom"
+                    infoformat="text/html" featurecount="5"
+					url="http://ows.region-bretagne.fr/geoserver/interne/wms" 
+					style="" 
+					attribution="Région Bretagne" 
+					metadata-csw=""
+					metadata="" />
+                <layer id="bv_2016" name="Bassins versants bretons (2016)" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="interne"
+					queryable="true" fields="nom" aliases="nom"
+                    infoformat="text/html" featurecount="5"
+					url="http://ows.region-bretagne.fr/geoserver/interne/wms" 
+					style="" 
+					attribution="Région Bretagne" 
+					metadata-csw=""
+					metadata="" />
+            <layer id="bassins_versants_gp5" name="Bassin Versant GP5" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="dreal_b"
+				queryable="true" fields="Nom_BV" aliases="Nom" 
+                infoformat="application/vnd.ogc.gml" featurecount="1"
+				style="" 
+				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
+				attribution="Région Bretagne" 
+				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=f13ca5d3-56a2-4b8d-9ea0-fefd436b9549" 
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=f13ca5d3-56a2-4b8d-9ea0-fefd436b9549" />
+                <layer id="sage_informations" name="Avancement SAGE au 01/01/2016" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="interne"
+					queryable="true" fields="nom" aliases="nom"
+                    infoformat="text/html" featurecount="5"
+					url="http://ows.region-bretagne.fr/geoserver/interne/wms" 
+					style="" 
+					attribution="Région Bretagne" 
+					metadata-csw=""
+					metadata="" />
 		</theme>
 
         <theme name="Biodiversité"  id="biodiversite" collapsed="true">
