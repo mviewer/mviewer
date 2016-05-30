@@ -100,7 +100,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
             <layer id="bassins_versants_gp5" name="Bassin Versant GP5" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="dreal_b"
 				queryable="true" fields="Nom_BV" aliases="Nom" 
                 infoformat="application/vnd.ogc.gml" featurecount="1"
-				style="" 
+				style="polygon_vert" 
 				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
 				attribution="Région Bretagne" 
 				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=f13ca5d3-56a2-4b8d-9ea0-fefd436b9549" 
