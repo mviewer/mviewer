@@ -121,6 +121,14 @@ p.center { text-align: center; }
 	background-image: url(../img/btn/picture.svg)
 }
 
+.ui-icon-3d:after {
+	background-image: url(../img/btn/3d.png)
+}
+
+.ui-icon-nord:after {
+	background-image: url(../img/btn/nord.png)
+}
+
 #backgroundlayerstoolbar, #zoomtoolbar, #toolstoolbar {
 	-webkit-box-shadow: 2px 2px 5px #888;
 	-moz-box-shadow: 2px 2px 5px #888;
