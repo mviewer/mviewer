@@ -56,6 +56,49 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
     </widgets> 
 
     <themes>
+	    <theme name="Limites administratives"  collapsed="true" id="territoire">  
+			<layer id="commune_bdcarto" name="Commune" scalemin="0" scalemax="50000000" visible="false" tiled="false"
+				queryable="true" fields="COMMUNE,INSEE_COM,SUPERFICIE" aliases="Nom,Code INSEE,Superficie"
+                infoformat="text/html" featurecount="1" style=""
+				sld="http://kartenn.region-bretagne.fr/styles/commune_region_large.sld" 
+				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
+				attribution="IGN - BDCARTO" 
+				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=b08e6cb1-236c-49b7-88f9-42b500d274d5"
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=b08e6cb1-236c-49b7-88f9-42b500d274d5" />
+            <layer id="epci_2017" name="EPCI : proposition des préfets au 31/03/2016" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+					searchable="false" queryable="false" fields="nom" aliases="Nom"
+                    infoformat="text/html" featurecount="20"
+					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+					style="" 
+				sld="http://kartenn.region-bretagne.fr/styles/epci_2017_large.sld" 
+					attribution="Région Bretagne" 
+					metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=f9f0447c-b46f-400f-9ebc-75254ba15bb8"
+					metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=f9f0447c-b46f-400f-9ebc-75254ba15bb8" />
+			<layer id="EPCI_053" name="Intercommunalité actuelle" scalemin="0" scalemax="50000000" visible="false" tiled="false"
+				queryable="true" fields="NOM_EPCI,SIREN_EPCI" aliases="Nom,SIREN"
+                infoformat="text/html" featurecount="1" style=""
+				sld="http://kartenn.region-bretagne.fr/styles/epci_region_large.sld" 
+				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
+				attribution="GéoBretagne" 
+				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=2298d744-49cb-4fcb-9487-26f916fecdff" 
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=2298d744-49cb-4fcb-9487-26f916fecdff" />			
+            <layer id="n_pays" name="Pays" scalemin="0" scalemax="50000000" visible="false" tiled="true"
+				queryable="true" fields="LIBELLE" aliases="Nom"
+                infoformat="text/html" featurecount="1" style=""     
+				sld="http://kartenn.region-bretagne.fr/styles/pays_region_large.sld" 
+				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
+				attribution="GéoBretagne" 
+				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=9722d181-75f9-40ab-a136-a9f9ed6f29a5" 
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=9722d181-75f9-40ab-a136-a9f9ed6f29a5" />
+            <layer id="FDepartement" name="Département" scalemin="0" scalemax="50000000" visible="false" tiled="false"
+				queryable="true" fields="NOM_PAYS" aliases="Nom"
+                infoformat="text/html" featurecount="1" style=""
+				sld="http://kartenn.region-bretagne.fr/styles/DEPARTEMENT_style_large.sld" 
+				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
+				attribution="IGN - BDCARTO" 
+				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=e16d50d4-746d-44e3-a5e7-5fc000f97665" 
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=e16d50d4-746d-44e3-a5e7-5fc000f97665" />
+        </theme>
         <theme name="Eau"  id="eau" collapsed="false">
                <layer id="riviere_me_proche" name="Masse d'eau proche bon état" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="interne"
 					queryable="true" fields="nom" aliases="nom"
@@ -176,52 +219,6 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
         </theme>
 
         <theme name="Agriculture"  collapsed="true" id="agriculture">  
-        </theme>
-
-        
-        <theme name="Limites administratives"  collapsed="true" id="territoire">  
-			<layer id="commune_bdcarto" name="Commune" scalemin="0" scalemax="50000000" visible="false" tiled="false"
-				queryable="true" fields="COMMUNE,INSEE_COM,SUPERFICIE" aliases="Nom,Code INSEE,Superficie"
-                infoformat="text/html" featurecount="1" style=""
-				sld="http://kartenn.region-bretagne.fr/styles/commune_region_large.sld" 
-				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
-				attribution="IGN - BDCARTO" 
-				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=b08e6cb1-236c-49b7-88f9-42b500d274d5"
-				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=b08e6cb1-236c-49b7-88f9-42b500d274d5" />
-            <layer id="epci_2017" name="EPCI : proposition des préfets au 31/03/2016" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
-					searchable="false" queryable="false" fields="nom" aliases="Nom"
-                    infoformat="text/html" featurecount="20"
-					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
-					style="" 
-				sld="http://kartenn.region-bretagne.fr/styles/epci_2017_large.sld" 
-					attribution="Région Bretagne" 
-					metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=f9f0447c-b46f-400f-9ebc-75254ba15bb8"
-					metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=f9f0447c-b46f-400f-9ebc-75254ba15bb8" />
-
-			<layer id="EPCI_053" name="Intercommunalité actuelle" scalemin="0" scalemax="50000000" visible="false" tiled="false"
-				queryable="true" fields="NOM_EPCI,SIREN_EPCI" aliases="Nom,SIREN"
-                infoformat="text/html" featurecount="1" style=""
-				sld="http://kartenn.region-bretagne.fr/styles/epci_region_large.sld" 
-				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
-				attribution="GéoBretagne" 
-				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=2298d744-49cb-4fcb-9487-26f916fecdff" 
-				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=2298d744-49cb-4fcb-9487-26f916fecdff" />			
-            <layer id="n_pays" name="Pays" scalemin="0" scalemax="50000000" visible="false" tiled="true"
-				queryable="true" fields="LIBELLE" aliases="Nom"
-                infoformat="text/html" featurecount="1"         style=""     
-				sld="http://kartenn.region-bretagne.fr/styles/pays_region_large.sld" 
-				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
-				attribution="GéoBretagne" 
-				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=9722d181-75f9-40ab-a136-a9f9ed6f29a5" 
-				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=9722d181-75f9-40ab-a136-a9f9ed6f29a5" />
-            <layer id="FDepartement" name="Département" scalemin="0" scalemax="50000000" visible="false" tiled="false"
-				queryable="true" fields="NOM_PAYS" aliases="Nom"
-                infoformat="text/html" featurecount="1" style=""
-				sld="http://kartenn.region-bretagne.fr/styles/DEPARTEMENT_style_large.sld" 
-				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
-				attribution="IGN - BDCARTO" 
-				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=e16d50d4-746d-44e3-a5e7-5fc000f97665" 
-				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=e16d50d4-746d-44e3-a5e7-5fc000f97665" />
-        </theme>
+        </theme>        
     </themes>
 </config>
