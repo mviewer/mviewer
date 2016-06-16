@@ -139,7 +139,7 @@ Représente les fonds de plan.
 * **layers**: Nom de la ressource ogc
 * **format**: Format image du fond de plan 
 * **visible**: Visibilité du fond de plan
-* **fromcapacity**: Attribut spécifique pour les fonds de plan WMTS. Permet la construction de layers à partir des capactiy. (**A IMPLEMENTER **)
+* **fromcapacity**: Attribut spécifique pour les fonds de plan WMTS. Permet la construction de layers à partir des capactiy.
 * **attribution**: Imagette de copyright.
 * **style** : Style de la couche
 * **matrixset** : option spécifique au flux WMTS
