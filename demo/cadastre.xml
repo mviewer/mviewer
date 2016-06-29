@@ -36,7 +36,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
     </widgets> 
 
     <themes>
-        <theme name="Couches de cadastre.gouv.fr - Rennes"  id="cadastre_gouv" collapsed="false">             
+        <!--<theme name="Couches de cadastre.gouv.fr - Rennes"  id="cadastre_gouv" collapsed="false">             
              <layer id="AMORCES_CAD,LIEUDIT,CP.CadastralParcel,SUBFISCAL,CLOTURE,DETAIL_TOPO,HYDRO,VOIE_COMMUNICATION,BU.Building,BORNE_REPERE" name="Couches groupées"
                 visible="true" tiled="true" namespace=""
 				queryable="false" fields="" aliases="" 
@@ -70,10 +70,10 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Direction générale des Finances publiques – Cadastre ; mise à jour :2015" 
 				metadata="https://www.cadastre.gouv.fr/scpc/html/aide/wms/url_fr.htm#LAYERS / STYLES" 
 				metadata-csw="" />            
-        </theme> 
-        <theme name="Couches de cadastre.gouv.fr - Juxtaposées"  id="cadastre_gouv2" collapsed="true">             
+        </theme> -->
+        <theme name="Couches de cadastre.gouv.fr"  id="cadastre_gouv2" collapsed="true">             
              <layer id="AMORCES_CAD,LIEUDIT,CP.CadastralParcel,SUBFISCAL,CLOTURE,DETAIL_TOPO,HYDRO,VOIE_COMMUNICATION,BU.Building,BORNE_REPERE" name="Couches groupées 2"
-                visible="false" tiled="true" namespace=""
+                visible="true" tiled="true" namespace=""
                 scalemin="99" scalemax="25000" 
 				queryable="false" fields="" aliases="" 
                 searchable="false" 

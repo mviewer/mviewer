@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <application title="Patrimoine" logo="" help="" panelfooterimage="img/panel-footer.png" panelfooterheight="80px" measuretools="true" legend="true" popup="false"/>
+    <application title="Patrimoine culturel" logo="" help="" panelfooterimage="img/panel-footer.png" panelfooterheight="80px" exportpng="false" legend="true" measuretools="true" legendasimage="false" popup="false" print="false"/>
     <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
-    <mapoptions maxzoom="19" projection="EPSG:3857" center="-403013.39038929436,6128402.399153711" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
+    <mapoptions maxzoom="20" projection="EPSG:3857" center="-403013.39038929436,6128402.399153711" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
     <![CDATA[<baselayers style="gallery"><!-- style="default"||gallery" -->        
         <baselayer  type="WMS" id="plan1" label="Plan" title="Plan OSM Géobretagne" thumbgallery="img/basemap/osm-map-bing.png" url="http://geobretagne.fr/geoserver/osm/wms" layers="map-bing" format="image/png" visible="false" attribution="OpenStreetMap CC-by-SA"/>
         <baselayer  type="WMS" id="photo1" label="Photo aérienne" title="Ortho Géobretagne" thumbgallery="img/basemap/ortho.jpg" url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite" format="image/jpeg" visible="false" attribution="partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver"/>
@@ -23,7 +23,10 @@
 L'attribut style = "gallery" permet d'afficher les fonds de carte dans une liste avec incrustation de vignette pour chaque layer
 L'attribut style = "default" permet d'afficher la liste des couches de fond sous forme d'un groupe de boutons.
 ]]>	
-	<baselayers style="gallery"><!-- style="default"||gallery" -->            		
+	<baselayers style="gallery"><!-- style="default"||gallery" -->     
+        <baselayer  type="OSM" id="stamen1" label="Toner-lite" title="Stamen Design" thumbgallery="img/basemap/toner-lite.png" 
+			url="http://{a-d}.tile.stamen.com/toner-lite/{z}/{x}/{y}.png" maxzoom="20" 
+			visible="true" attribution="Map tiles by  &lt;a href='http://stamen.com/'>Stamen Design &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />		  	
         <baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoPortail" maxscale="1000" thumbgallery="img/basemap/ortho.jpg"
             url="../wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" format="image/jpeg" visible="false" fromcapacity="false"
             attribution="&lt;a href='http://www.geoportail.fr/' target='_blank'>&lt;img src='http://api.ign.fr/geoportail/api/js/latest/theme/geoportal/img/logo_gp.gif'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
@@ -32,109 +35,264 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
             attribution="&lt;a href='http://www.geoportail.fr/' target='_blank'>&lt;img src='http://api.ign.fr/geoportail/api/js/latest/theme/geoportal/img/logo_gp.gif'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
        <baselayer  type="WMS" id="cassini" label="Carte de Cassini" title="GéoBretagne" thumbgallery="img/basemap/cassini.jpg" 
 			url="http://geobretagne.fr/geoserver/geobretagne/wms" layers="cassini" format="image/jpeg" visible="false" 
-			attribution="&lt;a href='http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=137efc4d-9ffa-4bb5-822c-b8bf65ca9633' target='_blank' >David Rumsey&lt;/a>"/>      
-        <baselayer  type="WMS" id="photo2" label="Photo aérienne 1950" title="GéoBretagne" thumbgallery="img/basemap/ortho-ancien.jpg" 
+			attribution="&lt;a href='http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=137efc4d-9ffa-4bb5-822c-b8bf65ca9633' target='_blank' >David Rumsey&lt;/a>"/>      geographie
+		<baselayer  type="WMS" id="photo2" label="Photo aérienne 1950" title="GéoBretagne" thumbgallery="img/basemap/ortho-ancien.jpg" 
 			url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite-ancien" format="image/jpeg" visible="false" 
 			attribution="&lt;a href='http://applications.region-bretagne.fr/geonetwork/?uuid=048622c5-b333-4c2b-94ec-40a41608dc06' target='_blank' >Partenaires GéoBretagne - IGN&lt;/a>"/>      
-        <baselayer  type="OSM" id="osm1" label="MapQuest" title="open.mapquest.com" thumbgallery="img/basemap/mapquest.png" 
+        <baselayer  type="OSM" id="osm1" label="Open Street Map" title="open.mapquest.com" thumbgallery="img/basemap/mapquest.png" 
 			url="http://otile{1-3}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png" 
-			attribution="© MapQuest. Données : les contributeurs d'&lt;a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='http://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" visible="true"/>       
+			attribution="© MapQuest. Données : les contributeurs d'&lt;a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='http://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" visible="false"/>
         <baselayer  type="WMTS" id="scan2" label="Cartes IGN" title="GéoPortail" maxscale="2000" thumbgallery="img/basemap/scan.jpg"
             url="../wmts" layers="GEOGRAPHICALGRIDSYSTEMS.MAPS" format="image/jpeg" visible="false" fromcapacity="false"
             attribution="&lt;a href='http://www.geoportail.fr/' target='_blank'>&lt;img src='http://api.ign.fr/geoportail/api/js/latest/theme/geoportal/img/logo_gp.gif'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
-    </baselayers> 
-    <authentification url="who" loginurl="?login" logouturl="../j_spring_security_logout" enabled="true"/>
+    </baselayers>    
     <proxy url="../proxy/?url="/>
     <!--<olscompletion url="http://gpp3-wxs.ign.fr/5kiwvtkb2v23y0x8chidxbij/ols/apis/completion"/>-->
-    <olscompletion url="../olscompletion" type="geoportail"/>
-    <!--<olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban"/>-->
-    <elasticsearch url="http://ows.region-bretagne.fr/kartenn/_search" geometryfield="geometry" linkid="search_id" querymode="fussy_like_this" />
-    <searchparameters bbox="true" localities="true" features="true"/>
+    <olscompletion url="../olscompletion"/>
+    <elasticsearch url="../elasticsearch"/>
 	<widgets>
        <!--<widget name="gauge"/>-->       
     </widgets> 
-
-    <themes>
-        <theme name="Inventaire du patrimoine"  collapsed="false" id="patrimoine">           
-			<layer id="inventaire_patrimoine" name="Patrimoine régional" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="rb"
-				searchable="true" queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
-                infoformat="text/html" featurecount="20"
-				style="" 
+     <themes>
+        <theme name="Etudes topographiques"  collapsed="true" id="etudes">         
+			<layer id="etudes_patrimoine" name="Architecture" scalemin="0" scalemax="400000000" visible="true" tiled="true" namespace="tmp"
+				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+                infoformat="text/html" featurecount="50"
+				style="patrimoine_etudes_geometry_ia" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Service de l'inventaire : Région Bretagne" 
-				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=a7f46b47-42fc-49b7-9b49-c7c11aee0932"
-				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=a7f46b47-42fc-49b7-9b49-c7c11aee0932" />
-            <layer id="recensement_patrimoine" name="Recensement local" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="rb" 
+				metadata=""
+				metadata-csw="" />
+			<layer id="etudes_patrimoine_simple" name="Objets mobiliers" scalemin="0" scalemax="400000000" visible="false" tiled="true" namespace="tmp"
+				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+                infoformat="text/html" featurecount="50"
+				style="patrimoine_etudes_centroide_im" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata=""
+				metadata-csw="" />
+        </theme>
+        <theme name="Recensement avant études"  collapsed="true" id="recensement"> 
+            <layer id="recensement_patrimoine" name="Recensement avant études" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="rb" 
 				searchable="true" queryable="true" fields="titre,localisati,datation,photo_1" aliases="Titre,Localisation,Datation,Photo" 
 				infoformat="text/html" featurecount="20"
-                style="" 
+                style="patrimoine_recensement_geometry" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0cf6de5d-9746-44d8-b003-a2dae2e7e585"
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=0cf6de5d-9746-44d8-b003-a2dae2e7e585" /> 
-            <layer id="croix_calvaire" name="Croix et calvaires" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb" 
-				searchable="true" queryable="true" fields="libelle" aliases="Libelle" 
+        </theme>
+       <theme name="Dossiers 'papier' avant 2000"  collapsed="true" id="papier"> 
+            <layer id="inventaire_papiers" name="Dossiers 'papiers' avant 2000" visible="true" tiled="false" namespace="rb"
+				queryable="true" fields="nom" aliases="Nom"
+                infoformat="text/html" featurecount="20" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				style=""
+				attribution="Région Bretagne" 
+				metadata-csw=""
+				metadata="" />	
+        </theme>
+        <theme name="Architecture civile"  collapsed="true" id="archi_civile"> 
+			<layer id="etudes_patrimoine_simple" name="Châteaux du 19ème siècle" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="tmp"
+				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+                infoformat="text/html" featurecount="50"
+				style="patrimoine_thematique_chateaux_19e_centroide" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata="http://patrimoine.bzh/gertrude-diffusion/dossier/1ca99a3b-810d-40d4-9df4-c2fbd81fdaaf"
+				metadata-csw="" />
+			<layer id="etudes_patrimoine_simple" name="Patrimoine des sports" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="tmp"
+				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+                infoformat="text/html" featurecount="50"
+				style="	patrimoine_thematique_sports_centroide" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata=""
+				metadata-csw="" />
+
+        </theme>
+
+        <theme name="Patrimoine religieux"  collapsed="true" id="archi_religieux"> 
+			<layer id="etudes_patrimoine_simple" name="Architecture gothique" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="tmp"
+				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+                infoformat="text/html" featurecount="50"
+				style="	patrimoine_thematique_architecture_gothique_centroide" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata=""
+				metadata-csw="" />
+			<layer id="etudes_patrimoine_simple" name="Eglises et chapelles du Finistère" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="tmp"
+				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+                infoformat="text/html" featurecount="50"
+				style="patrimoine_thematique_architecture_edifice_religieux_29_centroide" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/les-edifices-religieux-publics-dans-le-finistere-1801-1905-inventaire-et-diagnostic/ba840d05-71a9-4625-bec2-69ccd10a47fc"
+				metadata-csw="" />
+			<layer id="etudes_patrimoine_simple" name="Eglises et chapelles Ille-et-V." scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="tmp"
+				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+                infoformat="text/html" featurecount="50"
+				style="patrimoine_thematique_architecture_eglises_chapelles_35_centroide" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/les-eglises-et-chapelles-d-ille-et-vilaine/51825d3e-8c07-4d31-8593-82ea64639dd5"
+				metadata-csw="" />
+			<layer id="etudes_patrimoine_simple" name="Eglises romanes" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="tmp"
+				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+                infoformat="text/html" featurecount="50"
+				style="patrimoine_thematique_architecture_eglises_romanes_centroide" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/les-eglises-romanes-de-bretagne/db3ef42b-baf7-48e7-93a8-f8f3e89dbb12"
+				metadata-csw="" />
+			<layer id="etudes_patrimoine_simple" name="Orfèvrerie religieuse Hte-Bretagne" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="tmp"
+				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+                infoformat="text/html" featurecount="50"
+				style="	patrimoine_thematique_orfevrerie_centroide" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/l-orfevrerie-religieuse-en-haute-bretagne/90105141-8c25-4b9b-be40-f12b9ff3d308"
+				metadata-csw="" />
+			<layer id="etudes_patrimoine_simple" name="Stalles médiévales" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="tmp"
+				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+                infoformat="text/html" featurecount="50"
+				style="	patrimoine_thematique_stalles_centroide" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/les-stalles-en-bretagne/f2596507-5a6b-4360-b0eb-69eb100ab7a2"
+				metadata-csw="" />
+		     <layer id="croix_calvaire" name="Croix et calvaires (association)" visible="false" tiled="false" namespace="rb" 
+				queryable="true" fields="libelle" aliases="Libelle" 
+                searchable="true"
 				infoformat="text/html" featurecount="20"
                 style="" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Association croix et calvaires de Bretagne" 
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=90468f5b-eef8-452d-9443-060870b51332"
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=90468f5b-eef8-452d-9443-060870b51332" /> 
-        </theme> 
-       <theme name="Tourisme"  collapsed="true" id="tourisme"> 
-            <layer id="destinations_touristiques" name="Destinations touristiques" visible="false" tiled="false" namespace="rb"
-				queryable="true" fields="nom" aliases="Nom"
-                infoformat="text/html" featurecount="20" 
+		     <layer id="etudes_croix_calvaire" name="Croix et calvaires (études)" visible="false" tiled="false" namespace="rb" 
+				queryable="true" fields="libelle" aliases="Libelle" 
+                searchable="true"
+				infoformat="text/html" featurecount="20"
+                style="" 
+				url="http://ows.region-bretagne.fr/geoserver/tmp/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata-csw=""
+				metadata="" /> 
+		     <layer id="recensement_croix_calvaire" name="Croix et calvaires (recensement)" visible="false" tiled="false" namespace="rb" 
+				queryable="true" fields="libelle" aliases="Libelle" 
+                searchable="true"
+				infoformat="text/html" featurecount="20"
+                style="" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
-				style=""
-				attribution="Région Bretagne" 
-				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=677d4e97-82bc-4d64-b11c-167f423900ae"
-				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=677d4e97-82bc-4d64-b11c-167f423900ae" />	
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata-csw=""
+				metadata="" /> 
         </theme>
-        <theme name="Limites cadastrales"  collapsed="true" id="cadastre">  
-			<layer id="CP.CadastralZoning" name="Sections" scalemin="0" scalemax="50000" visible="false" tiled="false"
-				queryable="false" fields="label,nom_commune" aliases="Section,Commune"
-                infoformat="application/vnd.ogc.gml" featurecount="5"
-				style="cadastre_section_rb" 
-				url="http://geobretagne.fr/geoserver/cadastre/wms" 
-				attribution="DGFIP" 
-				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=0ca82e1d-b487-4879-8185-56b7c4e1a948" 
-				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0ca82e1d-b487-4879-8185-56b7c4e1a948" />                        
-            <layer id="CP.CadastralBuilding" name="Bâti" scalemin="0" scalemax="25000" visible="false" tiled="true"
-				queryable="false" fields="" aliases=""
-                infoformat="application/vnd.ogc.gml" featurecount="5"                
-				style="cadastre_bati_rb" 
-				url="http://geobretagne.fr/geoserver/cadastre/wms" 
-				attribution="DGFIP" 
-				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=0ca82e1d-b487-4879-8185-56b7c4e1a948"
-				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0ca82e1d-b487-4879-8185-56b7c4e1a948" />	
-            <layer id="CP.CadastralParcel" name="Parcelle cadastrale" scalemin="0" scalemax="50000" visible="false" tiled="true"
-				queryable="true" fields="label,nom_commune,areavalue" aliases="Parcelle,Commune,Surface"
-                infoformat="application/vnd.ogc.gml" featurecount="5"             
-				style="cadastre_parcelle_rb" 
-				url="http://geobretagne.fr/geoserver/cadastre/wms" 
-				attribution="DGFIP" 
-				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=0ca82e1d-b487-4879-8185-56b7c4e1a948" 
-				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0ca82e1d-b487-4879-8185-56b7c4e1a948" />
-		</theme>
-        <theme name="Limites administratives"  collapsed="true" id="territoire">  
-			<layer id="commune_bdcarto" name="Commune" scalemin="0" scalemax="50000000" visible="false" tiled="false"
-				queryable="true" fields="COMMUNE,INSEE_COM,SUPERFICIE" aliases="Nom,Code INSEE,Superficie"
-                infoformat="text/html" featurecount="5"                
-				style="commune_region" 
+
+        <theme name="Patrimoine maritime et fluvial"  collapsed="true" id="archi_pat_ma_flu"> 
+        	<layer id="etudes_patrimoine" name="Canal de Nantes à Brest" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="tmp"
+				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+                infoformat="text/html" featurecount="50"
+				style="patrimoine_thematique_canal" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/presentation-du-canal-de-nantes-a-brest/006678aa-7848-4c14-a633-a59828e97ab3"
+				metadata-csw="" />
+			<layer id="etudes_patrimoine" name="Fortifications littorales" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="tmp"
+				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+                infoformat="text/html" featurecount="50"
+				style="patrimoine_thematique_fortification_littorale" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/presentation-du-canal-de-nantes-a-brest/006678aa-7848-4c14-a633-a59828e97ab3"
+				metadata-csw="" />
+			<layer id="etudes_patrimoine_simple" name="Moulins à marée" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="tmp"
+				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+                infoformat="text/html" featurecount="50"
+				style="	patrimoine_thematique_moulins_papier_centroide" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/les-moulins-a-maree-de-bretagne/19934f6b-e5d4-42a0-ba6d-ec8b00638295"
+				metadata-csw="" />
+			<layer id="etudes_patrimoine_simple" name="Moulins à papier et papeteries" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="tmp"
+				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+                infoformat="text/html" featurecount="50"
+				style="	patrimoine_thematique_moulins_a_maree_centroide" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata=""
+				metadata-csw="" />
+        	<layer id="etudes_patrimoine_simple" name="Patrimoine balnéaire" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="tmp"
+				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+                infoformat="text/html" featurecount="50"
+				style="patrimoine_thematique_balneaire_centroide" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/presentation-du-patrimoine-balneaire-de-la-cote-d-emeraude/2c354096-cee7-4263-9786-02e479f578ce"
+				metadata-csw="" />
+			<layer id="etudes_patrimoine_simple" name="Patrimoine maritime culturel" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="tmp"
+				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+                infoformat="text/html" featurecount="50"
+				style="	patrimoine_thematique_architecture_patrimoine_maritime_centroide" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/le-patrimoine-maritime-culturel-en-bretagne/132f41af-7184-4fe7-a72e-668e838e044c"
+				metadata-csw="" />
+        </theme>
+
+        <theme name="Techniques et savoir-faire"  collapsed="true" id="archi_tech"> 
+			<layer id="etudes_patrimoine_simple" name="Ardoisières du Centre Bretagne" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="tmp"
+				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+                infoformat="text/html" featurecount="50"
+				style="patrimoine_thematique_ardoise_centroide" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/ardoisieres-du-centre-bretagne/b256a66e-8d9b-4501-9597-afceef31d24b"
+				metadata-csw="" />
+			<layer id="etudes_patrimoine_simple" name="Charpentes armoricaines Ille-et-V." scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="tmp"
+				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+                infoformat="text/html" featurecount="50"
+				style="patrimoine_thematique_charpente_armoricaine_35_centroide" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : geRégion Bretagne" 
+				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/les-charpentes-armoricaines-en-ille-et-vilaine/d4073292-07f9-4fce-b4c5-79bdadc6586d"
+				metadata-csw="" />
+			<layer id="etudes_patrimoine" name="Coiffes en filet brodé" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="tmp"
+				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+                infoformat="text/html" featurecount="50"
+				style="	patrimoine_thematique_coiffes" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/les-coiffes-en-filet-brode-de-bretagne/885719be-4e27-4ec2-be2b-9642ab145bb4"
+				metadata-csw="" />
+			<layer id="etudes_patrimoine_simple" name="Patrimoine industriel" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="tmp"
+				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+                infoformat="text/html" featurecount="50"
+				style="	patrimoine_thematique_industriel_centroide" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata=""
+				metadata-csw="" />
+			<layer id="etudes_patrimoine_simple" name="Patrimoine linier et chanvrier" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="tmp"
+				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+                infoformat="text/html" featurecount="50"
+				style="	patrimoine_thematique_linier_chanvier_centroide" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata=""
+				metadata-csw="" />
+        </theme>
+	<theme name="Limites administratives"  collapsed="true" id="territoire">  
+        <layer id="FDepartement" name="Département" scalemin="0" scalemax="50000000" visible="false" tiled="false"
+				queryable="true" fields="NOM_PAYS" aliases="Nom"
+                infoformat="text/html" featurecount="1"
+				style="" 
 				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
 				attribution="IGN - BDCARTO" 
-				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=b08e6cb1-236c-49b7-88f9-42b500d274d5"
-				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=b08e6cb1-236c-49b7-88f9-42b500d274d5" />			
-			<layer id="EPCI_053" name="Intercommunalité" scalemin="0" scalemax="50000000" visible="false" tiled="false"
-				queryable="true" fields="NOM_EPCI,SIREN_EPCI" aliases="Nom,SIREN"
-                infoformat="text/html" featurecount="5"
-				style="epci_region" 
-				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
-				attribution="GéoBretagne" 
-				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=2298d744-49cb-4fcb-9487-26f916fecdff" 
-				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=2298d744-49cb-4fcb-9487-26f916fecdff" />			
-            <layer id="n_pays" name="Pays" scalemin="0" scalemax="50000000" visible="true" tiled="true"
+				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=e16d50d4-746d-44e3-a5e7-5fc000f97665" 
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=e16d50d4-746d-44e3-a5e7-5fc000f97665" />
+	    <layer id="n_pays" name="Pays" visible="false" tiled="true"
 				queryable="true" fields="LIBELLE" aliases="Nom"
                 infoformat="text/html" featurecount="5"             
 				style="pays_region" 
@@ -142,14 +300,30 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="GéoBretagne" 
 				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=9722d181-75f9-40ab-a136-a9f9ed6f29a5" 
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=9722d181-75f9-40ab-a136-a9f9ed6f29a5" />
-            <layer id="FDepartement" name="Département" scalemin="0" scalemax="50000000" visible="false" tiled="false"
-				queryable="true" fields="NOM_PAYS" aliases="Nom"
-                infoformat="text/html" featurecount="5"
-				style="" 
+        <layer id="destinations_touristiques" name="Destinations touristiques" visible="false" tiled="false" namespace="rb"
+				queryable="true" fields="nom" aliases="Nom"
+                infoformat="text/html" featurecount="20" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				style=""
+				attribution="Région Bretagne" 
+				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=677d4e97-82bc-4d64-b11c-167f423900ae"
+				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=677d4e97-82bc-4d64-b11c-167f423900ae" />	
+		<layer id="EPCI_053" name="Intercommunalité" scalemin="0" scalemax="50000000" visible="false" tiled="false"
+				queryable="true" fields="NOM_EPCI,SIREN_EPCI" aliases="Nom,SIREN"
+                infoformat="text/html" featurecount="1"
+				style="epci_region" 
+				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
+				attribution="GéoBretagne" 
+				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=2298d744-49cb-4fcb-9487-26f916fecdff" 
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=2298d744-49cb-4fcb-9487-26f916fecdff" />			
+		<layer id="commune_bdcarto" name="Commune" scalemin="0" scalemax="50000000" visible="false" tiled="false"
+				queryable="true" fields="COMMUNE,INSEE_COM,SUPERFICIE" aliases="Nom,Code INSEE,Superficie"
+                infoformat="text/html" featurecount="1"                
+				style="commune_region" 
 				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
 				attribution="IGN - BDCARTO" 
-				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=e16d50d4-746d-44e3-a5e7-5fc000f97665" 
-				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=e16d50d4-746d-44e3-a5e7-5fc000f97665" />
+				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=b08e6cb1-236c-49b7-88f9-42b500d274d5"
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=b08e6cb1-236c-49b7-88f9-42b500d274d5" />			
         </theme>
     </themes>
 </config>
