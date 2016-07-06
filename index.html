@@ -13,25 +13,13 @@
     <link href="lib/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="lib/openlayers/3/ol.css" type="text/css" />	
     <link rel="stylesheet" href="css/black-tie/jquery-ui.min.css" type="text/css" />
-	<link rel="stylesheet" href="css/mviewer.css" type="text/css" />
-	<!--<link rel="stylesheet" href="css/mobile-panel-size.less.css" type="text/css" />-->
-	<!--<link rel="stylesheet" href="lib/jquery/base/plugins/scrollbar/jquery.jscrollpane.css" type="text/css" media="all" />-->
+	<link rel="stylesheet" href="css/mviewer.css" type="text/css" />	
     <link rel="stylesheet" href="lib/jquery/base/plugins/bjqs/bjqs.css" type="text/css" />
 	
     <script type="text/javascript" src="lib/proj4js/2.3.6/proj4.js"></script>
 	<script type="text/javascript" src="lib/jquery/base/1.10.2/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="lib/jquery/base/1.10.2/jquery-ui.min.js"></script>
-	<script>
-        /*$(document).bind("mobileinit", function(){
-			// no hashchange in url needed par the API       
-			$.mobile.ajaxEnabled = false;			
-	        $.mobile.hashListeningEnabled = false;			
-        });*/
-    </script>
-	<!--<script type="text/javascript" src="lib/jquery/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>	-->
-	<script type="text/javascript" src="lib/openlayers/3/ol.js"></script>    
-	<!--<script type="text/javascript" src="lib/jquery/base/plugins/scrollbar/jquery.mousewheel.js"></script>
-	<script type="text/javascript" src="lib/jquery/base/plugins/scrollbar/jquery.jscrollpane.js"></script>-->
+	<script type="text/javascript" src="lib/openlayers/3/ol.js"></script>
 	<script type="text/javascript" src="lib/jquery/base/plugins/xml2json/jquery.xml2json.js"></script>
 	<script type="text/javascript" src="lib/jquery/base/plugins/validate/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="lib/jquery/base/plugins/easyshare/jquery.easyShare.js"></script>    
@@ -45,17 +33,8 @@
 <script type="text/javascript">
 var config = {};
 var widgets = {};
-$("#main").fadeOut();
 $(document).ready(function () {
-	"use strict";	
-    /*$.mobile.loading('show', {
-        text: 'Chargement de Kartenn.',
-		textonly: true,
-        textVisible: true,
-        theme: 'b',        
-		html: ''
-    });*/
-	
+	"use strict";
 	if (window.location.search) {
 		$.extend(config, $.parseJSON('{"' + decodeURIComponent(window.location.search.substring(1)
 			.replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}'));    
@@ -75,21 +54,11 @@ $(document).ready(function () {
                 style = "css/themes/" + theme + ".css";
             }
             $('head').prepend('<link rel="stylesheet" href="'+style+'" type="text/css" />');
-            var map = mviewer.init(xml);             
-            setTimeout(function () {
-                /*$.mobile.loading('hide');*/
-                $("#main").css("opacity", 1).hide();
-                $("#main").fadeIn(2000);
-                //Hack ol3 control color
-                var themecolor = $("#backgroundlayerstoolbar a").css("background-color");
-                $(".ol-control button").css("background-color", themecolor);
-            }, 3000);           
-            /*$("#themepanel").panel("open");*/
+            var map = mviewer.init(xml);
             $( "#map" ).focus();
         }, // fin success config
-        error: function (request, status, error) {
-            /*$.mobile.loading('hide');			*/
-			alert("Fichier de configuration : " + configFile + " non trouvé ou incorrect !");
+        error: function (request, status, error) {            
+			mviewer.alert("Fichier de configuration : " + configFile + " non trouvé ou incorrect !", "alert-danger");
         }
     });
 
@@ -97,6 +66,7 @@ $(document).ready(function () {
 </script>  
 </head>
 <body>
+    <img src="img/ajax-loader.gif" id="loading-indicator" style="display:none" />
 	<nav class="navbar navbar-default no-margin navbar-fixed-top">    
     <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header fixed-brand">
@@ -113,84 +83,46 @@ $(document).ready(function () {
                             <ul class="nav navbar-nav">
                                 <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
                             </ul>
-                            <form class="navbar-form navbar-left" role="search">
+                            <div class="navbar-form navbar-left" role="search" id="searchtool">
                               <div class="form-group input-group">
                                 <input type="text" class="form-control" placeholder="Rechercher" id="searchfield">
-                                    <span class="input-group-btn">
-                                      <button type="submit" class="btn btn-default">
-                                        <i class="glyphicon glyphicon-search"></i>
+                                    <div class="input-group-btn">                                      
+                                      <button type="button" class="btn btn-default" aria-label="Help" data-toggle="modal" data-target="#parameterspanel">
+                                        <span class="glyphicon glyphicon-option-vertical"></span>
                                       </button>
-                                     </span>
-                            </form>
+                                    </div>
+                            </div>
                 </div><!-- bs-example-navbar-collapse-1 -->
            
     </nav>
     <div id="wrapper">
-        <!-- Sidebar -->
+        <!-- LEFT MENU SIDEBAR -->
         <div id="sidebar-wrapper">
-            <ul class="sidebar-nav nav-pills nav-stacked" id="menu"> 
-                <li class="active">
-                    <a href="#"><span class=""><i class="glyphicon glyphicon-picture"></i></span> Thème 1</a>
-                       <ul class="nav-pills nav-stacked" style="list-style-type:none;">
-                        <li><a href="#">layer1</a></li>
-                        <li><a href="#">layer2</a></li>
-                       </ul>
-                </li>
-                <li>
-                    <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span> Shortcut</a>
-                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
-                        <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>link1</a></li>
-                        <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>link2</a></li>
- 
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Overview</a>
-                </li>
-                <li>
-                    <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>Events</a>
-                </li>
-                <li>
-                    <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-youtube-play fa-stack-1x "></i></span>About</a>
-                </li>
-                <li>
-                    <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>Services</a>
-                </li>
-                <li>
-                    <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>Contact</a>
-                </li>
-            </ul>
-            <!--<div id="datalist"></div>-->
-        </div><!-- /#sidebar-wrapper -->
+            <ul class="sidebar-nav nav-pills nav-stacked" id="menu"></ul>
+        </div><!-- /#sidebar-wrapper -->        
         <!-- Page Content -->
         <div id="page-content-wrapper" >
-        <div class="container-fluid xyz" >
-        <!--<div id="main" data-role="page" style="opacity: 0;">-->
+        <div class="container-fluid xyz" >       
 		<!--  MAP  -->
-        <div class="row">
+        <div class="row">            
             <div id="map" tabindex="1" accesskey="1">
                 <div id="popup" class="ol-popup">
                     <div id="popuptitle" class="ol-popup-title"><code id="hdms">position</code><a href="#" id="popup-closer" class="ol-popup-closer"></a></div>                
-                    <div id="popup-content"></div>
+                    <div class="popup-content"></div>
                 </div>
             </div>
-        </div>
+            <div id="layers-container-box" class="">
+                <ul id="layers-container" class="list-group"></ul>
+            </div> 
+          </div>
         </div>
 		
         <!-- MARKER USED BY SEARCH IN FEATURES FUNCTIONNALITY, TO LOCATE SELECTED FEATURE ON THE MAP-->
-        <img id="els_marker" src="img/pin-red.png" />        
-        <!--<button class="ui-shadow ui-nodisc-icon ui-icon-bars ui-btn ui-btn-b ui-btn-icon-notext" id="tick-button2" onclick="$('#themepanel').panel('toggle');" ></button>		-->
-		<!-- TOP MENU BAR  -->        
-        <a href="#parameterspanel" id="searchparams" title="Modifier les paramètres de recherche" data-position-to="window" data-mini="true" 
-                data-role="button" data-rel="popup" data-icon="gear" data-iconpos="notext"  data-theme="b" tabindex="112" accesskey="12"></a>
-        <!--<div id="searchtool"  data-mini="true" >
-            <input type="search" id="searchfield" placeholder="Localiser..." title="Localiser une adresse" data-mini="true" data-theme="b" 
-                tabindex="2" accesskey="2" />
-        </div>-->
-        <ul id="searchresults" data-role="listview" data-inset="true" data-mini="true" data-theme="b" 
-                data-type="vertical"></ul>        
-		<div id="backgroundlayerstoolbar"  data-mini="true" data-theme="b" >			
-		</div>				
+        <img id="els_marker" src="img/pin-red.png" />
+		<!-- TOP MENU BAR  -->     
+             
+        <ul id="searchresults" class="list-group" ></ul>        
+		<div id="backgroundlayerstoolbar"></div>
 		<!-- FIRST VERTICAL RIGHT TOOLBAR -->
         <div id="zoomtoolbar" class="btn-group-vertical btn-group-sm" role="group" aria-label="true">
             <button href="#" onclick="mviewer.zoomIn();" title="Zoom avant (zoom fenêtre : shift + clic sur la carte)" 
@@ -208,36 +140,119 @@ $(document).ready(function () {
         </div>		
 		<!-- SECOND VERTICAL RIGHT TOOLBAR -->
 		<div id="toolstoolbar" class="btn-group-vertical btn-group-sm" role="group" aria-label="true">
-			<a class="mv-modetools" href="#" onclick="mviewer.setTool('measureline', this.id);" id="measurebtn" title="Mesurer" 
-				data-role="button" data-icon="measure" data-iconpos="notext" data-theme="b" tabindex="108" accesskey="8"></a>            
-			<a href="?login" id="login" title="Se connecter" tabindex="110" accesskey="10"
-				data-role="button" data-icon="lock" data-iconpos="notext" data-theme="b" style="display:none;"></a>
-			<button href="#sharepanel" onclick="mviewer.mapShare();" id="sharebtn" title="Partager cette carte" 
+			<!--<a class="mv-modetools" href="#" onclick="mviewer.setTool('measureline', this.id);" id="measurebtn" title="Mesurer" 
+				data-role="button" data-icon="measure" data-iconpos="notext" data-theme="b" tabindex="108" accesskey="8"></a>-->
+            <button class="mv-modetools btn btn-default" href="#" onclick="mviewer.setTool('measureline', this.id);" id="measurebtn" title="Mesurer" 
+				tabindex="108" accesskey="8">
+                <span class="glyphicon glyphicon-resize-horizontal" aria-hidden="true"></span>
+            </button> 
+			<a class="btn btn-default" type="button" href="?login" id="login" title="Se connecter" tabindex="110" accesskey="10"
+				style="display:none;">
+                <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+            </a>
+			<button data-toggle="modal" data-target="#sharepanel" onclick="mviewer.mapShare();" id="sharebtn" title="Partager cette carte" 
 				 tabindex="111" accesskey="11" class="btn btn-default">
                  <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
             </button>            
             <a href="#" id="exportpng" title="Exporter carte au format image" download="carte.png" tabindex="113" accesskey="13"
-				data-role="button" data-icon="exportpng" data-iconpos="notext" data-theme="b" ></a>
-            <a href="#" onclick="mviewer.getLegend(true)" id="legendbtn" title="Afficher la légende de la carte" tabindex="114" accesskey="14"
-				data-role="button" data-icon="legend" data-iconpos="notext" data-theme="b" ></a>
+				data-role="button" data-icon="exportpng" data-iconpos="notext" data-theme="b" ></a>            
             <a href="#" onclick="mviewer.print()" id="printbtn" title="Imprimer la carte" tabindex="103" accesskey="3"
 				data-role="button" data-icon="print" data-iconpos="notext" data-theme="b" ></a>
 		</div>
-        <div id="drawtoolsoptions" style="display:none;" class="btn-group-vertical" role="group" aria-label="true"> 
-            <a href="#" id="measurelinebtn" title="Mesure linéaire" onclick="mviewer.setTool('measureline');" data-icon="measureline"
-                data-role="button" data-iconpos="notext" data-theme="b" class="ui-btn-active" ></a>
-            <a href="#" id="measureareabtn" title="Mesure surfacique" onclick="mviewer.setTool('measurearea');" data-icon="measurearea" 
-                data-role="button" data-iconpos="notext" data-theme="b"></a>
+        <div id="drawtoolsoptions" style="display:none;" class="btn-group btn-group-sm" role="group" aria-label="true"> 
+            <button  id="measurelinebtn" title="Mesure linéaire" onclick="mviewer.setTool('measureline');" class="btn btn-primary" >
+                <span class="glyphicon glyphicon-resize-small" aria-hidden="true"></span>
+            </button>
+            <button  id="measureareabtn" title="Mesure surfacique" onclick="mviewer.setTool('measurearea');" class="btn btn-default">
+                <span class="glyphicon glyphicon-adjust" aria-hidden="true"></span>
+            </button>
         </div>
-		<!-- APPLICATION MESSAGEBOX -->		
-		<div id="msgpanel" data-role="popup" data-theme="b" data-position-to="window" class="todo">
-			<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" 
-				class="ui-btn-right">Fermer</a>
-			<div data-role="content">
-				<div id="msg">Information</div>
-			</div>
-		</div>
-		<!-- USAGE PANEL -->
+  </div>
+ </div>
+    <!-- /#wrapper -->
+    
+    <div id="bottom-panel">        
+            <a href="#" class="close" data-dismiss="alert" aria-label="close" onclick="$('#bottom-panel').toggleClass('active')" title="Fermer">×</a>
+            <div class="popup-content" ></div>
+    </div>
+     <div id="right-panel">        
+            <a href="#" class="close" data-dismiss="alert" aria-label="close" onclick="$('#right-panel').toggleClass('active')" title="Fermer">×</a>
+            <div class="popup-content" ></div>
+    </div>
+    
+		
+        <!-- SEARCH PARAMETERS PANEL -->
+        <div id="parameterspanel" class="modal fade" tabindex="-1" role="dialog" >
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">paramètres de recherche</h5>
+                 </div>
+                 <div class="modal-body" >
+                    <form role="form" id="searchparameters">
+                        <div  class="form-group" >                        
+                            <input type="checkbox" name="param_search_bbox" id="param_search_bbox" checked="true">
+                            <label for="param_search_bbox">Rechercher dans l'emprise de la carte</label>
+                         </div>
+                         <div  class="form-group" >   
+                            <input type="checkbox" name="param_search_localities" id="param_search_localities">
+                            <label for="param_search_localities">Rechercher des adresses</label>
+                         </div>
+                         <div  class="form-group" >   
+                            <input class="searchfeatures" type="checkbox" name="param_search_features" id="param_search_features">
+                            <label class="searchfeatures" for="param_search_features">Rechercher des entités</label>
+                         </div>
+                            <p id="adresse-attribution"></p>                        
+                    </form> 
+                </div>
+            </div>
+          </div>
+        </div>
+		<!-- SHARE PANEL -->
+        <div id="sharepanel" class="modal fade" tabindex="-1" role="dialog" >
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">partager cette carte</h5>
+                 </div>
+                 <div class="modal-body" >
+                    <div class="row">
+                        <div class="col-md-6" >
+                            <div class="btn-group-vertical" role="group" >
+                                <a type="button" class="btn btn-default" id="permalinklink" href="#" title="lien permanent vers la carte">lien vers la carte</a>	
+                                <a type="button" class="btn btn-default" href='#' title='Envoyer vers le visualiseur Georchestra'>
+                                    <img src="img/logo/g.png" alt="georchestra" onclick="mviewer.sendToGeorchestra();" />
+                                </a>
+                             </div>
+                        </div>
+                        <div id='share' class="col-md-6"> 
+                            <img id="permaqr" src="img/ajax-loader.gif" title="QR code vers la carte" alt="QR code" />
+                        </div>
+                        <!-- to georchestra viewer -->
+                        <form id="georchestraForm" target="_blank" method="post" action="http://geobretagne.fr/mapfishapp/" style="display:none;">
+                            <input type="hidden" id="georchestraFormData" name="data" value="" />
+                            <input type="submit" data-role="button" data-mini="true" data-iconpos="right" value="geOrchestra" />
+                        </form> 
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+		<!-- IMAGE POPUP -->		
+        <div id="imagepopup" class="modal fade" tabindex="-1" role="dialog" >
+          <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Photo</h4>
+                  </div>
+                <img class="popphoto" src="img/blank.gif" style="max-height:512px;" alt="image">
+            </div>
+          </div>
+        </div>
+        <!-- USAGE PANEL -->
 		<div id="usagepanel" data-role="popup" data-theme="b" class="todo">
 			<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" 
 				class="ui-btn-right">Fermer</a>
@@ -248,42 +263,6 @@ $(document).ready(function () {
 				<div id="usage"></div>
 			</div>
 		</div>
-        <!-- SEARCH PARAMETERS PANEL -->
-		<div id="parameterspanel" data-role="popup" data-theme="b" class="todo">
-			<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" 
-				class="ui-btn-right">Fermer</a>
-			<div data-role="header">
-				<h2>paramètres de recherche</h2>
-			</div>
-			<div data-role="content">
-				<form>
-                    <fieldset data-role="controlgroup" data-mini="true" id="searchparameters">                        
-                        <input type="checkbox" name="param_search_bbox" id="param_search_bbox" checked="true">
-                        <label for="param_search_bbox">Rechercher dans l'emprise de la carte</label>
-                        <input type="checkbox" name="param_search_localities" id="param_search_localities">
-                        <label for="param_search_localities">Rechercher des adresses</label>
-                        <input class="searchfeatures" type="checkbox" name="param_search_features" id="param_search_features">
-                        <label class="searchfeatures" for="param_search_features">Rechercher des entités</label>
-                        <p id="adresse-attribution"></p>
-                    </fieldset>
-                </form>                
-			</div>
-		</div>
-         <!-- LEGEND PANEL -->
-		<div id="maplegend" class="todo" data-role="popup" data-theme="b" >
-			<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" 
-				class="ui-btn-right">Fermer</a>
-			<div data-role="header">
-				<h2 class="mv-legend-title" >Légende</h2>
-			</div>
-			<div data-role="content" id="legend-content" class="legend-area" data-theme="a"></div>
-            <div data-role="content" id="source-content" data-theme="b"></div>			
-		</div>
-		<!-- IMAGE POPUP -->
-		<div class="todo" data-role="popup" id="imagepopup" data-overlay-theme="a" data-theme="d" data-corners="false" data-transition="flip" data-history="false">
-            <a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
-			<img class="popphoto" src="img/blank.gif" style="max-height:512px;" alt="image">
-        </div>
 		<!-- LEGAL PANEL -->
 		<div id="legalpanel" data-role="popup" data-theme="b" class="todo">
 			<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" 
@@ -308,35 +287,7 @@ $(document).ready(function () {
 				</div>
 			</div>
 		</div>
-		<!-- SHARE PANEL -->
-		<div id="sharepanel" data-role="popup" data-theme="b" class="todo">
-			<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" 
-				class="ui-btn-right">Fermer</a>
-			<div data-role="header">
-				<h1>Partager cette carte</h1>
-			</div>
-			<div data-role="content">
-                <p class="" >
-                    <a id="permalinklink" href="#" data-theme="a" data-role="button" data-mini="true" 
-                        title="lien permanent vers la carte">lien vers la carte</a>			                
-			    </p>
-				<div id='share' class="ui-block-a">					
-					<div>
-						<p class="" >			                
-							<img id="permaqr" src="img/loading.gif" title="QR code vers la carte" alt="QR code" />
-			            </p>
-					</div>					
-				</div>
-                <!-- to georchestra viewer -->
-                <form id="georchestraForm" target="_blank" method="post" action="http://geobretagne.fr/mapfishapp/" style="display:none;">
-                    <input type="hidden" id="georchestraFormData" name="data" value="" />
-                    <input type="submit" data-role="button" data-mini="true" data-iconpos="right" value="geOrchestra" />
-                </form>
-				<div id="simpleshare" class="ui-block-b">					
-					<div id="shareeasy"></div>
-				</div>                
-			</div>
-		</div>
+		
 		<!-- POPUP OPACITY -->
 		<div data-role="popup" id="opacityLayer-popup" class="todo ui-content" data-theme="a" data-transition="slideup">
             <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Fermer</a>
@@ -352,10 +303,9 @@ $(document).ready(function () {
 			<p id="metadata-abstract"></p>			
 			<p><a id="metadata-target" href="#" target="_blank">En savoir plus</a></p>
 		</div>        
-		
-	</div>
-  </div>
-    <!-- /#wrapper -->
+		<div id="alerts-zone" ></div>
+
+    
      <script type="text/javascript" src="lib/bootstrap/sidebar_menu.js"></script>
 </body>
 </html>
