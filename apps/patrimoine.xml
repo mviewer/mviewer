@@ -55,7 +55,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
     </widgets> 
      <themes>
         <theme name="Etudes topographiques"  collapsed="true" id="etudes">         
-			<layer id="etude_patrimoine" name="Architecture" scalemin="0" scalemax="400000000" visible="true" tiled="true" namespace="tmp"
+			<layer id="etude_patrimoine" name="Architecture" scalemin="0" scalemax="400000000" visible="true" tiled="false" namespace="tmp"
 				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
                 infoformat="text/html" featurecount="50"
 				style="patrimoine_etudes_geometry_ia" 
@@ -73,7 +73,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw="" />
         </theme>
         <theme name="Recensement avant études"  collapsed="true" id="recensement"> 
-            <layer id="recensement_patrimoine" name="Recensement avant études" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="rb" 
+            <layer id="recensement_patrimoine" name="Recensement avant études" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb" 
 				searchable="true" queryable="true" fields="titre,localisati,datation,photo_1" aliases="Titre,Localisation,Datation,Photo" 
 				infoformat="text/html" featurecount="20"
                 style="patrimoine_recensement_geometry" 
@@ -191,7 +191,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
         </theme>
 
         <theme name="Patrimoine maritime et fluvial"  collapsed="true" id="archi_pat_ma_flu"> 
-        	<layer id="etude_patrimoine" name="Canal de Nantes à Brest" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="tmp"
+        	<layer id="etude_patrimoine" name="Canal de Nantes à Brest" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="tmp"
 				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
                 infoformat="text/html" featurecount="50"
 				style="patrimoine_thematique_canal" 
@@ -199,7 +199,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/presentation-du-canal-de-nantes-a-brest/006678aa-7848-4c14-a633-a59828e97ab3"
 				metadata-csw="" />
-			<layer id="etude_patrimoine" name="Fortifications littorales" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="tmp"
+			<layer id="etude_patrimoine" name="Fortifications littorales" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="tmp"
 				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
                 infoformat="text/html" featurecount="50"
 				style="patrimoine_thematique_fortification_littorale" 
