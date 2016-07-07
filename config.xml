@@ -209,7 +209,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=ce651579-c92a-474d-aee1-6e44b5f55579" />
                     </theme> 
         <theme name="Inventaire du patrimoine"  collapsed="true" id="patrimoine">           
-			<layer id="inventaire_patrimoine" name="Patrimoine régional" visible="false" tiled="true" namespace="rb"
+			<layer id="etude_patrimoine_simple" name="Patrimoine régional" visible="false" tiled="true" namespace="rb"
 				queryable="true" fields="" aliases=""                
                 searchable="true"
                 infoformat="text/html" featurecount="20"
