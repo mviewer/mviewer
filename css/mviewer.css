@@ -5,7 +5,7 @@ html, body {
 	padding: 0;
 	font-size: 12.5px!important;
 	font-family: "Trebuchet MS",Helvetica,Arial,sans-serif;
-    background: url(../img/grid.png) repeat scroll center top #fff;
+    /*background: url(../img/grid.png) repeat scroll center top #fff;*/
     
 }
 
@@ -20,6 +20,7 @@ html {
 	width: 100%;
 	height: 100%;
 	z-index: 0;
+    background: url(../img/grid.png) repeat scroll center top #fff;
 }
 
 /* Openlayers 3 css override */
@@ -88,12 +89,14 @@ a#searchparams {
 }
 
 #searchresults li {
-	/*height: 26px !important;	*/
+	padding: 0;
 }
 
 #searchresults li a {
-	font-size: 12.5px !important;
-	/*padding: 0.4em 15px !important;*/
+	font-size: 10px;
+}
+#searchresults li.disabled {
+    padding: 10px;
 }
 
 
@@ -110,7 +113,10 @@ a#searchparams {
 
 /* Legend Panel */
 
-
+.mv-layer-details img {
+  max-width: 250px;
+  padding: 10px 30px 10px 10px;
+}
 
 #datalist {	
   overflow-y: auto;
@@ -230,6 +236,7 @@ a#searchparams {
 
 #right-panel-selector,#bottom-panel-selector {
   border-radius: 10px;
+  border: none;
 }
 
 #right-panel-ulnav,#bottom-panel-ulnav {
@@ -378,7 +385,7 @@ div#backgroundlayerstoolbar {
 #layers-container-box {
     position: fixed;
     overflow: auto;
-    height: 100%;
+    /*height: 100%;*/
     padding-top: 60px;
     padding-left: 3px;
     max-width: 300px; 
@@ -400,8 +407,13 @@ div#backgroundlayerstoolbar {
     -ms-transform: translateX(200px);  
 }
 
-.mv-layer-options {
+.mv-layer-details {
     min-width: 200px;
+}
+
+.mv-layer-options {
+  padding-top: 10px;
+  /* border-top: 1px dashed #333; */
 }
 
 #bottom-panel {
@@ -476,19 +488,23 @@ div#backgroundlayerstoolbar {
 
 #toolstoolbar {
 	position: fixed;
-	top: 150px;
+	top: 160px;
 	right: 10px;
 }
 
 #drawtoolsoptions {
   position: fixed;
-  right: 50px;
+  right: 70px;
   float: right;
-  top: 150px;
+  top: 160px;
 }
 
 li.mv-nav-item span {
-  margin-left: -25px;
+  margin-left: -20px;
+}
+
+.layerdisplay-title span {
+  padding-right: 10px;
 }
 
 #share img {  
@@ -553,6 +569,93 @@ li.mv-nav-item span {
 .tooltip-measure-static:before {
   border-top-color: rgba(34, 170, 221, 0.5);
 }
+/*  Range from http://danielstern.ca/range.css/?ref=css-tricks#/*/
+input[type=range].mv-range {
+  -webkit-appearance: none;
+  width: 100%;
+  margin: 8.3px 0;
+}
+input[type=range].mv-range:focus {
+  outline: none;
+}
+input[type=range].mv-range::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #30ffa9;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+input[type=range].mv-range::-webkit-slider-thumb {
+  box-shadow: 1px 1px 1px #333333, 0px 0px 1px #404040;
+  border: 1px solid #ff0000;
+  height: 25px;
+  width: 25px;
+  border-radius: 20px;
+  background: #ff0000;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -8.5px;
+}
+input[type=range].mv-range:focus::-webkit-slider-runnable-track {
+  background: #91ffd1;
+}
+input[type=range].mv-range::-moz-range-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #30ffa9;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+input[type=range].mv-range::-moz-range-thumb {
+  box-shadow: 1px 1px 1px #333333, 0px 0px 1px #404040;
+  border: 1px solid #ff0000;
+  height: 25px;
+  width: 25px;
+  border-radius: 20px;
+  background: #ff0000;
+  cursor: pointer;
+}
+input[type=range].mv-range::-ms-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type=range].mv-range::-ms-fill-lower {
+  background: #00ce78;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range].mv-range::-ms-fill-upper {
+  background: #30ffa9;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range].mv-range::-ms-thumb {
+  box-shadow: 1px 1px 1px #333333, 0px 0px 1px #404040;
+  border: 1px solid #ff0000;
+  height: 25px;
+  width: 25px;
+  border-radius: 20px;
+  background: #ff0000;
+  cursor: pointer;
+  height: 8.4px;
+}
+input[type=range].mv-range:focus::-ms-fill-lower {
+  background: #30ffa9;
+}
+input[type=range].mv-range:focus::-ms-fill-upper {
+  background: #91ffd1;
+}
+/* fin de range
 
 
 .todo {

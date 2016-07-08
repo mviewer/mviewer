@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link href="lib/bootstrap/simple_sidebar.css" rel="stylesheet">
     <link href="lib/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <!--md
+    <link href="lib/bootstrap.material-design/css/bootstrap-material-design.min.css" rel="stylesheet">
+    <link href="lib/bootstrap.material-design/css/ripples.min.css" rel="stylesheet">
+    -->
 	<link rel="stylesheet" href="lib/openlayers/3/ol.css" type="text/css" />	
     <link rel="stylesheet" href="css/black-tie/jquery-ui.min.css" type="text/css" />
 	<link rel="stylesheet" href="css/mviewer.css" type="text/css" />	
@@ -27,7 +31,12 @@
 	<script type="text/javascript" src="lib/jquery.extend.js"></script>
 	<script type="text/javascript" src="lib/jqm-templates.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-	<script type="text/javascript" type="text/javascript" src="lib/mviewer.js"></script>
+	<!--md 
+    <script src="lib/bootstrap.material-design/js/material.min.js" type="text/javascript"></script>
+    <script src="lib/bootstrap.material-design/js/ripples.min.js" type="text/javascript"></script>
+    -->
+    
+    <script type="text/javascript" type="text/javascript" src="lib/mviewer.js"></script>
     <script type="text/javascript" src="lib/featurestyles.js"></script>   
 				
 <script type="text/javascript">
@@ -35,6 +44,7 @@ var config = {};
 var widgets = {};
 $(document).ready(function () {
 	"use strict";
+    //$.material.init();
 	if (window.location.search) {
 		$.extend(config, $.parseJSON('{"' + decodeURIComponent(window.location.search.substring(1)
 			.replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}'));    
@@ -118,7 +128,7 @@ $(document).ready(function () {
         </div>
 		
         <!-- MARKER USED BY SEARCH IN FEATURES FUNCTIONNALITY, TO LOCATE SELECTED FEATURE ON THE MAP-->
-        <img id="els_marker" src="img/pin-red.png" />
+        <img id="els_marker" src="img/marker-pink.png" />
 		<!-- TOP MENU BAR  -->     
              
         <ul id="searchresults" class="list-group" ></ul>        
@@ -126,15 +136,15 @@ $(document).ready(function () {
 		<!-- FIRST VERTICAL RIGHT TOOLBAR -->
         <div id="zoomtoolbar" class="btn-group-vertical btn-group-sm" role="group" aria-label="true">
             <button href="#" onclick="mviewer.zoomIn();" title="Zoom avant (zoom fenêtre : shift + clic sur la carte)" 
-				class="btn btn-default" tabindex="104" accesskey="4" >
+				class="btn btn-default btn-raised" tabindex="104" accesskey="4" >
                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             </button>
 			<button href="#" id="toto" onclick="mviewer.zoomToInitialExtent();" 
-				title="Revenir à l'étendue géographique de départ" class="btn btn-default" tabindex="105" accesskey="5">
+				title="Revenir à l'étendue géographique de départ" class="btn btn-default btn-raised" tabindex="105" accesskey="5">
                  <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
             </button>                
 			<button href="#" onclick="mviewer.zoomOut();" title="Zoom arrière" 
-				class="btn btn-default" tabindex="106" accesskey="6">
+				class="btn btn-default btn-raised" tabindex="106" accesskey="6">
                  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
             </button>
         </div>		
@@ -142,16 +152,16 @@ $(document).ready(function () {
 		<div id="toolstoolbar" class="btn-group-vertical btn-group-sm" role="group" aria-label="true">
 			<!--<a class="mv-modetools" href="#" onclick="mviewer.setTool('measureline', this.id);" id="measurebtn" title="Mesurer" 
 				data-role="button" data-icon="measure" data-iconpos="notext" data-theme="b" tabindex="108" accesskey="8"></a>-->
-            <button class="mv-modetools btn btn-default" href="#" onclick="mviewer.setTool('measureline', this.id);" id="measurebtn" title="Mesurer" 
+            <button class="mv-modetools btn btn-default btn-raised" href="#" onclick="mviewer.setTool('measureline', this.id);" id="measurebtn" title="Mesurer" 
 				tabindex="108" accesskey="8">
                 <span class="glyphicon glyphicon-resize-horizontal" aria-hidden="true"></span>
             </button> 
-			<a class="btn btn-default" type="button" href="?login" id="login" title="Se connecter" tabindex="110" accesskey="10"
+			<a class="btn btn-default btn-raised" type="button" href="?login" id="login" title="Se connecter" tabindex="110" accesskey="10"
 				style="display:none;">
                 <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
             </a>
 			<button data-toggle="modal" data-target="#sharepanel" onclick="mviewer.mapShare();" id="sharebtn" title="Partager cette carte" 
-				 tabindex="111" accesskey="11" class="btn btn-default">
+				 tabindex="111" accesskey="11" class="btn btn-default btn-raised">
                  <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
             </button>            
             <a href="#" id="exportpng" title="Exporter carte au format image" download="carte.png" tabindex="113" accesskey="13"
@@ -160,10 +170,10 @@ $(document).ready(function () {
 				data-role="button" data-icon="print" data-iconpos="notext" data-theme="b" ></a>
 		</div>
         <div id="drawtoolsoptions" style="display:none;" class="btn-group btn-group-sm" role="group" aria-label="true"> 
-            <button  id="measurelinebtn" title="Mesure linéaire" onclick="mviewer.setTool('measureline');" class="btn btn-primary" >
+            <button  id="measurelinebtn" title="Mesure linéaire" onclick="mviewer.setTool('measureline');" class="btn btn-default btn-raised" >
                 <span class="glyphicon glyphicon-resize-small" aria-hidden="true"></span>
             </button>
-            <button  id="measureareabtn" title="Mesure surfacique" onclick="mviewer.setTool('measurearea');" class="btn btn-default">
+            <button  id="measureareabtn" title="Mesure surfacique" onclick="mviewer.setTool('measurearea');" class="btn btn-default btn-raised">
                 <span class="glyphicon glyphicon-adjust" aria-hidden="true"></span>
             </button>
         </div>
@@ -247,8 +257,14 @@ $(document).ready(function () {
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Photo</h4>
-                  </div>
-                <img class="popphoto" src="img/blank.gif" style="max-height:512px;" alt="image">
+                </div>
+                <div class="modal-body" >
+                    <div class="row">
+                        <div class="col-md-12">
+                            <img class="popphoto center-block" src="img/blank.gif" style="max-height:512px;" alt="image">
+                        </div>
+                    </div>
+                </div>
             </div>
           </div>
         </div>

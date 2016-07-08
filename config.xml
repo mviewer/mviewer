@@ -58,13 +58,14 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
     </widgets> 
 
     <themes>
-        <theme name="Formation"  id="formation" collapsed="true">
+        <theme name="Formation"  id="formation" collapsed="true" icon="book">
             <layer id="lycee" name="Lycée" visible="false" tiled="false" namespace="rb"
 				queryable="true" fields="nom,photo,libelle,secteur_li,reseau_lib" aliases="Nom,Photo,Commune,Secteur,Réseau" 
                 searchable="true" 
                 infoformat="text/html" featurecount="20"
                 infopanel="bottom-panel"
-				style="" 
+				style="lycee_secteur_picto,lycee_reseau"
+                opacity="0.5"            
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Région Bretagne" 
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25" 
@@ -79,7 +80,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=f713de6d-1269-40b2-8bd4-3704c106fde6" 
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=f713de6d-1269-40b2-8bd4-3704c106fde6" />                    
 		</theme>		
-        <theme name="Transport collectif régional"  collapsed="true" id="transport">
+        <theme name="Transport collectif régional"  collapsed="true" id="transport" icon="bus">
             <layer id="transport_regional_arret" name="Point d'arrêt régional" visible="false" tiled="false" namespace="rb" 
 				queryable="true" fields="nom_pa" aliases="Nom" 
                 searchable="true"
@@ -99,7 +100,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=9d19c331-3941-4545-8409-ec18cf88a544"
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=9d19c331-3941-4545-8409-ec18cf88a544" />
         </theme>    
-        <theme name="Transport fluvial"  collapsed="true" id="maritime"> 
+        <theme name="Transport fluvial"  collapsed="true" id="maritime" icon="ship"> 
              <layer id="ecluse" name="Ecluse" visible="false" tiled="false" namespace="rb"
 					queryable="true" fields="nom_ecluse,photo" aliases="Nom,Photo"
                     searchable="true"
@@ -209,8 +210,8 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=ce651579-c92a-474d-aee1-6e44b5f55579"
 					metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=ce651579-c92a-474d-aee1-6e44b5f55579" />
                     </theme> 
-        <theme name="Inventaire du patrimoine"  collapsed="true" id="patrimoine">           
-			<layer id="inventaire_patrimoine" name="Patrimoine régional" visible="false" tiled="true" namespace="rb"
+        <theme name="Inventaire du patrimoine"  collapsed="true" id="patrimoine" icon="star">           
+			<layer id="etude_patrimoine_simple" name="Patrimoine régional" visible="false" tiled="true" namespace="rb"
 				queryable="true" fields="" aliases=""                
                 searchable="true"
                 infoformat="text/html" featurecount="20"
@@ -238,7 +239,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=90468f5b-eef8-452d-9443-060870b51332"
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=90468f5b-eef8-452d-9443-060870b51332" /> 
         </theme>        
-        <theme name="Espaces naturels"  collapsed="true" id="nature"> 
+        <theme name="Espaces naturels"  collapsed="true" id="nature" icon="envira"> 
             <layer id="reserve_naturelle_regionale" name="Réserve Naturelle Régionale" visible="false" tiled="false" namespace="rb"
 				queryable="true" fields="rnr_nom,image,url" aliases="Nom,photo,Détails"
                 searchable="true"
@@ -250,7 +251,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=77f8fc52-ae57-41d1-8f08-7b121b013f51"
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=77f8fc52-ae57-41d1-8f08-7b121b013f51" />	
         </theme>
-       <theme name="Tourisme"  collapsed="true" id="tourisme"> 
+       <theme name="Tourisme"  collapsed="true" id="tourisme" icon="plane"> 
             <layer id="destinations_touristiques" name="Destinations touristiques" visible="false" tiled="false" namespace="rb"
 				queryable="true" fields="nom" aliases="Nom"
                 infoformat="text/html" featurecount="20" 
@@ -260,7 +261,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=677d4e97-82bc-4d64-b11c-167f423900ae"
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=677d4e97-82bc-4d64-b11c-167f423900ae" />	
         </theme>
-        <theme name="Sites régionaux"  collapsed="true" id="sites"> 
+        <theme name="Sites régionaux"  collapsed="true" id="sites" icon="university"> 
             <layer id="sites_region" name="Sites région" visible="true" tiled="false" namespace="rb"
 				queryable="true" fields="nom_batiment,adresse,code_postal,ville,telephone" aliases="Batiment,Adresse,Code Postal,Ville,Téléphone"
                 infoformat="text/html" featurecount="20" 
@@ -270,7 +271,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=a6dde882-4334-4ce0-909f-adb8597ada97"
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=a6dde882-4334-4ce0-909f-adb8597ada97" />	
         </theme>
-        <theme name="Limites cadastrales"  collapsed="true" id="cadastre">  
+        <theme name="Limites cadastrales"  collapsed="true" id="cadastre" icon="cubes">  
 			<layer id="CP.CadastralZoning" name="Sections" scalemin="0" scalemax="50000" visible="false" tiled="false"
 				queryable="false" fields="label,nom_commune" aliases="Section,Commune"
                 infoformat="application/vnd.ogc.gml" featurecount="5"
