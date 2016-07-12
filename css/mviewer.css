@@ -210,7 +210,7 @@ a#searchparams {
 
 
 .popup-content {
-    padding-top: 20px;
+    /*padding-top: 20px;*/
     font-family: "Trebuchet MS",Helvetica,Arial,sans-serif;
     font-size: 80%;
     text-shadow: none;    
@@ -288,14 +288,23 @@ p.bjqs-caption{
 	background: rgba(255,255,255,0.5);
 }
 
-p.counter-slide {
-  position: absolute;
-  bottom: -10px;
-  left: 120px;
+.counter-slide {
+  position: absolute;  
   background-color: #000;
   color: #fff;
   border-radius: 5px 5px 5px 5px;
   padding: 2px 2px 2px 2px;
+}
+
+#right-panel .counter-slide {
+  bottom: 125px;
+  left: 50%;
+  display: none;
+}
+
+#bottom-panel .counter-slide {
+  bottom: -10px;
+  left: 50%x; 
 }
 
 .ui-tabs-panel >ul {
@@ -429,7 +438,7 @@ div#backgroundlayerstoolbar {
 }
 
 #bottom-panel.active {
-    height: 200px;
+    height: 350px;
     opacity: 1;
 }
 
@@ -451,23 +460,31 @@ div#backgroundlayerstoolbar {
 }
 
 #right-panel .close {
-  top: 60px;
-  position: absolute;
+  padding-top: 60px;  
   right: 10px;
 }
 
 #right-panel .popup-content {
-  overflow-y: auto;
+  overflow-y: hidden;
   overflow-x: hidden;
   position: absolute;
-  top: 140px;
+  top: 85px;
   left: 0px;
-  right: 10px;
-  bottom: 60px;
+  height: 100%;
   width: auto;
-  padding-left: 10px;
+  padding: 0 0 0 0;
 }
 
+#right-panel-selector, #right-panel .carousel.slide, #right-panel .nav.nav-tabs, #right-panel .tab-content,
+#right-panel .tab-pane.active, #carousel-right-panel-1, #right-panel .item.active, #right-panel .carousel-inner {
+  height: 100%;
+}
+
+#right-panel .carousel-inner {
+      padding-left: 15px;
+      padding-right: 15px;
+}
+ 
 #bottom-panel .popup-content {  
   padding-left: 250px;
 }
@@ -654,6 +671,22 @@ input[type=range].mv-range:focus::-ms-fill-lower {
 }
 input[type=range].mv-range:focus::-ms-fill-upper {
   background: #91ffd1;
+}
+
+#right-panel.tab-content {
+  padding-top: 150px;
+}
+li[role="presentation"] {
+  max-width: 125px;
+}
+
+.popup-content a.left.carousel-control, .popup-content a.right.carousel-control {
+  color: #000;
+  background: none;
+}
+
+.popup-content h3 {
+  font-size: small;
 }
 /* fin de range
 
