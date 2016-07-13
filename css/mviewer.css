@@ -442,6 +442,14 @@ div#backgroundlayerstoolbar {
     opacity: 1;
 }
 
+#bottom-panel .mv-header {
+  padding-left: 250px;
+}
+
+#bottom-panel .close {
+  margin-top: -45px;
+}
+
 #right-panel {
     right: 0px;
     opacity: 0; 
@@ -460,8 +468,12 @@ div#backgroundlayerstoolbar {
 }
 
 #right-panel .close {
-  padding-top: 60px;  
+  /*padding-top: 60px;  
+  right: 10px;*/
+  padding-top: 0px;
   right: 10px;
+  position: absolute;
+  margin-top: -38px;
 }
 
 #right-panel .popup-content {
@@ -475,14 +487,15 @@ div#backgroundlayerstoolbar {
   padding: 0 0 0 0;
 }
 
-#right-panel-selector, #right-panel .carousel.slide, #right-panel .nav.nav-tabs, #right-panel .tab-content,
+#right-panel-selector, #right-panel-selector .row , #right-panel-selector .col-md-12 , #right-panel-selector .tabs-left , 
+#right-panel .carousel.slide, #right-panel .nav.nav-tabs, #right-panel .tab-content,
 #right-panel .tab-pane.active, #carousel-right-panel-1, #right-panel .item.active, #right-panel .carousel-inner {
   height: 100%;
 }
 
 #right-panel .carousel-inner {
-      padding-left: 15px;
-      padding-right: 15px;
+      padding-left: 0px;
+      /*padding-right: 15px;*/
 }
  
 #bottom-panel .popup-content {  
@@ -693,4 +706,67 @@ li[role="presentation"] {
 
 .todo {
     display: none;
+}
+
+/* tab vertical */
+.tabs-left {
+ /* margin-top: 3rem;*/
+}
+
+.nav-tabs {
+  float: left;
+  border-bottom: 0;
+}
+.nav-tabs li {
+  float: none;
+  margin: 0;
+}
+.nav-tabs li a {
+  margin-right: 0;
+  border: 0;
+  background-color: #c0392b;
+}
+.nav-tabs li a:hover {
+  background-color: #e74c3c;
+}
+.nav-tabs .glyphicon {
+  color: #fff;
+}
+.nav-tabs .active .glyphicon {
+  color: #333;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  border: 0;
+}
+
+.tab-content {
+  /*margin-left: 45px;*/
+}
+.tab-content .tab-pane {
+  display: none;
+  background-color: #fff;
+  /*padding: 1.6rem;*/
+  padding-top: 10px;
+  /*overflow-y: auto;*/
+  overflow-y: hidden;
+}
+
+  
+.tab-content .active {
+  display: block;
+}
+/* vertical tab end */
+
+#right-panel .mv-header h5 {
+  padding-top: 50px;
+  text-align: center;
+  background-color: rgb(248, 248, 248);
+  line-height: 2em;
+}
+
+.tab-pane {
+    padding-left: 2px;
+    padding-right: 2px;
+    
 }

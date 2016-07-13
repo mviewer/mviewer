@@ -181,12 +181,14 @@ $(document).ready(function () {
  </div>
     <!-- /#wrapper -->
     
-    <div id="bottom-panel">        
-            <a href="#" class="close" data-dismiss="alert" aria-label="close" onclick="$('#bottom-panel').toggleClass('active')" title="Fermer">×</a>
+    <div id="bottom-panel">><div class="mv-header"><h5>Informations</h5>         
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" onclick="$('#bottom-panel').toggleClass('active')" title="Fermer">×</a>
+             </div>
             <div class="popup-content" ></div>
     </div>
-     <div id="right-panel">        
-            <a href="#" class="close" data-dismiss="alert" aria-label="close" onclick="$('#right-panel').toggleClass('active')" title="Fermer">×</a>
+     <div id="right-panel"><div class="mv-header"><h5>Informations</h5>        
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" onclick="$('#right-panel').toggleClass('active')" title="Fermer">×</a>
+            </div>
             <div class="popup-content" ></div>
     </div>
     
@@ -302,26 +304,30 @@ $(document).ready(function () {
 				<div id="contact">			
 				</div>
 			</div>
-		</div>
+		</div>		
 		
-		<!-- POPUP OPACITY -->
-		<div data-role="popup" id="opacityLayer-popup" class="todo ui-content" data-theme="a" data-transition="slideup">
-            <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Fermer</a>
-			<form>
-				<label for="opacityLayer-slider">Opacité:</label>
-				<input type="range" name="var-layer-to-control" id="opacityLayer-slider" data-highlight="true" min="0" max="100" value="50" data-mini="false"  onchange="mviewer.changeLayerOpacity(this.name,this.value)">
-			</form>            
-		</div>
-		<!-- POPUP METADATA -->
-		<div data-role="popup" id="metadataPopup" class=" todo ui-content" data-theme="b" data-transition="slidedown" >
-            <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Fermer</a>
-			<strong id="metadata-title"></strong>
-			<p id="metadata-abstract"></p>			
-			<p><a id="metadata-target" href="#" target="_blank">En savoir plus</a></p>
-		</div>        
 		<div id="alerts-zone" ></div>
 
     
      <script type="text/javascript" src="lib/bootstrap/sidebar_menu.js"></script>
+     <script>
+        var tabsFn = (function() {
+          
+          function init() {
+            setHeight();
+          }
+          
+          function setHeight() {
+            var $tabPane = $('.tab-pane'),
+                tabsHeight = $('.nav-tabs').height();
+            
+            $tabPane.css({
+              height: tabsHeight
+            });
+          }
+            
+          $(init);
+        })();
+</script>
 </body>
 </html>
