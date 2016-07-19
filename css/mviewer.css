@@ -470,17 +470,20 @@ div#backgroundlayerstoolbar {
 #right-panel .close {
   /*padding-top: 60px;  
   right: 10px;*/
+  color: #fff;
+  opacity: 1;
   padding-top: 0px;
   right: 10px;
   position: absolute;
   margin-top: -38px;
+  padding-top: 10px;
 }
 
 #right-panel .popup-content {
   overflow-y: hidden;
   overflow-x: hidden;
   position: absolute;
-  top: 85px;
+  /*top: 85px;*/
   left: 0px;
   height: 100%;
   width: auto;
@@ -758,11 +761,15 @@ li[role="presentation"] {
 }
 /* vertical tab end */
 
+#right-panel .mv-header {
+  padding-top: 50px;  
+  background-color: rgb(192, 57, 43);
+  color: #fff;  
+}
 #right-panel .mv-header h5 {
-  padding-top: 50px;
   text-align: center;
-  background-color: rgb(248, 248, 248);
   line-height: 2em;
+  margin-bottom: 0;
 }
 
 .tab-pane {

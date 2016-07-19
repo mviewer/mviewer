@@ -18,6 +18,7 @@
 	<script type="text/javascript" src="lib/openlayers/3/ol.js"></script>
 	<script type="text/javascript" src="lib/jquery/base/plugins/xml2json/jquery.xml2json.js"></script>	
 	<script type="text/javascript" src="lib/jqm-templates.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Sortable/1.4.2/Sortable.min.js"></script>
 	<script type="text/javascript" src="lib/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" type="text/javascript" src="lib/mviewer.js"></script>
     <script type="text/javascript" src="lib/featurestyles.js"></script>   
@@ -53,6 +54,35 @@ $(document).ready(function () {
         error: function (request, status, error) {            
 			mviewer.alert("Fichier de configuration : " + configFile + " non trouvé ou incorrect !", "alert-danger");
         }
+    });
+    
+    Sortable.create(document.getElementById('layers-container'), {
+        handle: '.layerdisplay-title',
+        onAdd: function (/**Event*/evt) {
+            var itemEl = evt.item;  // dragged HTMLElement
+            evt.from;  // previous list
+            // + indexes from onEnd
+            console.log("dfdfdffsdjfs");
+        },
+        onUpdate: function (evt) {
+            var actionMove = { 
+                layerName: $(evt.item).attr("data-layerid"),
+                layerRef: "",
+                action: ""};
+            var itemsList = $(evt.from).find(".list-group-item");
+            //New position in the list
+            var newPos = evt.newIndex;            
+            if (newPos < itemsList.length -1) {
+                //Get the under layer name               
+                actionMove.layerRef = $(itemsList[newPos +1]).attr("data-layerid");
+                actionMove.action = "up"
+            } else {
+                //Get the over layer name               
+                actionMove.layerRef = $(itemsList[newPos -1]).attr("data-layerid");
+                actionMove.action = "down";
+            }
+            mviewer.orderLayer(actionMove);            
+          }
     });
 
 });
