@@ -393,16 +393,20 @@ div#backgroundlayerstoolbar {
 
 #layers-container-box {
     position: fixed;
-    overflow: auto;
-    /*height: 100%;*/
+    overflow-y: auto;
+    max-height: 100%;
     padding-top: 60px;
     padding-left: 3px;
     max-width: 300px; 
-    padding-bottom: 40px;
+    /*padding-bottom: 40px;*/
      -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
+}
+
+ul#layers-container {
+  margin-bottom: 0;
 }
 
 
@@ -728,6 +732,7 @@ li[role="presentation"] {
   margin-right: 0;
   border: 0;
   background-color: #c0392b;
+  border-radius: 0;
 }
 .nav-tabs li a:hover {
   background-color: #e74c3c;

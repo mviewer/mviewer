@@ -57,7 +57,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
        <!--<widget name="gauge"/>-->       
     </widgets> 
 
-    <themes>
+    <themes>        
         <theme name="Formation"  id="formation" collapsed="true" icon="book">
             <layer id="lycee" name="Lycée" visible="false" tiled="false" namespace="rb"
 				queryable="true" fields="nom,photo,libelle,secteur_li,reseau_lib" aliases="Nom,Photo,Commune,Secteur,Réseau" 
@@ -81,6 +81,16 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=f713de6d-1269-40b2-8bd4-3704c106fde6" />                    
 		</theme>		
         <theme name="Transport collectif régional"  collapsed="true" id="transport" icon="bus">
+             <layer id="vue_freq_totale_2015" name="Fréquentation 2015" visible="true" tiled="false" namespace="rb" 
+				queryable="true" fields="" aliases="" 
+                searchable="false"
+                timefilter="true"
+                infoformat="text/html" featurecount="20"                
+				url="http://rec-owsig.cr-bretagne.fr:8080/geoserver/rb/wms" 
+				style="" 
+				attribution="Transports Région Bretagne" 
+				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=a856d070-c900-44db-8020-7892a3071293"
+				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=a856d070-c900-44db-8020-7892a3071293" />   
             <layer id="transport_regional_arret" name="Point d'arrêt régional" visible="false" tiled="false" namespace="rb" 
 				queryable="true" fields="nom_pa" aliases="Nom" 
                 searchable="true"
@@ -240,7 +250,12 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=90468f5b-eef8-452d-9443-060870b51332"
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=90468f5b-eef8-452d-9443-060870b51332" /> 
         </theme>        
-        <theme name="Espaces naturels"  collapsed="true" id="nature" icon="envira"> 
+        <theme name="Espaces naturels"  collapsed="true" id="nature" icon="envira">
+            <layer id="v_mesures_sediment_2011" name="2011" visible="false" tiled="false" namespace="port_protect" queryable="true" 
+                fields="id_unique,point_unique,info_sup,profondeur,date,annee,type,parametre,code_sandre,valeur,unite,seuil" 
+                aliases="ID,ID point de prélèvement,Informations supplémentaires,Profondeur,Date,Année,Type,Paramètre,Code SANDRE,Valeur,Unité,Seuil" 
+                searchable="true" infoformat="application/vnd.ogc.gml" featurecount="20" style="port_mesures_sed_cadmium,port_mesures_sed_chrome"
+                url="http://kartenn.region-bretagne.fr/geoserver-proxy/port_protect/wms" attribution="Région Bretagne" metadata="" metadata-csw=""/>
             <layer id="reserve_naturelle_regionale" name="Réserve Naturelle Régionale" visible="false" tiled="false" namespace="rb"
 				queryable="true" fields="rnr_nom,image,url" aliases="Nom,photo,Détails"
                 searchable="true"
