@@ -17,5 +17,8 @@ mviewer.hooks.lycee2.layer = new ol.layer.Vector({
             })
           })
         })
-  })                    
+  });
+mviewer.hooks.lycee2.handle = function (features) {        
+       mviewer.alert(features[0].properties.nom, "alert-info");
+   };    
 } 
