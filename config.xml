@@ -84,7 +84,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
              <layer id="vue_freq_totale_2015" name="Fréquentation 2015" visible="true" tiled="false" namespace="rb" 
 				queryable="true" fields="" aliases="" 
                 searchable="false"
-                timefilter="true"
+                timefilter="true" timeinterval="month"
                 infoformat="text/html" featurecount="20"                
 				url="http://rec-owsig.cr-bretagne.fr:8080/geoserver/rb/wms" 
 				style="" 
