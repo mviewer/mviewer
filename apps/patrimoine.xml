@@ -63,7 +63,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata=""
 				metadata-csw="" />
-			<layer id="etude_patrimoine_simple" name="Objets mobiliers" scalemin="0" scalemax="400000000" visible="false" tiled="false" namespace="tmp"
+			<layer id="etude_patrimoine_im" name="Objets mobiliers" scalemin="0" scalemax="400000000" visible="false" tiled="true" namespace="tmp"
 				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
                 infoformat="text/html" featurecount="50"
 				style="patrimoine_etudes_centroide_im" 
@@ -191,7 +191,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
         </theme>
 
         <theme name="Patrimoine maritime et fluvial"  collapsed="true" id="archi_pat_ma_flu"> 
-        	<layer id="etude_patrimoine" name="Canal de Nantes à Brest" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="tmp"
+        	<layer id="thematique_patrimoine" name="Canal de Nantes à Brest" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="tmp"
 				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/canal_nantes_brest.png"
 				style="patrimoine_thematique_canal" 
@@ -199,7 +199,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/presentation-du-canal-de-nantes-a-brest/006678aa-7848-4c14-a633-a59828e97ab3"
 				metadata-csw="" />
-			<layer id="etude_patrimoine" name="Fortifications littorales" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="tmp"
+			<layer id="thematique_patrimoine" name="Fortifications littorales" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="tmp"
 				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/fortifications.png"
 				style="patrimoine_thematique_fortification_littorale" 
@@ -258,7 +258,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : geRégion Bretagne" 
 				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/les-charpentes-armoricaines-en-ille-et-vilaine/d4073292-07f9-4fce-b4c5-79bdadc6586d"
 				metadata-csw="" />
-			<layer id="etude_patrimoine" name="Coiffes en filet brodé" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="tmp"
+			<layer id="thematique_patrimoine" name="Coiffes en filet brodé" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="tmp"
 				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/coiffes.png"
 				style="	patrimoine_thematique_coiffes" 
