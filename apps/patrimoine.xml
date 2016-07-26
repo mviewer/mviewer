@@ -161,15 +161,6 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/les-stalles-en-bretagne/f2596507-5a6b-4360-b0eb-69eb100ab7a2"
 				metadata-csw="" />
-		     <layer id="croix_calvaire" name="Croix et calvaires (association)" visible="false" tiled="false" namespace="rb" 
-				queryable="true" fields="libelle" aliases="Libelle" 
-                searchable="true" legendurl="http://kartenn.region-bretagne.fr/img/legend/croix_et_calvaires_recensement.png"
-				infoformat="text/html" featurecount="20"
-                style="" 
-				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
-				attribution="Association croix et calvaires de Bretagne" 
-				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=90468f5b-eef8-452d-9443-060870b51332"
-				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=90468f5b-eef8-452d-9443-060870b51332" /> 
 		     <layer id="etude_croix_calvaire" name="Croix et calvaires (études)" visible="false" tiled="false" namespace="rb" 
 				queryable="true" fields="libelle" aliases="Libelle" 
                 searchable="true" legendurl="http://kartenn.region-bretagne.fr/img/legend/croix_et_calvaires_etudes.png"
@@ -181,13 +172,22 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata="" /> 
 		     <layer id="recensement_croix_calvaire" name="Croix et calvaires (recensement)" visible="false" tiled="false" namespace="rb" 
 				queryable="true" fields="libelle" aliases="Libelle" 
-                searchable="true" legendurl="http://kartenn.region-bretagne.fr/img/legend/croix_et_calvaires_association.png"
+                searchable="true" legendurl="http://kartenn.region-bretagne.fr/img/legend/croix_et_calvaires_recensement.png"
 				infoformat="text/html" featurecount="20"
                 style="" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata-csw=""
 				metadata="" /> 
+		     <layer id="croix_calvaire" name="Croix et calvaires (association)" visible="false" tiled="false" namespace="rb" 
+				queryable="true" fields="libelle" aliases="Libelle" 
+                searchable="true" legendurl="http://kartenn.region-bretagne.fr/img/legend/croix_et_calvaires_association.png"
+				infoformat="text/html" featurecount="20"
+                style="" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Association croix et calvaires de Bretagne" 
+				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=90468f5b-eef8-452d-9443-060870b51332"
+				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=90468f5b-eef8-452d-9443-060870b51332" /> 
         </theme>
 
         <theme name="Patrimoine maritime et fluvial"  collapsed="true" id="archi_pat_ma_flu"> 
