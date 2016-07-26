@@ -163,7 +163,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw="" />
 		     <layer id="croix_calvaire" name="Croix et calvaires (association)" visible="false" tiled="false" namespace="rb" 
 				queryable="true" fields="libelle" aliases="Libelle" 
-                searchable="true" legendurl="http://kartenn.region-bretagne.fr/img/legend/croix_et_calvaires_association.png"
+                searchable="true" legendurl="http://kartenn.region-bretagne.fr/img/legend/croix_et_calvaires_recensement.png"
 				infoformat="text/html" featurecount="20"
                 style="" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -172,7 +172,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=90468f5b-eef8-452d-9443-060870b51332" /> 
 		     <layer id="etude_croix_calvaire" name="Croix et calvaires (études)" visible="false" tiled="false" namespace="rb" 
 				queryable="true" fields="libelle" aliases="Libelle" 
-                searchable="true"
+                searchable="true" legendurl="http://kartenn.region-bretagne.fr/img/legend/croix_et_calvaires_etudes.png"
 				infoformat="text/html" featurecount="20"
                 style="" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -181,7 +181,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata="" /> 
 		     <layer id="recensement_croix_calvaire" name="Croix et calvaires (recensement)" visible="false" tiled="false" namespace="rb" 
 				queryable="true" fields="libelle" aliases="Libelle" 
-                searchable="true"
+                searchable="true" legendurl="http://kartenn.region-bretagne.fr/img/legend/croix_et_calvaires_association.png"
 				infoformat="text/html" featurecount="20"
                 style="" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 

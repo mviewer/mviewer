@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <application title="Kartenn vn" logo="" help="http://kartenn.region-bretagne.fr/mviewer/aide_kartenn_vn.pdf" panelfooterimage="img/panel-footer.png" panelfooterheight="80px" exportpng="true" measuretools="true" legend="true" legendasimage="true" popup="false"/>
+    <application title="Kartenn vn" logo="" help="http://kartenn.region-bretagne.fr/mviewer/aide_kartenn_vn.pdf" panelfooterimage="img/panel-footer.png" panelfooterheight="80px" measuretools="true" legend="true" popup="false" exportpng="true" legendasimage="true"/>
     <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
     <mapoptions maxzoom="20" projection="EPSG:3857" center="-403013.39038929436,6128402.399153711" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
     <![CDATA[<baselayers style="gallery"><!-- style="default"||gallery" -->        
@@ -361,7 +361,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0ca82e1d-b487-4879-8185-56b7c4e1a948" />                        
         </theme> 
         <theme name="Patrimoine naturel, sites et paysages"  collapsed="true" id="nature">
-            <layer id="bretagne_ac1" name="Sertvitude immeubles MH" scalemin="0" scalemax="50000000" visible="false" tiled="false"
+            <layer id="bretagne_ac1" name="Servitude immeubles MH" scalemin="0" scalemax="50000000" visible="false" tiled="false"
 				queryable="true" fields="SITE" aliases="Site"
                 infoformat="text/html" featurecount="5"             
 				style=""
@@ -381,9 +381,9 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
             <layer id="Sites_inscrits__ponctuel_" name="Sites inscrits (ponctuel)" scalemin="0" scalemax="50000000" visible="false" tiled="true"
 				queryable="true" fields="SITE" aliases="Site"
                 infoformat="application/vnd.ogc.gml" featurecount="5"             
-				style=""
+				style="" 
                 useproxy="true"
-				url="http://ws.carmen.developpement-durable.gouv.fr/WMS/10/Nature_Paysage?" 
+				url="http://kartenn.region-bretagne.fr/carmen?" 
 				attribution="CARMEN" 
 				metadata="http://metadata.carmen.developpement-durable.gouv.fr/geonetwork-10/srv/fre/metadata.show?uuid=7d96886f-29b5-4b93-8ad3-d8722485602c" 
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=7d96886f-29b5-4b93-8ad3-d8722485602c" />
@@ -391,7 +391,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				queryable="true" fields="SITE" aliases="Site"
                 infoformat="application/vnd.ogc.gml" featurecount="5"             
 				style="" useproxy="true"
-				url="http://ws.carmen.developpement-durable.gouv.fr/WMS/10/Nature_Paysage?" 
+				url="http://kartenn.region-bretagne.fr/carmen?" 
 				attribution="CARMEN" 
 				metadata="http://metadata.carmen.developpement-durable.gouv.fr/geonetwork/10/fre/metadata.show?uuid=7d96886f-29b5-4b93-8ad3-d8722485602c" 
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=7d96886f-29b5-4b93-8ad3-d8722485602c" />
@@ -399,7 +399,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				queryable="true" fields="SITE" aliases="Site"
                 infoformat="application/vnd.ogc.gml" featurecount="5"             
 				style="" useproxy="true"
-				url="http://ws.carmen.developpement-durable.gouv.fr/WMS/10/Nature_Paysage?" 
+				url="http://kartenn.region-bretagne.fr/carmen?" 
 				attribution="CARMEN" 
 				metadata="http://metadata.carmen.developpement-durable.gouv.fr/geonetwork-10/srv/fre/metadata.show?uuid=d42013b5-6c2b-4e18-8ddb-db2677860b2d" 
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=d42013b5-6c2b-4e18-8ddb-db2677860b2d" />
@@ -407,7 +407,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				queryable="true" fields="SITE" aliases="Site"
                 infoformat="application/vnd.ogc.gml" featurecount="5"             
 				style="" useproxy="true"
-				url="http://ws.carmen.developpement-durable.gouv.fr/WMS/10/Nature_Paysage?" 
+				url="http://kartenn.region-bretagne.fr/carmen?" 
 				attribution="CARMEN" 
 				metadata="http://metadata.carmen.developpement-durable.gouv.fr/geonetwork-10/srv/fre/metadata.show?uuid=d42013b5-6c2b-4e18-8ddb-db2677860b2d" 
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=d42013b5-6c2b-4e18-8ddb-db2677860b2d" />
@@ -415,7 +415,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				queryable="true" fields="LB_ZONE" aliases="Libellé zone"
                 infoformat="application/vnd.ogc.gml" featurecount="5"             
 				style="" useproxy="true"
-				url="http://ws.carmen.developpement-durable.gouv.fr/WMS/10/Nature_Paysage?" 
+				url="http://kartenn.region-bretagne.fr/carmen?" 
 				attribution="CARMEN" 
 				metadata="http://metadata.carmen.developpement-durable.gouv.fr/geonetwork/10/fre/metadata.show?uuid=33665796-fb24-4117-91aa-3265c76d8031" 
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=33665796-fb24-4117-91aa-3265c76d8031" />
@@ -423,7 +423,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				queryable="true" fields="LB_ZONE" aliases="Libellé zone"
                 infoformat="application/vnd.ogc.gml" featurecount="5"             
 				style="" useproxy="true"
-				url="http://ws.carmen.developpement-durable.gouv.fr/WMS/10/Nature_Paysage?" 
+				url="http://kartenn.region-bretagne.fr/carmen?" 
 				attribution="CARMEN" 
 				metadata="http://metadata.carmen.developpement-durable.gouv.fr/geonetwork-10/srv/fre/metadata.show?uuid=ce4d1839-b7a8-4b11-84a6-a3a9f77b1192" 
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=ce4d1839-b7a8-4b11-84a6-a3a9f77b1192" />
@@ -431,7 +431,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				queryable="true" fields="NOM" aliases="Nom"
                 infoformat="application/vnd.ogc.gml" featurecount="5"             
 				style="" useproxy="true"
-				url="http://ws.carmen.developpement-durable.gouv.fr/WMS/10/Nature_Paysage?" 
+				url="http://kartenn.region-bretagne.fr/carmen?" 
 				attribution="CARMEN" 
 				metadata="http://metadata.carmen.developpement-durable.gouv.fr/geonetwork-10/srv/fre/metadata.show?uuid=0b4fe074-5827-47c6-b00e-1c74613ba9cf" 
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0b4fe074-5827-47c6-b00e-1c74613ba9cf" />
@@ -439,7 +439,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				queryable="true" fields="ZONE" aliases="Zone"
                 infoformat="application/vnd.ogc.gml" featurecount="5"             
 				style="" useproxy="true"
-				url="http://ws.carmen.developpement-durable.gouv.fr/WMS/10/Nature_Paysage?" 
+				url="http://kartenn.region-bretagne.fr/carmen?" 
 				attribution="CARMEN" 
 				metadata="http://metadata.carmen.developpement-durable.gouv.fr/geonetwork-10/srv/fre/metadata.show?uuid=ddd7da8e-8275-40db-ab39-b5a3178ab570" 
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=ddd7da8e-8275-40db-ab39-b5a3178ab570" />
