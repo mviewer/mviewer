@@ -283,6 +283,24 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata=""
 				metadata-csw="" />
         </theme>
+	<theme name="Edifices protégés MH"  collapsed="true" id="mh">  
+            <layer id="bretagne_ac1" name="Servitude immeubles MH" visible="false" tiled="false"
+				queryable="true" fields="SITE" aliases="Site"
+                infoformat="text/html" featurecount="5"             
+				style=""
+				url="http://geobretagne.fr/geoserver/drac/wms?" 
+				attribution="CARMEN" 
+				metadata="http://metadata.carmen.developpement-durable.gouv.fr/geonetwork-10/srv/fre/metadata.show?uuid=ef4d5b43-a7cd-4237-a56c-0c1d2226dec1" 
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=ef4d5b43-a7cd-4237-a56c-0c1d2226dec1" />
+            <layer id="bretagne_immeuble_mh" name="Immeubles MH" visible="false" tiled="false"
+				queryable="true" fields="SITE" aliases="Site"
+                infoformat="text/html" featurecount="5"             
+				style=""
+				url="http://geobretagne.fr/geoserver/drac/wms?" 
+				attribution="DRAC" 
+				metadata="" 
+				metadata-csw="" />	
+    </theme>
 	<theme name="Limites administratives"  collapsed="true" id="territoire">  
         <layer id="FDepartement" name="Département" visible="false" tiled="false"
 				queryable="true" fields="NOM_PAYS" aliases="Nom"
