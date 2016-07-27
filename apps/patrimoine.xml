@@ -61,16 +61,16 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				style="patrimoine_etudes_geometry_ia" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Service de l'inventaire : Région Bretagne" 
-				metadata=""
-				metadata-csw="" />
+				metadata="http://applications.region-bretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/1b3c63dd-e39e-48f5-ba87-882e09bb084a"
+				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=1b3c63dd-e39e-48f5-ba87-882e09bb084a" />
 			<layer id="etude_patrimoine_im" name="Objets mobiliers" visible="false" tiled="true" namespace="tmp"
 				queryable="true" 
                 infoformat="text/html" featurecount="50"
 				style="patrimoine_etudes_centroide_im" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Service de l'inventaire : Région Bretagne" 
-				metadata=""
-				metadata-csw="" />
+				metadata="http://applications.region-bretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/5a6257ee-3fd8-41f2-bb63-55374e7a899a"
+				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=5a6257ee-3fd8-41f2-bb63-55374e7a899a" />
         </theme>
         <theme name="Recensement avant études"  collapsed="true" id="recensement"> 
             <layer id="recensement_patrimoine" name="Recensement avant études" visible="false" tiled="false" namespace="rb" 
@@ -89,8 +89,8 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				style=""
 				attribution="Région Bretagne" 
-				metadata-csw=""
-				metadata="" />	
+				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=e2588666-6b16-4d5a-bca2-5e927bc0a922"
+				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=e2588666-6b16-4d5a-bca2-5e927bc0a922" /> 
         </theme>
         <theme name="Architecture civile"  collapsed="true" id="archi_civile"> 
 			<layer id="etude_patrimoine_simple" name="Châteaux du 19ème siècle" visible="false" tiled="false" namespace="tmp"
