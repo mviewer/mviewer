@@ -55,7 +55,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
     </widgets> 
      <themes>
         <theme name="Etudes topographiques"  collapsed="true" id="etudes">         
-			<layer id="etude_patrimoine" name="Architecture" visible="true" tiled="false" namespace="tmp"
+			<layer id="etude_patrimoine" name="Architecture" visible="true" tiled="true" namespace="tmp"
 				queryable="true" 
                 infoformat="text/html" featurecount="50"
 				style="patrimoine_etudes_geometry_ia" 
@@ -73,10 +73,10 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=5a6257ee-3fd8-41f2-bb63-55374e7a899a" />
         </theme>
         <theme name="Recensement avant études"  collapsed="true" id="recensement"> 
-            <layer id="recensement_patrimoine" name="Recensement avant études" visible="false" tiled="false" namespace="rb" 
+            <layer id="recensement_patrimoine" name="Recensement avant études" visible="false" tiled="true" namespace="rb" 
 				searchable="true" queryable="true" 
 				infoformat="text/html" featurecount="20"
-                style="patrimoine_recensement_geometry" 
+                style="recensement_point_centroide" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0cf6de5d-9746-44d8-b003-a2dae2e7e585"
