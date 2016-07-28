@@ -250,7 +250,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=77f8fc52-ae57-41d1-8f08-7b121b013f51" />	
         </theme>
        <theme name="Tourisme"  collapsed="true" id="tourisme"> 
-            <layer id="destinations_touristiques" name="Destinations touristiques" visible="false" tiled="false" namespace="rb"
+            <layer id="destination_touristique" name="Destinations touristiques" visible="false" tiled="false" namespace="rb"
 				queryable="true"
                 infoformat="text/html" featurecount="20" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -260,7 +260,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=677d4e97-82bc-4d64-b11c-167f423900ae" />	
         </theme>
         <theme name="Sites régionaux"  collapsed="true" id="sites"> 
-            <layer id="sites_region" name="Sites région" visible="true" tiled="false" namespace="rb"
+            <layer id="site_region" name="Sites région" visible="true" tiled="false" namespace="rb"
 				queryable="true"
                 infoformat="text/html" featurecount="20" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 

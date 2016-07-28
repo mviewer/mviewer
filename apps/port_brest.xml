@@ -56,7 +56,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 
     <themes>
         <theme name="Sites régionaux"  collapsed="true" id="sites"> 
-            <layer id="sites_region" name="Sites région" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="rb"
+            <layer id="site_region" name="Sites région" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="rb"
 				queryable="true" fields="nom_batiment,adresse,code_postal,ville,telephone" aliases="Batiment,Adresse,Code Postal,Ville,Téléphone"
                 infoformat="text/html" featurecount="1" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
