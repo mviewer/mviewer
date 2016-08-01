@@ -53,7 +53,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 
     <themes>
             <theme name="Patrimoine bâti"  collapsed="true" id="pat_bati">
-                <layer id="batiments_vn" name="Bâtiments" visible="false" tiled="false" namespace="rb"
+                <layer id="batiment_vn" name="Bâtiments" visible="false" tiled="false" namespace="rb"
 					searchable="true" queryable="true" fields="nom,affecta,photo" aliases="Nom, Affectation,Photo"
                     infoformat="text/html" featurecount="20"
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -97,7 +97,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=3e21dfe0-6124-4af0-b893-c5b0b23869a7" />  
         </theme> 
             <theme name="Signalisation"  collapsed="true" id="signalisation"> 
-               <layer id="bornes_km_vn" name="Bornes Kilométriques" visible="false" tiled="false" namespace="rb"
+               <layer id="borne_km_vn" name="Bornes Kilométriques" visible="false" tiled="false" namespace="rb"
 					queryable="true" 
                     infoformat="text/html" featurecount="20"
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -121,7 +121,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					attribution="Région Bretagne" 
 					metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=58e1b1a6-2cf7-4088-b59a-bdc1c7526e3c"
 					metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=58e1b1a6-2cf7-4088-b59a-bdc1c7526e3c" />  
-               <layer id="bouees_vn" name="Bouées" visible="false" tiled="false" namespace="rb"
+               <layer id="bouee_vn" name="Bouées" visible="false" tiled="false" namespace="rb"
 					queryable="true" 
                     infoformat="text/html" featurecount="20"
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -148,7 +148,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					attribution="Région Bretagne" 
 					metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=08835525-f372-4681-9c1d-527ee6a51e79"
 					metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=08835525-f372-4681-9c1d-527ee6a51e79" />  
-               <layer id="eau_randonneurs_vn" name="Points d'eau randonneurs" visible="false" tiled="false" namespace="rb"
+               <layer id="eau_randonneur_vn" name="Points d'eau randonneurs" visible="false" tiled="false" namespace="rb"
 					queryable="false" 
                     infoformat="text/html" featurecount="20"
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -156,7 +156,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					attribution="Région Bretagne" 
 					metadata-csw=""
 					metadata="" />  
-                <layer id="sanitaires_wc_vn" name="Toilettes" visible="false" tiled="false" namespace="rb"
+                <layer id="sanitaire_wc_vn" name="Toilettes" visible="false" tiled="false" namespace="rb"
 					queryable="true"
                     infoformat="text/html" featurecount="20"
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -164,7 +164,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					attribution="Région Bretagne" 
 					metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=c1b02fac-b018-4c87-8a11-b032b34af3db"
 					metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=c1b02fac-b018-4c87-8a11-b032b34af3db" />  
-                 <layer id="sanitaires_douche_vn" name="Douches" visible="false" tiled="false" namespace="rb"
+                 <layer id="sanitaire_douche_vn" name="Douches" visible="false" tiled="false" namespace="rb"
 					queryable="true"
                     infoformat="text/html" featurecount="20"
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -173,7 +173,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=c1b02fac-b018-4c87-8a11-b032b34af3db"
 					metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=c1b02fac-b018-4c87-8a11-b032b34af3db" />  
 
-                <layer id="bornes_eau_vn" name="Points d'eau navigants" visible="false" tiled="false" namespace="rb"
+                <layer id="borne_eau_vn" name="Points d'eau navigants" visible="false" tiled="false" namespace="rb"
 					queryable="true"
                     infoformat="text/html" featurecount="20"
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -181,7 +181,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					attribution="Région Bretagne" 
 					metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=c74aad0d-d6ba-4455-8948-3b68b8d32ea0"
 					metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=c74aad0d-d6ba-4455-8948-3b68b8d32ea0" />  
-                <layer id="bornes_elec_vn" name="Points d'électricité" visible="false" tiled="false" namespace="rb"
+                <layer id="borne_elec_vn" name="Points d'électricité" visible="false" tiled="false" namespace="rb"
 					queryable="true"
                     infoformat="text/html" featurecount="20"
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -189,7 +189,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					attribution="Région Bretagne" 
 					metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=c74aad0d-d6ba-4455-8948-3b68b8d32ea0"
 					metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=c74aad0d-d6ba-4455-8948-3b68b8d32ea0" />  
-                <layer id="bornes_eu_vn" name="Points eau usées" visible="false" tiled="false" namespace="rb"
+                <layer id="borne_eu_vn" name="Points eau usées" visible="false" tiled="false" namespace="rb"
 					queryable="true"
                     infoformat="text/html" featurecount="20"
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -208,7 +208,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					attribution="Région Bretagne" 
 					metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=774a2065-339f-4802-a50f-4b84b6ca249f"
 					metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=774a2065-339f-4802-a50f-4b84b6ca249f" />  
-                <layer id="ports_vn" name="Ports et mouillages " visible="false" tiled="false" namespace="rb"
+                <layer id="port_vn" name="Ports et mouillages " visible="false" tiled="false" namespace="rb"
 					queryable="true" 
                     infoformat="text/html" featurecount="20"
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -250,7 +250,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					metadata="" />
         </theme> 
         <theme name="Infrastructures Hydrauliques"  collapsed="true" id="hydraulique"> 
-                <layer id="ouvrage_hydraulique_secondaire" name="Ouvrages hydrauliques secondaires" visible="false" tiled="false" namespace="rb"
+                <layer id="ouvrage_hydraulique_secondaire_vn" name="Ouvrages hydrauliques secondaires" visible="false" tiled="false" namespace="rb"
 					queryable="true" 
                     infoformat="text/html" featurecount="20"
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -258,7 +258,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					attribution="Région Bretagne" 
 					metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=5b22269e-d6bd-4f25-8583-12697db4475f"
 					metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=5b22269e-d6bd-4f25-8583-12697db4475f" />  
-                <layer id="ouvrages_conduites_vn" name="Ouvrages conduites" visible="false" tiled="false" namespace="rb"
+                <layer id="ouvrage_conduite_vn" name="Ouvrages conduites" visible="false" tiled="false" namespace="rb"
 					queryable="true"
                     infoformat="text/html" featurecount="20"
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -274,7 +274,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					attribution="Région Bretagne" 
 					metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=f1d5b549-64cb-4ccc-9281-5b56b97c7183"
 					metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=f1d5b549-64cb-4ccc-9281-5b56b97c7183" />  
-                <layer id="rigoles_vn" name="Rigoles" visible="false" tiled="false" namespace="rb"
+                <layer id="rigole_vn" name="Rigoles" visible="false" tiled="false" namespace="rb"
 					queryable="true"
                     infoformat="text/html" featurecount="20"
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -298,7 +298,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					attribution="Région Bretagne" 
 					metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=7cab44b0-4639-43f2-a824-3eecb7d3bf66"
 					metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=7cab44b0-4639-43f2-a824-3eecb7d3bf66" /> 
-                <layer id="etangs_vn" name="Etangs" visible="false" tiled="false" namespace="rb"
+                <layer id="etang_vn" name="Etangs" visible="false" tiled="false" namespace="rb"
 					queryable="true"
                     infoformat="text/html" featurecount="20"
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -326,7 +326,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					attribution="Région Bretagne" 
 					metadata-csw=""
 					metadata="" />
-                <layer id="parcelles_dpf" name="Parcelles cadastrées du DPF" visible="false" tiled="false" namespace="interne"
+                <layer id="parcelle_dpf" name="Parcelles cadastrées du DPF" visible="false" tiled="false" namespace="interne"
 					queryable="true"
                     infoformat="text/html" featurecount="20"
 					url="http://ows.region-bretagne.fr/geoserver/interne/wms" 
@@ -334,7 +334,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					attribution="Région Bretagne" 
 					metadata-csw=""
 					metadata="" />                      
-                <layer id="limites_dpf" name="DPF" visible="false" tiled="false" namespace="interne"
+                <layer id="limite_dpf" name="DPF" visible="false" tiled="false" namespace="interne"
 					queryable="true"
                     infoformat="text/html" featurecount="20"
 					url="http://ows.region-bretagne.fr/geoserver/interne/wms" 
