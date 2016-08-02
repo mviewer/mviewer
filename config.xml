@@ -184,7 +184,6 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 
              <layer id="voie_navigable" name="Voie navigable" visible="false" tiled="false" namespace="rb"
 					queryable="true"
-                    searchable="true"
                     infoformat="text/html" featurecount="20"
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 					style="" 
@@ -239,7 +238,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
         </theme>        
         <theme name="Espaces naturels"  collapsed="true" id="nature"> 
             <layer id="reserve_naturelle_regionale" name="Réserve Naturelle Régionale" visible="false" tiled="false" namespace="rb"
-				queryable="true" fields="rnr_nom,image,url" aliases="Nom,photo,Détails"
+				queryable="true" fields="nom,image,site_web" aliases="Nom,photo,Détails"
                 searchable="true"
                 opacity="1" 
                 infoformat="application/vnd.ogc.gml" featurecount="20"
