@@ -284,15 +284,24 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata=""
 				metadata-csw="" />
         </theme>
-	<theme name="Edifices protégés MH"  collapsed="true" id="mh">  
+	<theme name="Edifices protégés MH"  collapsed="true" id="mh"> 
+            <layer id="site" name="Carte archéologique" visible="false" tiled="false"
+				queryable="true" fields="SITE" aliases="Site"
+                infoformat="text/html" featurecount="5"             
+				style=""
+				url="http://geobretagne.fr/geoserver/drac/wms?" 
+				attribution="DRAC" 
+				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=cd3bc8a0-a3b0-4c0e-bcc4-df7fbb8c213b" 
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=cd3bc8a0-a3b0-4c0e-bcc4-df7fbb8c213b" />
             <layer id="bretagne_immeuble_mh" name="Immeubles MH" visible="false" tiled="false"
 				queryable="true" fields="SITE" aliases="Site"
                 infoformat="text/html" featurecount="5"             
 				style=""
 				url="http://geobretagne.fr/geoserver/drac/wms?" 
 				attribution="DRAC" 
-				metadata="" 
-				metadata-csw="" />	
+				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=de78afa5839169ff11e427d411c4f28b25460619" 
+				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=de78afa5839169ff11e427d411c4f28b25460619" />
+
     </theme>
 	<theme name="Limites administratives"  collapsed="true" id="territoire">  
         <layer id="FDepartement" name="Département" visible="false" tiled="false"

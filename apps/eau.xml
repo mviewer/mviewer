@@ -100,7 +100,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=e16d50d4-746d-44e3-a5e7-5fc000f97665" />
         </theme>
         <theme name="Eau"  id="eau" collapsed="false">
-               <layer id="riviere_me_proche" name="Masse d'eau proche bon état" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="interne"
+               <layer id="riviere_masse_eau_proche" name="Masse d'eau proche bon état" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="interne"
 					queryable="true" fields="nom" aliases="nom"
                     infoformat="text/html" featurecount="5"
 					url="http://ows.region-bretagne.fr/geoserver/interne/wms" 
@@ -132,7 +132,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					attribution="Région Bretagne" 
 					metadata-csw=""
 					metadata="" />
-                <layer id="bv_2016" name="Bassins versants bretons (2016)" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="interne"
+                <layer id="bassin_versant_2016" name="Bassins versants bretons (2016)" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="interne"
 					queryable="true" fields="nom" aliases="nom"
                     infoformat="text/html" featurecount="5"
 					url="http://ows.region-bretagne.fr/geoserver/interne/wms" 
@@ -148,7 +148,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Région Bretagne" 
 				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=f13ca5d3-56a2-4b8d-9ea0-fefd436b9549" 
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=f13ca5d3-56a2-4b8d-9ea0-fefd436b9549" />
-                <layer id="sage_informations" name="Avancement SAGE au 01/01/2016" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="interne"
+                <layer id="sage_information" name="Avancement SAGE au 01/01/2016" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="interne"
 					queryable="true" fields="nom" aliases="nom"
                     infoformat="text/html" featurecount="5"
 					url="http://ows.region-bretagne.fr/geoserver/interne/wms" 
