@@ -115,6 +115,7 @@ a#searchparams {
 
 .mv-layer-details img {
   max-width: 250px;
+  max-height: 250px;
   padding: 10px 30px 10px 10px;
 }
 
@@ -345,7 +346,7 @@ p.bjqs-caption{
 }
 
 img.mv-logo {
-  max-height: 40px;  
+  max-height: 35px;  
   padding-top: 0px;
   margin-top: -7px;
 }
@@ -501,7 +502,7 @@ ul#layers-container {
 }
 
 #right-panel .carousel-inner {
-      padding-left: 0px;
+      padding-left: 8px;
       padding-right: 25px;
 }
  
@@ -541,7 +542,7 @@ li.mv-nav-item span {
 }
 
 .layerdisplay-title span {
-  padding-right: 10px;
+  padding-right: 5px;
 }
 
 #share img {  
@@ -731,11 +732,11 @@ li[role="presentation"] {
 .nav-tabs li a {
   margin-right: 0;
   border: 0;
-  background-color: #c0392b;
+  background-color: #032e46;
   border-radius: 0;
 }
 .nav-tabs li a:hover {
-  background-color: #e74c3c;
+  background-color:#032e46;
 }
 .nav-tabs .glyphicon {
   color: #fff;
@@ -755,7 +756,7 @@ li[role="presentation"] {
   display: none;
   background-color: #fff;
   /*padding: 1.6rem;*/
-  padding-top: 10px;
+ /* padding-top: 10px;*/
   /*overflow-y: auto;*/
   overflow-y: hidden;
 }
@@ -768,13 +769,14 @@ li[role="presentation"] {
 
 #right-panel .mv-header {
   padding-top: 50px;  
-  background-color: rgb(192, 57, 43);
+  background-color: #032e46;
   color: #fff;  
 }
 #right-panel .mv-header h5 {
   text-align: center;
   line-height: 2em;
   margin-bottom: 0;
+  font-family: spotka-alternatemedium;
 }
 
 .tab-pane {
@@ -783,9 +785,11 @@ li[role="presentation"] {
     
 }
 
+/*
 .tab-pane li.item {
   width: 272px;
 }
+*/
 
 div.tooltip {
     max-width: 190px;    
@@ -800,4 +804,270 @@ div.tooltip-inner { width:200px; max-width: 200px; margin-left: -20px; padding-l
   margin-top: -5px;
   border-width: 5px 0 5px 5px;
   border-left-color: #fff;
+}
+
+/* Modification CSS Agath*/
+
+/* Import des fonts*/
+@font-face {
+			font-family: 'spotka-alternatemedium';
+			src: url('font/spotka-alternatemedium.ttf') format('truetype');
+			}
+@font-face {
+			font-family: 'spotka-alternatebold';
+			src: url('font/spotka-alternatebold.ttf') format('truetype');
+			}
+
+/* Style fenêtre de configuration*/
+
+h3.title{
+	font-family: 'spotka-alternatebold';
+	font-size: 24px;
+	color:#032e46;
+	}
+	
+h4.title{
+			font-family: 'spotka-alternatebold';
+			font-size: 16px;
+			color:#032e46;
+			}
+				
+p.info{
+	font-family:'Open Sans'!important;
+	}
+
+.info{
+	font-family:'Open Sans'!important;
+	}	
+
+#block_crit{
+		display: block;
+		box-sizing: content-box;
+		width: 130px;
+		height: 30px;
+		opacity: 1;
+		margin: 0;
+		border-radius: 4px;
+		color: rgba(255,255,255,1);
+		background: #032e46;
+	}
+#ind_freq_an{
+				display: block;
+				box-sizing: content-box;
+				width: 130px;
+				height: 30px;
+				opacity: 1;
+				margin: 0;
+				border-radius: 4px;
+				border: solid 2px #16a085;
+				color: #16a085;
+				background: #ffffff;
+			}
+#ind_freq_mois{
+				display: block;
+				box-sizing: content-box;
+				width: 130px;
+				height: 30px;
+				opacity: 1;
+				margin: 0;
+				border-radius: 4px;
+				border: solid 2px #1dd2af;
+				color: #1dd2af;
+				background: #ffffff;
+			}
+#ind_valid_an{
+				display: block;
+				box-sizing: content-box;
+				width: 130px;
+				height: 30px;
+				opacity: 1;
+				margin: 0;
+				border-radius: 4px;
+				border: solid 2px #f4c300;
+				color: #f4c300;
+				background: #ffffff;
+			}
+
+#ind_valid_trim{
+				display: block;
+				box-sizing: content-box;
+				width: 130px;
+				height: 30px;
+				opacity: 1;
+				margin: 0;
+				border-radius: 4px;
+				border: solid 2px #f4d03f;
+				color: #f4d03f;
+				background: #ffffff;
+			}
+
+#ind_cir_an{
+				display: block;
+				box-sizing: content-box;
+				width: 130px;
+				height: 30px;
+				opacity: 1;
+				margin: 0;
+				border-radius: 4px;
+				border: solid 2px #e74c3c;
+				color: #e74c3c;
+				background: #ffffff;
+			}			
+			
+p.text{
+		font-family: 'Open Sans';
+		font-size:12px;
+		padding-top: 5px;
+		padding-left: 7px;
+	}
+
+.indicateur {
+			font-family: 'spotkabold';
+			font-size: 38px;
+			text-transform: uppercase;
+			letter-spacing: -0.2pt;
+			color:#032e46;
+			}
+
+	
+	
+/* Modification de l'interface bootstrap*/
+
+/* Barre du haut*/
+.navbar-default{
+	border-color:#032e46;
+}
+.navbar-default .navbar-collapse, .navbar-default .navbar-form{
+	border-color:#032e46;
+	background-color: #032e46;
+}
+	
+a.navbar-brand{
+	color:#ffffff !important;
+	font-family: 'spotka-alternatebold';
+	font-size: 20px;	
+}
+
+.navbar-default .navbar-toggle{
+	border-color: #ffffff;
+}
+	
+.glyphicon-th-large:before{
+	color:#ffffff;
+}
+
+.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover{
+	background-color:#2e5367;
+}
+
+/* Barre gauche*/
+
+#sidebar-wrapper{
+	font-family:'Open Sans';
+	letter-spacing:-0.2pt;
+}
+
+.sidebar-nav li a:hover{
+	border-left:#032e46 0px solid;
+	background:#032e46;
+	color: #f8f8f8;
+}
+
+.nav-pills li a{
+	border-radius:0px;
+}
+
+/*Barre du bas*/
+ul.carousel-inner{
+	padding-left:10px;
+}
+
+/*.iframe_bas{
+	margin-top:-17px;
+}*/
+
+/* MAP */
+
+/* Configuration de la légende*/ 
+#layers-container a {
+	color: #032e46;
+	font-family: Open Sans;
+	font-weight: bold;
+	padding-right:10px;
+}
+
+.form-group label {
+	font-family: Open Sans;
+}
+
+#mv-layer-options a{
+	font-weight:normal;
+}
+.form-control{
+	font-family: Open Sans; 
+	font-size: inherit;
+}
+
+/* Configuration fenêtre de fond de carte */ 
+#backgroundlayerstoolbar{
+	background:#f8f8f8;
+	border-radius:4px ;
+	right:15px;
+	padding-top:3px;
+}
+
+#backgroundlayerstoolbar .btn-default{
+	color: #999;
+	background-color:#f8f8f8;
+	border-color:#f8f8f8;
+	height:84px;
+}
+
+#backgroundlayerstoolbar .btn-default:focus{
+	color: #999;
+	background-color:#f8f8f8;
+	border-color:#f8f8f8;
+	height:84px;
+}
+
+#backgroundlayerstoolbar .btn-default.btn-xs{
+	color: #999;
+	background-color:#f8f8f8;
+	border-color:#f8f8f8;
+	height:84px;
+}
+
+#backgroundlayerstoolbar ul li {
+	width: 80px;
+	height: 55px;
+	border: 2px solid #f8f8f8;
+	border-radius:7px;
+	margin:2px;
+}
+
+ul#basemapslist {
+	margin-bottom: 3px;
+	margin-right: 3px;
+}
+ul#basemapslist p {
+	margin-left: -6px;
+	margin-right: -6px;
+	font-family: Open Sans;
+	font-size: 9px;
+	line-height:1.3;
+	color:#333;
+	opacity:1;
+	background-color:rgba(255,255,255,0);
+	padding-top:53px;
+}
+
+ul#basemapslist  li.active{
+	border:2px #f5f5f5 outset;
+}
+
+/* Echelle*/ 
+.ol-scale-line-inner{
+	color: #777;
+    border-color: #777;
+    font-family: Open Sans;
 }
