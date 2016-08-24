@@ -29,7 +29,8 @@ html {
     color: #333333;
     background-color: rgba(255,255,255,0.7);
     border-top-left-radius: 4px;
-    right: 15em;
+    right: auto;
+    margin-left: 150px;
 }
 
 .ol-attribution a {
@@ -48,14 +49,14 @@ html {
 
 .ol-control button {
   color: #fff;
-  /*background-color: #333;*/
+  background-color: #032e46;
   height: 30px;
   width: 30px;
 }
 
 .ol-control button:focus, .ol-control button:hover {
   text-decoration: none;
-  /*background-color: #333;  */
+  background-color: #032e46;
 }
 
 /* search tollbar */
@@ -370,16 +371,16 @@ ul#basemapslist  li{
     cursor: pointer;
     height: 75px;
     width: 100px;
-    -webkit-transition: -webkit-transform .5s,bottom .5s,width .5s; */
+    -webkit-transition: -webkit-transform .5s,bottom .5s,width .5s; 
   -moz-transition: -moz-transform .5s,bottom .5s,width .5s;
   -o-transition: -o-transform .5s,bottom .5s,width .5s;
   transition: transform .5s,bottom .5s,width .5s;
 }
 
 ul#basemapslist  li:hover{   
-    -webkit-transform: translate3d(25px,0,0);
+    /*-webkit-transform: translate3d(25px,0,0);
     transform: translate3d(25px,0,0);
-    -ms-transform: translateX(25px);
+    -ms-transform: translateX(25px);*/
 }
 
 ul#basemapslist  li.active{
@@ -391,6 +392,12 @@ ul#basemapslist  li.active{
 div#backgroundlayerstoolbar {
   display: inline-flex;
 }
+
+.bglt-btn.mini .fa {  
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);  
+}
+
 
 #layers-container-box {
     position: fixed;
@@ -1016,7 +1023,7 @@ ul.carousel-inner{
 	padding-top:3px;
 }
 
-#backgroundlayerstoolbar .btn-default{
+/*#backgroundlayerstoolbar .btn-default{
 	color: #999;
 	background-color:#f8f8f8;
 	border-color:#f8f8f8;
@@ -1035,6 +1042,12 @@ ul.carousel-inner{
 	background-color:#f8f8f8;
 	border-color:#f8f8f8;
 	height:84px;
+}*/
+
+.bglt-btn {
+  width: 26px;
+  text-align: center;
+  line-height: 84px;
 }
 
 #backgroundlayerstoolbar ul li {
@@ -1043,6 +1056,7 @@ ul.carousel-inner{
 	border: 2px solid #f8f8f8;
 	border-radius:7px;
 	margin:2px;
+    background-size: 80px;
 }
 
 ul#basemapslist {
@@ -1062,7 +1076,8 @@ ul#basemapslist p {
 }
 
 ul#basemapslist  li.active{
-	border:2px #f5f5f5 outset;
+	/*border:2px #f5f5f5 outset;*/
+    border:2px #032e46 outset;    
 }
 
 /* Echelle*/ 
@@ -1071,3 +1086,4 @@ ul#basemapslist  li.active{
     border-color: #777;
     font-family: Open Sans;
 }
+
