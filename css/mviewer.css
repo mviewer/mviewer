@@ -404,7 +404,7 @@ div#backgroundlayerstoolbar {
     overflow-y: auto;
     max-height: 100%;
     padding-top: 60px;
-    padding-left: 3px;
+    padding-left: 7px;
     max-width: 300px; 
     /*padding-bottom: 40px;*/
      -webkit-transition: all 0.5s ease;
@@ -437,6 +437,13 @@ ul#layers-container {
   /* border-top: 1px dashed #333; */
 }
 
+
+#bottom-panel.toggled {
+    -webkit-transform: translate3d(200px,0,0);
+    transform: translate3d(200px,0,0);
+    -ms-transform: translateX(200px);  
+}
+
 #bottom-panel {
     bottom: 0px;
     opacity: 0; 
@@ -444,10 +451,13 @@ ul#layers-container {
     width: 100%;
     background: #fff;
     position: fixed;
+    z-index: 2;
     -webkit-transition: all 0.5s ease;
    -moz-transition: all 0.5s ease;
    transition: all 0.5s ease;
 }
+
+
 
 #bottom-panel.active {
     height: 350px;
@@ -455,7 +465,7 @@ ul#layers-container {
 }
 
 #bottom-panel .mv-header {
-  padding-left: 250px;
+  /*padding-left: 250px;*/
 }
 
 #bottom-panel .close {
@@ -469,6 +479,7 @@ ul#layers-container {
     width: 0px;
     background: #fff;
     position: fixed;
+    z-index: 3;
     -webkit-transition: all 0.5s ease;
    -moz-transition: all 0.5s ease;
    transition: all 0.5s ease;
@@ -508,14 +519,52 @@ ul#layers-container {
   height: 100%;
 }
 
+.tab-pane {
+    margin-left: 20px;
+}
+
+#right-panel .item.active {
+    /*min-width : 200px;*/
+   overflow-y: auto;
+}
+
+#right-panel .item.active img {
+    max-width: 280px!important;
+}
+
 #right-panel .carousel-inner {
       padding-left: 8px;
       padding-right: 25px;
+      width: 280px;
+}
+
+/* CSS Fiche info GML */
+
+.gml-item-title {
+    padding-bottom: 6px;
+    padding-top: 15px;
+    font-family: spotka-alternatebold;
+	color:#032e46;
+    font-size: 24px;
+}
+
+.gml-item-field-name {
+    float: left;
+    padding-right: 10px;
+    font-weight: bold;
+	font-family: Open Sans 
+}
+
+.gml-item-field-name::after {
+    content: " : ";
+}
+
+.gml-item-field-value{
+	font-family: Open Sans 
 }
  
-#bottom-panel .popup-content {  
-  padding-left: 250px;
-}
+/*#bottom-panel .popup-content {  */
+
 
 #backgroundlayerstoolbar {
 	bottom: .7em;
@@ -577,7 +626,7 @@ li.mv-nav-item span {
 
 /* Measure control css */
 
-.tooltip {
+.tooltip2 {
   position: relative;
   background: rgba(0, 0, 0, 1);
   border-radius: 4px;
@@ -739,21 +788,24 @@ li[role="presentation"] {
 .nav-tabs li a {
   margin-right: 0;
   border: 0;
-  background-color: #032e46;
+  /*background-color: #fff;*/
   border-radius: 0;
 }
 .nav-tabs li a:hover {
-  background-color:#032e46;
+  /*background-color: #032e46;  */
 }
 .nav-tabs .glyphicon {
-  color: #fff;
-}
-.nav-tabs .active .glyphicon {
   color: #333;
+}
+
+
+.nav-tabs .active .glyphicon {
+  color: #fff;  
 }
 
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
   border: 0;
+  background-color:#032e46;
 }
 
 .tab-content {
@@ -792,26 +844,8 @@ li[role="presentation"] {
     
 }
 
-/*
-.tab-pane li.item {
-  width: 272px;
-}
-*/
-
-div.tooltip {
-    max-width: 190px;    
-}
 
 
-div.tooltip-inner { width:200px; max-width: 200px; margin-left: -20px; padding-left:10px;}
-
-.tooltip.left .tooltip-arrow {
-  top: 50%;
-  right: 0;
-  margin-top: -5px;
-  border-width: 5px 0 5px 5px;
-  border-left-color: #fff;
-}
 
 /* Modification CSS Agath*/
 
@@ -948,6 +982,10 @@ p.text{
 	border-color:#032e46;
 	background-color: #032e46;
 }
+
+.navbar-header.fixed-brand{
+	background-color: #032e46;
+}
 	
 a.navbar-brand{
 	color:#ffffff !important;
@@ -969,9 +1007,10 @@ a.navbar-brand{
 
 /* Barre gauche*/
 
-#sidebar-wrapper{
+#sidebar-wrapper a{
 	font-family:'Open Sans';
 	letter-spacing:-0.2pt;
+	/*font-weight:bold;*/
 }
 
 .sidebar-nav li a:hover{
@@ -984,14 +1023,49 @@ a.navbar-brand{
 	border-radius:0px;
 }
 
+li.level-2{
+	text-indent:9px;
+}
+
+
+
+li.mv-nav-item {
+	line-height: 35px;
+	font-size:12px;
+}
+
+.level-2 .mv-nav-item a{
+	margin-left:-40px;
+	text-indent: 21px;
+	
+}
+
+ul#menu {
+	font-weight: bold;
+}
+
+ul.nav-pills.nav-stacked{
+	font-weight: normal;
+}
+
 /*Barre du bas*/
 ul.carousel-inner{
 	padding-left:10px;
 }
 
-/*.iframe_bas{
-	margin-top:-17px;
-}*/
+.iframe_bas{
+	margin-top:-14px;
+}
+
+.mv-header{
+	font-family:spotka-alternatemedium;
+	color: #032e46;
+	padding-left:10px;
+}
+
+.fa-chevron-circle-down{
+	color:#032e46;
+}
 
 /* MAP */
 
@@ -1007,12 +1081,60 @@ ul.carousel-inner{
 	font-family: Open Sans;
 }
 
-#mv-layer-options a{
+#layers-container .mv-layer-options a{
 	font-weight:normal;
+	font-style: italic;
+	color: #999999;
 }
+
+#layers-container .mv-layer-options p {
+	font-family: Open Sans; 
+	margin: 0 0 5px;
+}
+
 .form-control{
 	font-family: Open Sans; 
 	font-size: inherit;
+}
+
+.form-group.form-group-analyses{
+	margin-top:11px;	
+}
+
+.form-group.form-group-opacity{
+	margin-bottom:10px;
+}
+
+/* Style curseur slider */
+.mv-layer-options  .slider-selection{
+	background:#032e46;	
+}
+
+.mv-layer-options .slider-handle {
+    background: #032e46;
+	width: 15px;
+	height: 15px;
+}
+
+.mv-layer-options .slider.slider-horizontal .slider-track {
+  height: 5px;
+}
+
+.mv-layer-options  .slider-track-high{
+	background:#ddd;	
+}
+
+.mv-layer-options  .slider.slider-horizontal{
+	width: 240px;
+}
+
+.mv-layer-options .tooltip-inner{
+	background-color:#032e46;
+	border-radius: 4px;
+	font-family: Open Sans;
+}
+.mv-layer-options .tooltip.top .tooltip-arrow{
+	border-top-color:#032e46;
 }
 
 /* Configuration fenêtre de fond de carte */ 
@@ -1021,6 +1143,7 @@ ul.carousel-inner{
 	border-radius:4px ;
 	right:15px;
 	padding-top:3px;
+    z-index: 1;
 }
 
 /*#backgroundlayerstoolbar .btn-default{
@@ -1049,6 +1172,24 @@ ul.carousel-inner{
   text-align: center;
   line-height: 84px;
 }
+
+#bottom-panel-btn {
+  margin-top: -24px;
+  text-align: center;  
+}
+
+#bottom-panel-btn .fa-chevron-circle-down {    
+    width: 60px;
+    text-align: center;
+    line-height: 1.6em;
+    background: #fff;    
+    border-radius: 0.4em 0.4em 0 0;
+    font-size: 15px;
+    }
+    
+#bottom-panel-btn .fa-chevron-circle-down:hover {        
+    background: #f8f8f8;
+    }
 
 #backgroundlayerstoolbar ul li {
 	width: 80px;
