@@ -56,7 +56,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
     </widgets> 
      <themes>
         <theme name="Etudes topographiques"  collapsed="true" id="etudes">         
-			<layer id="etude_patrimoine" name="Architecture" visible="true" tiled="true" namespace="tmp"
+			<layer id="etude_patrimoine" name="Architecture" visible="true" tiled="true"
 				queryable="true" searchable="true"
                 infoformat="text/html" featurecount="50"
 				style="patrimoine_etudes_geometry_ia"  legendurl="http://kartenn.region-bretagne.fr/img/legend/etudes_architecture.png"
@@ -64,7 +64,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://applications.region-bretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/1b3c63dd-e39e-48f5-ba87-882e09bb084a"
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=1b3c63dd-e39e-48f5-ba87-882e09bb084a" />
-			<layer id="etude_patrimoine_im" name="Objets mobiliers" visible="false" tiled="true" namespace="tmp"
+			<layer id="etude_patrimoine_im" name="Objets mobiliers" visible="false" tiled="true"
 				queryable="true" searchable="true"
                 infoformat="text/html" featurecount="50"
 				style="patrimoine_etudes_centroide_im" legendurl="http://kartenn.region-bretagne.fr/img/legend/etudes_objets.png"
@@ -74,7 +74,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=5a6257ee-3fd8-41f2-bb63-55374e7a899a" />
         </theme>
         <theme name="Recensement avant études"  collapsed="true" id="recensement"> 
-            <layer id="recensement_patrimoine" name="Recensement avant études" visible="false" tiled="true" namespace="rb" 
+            <layer id="recensement_patrimoine" name="Recensement avant études" visible="false" tiled="true" 
 				searchable="true" queryable="true" 
 				infoformat="text/html" featurecount="20"
                 style="recensement_point_centroide"  legendurl="http://kartenn.region-bretagne.fr/img/legend/recensement.png"
@@ -84,7 +84,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=0cf6de5d-9746-44d8-b003-a2dae2e7e585" /> 
         </theme>
        <theme name="Dossiers 'papier' avant 2000"  collapsed="true" id="papier"> 
-            <layer id="inventaire_papiers" name="Dossiers 'papiers' avant 2000" visible="true" tiled="false" namespace="rb"
+            <layer id="inventaire_papiers" name="Dossiers 'papiers' avant 2000" visible="true" tiled="false"
 				queryable="true" fields="nom" aliases="Nom" 
                 infoformat="text/html" featurecount="20" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
@@ -94,7 +94,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=e2588666-6b16-4d5a-bca2-5e927bc0a922" /> 
         </theme>
         <theme name="Architecture civile"  collapsed="true" id="archi_civile"> 
-			<layer id="etude_patrimoine_simple" name="Châteaux du 19ème siècle" visible="false" tiled="false" namespace="tmp"
+			<layer id="etude_patrimoine_simple" name="Châteaux du 19ème siècle" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/chateaux_19e.png"
 				style="patrimoine_thematique_chateaux_19e_centroide" 
@@ -102,7 +102,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://patrimoine.bzh/gertrude-diffusion/dossier/1ca99a3b-810d-40d4-9df4-c2fbd81fdaaf"
 				metadata-csw="" />
-			<layer id="etude_patrimoine_simple" name="Patrimoine des sports" visible="false" tiled="false" namespace="tmp"
+			<layer id="etude_patrimoine_simple" name="Patrimoine des sports" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/pat_sports.png"
 				style="	patrimoine_thematique_sports_centroide" 
@@ -114,7 +114,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
         </theme>
 
         <theme name="Patrimoine religieux"  collapsed="true" id="archi_religieux"> 
-			<layer id="etude_patrimoine_simple" name="Architecture gothique" visible="false" tiled="false" namespace="tmp"
+			<layer id="etude_patrimoine_simple" name="Architecture gothique" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/architecture_gothique.png"
 				style="	patrimoine_thematique_architecture_gothique_centroide" 
@@ -122,7 +122,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata=""
 				metadata-csw="" />
-			<layer id="etude_patrimoine_simple" name="Eglises et chapelles du Finistère" visible="false" tiled="false" namespace="tmp"
+			<layer id="etude_patrimoine_simple" name="Eglises et chapelles du Finistère" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/eglises_chapelles_29.png"
 				style="patrimoine_thematique_architecture_edifice_religieux_29_centroide" 
@@ -130,7 +130,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/les-edifices-religieux-publics-dans-le-finistere-1801-1905-inventaire-et-diagnostic/ba840d05-71a9-4625-bec2-69ccd10a47fc"
 				metadata-csw="" />
-			<layer id="etude_patrimoine_simple" name="Eglises et chapelles Ille-et-V." visible="false" tiled="false" namespace="tmp"
+			<layer id="etude_patrimoine_simple" name="Eglises et chapelles Ille-et-V." visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/eglises_chapelles_35.png"
 				style="patrimoine_thematique_architecture_eglises_chapelles_35_centroide" 
@@ -138,7 +138,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/les-eglises-et-chapelles-d-ille-et-vilaine/51825d3e-8c07-4d31-8593-82ea64639dd5"
 				metadata-csw="" />
-			<layer id="etude_patrimoine_simple" name="Eglises romanes" visible="false" tiled="false" namespace="tmp"
+			<layer id="etude_patrimoine_simple" name="Eglises romanes" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/eglises_romanes.png"
 				style="patrimoine_thematique_architecture_eglises_romanes_centroide" 
@@ -146,7 +146,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/les-eglises-romanes-de-bretagne/db3ef42b-baf7-48e7-93a8-f8f3e89dbb12"
 				metadata-csw="" />
-			<layer id="etude_patrimoine_simple" name="Orfèvrerie religieuse Hte-Bretagne" visible="false" tiled="false" namespace="tmp"
+			<layer id="etude_patrimoine_simple" name="Orfèvrerie religieuse Hte-Bretagne" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/orfevrerie.png"
 				style="	patrimoine_thematique_orfevrerie_centroide" 
@@ -154,7 +154,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/l-orfevrerie-religieuse-en-haute-bretagne/90105141-8c25-4b9b-be40-f12b9ff3d308"
 				metadata-csw="" />
-			<layer id="etude_patrimoine_simple" name="Stalles médiévales" visible="false" tiled="false" namespace="tmp"
+			<layer id="etude_patrimoine_simple" name="Stalles médiévales" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/stalles.png"
 				style="	patrimoine_thematique_stalles_centroide" 
@@ -162,7 +162,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/les-stalles-en-bretagne/f2596507-5a6b-4360-b0eb-69eb100ab7a2"
 				metadata-csw="" />
-		     <layer id="etude_croix_calvaire" name="Croix et calvaires (études)" visible="false" tiled="false" namespace="rb" 
+		     <layer id="etude_croix_calvaire" name="Croix et calvaires (études)" visible="false" tiled="false" 
 				queryable="true"
                 searchable="true" legendurl="http://kartenn.region-bretagne.fr/img/legend/croix_et_calvaires_etudes.png"
 				infoformat="text/html" featurecount="20"
@@ -171,7 +171,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata-csw=""
 				metadata="" /> 
-		     <layer id="recensement_croix_calvaire" name="Croix et calvaires (recensement)" visible="false" tiled="false" namespace="rb" 
+		     <layer id="recensement_croix_calvaire" name="Croix et calvaires (recensement)" visible="false" tiled="false" 
 				queryable="true"
                 searchable="true" legendurl="http://kartenn.region-bretagne.fr/img/legend/croix_et_calvaires_recensement.png"
 				infoformat="text/html" featurecount="20"
@@ -180,7 +180,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata-csw=""
 				metadata="" /> 
-		     <layer id="croix_calvaire" name="Croix et calvaires (association)" visible="false" tiled="false" namespace="rb" 
+		     <layer id="croix_calvaire" name="Croix et calvaires (association)" visible="false" tiled="false" 
 				queryable="true"
                 searchable="true" legendurl="http://kartenn.region-bretagne.fr/img/legend/croix_et_calvaires_association.png"
 				infoformat="text/html" featurecount="20"
@@ -192,7 +192,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
         </theme>
 
         <theme name="Patrimoine maritime et fluvial"  collapsed="true" id="archi_pat_ma_flu"> 
-        	<layer id="thematique_patrimoine" name="Canal de Nantes à Brest" visible="false" tiled="false" namespace="tmp"
+        	<layer id="thematique_patrimoine" name="Canal de Nantes à Brest" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/canal_nantes_brest.png"
 				style="patrimoine_thematique_canal" 
@@ -200,7 +200,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/presentation-du-canal-de-nantes-a-brest/006678aa-7848-4c14-a633-a59828e97ab3"
 				metadata-csw="" />
-			<layer id="thematique_patrimoine" name="Fortifications littorales" visible="false" tiled="false" namespace="tmp"
+			<layer id="thematique_patrimoine" name="Fortifications littorales" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/fortifications.png"
 				style="patrimoine_thematique_fortification_littorale" 
@@ -208,7 +208,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/presentation-du-canal-de-nantes-a-brest/006678aa-7848-4c14-a633-a59828e97ab3"
 				metadata-csw="" />
-			<layer id="etude_patrimoine_simple" name="Moulins à marée" visible="false" tiled="false" namespace="tmp"
+			<layer id="etude_patrimoine_simple" name="Moulins à marée" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/moulins_a_maree.png"
 				style="	patrimoine_thematique_moulins_a_maree_centroide" 
@@ -216,7 +216,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/les-moulins-a-maree-de-bretagne/19934f6b-e5d4-42a0-ba6d-ec8b00638295"
 				metadata-csw="" />
-			<layer id="etude_patrimoine_simple" name="Moulins à papier et papeteries" visible="false" tiled="false" namespace="tmp"
+			<layer id="etude_patrimoine_simple" name="Moulins à papier et papeteries" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/moulins_a_papier.png"
 				style="	patrimoine_thematique_moulins_papier_centroide" 
@@ -224,7 +224,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/les-moulins-a-papier-et-papeteries-industrielles-de-bretagne/b3b9ecf6-0e9c-404f-9263-76070b66f7d6"
 				metadata-csw="" />
-        	<layer id="etude_patrimoine_simple" name="Patrimoine balnéaire" visible="false" tiled="false" namespace="tmp"
+        	<layer id="etude_patrimoine_simple" name="Patrimoine balnéaire" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/pat_balneaire.png"
 				style="patrimoine_thematique_balneaire_centroide" 
@@ -232,7 +232,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/presentation-du-patrimoine-balneaire-de-la-cote-d-emeraude/2c354096-cee7-4263-9786-02e479f578ce"
 				metadata-csw="" />
-			<layer id="etude_patrimoine_simple" name="Patrimoine maritime culturel" visible="false" tiled="false" namespace="tmp"
+			<layer id="etude_patrimoine_simple" name="Patrimoine maritime culturel" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/pat_maritime.png"
 				style="	patrimoine_thematique_architecture_patrimoine_maritime_centroide" 
@@ -243,7 +243,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
         </theme>
 
         <theme name="Techniques et savoir-faire"  collapsed="true" id="archi_tech"> 
-			<layer id="etude_patrimoine_simple" name="Ardoisières du Centre Bretagne" visible="false" tiled="false" namespace="tmp"
+			<layer id="etude_patrimoine_simple" name="Ardoisières du Centre Bretagne" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/ardoisieres.png"
 				style="patrimoine_thematique_ardoise_centroide" 
@@ -251,7 +251,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/ardoisieres-du-centre-bretagne/b256a66e-8d9b-4501-9597-afceef31d24b"
 				metadata-csw="" />
-			<layer id="etude_patrimoine_simple" name="Charpentes armoricaines Ille-et-V." visible="false" tiled="false" namespace="tmp"
+			<layer id="etude_patrimoine_simple" name="Charpentes armoricaines Ille-et-V." visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/charpentes_armoricaines.png"
 				style="patrimoine_thematique_charpente_armoricaine_35_centroide" 
@@ -259,7 +259,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : geRégion Bretagne" 
 				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/les-charpentes-armoricaines-en-ille-et-vilaine/d4073292-07f9-4fce-b4c5-79bdadc6586d"
 				metadata-csw="" />
-			<layer id="thematique_patrimoine" name="Coiffes en filet brodé" visible="false" tiled="false" namespace="tmp"
+			<layer id="thematique_patrimoine" name="Coiffes en filet brodé" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/coiffes.png"
 				style="	patrimoine_thematique_coiffes" 
@@ -267,7 +267,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/les-coiffes-en-filet-brode-de-bretagne/885719be-4e27-4ec2-be2b-9642ab145bb4"
 				metadata-csw="" />
-			<layer id="etude_patrimoine_simple" name="Patrimoine industriel" visible="false" tiled="false" namespace="tmp"
+			<layer id="etude_patrimoine_simple" name="Patrimoine industriel" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/pat_industriel.png"
 				style="	patrimoine_thematique_industriel_centroide" 
@@ -275,7 +275,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata=""
 				metadata-csw="" />
-			<layer id="etude_patrimoine_simple" name="Patrimoine linier et chanvrier" visible="false" tiled="false" namespace="tmp"
+			<layer id="etude_patrimoine_simple" name="Patrimoine linier et chanvrier" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/pat_linier_chanvier.png"
 				style="	patrimoine_thematique_linier_chanvier_centroide" 
@@ -322,7 +322,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="GéoBretagne" 
 				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=9722d181-75f9-40ab-a136-a9f9ed6f29a5" 
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=9722d181-75f9-40ab-a136-a9f9ed6f29a5" />
-        <layer id="destination_touristique" name="Destinations touristiques" visible="false" tiled="false" namespace="rb"
+        <layer id="destination_touristique" name="Destinations touristiques" visible="false" tiled="false"
 				queryable="true" fields="nom" aliases="Nom"
                 infoformat="text/html" featurecount="20" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
