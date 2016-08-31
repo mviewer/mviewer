@@ -308,15 +308,6 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=ce651579-c92a-474d-aee1-6e44b5f55579" />                      
         </theme> 
             <theme name="Domanialité"  collapsed="true" id="domanialite"> 
-                <layer id="r53_2013_parcelle_publique" name="Parcelles publiques" visible="false" tiled="false" namespace="rb"
-					queryable="false"
-                    secure="true"
-                    infoformat="text/html" featurecount="20"
-					url="http://kartenn.region-bretagne.fr/geoserver-proxy/rb/wms" 
-					style="" legendurl="http://kartenn.region-bretagne.fr/img/legend/parcelles_publiques.png"
-					attribution="DREAL Bretagne" 
-					metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=515cf06a-fc63-4059-9813-be6c57695eca"
-					metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=515cf06a-fc63-4059-9813-be6c57695eca" />
                 <layer id="convention_superposition" name="Convention de superposition" visible="false" tiled="false" namespace="rb"
 					queryable="true"
                     secure="true"
@@ -341,7 +332,16 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					style="" 
 					attribution="Région Bretagne" 
 					metadata-csw=""
-					metadata="" />                      
+					metadata="" />  
+                <layer id="r53_2013_parcelle_publique" name="Parcelles publiques" visible="false" tiled="false" namespace="rb"
+					queryable="false"
+                    secure="true"
+                    infoformat="text/html" featurecount="20"
+					url="http://kartenn.region-bretagne.fr/geoserver-proxy/rb/wms" 
+					style="" legendurl="http://kartenn.region-bretagne.fr/img/legend/parcelles_publiques.png"
+					attribution="DREAL Bretagne" 
+					metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=515cf06a-fc63-4059-9813-be6c57695eca"
+					metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=515cf06a-fc63-4059-9813-be6c57695eca" />                    
         </theme> 
         <theme name="Cadastre"  collapsed="true" id="cadastre"> 
              <layer id="CP.CadastralBuilding" name="Bâti" scalemin="0" scalemax="25000" visible="false" tiled="true"
