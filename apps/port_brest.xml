@@ -66,27 +66,27 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=a6dde882-4334-4ce0-909f-adb8597ada97" />	
         </theme>
         <theme name="Espace portuaire"  id="port" collapsed="true">
-            <layer id="bddom_brest" name="Occupations domaniales" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="port"
+            <layer id="bddom" name="Occupations domaniales" scalemin="0" scalemax="50000000" visible="false" tiled="false"
 				queryable="true" fields="idu" aliases="idu" 
                 infoformat="application/vnd.ogc.gml" featurecount="1"
 				style="" 
-				url="http://ows.region-bretagne.fr/geoserver/port/wms" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Région Bretagne" 
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=43ce0e25-ef3c-4e88-a546-6197e1f84d99" 
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=43ce0e25-ef3c-4e88-a546-6197e1f84d99" />
-            <layer id="concessions_port_brest" name="Concessions" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="port"
+            <layer id="concession" name="Concessions" scalemin="0" scalemax="50000000" visible="false" tiled="false"
 				queryable="true" fields="concession" aliases="Concession" 
                 infoformat="application/vnd.ogc.gml" featurecount="1"
-				style="" 
-				url="http://ows.region-bretagne.fr/geoserver/port/wms" 
+				style="	concessions_ports_style" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Région Bretagne" 
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=9ee47f66-a2b2-40a8-a5cf-82f7fae4cbac" 
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=9ee47f66-a2b2-40a8-a5cf-82f7fae4cbac" />
-			<layer id="contour_port_brest" name="Contour du port de Brest" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="port"
+			<layer id="contour_port_aero" name="Contour du port de Brest" scalemin="0" scalemax="50000000" visible="true" tiled="false"
 				queryable="false" fields="site" aliases="Site"
                 infoformat="text/html" featurecount="2"               
-				url="http://ows.region-bretagne.fr/geoserver/port/wms" 
-				style="" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				style="port_contour" 
 				attribution="Région Bretagne" 
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=ca6d2fd1-68cd-4265-9453-f40d02400e49" 
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=ca6d2fd1-68cd-4265-9453-f40d02400e49" />                    
