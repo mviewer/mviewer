@@ -56,6 +56,16 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 
     <themes>
         <theme name="Infrastructures de transports"  collapsed="false" id="transport" icon="train">
+             <layer id="ref_trace_OD_2013_2016" name="Trains" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="rb"
+                    searchable="false" queryable="true" fields="" aliases=""
+                    customcontrols="true"
+                    infoformat="text/html" featurecount="1"
+                    style=""
+                    stylesalias=""
+                    url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+                    attribution="Région Bretagne" 
+                    metadata=""
+                    metadata-csw="" />
             <group name="Transports ferroviaires" id="grp1" >	
                 <layer id="dim_lignes_ferroviaires_bzh" name="Lignes ferroviaires" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="rb"
                     searchable="false" queryable="true" fields="axe" aliases="axe"
@@ -67,7 +77,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
                     metadata=""
                     metadata-csw="" />	
                 <layer id="dim_arrets_ferroviaires_bzh" name="Arrêts ferroviaires régionaux" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="rb"
-                    searchable="false" queryable="true" fields="nom_pa" aliases="nom_pa"
+                    searchable="false" queryable="true" fields="nom_pa" aliases="nom_pa"                    
                     infoformat="text/html" featurecount="20"
                     style="transports_arret_ferr_defaut, transports_arret_ferr_borne,transports_arret_ferr_guichet,transports_arret_ferr_info_dynami,transports_arret_ferr_nature,transports_arret_ferr_parking,transports_arret_ferr_velo,transports_arret_ferr_pmr"
                     stylesalias="Par défaut, Distributeur automatique de billet, Guichet, Information dynamique,Nature des arrêts ferroviaires,Parking voiture,Parking vélo, Assistance PMR"
