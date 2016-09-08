@@ -3,7 +3,7 @@ html, body {
 	height: 100%;
 	margin: 0;
 	padding: 0;
-	font-size: 12.5px!important;
+	font-size: 12.5px;
 	font-family: "Trebuchet MS",Helvetica,Arial,sans-serif;
     /*background: url(../img/grid.png) repeat scroll center top #fff;*/
     
@@ -48,15 +48,15 @@ html {
 }
 
 .ol-control button {
-  color: #fff;
-  background-color: #032e46;
+  /*color: #fff;
+  background-color: #032e46;*/
   height: 30px;
   width: 30px;
 }
 
 .ol-control button:focus, .ol-control button:hover {
   text-decoration: none;
-  background-color: #032e46;
+  /*background-color: #032e46;*/
 }
 
 /* search tollbar */
@@ -85,8 +85,10 @@ a#searchparams {
     max-width:300px;	
     min-width: 246px;
 	position: fixed;
-	right:50px;
+	right:65px;
 	top: 60px;
+    z-index: 5;
+	font-family: Open Sans;
 }
 
 #searchresults li {
@@ -99,6 +101,14 @@ a#searchparams {
 #searchresults li.disabled {
     padding: 10px;
 }
+
+li.geoportail.list-group-item.disabled{
+	background:#032e46;
+	border-color:#032e46;
+	color:#fff;
+	font-size:13px!important;
+}
+
 
 
 /* popups */
@@ -246,7 +256,7 @@ a#searchparams {
     /*font-size: 12px;*/
 }
 
-ul.bjqs-controls.v-centered li.bjqs-prev a {
+/*ul.bjqs-controls.v-centered li.bjqs-prev a {
   left: 15px!important;
 }
 
@@ -288,7 +298,7 @@ ol.bjqs-markers li a:hover{
 
 p.bjqs-caption{
 	background: rgba(255,255,255,0.5);
-}
+}*/
 
 .counter-slide {
   position: absolute;  
@@ -384,7 +394,7 @@ ul#basemapslist  li:hover{
 }
 
 ul#basemapslist  li.active{
-    border: 3px red dashed;
+    /*border: 3px red dashed;*/
     /*-webkit-transform: rotate(360deg);
     transform: rotate(360deg);*/
 }
@@ -543,9 +553,9 @@ ul#layers-container {
 .gml-item-title {
     padding-bottom: 6px;
     padding-top: 15px;
-    font-family: spotka-alternatebold;
+    /*font-family: spotka-alternatebold;
 	color:#032e46;
-    font-size: 24px;
+    font-size: 24px;*/
 }
 
 .gml-item-field-name {
@@ -763,7 +773,7 @@ li[role="presentation"] {
 }
 
 .popup-content h3 {
-  font-size: small;
+  /*font-size: small;*/
 }
 /* fin de range
 
@@ -805,7 +815,7 @@ li[role="presentation"] {
 
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
   border: 0;
-  background-color:#032e46;
+  /*background-color:#032e46;*/
 }
 
 .tab-content {
@@ -828,14 +838,14 @@ li[role="presentation"] {
 
 #right-panel .mv-header {
   padding-top: 50px;  
-  background-color: #032e46;
-  color: #fff;  
+  /*background-color: #032e46;
+  color: #fff;  */
 }
 #right-panel .mv-header h5 {
   text-align: center;
   line-height: 2em;
   margin-bottom: 0;
-  font-family: spotka-alternatemedium;
+  /*font-family: spotka-alternatemedium;*/
 }
 
 .tab-pane {
@@ -847,21 +857,21 @@ li[role="presentation"] {
 
 
 
-/* Modification CSS Agath*/
+/*********** MODIFICATION CSS AGATH**********/
 
 /* Import des fonts*/
-@font-face {
+/*@font-face {
 			font-family: 'spotka-alternatemedium';
 			src: url('font/spotka-alternatemedium.ttf') format('truetype');
 			}
 @font-face {
 			font-family: 'spotka-alternatebold';
 			src: url('font/spotka-alternatebold.ttf') format('truetype');
-			}
+			}*/
 
-/* Style fenêtre de configuration*/
+/************* Style fenêtre de configuration - Indicateurs Transports*/
 
-h3.title{
+/*h3.title{
 	font-family: 'spotka-alternatebold';
 	font-size: 24px;
 	color:#032e46;
@@ -871,17 +881,10 @@ h4.title{
 			font-family: 'spotka-alternatebold';
 			font-size: 16px;
 			color:#032e46;
-			}
+			}*/
 				
-p.info{
-	font-family:'Open Sans'!important;
-	}
 
-.info{
-	font-family:'Open Sans'!important;
-	}	
-
-#block_crit{
+/*#block_crit{
 		display: block;
 		box-sizing: content-box;
 		width: 130px;
@@ -968,14 +971,21 @@ p.text{
 			text-transform: uppercase;
 			letter-spacing: -0.2pt;
 			color:#032e46;
-			}
+			}*/
+			
+.chiffres_cles{
+				font-family:spotkabold; 
+				font-size:38px; 
+				margin-top:-13px; 
+				margin-bottom:-8px;
+			}			
 
 	
 	
-/* Modification de l'interface bootstrap*/
+/****************** Modification de l'interface bootstrap*/
 
-/* Barre du haut*/
-.navbar-default{
+/********** Barre du haut**********/
+/*.navbar-default{
 	border-color:#032e46;
 }
 .navbar-default .navbar-collapse, .navbar-default .navbar-form{
@@ -1003,20 +1013,28 @@ a.navbar-brand{
 
 .navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover{
 	background-color:#2e5367;
+}*/
+
+#mv-navbar .form-control{
+	border: 1px transparent;
 }
 
-/* Barre gauche*/
+.btn-default{
+	border-color: transparent;
+}
+
+/************** Barre gauche*************/
 
 #sidebar-wrapper a{
-	font-family:'Open Sans';
-	letter-spacing:-0.2pt;
+	/*font-family:'Open Sans';
+	letter-spacing:-0.2pt;*/
 	/*font-weight:bold;*/
 }
 
 .sidebar-nav li a:hover{
-	border-left:#032e46 0px solid;
+	/*border-left:#032e46 0px solid;
 	background:#032e46;
-	color: #f8f8f8;
+	color: #f8f8f8;*/
 }
 
 .nav-pills li a{
@@ -1040,6 +1058,11 @@ li.mv-nav-item {
 	
 }
 
+#loading-indicator {
+  width: 35px;  
+  margin-top: -4px;
+}
+
 ul#menu {
 	font-weight: bold;
 }
@@ -1048,7 +1071,7 @@ ul.nav-pills.nav-stacked{
 	font-weight: normal;
 }
 
-/*Barre du bas*/
+/************Fenêtre du bas**********/
 ul.carousel-inner{
 	padding-left:10px;
 }
@@ -1058,21 +1081,23 @@ ul.carousel-inner{
 }
 
 .mv-header{
-	font-family:spotka-alternatemedium;
-	color: #032e46;
+	/*font-family:spotka-alternatemedium;
+	color: #032e46;*/
 	padding-left:10px;
 }
 
 .fa-chevron-circle-down{
-	color:#032e46;
+	/*color:#032e46;*/
 }
 
-/* MAP */
+span.state-icon.fa{
+	padding-right:3px;
+}
 
-/* Configuration de la légende*/ 
-#layers-container a {
-	color: #032e46;
-	font-family: Open Sans;
+/******* MAP ********/
+
+/************* Configuration de la fenêtre de la légende**************/ 
+#layers-container a {	
 	font-weight: bold;
 	padding-right:10px;
 }
@@ -1088,12 +1113,12 @@ ul.carousel-inner{
 }
 
 #layers-container .mv-layer-options p {
-	font-family: Open Sans; 
+	/*font-family: Open Sans; */
 	margin: 0 0 5px;
 }
 
 .form-control{
-	font-family: Open Sans; 
+	/*font-family: Open Sans; */
 	font-size: inherit;
 }
 
@@ -1105,13 +1130,11 @@ ul.carousel-inner{
 	margin-bottom:10px;
 }
 
-/* Style curseur slider */
-.mv-layer-options  .slider-selection{
-	background:#032e46;	
-}
+/********* Style curseur slider opacity  */
+
 
 .mv-layer-options .slider-handle {
-    background: #032e46;
+    /*background: #032e46;*/
 	width: 15px;
 	height: 15px;
 }
@@ -1120,24 +1143,79 @@ ul.carousel-inner{
   height: 5px;
 }
 
-.mv-layer-options  .slider-track-high{
-	background:#ddd;	
-}
+
 
 .mv-layer-options  .slider.slider-horizontal{
 	width: 240px;
 }
 
-.mv-layer-options .tooltip-inner{
+.tooltip.tooltip-main.top{
+	margin-left:-19px!important;
+}
+/*.mv-layer-options .tooltip-inner{
 	background-color:#032e46;
 	border-radius: 4px;
 	font-family: Open Sans;
 }
 .mv-layer-options .tooltip.top .tooltip-arrow{
 	border-top-color:#032e46;
+}*/
+
+/* Slider timer*/
+
+.slider-selection.tick-slider-selection{
+	background-image: none;
 }
 
-/* Configuration fenêtre de fond de carte */ 
+.slider-tick {
+	width:10px;
+	height:10px;
+}
+.slider.slider-horizontal .slider-tick-container{
+	top:2px;
+	left:4px;
+}
+
+.mv-layer-options  .slider.slider-horizontal{
+	width:230px
+}
+
+
+.form-group-timer .slider.slider-horizontal{
+	margin-left:11px;
+}
+
+.form-group-opacity .slider.slider-horizontal{
+	margin-left:5px;
+	width:236px;
+}
+
+
+.slider.slider-horizontal .slider-tick-label-container{
+	margin-top:13px;
+	font-family:Open Sans;
+}
+
+.tooltip.bottom .tooltip-arrow{
+	margin-left:-8px;
+	left:57%
+}
+
+.tooltip.bottom{
+	margin-top:-4px;
+}
+
+.tooltip.tooltip-main.bottom{
+	margin-left:-24.3px!important;
+}
+
+.slider-handle{
+	-webkit-box-shadow: none;
+}
+
+/******* Configuration fenêtre de fond de carte ************/ 
+
+/**** Fenêtre des fonds de carte ****/
 #backgroundlayerstoolbar{
 	background:#f8f8f8;
 	border-radius:4px ;
@@ -1146,26 +1224,6 @@ ul.carousel-inner{
     z-index: 1;
 }
 
-/*#backgroundlayerstoolbar .btn-default{
-	color: #999;
-	background-color:#f8f8f8;
-	border-color:#f8f8f8;
-	height:84px;
-}
-
-#backgroundlayerstoolbar .btn-default:focus{
-	color: #999;
-	background-color:#f8f8f8;
-	border-color:#f8f8f8;
-	height:84px;
-}
-
-#backgroundlayerstoolbar .btn-default.btn-xs{
-	color: #999;
-	background-color:#f8f8f8;
-	border-color:#f8f8f8;
-	height:84px;
-}*/
 
 .bglt-btn {
   width: 26px;
@@ -1207,7 +1265,7 @@ ul#basemapslist {
 ul#basemapslist p {
 	margin-left: -6px;
 	margin-right: -6px;
-	font-family: Open Sans;
+	/*font-family: Open Sans;*/
 	font-size: 9px;
 	line-height:1.3;
 	color:#333;
@@ -1216,15 +1274,44 @@ ul#basemapslist p {
 	padding-top:53px;
 }
 
-ul#basemapslist  li.active{
-	/*border:2px #f5f5f5 outset;*/
-    border:2px #032e46 outset;    
-}
 
-/* Echelle*/ 
+/**** Echelle*/ 
 .ol-scale-line-inner{
 	color: #777;
     border-color: #777;
     font-family: Open Sans;
 }
+/* Icone layers non coches 
+Utiliser le code Unicode du caractere de la police awesome.
+*/
+
+.mv-layer-unchecked:before {
+    content: "\f10c";
+}
+
+.mv-layer-checked:before {
+    content: "\f058";
+}
+
+
+/**** Button right toolbar */
+
+.btn-default:hover{
+	border-color: transparent;
+}
+
+.mv-slider-timer {
+  padding-bottom: 10px;
+}
+
+/*.btn-warning{
+	background-color: #032e46;
+	border-color: #032e46;
+}
+
+.btn-warning:hover{
+	background-color: #032e46;
+	border-color: #032e46;
+}*/
+
 

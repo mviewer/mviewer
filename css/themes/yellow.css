@@ -1,0 +1,246 @@
+/* Import des fonts*/
+@font-face {
+			font-family: 'spotka-alternatemedium';
+			src: url('../font/spotka-alternatemedium.ttf') format('truetype');
+			}
+@font-face {
+			font-family: 'spotka-alternatebold';
+			src: url('../font/spotka-alternatebold.ttf') format('truetype');
+			}
+            
+/* Modification de l'interface bootstrap*/
+
+/* Barre du haut*/
+.navbar-default{
+	border-color:#EAC937;
+}
+
+#mv-navbar{
+	border-color:#EAC937;
+	background-color: #EAC937;
+}
+
+.navbar-header.fixed-brand{
+	background-color: #EAC937;
+}
+	
+#mv-navbar a.navbar-brand{
+	color:#ffffff;
+	font-family: 'spotka-alternatebold';
+	font-size: 20px;	
+}
+
+#menu-toggle-2{
+	border-color: #ffffff;
+}
+	
+.glyphicon-th-large:before{
+	color:#ffffff;
+}
+
+.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover{
+	background-color:#2e5367;
+}
+
+.ol-control button {
+  color: #fff!important;
+  background-color: #EAC937!important;
+}
+
+.ol-control button:focus, .ol-control button:hover {  
+  background-color: #EAC937;
+}
+
+.gml-item-title {    
+    font-family: spotka-alternatebold;
+	color:#EAC937;
+    font-size: 24px;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus { 
+  background-color:#EAC937;
+}
+
+#right-panel .mv-header {  
+  background-color: #EAC937;
+  color: #fff;  
+}
+#right-panel .mv-header h5 {  
+  font-family: spotka-alternatemedium;
+}
+
+/* Barre gauche*/
+
+#sidebar-wrapper a{
+	font-family:'Open Sans';
+	letter-spacing:-0.2pt;
+	
+}
+
+#menu li a:hover{
+	border-left:#EAC937 0px solid;
+	background:#EAC937;
+	color: #f8f8f8;
+}
+
+.mv-header{
+	font-family:spotka-alternatemedium;
+	color: #EAC937;	
+}
+
+.fa-chevron-circle-down{
+	color:#EAC937;
+}
+
+#layers-container a {
+	color: #EAC937;
+	font-family: Open Sans;	
+}
+
+.form-group label {
+	font-family: Open Sans;
+}
+
+#layers-container .mv-layer-options p {
+	font-family: Open Sans; 
+}
+
+.form-control{
+	font-family: Open Sans; 
+}
+
+/* Style curseur slider */
+.mv-layer-options  .slider-selection{
+	background:#EAC937;	
+}
+
+.mv-layer-options .slider-handle {
+    background: #EAC937;
+}
+
+.mv-layer-options .tooltip-inner{
+	background-color:#EAC937;
+	border-radius: 4px;
+	font-family: Open Sans;
+}
+.mv-layer-options .tooltip.top .tooltip-arrow{
+	border-top-color:#EAC937;
+}
+
+
+ul#basemapslist p {
+	font-family: Open Sans;
+}
+
+ul#basemapslist  li.active{	
+    border:2px #EAC937 outset;    
+}
+
+/* Style fenêtre de configuration*/
+
+h3.title{
+	font-family: 'spotka-alternatebold';
+	font-size: 24px;
+	color:#EAC937;
+	}
+	
+h4.title{
+    font-family: 'spotka-alternatebold';
+    font-size: 16px;
+    color:#EAC937;
+}
+
+.info{
+	font-family:'Open Sans';
+	}
+
+#block_crit{
+		display: block;
+		box-sizing: content-box;
+		width: 130px;
+		height: 30px;
+		opacity: 1;
+		margin: 0;
+		border-radius: 4px;
+		color: rgba(255,255,255,1);
+		background: #EAC937;
+	}
+#ind_freq_an{
+				display: block;
+				box-sizing: content-box;
+				width: 130px;
+				height: 30px;
+				opacity: 1;
+				margin: 0;
+				border-radius: 4px;
+				border: solid 2px #16a085;
+				color: #16a085;
+				background: #ffffff;
+			}
+#ind_freq_mois{
+				display: block;
+				box-sizing: content-box;
+				width: 130px;
+				height: 30px;
+				opacity: 1;
+				margin: 0;
+				border-radius: 4px;
+				border: solid 2px #1dd2af;
+				color: #1dd2af;
+				background: #ffffff;
+			}
+#ind_valid_an{
+				display: block;
+				box-sizing: content-box;
+				width: 130px;
+				height: 30px;
+				opacity: 1;
+				margin: 0;
+				border-radius: 4px;
+				border: solid 2px #f4c300;
+				color: #f4c300;
+				background: #ffffff;
+			}
+
+#ind_valid_trim{
+				display: block;
+				box-sizing: content-box;
+				width: 130px;
+				height: 30px;
+				opacity: 1;
+				margin: 0;
+				border-radius: 4px;
+				border: solid 2px #f4d03f;
+				color: #f4d03f;
+				background: #ffffff;
+			}
+
+#ind_cir_an{
+				display: block;
+				box-sizing: content-box;
+				width: 130px;
+				height: 30px;
+				opacity: 1;
+				margin: 0;
+				border-radius: 4px;
+				border: solid 2px #e74c3c;
+				color: #e74c3c;
+				background: #ffffff;
+			}			
+			
+p.text{
+		font-family: 'Open Sans';
+		font-size:12px;
+		padding-top: 5px;
+		padding-left: 7px;
+	}
+
+.indicateur {
+			font-family: 'spotkabold';
+			font-size: 38px;
+			text-transform: uppercase;
+			letter-spacing: -0.2pt;
+			color:#EAC937;
+			}
+
+            
