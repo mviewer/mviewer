@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
-    <application title="Kartenn" logo="img/logo/geobretagne.png" help=""  exportpng="false" legend="true" measuretools="true" legendasimage="false" popup="false" print="false" style="css/themes/blue.css"/>
+    <application title="Kartenn" logo="img/logo/geobretagne.png" help=""  exportpng="false" measuretools="true" style="css/themes/blue.css"/>
     <mapoptions maxzoom="18" projection="EPSG:3857" center="-403013.39038929436,6128402.399153711" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
     
 	<baselayers style="gallery"><!-- style="default"||gallery" -->
@@ -39,7 +39,7 @@
 				attribution="Région Bretagne" 
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25" 
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25" />
-			<layer id="site_cfa" name="Centre de formation d'apprentis" visible="false" tiled="false" namespace="rb"
+			<layer id="cfa_site" name="Centre de formation d'apprentis" visible="false" tiled="false" namespace="rb"
 				queryable="true" fields="cfa,site_adr1,site_cp,site_ville,site_inter" aliases="Nom,Adresse,CP,Ville, Site Web"
                 searchable="true"
                 infoformat="text/html" featurecount="20"               
