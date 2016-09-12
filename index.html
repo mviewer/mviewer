@@ -29,8 +29,7 @@
 var config = {};
 var widgets = {};
 $(document).ready(function () {
-	"use strict";
-    //$.material.init();
+	"use strict";    
 	if (window.location.search) {
 		$.extend(config, $.parseJSON('{"' + decodeURIComponent(window.location.search.substring(1)
 			.replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}'));    
@@ -59,13 +58,7 @@ $(document).ready(function () {
     });
     
     Sortable.create(document.getElementById('layers-container'), {
-        handle: '.layerdisplay-title',
-        onAdd: function (/**Event*/evt) {
-            var itemEl = evt.item;  // dragged HTMLElement
-            evt.from;  // previous list
-            // + indexes from onEnd
-            console.log("dfdfdffsdjfs");
-        },
+        handle: '.layerdisplay-title',        
         onUpdate: function (evt) {
             var actionMove = { 
                 layerName: $(evt.item).attr("data-layerid"),
@@ -177,11 +170,15 @@ $(document).ready(function () {
                 <button data-toggle="modal" data-target="#sharepanel" onclick="mviewer.mapShare();" id="sharebtn" title="Partager cette carte" 
                      tabindex="111" accesskey="11" class="btn btn-default btn-raised">
                      <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-                </button>            
-                <a href="#" id="exportpng" title="Exporter carte au format image" download="carte.png" tabindex="113" accesskey="13"
-                    data-role="button" data-icon="exportpng" data-iconpos="notext" data-theme="b" ></a>            
-                <a href="#" onclick="mviewer.print()" id="printbtn" title="Imprimer la carte" tabindex="103" accesskey="3"
-                    data-role="button" data-icon="print" data-iconpos="notext" data-theme="b" ></a>
+                </button>
+                 <a href="#" id="exportpng" title="Exporter carte au format image" download="carte.png"
+                    class="btn btn-default btn-raised"  tabindex="113" accesskey="13">
+                     <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
+                </a>                
+                <button href="#" onclick="mviewer.print()" id="printbtn" title="Imprimer la carte" tabindex="103" accesskey="3"  
+                    class="btn btn-default btn-raised" >
+                     <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                </button>                
             </div>
             <div id="drawtoolsoptions" style="display:none;" class="btn-group btn-group-sm" role="group" aria-label="true"> 
                 <button  id="measurelinebtn" title="Mesure linéaire" onclick="mviewer.setTool('measureline');" class="btn btn-default btn-raised" >
@@ -253,7 +250,7 @@ $(document).ready(function () {
                             <!-- to georchestra viewer -->
                             <form id="georchestraForm" target="_blank" method="post" action="http://geobretagne.fr/mapfishapp/" style="display:none;">
                                 <input type="hidden" id="georchestraFormData" name="data" value="" />
-                                <input type="submit" data-role="button" data-mini="true" data-iconpos="right" value="geOrchestra" />
+                                <input type="submit" data-role="button"  value="geOrchestra" />
                             </form> 
                        </div>
                     </div>
@@ -266,7 +263,7 @@ $(document).ready(function () {
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Photo</h4>
+                        <h4 class="modal-title"></h4>
                     </div>
                     <div class="modal-body" >
                         <div class="row">
