@@ -288,3 +288,18 @@ p.text{
 	background-color: #032e46;
 	border-color: #032e46;
 }
+
+#alerts-zone .alert.alert-info {
+  background-color: #032e46;
+  color: #fff;
+}
+
+#alerts-zone .close, .modal-header .close {  
+  color: #fff;
+  text-shadow: 0 1px 0 #000;  
+}
+
+.modal-header {
+  background-color: #032e46;
+  color: #fff;
+}
