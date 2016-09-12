@@ -109,6 +109,10 @@ mviewer.customControls.ref_trace_OD_2013_2016 = (function() {
                    error: function () {alert( "error ajax" );}
             });      
         
+        },
+        
+        destroy: function () {
+            _map.removeLayer(_vector);            
         }
      }; // fin return	
 
