@@ -249,6 +249,12 @@ Noeud enfant de theme décrivant une couche.
     secure=""
 	infoformat="" featurecount=""
 	style=""
+    stylesalias=""
+    timefilter="" 
+    timeinterval="" 
+    timecontrol="" 
+    timemin="" 
+    timemax=""
     opacity=""
     legendurl=""
 	url=""
@@ -279,10 +285,19 @@ Ce fichier js doit être placé dans le répertoire hooks/
 * **secure**: Précise si la couche est protégée ( méchanisme geoserver ) auquel cas un test est affectué pour savoir si la couche est accessible. SI ce n'est pas le cas, la couche est retirée du panneau et de la carte.
 * **infoformat**: Format du GetFeatureInfo. 2 formats sont supportés : text/html et application/vnd.ogc.gml
 * **featurecount**: Nombre d'éléments retournés lors de l'intérrogation
-* **style**: Style de la couche.
+* **style**: Style(s) de la couche. Si plusieurs styles , utiliser la virgule comme séparateur.
 Si la couche est de type wms, il faut faire référence à un style sld.
 Si la couche est de type geojson, il faut faire référence à un style définit dans lib/featurestyles.js
 Si la couche est de type hook, le style n'est pas défini ici.
+* **stylealias**: Titres à utiliser pour chaques style. utiliser la virgule comme séparateur si plusieurs styles.
+* **timefilter**: Booléen précisant si la dimension temporelle est activée pour cette couche. Voir (http://docs.geoserver.org/latest/en/user/services/wms/time.html)
+* **timeinterval**: day|month|year
+* **timecontrol**: calendar|slider 
+* **timemin**: Date mini format : "yyyy-mm-dd" 
+* **timemax**: Date mini format : "yyyy-mm-dd" 
+* **customcontrols**: Booléen. Si actif, il faut déposer un fichier js et un fichier html ayant pour nom l'id de la couche dans le répertoire controls.
+La structure du js doit être la suivante : (../controls/model.js)
+Ce fichier js doit être placé dans le répertoire hooks/
 * **opacity**: Opacité de la couche (1 par défaut)
 * **legendurl**: url premettant de récupérer la légende. Si non défini, c'est un getFeatureLegend qui est effectué.
 * **url**: URL de la couche

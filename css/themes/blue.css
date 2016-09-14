@@ -303,3 +303,7 @@ p.text{
   background-color: #032e46;
   color: #fff;
 }
+
+.datepicker .active {
+    background-color: #032e46!important;
+}
