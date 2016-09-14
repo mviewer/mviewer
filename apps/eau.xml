@@ -251,6 +251,16 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="DREAL" 
 				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=91f11c02-a116-42bb-ab18-b9199b7830d0"
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=91f11c02-a116-42bb-ab18-b9199b7830d0" />
-        </theme>        
+        </theme>   
+        <theme name="Assainissement"  collapsed="true" id="assainissement">
+                <layer id="station_epuration_priorite_geom" name="Stations d'épuration : priorité 2016 - 2018" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+					queryable="true" fields="ident" aliases="ident"
+                    infoformat="text/html" featurecount="20"
+					url="http://ows.region-bretagne.fr/geoserver/interne/wms" 
+					style="" 
+					attribution="Région Bretagne" 
+					metadata-csw=""
+					metadata="" />  
+		</theme>   
     </themes>
 </config>
