@@ -285,7 +285,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw="" />
         </theme>
 	<theme name="Edifices protégés MH"  collapsed="true" id="mh"> 
-            <layer id="bretagne_immeuble_mh" name="Immeubles MH" visible="false" tiled="false"
+            <layer id="bretagne_immeuble_mh" name="Immeubles MH (source Etat)" visible="false" tiled="false"
 				queryable="true" fields="SITE" aliases="Site"
                 infoformat="text/html" featurecount="5"             
 				style=""
@@ -296,7 +296,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 
     </theme>
 	<theme name="Carte archéologique"  collapsed="true" id="archeo"> 
-            <layer id="site" name="Carte archéologique" visible="false" tiled="false"
+            <layer id="site" name="Carte archéologique (source Etat)" visible="false" tiled="false"
 				queryable="true" fields="SITE" aliases="Site"
                 infoformat="text/html" featurecount="5"             
 				style=""
