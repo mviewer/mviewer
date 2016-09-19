@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr-fr" lang="fr-fr" dir="ltr" >
 <head>
-	<title>Kartenn</title>	
+	<title>mviewer</title>	
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />	
@@ -90,7 +90,7 @@ $(document).ready(function () {
     <!-- Ajax Loader -->
     <img src="img/load_blanc.gif" id="loading-indicator" style="display:none" />
     <!-- NAVBAR -->
-	<nav class="navbar navbar-default no-margin navbar-fixed-top" id="mv-navbar">
+	<nav class="navbar navbar-default no-margin navbar-fixed-top" id="mv-navbar">        
         <div class="navbar-header fixed-brand">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
               <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
@@ -98,12 +98,13 @@ $(document).ready(function () {
             <a class="navbar-brand" href="#">
                 <img alt="Logo" src="img/logo/rb_bl.png" class="mv-logo">
             </a>
-            <a class="navbar-brand" href="#"> Kartenn</a>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <!--<a class="navbar-brand" href="#"> Mviewer</a>-->
+        </div>        
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">            
             <ul class="nav navbar-nav">
                 <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
             </ul>
+            <p class="navbar-text mv-title">mViewer</p>
             <div class="navbar-form navbar-left" role="search" id="searchtool">
                 <div class="form-group input-group">
                     <input type="text" class="form-control" placeholder="Rechercher" id="searchfield">
@@ -114,7 +115,7 @@ $(document).ready(function () {
                     </div>
                 </div>
             </div>
-        </div>
+        </div>        
     </nav>
     <div id="wrapper">
         <!-- LEFT MENU SIDEBAR -->

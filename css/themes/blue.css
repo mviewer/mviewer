@@ -24,8 +24,8 @@
 	background-color: #032e46;
 }
 	
-#mv-navbar a.navbar-brand{
-	color:#ffffff;
+#mv-navbar a.navbar-brand, .mv-title{
+	color:#ffffff!important;
 	font-family: 'spotka-alternatebold';
 	font-size: 20px;	
 }
