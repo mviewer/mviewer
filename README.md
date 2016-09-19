@@ -21,7 +21,7 @@ Le fichier de config permet la personnalisation des thèmes/couches du visualise
 
 	<?xml version="1.0" encoding="UTF-8"?>
 	<config>
-    <application title="" logo="" help="" description"" style="" panelfooterimage="" panelfooterheight="" exportpng="" measuretools="" legend="" legendasimage=""/>
+    <application title="" logo="" help="" panelstate="" description"" style="" panelfooterimage="" panelfooterheight="" exportpng="" measuretools="" legend="" legendasimage=""/>
     <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
     <mapoptions maxzoom="18" projection="EPSG:3857" center="-403013.39038929436,6128402.399153711" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
    
@@ -80,6 +80,7 @@ Personnalisation de l'application (overriding)
 * **description** : Description du panneau thématiques.
 * **style**: style à utiliser || css/themes/default.css [ressource](https://themeroller.jquerymobile.com/)
 * **help**: Url du fichier d'aide || aide_kartenn.pdf.
+* **panelstate**: Ouverture du panneau thématique au démarrage : open/close || open.
 * **panelfooterimage**: Url du fichier image à utiliser en arrière plan du panel footer.
 * **panelfooterheight**: Taille en pixels du footer du panel.
 * **exportpng**: Enables map export as png file  true/false || false. Export is possible only with local layers (same origin) or with layers served with CORS.
