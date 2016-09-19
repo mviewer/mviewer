@@ -81,6 +81,7 @@ Personnalisation de l'application (overriding)
 * **style**: style à utiliser || css/themes/default.css [ressource](https://themeroller.jquerymobile.com/)
 * **help**: Url du fichier d'aide || aide_kartenn.pdf.
 * **panelstate**: Ouverture du panneau thématique au démarrage : open/close || open.
+* **showcoordinates**: Affichage des coordonnées lat/lon correspondant au clic. true/false || false.
 * **panelfooterimage**: Url du fichier image à utiliser en arrière plan du panel footer.
 * **panelfooterheight**: Taille en pixels du footer du panel.
 * **exportpng**: Enables map export as png file  true/false || false. Export is possible only with local layers (same origin) or with layers served with CORS.

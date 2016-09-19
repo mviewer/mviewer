@@ -782,6 +782,11 @@ p.counter-slide {
   color: #222;
 }
 
+#hdms {
+  background-color: #fff;
+  text-shadow: none;
+}
+
 
 
 /* CSS scroll bar style for chrome */ 
