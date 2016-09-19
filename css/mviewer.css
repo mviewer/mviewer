@@ -634,7 +634,7 @@ a#tabThemes , a#tabInfos{
 
 code {
 		padding: 2px 4px;
-		color: #d14;
+		color: #fff;
 		white-space: nowrap;		
 }
 
@@ -783,7 +783,6 @@ p.counter-slide {
 }
 
 #hdms {
-  background-color: #fff;
   text-shadow: none;
 }
 
