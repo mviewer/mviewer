@@ -44,7 +44,7 @@
                     infoformat="text/html" featurecount="1"
                     style=""
                     stylesalias=""
-                    url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+                    url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
                     attribution="Région Bretagne" 
                     metadata=""
                     metadata-csw="" />-->
@@ -53,7 +53,7 @@
                     infoformat="text/html" featurecount="20"
                     style="transports_ligne_ferr_defaut, transports_lignes_ferr_typologie" 
 					stylesalias="Par défaut,Type d'infrastructures"
-                    url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+                    url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
                     attribution="Région Bretagne" 
                     metadata=""
                     metadata-csw="" />	
@@ -62,7 +62,7 @@
                     infoformat="text/html" featurecount="20"
                     style="transports_arret_ferr_defaut, transports_arret_ferr_borne,transports_arret_ferr_guichet,transports_arret_ferr_info_dynami,transports_arret_ferr_nature,transports_arret_ferr_parking,transports_arret_ferr_velo,transports_arret_ferr_pmr"
                     stylesalias="Par défaut, Distributeur automatique de billet, Guichet, Information dynamique,Nature des arrêts ferroviaires,Parking voiture,Parking vélo, Assistance PMR"
-                    url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+                    url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
                     attribution="Région Bretagne" 
                     metadata=""
                     metadata-csw="" />
@@ -70,7 +70,7 @@
                     searchable="false" queryable="false" fields="nom_pa" aliases="nom_pa"
                     infoformat="text/html" featurecount="20"
                     style="transports_pem_defaut"
-                    url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+                    url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
                     attribution="Région Bretagne" 
                     metadata=""
                     metadata-csw="" />
@@ -80,7 +80,7 @@
                     searchable="false" queryable="true" 
                     infoformat="text/html" featurecount="20"
                     style="transports_arret_rout_defaut"
-                    url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+                    url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
                     attribution="Région Bretagne" 
                     metadata=""
                     metadata-csw="" />
@@ -88,7 +88,7 @@
                     searchable="false" queryable="true" fields="axe" aliases="axe"
                     infoformat="text/html" featurecount="20"
                     style="transports_ligne_rout_reg_defaut" 
-                    url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+                    url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
                     attribution="Région Bretagne" 
                     metadata=""
                     metadata-csw="" />
@@ -98,7 +98,7 @@
                     searchable="false" queryable="true" fields="axe" aliases="axe"
                     infoformat="text/html" featurecount="20"
                     style="transports_aeroport" 
-                    url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+                    url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
                     attribution="Région Bretagne" 
                     metadata=""
                     metadata-csw="" />
@@ -106,7 +106,7 @@
                     searchable="false" queryable="true" fields="axe" aliases="axe"   
                     infoformat="text/html" featurecount="20"
                     style="transports_gare_mari" 
-                    url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+                    url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
                     attribution="Région Bretagne" 
                     metadata=""
                     metadata-csw="" />	
@@ -114,7 +114,7 @@
                     searchable="false" queryable="true" fields="axe" aliases="axe"
                     infoformat="text/html" featurecount="20"
                     style="transports_aire_covoiturage" 
-                    url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+                    url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
                     attribution="Région Bretagne" 
                     metadata=""
                     metadata-csw="" />	
@@ -128,7 +128,7 @@
 				timefilter="true" timeinterval="year" timecontrol="slider" timemin="2006" timemax="2016" 
 				style="transports_circulation_ete_lun,transports_circulation_ete_mar,transports_circulation_ete_mer,transports_circulation_ete_jeu,transports_circulation_ete_ven, transports_circulation_ete_sam, transports_circulation_ete_dim "
                 stylesalias="Lundi,Mardi,Mercredi,Jeudi,Vendredi,Samedi,Dimanche"
-				url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+				url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
 				attribution="Région Bretagne" 
 				metadata=""
 				metadata-csw="" />
@@ -139,7 +139,7 @@
 				timefilter="true" timeinterval="year" timecontrol="slider" timemin="2006" timemax="2016"
 				style="transports_circulation_hiv_lun, transports_circulation_hiv_mar, transports_circulation_hiv_mer, transports_circulation_hiv_jeu, transports_circulation_hiv_ven, transports_circulation_hiv_sam, transports_circulation_hiv_dim  "
 				stylesalias="Lundi,Mardi,Mercredi,Jeudi,Vendredi,Samedi,Dimanche"
-				url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+				url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
 				attribution="Région Bretagne" 
 				metadata=""
 				metadata-csw="" />		
@@ -150,7 +150,7 @@
                 infoformat="text/html" featurecount="20"
 				timefilter="true" timeinterval="year" timecontrol="slider" timemin="2013" timemax="2017"
 				style="transports_travaux_gare"
-				url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+				url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
 				attribution="Région Bretagne" 
 				metadata=""
 				metadata-csw="" />
@@ -159,7 +159,7 @@
                 infoformat="text/html" featurecount="20"
 				timefilter="true" timeinterval="year" timecontrol="slider" timemin="2012" timemax="2017"
 				style="transports_travaux_troncons"
-				url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+				url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
 				attribution="Région Bretagne" 
 				metadata=""
 				metadata-csw="" />			
@@ -172,7 +172,7 @@
                 infoformat="text/html" featurecount="20"
 				timefilter="true" timeinterval="year" timecontrol="slider" timemin="2009" timemax="2015"
 				style="transports_aristote_an"
-				url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+				url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
 				attribution="Région Bretagne" 
 				metadata=""
 				metadata-csw="" />	
@@ -182,7 +182,7 @@
                 infoformat="text/html" featurecount="20"
 				timefilter="true" timeinterval="month"
 				style="transports_aristote_mois"
-				url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+				url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
 				attribution="Région Bretagne" 
 				metadata=""
 				metadata-csw="" />-->
@@ -194,7 +194,7 @@
                 infoformat="text/html" featurecount="20"
 				timefilter="true" timeinterval="year" timecontrol="slider" timemin="2012" timemax="2015"
 				style="transports_korrigo_an"
-				url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+				url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
 				attribution="Région Bretagne" 
 				metadata=""
 				metadata-csw="" />
@@ -205,7 +205,7 @@
 				style="transports_korrigo_moins_h6,transports_korrigo_h6_h9, transports_korrigo_h9_h16, transports_korrigo_h16_h19, transports_korrigo_plus_h19"
 				stylesalias="Avant 6h,Entre 6h et 9h,Entre 9h et 16h,Entre 16h et 19h,Après 19h"
 				timefilter="true" timeinterval="year" timecontrol="slider" timemin="2012" timemax="2015"
-				url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+				url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
 				attribution="Région Bretagne" 
 				metadata=""
 				metadata-csw="" />	
@@ -217,7 +217,7 @@
 				timefilter="true" timeinterval="year" timecontrol="slider" timemin="2012" timemax="2015"
 				style="transports_freq_jour_categorie,transports_freq_jour_totale,transports_freq_jour_h6_h9,transports_freq_jour_h16_h19"
 				stylesalias="Catégorie,Totale, Entre 6h et 9h, Entre 16h et 19h"
-				url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+				url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
 				attribution="Région Bretagne" 
 				metadata=""
 				metadata-csw="" />	
@@ -228,7 +228,7 @@
                 infoformat="text/html" featurecount="20"
 				style="transports_etabliss_scolaire_defaut, transports_etablissement_scolaire_nature"
 				stylesalias="Par défaut, Nature"
-				url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+				url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
 				attribution="Région Bretagne" 
 				metadata=""
 				metadata-csw="" />
@@ -236,7 +236,7 @@
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
                 infoformat="text/html" featurecount="20"
 				style="transports_administration_defaut"
-				url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+				url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
 				attribution="Région Bretagne" 
 				metadata=""
 				metadata-csw="" />
@@ -244,7 +244,7 @@
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
                 infoformat="text/html" featurecount="20"
 				style="transports_patrimoine_naturel_defaut"
-				url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+				url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
 				attribution="Région Bretagne" 
 				metadata=""
 				metadata-csw="" />
@@ -252,7 +252,7 @@
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
                 infoformat="text/html" featurecount="20"
 				style="transports_patrimoine_culturel_defaut"
-				url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+				url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
 				attribution="Région Bretagne" 
 				metadata=""
 				metadata-csw="" />
@@ -260,7 +260,7 @@
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
                 infoformat="text/html" featurecount="20"
 				style="transports_equip_sport_defaut"
-				url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+				url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
 				attribution="Région Bretagne" 
 				metadata=""
 				metadata-csw="" />		
@@ -271,7 +271,7 @@
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
                 infoformat="text/html" featurecount="20"
 				style="transports_pop_densite"
-				url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+				url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
 				attribution="INSEE - Densité de population par commune en 2013" 
 				metadata=""
 				metadata-csw="" />
@@ -280,7 +280,7 @@
                 infoformat="text/html" featurecount="20"
 				style="transports_pop_0_14ans,transports_pop_1529ans,transports_pop_3044ans,transports_pop_4559ans,transports_pop_6074ans,transports_pop_7589ans,transports_pop_90ans"
 				stylesalias="0 - 14 ans,15 - 29 ans,30 - 44 ans,44 - 59 ans,60 - 74 ans,75 - 89 ans,90 ans"
-				url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+				url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
 				attribution="INSEE - Répartition de la population selon les catégories d'âge par commune en 2013" 
 				metadata=""
 				metadata-csw="" />	
@@ -325,7 +325,7 @@
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
                 infoformat="text/html" featurecount="20"
 				style=""
-				url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+				url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
 				attribution="Région Bretagne" 
 				metadata="transports_ptus"
 				metadata-csw="" />
