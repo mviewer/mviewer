@@ -58,7 +58,7 @@
                     metadata=""
                     metadata-csw="" />	
                 <layer id="dim_arrets_ferroviaires_bzh" name="Arrêts ferroviaires régionaux" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="rb"
-                    searchable="false" queryable="true" fields="nom_pa" aliases="nom_pa"                    
+                    searchable="true" queryable="true" fields="nom_pa" aliases="nom_pa"                    
                     infoformat="text/html" featurecount="20"
                     style="transports_arret_ferr_defaut, transports_arret_ferr_borne,transports_arret_ferr_guichet,transports_arret_ferr_info_dynami,transports_arret_ferr_nature,transports_arret_ferr_parking,transports_arret_ferr_velo,transports_arret_ferr_pmr"
                     stylesalias="Par défaut, Distributeur automatique de billet, Guichet, Information dynamique,Nature des arrêts ferroviaires,Parking voiture,Parking vélo, Assistance PMR"

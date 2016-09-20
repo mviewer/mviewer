@@ -1315,4 +1315,30 @@ Utiliser le code Unicode du caractere de la police awesome.
 	border-color: #032e46;
 }*/
 
+.leftpanel-btn {  
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: large;
+}
+
+.leftpanel-btn:hover {  
+   font-size: x-large;
+   color: #032e46;
+   color: #032e46;
+}
+
+.leftpanel-btn:before {
+    content: "\f137";
+}
+
+.leftpanel-btn-closed:before {
+    content: "\f138";
+}
+
+
+
+
+
+
 
