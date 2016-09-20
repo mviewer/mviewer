@@ -294,15 +294,11 @@ p.text{
   color: #fff;
 }
 
-#alerts-zone .close, .modal-header .close {  
+#alerts-zone .close {  
   color: #fff;
   text-shadow: 0 1px 0 #000;  
 }
 
-.modal-header {
-  background-color: #032e46;
-  color: #fff;
-}
 
 .datepicker .active {
     background-color: #032e46!important;

@@ -4,7 +4,7 @@
     <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
     <mapoptions maxzoom="19" projection="EPSG:3857" center="-403013.39038929436,6128402.399153711" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
   
-	<baselayers style="gallery"><!-- style="default"||gallery" -->            		
+	<baselayers style="default"><!-- style="default"||gallery" -->            		
         <baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoPortail" maxscale="1000" thumbgallery="img/basemap/ortho.jpg"
             url="../wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" format="image/jpeg" visible="false" fromcapacity="false"
             attribution="&lt;a href='http://www.geoportail.fr/' target='_blank'>&lt;img src='http://api.ign.fr/geoportail/api/js/latest/theme/geoportal/img/logo_gp.gif'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
@@ -38,7 +38,7 @@
     <themes>
         <theme name="Infrastructures de transports"  collapsed="false" id="transport" icon="train">            
             <group name="Transports ferroviaires" id="grp1" >
-                 <!--<layer id="ref_trace_OD_2013_2016" name="Trains" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="rb"
+                 <layer id="ref_trace_OD_2013_2016" name="Trains" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="rb"
                     searchable="false" queryable="true" fields="" aliases=""
                     customcontrols="true"
                     infoformat="text/html" featurecount="1"
@@ -47,7 +47,7 @@
                     url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
                     attribution="Région Bretagne" 
                     metadata=""
-                    metadata-csw="" />-->
+                    metadata-csw="" />
                 <layer id="dim_lignes_ferroviaires_bzh" name="Lignes ferroviaires" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="rb"
                     searchable="false" queryable="true" fields="axe" aliases="axe"
                     infoformat="text/html" featurecount="20"
