@@ -147,7 +147,7 @@ $(document).ready(function () {
             <!-- SEARCH RESULTS  -->
             <ul id="searchresults" class="list-group" ></ul>
             <!-- BACKGROUND LAYERS  -->
-            <div id="backgroundlayerstoolbar"></div>
+            <div id="backgroundlayerstoolbar-gallery"></div>
             <!-- FIRST VERTICAL RIGHT TOOLBAR -->
             <div id="zoomtoolbar" class="btn-group-vertical btn-group-sm" role="group" aria-label="true">
                 <button href="#" onclick="mviewer.zoomIn();" title="Zoom avant (zoom fenêtre : shift + clic sur la carte)" 
@@ -184,11 +184,7 @@ $(document).ready(function () {
                 <button href="#" onclick="mviewer.print()" id="printbtn" title="Imprimer la carte" tabindex="103" accesskey="3"  
                     class="btn btn-default btn-raised" >
                      <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
-                </button>
-                <button href="#" onclick="mviewer.nextBackgroundLayer();" id="backgroundlayersbtn" title="Changer de fond de carte" tabindex="103" accesskey="3"  
-                    class="btn btn-default btn-raised" >
-                     <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
-                </button>                     
+                </button>                              
             </div>
             <div id="drawtoolsoptions" style="display:none;" class="btn-group btn-group-sm" role="group" aria-label="true"> 
                 <button  id="measurelinebtn" title="Mesure linéaire" onclick="mviewer.setTool('measureline');" class="btn btn-default btn-raised" >
@@ -198,6 +194,12 @@ $(document).ready(function () {
                     <span class="glyphicon glyphicon-adjust" aria-hidden="true"></span>
                 </button>
             </div>
+            <div id="backgroundlayerstoolbar-default" class="btn-group-vertical btn-group-sm" role="group" aria-label="true">
+            <button href="#" onclick="mviewer.nextBackgroundLayer();" id="backgroundlayersbtn" title="Changer de fond de carte" tabindex="103" accesskey="3"  
+                    class="btn-lg btn-default btn-raised" >
+                     <!--<span class="glyphicon glyphicon-globe" aria-hidden="true"></span>-->
+            </button>                     
+        </div>
         </div>
     </div><!-- END WRAPPER -->   
     

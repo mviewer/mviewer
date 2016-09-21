@@ -400,7 +400,7 @@ ul#basemapslist  li.active{
     transform: rotate(360deg);*/
 }
 
-div#backgroundlayerstoolbar {
+div#backgroundlayerstoolbar-gallery {
   display: inline-flex;
 }
 
@@ -577,12 +577,28 @@ ul#layers-container {
 /*#bottom-panel .popup-content {  */
 
 
-#backgroundlayerstoolbar {
+#backgroundlayerstoolbar-gallery {
 	bottom: .7em;
 	right: 50px;
 	float: right;
 	position: fixed;
     margin-bottom: 0;
+}
+
+#backgroundlayersbtn {
+  background-image: url("../img/basemap/osm.png");
+  background-size: 39px 43px;
+  height: 40px;
+  width: 40px;
+  border-radius: 5px;
+  border: 3px solid #f8f8f8;
+}
+
+#backgroundlayerstoolbar-default {
+	bottom: .7em;
+	right: 10px;
+	float: right;
+	position: fixed;   
 }
 
 #zoomtoolbar {
@@ -1217,7 +1233,7 @@ span.state-icon.fa{
 /******* Configuration fenêtre de fond de carte ************/ 
 
 /**** Fenêtre des fonds de carte ****/
-#backgroundlayerstoolbar{
+#backgroundlayerstoolbar-gallery{
 	background:#f8f8f8;
 	border-radius:4px ;
 	right:15px;
@@ -1250,7 +1266,7 @@ span.state-icon.fa{
     background: #f8f8f8;
     }
 
-#backgroundlayerstoolbar ul li {
+#backgroundlayerstoolbar-gallery ul li {
 	width: 80px;
 	height: 55px;
 	border: 2px solid #f8f8f8;
