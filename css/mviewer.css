@@ -635,7 +635,7 @@ li.mv-nav-item span {
 
 #loading-indicator {
   position: absolute;
-  left: 180px;
+  right: 275px;
   top: 13px;
   z-index: 10000;
 }
@@ -1040,6 +1040,10 @@ a.navbar-brand{
 	border-color: transparent;
 }
 
+#mv-navbar {
+	line-height:1.15;
+}
+
 /************** Barre gauche*************/
 
 #sidebar-wrapper a{
@@ -1334,8 +1338,9 @@ Utiliser le code Unicode du caractere de la police awesome.
 .leftpanel-btn {  
   position: absolute;
   bottom: 10px;
-  right: 10px;
+  right: 16px;
   font-size: large;
+  color: #999;
 }
 
 .leftpanel-btn:hover {  
