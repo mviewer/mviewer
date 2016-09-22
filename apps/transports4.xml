@@ -4,7 +4,7 @@
     <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
     <mapoptions maxzoom="19" projection="EPSG:3857" center="-403013.39038929436,6128402.399153711" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
   
-	<baselayers style="gallery"><!-- style="default"||gallery" -->            		
+	<baselayers style="default"><!-- style="default"||gallery" -->            		
         <baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoPortail" maxscale="1000" thumbgallery="img/basemap/ortho.jpg"
             url="../wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" format="image/jpeg" visible="false" fromcapacity="false"
             attribution="&lt;a href='http://www.geoportail.fr/' target='_blank'>&lt;img src='http://api.ign.fr/geoportail/api/js/latest/theme/geoportal/img/logo_gp.gif'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
@@ -38,7 +38,7 @@
     <themes>
         <theme name="Infrastructures de transports"  collapsed="false" id="transport" icon="train">            
             <group name="Transports ferroviaires" id="grp1" >
-                 <!--<layer id="ref_trace_OD_2013_2016" name="Trains" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="rb"
+                 <!--<layer id="ref_trace_OD_2013_2016" name="Trains"  visible="true" tiled="false" namespace="rb"
                     searchable="false" queryable="true" fields="" aliases=""
                     customcontrols="true"
                     infoformat="text/html" featurecount="1"
@@ -48,7 +48,7 @@
                     attribution="Région Bretagne" 
                     metadata=""
                     metadata-csw="" />-->
-                <layer id="dim_lignes_ferroviaires_bzh" name="Lignes ferroviaires" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="rb"
+                <layer id="dim_lignes_ferroviaires_bzh" name="Lignes ferroviaires"  visible="true" tiled="false" namespace="rb"
                     searchable="false" queryable="true" fields="axe" aliases="axe"
                     infoformat="text/html" featurecount="20"
                     style="transports_ligne_ferr_defaut, transports_lignes_ferr_typologie" 
@@ -57,7 +57,7 @@
                     attribution="Région Bretagne" 
                     metadata=""
                     metadata-csw="" />	
-                <layer id="dim_arrets_ferroviaires_bzh" name="Arrêts ferroviaires régionaux" scalemin="0" scalemax="50000000" visible="true" tiled="false" namespace="rb"
+                <layer id="dim_arrets_ferroviaires_bzh" name="Arrêts ferroviaires régionaux"  visible="true" tiled="false" namespace="rb"
                     searchable="true" queryable="true" fields="nom_pa" aliases="nom_pa"                    
                     infoformat="text/html" featurecount="20"
                     style="transports_arret_ferr_defaut, transports_arret_ferr_borne,transports_arret_ferr_guichet,transports_arret_ferr_info_dynami,transports_arret_ferr_nature,transports_arret_ferr_parking,transports_arret_ferr_velo,transports_arret_ferr_pmr"
@@ -66,7 +66,7 @@
                     attribution="Région Bretagne" 
                     metadata=""
                     metadata-csw="" />
-                <layer id="vue_pem_bzh" name="Pôles d'échanges multimodaux" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+                <layer id="vue_pem_bzh" name="Pôles d'échanges multimodaux"  visible="false" tiled="false" namespace="rb"
                     searchable="false" queryable="false" fields="nom_pa" aliases="nom_pa"
                     infoformat="text/html" featurecount="20"
                     style="transports_pem_defaut"
@@ -76,7 +76,7 @@
                     metadata-csw="" />
             </group>
             <group name="Transports routiers" id="grp2" >
-                <layer id="dim_arrets_routiers_reg_bzh" name="Arrêts routiers régionaux" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+                <layer id="dim_arrets_routiers_reg_bzh" name="Arrêts routiers régionaux"  visible="false" tiled="false" namespace="rb"
                     searchable="false" queryable="true" 
                     infoformat="text/html" featurecount="20"
                     style="transports_arret_rout_defaut"
@@ -84,7 +84,7 @@
                     attribution="Région Bretagne" 
                     metadata=""
                     metadata-csw="" />
-                <layer id="dim_lignes_routieres_reg_bzh" name="Lignes routières régionales" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+                <layer id="dim_lignes_routieres_reg_bzh" name="Lignes routières régionales"  visible="false" tiled="false" namespace="rb"
                     searchable="false" queryable="true" fields="axe" aliases="axe"
                     infoformat="text/html" featurecount="20"
                     style="transports_ligne_rout_reg_defaut" 
@@ -94,7 +94,7 @@
                     metadata-csw="" />
 			</group>		
 			<group name="Autres" id="grp3" >		
-                <layer id="dim_aeroport_regi_bzh" name="Aéroports régionaux" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+                <layer id="dim_aeroport_regi_bzh" name="Aéroports régionaux"  visible="false" tiled="false" namespace="rb"
                     searchable="false" queryable="true" fields="axe" aliases="axe"
                     infoformat="text/html" featurecount="20"
                     style="transports_aeroport" 
@@ -102,7 +102,7 @@
                     attribution="Région Bretagne" 
                     metadata=""
                     metadata-csw="" />
-                <layer id="dim_gare_maritime_bzh" name="Gares maritimes" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+                <layer id="dim_gare_maritime_bzh" name="Gares maritimes"  visible="false" tiled="false" namespace="rb"
                     searchable="false" queryable="true" fields="axe" aliases="axe"   
                     infoformat="text/html" featurecount="20"
                     style="transports_gare_mari" 
@@ -110,7 +110,7 @@
                     attribution="Région Bretagne" 
                     metadata=""
                     metadata-csw="" />	
-                <layer id="dim_aire_covoiturage_bzh" name="Aires de covoiturage" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+                <layer id="dim_aire_covoiturage_bzh" name="Aires de covoiturage"  visible="false" tiled="false" namespace="rb"
                     searchable="false" queryable="true" fields="axe" aliases="axe"
                     infoformat="text/html" featurecount="20"
                     style="transports_aire_covoiturage" 
@@ -121,7 +121,7 @@
             </group>
         </theme>
 		<theme name="Circulation TER annuelle"  collapsed="false" id="train" icon="code-fork">   
-			<layer id="vue_circulation_2006_2016_ete" name="Train journalier en été" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+			<layer id="vue_circulation_2006_2016_ete" name="Train journalier en été"  visible="false" tiled="false" namespace="rb"
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
 				infopanel="bottom-panel"
                 infoformat="text/html" featurecount="20"
@@ -132,7 +132,7 @@
 				attribution="Région Bretagne" 
 				metadata=""
 				metadata-csw="" />
-			<layer id="vue_circulation_2006_2016_hiver" name="Train journalier en hiver" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+			<layer id="vue_circulation_2006_2016_hiver" name="Train journalier en hiver"  visible="false" tiled="false" namespace="rb"
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
 				infopanel="bottom-panel"
                 infoformat="text/html" featurecount="20"
@@ -145,7 +145,7 @@
 				metadata-csw="" />		
         </theme>
 		<theme name="Travaux"  collapsed="false" id="travaux" icon="exclamation-triangle ">   
-			<layer id="vue_travaux_gare" name="Gares ferroviaires" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+			<layer id="vue_travaux_gare" name="Gares ferroviaires"  visible="false" tiled="false" namespace="rb"
 				searchable="false" queryable="true" 
                 infoformat="text/html" featurecount="20"
 				timefilter="true" timeinterval="year" timecontrol="slider" timemin="2013" timemax="2017"
@@ -154,7 +154,7 @@
 				attribution="Région Bretagne" 
 				metadata=""
 				metadata-csw="" />
-			<layer id="vue_travaux_troncon" name="Tronçons ferroviaires" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+			<layer id="vue_travaux_troncon" name="Tronçons ferroviaires"  visible="false" tiled="false" namespace="rb"
 				searchable="false" queryable="true" 
                 infoformat="text/html" featurecount="20"
 				timefilter="true" timeinterval="year" timecontrol="slider" timemin="2012" timemax="2017"
@@ -166,7 +166,7 @@
 				
         </theme>
 		<theme name="Suivi des voyages Aristote"  collapsed="false" id="aristote" icon="suitcase">
-			<layer id="vue_freq_totale_2009_2015_an" name="Nombre annuel de voyages TER" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+			<layer id="vue_freq_totale_2009_2015_an" name="Nombre annuel de voyages TER"  visible="false" tiled="false" namespace="rb"
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
 				infopanel="bottom-panel"
                 infoformat="text/html" featurecount="20"
@@ -176,7 +176,7 @@
 				attribution="Région Bretagne" 
 				metadata=""
 				metadata-csw="" />	
-			<!--<layer id="vue_freq_totale_2009_2015" name="Par mois" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+			<!--<layer id="vue_freq_totale_2009_2015" name="Par mois"  visible="false" tiled="false" namespace="rb"
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
 				infopanel="bottom-panel"
                 infoformat="text/html" featurecount="20"
@@ -188,7 +188,7 @@
 				metadata-csw="" />-->
         </theme>
 		<theme name="Validations Korrigo"  collapsed="false" id="korrigo" icon="credit-card">   
-			<layer id="vue_korrigo_valid_annuelle" name="Moyenne annuelle des validations journalières" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+			<layer id="vue_korrigo_valid_annuelle" name="Moyenne annuelle des validations journalières"  visible="false" tiled="false" namespace="rb"
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
 				infopanel="bottom-panel"
                 infoformat="text/html" featurecount="20"
@@ -198,7 +198,7 @@
 				attribution="Région Bretagne" 
 				metadata=""
 				metadata-csw="" />
-			<layer id="vue_korrigo_valid_total_heure" name="Moyenne annuelle des validations par plage horaire" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+			<layer id="vue_korrigo_valid_total_heure" name="Moyenne annuelle des validations par plage horaire"  visible="false" tiled="false" namespace="rb"
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
 				infopanel="bottom-panel"
                 infoformat="text/html" featurecount="20"
@@ -211,7 +211,7 @@
 				metadata-csw="" />	
         </theme>
 		<theme name="Fréquentation journalière"  collapsed="false" id="freq_jour" icon="group">
-			<layer id="vue_freq_journaliere_2012_15" name="Nombre de voyageurs par jour" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+			<layer id="vue_freq_journaliere_2012_15" name="Nombre de montées par jour"  visible="false" tiled="false" namespace="rb"
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
                 infoformat="text/html" featurecount="20"
 				timefilter="true" timeinterval="year" timecontrol="slider" timemin="2012" timemax="2015"
@@ -223,7 +223,7 @@
 				metadata-csw="" />	
         </theme>
 		<theme name="Points d'intérêt"  collapsed="false" id="poi" icon="map-marker">   
-			<layer id="dim_poi_etablissement_scolaire_bzh" name="Établissements scolaires" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+			<layer id="dim_poi_etablissement_scolaire_bzh" name="Établissements scolaires"  visible="false" tiled="false" namespace="rb"
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
                 infoformat="text/html" featurecount="20"
 				style="transports_etabliss_scolaire_defaut, transports_etablissement_scolaire_nature"
@@ -232,7 +232,7 @@
 				attribution="Région Bretagne" 
 				metadata=""
 				metadata-csw="" />
-			<layer id="poi_administration_bzh" name="Administrations" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+			<layer id="poi_administration_bzh" name="Administrations"  visible="false" tiled="false" namespace="rb"
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
                 infoformat="text/html" featurecount="20"
 				style="transports_administration_defaut"
@@ -240,7 +240,7 @@
 				attribution="Région Bretagne" 
 				metadata=""
 				metadata-csw="" />
-			<layer id="dim_poi_patrimoine_naturel_bzh" name="Patrimoine naturel" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+			<layer id="dim_poi_patrimoine_naturel_bzh" name="Patrimoine naturel"  visible="false" tiled="false" namespace="rb"
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
                 infoformat="text/html" featurecount="20"
 				style="transports_patrimoine_naturel_defaut"
@@ -248,7 +248,7 @@
 				attribution="Région Bretagne" 
 				metadata=""
 				metadata-csw="" />
-			<layer id="dim_poi_patrimoine_culturel_bzh" name="Patrimoine culturel" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+			<layer id="dim_poi_patrimoine_culturel_bzh" name="Patrimoine culturel"  visible="false" tiled="false" namespace="rb"
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
                 infoformat="text/html" featurecount="20"
 				style="transports_patrimoine_culturel_defaut"
@@ -256,7 +256,7 @@
 				attribution="Région Bretagne" 
 				metadata=""
 				metadata-csw="" />
-			<layer id="dim_poi_equipements_sports_bzh" name="Sports et Loisirs" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+			<layer id="dim_poi_equipements_sports_bzh" name="Sports et Loisirs"  visible="false" tiled="false" namespace="rb"
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
                 infoformat="text/html" featurecount="20"
 				style="transports_equip_sport_defaut"
@@ -267,7 +267,7 @@
 			
         </theme>
 		<theme name="Population"  collapsed="false" id="population" icon="male">   
-			<layer id="population_bzh_2013" name="Densité (hab/km²)" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+			<layer id="population_bzh_2013" name="Densité (hab/km²)"  visible="false" tiled="false" namespace="rb"
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
                 infoformat="text/html" featurecount="20"
 				style="transports_pop_densite"
@@ -275,7 +275,7 @@
 				attribution="INSEE - Densité de population par commune en 2013" 
 				metadata=""
 				metadata-csw="" />
-			<layer id="population_bzh_2013" name=" Catégorie d'âge (%)" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+			<layer id="population_bzh_2013" name=" Catégorie d'âge (%)"  visible="false" tiled="false" namespace="rb"
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
                 infoformat="text/html" featurecount="20"
 				style="transports_pop_0_14ans,transports_pop_1529ans,transports_pop_3044ans,transports_pop_4559ans,transports_pop_6074ans,transports_pop_7589ans,transports_pop_90ans"
@@ -287,7 +287,7 @@
 		</theme>		
         <theme name="Découpages territoriaux"  collapsed="true" id="territoire" icon="globe"> 
 		<group name="Limites administratives" id="grp1" >
-			<layer id="commune_bdcarto" name="Commune" scalemin="0" scalemax="50000000" visible="false" tiled="false"
+			<layer id="commune_bdcarto" name="Commune"  visible="false" tiled="false"
 				queryable="true" fields="COMMUNE,INSEE_COM,SUPERFICIE" aliases="Nom,Code INSEE,Superficie"
                 infoformat="application/vnd.ogc.gml" featurecount="5"                
 				style="commune_region" 
@@ -295,7 +295,7 @@
 				attribution="IGN - BDCARTO" 
 				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=b08e6cb1-236c-49b7-88f9-42b500d274d5"
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=b08e6cb1-236c-49b7-88f9-42b500d274d5" />
-			<layer id="EPCI_053" name="Intercommunalité" scalemin="0" scalemax="50000000" visible="false" tiled="false"
+			<layer id="EPCI_053" name="Intercommunalité"  visible="false" tiled="false"
 				queryable="true" fields="NOM_EPCI,SIREN_EPCI" aliases="Nom,SIREN"
                 infoformat="application/vnd.ogc.gml" featurecount="5"
 				style="epci_region" 
@@ -303,7 +303,7 @@
 				attribution="GéoBretagne" 
 				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=2298d744-49cb-4fcb-9487-26f916fecdff" 
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=2298d744-49cb-4fcb-9487-26f916fecdff" />			
-			<layer id="n_pays" name="Pays" scalemin="0" scalemax="50000000" visible="false" tiled="true"
+			<layer id="n_pays" name="Pays"  visible="false" tiled="true"
 				queryable="true" fields="NOM_PAYS" aliases="Nom"
                 infoformat="application/vnd.ogc.gml" featurecount="5"             
 				style="pays_region" 
@@ -311,7 +311,7 @@
 				attribution="GéoBretagne" 
 				metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=9722d181-75f9-40ab-a136-a9f9ed6f29a5" 
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=9722d181-75f9-40ab-a136-a9f9ed6f29a5" />				
-			<layer id="FDepartement" name="Département" scalemin="0" scalemax="50000000" visible="false" tiled="false"
+			<layer id="FDepartement" name="Département"  visible="false" tiled="false"
 				queryable="true" fields="LIBELLE" aliases="Nom"
                 infoformat="application/vnd.ogc.gml" featurecount="5"
 				style="" 
@@ -321,7 +321,7 @@
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=e16d50d4-746d-44e3-a5e7-5fc000f97665" />
 		</group>
 		<group name="Périmètres d'action" id="grp2" >
-			<layer id="dim_ptus_2015" name="Périmètre de transport urbain" scalemin="0" scalemax="50000000" visible="false" tiled="false" namespace="rb"
+			<layer id="dim_ptus_2015" name="Périmètre de transport urbain"  visible="false" tiled="false" namespace="rb"
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
                 infoformat="text/html" featurecount="20"
 				style=""

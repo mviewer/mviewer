@@ -211,7 +211,7 @@
 				metadata-csw="" />	
         </theme>
 		<theme name="Fréquentation journalière"  collapsed="false" id="freq_jour" icon="group">
-			<layer id="vue_freq_journaliere_2012_15" name="Nombre de voyageurs par jour"  visible="false" tiled="false" namespace="rb"
+			<layer id="vue_freq_journaliere_2012_15" name="Nombre de montées par jour"  visible="false" tiled="false" namespace="rb"
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
                 infoformat="text/html" featurecount="20"
 				timefilter="true" timeinterval="year" timecontrol="slider" timemin="2012" timemax="2015"
