@@ -1252,8 +1252,7 @@ span.state-icon.fa{
   line-height: 84px;
 }
 
-#bottom-panel-btn {
-  margin-top: -24px;
+#bottom-panel-btn {  
   text-align: center;  
 }
 
@@ -1268,7 +1267,13 @@ span.state-icon.fa{
     
 #bottom-panel-btn .fa-chevron-circle-down:hover {        
     background: #f8f8f8;
-    }
+}
+
+.mv-close {
+  margin-top: -24px;
+  position: absolute;
+  cursor: pointer;
+}    
 
 #backgroundlayerstoolbar-gallery ul li {
 	width: 80px;
