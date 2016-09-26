@@ -168,7 +168,7 @@ $(document).ready(function () {
             <!-- SECOND VERTICAL RIGHT TOOLBAR -->
             <div id="toolstoolbar" class="btn-group-vertical btn-group-sm" role="group" aria-label="true">                
                 <button class="mv-modetools btn btn-default btn-raised" href="#" onclick="mviewer.setTool('measureline', this.id);" id="measurebtn" title="Mesurer" 
-                    tabindex="108" accesskey="8">
+                    tabindex="108" accesskey="8" style="display:none;">
                     <span class="glyphicon glyphicon-resize-horizontal" aria-hidden="true"></span>
                 </button> 
                 <a class="btn btn-default btn-raised" type="button" href="?login" id="login" title="Se connecter" tabindex="110" accesskey="10"
@@ -180,11 +180,11 @@ $(document).ready(function () {
                      <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
                 </button>
                  <a href="#" id="exportpng" title="Exporter carte au format image" download="carte.png"
-                    class="btn btn-default btn-raised"  tabindex="113" accesskey="13">
+                    class="btn btn-default btn-raised"  tabindex="113" accesskey="13" style="display:none;">
                      <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
                 </a>                
                 <button href="#" onclick="mviewer.print()" id="printbtn" title="Imprimer la carte" tabindex="103" accesskey="3"  
-                    class="btn btn-default btn-raised" >
+                    class="btn btn-default btn-raised" style="display:none;" >
                      <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
                 </button>                              
             </div>
