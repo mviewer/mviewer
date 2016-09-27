@@ -252,7 +252,8 @@ Noeud enfant de theme décrivant une couche.
     stylesalias=""
     timefilter="" 
     timeinterval="" 
-    timecontrol="" 
+    timecontrol=""
+    timevalues=""    
     timemin="" 
     timemax=""
     opacity=""
@@ -292,7 +293,8 @@ Si la couche est de type hook, le style n'est pas défini ici.
 * **stylealias**: Titres à utiliser pour chaques style. utiliser la virgule comme séparateur si plusieurs styles.
 * **timefilter**: Booléen précisant si la dimension temporelle est activée pour cette couche. Voir (http://docs.geoserver.org/latest/en/user/services/wms/time.html)
 * **timeinterval**: day|month|year
-* **timecontrol**: calendar|slider 
+* **timecontrol**: calendar|slider
+* **timevalues**: valeurs séparées par des virgules - A utiliser avec le controle slider pour des valeurs non régulières ex (1950, 1976, 1980, 2004).
 * **timemin**: Date mini format : "yyyy-mm-dd" 
 * **timemax**: Date mini format : "yyyy-mm-dd" 
 * **customcontrols**: Booléen. Si actif, il faut déposer un fichier js et un fichier html ayant pour nom l'id de la couche dans le répertoire controls.
