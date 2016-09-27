@@ -1384,6 +1384,10 @@ Utiliser le code Unicode du caractere de la police awesome.
     background-color: #f5f5f5;
 }
 
+#els_marker path {
+  fill: #F31541;
+}
+
 
 
 
