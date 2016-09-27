@@ -129,7 +129,7 @@ Représente les fonds de plan.
 
 #####Attributs 
 
-* **type**: Type de flux OGC (OSM/WMTS/WMS)
+* **type**: Type de flux OGC (OSM/WMTS/WMS/fake)
 * **id**: Identifiant du fond de plan
 * **label**: Titre du fond de plan
 * **title**: Sous-titre du fond de plan
