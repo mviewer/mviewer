@@ -24,9 +24,10 @@ L'attribut style = "gallery" permet d'afficher les fonds de carte dans une liste
 L'attribut style = "default" permet d'afficher la liste des couches de fond sous forme d'un groupe de boutons.
 ]]>	
 	<baselayers style="gallery"><!-- style="default"||gallery" -->     
+	    <baselayer  type="WMS" id="plan2" label="OpenStreetMap" title="GéoBretagne" thumbgallery="img/basemap/osm.png" maxscale="1000" url="http://osm.geobretagne.fr/gwc01/service/wms" layers="osm:google" format="image/png" visible="true" attribution="OSM" style="_null" matrixset="EPSG:3857" minresolution="0.4"/>
         <baselayer  type="OSM" id="stamen1" label="Toner-lite" title="Stamen Design" thumbgallery="img/basemap/toner-lite.png" 
 			url="http://{a-d}.tile.stamen.com/toner-lite/{z}/{x}/{y}.png" maxzoom="20" 
-			visible="true" attribution="Map tiles by  &lt;a href='http://stamen.com/'>Stamen Design &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />		  	
+			visible="false" attribution="Map tiles by  &lt;a href='http://stamen.com/'>Stamen Design &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />		  	
         <baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoPortail" maxscale="1000" thumbgallery="img/basemap/ortho.jpg"
             url="../wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" format="image/jpeg" visible="false" fromcapacity="false"
             attribution="&lt;a href='http://www.geoportail.fr/' target='_blank'>&lt;img src='http://api.ign.fr/geoportail/api/js/latest/theme/geoportal/img/logo_gp.gif'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
@@ -93,7 +94,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=e2588666-6b16-4d5a-bca2-5e927bc0a922"
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=e2588666-6b16-4d5a-bca2-5e927bc0a922" /> 
         </theme>
-        <theme name="Architecture civile"  collapsed="true" id="archi_civile"> 
+        <theme name="Enquêtes thématiques - Architecture civile"  collapsed="true" id="archi_civile"> 
 			<layer id="etude_patrimoine_simple" name="Châteaux du 19ème siècle" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/chateaux_19e.png"
@@ -113,7 +114,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 
         </theme>
 
-        <theme name="Patrimoine religieux"  collapsed="true" id="archi_religieux"> 
+        <theme name="Enquêtes thématiques - Patrimoine religieux"  collapsed="true" id="archi_religieux"> 
 			<layer id="etude_patrimoine_simple" name="Architecture gothique" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/architecture_gothique.png"
@@ -191,7 +192,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=90468f5b-eef8-452d-9443-060870b51332" /> 
         </theme>
 
-        <theme name="Patrimoine maritime et fluvial"  collapsed="true" id="archi_pat_ma_flu"> 
+        <theme name="Enquêtes thématiques - Patrimoine maritime et fluvial"  collapsed="true" id="archi_pat_ma_flu"> 
         	<layer id="thematique_patrimoine" name="Canal de Nantes à Brest" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/canal_nantes_brest.png"
@@ -242,7 +243,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw="" />
         </theme>
 
-        <theme name="Techniques et savoir-faire"  collapsed="true" id="archi_tech"> 
+        <theme name="Enquêtes thématiques - Techniques et savoir-faire"  collapsed="true" id="archi_tech"> 
 			<layer id="etude_patrimoine_simple" name="Ardoisières du Centre Bretagne" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/ardoisieres.png"
@@ -306,7 +307,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=cd3bc8a0-a3b0-4c0e-bcc4-df7fbb8c213b" />
     </theme>
 	<theme name="Informations territoriales"  collapsed="true" id="territoire">  
-        <layer id="courbes-20m-aoa" name="Courbes de niveaux" visible="false" tiled="true"
+        <layer id="courbes-20m-10m-aoa" name="Courbes de niveaux" visible="false" tiled="true"
 				queryable="false" fields="" aliases=""
                 infoformat="text/html" featurecount="1"
 				style="" 
