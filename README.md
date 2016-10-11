@@ -1,7 +1,7 @@
 MVIEWER
 =============
 
-Visualiseur géographique [Kartenn](http://kartenn.region-bretagne.fr/mviewer/) basé sur OpenLayers 3.10.0 et Bootstrap.
+Visualiseur géographique [Kartenn](http://kartenn.region-bretagne.fr/mviewer/) basé sur OpenLayers 3.10.0 et Bootstrap 3.3.6
 
 Déploiement 
 -----------
