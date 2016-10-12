@@ -56,6 +56,26 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
        <!--<widget name="gauge"/>-->       
     </widgets> 
      <themes>
+       <theme name="Dossiers 'papier' avant 2000"  collapsed="true" id="papier"> 
+            <layer id="inventaire_papiers" name="Dossiers 'papiers' avant 2000" visible="true" tiled="false"
+				queryable="true" fields="nom" aliases="Nom" 
+                infoformat="text/html" featurecount="20" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				style=""
+				attribution="Région Bretagne" 
+				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=e2588666-6b16-4d5a-bca2-5e927bc0a922"
+				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=e2588666-6b16-4d5a-bca2-5e927bc0a922" /> 
+        </theme>
+        <theme name="Recensement avant études"  collapsed="true" id="recensement"> 
+            <layer id="recensement_patrimoine" name="Recensement avant études" visible="false" tiled="true" 
+				searchable="true" queryable="true" 
+				infoformat="text/html" featurecount="20"
+                style="recensement_point_centroide"  legendurl="http://kartenn.region-bretagne.fr/img/legend/recensement.png"
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0cf6de5d-9746-44d8-b003-a2dae2e7e585"
+				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=0cf6de5d-9746-44d8-b003-a2dae2e7e585" /> 
+        </theme>
         <theme name="Etudes topographiques"  collapsed="true" id="etudes">         
 			<layer id="etude_patrimoine" name="Architecture" visible="true" tiled="true"
 				queryable="true" searchable="true"
@@ -74,27 +94,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata="http://applications.region-bretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/5a6257ee-3fd8-41f2-bb63-55374e7a899a"
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=5a6257ee-3fd8-41f2-bb63-55374e7a899a" />
         </theme>
-        <theme name="Recensement avant études"  collapsed="true" id="recensement"> 
-            <layer id="recensement_patrimoine" name="Recensement avant études" visible="false" tiled="true" 
-				searchable="true" queryable="true" 
-				infoformat="text/html" featurecount="20"
-                style="recensement_point_centroide"  legendurl="http://kartenn.region-bretagne.fr/img/legend/recensement.png"
-				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
-				attribution="Service de l'inventaire : Région Bretagne" 
-				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0cf6de5d-9746-44d8-b003-a2dae2e7e585"
-				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=0cf6de5d-9746-44d8-b003-a2dae2e7e585" /> 
-        </theme>
-       <theme name="Dossiers 'papier' avant 2000"  collapsed="true" id="papier"> 
-            <layer id="inventaire_papiers" name="Dossiers 'papiers' avant 2000" visible="true" tiled="false"
-				queryable="true" fields="nom" aliases="Nom" 
-                infoformat="text/html" featurecount="20" 
-				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
-				style=""
-				attribution="Région Bretagne" 
-				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=e2588666-6b16-4d5a-bca2-5e927bc0a922"
-				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=e2588666-6b16-4d5a-bca2-5e927bc0a922" /> 
-        </theme>
-        <theme name="Enquêtes thématiques - Architecture civile"  collapsed="true" id="archi_civile"> 
+        <theme name="Enq. thématiques - Architecture civile"  collapsed="true" id="archi_civile"> 
 			<layer id="etude_patrimoine_simple" name="Châteaux du 19ème siècle" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/chateaux_19e.png"
@@ -111,10 +111,9 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata=""
 				metadata-csw="" />
-
         </theme>
 
-        <theme name="Enquêtes thématiques - Patrimoine religieux"  collapsed="true" id="archi_religieux"> 
+        <theme name="Enq. thématiques - Pat. religieux"  collapsed="true" id="archi_religieux"> 
 			<layer id="etude_patrimoine_simple" name="Architecture gothique" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/architecture_gothique.png"
@@ -192,7 +191,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=90468f5b-eef8-452d-9443-060870b51332" /> 
         </theme>
 
-        <theme name="Enquêtes thématiques - Patrimoine maritime et fluvial"  collapsed="true" id="archi_pat_ma_flu"> 
+        <theme name="Enq. thématiques - Pat. maritime et fluvial"  collapsed="true" id="archi_pat_ma_flu"> 
         	<layer id="thematique_patrimoine" name="Canal de Nantes à Brest" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/canal_nantes_brest.png"
@@ -243,7 +242,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				metadata-csw="" />
         </theme>
 
-        <theme name="Enquêtes thématiques - Techniques et savoir-faire"  collapsed="true" id="archi_tech"> 
+        <theme name="Enq. thématiques - Techniq. et savoir-faire"  collapsed="true" id="archi_tech"> 
 			<layer id="etude_patrimoine_simple" name="Ardoisières du Centre Bretagne" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/ardoisieres.png"
