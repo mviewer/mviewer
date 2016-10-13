@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <application title="Kartenn Transport" logo="" help="" measuretools="true" style="css/themes/blue.css"/>
+    <application title="Kartenn Transport" logo="" help="" measuretools="true" exportpng="true" style="css/themes/blue.css"/>
     <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
     <mapoptions maxzoom="19" projection="EPSG:3857" center="-220750.13768758904,6144925.57790189" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
   
@@ -220,7 +220,7 @@
                 infoformat="text/html" featurecount="20"
 				timefilter="true" timeinterval="year" timecontrol="slider" timemin="2012" timemax="2015"
 				style="transports_freq_jour_categorie,transports_freq_jour_totale,transports_freq_jour_h6_h9,transports_freq_jour_h16_h19"
-				stylesalias="Catégorie,Totale, Entre 6h et 9h, Entre 16h et 19h"
+				stylesalias="Catégorie,Total, Entre 6h et 9h, Entre 16h et 19h"
 				url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
 				attribution="Région Bretagne" 
 				metadata=""

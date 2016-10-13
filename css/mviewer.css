@@ -1389,7 +1389,28 @@ Utiliser le code Unicode du caractere de la police awesome.
 }
 
 
+/**************** BUTTON TOOLS ***/
 
+btn:active, .btn.active, .btn:focus, btn-lg:active, .btn-lg.active, .btn-lg:focus  {
+  outline: 0px !important;
+  -webkit-appearance: none;
+}
 
+#drawtoolsoptions button:focus {
+  background-color: green;
+}
+#drawtoolsoptions button {
+  background-color: red;
+}
+.btn-default.focus, .btn-default:focus{
+	color: #333;
+	border-color: #e6e6e6;
+	background-color: #e6e6e6;
+}
 
+.btn-default.active, .btn-default:active{
+	background-color:#032e46;
+	color:#fff;
+	border-color:#032e46;
+}
 
