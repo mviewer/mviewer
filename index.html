@@ -90,7 +90,10 @@ $(document).ready(function () {
 </head>
 <body>
     <!-- Ajax Loader -->
-    <img src="img/load_blanc.gif" id="loading-indicator" style="display:none" />
+    <!--<img src="img/loader.gif" id="loading-indicator" style="display:none" />-->
+	<div id="loading-indicator" style="display:none">
+		<div class="loader">Loading...</div>
+	</div>	
     <!-- NAVBAR -->
 	<nav class="navbar navbar-default no-margin navbar-fixed-top" id="mv-navbar">        
         <div class="navbar-header fixed-brand">
@@ -98,7 +101,7 @@ $(document).ready(function () {
               <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
             </button>-->
             <a class="navbar-brand" href="#">
-                <img alt="Logo" src="img/logo/rb_bl.png" class="mv-logo">
+                <img alt="Logo" src="img/logo/rb_blanc.svg" class="mv-logo">
             </a>
             <!--<a class="navbar-brand" href="#"> Mviewer</a>-->
         </div>        
@@ -149,6 +152,7 @@ $(document).ready(function () {
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="els_marker" x="0px" y="0px" viewBox="0 0 297 297" style="enable-background:new 0 0 297 297;" xml:space="preserve" width="30px" height="30px">
                 <path d="M148.5,0C85.646,0,34.511,51.136,34.511,113.989c0,25.11,8.008,48.926,23.157,68.873  c13.604,17.914,32.512,31.588,53.658,38.904l27.464,68.659c1.589,3.971,5.434,6.574,9.71,6.574c4.276,0,8.121-2.603,9.71-6.574  l27.464-68.659c21.146-7.316,40.054-20.99,53.658-38.904c15.149-19.947,23.157-43.763,23.157-68.873  C262.489,51.136,211.354,0,148.5,0z M148.5,72.682c22.777,0,41.308,18.53,41.308,41.308c0,22.777-18.53,41.309-41.308,41.309  c-22.777,0-41.308-18.531-41.308-41.309C107.192,91.212,125.723,72.682,148.5,72.682z" fill="#F31541"/><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g>
             </svg>
+			
             <!-- SEARCH RESULTS  -->
             <ul id="searchresults" class="list-group" ></ul>
             <!-- BACKGROUND LAYERS  -->
@@ -221,24 +225,26 @@ $(document).ready(function () {
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h5 class="modal-title">paramètres de recherche</h5>
+                        <h5 class="modal-title">Paramètres de recherche</h5>
                     </div>
                     <div class="modal-body" >
-                        <form role="form" id="searchparameters">
-                            <div  class="form-group" >                        
-                                <input type="checkbox" name="param_search_bbox" id="param_search_bbox" checked="true">
-                                <label for="param_search_bbox">Rechercher dans l'emprise de la carte</label>
-                            </div>
-                            <div  class="form-group" >   
-                                <input type="checkbox" name="param_search_localities" id="param_search_localities">
-                                <label for="param_search_localities">Rechercher des adresses</label>
-                            </div>
-                            <div  class="form-group" >   
-                                <input class="searchfeatures" type="checkbox" name="param_search_features" id="param_search_features">
-                                <label class="searchfeatures" for="param_search_features">Rechercher des entités</label>
-                            </div>
-                            <p id="adresse-attribution"></p>                        
-                        </form> 
+                        <ul id="searchparameters">
+                            <li class="mv-param-item" id="param_search_bbox" onclick="mviewer.toggleParameter(this)" >                
+                                <a href="#" ><span class="state-icon fa mv-unchecked"></span>
+                                Rechercher dans l'emprise de la carte
+                               </a>
+                            </li>
+                            <li class="mv-param-item" id="param_search_localities" onclick="mviewer.toggleParameter(this)" >                
+                                <a href="#" ><span class="state-icon fa mv-unchecked"></span>
+                                Rechercher des adresses
+                                </a>
+                            </li>
+                            <li class="mv-param-item" id="param_search_features" onclick="mviewer.toggleParameter(this)" >                
+                                <a href="#" ><span class="state-icon fa mv-unchecked"></span>
+                                Rechercher des entités
+                               </a>
+                           </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -249,13 +255,13 @@ $(document).ready(function () {
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h5 class="modal-title">partager cette carte</h5>
+                        <h5 class="modal-title">Partager cette carte</h5>
                     </div>
                     <div class="modal-body" >
                         <div class="row">
                             <div class="col-md-6" >
                                 <div class="btn-group-vertical" role="group" >
-                                    <a type="button" class="btn btn-default" id="permalinklink" href="#" title="lien permanent vers la carte">lien vers la carte</a>	
+                                    <a type="button" class="btn btn-default" id="permalinklink" href="#" title="lien permanent vers la carte">Lien vers la carte</a>	
                                     <a type="button" class="btn btn-default" href='#' title='Envoyer vers le visualiseur Georchestra'>
                                         <img src="img/logo/g.png" alt="georchestra" onclick="mviewer.sendToGeorchestra();" />
                                     </a>
