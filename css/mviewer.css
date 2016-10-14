@@ -1269,7 +1269,7 @@ span.state-icon.fa{
 	/*font-family: Open Sans; */
 	font-size: inherit;
 	color: #333;
-	border: 0.2px solid rgba(51, 51, 51, 0.44);
+	border: 1px solid rgba(51, 51, 51, 0.44);
 }
 
 .form-control:focus{
@@ -1284,6 +1284,11 @@ span.state-icon.fa{
 .form-group.form-group-opacity{
 	margin-bottom:10px;
 }
+
+.form-group .btn-default:focus{
+	border:1px solid #e6e6e6;
+}
+
 
 /********* Style curseur slider opacity  */
 
