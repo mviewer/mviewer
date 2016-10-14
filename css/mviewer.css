@@ -96,7 +96,10 @@ a#searchparams {
 }
 
 #searchresults li a {
-	font-size: 10px;
+	font-size: 11px;
+}
+#searchresults li a:hover{
+	font-weight: bold;
 }
 #searchresults li.disabled {
     padding: 10px;
@@ -328,10 +331,6 @@ p.bjqs-caption{
 
 
 
-
-
-
-
 /* CSS scroll bar style for chrome */ 
 
 ::-webkit-scrollbar {
@@ -363,7 +362,9 @@ img.mv-logo {
   max-width: 100px;
 }
 
-
+p.navbar-text.mv-title{
+	margin-left:0%;
+}
 div#datalist {
   max-width: 300px;
 }
@@ -590,8 +591,8 @@ ul#layers-container {
   background-size: 39px 43px;
   height: 40px;
   width: 40px;
-  border-radius: 5px;
-  border: 3px solid #f8f8f8;
+  border-radius: 25px;
+  border: 2.5px solid #f8f8f8;
 }
 
 #backgroundlayerstoolbar-default {
@@ -1001,6 +1002,15 @@ p.text{
 	
 /****************** Modification de l'interface bootstrap*/
 
+a {
+	color: #333;
+}
+
+a:hover{
+	color: #032e46;
+	/*font-weight: bold;*/
+	text-decoration: none;
+}
 /********** Barre du haut**********/
 /*.navbar-default{
 	border-color:#032e46;
@@ -1033,7 +1043,7 @@ a.navbar-brand{
 }*/
 
 #mv-navbar .form-control{
-	border: 1px transparent;
+	border-width: 0px;
 }
 
 .btn-default{
@@ -1042,6 +1052,103 @@ a.navbar-brand{
 
 #mv-navbar {
 	line-height:1.15;
+}
+.list-group-item{
+	border:none;
+}
+
+/* Résultats recherches */ 
+
+li.elasticsearch.list-group-item.disabled{
+	background-color: white;
+	color: #032e46;
+	font-weight: bold;
+	
+}
+
+/* Boîte de dialogue paramètre de recherche */ 
+
+#parameterspanel .modal-header{
+	color: #333;
+	font-family: Open Sans;
+	font-size: 13px;
+}
+
+#parameterspanel .form-group label {
+	font-weight:normal;
+	color: #333;
+	font-family: Open Sans;
+	font-size: 13px;
+}
+
+.modal-header{
+	border-bottom:none;
+}
+
+/* Boîte de dialogue partager la carte */ 
+
+#sharepanel .modal-header{
+	color: #333;
+	font-family: Open Sans;
+	font-size: 13px;
+}
+
+#sharepanel .form-group label {
+	font-weight:normal;
+	color: #333;
+	font-family: Open Sans;
+	font-size: 13px;
+}
+
+a#permalinklink{
+	font-family: Open Sans;
+}
+#sharepanel .btn-group-vertical{
+	margin-top:10%;
+}
+
+/******** ICON LOADING *********/
+.loader {
+  margin: 4px auto;
+  font-size: 3px;
+  position: fixed;
+  text-indent: -9999em;
+  border-top: 1.1em solid rgba(255, 255, 255, 0.2);
+  border-right: 1.1em solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);
+  border-left: 1.1em solid #ffffff;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation: load8 1.1s infinite linear;
+  animation: load8 1.1s infinite linear;
+}
+.loader,
+.loader:after {
+  border-radius: 50%;
+  width: 10em;
+  height: 10em;
+  right:270px;
+}
+@-webkit-keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
 
 /************** Barre gauche*************/
@@ -1092,6 +1199,13 @@ ul.nav-pills.nav-stacked{
 	font-weight: normal;
 }
 
+/* Search toolbar*/
+
+#searchfield.btn-default{
+	color:red;
+}
+
+
 /************Fenêtre du bas**********/
 ul.carousel-inner{
 	padding-left:10px;
@@ -1141,8 +1255,15 @@ span.state-icon.fa{
 .form-control{
 	/*font-family: Open Sans; */
 	font-size: inherit;
+	color: #333;
+	border: 0.2px solid rgba(51, 51, 51, 0.44);
 }
 
+.form-control:focus{
+	border:0.2px solid rgba(51, 51, 51, 0.44);
+	-webkit-box-shadow: none;
+	box-shadow: none;	
+}
 .form-group.form-group-analyses{
 	margin-top:11px;	
 }
@@ -1311,11 +1432,11 @@ ul#basemapslist p {
 Utiliser le code Unicode du caractere de la police awesome.
 */
 
-.mv-layer-unchecked:before {
+.mv-unchecked:before {
     content: "\f10c";
 }
 
-.mv-layer-checked:before {
+.mv-checked:before {
     content: "\f058";
 }
 
@@ -1349,8 +1470,7 @@ Utiliser le code Unicode du caractere de la police awesome.
 }
 
 .leftpanel-btn:hover {  
-   font-size: x-large;
-   color: #032e46;
+   font-size: large;
    color: #032e46;
 }
 
@@ -1384,8 +1504,9 @@ Utiliser le code Unicode du caractere de la police awesome.
     background-color: #f5f5f5;
 }
 
+/***** Map-pins****/
 #els_marker path {
-  fill: #F31541;
+  fill: #ee4b4b;
 }
 
 
@@ -1419,6 +1540,4 @@ btn:active, btn.active, .btn-default.active, .btn-default:active, btn:focus, btn
 	color:#fff;
 	border-color:#032e46;
 }
-
-border-color: #adadad;
 
