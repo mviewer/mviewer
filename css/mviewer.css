@@ -656,13 +656,15 @@ li.mv-nav-item span {
 
 .tooltip2 {
   position: relative;
-  background: rgba(0, 0, 0, 1);
+  background: rgba(3,46,70,0.85);
   border-radius: 4px;
   color: white;
   padding: 4px 8px;
   opacity: 1;
   white-space: nowrap;
   text-shadow: none;
+  font-family: Open Sans;
+  font-weight: normal!important;
 }
 
 .tooltip-measure {
@@ -671,14 +673,14 @@ li.mv-nav-item span {
 }
 
 .tooltip-measure-static {
-  background-color: rgba(34, 170, 221, 0.5);
-  color: black;
-  border: 1px solid white;
+  background-color: rgba(3,46,70,0.85);
+  color: #fff;
+  font-family: Open Sans;
 }
 
 .tooltip-measure:before,
 .tooltip-measure-static:before {
-  border-top: 6px solid rgba(0, 0, 0, 1);
+  border-top: 6px solid rgba(3,46,70,0.85);
   border-right: 6px solid transparent;
   border-left: 6px solid transparent;
   content: "";
@@ -689,7 +691,7 @@ li.mv-nav-item span {
 }
 
 .tooltip-measure-static:before {
-  border-top-color: rgba(34, 170, 221, 0.5);
+  border-top-color: rgba(3,46,70,0.85);
 }
 /*  Range from http://danielstern.ca/range.css/?ref=css-tricks#/*/
 input[type=range].mv-range {
@@ -823,12 +825,12 @@ li[role="presentation"] {
   /*background-color: #032e46;  */
 }
 .nav-tabs .glyphicon {
-  color: #333;
+  color: #ccc;
 }
 
 
 .nav-tabs .active .glyphicon {
-  color: #fff;  
+  color: #032e46;  
 }
 
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
@@ -1074,17 +1076,28 @@ li.elasticsearch.list-group-item.disabled{
 	font-size: 13px;
 }
 
-#parameterspanel .form-group label {
-	font-weight:normal;
-	color: #333;
-	font-family: Open Sans;
-	font-size: 13px;
-}
-
 .modal-header{
 	border-bottom:none;
+	padding-bottom:0px;
 }
 
+ul#searchparameters{
+	list-style: none;
+	font-family: Open Sans;
+	padding-left: 10px;
+	padding-top:0px;
+	line-height: 1.6;
+	
+}
+
+#searchparameters .mv-param-item a:hover{
+	color:#333;
+}
+#searchparameters .mv-param-item a:focus{
+	color:#333;
+	text-decoration:none;
+	outline: none;
+}
 /* Boîte de dialogue partager la carte */ 
 
 #sharepanel .modal-header{
@@ -1437,7 +1450,7 @@ Utiliser le code Unicode du caractere de la police awesome.
 }
 
 .mv-checked:before {
-    content: "\f058";
+    content: "\f192";
 }
 
 
