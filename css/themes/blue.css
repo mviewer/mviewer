@@ -186,6 +186,7 @@ h4.title{
 	font-family:'Open Sans';
 	}
 
+/* Spécifique au transports */	
 #block_crit{
 		display: block;
 		box-sizing: content-box;
@@ -276,6 +277,7 @@ p.text{
 			}
 
 
+			
 	/* Button right toolbar */
 
 
@@ -302,4 +304,55 @@ p.text{
 
 .datepicker .active {
     background-color: #032e46!important;
+}
+
+.leftpanel-btn:hover {
+   color: #032e46;
+}
+
+
+/* Résultats recherches */
+
+li.elasticsearch.list-group-item.disabled{
+	color: #032e46;
+	
+}
+
+/* Buttons tools*/
+#drawtoolsoptions .btn-default.active, #drawtoolsoptions .btn-default:active, #drawtoolsoptions .btn-default.focus, #drawtoolsoptions .btn-default:focus {
+	background-color:#032e46;
+	border-color:#032e46;
+}
+
+/* Search toolbar */
+
+li.geoportail.list-group-item.disabled{
+	background:#032e46;
+	border-color:#032e46;
+}
+
+.nav-tabs .active .glyphicon {
+  color: #032e46;  
+}
+
+a:hover{
+	color: #032e46;
+}
+
+/* Tooltip measure */
+.tooltip2 {
+  background: #032e46;
+}
+
+.tooltip-measure-static {
+  background-color: #032e46;
+}
+
+.tooltip-measure:before,
+.tooltip-measure-static:before {
+  border-top: 6px solid #032e46;
+}
+
+.tooltip-measure-static:before {
+  border-top-color: #032e46;
 }
