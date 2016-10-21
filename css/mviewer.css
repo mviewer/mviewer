@@ -30,7 +30,7 @@ html {
     background-color: rgba(255,255,255,0.7);
     border-top-left-radius: 4px;
     right: auto;
-    margin-left: 150px;
+    margin-left: 145px;
 }
 
 .ol-attribution a {
@@ -60,6 +60,9 @@ html {
 }
 
 /* search tollbar */
+#searchfield{
+	border:0px;
+}
 
 #searchtool {	
 	width:220px;
@@ -112,7 +115,13 @@ li.geoportail.list-group-item.disabled{
 	font-size:13px!important;
 }
 
-
+#searchtool .btn-default{
+	background-color:#ffffff;
+	color:#032e46;
+	z-index: 1;
+	border-color:#fff;
+	border-radius: 0px;
+}
 
 /* popups */
 
@@ -426,12 +435,12 @@ div#backgroundlayerstoolbar-gallery {
 }
 
 #layers-container-box-header {
-  height: 20px;
+  height: 35px;
   background-color: #032e46;
 }
 
 #legend:not(.active) {
-  width: 22px;
+  width: 35px;
 }
 
 
@@ -459,8 +468,8 @@ transform: scale3d(0, 0, 0);*/
 
 #layers-container-box-header span.glyphicon.glyphicon-menu-hamburger {
   color: #fff;
-  padding-left: 5px;
-  padding-top: 3px;
+  padding-left: 10px;
+  padding-top: 10px;
 }
 
 ul#layers-container {
@@ -633,6 +642,7 @@ ul#layers-container {
   width: 40px;
   border-radius: 25px;
   border: 2.5px solid #f8f8f8;
+  box-shadow: 0px 0px 30px 3px rgba(200, 200, 200, 0.5) ;
 }
 
 #backgroundlayerstoolbar-default {
@@ -690,6 +700,13 @@ li.mv-nav-item span {
 }
 #alerts-zone .alert {
   margin-bottom: 2px;
+}
+
+#zoomtoolbar {
+	box-shadow: 0px 0px 30px 3px rgba(200, 200, 200, 0.5);
+}
+#toolstoolbar {
+	box-shadow: 0px 0px 30px 3px rgba(200, 200, 200, 0.5);
 }
 
 /* Measure control css */
@@ -955,13 +972,11 @@ a.navbar-brand{
 	background-color:#2e5367;
 }*/
 
-#mv-navbar .form-control{
+#mv-navbar {
 	border-width: 0px;
 }
 
-.btn-default{
-	border-color: transparent;
-}
+
 
 #mv-navbar {
 	line-height:1.15;
@@ -1030,6 +1045,9 @@ a#permalinklink{
 	margin-top:10%;
 }
 
+.modal-content{
+	border-radius: 0px;
+}
 /******** ICON LOADING *********/
 .loader {
   margin: 4px auto;
@@ -1124,9 +1142,6 @@ ul.nav-pills.nav-stacked{
 
 /* Search toolbar*/
 
-#searchfield.btn-default{
-	color:red;
-}
 
 
 /************Fenêtre du bas**********/
@@ -1186,6 +1201,7 @@ a:focus{
 	border:1px solid rgba(51, 51, 51, 0.2);
 	-webkit-box-shadow: none;
 	box-shadow: none;
+	/*border:0px;*/
 }
 
 .form-control:focus{
@@ -1205,7 +1221,22 @@ a:focus{
 	border:1px solid #e6e6e6;
 }
 
+.list-group-item{
+	border:1px solid #ffffff;
+}
+.list-group-item:first-child{
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+}
 
+.list-group-item:last-child{
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+
+#legend:not(.active){
+
+}
 /********* Style curseur slider opacity  */
 
 
@@ -1492,7 +1523,7 @@ btn:active, .btn.active, .btn:focus, btn-lg:active, .btn-lg.active, .btn-lg:focu
 }*/
 
 btn:active, btn.active, .btn-default.active, .btn-default:active, btn:focus, btn.focus, .btn-default.focus, .btn-default:focus {
-   border: none;
+   border-color: none!important;
 }
 
 #drawtoolsoptions .btn-default.active, #drawtoolsoptions .btn-default:active, #drawtoolsoptions .btn-default.focus, #drawtoolsoptions .btn-default:focus {
@@ -1501,3 +1532,36 @@ btn:active, btn.active, .btn-default.active, .btn-default:active, btn:focus, btn
 	/* border-color:#032e46; */
 }
 
+
+.btn-group-vertical>.btn:first-child:not(:last-child){
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+}
+
+.btn-group-vertical>.btn:last-child:not(:first-child){
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+
+button#measureareabtn{
+	border-radius:0px;
+	border:0px;
+}
+button#measurelinebtn{
+	border-radius:0px;
+}
+
+.form-control{
+	border-radius: 0px;
+}
+
+button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
+	border:none;
+}
+
+.ol-control button{
+	border-radius: 30px;
+}
+.ol-attribution.ol-unselectable.ol-control.ol-collapsed{
+	border-radius: 30px;
+}
