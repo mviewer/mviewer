@@ -425,6 +425,44 @@ div#backgroundlayerstoolbar-gallery {
     transition: all 0.5s ease;
 }
 
+#layers-container-box-header {
+  height: 20px;
+  background-color: #032e46;
+}
+
+#legend:not(.active) {
+  width: 22px;
+}
+
+
+.active #layers-container {
+    display: block;    
+    /*-webkit-transform: scale3d(1, 1, 1);
+-moz-transform: scale3d(1, 1, 1);
+-o-transform: scale3d(1, 1, 1);
+-ms-transform: scale3d(1, 1, 1);
+transform: scale3d(1, 1, 1);*/
+}
+
+#layers-container {
+    display: none;
+   /* -webkit-transition-duration: 1s; 
+    transition-duration: 1s;
+     -webkit-transform-origin: left top; 
+    transform-origin: left top;
+   -webkit-transform: scale3d(0, 0, 0);
+-moz-transform: scale3d(0, 0, 0);
+-o-transform: scale3d(0,0, 0);
+-ms-transform: scale3d(0, 0, 0);
+transform: scale3d(0, 0, 0);*/
+}
+
+#layers-container-box-header span.glyphicon.glyphicon-menu-hamburger {
+  color: #fff;
+  padding-left: 5px;
+  padding-top: 3px;
+}
+
 ul#layers-container {
   margin-bottom: 0;
 }
@@ -502,9 +540,7 @@ ul#layers-container {
     opacity: 1;
 }
 
-#right-panel .close {
-  /*padding-top: 60px;  
-  right: 10px;*/
+#right-panel .close {  
   color: #fff;
   opacity: 1;
   padding-top: 0px;
@@ -512,6 +548,10 @@ ul#layers-container {
   position: absolute;
   margin-top: -38px;
   padding-top: 10px;
+}
+
+#right-panel:not(.active) .close {  
+  display: none;
 }
 
 #right-panel .popup-content {
