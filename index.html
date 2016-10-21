@@ -136,7 +136,12 @@ $(document).ready(function () {
                 <div class="row">            
                     <div id="map" tabindex="1" accesskey="1"></div>
                     <div id="layers-container-box" class="">
-                        <ul id="layers-container" class="list-group"></ul>
+                        <div id="legend" class="active">
+                            <div id="layers-container-box-header" >
+                                <a onclick="mviewer.toggleLegend();" title="Afficher/masquer la légende" href="#"> <span class="glyphicon glyphicon-menu-hamburger"></span> </a>
+                            </div>
+                            <ul id="layers-container" class="list-group"></ul>
+                        </div>
                     </div>
                     <!-- BOTTOM PANEL -->
                     <div id="bottom-panel">

@@ -425,6 +425,29 @@ div#backgroundlayerstoolbar-gallery {
     transition: all 0.5s ease;
 }
 
+#layers-container-box-header {
+  height: 20px;
+  background-color: #032e46;
+}
+
+#legend:not(.active) {
+  width: 22px;  
+}
+
+.active #layers-container {
+    display: block;
+}
+
+#layers-container {
+    display: none;
+}
+
+#layers-container-box-header span.glyphicon.glyphicon-menu-hamburger {
+  color: #fff;
+  padding-left: 5px;
+  padding-top: 3px;
+}
+
 ul#layers-container {
   margin-bottom: 0;
 }
