@@ -26,6 +26,11 @@
   font-weight: bold; 
 }
 
+.but_link a:focus{
+  font-weight: bold;
+  font-color:#fff; 
+}
+
 
 /* Fenêtre Template Geoserver */ 
 
