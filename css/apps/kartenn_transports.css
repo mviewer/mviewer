@@ -16,6 +16,7 @@
 .but_link p{
   margin: 0;
   text_align:center;
+  color:#fff;
 }     
 .but_link a{
   color: #fff;
@@ -23,6 +24,7 @@
 }
 .but_link a:hover{
   font-weight: bold; 
+  font-color:#fff;
 }
 
 .but_link a:focus{
@@ -259,6 +261,7 @@ p.text{
 	font-family: Open Sans; 
 }
 
+
 /* Style curseur slider Opacité */
 .mv-layer-options  .slider-selection{
 	background:#032e46;	
@@ -305,6 +308,10 @@ p.text{
 
 .mv-layer-options  .slider-track-high{
 	background:#032e46;	
+}
+
+#layers-container-box-header {
+  background-color: #032e46;
 }
 
 
@@ -395,6 +402,10 @@ li.geoportail.list-group-item.disabled{
 
 a:hover{
 	color: #032e46;
+}
+
+#searchtool .btn-default{
+	color:#032e46;
 }
 
 /* Tooltip measure */
