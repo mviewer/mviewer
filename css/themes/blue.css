@@ -186,98 +186,7 @@ h4.title{
 	font-family:'Open Sans';
 	}
 
-/* Spécifique au transports */	
-#block_crit{
-		display: block;
-		box-sizing: content-box;
-		width: 130px;
-		height: 30px;
-		opacity: 1;
-		margin: 0;
-		border-radius: 4px;
-		color: rgba(255,255,255,1);
-		background: #032e46;
-	}
-#ind_freq_an{
-				display: block;
-				box-sizing: content-box;
-				width: 130px;
-				height: 30px;
-				opacity: 1;
-				margin: 0;
-				border-radius: 4px;
-				border: solid 2px #16a085;
-				color: #16a085;
-				background: #ffffff;
-			}
-#ind_freq_mois{
-				display: block;
-				box-sizing: content-box;
-				width: 130px;
-				height: 30px;
-				opacity: 1;
-				margin: 0;
-				border-radius: 4px;
-				border: solid 2px #1dd2af;
-				color: #1dd2af;
-				background: #ffffff;
-			}
-#ind_valid_an{
-				display: block;
-				box-sizing: content-box;
-				width: 130px;
-				height: 30px;
-				opacity: 1;
-				margin: 0;
-				border-radius: 4px;
-				border: solid 2px #f4c300;
-				color: #f4c300;
-				background: #ffffff;
-			}
-
-#ind_valid_trim{
-				display: block;
-				box-sizing: content-box;
-				width: 130px;
-				height: 30px;
-				opacity: 1;
-				margin: 0;
-				border-radius: 4px;
-				border: solid 2px #f4d03f;
-				color: #f4d03f;
-				background: #ffffff;
-			}
-
-#ind_cir_an{
-				display: block;
-				box-sizing: content-box;
-				width: 130px;
-				height: 30px;
-				opacity: 1;
-				margin: 0;
-				border-radius: 4px;
-				border: solid 2px #e74c3c;
-				color: #e74c3c;
-				background: #ffffff;
-			}			
-			
-p.text{
-		font-family: 'Open Sans';
-		font-size:12px;
-		padding-top: 5px;
-		padding-left: 7px;
-	}
-
-.indicateur {
-			font-family: 'spotkabold';
-			font-size: 38px;
-			text-transform: uppercase;
-			letter-spacing: -0.2pt;
-			color:#032e46;
-			}
-
-
-			
+		
 	/* Button right toolbar */
 
 
@@ -309,7 +218,6 @@ p.text{
 .leftpanel-btn:hover {
    color: #032e46;
 }
-
 
 /* Résultats recherches */
 

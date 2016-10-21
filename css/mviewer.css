@@ -874,129 +874,6 @@ li[role="presentation"] {
 
 
 /*********** MODIFICATION CSS AGATH**********/
-
-/* Import des fonts*/
-/*@font-face {
-			font-family: 'spotka-alternatemedium';
-			src: url('font/spotka-alternatemedium.ttf') format('truetype');
-			}
-@font-face {
-			font-family: 'spotka-alternatebold';
-			src: url('font/spotka-alternatebold.ttf') format('truetype');
-			}*/
-
-/************* Style fenêtre de configuration - Indicateurs Transports*/
-
-/*h3.title{
-	font-family: 'spotka-alternatebold';
-	font-size: 24px;
-	color:#032e46;
-	}
-	
-h4.title{
-			font-family: 'spotka-alternatebold';
-			font-size: 16px;
-			color:#032e46;
-			}*/
-				
-
-/*#block_crit{
-		display: block;
-		box-sizing: content-box;
-		width: 130px;
-		height: 30px;
-		opacity: 1;
-		margin: 0;
-		border-radius: 4px;
-		color: rgba(255,255,255,1);
-		background: #032e46;
-	}
-#ind_freq_an{
-				display: block;
-				box-sizing: content-box;
-				width: 130px;
-				height: 30px;
-				opacity: 1;
-				margin: 0;
-				border-radius: 4px;
-				border: solid 2px #16a085;
-				color: #16a085;
-				background: #ffffff;
-			}
-#ind_freq_mois{
-				display: block;
-				box-sizing: content-box;
-				width: 130px;
-				height: 30px;
-				opacity: 1;
-				margin: 0;
-				border-radius: 4px;
-				border: solid 2px #1dd2af;
-				color: #1dd2af;
-				background: #ffffff;
-			}
-#ind_valid_an{
-				display: block;
-				box-sizing: content-box;
-				width: 130px;
-				height: 30px;
-				opacity: 1;
-				margin: 0;
-				border-radius: 4px;
-				border: solid 2px #f4c300;
-				color: #f4c300;
-				background: #ffffff;
-			}
-
-#ind_valid_trim{
-				display: block;
-				box-sizing: content-box;
-				width: 130px;
-				height: 30px;
-				opacity: 1;
-				margin: 0;
-				border-radius: 4px;
-				border: solid 2px #f4d03f;
-				color: #f4d03f;
-				background: #ffffff;
-			}
-
-#ind_cir_an{
-				display: block;
-				box-sizing: content-box;
-				width: 130px;
-				height: 30px;
-				opacity: 1;
-				margin: 0;
-				border-radius: 4px;
-				border: solid 2px #e74c3c;
-				color: #e74c3c;
-				background: #ffffff;
-			}			
-			
-p.text{
-		font-family: 'Open Sans';
-		font-size:12px;
-		padding-top: 5px;
-		padding-left: 7px;
-	}
-
-.indicateur {
-			font-family: 'spotkabold';
-			font-size: 38px;
-			text-transform: uppercase;
-			letter-spacing: -0.2pt;
-			color:#032e46;
-			}*/
-			
-.chiffres_cles{
-				font-family:spotkabold; 
-				font-size:38px; 
-				margin-top:-13px; 
-				margin-bottom:-8px;
-			}			
-
-	
 	
 /****************** Modification de l'interface bootstrap*/
 
@@ -1157,6 +1034,11 @@ a#permalinklink{
   }
 }
 
+#loading-indicator {
+  width: 35px;  
+  margin-top: -4px;
+}
+
 /************** Barre gauche*************/
 
 #sidebar-wrapper a{
@@ -1180,9 +1062,8 @@ li.level-2{
 }
 
 
-
 li.mv-nav-item {
-	line-height: 35px;
+	line-height: 33px;
 	font-size:12px;
 }
 
@@ -1192,10 +1073,6 @@ li.mv-nav-item {
 	
 }
 
-#loading-indicator {
-  width: 35px;  
-  margin-top: -4px;
-}
 
 ul#menu {
 	font-weight: bold;
@@ -1375,6 +1252,27 @@ a:focus{
 .slider-selection{
 	-webkit-box-shadow: none;
 	box-shadow: none;
+}
+
+
+/**** Popover *****/
+.popover-content{
+	font-size: 13px;
+	font-family: Open Sans;
+	color: #555;
+}
+
+.popover-content a{
+	font-style: italic;
+}	
+
+.popover-title{
+	font-family: Open Sans; 
+	font-weight: bold;
+	color:#555;
+	border-bottom:none;
+	background-color: #fff;
+	margin-bottom: -4%;
 }
 
 /******* Configuration fenêtre de fond de carte ************/ 

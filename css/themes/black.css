@@ -1,0 +1,278 @@
+/* Import des fonts*/
+@font-face {
+			font-family: 'spotka-alternatemedium';
+			src: url('../font/spotka-alternatemedium.ttf') format('truetype');
+			}
+@font-face {
+			font-family: 'spotka-alternatebold';
+			src: url('../font/spotka-alternatebold.ttf') format('truetype');
+			}
+            
+/* Modification de l'interface bootstrap*/
+
+/* Barre de navigation du haut*/
+.navbar-default{
+	border-color:#000000;
+}
+
+#mv-navbar{
+	border-color:#000000;
+	background-color: #000000;
+}
+
+.navbar-header.fixed-brand{
+	background-color: #000000;
+}
+	
+#mv-navbar a.navbar-brand, .mv-title{
+	color:#ffffff!important;
+	font-family: 'spotka-alternatebold';
+	font-size: 20px;	
+}
+
+.navbar-default .navbar-toggle{
+	border-color: #ffffff;
+}
+	
+.glyphicon-th-large:before{
+	color:#ffffff;
+}
+
+.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover{
+	background-color:#2e5367;
+}
+
+.ol-control button {
+  color: #fff!important;
+  background-color: #000000!important;
+}
+
+.ol-control button:focus, .ol-control button:hover {  
+  background-color: #000000;
+}
+
+.gml-item-title {    
+    font-family: spotka-alternatebold;
+	color:#000000;
+    font-size: 24px;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus { 
+  background-color:#000000;
+}
+
+#right-panel .mv-header {  
+  background-color: #000000;
+  color: #fff;  
+}
+#right-panel .mv-header h5 {  
+  font-family: spotka-alternatemedium;
+}
+
+/* Barre de navigation de gauche*/
+
+#sidebar-wrapper a{
+	font-family:'Open Sans';
+	letter-spacing:-0.2pt;
+	
+}
+
+#menu li a:hover{
+	border-left:#000000 0px solid;
+	background:#000000;
+	color: #f8f8f8;
+}
+
+.mv-header{
+	font-family:spotka-alternatemedium;
+	color: #000000;	
+}
+
+.fa-chevron-circle-down{
+	color:#000000;
+}
+
+#layers-container a {
+	color: #666;
+	font-family: Open Sans;	
+}
+
+.form-group label {
+	font-family: Open Sans;
+}
+
+#layers-container .mv-layer-options p {
+	font-family: Open Sans; 
+}
+
+.form-control{
+	font-family: Open Sans; 
+}
+
+/* Style curseur slider Opacité */
+.mv-layer-options  .slider-selection{
+	background:#000000;	
+}
+
+.mv-layer-options .slider-handle {
+    background: #000000;
+}
+
+.mv-layer-options .tooltip-inner{
+	background-color:#000000;
+	border-radius: 4px;
+	font-family: Open Sans;
+}
+.mv-layer-options .tooltip.top .tooltip-arrow{
+	border-top-color:#000000;
+}
+
+
+/* Slider temporalité */ 
+
+.mv-layer-options  .form-group-timer .slider-selection{
+	background:#000000;
+	-webkit-box-shadow:inset 0 0px 0 rgba(0,0,0,0);
+}
+
+.slider-tick.round.in-selection{
+	background: #000000;
+	background-image: none;
+	-webkit-box-shadow:inset 0 0px 0 rgba(0,0,0,0);
+}
+
+
+.slider-tick.round{
+	background:#000000;
+	background-image:none;
+	-webkit-box-shadow:inset 0 0px 0 rgba(0,0,0,0);
+	opacity: 1;
+}
+
+.form-group-timer .tooltip.bottom .tooltip-arrow{
+	border-bottom-color:#000000;
+}
+
+.mv-layer-options  .slider-track-high{
+	background:#000000;	
+}
+
+
+/* Basemap*/ 
+
+ul#basemapslist p {
+	font-family: Open Sans;
+}
+
+ul#basemapslist  li.active{	
+    border:2px #000000 outset;    
+}
+
+/* Style fenêtre de configuration*/
+
+h3.title{
+	font-family: 'spotka-alternatebold';
+	font-size: 24px;
+	color:#000000;
+	}
+	
+h4.title{
+    font-family: 'spotka-alternatebold';
+    font-size: 16px;
+    color:#000000;
+}
+
+.info{
+	font-family:'Open Sans';
+	}
+
+
+			
+p.text{
+		font-family: 'Open Sans';
+		font-size:12px;
+		padding-top: 5px;
+		padding-left: 7px;
+	}
+
+	
+	
+			
+/* Button right toolbar */
+
+
+#toolstoolbar.btn-warning{
+	background-color: #000000;
+	border-color: #000000;
+}
+
+#toolstoolbar.btn-warning:hover{
+	background-color: #000000;
+	border-color: #000000;
+}
+
+#alerts-zone .alert.alert-info {
+  background-color: #000000;
+  color: #fff;
+}
+
+#alerts-zone .close {  
+  color: #fff;
+  text-shadow: 0 1px 0 #000;  
+}
+
+
+.datepicker .active {
+    background-color: #000000!important;
+}
+
+.leftpanel-btn:hover {
+   color: #000000;
+}
+
+
+/* Résultats recherches */
+
+li.elasticsearch.list-group-item.disabled{
+	color: #000000;
+	
+}
+
+/* Buttons tools*/
+#drawtoolsoptions .btn-default.active, #drawtoolsoptions .btn-default:active, #drawtoolsoptions .btn-default.focus, #drawtoolsoptions .btn-default:focus {
+	background-color:#000000;
+	border-color:#000000;
+}
+
+/* Search toolbar */
+
+li.geoportail.list-group-item.disabled{
+	background:#000000;
+	border-color:#000000;
+}
+
+.nav-tabs .active .glyphicon {
+  color: #000000;  
+}
+
+a:hover{
+	color: #000000;
+}
+
+/* Tooltip measure */
+.tooltip2 {
+  background: #000000;
+}
+
+.tooltip-measure-static {
+  background-color: #000000;
+}
+
+.tooltip-measure:before,
+.tooltip-measure-static:before {
+  border-top: 6px solid #000000;
+}
+
+.tooltip-measure-static:before {
+  border-top-color: #000000;
+}

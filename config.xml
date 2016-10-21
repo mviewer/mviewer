@@ -31,8 +31,9 @@
     <authentification url="who" loginurl="?login" logouturl="../j_spring_security_logout" enabled="true"/>
     <proxy url=""/>
     <!--<olscompletion url="http://gpp3-wxs.ign.fr/5kiwvtkb2v23y0x8chidxbij/ols/apis/completion"/>-->
-    <olscompletion url="../olscompletion" type="geoportail"/>
-    <!--<olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban"/>-->
+    <!--<olscompletion url="../olscompletion" type="geoportail"/>-->
+    <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban" attribution="Ce service est proposé par ...
+    	"/>
     <elasticsearch url="http://ows.region-bretagne.fr/kartenn/_search" geometryfield="geometry" linkid="search_id" querymode="fussy_like_this" />
     <searchparameters bbox="true" localities="true" features="true"/>
 	<widgets>
