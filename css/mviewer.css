@@ -502,9 +502,7 @@ ul#layers-container {
     opacity: 1;
 }
 
-#right-panel .close {
-  /*padding-top: 60px;  
-  right: 10px;*/
+#right-panel .close {  
   color: #fff;
   opacity: 1;
   padding-top: 0px;
@@ -512,6 +510,10 @@ ul#layers-container {
   position: absolute;
   margin-top: -38px;
   padding-top: 10px;
+}
+
+#right-panel:not(.active) .close {  
+  display: none;
 }
 
 #right-panel .popup-content {
