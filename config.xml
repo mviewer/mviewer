@@ -208,7 +208,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=ce651579-c92a-474d-aee1-6e44b5f55579" />
                     </theme> 
         <theme name="Inventaire du patrimoine"  collapsed="true" id="patrimoine">           
-			<layer id="etude_patrimoine" name="Etudes 'topo' architecture" visible="false" tiled="true"
+			<layer id="etude_patrimoine_architecture" name="Etudes 'topo' architecture" visible="false" tiled="true"
 				queryable="true" searchable="true"
                 infoformat="text/html" featurecount="50"
 				style="patrimoine_etudes_geometry_ia"  legendurl="http://kartenn.region-bretagne.fr/img/legend/etudes_architecture.png"
@@ -216,7 +216,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://applications.region-bretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/1b3c63dd-e39e-48f5-ba87-882e09bb084a"
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=1b3c63dd-e39e-48f5-ba87-882e09bb084a" />
-			<layer id="etude_patrimoine_im" name="Etudes 'topo' objets mobiliers" visible="false" tiled="true"
+			<layer id="etude_patrimoine_mobilier" name="Etudes 'topo' objets mobiliers" visible="false" tiled="true"
 				queryable="true" searchable="true"
                 infoformat="text/html" featurecount="50"
 				style="patrimoine_etudes_centroide_im" legendurl="http://kartenn.region-bretagne.fr/img/legend/etudes_objets.png"
@@ -240,7 +240,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Région Bretagne" 
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=e2588666-6b16-4d5a-bca2-5e927bc0a922"
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=e2588666-6b16-4d5a-bca2-5e927bc0a922" /> 
-        	<layer id="thematique_patrimoine" name="Enquêtes thématiques" visible="false" tiled="true"
+        	<layer id="etude_patrimoine_thematique" name="Enquêtes thématiques" visible="false" tiled="true"
 				queryable="true"
                 infoformat="text/html" featurecount="50"
 				style="" 
