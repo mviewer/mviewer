@@ -1501,3 +1501,13 @@ btn:active, btn.active, .btn-default.active, .btn-default:active, btn:focus, btn
 	/* border-color:#032e46; */
 }
 
+#bottom-links {
+  position: fixed;
+  bottom: 0px;
+  right: 200px;
+}
+
+.mv-credits {
+  cursor: pointer;
+}
+
