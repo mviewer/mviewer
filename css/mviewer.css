@@ -920,6 +920,7 @@ a#permalinklink{
 
 .modal-content{
 	border-radius: 0px;
+	font-family: Open Sans;
 }
 /******** ICON LOADING *********/
 .loader {
@@ -1359,12 +1360,6 @@ btn:active, btn.active, .btn-default.active, .btn-default:active, btn:focus, btn
 	color:#fff;
 }
 
-#bottom-links {
-  position: fixed;
-  bottom: 0px;
-  right: 200px;
-}
-
 .mv-credits {
   cursor: pointer;
 }
@@ -1400,4 +1395,48 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
 }
 .ol-attribution.ol-unselectable.ol-control.ol-collapsed{
 	border-radius: 30px;
+}
+
+/******** Lien Aide et Crédits **** Fenêtre Crédits *********/
+#bottom-links {
+  position: fixed;
+  bottom: 1%;
+  left: 50%;
+  font-family: Open Sans;
+  color:#888;
+  font-weight:500;
+}
+
+#bottom-links a{
+  color:#888;
+  font-weight:500; 
+}
+
+#creditspopup .contact{
+	text-align:center;
+   font-size:11px;
+}
+#creditspopup .info_edito{
+  font-size:11px;
+}
+#creditspopup .rl{
+	text-decoration:underline;
+}
+
+#creditspopup .droit_auteur p{
+  text-align:justify;
+  font-size:11px;
+}
+
+#creditspopup .techno p{
+  text-align:justify;
+  font-size:11px;
+}
+
+.logo_techno{
+  margin-left:10%;
+}
+
+.logo_techno img{
+  width: 10%;
 }
