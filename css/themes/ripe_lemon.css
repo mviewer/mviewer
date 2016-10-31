@@ -1,3 +1,5 @@
+/*--------------------------- THEME KARTENN RIPE_LEMON -------------------------*/
+
 /* Import des fonts*/
 @font-face {
 			font-family: 'spotka-alternatemedium';
@@ -69,7 +71,7 @@
   font-family: spotka-alternatemedium;
 }
 
-/* Barre de navigation de gauche*/
+/* Barre de gauche*/
 
 #sidebar-wrapper a{
 	font-family:'Open Sans';
@@ -93,7 +95,7 @@
 }
 
 #layers-container a {
-	color: #666;
+	color: #f7ca18;
 	font-family: Open Sans;	
 }
 
@@ -157,6 +159,10 @@
 	background:#f7ca18;	
 }
 
+#layers-container-box-header {
+  background-color: #f7ca18;
+}
+
 
 /* Basemap*/ 
 
@@ -186,19 +192,8 @@ h4.title{
 	font-family:'Open Sans';
 	}
 
-
-			
-p.text{
-		font-family: 'Open Sans';
-		font-size:12px;
-		padding-top: 5px;
-		padding-left: 7px;
-	}
-
-	
-	
-			
-/* Button right toolbar */
+		
+	/* Button right toolbar */
 
 
 #toolstoolbar.btn-warning{
@@ -230,7 +225,6 @@ p.text{
    color: #f7ca18;
 }
 
-
 /* Résultats recherches */
 
 li.elasticsearch.list-group-item.disabled{
@@ -257,6 +251,10 @@ li.geoportail.list-group-item.disabled{
 
 a:hover{
 	color: #f7ca18;
+}
+
+#searchtool .btn-default{
+	color:#f7ca18;
 }
 
 /* Tooltip measure */

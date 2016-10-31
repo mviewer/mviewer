@@ -1,3 +1,5 @@
+/*--------------------------- THEME KARTENN BLUE -------------------------*/
+
 /* Import des fonts*/
 @font-face {
 			font-family: 'spotka-alternatemedium';
@@ -157,6 +159,10 @@
 	background:#032e46;	
 }
 
+#layers-container-box-header {
+  background-color: #032e46;
+}
+
 
 /* Basemap*/ 
 
@@ -245,6 +251,10 @@ li.geoportail.list-group-item.disabled{
 
 a:hover{
 	color: #032e46;
+}
+
+#searchtool .btn-default{
+	color:#032e46;
 }
 
 /* Tooltip measure */
