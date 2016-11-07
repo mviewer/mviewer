@@ -290,7 +290,7 @@ Ce fichier js doit être placé dans le répertoire hooks/
 Si la couche est de type wms, il faut faire référence à un style sld.
 Si la couche est de type geojson, il faut faire référence à un style définit dans lib/featurestyles.js
 Si la couche est de type hook, le style n'est pas défini ici.
-* **stylealias**: Titres à utiliser pour chaques style. utiliser la virgule comme séparateur si plusieurs styles.
+* **stylesalias**: Titres à utiliser pour chaques style. utiliser la virgule comme séparateur si plusieurs styles.
 * **timefilter**: Booléen précisant si la dimension temporelle est activée pour cette couche. Voir (http://docs.geoserver.org/latest/en/user/services/wms/time.html)
 * **timeinterval**: day|month|year
 * **timecontrol**: calendar|slider|slider-range
