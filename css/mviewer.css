@@ -378,6 +378,7 @@ div#backgroundlayerstoolbar-gallery {
 
 #layers-container-box-header {
   height: 35px;
+  min-width: 35px;
 }
 
 #legend:not(.active) {
