@@ -144,7 +144,7 @@
 }
 
 
-.slider-tick.round{
+.form-group-timer .slider-tick.round{
 	background:#f7ca18;
 	background-image:none;
 	-webkit-box-shadow:inset 0 0px 0 rgba(0,0,0,0);
@@ -155,7 +155,7 @@
 	border-bottom-color:#f7ca18;
 }
 
-.mv-layer-options  .slider-track-high{
+.mv-layer-options  .form-group-timer .slider-track-high{
 	background:#f7ca18;	
 }
 
