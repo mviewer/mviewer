@@ -69,6 +69,16 @@ button:focus {
 	top: 3px;
 }
 
+.mv-searchtool-delete {    
+    padding-right: 0px;
+    display: none;
+}
+
+.active.mv-searchtool-delete {    
+    padding-right: 0px;
+    display: inline;
+}
+
 a#searchparams {
   position: fixed;
   right: 252px;
