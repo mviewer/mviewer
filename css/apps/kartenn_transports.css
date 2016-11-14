@@ -295,7 +295,7 @@ p.text{
 }
 
 
-.slider-tick.round{
+.form-group-timer .slider-tick.round{
 	background:#032e46;
 	background-image:none;
 	-webkit-box-shadow:inset 0 0px 0 rgba(0,0,0,0);
@@ -306,8 +306,8 @@ p.text{
 	border-bottom-color:#032e46;
 }
 
-.mv-layer-options  .slider-track-high{
-	/*background:#032e46;	*/
+.mv-layer-options  .form-group-timer .slider-track-high{
+	background:#032e46;
 }
 
 #layers-container-box-header {

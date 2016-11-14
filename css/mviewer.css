@@ -12,6 +12,9 @@ html {
 	-ms-text-size-adjust: 100%;
 }
 
+button:focus {
+    outline: none;
+}
 
 #map {
 	position: fixed;

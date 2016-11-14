@@ -65,7 +65,16 @@
                 url="http://kartenn.region-bretagne.fr/geoserver-proxy/interne/wms"
                 attribution="INSEE - Répartition de la population selon les catégories d'âge par commune en 2013" 
                 metadata=""
-                metadata-csw="" />  
-        </theme>
-    </themes>
+                metadata-csw="" />
+             <layer id="population" name="Population mondiale"  visible="false" tiled="true"
+                searchable="false" queryable="false"                               
+                timefilter="true" timeinterval="year" timecontrol="slider" timevalues="1975,2000,2015"                 
+                style=""  
+                stylesalias=""
+                url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
+                attribution="GéoBretagne" 
+                metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=f720e131-2dc9-4db0-8b50-7e5f1609944e"
+                metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=f720e131-2dc9-4db0-8b50-7e5f1609944e" />
+         </theme>      
+       </themes>
 </config>
