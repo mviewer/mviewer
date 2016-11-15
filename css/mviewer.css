@@ -85,7 +85,7 @@ a#searchparams {
 	right:65px;
 	top: 60px;
     z-index: 5;
-	font-family: Open Sans;
+	font-family: Open Sans, Arial;
 }
 
 #searchresults li {
@@ -545,7 +545,7 @@ ul#layers-container {
     float: left;
     padding-right: 10px;
     font-weight: bold;
-	font-family: Open Sans 
+	font-family: Open Sans, Arial; 
 }
 
 .gml-item-field-name::after {
@@ -553,7 +553,7 @@ ul#layers-container {
 }
 
 .gml-item-field-value{
-	font-family: Open Sans 
+	font-family: Open Sans, Arial; 
 }
  
 /*#bottom-panel .popup-content {  */
@@ -651,7 +651,7 @@ li.mv-nav-item span {
   opacity: 1;
   white-space: nowrap;
   text-shadow: none;
-  font-family: Open Sans;
+  font-family: Open Sans, Arial;
   font-weight: normal!important;
 }
 
@@ -662,7 +662,7 @@ li.mv-nav-item span {
 
 .tooltip-measure-static {
   color: #fff;
-  font-family: Open Sans;
+  font-family: Open Sans, Arial;
 }
 
 .tooltip-measure:before,
@@ -870,7 +870,7 @@ li.elasticsearch.list-group-item.disabled{
 
 #parameterspanel .modal-header{
 	color: #333;
-	font-family: Open Sans;
+	font-family: Open Sans, Arial;
 	font-size: 13px;
 }
 
@@ -881,7 +881,7 @@ li.elasticsearch.list-group-item.disabled{
 
 ul#searchparameters{
 	list-style: none;
-	font-family: Open Sans;
+	font-family: Open Sans, Arial;
 	padding-left: 10px;
 	padding-top:0px;
 	line-height: 1.6;
@@ -900,19 +900,19 @@ ul#searchparameters{
 
 #sharepanel .modal-header{
 	color: #333;
-	font-family: Open Sans;
+	font-family: Open Sans, Arial;
 	font-size: 13px;
 }
 
 #sharepanel .form-group label {
 	font-weight:normal;
 	color: #333;
-	font-family: Open Sans;
+	font-family: Open Sans, Arial;
 	font-size: 13px;
 }
 
 a#permalinklink{
-	font-family: Open Sans;
+	font-family: Open Sans, Arial;
 }
 #sharepanel .btn-group-vertical{
 	margin-top:10%;
@@ -920,7 +920,7 @@ a#permalinklink{
 
 .modal-content{
 	border-radius: 0px;
-	font-family: Open Sans;
+	font-family: Open Sans, Arial;
 }
 /******** ICON LOADING *********/
 .loader {
@@ -1045,7 +1045,7 @@ a:focus{
 }
 
 .form-group label {
-	font-family: Open Sans;
+	font-family: Open Sans, Arial;
 }
 
 #layers-container .mv-layer-options a{
@@ -1055,7 +1055,7 @@ a:focus{
 }
 
 #layers-container .mv-layer-options p {
-	/*font-family: Open Sans; */
+	/*font-family: Open Sans, Arial; */
 	margin: 0 0 5px;
 }
 
@@ -1153,7 +1153,7 @@ a:focus{
 
 .slider.slider-horizontal .slider-tick-label-container{
 	margin-top:13px;
-	font-family:Open Sans;
+	font-family:Open Sans, Arial;
 }
 
 .tooltip.bottom .tooltip-arrow{
@@ -1182,7 +1182,7 @@ a:focus{
 /**** Popover *****/
 .popover-content{
 	font-size: 13px;
-	font-family: Open Sans;
+	font-family: Open Sans, Arial;
 	color: #555;
 }
 
@@ -1191,7 +1191,7 @@ a:focus{
 }	
 
 .popover-title{
-	font-family: Open Sans; 
+	font-family: Open Sans, Arial; 
 	font-weight: bold;
 	color:#555;
 	border-bottom:none;
@@ -1269,7 +1269,7 @@ ul#basemapslist p {
 .ol-scale-line-inner{
 	color: #777;
     border-color: #777;
-    font-family: Open Sans;
+    font-family: Open Sans, Arial;
 }
 /* Icone layers non coches 
 Utiliser le code Unicode du caractere de la police awesome.
@@ -1402,7 +1402,7 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
   position: fixed;
   bottom: 1%;
   left: 50%;
-  font-family: Open Sans;
+  font-family: Open Sans, Arial;
   color:#888;
   font-weight:500;
 }

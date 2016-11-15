@@ -5,7 +5,7 @@
 /* Button vers Dashboard Gare -- Synthèse */
 .but_link{
       padding:10px 0 10px 0;
-      font:13px Open Sans;
+      font:13px Open Sans, Arial;
       background:rgba(3, 46, 70, 0.9);
       color:#fff;
       width:100px;
@@ -135,7 +135,7 @@ h4.title{
 			}			
 			
 p.text{
-		font-family: 'Open Sans';
+		font-family: 'Open Sans', Arial;
 		font-size:12px;
 		padding-top: 3%;
 		padding-left: 6%;
@@ -224,7 +224,7 @@ p.text{
 /* Barre de gauche*/
 
 #sidebar-wrapper a{
-	font-family:'Open Sans';
+	font-family:'Open Sans', Arial;
 	letter-spacing:-0.2pt;
 	
 }
@@ -246,19 +246,19 @@ p.text{
 
 #layers-container a {
 	color: #032e46;
-	font-family: Open Sans;	
+	font-family: Open Sans, Arial;	
 }
 
 .form-group label {
-	font-family: Open Sans;
+	font-family: Open Sans, Arial;
 }
 
 #layers-container .mv-layer-options p {
-	font-family: Open Sans; 
+	font-family: Open Sans, Arial; 
 }
 
 .form-control{
-	font-family: Open Sans; 
+	font-family: Open Sans, Arial; 
 }
 
 
@@ -274,7 +274,7 @@ p.text{
 .mv-layer-options .tooltip-inner{
 	background-color:#032e46;
 	border-radius: 4px;
-	font-family: Open Sans;
+	font-family: Open Sans, Arial;
 }
 .mv-layer-options .tooltip.top .tooltip-arrow{
 	border-top-color:#032e46;
@@ -318,7 +318,7 @@ p.text{
 /* Basemap*/ 
 
 ul#basemapslist p {
-	font-family: Open Sans;
+	font-family: Open Sans, Arial;
 }
 
 ul#basemapslist  li.active{	
@@ -340,7 +340,7 @@ h4.title{
 }
 
 .info{
-	font-family:'Open Sans';
+	font-family:'Open Sans', Arial;
 	}
 
 		
