@@ -1310,6 +1310,14 @@ Utiliser le code Unicode du caractere de la police awesome.
     content: "\f192";
 }
 
+.mv-time-player:before {
+    content: "\f04b";
+}
+
+.active.mv-time-player:before {
+    content: "\f04c";
+}
+
 
 /**** Button right toolbar */
 
