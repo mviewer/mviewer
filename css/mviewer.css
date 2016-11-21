@@ -1318,6 +1318,10 @@ Utiliser le code Unicode du caractere de la police awesome.
     content: "\f04c";
 }
 
+.mv-time-player {
+    cursor: pointer;
+}
+
 
 /**** Button right toolbar */
 

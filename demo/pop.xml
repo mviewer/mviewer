@@ -29,7 +29,7 @@
 
     <themes>
         <theme name="Bati"   id="Bâti" icon="home"> 
-            <layer id="buildup38" name="Bâti (38)"  visible="false" tiled="true"
+            <layer id="buildup38" name="Bâti (38)"  visible="false" tiled="false"
                 searchable="false" queryable="false"
                 style=""
                 opacity="0.5" 
