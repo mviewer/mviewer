@@ -73,6 +73,26 @@
                 attribution="INSEE - Répartition de la population selon les catégories d'âge par commune en 2013" 
                 metadata=""
                 metadata-csw="" />
-         </theme>      
+         </theme>  
+         <theme name="Bâti"   id="Bâti" icon="home"> 
+            <layer id="buildup38" name="Bâti (38m)"  visible="false" tiled="true"
+                searchable="false" queryable="false"
+                style=""
+                opacity="0.5" 
+                timefilter="true" timeinterval="year" timecontrol="slider" timevalues="1975,1990,2000,2014"
+                url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
+                attribution="© European Union, 1995-2016" 
+                metadata="http://ghslsys.jrc.ec.europa.eu/ghs_bu.php"
+                metadata-csw="" />
+            <layer id="buildup" name="Bâti (250m)"  visible="false" tiled="false"
+                searchable="false" queryable="false"
+                style=""
+                opacity="0.5" 
+                timefilter="true" timeinterval="year" timecontrol="slider" timevalues="1975,1990,2000,2014"
+                url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
+                attribution="© European Union, 1995-2016" 
+                metadata="http://ghslsys.jrc.ec.europa.eu/ghs_bu.php"
+                metadata-csw="" />
+        </theme>    
        </themes>
 </config>
