@@ -38,7 +38,7 @@
                 metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=68ce21d3-9d36-4ed0-b75f-14a7bb9a5ac6" />
             <layer id="n_mat_eolien_p_r53" name="Eoliennes en Bretagne"  visible="true" tiled="false"
                 searchable="false" queryable="true"                               
-                timefilter="true" timeinterval="year" timecontrol="slider-range" timevalues="2005,2006,2007,2008,2009,2010,2011,2012,2016" 
+                timefilter="true" timeinterval="year" timecontrol="slider-range" timevalues="2004,2005,2006,2007,2008,2009,2010,2011,2012,2016" 
                 infoformat="text/html" featurecount="20"
                 style="eolienne_style,eoliennes_hauteur,eoliennes_puissance"  
                 stylesalias="Par défaut,hauteur,puissance"
