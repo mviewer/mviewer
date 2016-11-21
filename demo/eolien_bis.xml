@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <application title="L'Éolien en Bretagne" logo="img/logo/geobretagne.png" help="" measuretools="false" exportpng="true" style="css/apps/kartenn_eolien.css"/>
+    <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
+    <mapoptions maxzoom="19" projection="EPSG:3857" center="-220750.13768758904,6144925.57790189" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
+  
+    <baselayers style="default"><!-- style="default"||gallery" -->                  
+        <baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoPortail" maxscale="1000" thumbgallery="img/basemap/ortho.jpg"
+            url="http://kartenn.region-bretagne.fr/wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" format="image/jpeg" visible="false" fromcapacity="false"
+            attribution="&lt;a href='http://www.geoportail.fr/' target='_blank'>&lt;img src='http://api.ign.fr/geoportail/api/js/latest/theme/geoportal/img/logo_gp.gif'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
+        <baselayer  type="fake" id="fake" label="Carroyage" title="Carroyage" thumbgallery="img/basemap/grid.png" visible="false"  />
+        <baselayer  type="OSM" id="darkmatter" label="Dark Matter" title="CartoDb" thumbgallery="img/basemap/darkmatter.png" 
+            url="http://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png" maxzoom="20" 
+            visible="false" attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="OSM" id="positron" label="Positron" title="CartoDb" thumbgallery="img/basemap/positron.png" 
+            url="http://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20" 
+            visible="true" attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="OSM" id="osm1" label="OpenStreetMap" title="OpenStreetMap" thumbgallery="img/basemap/osm.png" 
+            url="http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
+            attribution="© MapQuest. Données : les contributeurs d'&lt;a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='http://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" visible="false"/>       
+        <baselayer  type="WMTS" id="scan2" label="Cartes IGN" title="GéoPortail" maxscale="2000" thumbgallery="img/basemap/scan.jpg"
+            url="http://kartenn.region-bretagne.fr/wmts" layers="GEOGRAPHICALGRIDSYSTEMS.MAPS" format="image/jpeg" visible="false" fromcapacity="false"
+            attribution="&lt;a href='http://www.geoportail.fr/' target='_blank'>&lt;img src='http://api.ign.fr/geoportail/api/js/latest/theme/geoportal/img/logo_gp.gif'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
+    </baselayers> 
+    <themes>
+        <theme name="Éolien"   id="eolien" icon="cog">   
+        <group name="Infrastructures éoliennes" id="grp1" >         
+            <layer id="eolien_bzh" name="Implantation des éoliennes"  visible="true" tiled="false"
+                searchable="false" queryable="true"                               
+                timefilter="true" timeinterval="year" timecontrol="slider-range" timevalues="2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2016" 
+                infoformat="text/html" featurecount="20"
+                style="demo_eolien_defaut,demo_eolien_hauteur,demo_eolien_puissance"  
+                stylesalias="Par défaut,Hauteur maximum (en m),Puissance nominale (en)"
+                url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+                attribution="GéoBretagne" 
+                metadata=""
+                metadata-csw="" />
+        </group>        
+        <group name="Zone de développement" id="grp2" >        
+             <layer id="n_sre_eolien_s_r53" name="Zone favorable (SRE)"  visible="false" tiled="false"
+                searchable="false" queryable="false"
+                sld="http://kartenn.region-bretagne.fr/styles/demo_schema_eolien.sld"  
+                url="http://dev.geobretagne.fr/geoserver/dreal_b/wms"
+                attribution="GéoBretagne" 
+                metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=68ce21d3-9d36-4ed0-b75f-14a7bb9a5ac6"
+                metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=68ce21d3-9d36-4ed0-b75f-14a7bb9a5ac6" />
+             <layer id="n_zde_eolien_s_r53" name="Zone de développement éolien 2012"  visible="false" tiled="false"
+                searchable="false" queryable="false"
+                sld="http://kartenn.region-bretagne.fr/styles/demo_zd_eolien.sld"  
+                url="http://dev.geobretagne.fr/geoserver/dreal_b/wms"
+                attribution="GéoBretagne" 
+                metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=14e58cec-b3b2-4469-8a6b-b0f0f9b16526"
+                metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=14e58cec-b3b2-4469-8a6b-b0f0f9b16526" />       
+         </group>    
+        </theme>
+        <theme name="Population"  collapsed="false" id="population" icon="male">   
+            <layer id="population_bzh_2013" name="Densité (hab/km²)"  visible="false" tiled="false"
+                searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
+                infopanel="bottom-panel"
+                infoformat="text/html" featurecount="20"
+                style="transports_pop_densite"
+                url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+                attribution="INSEE - Densité de population par commune en 2013" 
+                metadata=""
+                metadata-csw="" />
+            <layer id="population_bzh_2013" name=" Catégorie d'âge (%)"  visible="false" tiled="false"
+                searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
+                infopanel="bottom-panel"
+                infoformat="text/html" featurecount="20"
+                style="transports_pop_0_14ans,transports_pop_1529ans,transports_pop_3044ans,transports_pop_4559ans,transports_pop_6074ans,transports_pop_7589ans,transports_pop_90ans"
+                stylesalias="0 - 14 ans,15 - 29 ans,30 - 44 ans,45 - 59 ans,60 - 74 ans,75 - 89 ans,90 ans"
+                url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+                attribution="INSEE - Répartition de la population selon les catégories d'âge par commune en 2013" 
+                metadata=""
+                metadata-csw="" />
+         </theme>      
+       </themes>
+</config>
