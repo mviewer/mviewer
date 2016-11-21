@@ -1312,7 +1312,7 @@ Utiliser le code Unicode du caractere de la police awesome.
 
 .mv-time-vertical {
     padding-left: 10px;
-    transform: rotate(90deg);
+    transform: rotate(45deg);
 }
 
 .mv-time-player:before {
