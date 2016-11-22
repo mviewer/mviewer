@@ -1173,7 +1173,7 @@ a:focus{
 }
 
 .form-group-opacity .slider.slider-horizontal{
-	margin-left:5px;
+	margin-left:2px;
 	width:236px;
 }
 
@@ -1185,7 +1185,8 @@ a:focus{
 
 .tooltip.bottom .tooltip-arrow{
 	margin-left:-8px;
-	left:57%
+	left:57%;
+  border-bottom-color:#032e46;
 }
 
 .tooltip.bottom{
@@ -1205,6 +1206,29 @@ a:focus{
 	box-shadow: none;
 }
 
+.slider-track-high{
+  background-color: #ccc;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.slider-track-low{
+  background-color: #ccc;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.slider-tick.round{
+  background-color:#ccc;
+  opacity:1;
+  background-image:none;
+  -webkit-box-shadow: none; 
+  box-shadow:none;
+
+}
+
+.slider.slider-horizontal{
+  margin-left: 7px;
+}
 
 /**** Popover *****/
 .popover-content{
