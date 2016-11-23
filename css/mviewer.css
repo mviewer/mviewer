@@ -379,6 +379,7 @@ div#backgroundlayerstoolbar-gallery {
 #layers-container-box {
     position: fixed;
     overflow-y: auto;
+    overflow-x: hidden;
     max-height: 100%;
     padding-top: 60px;
     padding-left: 7px;
