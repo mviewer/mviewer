@@ -166,6 +166,10 @@ li.geoportail.list-group-item.disabled{
     padding-left: 10px;    
 }
 
+.layerdisplay-subtitle {
+
+}
+
 .layer-searchable {
   background-image: url(../img/btn/search.png);
   background-repeat: no-repeat;  
