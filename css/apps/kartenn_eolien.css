@@ -36,8 +36,6 @@
 /* Fenêtre Template Geoserver */ 
 
 /*Import des fonts*/
-@import url('https://fonts.googleapis.com/css?family=Oswald');
-
 @font-face {
 			font-family: 'oswald-regular';
 			src: url('../font/oswald-regular.ttf') format('truetype');
@@ -46,17 +44,25 @@
 			font-family: 'oswald-bold';
 			src: url('../font/oswald-bold.ttf') format('truetype');
 			}
+@font-face {
+			font-family: 'roboto_c_bold';
+			src: url('../font/Roboto_Condensed/RobotoCondensed-Bold.ttf') format('truetype');
+			}
+@font-face {
+			font-family: 'roboto_c_regular';
+			src: url('../font/Roboto_Condensed/RobotoCondensed-Regular.ttf') format('truetype');
+			}						
 
 /*----Style fenêtre de configuration - Indicateurs Transports*/
 
 h3.title{
-	font-family: 'oswald-bold', sans-serif;
+	font-family: 'roboto_c_bold', sans-serif;
 	font-size: 24px;
 	color:#032e46;
 	}
 	
 h4.title{
-			font-family: 'oswald-bold', sans-serif;
+			font-family: 'roboto_c_bold', sans-serif;
 			font-size: 16px;
 			color:#032e46;
 			}
@@ -143,7 +149,7 @@ p.text{
 	}
 
 .indicateur {
-			font-family: 'Oswald';
+			font-family: 'roboto_c_bold';
 			font-size: 38px;
 			text-transform: uppercase;
 			letter-spacing: -0.2pt;
@@ -151,7 +157,7 @@ p.text{
 			}
 			
 .chiffres_cles{
-				font-family:'Oswald'; 
+				font-family:'roboto_c_bold'; 
 				font-size:38px; 
 				margin-top:-13px; 
 				margin-bottom:-8px;
@@ -179,7 +185,7 @@ p.text{
 	
 #mv-navbar a.navbar-brand, .mv-title{
 	color:#ffffff!important;
-	font-family: 'oswald-regular';
+	font-family: 'roboto_c_bold';
 	font-size: 20px;	
 	letter-spacing: 1.2px;
 }
@@ -206,7 +212,7 @@ p.text{
 }
 
 .gml-item-title {    
-    font-family: 'oswald-bold';
+    font-family: 'roboto_c_bold';
 	color:#032e46;
     font-size: 24px;
 }
@@ -220,7 +226,7 @@ p.text{
   color: #fff;  
 }
 #right-panel .mv-header h5 {  
-  font-family: 'oswald-regular';
+  font-family: 'roboto_c_bold';
   letter-spacing: 1px;
 }
 
@@ -239,9 +245,8 @@ p.text{
 }
 
 .mv-header{
-	font-family: 'oswald-regular';
-    letter-spacing: 1px;
-	color: #032e46;	
+	font-family: 'roboto_c_bold';
+    	color: #032e46;	
 }
 
 .fa-chevron-circle-down{
@@ -332,14 +337,13 @@ ul#basemapslist  li.active{
 /* Style fenêtre de configuration*/
 
 h3.title{
-	font-family: 'oswald-bold';
+	font-family: 'roboto_c_bold';
 	font-size: 24px;
 	color:#032e46;
-	letter-spacing: 2px;
 	}
 	
 h4.title{
-    font-family: 'oswald-regular';
+    font-family: 'roboto_c_bold';
     font-size: 16px;
     color:#032e46;
 }
