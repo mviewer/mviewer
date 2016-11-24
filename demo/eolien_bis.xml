@@ -67,9 +67,9 @@
                 metadata-csw="" />
          </theme>  
          <theme name="Territoires"   id="territoires" icon="home"> 
-            <layer id="buildup" name="Zones anthropisées"  visible="false" tiled="false"
-                searchable="false" queryable="false"
-                style=""
+            <layer id="buildup" name="Zones artificialisées"  visible="false" tiled="false"
+                searchable="false" queryable="false"    
+                style=""          
                 opacity="0.5" 
                 timefilter="true" timeinterval="year" timecontrol="slider" timevalues="1975,1990,2000,2014"
                 url="http://geobretagne.fr/geoserver/europe/wms"
