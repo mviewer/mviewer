@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <application title="Nouveau visualiseur thématique" logo="img/logo/geobretagne.png" help="" measuretools="false" exportpng="true" style="css/apps/kartenn_eolien.css"/>
+    <application title="Nouveau visualiseur thématique" logo="img/logo/geobretagne.png" help="http://geobretagne.fr" measuretools="false" exportpng="true" style="css/apps/kartenn_eolien.css"/>
     <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
     <mapoptions maxzoom="19" projection="EPSG:3857" center="-220750.13768758904,6144925.57790189" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
   
