@@ -24,7 +24,7 @@
     </baselayers>
     <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban" attribution="La recherche d'adresse est un service proposé par la BAN"/>
     <themes>
-    	<theme name="Infrastructures de transports"  collapsed="false" id="transport" icon="train">            
+    	<theme name="Transports"  collapsed="false" id="transport" icon="train">            
             <group name="Transports ferroviaires" id="grp1" >
                 <layer id="troncon_ferroviaire" name="Lignes ferroviaires"  visible="false" tiled="false"
                     searchable="false" queryable="true" fields="axe" aliases="axe" secure="true"
@@ -108,8 +108,8 @@
                 metadata=""
                 metadata-csw="" />
          </theme>  
-         <theme name="Bâti"   id="Bâti" icon="home"> 
-            <layer id="buildup" name="Evolution du bâti"  visible="false" tiled="false"
+         <theme name="Territoires"   id="territoires" icon="home"> 
+            <layer id="buildup" name="Zones urbanisées"  visible="false" tiled="false"
                 searchable="false" queryable="false"
                 style=""
                 opacity="0.5" 
