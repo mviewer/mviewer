@@ -55,13 +55,13 @@
          </group>    
         </theme>-->
         <theme name="Population"  collapsed="false" id="population" icon="male">
-            <layer id="population_bzh_2013" name=" Catégorie d'âge (%)"  visible="true" tiled="false"
+            <layer id="population_bzh" name=" Catégorie d'âge (%)"  visible="true" tiled="false"
                 searchable="false" queryable="true" 
                 infopanel="bottom-panel"
                 infoformat="text/html" featurecount="5"
                 style="transports_pop_0_14ans,transports_pop_1529ans,transports_pop_3044ans,transports_pop_4559ans,transports_pop_6074ans,transports_pop_7589ans,transports_pop_90ans"
                 stylesalias="0 - 14 ans,15 - 29 ans,30 - 44 ans,45 - 59 ans,60 - 74 ans,75 - 89 ans,90 ans"
-                url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+                url="http://ows.region-bretagne.fr/geoserver/interne/wms"
                 attribution="INSEE - Répartition de la population selon les catégories d'âge par commune en 2013" 
                 metadata=""
                 metadata-csw="" />
