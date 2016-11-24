@@ -67,7 +67,7 @@
                 metadata-csw="" />
          </theme>  
          <theme name="Territoires"   id="territoires" icon="home"> 
-            <layer id="buildup" name="Zones construites"  visible="false" tiled="false"
+            <layer id="buildup" name="Zones anthropisées"  visible="false" tiled="false"
                 searchable="false" queryable="false"
                 style=""
                 opacity="0.5" 
