@@ -256,6 +256,9 @@ Noeud enfant de theme décrivant une couche.
     timevalues=""    
     timemin="" 
     timemax=""
+    attributefilter=""
+    attributefield=""
+    attributevalues=""
     opacity=""
     legendurl=""
 	url=""
@@ -296,7 +299,13 @@ Si la couche est de type hook, le style n'est pas défini ici.
 * **timecontrol**: calendar|slider|slider-range
 * **timevalues**: valeurs séparées par des virgules - A utiliser avec le controle slider pour des valeurs non régulières ex (1950, 1976, 1980, 2004).
 * **timemin**: Date mini format : "yyyy-mm-dd" 
-* **timemax**: Date mini format : "yyyy-mm-dd" 
+* **timemax**: Date mini format : "yyyy-mm-dd"
+* **attributefilter**:  Booléen précisant si on active la sélection attributaire par menu déroulant
+* **attributefield**: Nom du champ à utiliser avec le contrôle attributefilter.
+* **attributevalues**: valeurs séparées par des virgules.
+* **attributelabel**:  Texte à afficher pour la liste déroulante associée.
+* **attributestylesync**: Booléen qui précise s'il convient d'appliquer un style (sld) spécifique lors du filtre attributaire. Dans ce cas la convention est la suivante : nom_style_courant_attributevalue.
+* **attributefilterenabled**: Booléen précisant si le filtre est activé par défaut (avec la première valeur de la liste attributevalues).
 * **customcontrols**: Booléen. Si actif, il faut déposer un fichier js et un fichier html ayant pour nom l'id de la couche dans le répertoire controls.
 La structure du js doit être la suivante : (../controls/model.js)
 Ce fichier js doit être placé dans le répertoire hooks/

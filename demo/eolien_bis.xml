@@ -56,7 +56,8 @@
         </theme>-->
         <theme name="Population"  collapsed="false" id="population" icon="male">
             <layer id="population_bzh" name=" Catégorie d'âge (%)"  visible="true" tiled="false"
-                searchable="false" queryable="true" 
+                searchable="false" queryable="true"
+                attributefilter="true" attributefield="code_insee" attributevalues="56078,56162"  attributelabel="Echelle" attributestylesync="true" attributefilterenabled="false"
                 infopanel="bottom-panel"
                 infoformat="text/html" featurecount="5"
                 style="transports_pop_0_14ans,transports_pop_1529ans,transports_pop_3044ans,transports_pop_4559ans,transports_pop_6074ans,transports_pop_7589ans,transports_pop_90ans"
