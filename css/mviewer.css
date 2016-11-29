@@ -170,6 +170,20 @@ li.geoportail.list-group-item.disabled{
 	font-size: 11px;
 	font-family: 'Open Sans';
 	font-style: italic;
+    display: -webkit-inline-box;
+}
+
+.layerdisplay-subtitle .selected-attribute:before {    
+    content: "\f0ac  ";
+}
+
+.layerdisplay-subtitle .selected-sld:before {
+    content: "\f040  ";    
+}
+
+.layerdisplay-subtitle .selected-attribute {    
+    padding-left: 5px;
+    
 }
 
 .layer-searchable {

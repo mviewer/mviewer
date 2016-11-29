@@ -55,7 +55,7 @@
          </group>    
         </theme>-->
         <theme name="Population"  collapsed="false" id="population" icon="male">
-            <layer id="population_bzh" name=" Catégorie d'âge (%)"  visible="true" tiled="false"
+            <layer id="population_bzh" name=" Catégorie d'âge (%)"  visible="false" tiled="false"
                 searchable="false" queryable="true"
                 attributefilter="true" attributefield="code_insee" attributevalues="56078,56162"  attributelabel="Echelle" attributestylesync="true" attributefilterenabled="false"
                 infopanel="bottom-panel"
@@ -66,6 +66,18 @@
                 attribution="INSEE - Répartition de la population selon les catégories d'âge par commune en 2013" 
                 metadata=""
                 metadata-csw="" />
+                <layer id="unite_administrative_pop_2013" name="Unités administratives"  visible="true" tiled="false"
+                searchable="false" queryable="true"
+                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Echelle" attributestylesync="true" attributefilterenabled="true"
+                infopanel="bottom-panel"
+                infoformat="text/html" featurecount="5"
+                style="mv_population_2013,mv_population_h_2013"
+                stylesalias="population totale,population masculine"
+                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+                attribution="Région Bretagne" 
+                metadata=""
+                metadata-csw="" />
+                
          </theme>  
          <theme name="Territoires"   id="territoires" icon="home"> 
             <layer id="buildup" name="Zones artificialisées"  visible="false" tiled="false"
