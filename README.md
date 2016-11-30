@@ -265,6 +265,7 @@ Noeud enfant de theme décrivant une couche.
 	attribution=""
 	metadata=""
 	metadata-csw="" />
+    <template url=""/>
 	</theme> 
 
 #######Attributs
@@ -315,6 +316,13 @@ Ce fichier js doit être placé dans le répertoire hooks/
 * **attribution**: Copyright de la couche.
 * **metadata**: Lien vers la fiche de metadonnées complète
 * **metadata-csw**: Requête CSW pour l'affiche dans la popup du détail de la couche.
+
+#######Noeuds
+
+* **<template>**: contient le template type Mustache (https://github.com/janl/mustache.js) à appliquer à la fiche d'information.
+Pour fonctionner, il faut que le paramètre **infoformat** ait la valeur "application/vnd.ogc.gml".
+Le template peut être un fichier statique ex templates/template1.mst ou directement saisi dans le noeud <template> avec les balises <![CDATA[ ]]>.
+
 
 Utilisation		
 -----------
