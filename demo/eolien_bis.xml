@@ -68,7 +68,7 @@
                 metadata-csw="" />
                 <layer id="unite_administrative_pop_2013" name="Unités administratives"  visible="true" tiled="false"
                 searchable="false" queryable="true"
-                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Echelle" attributestylesync="true" attributefilterenabled="true"
+                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Echelle" attributestylesync="true" attributefilterenabled="false"
                 infopanel="bottom-panel"
                 infoformat="text/html" featurecount="5"
                 style="mv_population_2013,mv_population_h_2013"
