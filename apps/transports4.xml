@@ -131,7 +131,7 @@
                 <layer id="gare_maritime" name="Gares maritimes"  visible="false" tiled="false"
                     searchable="false" queryable="true" fields="axe" aliases="axe"   
                     infoformat="text/html" featurecount="20"
-                    sld="http://kartenn.region-bretagne.fr/mviewer-dev/sld/gare_maritime1.sld" 
+                    sld="http://kartenn.region-bretagne.fr/mviewer-dev/sld/gare_maritime.sld" 
                     url="http://geobretagne.fr/geoserver/dreal_b/ows"
                     legendurl="http://kartenn.region-bretagne.fr/doc/transports/icons/gare_marit.svg" 
                     attribution="Région Bretagne" 
