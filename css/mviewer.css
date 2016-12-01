@@ -159,8 +159,24 @@ li.geoportail.list-group-item.disabled{
 }
 
 
+/* Sous-title: nom des style et des filtres sur attibuts */
 
-
+/*Styles*/
+.selected-sld.fa span{
+  font-family: Open Sans;
+  font-style: italic;
+}
+.selected-sld.fa{
+  color: #777;
+}
+/*Filtres*/
+.selected-attribute.fa span{
+  font-family: Open Sans;
+  font-style: italic;
+}
+.selected-attribute.fa{
+  color: #777;
+}
 
 .layerdisplay-title {
     padding-left: 10px;    
@@ -196,7 +212,6 @@ li.geoportail.list-group-item.disabled{
   width: 10px;
   background-size: 100%;
 }
-
 
 /* GetFeatureInfo style */
 
