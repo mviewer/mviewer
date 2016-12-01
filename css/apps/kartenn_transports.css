@@ -12,6 +12,10 @@
       border:1px solid #032e46;
       margin-left: 25%;
       }
+.but_link:hover{
+      background:rgba(3, 46, 70, 1);
+      border:1px solid #032e46;
+      }
 
 .but_link p{
   margin: 0;
@@ -23,13 +27,11 @@
   margin-left:13%;
 }
 .but_link a:hover{
-  font-weight: bold; 
-  font-color:#fff;
+  color:#fff;
 }
 
 .but_link a:focus{
-  font-weight: bold;
-  font-color:#fff; 
+  color:#fff; 
 }
 
 
@@ -314,6 +316,15 @@ p.text{
   background-color: #032e46;
 }
 
+/* Sous-title: nom des style et des filtres sur attibuts */
+.selected-sld.fa span{
+	font-family: Open Sans;
+	font-style: italic;
+}
+.selected-sld.fa{
+	color: #777;
+}
+
 
 /* Basemap*/ 
 
@@ -425,3 +436,4 @@ a:hover{
 .tooltip-measure-static:before {
   border-top-color: #032e46;
 }
+
