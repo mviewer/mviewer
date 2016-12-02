@@ -197,8 +197,8 @@ li.geoportail.list-group-item.disabled{
     content: "\f040  ";    
 }
 
-.layerdisplay-subtitle .selected-attribute {    
-    padding-left: 15px;    
+.layerdisplay-subtitle .selected-sld {    
+	padding-right:10px;   
 }
 
 
