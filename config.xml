@@ -108,7 +108,15 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					attribution="Région Bretagne" 
 					metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=774a2065-339f-4802-a50f-4b84b6ca249f"
 					metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=774a2065-339f-4802-a50f-4b84b6ca249f" />
-              <layer id="eau_randonneur_vn" name="Points d'eau randonneurs" scalemin="0" scalemax="50000000" visible="false" tiled="false"
+                <layer id="maison_eclusiere_aap" name="Appels à projets maisons éclusières" visible="false" tiled="false" namespace="rb"
+					searchable="true" queryable="true"
+                    infoformat="text/html" featurecount="20"
+					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+					style="" 
+					attribution="Région Bretagne" 
+					metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=b62a6ef0-2cb4-44f0-b679-1d06b027e0ea"
+					metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=b62a6ef0-2cb4-44f0-b679-1d06b027e0ea" />              
+			 <layer id="eau_randonneur_vn" name="Points d'eau randonneurs" scalemin="0" scalemax="50000000" visible="false" tiled="false"
 					queryable="false"
                     infoformat="text/html" featurecount="20"
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 

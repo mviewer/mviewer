@@ -53,6 +53,14 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 
     <themes>
             <theme name="Patrimoine bâti"  collapsed="true" id="pat_bati">
+                <layer id="maison_eclusiere_aap" name="Appels à projets maisons éclusières" visible="false" tiled="false" namespace="rb"
+					searchable="true" queryable="true"
+                    infoformat="text/html" featurecount="20"
+					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+					style="" 
+					attribution="Région Bretagne" 
+					metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=b62a6ef0-2cb4-44f0-b679-1d06b027e0ea"
+					metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=b62a6ef0-2cb4-44f0-b679-1d06b027e0ea" />              
                 <layer id="batiment_vn" name="Bâtiments" visible="false" tiled="false" namespace="rb"
 					searchable="true" queryable="true" fields="nom,affecta,photo" aliases="Nom, Affectation,Photo"
                     infoformat="text/html" featurecount="20"
