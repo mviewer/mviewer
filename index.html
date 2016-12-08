@@ -99,9 +99,7 @@ $(document).ready(function () {
     <!-- NAVBAR -->
 	<nav class="navbar navbar-default no-margin navbar-fixed-top" id="mv-navbar">        
         <div class="navbar-header fixed-brand">
-            <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
-              <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
-            </button>-->
+            <a type="button" class="navbar-brand menu-toggle" href="#"><span class="glyphicon glyphicon-menu-hamburger"></span></a>            
             <a class="navbar-brand" href="#">
                 <img alt="Logo" src="img/logo/rb_blanc.svg" class="mv-logo">
             </a>
@@ -131,7 +129,7 @@ $(document).ready(function () {
         <!-- LEFT MENU SIDEBAR -->
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav nav-pills nav-stacked" id="menu"></ul>
-            <div id="menu-toggle-2" ><span class="fa leftpanel-btn"></span></div>
+            <!--<div id="menu-toggle-2" ><span class="fa leftpanel-btn"></span></div>-->
         </div>
         
         <!-- Page Content -->
@@ -143,7 +141,7 @@ $(document).ready(function () {
                     <div id="layers-container-box" class="">
                         <div id="legend" class="active">
                             <div id="layers-container-box-header" >
-                                <a onclick="mviewer.toggleLegend();" title="Afficher/masquer la légende" href="#"> <span class="glyphicon glyphicon-menu-hamburger"></span> </a>
+                                <a onclick="mviewer.toggleLegend();" title="Afficher/masquer la légende" href="#"> <span class="glyphicon glyphicon-list"></span> </a>
                             </div>
                             <ul id="layers-container" class="list-group"></ul>
                         </div>
