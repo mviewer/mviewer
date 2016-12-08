@@ -208,7 +208,7 @@
 			<layer id="freq_journaliere" name="Nombre moyen de montées par jour"  visible="false" tiled="false" secure="true"
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
                 infoformat="text/html" featurecount="20"
-				timefilter="true" timeinterval="year" timecontrol="slider" timemin="2012" timemax="2015" timevalues="2012,2013,2014,2015"
+				timefilter="true" timeinterval="year" timecontrol="slider" timemin="2012" timemax="2016" timevalues="2012,2013,2014,2015,2016"
 				style="transports_freq_jour_categorie,transports_freq_jour_totale,transports_freq_jour_h6_h9,transports_freq_jour_h16_h19"
 				stylesalias="Catégorie,Total, Entre 6h et 9h, Entre 16h et 19h"
 				url="http://kartenn.region-bretagne.fr/geoserver-proxy/interne/wms"
