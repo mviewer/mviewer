@@ -55,7 +55,7 @@
                 <layer id="troncon_ferroviaire" name="Lignes ferroviaires"  visible="true" tiled="false"
                     searchable="false" queryable="true" fields="axe" aliases="axe" secure="true"
                     infoformat="text/html" featurecount="20"
-                    style="transports_ligne_ferr_defaut, transports_lignes_ferr_typologie" 
+                    style="transports_ligne_ferr_defaut, transports_ligne_ferr_typologie" 
 					stylesalias="Par défaut,Type d'infrastructures"
                     url="http://kartenn.region-bretagne.fr/geoserver-proxy/rb/wms"
                     attribution="Région Bretagne" 
@@ -149,7 +149,7 @@
             </group>
         </theme>
 		<theme name="Circulation TER annuelle"  collapsed="false" id="train" icon="code-fork">   
-			<layer id="circulation_ter_ete" name="Train journalier en été"  visible="false" tiled="false" secure="true"
+			<layer id="circulation_ter_ete" name="Nombre de trains par jour en été"  visible="false" tiled="false" secure="true"
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
 				infopanel="bottom-panel"
                 infoformat="text/html" featurecount="20"
@@ -160,7 +160,7 @@
 				attribution="Région Bretagne" 
 				metadata="http://kartenn.region-bretagne.fr/geonetwork/?uuid=63ce0894-0277-4d36-af03-36c2a0764911"
 				metadata-csw="http://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=63ce0894-0277-4d36-af03-36c2a0764911" />
-			<layer id="circulation_ter_hiver" name="Train journalier en hiver"  visible="false" tiled="false"  secure="true"
+			<layer id="circulation_ter_hiver" name="Nombre de trains par jour en hiver"  visible="false" tiled="false"  secure="true"
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
 				infopanel="bottom-panel"
                 infoformat="text/html" featurecount="20"
@@ -197,12 +197,24 @@
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
 				infopanel="bottom-panel"
                 infoformat="text/html" featurecount="20"
-				timefilter="true" timeinterval="year" timecontrol="slider" timemin="2009" timemax="2015" timevalues="2009,2010,2011,2012,2013,2014,2015"
+				timefilter="true" timeinterval="year" timecontrol="slider" timemin="2009" timemax="2014" timevalues="2009,2010,2011,2012,2013,2014"
 				style="transports_aristote_an"
 				url="http://kartenn.region-bretagne.fr/geoserver-proxy/interne/wms"
 				attribution="Région Bretagne" 
 				metadata="http://kartenn.region-bretagne.fr/geonetwork/?uuid=f0e4f993-0e15-4fcd-8dfb-265fb17cd216"
 				metadata-csw="http://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=f0e4f993-0e15-4fcd-8dfb-265fb17cd216" />	
+        </theme>
+        <theme name="Fréquentation journalière"  collapsed="false" id="freq_jour" icon="group">
+			<layer id="freq_journaliere" name="Nombre moyen de montées par jour"  visible="false" tiled="false" secure="true"
+				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
+                infoformat="text/html" featurecount="20"
+				timefilter="true" timeinterval="year" timecontrol="slider" timemin="2012" timemax="2015" timevalues="2012,2013,2014,2015"
+				style="transports_freq_jour_categorie,transports_freq_jour_totale,transports_freq_jour_h6_h9,transports_freq_jour_h16_h19"
+				stylesalias="Catégorie,Total, Entre 6h et 9h, Entre 16h et 19h"
+				url="http://kartenn.region-bretagne.fr/geoserver-proxy/interne/wms"
+				attribution="Région Bretagne" 
+				metadata="http://kartenn.region-bretagne.fr/geonetwork/?uuid=4337c740-f031-4a61-a7b6-0052e0d24e20"
+				metadata-csw="http://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=4337c740-f031-4a61-a7b6-0052e0d24e20" />	
         </theme>
 		<theme name="Validations Korrigo"  collapsed="false" id="korrigo" icon="credit-card">   
 			<layer id="korrigo_valid_annuelle_geom" name="Moyenne annuelle des validations journalières"  visible="false" tiled="false" secure="true"
@@ -226,19 +238,7 @@
 				attribution="Région Bretagne" 
 				metadata="http://kartenn.region-bretagne.fr/geonetwork/?uuid=4477c443-7924-4644-a01b-f66c14e93107"
 				metadata-csw="http://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=4477c443-7924-4644-a01b-f66c14e93107" />
-        </theme>
-		<theme name="Fréquentation journalière"  collapsed="false" id="freq_jour" icon="group">
-			<layer id="freq_journaliere" name="Nombre moyen de montées par jour"  visible="false" tiled="false" secure="true"
-				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
-                infoformat="text/html" featurecount="20"
-				timefilter="true" timeinterval="year" timecontrol="slider" timemin="2012" timemax="2015" timevalues="2012,2013,2014,2015"
-				style="transports_freq_jour_categorie,transports_freq_jour_totale,transports_freq_jour_h6_h9,transports_freq_jour_h16_h19"
-				stylesalias="Catégorie,Total, Entre 6h et 9h, Entre 16h et 19h"
-				url="http://kartenn.region-bretagne.fr/geoserver-proxy/interne/wms"
-				attribution="Région Bretagne" 
-				metadata="http://kartenn.region-bretagne.fr/geonetwork/?uuid=4337c740-f031-4a61-a7b6-0052e0d24e20"
-				metadata-csw="http://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=4337c740-f031-4a61-a7b6-0052e0d24e20" />	
-        </theme>
+        </theme>		
 		<theme name="Points d'intérêt"  collapsed="false" id="poi" icon="map-marker">   
 			<layer id="poi_etablissement_scolaire" name="Établissements scolaires"  visible="false" tiled="false" 
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
