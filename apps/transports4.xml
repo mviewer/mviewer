@@ -106,7 +106,7 @@
                     style="transports_arret_rout_dep_defaut"
                     legendurl="http://kartenn.region-bretagne.fr/doc/transports/icons/arret_rout_dep.svg" 
                     url="http://kartenn.region-bretagne.fr/geoserver-proxy/interne/wms"
-                    attribution="GéoBretagne" 
+                    attribution="Région Bretagne - GéoBretagne" 
                     metadata=""
                     metadata-csw="" />
                 <layer id="ligne_routiere_departementale" name="Lignes routières départementales"  visible="false" tiled="false" secure="true"
@@ -114,7 +114,7 @@
                     infoformat="text/html" featurecount="20"
                     style="transports_ligne_rout_dep_defaut" 
                     url="http://kartenn.region-bretagne.fr/geoserver-proxy/interne/wms"
-                    attribution="GéoBretagne" 
+                    attribution="Région Bretagne - GéoBretagne" 
                     metadata=""
                     metadata-csw="" />
 			</group>		
