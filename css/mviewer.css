@@ -468,7 +468,12 @@ transform: scale3d(0, 0, 0);*/
 }
 
 .menu-toggle.closed span {
-    transform: rotate(90deg);
+    transform: rotate(90deg);    
+}
+
+.menu-toggle span {
+    transform: rotate(0deg);
+    transition: all ease-out .3s;
 }
 
 ul#layers-container {

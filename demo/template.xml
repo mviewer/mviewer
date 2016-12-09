@@ -39,7 +39,7 @@
 	                attribution="Région Bretagne" 
 	                metadata=""
 	                metadata-csw="">   
-                    <template url="templates/template2.mst"></template>
+                    <template url="templates/demo.population.mst"></template>
               </layer>  
             <layer id="arret_ferroviaire" name="Arrêts ferroviaires régionaux"  visible="true" tiled="false" 
                     searchable="true" queryable="true" fields="nom,commune" aliases="nom,commune" secure="false"                   
@@ -52,7 +52,7 @@
                     attribution="Région Bretagne" 
                     metadata=""
                     metadata-csw="">
-                    <template url="templates/template1.mst"></template>
+                    <template url="templates/demo.arrets_fer.mst"></template>
                     <!--<template><![CDATA[
                         {{#features}}<li class="item"><b>{{nom}}</b><br/>{{code_uic}}<br/><button class="btn btn-default"/><iframe src="http://kartenn.region-bretagne.fr/ws/transports/iframe_demographie.php?insee_comm={{code_uic}}" /></li>{{/features}}
                     ]]></template>-->
