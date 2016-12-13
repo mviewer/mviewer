@@ -457,10 +457,23 @@ transform: scale3d(1, 1, 1);*/
 transform: scale3d(0, 0, 0);*/
 }
 
-#layers-container-box-header span.glyphicon.glyphicon-menu-hamburger {
+#layers-container-box-header span {
   color: #fff;
-  padding-left: 10px;
-  padding-top: 10px;
+  padding: 10px;
+  /*transform: rotate(90deg);   */
+}
+
+.active #layers-container-box-header span {
+  transform: rotate(0deg); 
+}
+
+.menu-toggle.closed span {
+    transform: rotate(90deg);    
+}
+
+.menu-toggle span {
+    transform: rotate(0deg);
+    transition: all ease-out .3s;
 }
 
 ul#layers-container {
