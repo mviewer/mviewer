@@ -233,7 +233,7 @@
                 infoformat="text/html" featurecount="20"
 				style="transports_korrigo_moins_h6,transports_korrigo_h6_h9, transports_korrigo_h9_h16, transports_korrigo_h16_h19, transports_korrigo_plus_h19"
 				stylesalias="Avant 6h,Entre 6h et 9h,Entre 9h et 16h,Entre 16h et 19h,Après 19h"
-				timefilter="true" timeinterval="year" timecontrol="slider" timemin="2012" timemax="2015" timevalues="2012,2013,2014,2015"
+				timefilter="true" timeinterval="year" timecontrol="slider" timemin="2012" timemax="2016" timevalues="2012,2013,2014,2015,2016"
 				url="http://kartenn.region-bretagne.fr/geoserver-proxy/interne/wms"
 				attribution="Région Bretagne" 
 				metadata="http://kartenn.region-bretagne.fr/geonetwork/?uuid=4477c443-7924-4644-a01b-f66c14e93107"
