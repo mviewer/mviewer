@@ -221,7 +221,7 @@
 				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
 				infopanel="bottom-panel"
                 infoformat="text/html" featurecount="20"
-				timefilter="true" timeinterval="year" timecontrol="slider" timemin="2012" timemax="2015" timevalues="2012,2013,2014,2015"
+				timefilter="true" timeinterval="year" timecontrol="slider" timemin="2012" timemax="2016" timevalues="2012,2013,2014,2015,2016"
 				style="transports_korrigo_an"
 				url="http://kartenn.region-bretagne.fr/geoserver-proxy/interne/wms"
 				attribution="Région Bretagne" 
