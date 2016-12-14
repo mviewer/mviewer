@@ -46,6 +46,10 @@
 			font-family: 'spotka-alternatebold';
 			src: url('../font/spotka-alternatebold.ttf') format('truetype');
 			}
+@font-face {
+			font-family: 'spotkabold';
+			src: url('../font/spotkabold.ttf') format('truetype');
+			}			
 
 
 /*----Style fenêtre de configuration - Indicateurs Transports*/
