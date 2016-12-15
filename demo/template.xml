@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <application title="Nouveau visualiseur thématique" logo="img/logo/geobretagne.png" help="http://geobretagne.fr" measuretools="false" exportpng="true" style="css/apps/kartenn_eolien.css"/>
+    <application title="Kartenn Template" logo="img/logo/geobretagne.png" help="http://geobretagne.fr" measuretools="false" exportpng="true" style="css/themes/externe/blue.css"/>
     <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
     <mapoptions maxzoom="19" projection="EPSG:3857" center="-220750.13768758904,6144925.57790189" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
   
@@ -30,7 +30,7 @@
             <layer id="rp_struct_pop_geom" name="Part de la population selon la CSP"  visible="true" tiled="false"
 	                searchable="false" queryable="true" fields="nom_geo,level,p_pop,densite" aliases="nom_geo,level,p_pop,densite"
 	                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Echelle" attributestylesync="true" attributefilterenabled="true"
-	                infopanel=""
+	                infopanel="bottom-panel"
 	                infoformat="application/vnd.ogc.gml" featurecount="5"
 	                timefilter="true" timeinterval="year" timecontrol="slider" timemin="1999" timemax="2013" timevalues="1999,2008,2013"
 	                style="rphab_txcs1@commune,rphab_txcs2@commune,rphab_txcs3@commune,rphab_txcs4@commune,rphab_txcs5@commune,rphab_txcs6@commune,rphab_txcs7@commune,rphab_txcs8@commune"

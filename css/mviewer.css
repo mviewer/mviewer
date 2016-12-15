@@ -1,10 +1,35 @@
+/*--------------------------- KARTENN CSS BASIQUE -------------------------*/
+
+/* Import des fonts*/
+@font-face {
+      font-family: 'opensans_bold';
+      src: url('../../font/Open_sans/OpenSans-Bold.ttf') format('truetype');
+      }
+@font-face {
+      font-family: 'opensans_extrabold';
+      src: url('../../font/Open_sans/OpenSans-ExtraBold.ttf') format('truetype');
+      }
+@font-face {
+      font-family: 'opensans_semibold';
+      src: url('../../font/Open_sans/OpenSans-Semibold.ttf') format('truetype');
+      }
+@font-face {
+      font-family: 'Open Sans';
+      src: url('../../font/Open_sans/OpenSans-Regular.ttf') format('truetype');
+      }
+@font-face {
+      font-family: 'opensans_light';
+      src: url('../../font/Open_sans/OpenSans-Light.ttf') format('truetype');
+      }                 
+
+/* CSS kartenn*/      
 html, body {
 	width: 100%;
 	height: 100%;
 	margin: 0;
 	padding: 0;
 	font-size: 12.5px;
-	font-family: "Trebuchet MS",Helvetica,Arial,sans-serif;  
+	font-family: 'Open Sans', Helvetica, sans-serif;  
 }
 
 html {
@@ -98,7 +123,7 @@ a#searchparams {
 	right:65px;
 	top: 60px;
     z-index: 5;
-	font-family: Open Sans, Arial;
+	font-family: 'Open Sans', sans-serif;
 }
 
 #searchresults li {
@@ -163,7 +188,7 @@ li.geoportail.list-group-item.disabled{
 
 /*Styles*/
 .selected-sld.fa span{
-  font-family: Open Sans;
+  font-family: 'Open Sans';
   font-style: italic;
 }
 .selected-sld.fa{
@@ -171,7 +196,7 @@ li.geoportail.list-group-item.disabled{
 }
 /*Filtres*/
 .selected-attribute.fa span{
-  font-family: Open Sans;
+  font-family: 'Open Sans';
   font-style: italic;
 }
 .selected-attribute.fa{
@@ -268,7 +293,7 @@ li.geoportail.list-group-item.disabled{
 
 
 .popup-content {
-    font-family: "Trebuchet MS",Helvetica,Arial,sans-serif;
+    font-family: "Trebuchet MS",Helvetica,sans-serif,sans-serif;
     text-shadow: none;    
     padding-right: 10px;    
 }
@@ -608,7 +633,7 @@ ul#layers-container {
     float: left;
     padding-right: 10px;
     font-weight: bold;
-	font-family: Open Sans, Arial; 
+	font-family: 'Open Sans', sans-serif; 
 }
 
 .gml-item-field-name::after {
@@ -616,7 +641,7 @@ ul#layers-container {
 }
 
 .gml-item-field-value{
-	font-family: Open Sans, Arial; 
+	font-family: 'Open Sans', sans-serif; 
 }
  
 /*#bottom-panel .popup-content {  */
@@ -714,7 +739,7 @@ li.mv-nav-item span {
   opacity: 1;
   white-space: nowrap;
   text-shadow: none;
-  font-family: Open Sans, Arial;
+  font-family: 'Open Sans', sans-serif;
   font-weight: normal!important;
 }
 
@@ -725,7 +750,7 @@ li.mv-nav-item span {
 
 .tooltip-measure-static {
   color: #fff;
-  font-family: Open Sans, Arial;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .tooltip-measure:before,
@@ -933,7 +958,7 @@ li.elasticsearch.list-group-item.disabled{
 
 #parameterspanel .modal-header{
 	color: #333;
-	font-family: Open Sans, Arial;
+	font-family: 'Open Sans', sans-serif;
 	font-size: 13px;
 }
 
@@ -944,7 +969,7 @@ li.elasticsearch.list-group-item.disabled{
 
 ul#searchparameters{
 	list-style: none;
-	font-family: Open Sans, Arial;
+	font-family: 'Open Sans', sans-serif;
 	padding-left: 10px;
 	padding-top:0px;
 	line-height: 1.6;
@@ -963,19 +988,19 @@ ul#searchparameters{
 
 #sharepanel .modal-header{
 	color: #333;
-	font-family: Open Sans, Arial;
+	font-family: 'Open Sans', sans-serif;
 	font-size: 13px;
 }
 
 #sharepanel .form-group label {
 	font-weight:normal;
 	color: #333;
-	font-family: Open Sans, Arial;
+	font-family: 'Open Sans', sans-serif;
 	font-size: 13px;
 }
 
 a#permalinklink{
-	font-family: Open Sans, Arial;
+	font-family:'Open Sans', sans-serif;
 }
 #sharepanel .btn-group-vertical{
 	margin-top:10%;
@@ -983,7 +1008,7 @@ a#permalinklink{
 
 .modal-content{
 	border-radius: 0px;
-	font-family: Open Sans, Arial;
+	font-family: 'Open Sans', sans-serif;
 }
 /******** ICON LOADING *********/
 .loader {
@@ -1121,7 +1146,7 @@ a:focus{
 }
 
 .form-group label {
-	font-family: Open Sans, Arial;
+	font-family: 'Open Sans', sans-serif;
 }
 
 #layers-container .mv-layer-options a{
@@ -1131,7 +1156,7 @@ a:focus{
 }
 
 #layers-container .mv-layer-options p {
-	/*font-family: Open Sans, Arial; */
+	/*font-family: Open Sans, sans-serif; */
 	margin: 0 0 5px;
 }
 
@@ -1229,7 +1254,7 @@ a:focus{
 
 .slider.slider-horizontal .slider-tick-label-container{
 	margin-top:13px;
-	font-family:Open Sans, Arial;
+	font-family:'Open Sans', sans-serif;
 }
 
 .tooltip.bottom .tooltip-arrow{
@@ -1282,7 +1307,7 @@ a:focus{
 /**** Popover *****/
 .popover-content{
 	font-size: 13px;
-	font-family: Open Sans, Arial;
+	font-family: 'Open Sans', sans-serif;
 	color: #555;
 }
 
@@ -1291,7 +1316,7 @@ a:focus{
 }	
 
 .popover-title{
-	font-family: Open Sans, Arial; 
+	font-family: 'Open Sans', sans-serif; 
 	font-weight: bold;
 	color:#555;
 	border-bottom:none;
@@ -1369,7 +1394,7 @@ ul#basemapslist p {
 .ol-scale-line-inner{
 	color: #777;
     border-color: #777;
-    font-family: Open Sans, Arial;
+    font-family: 'Open Sans', sans-serif;
 }
 /* Icone layers non coches 
 Utiliser le code Unicode du caractere de la police awesome.
@@ -1519,7 +1544,7 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
   position: fixed;
   bottom: 1%;
   left: 50%;
-  font-family: Open Sans, Arial;
+  font-family: 'Open Sans', sans-serif;
   color:#888;
   font-weight:500;
 }
