@@ -91,7 +91,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0cf6de5d-9746-44d8-b003-a2dae2e7e585"
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=0cf6de5d-9746-44d8-b003-a2dae2e7e585" /> 
-			<layer id="recensement_patrimoine_operation" name="Patrimoines des sports en Bretagne" visible="false" tiled="false" 
+			<layer id="recensement_patrimoine_operation" name="Etablissements nautiques" visible="false" tiled="false" 
 				searchable="false" queryable="true" 
 				infoformat="text/html" featurecount="20"
                 style="recensement_patrimoine_sports"  legendurl="http://kartenn.region-bretagne.fr/img/legend/pat_sports_recensement.png"
@@ -175,7 +175,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://patrimoine.bzh/gertrude-diffusion/dossier/1ca99a3b-810d-40d4-9df4-c2fbd81fdaaf"
 				metadata-csw="" />
-			<layer id="etude_patrimoine_simple" name="Patrimoine des sports" visible="false" tiled="false"
+			<layer id="etude_patrimoine_simple" name="Patrimoine des sports (études)" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/pat_sports.png"
 				style="	patrimoine_thematique_sports_centroide" 
@@ -183,6 +183,14 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata=""
 				metadata-csw="" />
+			<layer id="recensement_patrimoine_operation" name="Etablissements nautiques (recensés)" visible="false" tiled="false" 
+				searchable="false" queryable="true" 
+				infoformat="text/html" featurecount="20"
+                style="recensement_patrimoine_sports"  legendurl="http://kartenn.region-bretagne.fr/img/legend/pat_sports_recensement.png"
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0cf6de5d-9746-44d8-b003-a2dae2e7e585"
+				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=0cf6de5d-9746-44d8-b003-a2dae2e7e585" /> 
         </theme>
 
         <theme name="Enq. thématiques - Pat. religieux"  collapsed="true" id="archi_religieux"> 
