@@ -183,7 +183,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata=""
 				metadata-csw="" />
-			<layer id="recensement_patrimoine_operation" name="Etablissements nautiques (recensés)" visible="false" tiled="false" 
+			<layer id="recensement_patrimoine_operation" name="Etab. nautiques (recensés)" visible="false" tiled="false" 
 				searchable="false" queryable="true" 
 				infoformat="text/html" featurecount="20"
                 style="recensement_patrimoine_sports"  legendurl="http://kartenn.region-bretagne.fr/img/legend/etablissements_nautiques.png"
