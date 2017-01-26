@@ -95,7 +95,7 @@
 	                metadata-csw="">
 	                <template url="templates/territoire.pop.cat_age.mst"></template>
 	        </layer>	          
-	         <layer id="rp_struct_pop_geom" name="Part de la population selon la CSP"  visible="true" tiled="false"
+	         <layer id="rp_struct_pop_geom" name="Part de la population selon la CSP"  visible="false" tiled="false"
 	                searchable="false" queryable="true"
 	                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Echelle" attributestylesync="true" attributefilterenabled="true"
 	                infopanel="bottom-panel"
