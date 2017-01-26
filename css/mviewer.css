@@ -397,6 +397,7 @@ img.mv-logo {
   padding-top: 0px;
   margin-top: -7px;
   max-width: 100px;
+  margin-left: -5px;
 }
 
 p.navbar-text.mv-title{
@@ -937,7 +938,7 @@ a:hover{
 }
 
 #mv-navbar {
-	border-width: 0px;
+	border-width: 2px;
 }
 
 

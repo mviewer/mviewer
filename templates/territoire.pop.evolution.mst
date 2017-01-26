@@ -1,0 +1,40 @@
+{{#features}}
+	<li class="item">
+		<div class="">
+			<div class="title-feature">{{nom_geo}} ({{code_geo}})</div>
+		</div>
+		<iframe class="iframe_right"src="http://172.16.10.39/ws/territoire/pop.evolution.all.php?code_geo={{code_geo}}"></iframe>	
+		<div class="col-xs-12" style="text-align:center; margin-left:-20px;">
+			<span class="critere glyphicon glyphicon-map-marker" aria-hidden="true"><span id="text">{{level}}</span></span>
+		</div>		
+	</li>
+		
+{{/features}}
+
+<style>
+		.title-feature {
+			color: #2d4059;
+			font-family:"roboto_black";
+			font-size:23px;
+			margin-bottom:12px;
+			margin-top:12px;
+			line-height:1.1;
+		}
+		.iframe_right{
+			width:200px;
+			height:700px;
+			border: none;
+			margin-left:10px;
+		}
+		.critere {
+			color: #fff;			
+			font-size:13px;			
+			background-color:#2d4059;
+			border-radius:3px;
+			padding:7px 16px 8px 13px;
+		}
+		#text{
+			font-family:"roboto_regular";
+			margin-left:3px;
+		}
+</style>
