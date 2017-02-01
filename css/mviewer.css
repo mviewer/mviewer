@@ -3,23 +3,23 @@
 /* Import des fonts*/
 @font-face {
       font-family: 'opensans_bold';
-      src: url('../../font/Open_sans/OpenSans-Bold.ttf') format('truetype');
+      src: url('../css/font/Open_sans/OpenSans-Bold.ttf') format('truetype');
       }
 @font-face {
       font-family: 'opensans_extrabold';
-      src: url('../../font/Open_sans/OpenSans-ExtraBold.ttf') format('truetype');
+      src: url('../css/font/Open_sans/OpenSans-ExtraBold.ttf') format('truetype');
       }
 @font-face {
       font-family: 'opensans_semibold';
-      src: url('../../font/Open_sans/OpenSans-Semibold.ttf') format('truetype');
+      src: url('../css/font/Open_sans/OpenSans-Semibold.ttf') format('truetype');
       }
 @font-face {
       font-family: 'Open Sans';
-      src: url('../../font/Open_sans/OpenSans-Regular.ttf') format('truetype');
+      src: url('../css/font/Open_sans/OpenSans-Regular.ttf') format('truetype');
       }
 @font-face {
       font-family: 'opensans_light';
-      src: url('../../font/Open_sans/OpenSans-Light.ttf') format('truetype');
+      src: url('../css/font/Open_sans/OpenSans-Light.ttf') format('truetype');
       }                 
 
 /* CSS kartenn*/      
