@@ -175,13 +175,29 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://patrimoine.bzh/gertrude-diffusion/dossier/1ca99a3b-810d-40d4-9df4-c2fbd81fdaaf"
 				metadata-csw="" />
+			<layer id="etude_patrimoine_simple" name="Châteaux, maisons de maître... de Quimper" visible="false" tiled="false"
+				queryable="true"
+                infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/chateaux_quimper.png"
+				style="patrimoine_thematique_chateaux_quimper_centroide" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata="http://patrimoine.bzh/gertrude-diffusion/dossier/les-chateaux-maisons-de-maitre-et-maisons-d-architecte-a-quimper/82f3a11e-9fcc-4c16-9437-7774efe6c33f"
+				metadata-csw="" />
+			<layer id="etude_patrimoine_simple" name="Manoirs de Quimper" visible="false" tiled="false"
+				queryable="true"
+                infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/manoirs_quimper.png"
+				style="patrimoine_thematique_manoirs_quimper_centroide" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata="http://patrimoine.bzh/gertrude-diffusion/dossier/manoirs-de-quimper/0ca31273-4439-4e02-aff2-b3de5de72439"
+				metadata-csw="" />
 			<layer id="etude_patrimoine_simple" name="Patrimoine des sports (études)" visible="false" tiled="false"
 				queryable="true"
                 infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/pat_sports.png"
 				style="	patrimoine_thematique_sports_centroide" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Service de l'inventaire : Région Bretagne" 
-				metadata=""
+				metadata="http://patrimoine.bzh/gertrude-diffusion/dossier/patrimoine-des-sports-en-bretagne/16475fc5-20dd-40c5-ac5e-ad4bf1df3445"
 				metadata-csw="" />
 			<layer id="recensement_patrimoine_operation" name="Etab. nautiques (recensés)" visible="false" tiled="false" 
 				searchable="false" queryable="true" 
@@ -189,8 +205,8 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
                 style="recensement_patrimoine_sports"  legendurl="http://kartenn.region-bretagne.fr/img/legend/etablissements_nautiques.png"
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Service de l'inventaire : Région Bretagne" 
-				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0cf6de5d-9746-44d8-b003-a2dae2e7e585"
-				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=0cf6de5d-9746-44d8-b003-a2dae2e7e585" /> 
+				metadata-csw="http://patrimoine.bzh/gertrude-diffusion/dossier/les-centres-nautiques-en-bretagne/bafff2e7-7a6a-4871-ac64-f0c99dd29339"
+				metadata="" /> 
         </theme>
 
         <theme name="Enq. thématiques - Pat. religieux"  collapsed="true" id="archi_religieux"> 
@@ -278,7 +294,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				style="patrimoine_thematique_canal" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Service de l'inventaire : Région Bretagne" 
-				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/presentation-du-canal-de-nantes-a-brest/006678aa-7848-4c14-a633-a59828e97ab3"
+				metadata="http://patrimoine.bzh/gertrude-diffusion/dossier/presentation-du-canal-de-nantes-a-brest/006678aa-7848-4c14-a633-a59828e97ab3"
 				metadata-csw="" />
 			<layer id="etude_patrimoine_thematique" name="Fortifications littorales" visible="false" tiled="false"
 				queryable="true"
@@ -286,7 +302,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				style="patrimoine_thematique_fortification_littorale" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Service de l'inventaire : Région Bretagne" 
-				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/presentation-du-canal-de-nantes-a-brest/006678aa-7848-4c14-a633-a59828e97ab3"
+				metadata="http://patrimoine.bzh/gertrude-diffusion/dossier/presentation-de-l-inventaire-thematique-fortifications-littorales-17e-20e-siecles/af8863e3-b438-4b8a-88ac-05d67ded2e11 "
 				metadata-csw="" />
 			<layer id="etude_patrimoine_simple" name="Moulins à marée" visible="false" tiled="false"
 				queryable="true"
@@ -294,7 +310,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				style="	patrimoine_thematique_moulins_a_maree_centroide" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Service de l'inventaire : Région Bretagne" 
-				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/les-moulins-a-maree-de-bretagne/19934f6b-e5d4-42a0-ba6d-ec8b00638295"
+				metadata="http://patrimoine.bzh/gertrude-diffusion/dossier/les-moulins-a-maree-de-bretagne/19934f6b-e5d4-42a0-ba6d-ec8b00638295"
 				metadata-csw="" />
 			<layer id="etude_patrimoine_simple" name="Moulins à papier et papeteries" visible="false" tiled="false"
 				queryable="true"
@@ -302,7 +318,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				style="	patrimoine_thematique_moulins_papier_centroide" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Service de l'inventaire : Région Bretagne" 
-				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/les-moulins-a-papier-et-papeteries-industrielles-de-bretagne/b3b9ecf6-0e9c-404f-9263-76070b66f7d6"
+				metadata="http://patrimoine.bzh/gertrude-diffusion/dossier/les-moulins-a-papier-et-papeteries-industrielles-de-bretagne/b3b9ecf6-0e9c-404f-9263-76070b66f7d6"
 				metadata-csw="" />
         	<layer id="etude_patrimoine_simple" name="Patrimoine balnéaire" visible="false" tiled="false"
 				queryable="true"
@@ -310,7 +326,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				style="patrimoine_thematique_balneaire_centroide" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Service de l'inventaire : Région Bretagne" 
-				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/presentation-du-patrimoine-balneaire-de-la-cote-d-emeraude/2c354096-cee7-4263-9786-02e479f578ce"
+				metadata="http://patrimoine.bzh/gertrude-diffusion/dossier/presentation-du-patrimoine-balneaire-de-la-cote-d-emeraude/2c354096-cee7-4263-9786-02e479f578ce"
 				metadata-csw="" />
 			<layer id="etude_patrimoine_simple" name="Patrimoine maritime culturel" visible="false" tiled="false"
 				queryable="true"
@@ -318,7 +334,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				style="	patrimoine_thematique_architecture_patrimoine_maritime_centroide" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Service de l'inventaire : Région Bretagne" 
-				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/le-patrimoine-maritime-culturel-en-bretagne/132f41af-7184-4fe7-a72e-668e838e044c"
+				metadata="http://patrimoine.bzh/gertrude-diffusion/dossier/le-patrimoine-maritime-culturel-en-bretagne/132f41af-7184-4fe7-a72e-668e838e044c"
 				metadata-csw="" />
         </theme>
 
@@ -329,7 +345,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				style="patrimoine_thematique_ardoise_centroide" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Service de l'inventaire : Région Bretagne" 
-				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/ardoisieres-du-centre-bretagne/b256a66e-8d9b-4501-9597-afceef31d24b"
+				metadata="http://patrimoine.bzh/gertrude-diffusion/dossier/ardoisieres-du-centre-bretagne/b256a66e-8d9b-4501-9597-afceef31d24b"
 				metadata-csw="" />
 			<layer id="etude_patrimoine_simple" name="Charpentes armoricaines Ille-et-V." visible="false" tiled="false"
 				queryable="true"
@@ -337,7 +353,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				style="patrimoine_thematique_charpente_armoricaine_35_centroide" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Service de l'inventaire : geRégion Bretagne" 
-				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/les-charpentes-armoricaines-en-ille-et-vilaine/d4073292-07f9-4fce-b4c5-79bdadc6586d"
+				metadata="http://patrimoine.bzh/gertrude-diffusion/dossier/les-charpentes-armoricaines-en-ille-et-vilaine/d4073292-07f9-4fce-b4c5-79bdadc6586d"
 				metadata-csw="" />
 			<layer id="etude_patrimoine_thematique" name="Coiffes en filet brodé" visible="false" tiled="false"
 				queryable="true"
@@ -345,7 +361,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				style="	patrimoine_thematique_coiffes" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Service de l'inventaire : Région Bretagne" 
-				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/les-coiffes-en-filet-brode-de-bretagne/885719be-4e27-4ec2-be2b-9642ab145bb4"
+				metadata="http://patrimoine.bzh/gertrude-diffusion/dossier/les-coiffes-en-filet-brode-de-bretagne/885719be-4e27-4ec2-be2b-9642ab145bb4"
 				metadata-csw="" />
 			<layer id="etude_patrimoine_simple" name="Patrimoine industriel" visible="false" tiled="false"
 				queryable="true"
@@ -361,7 +377,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				style="	patrimoine_thematique_linier_chanvier_centroide" 
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Service de l'inventaire : Région Bretagne" 
-				metadata=""
+				metadata="http://patrimoine.bzh/gertrude-diffusion/dossier/patrimoine-linier-et-chanvrier-de-bretagne/9b81b7b6-6e14-41ff-96d5-4a6b2f7f4345"
 				metadata-csw="" />
         </theme>
 	<theme name="Edifices protégés MH"  collapsed="true" id="mh"> 
