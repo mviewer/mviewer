@@ -205,8 +205,8 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
                 style="recensement_patrimoine_sports"  legendurl="http://kartenn.region-bretagne.fr/img/legend/etablissements_nautiques.png"
 				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
 				attribution="Service de l'inventaire : Région Bretagne" 
-				metadata-csw="http://patrimoine.bzh/gertrude-diffusion/dossier/les-centres-nautiques-en-bretagne/bafff2e7-7a6a-4871-ac64-f0c99dd29339"
-				metadata="" /> 
+				metadata="http://patrimoine.bzh/gertrude-diffusion/dossier/les-centres-nautiques-en-bretagne/bafff2e7-7a6a-4871-ac64-f0c99dd29339"
+				metadata-csw="" /> 
         </theme>
 
         <theme name="Enq. thématiques - Pat. religieux"  collapsed="true" id="archi_religieux"> 
