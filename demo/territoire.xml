@@ -42,79 +42,143 @@
         <theme name="Population"  collapsed="false" id="habitant" icon="male">
 	        <layer id="rp_struct_pop_geom" name="Nombre d'habitants"  visible="false" tiled="false"
 	                searchable="false" queryable="true"
-	                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Echelle" attributestylesync="true" attributefilterenabled="true"
+	                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Échelle" attributestylesync="true" attributefilterenabled="true"
 	                infopanel="bottom-panel"
 	                infoformat="application/vnd.ogc.gml" featurecount="5"
 	                timefilter="true" timeinterval="year" timecontrol="slider" timemin="1999" timemax="2013" timevalues="1999,2008,2013"
-	                style="rphab_total, rphab_homme, rphab_femme"
-	                stylesalias="Population municipale, Population masculine, Population féminine"
+	                style="rphab_total@commune"
+	                stylesalias=""
 	                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
-	                attribution="Région Bretagne" 
+	                attribution="INSEE - Région Bretagne" 
 	                metadata=""
 	                metadata-csw="">
 	                <template url="templates/territoire.pop.nbr_habitant.mst"></template>
 	        </layer>        
 	        <layer id="rp_struct_pop_geom" name="Densité de population (hab/km²)"  visible="false" tiled="false"
 	                searchable="false" queryable="true"
-	                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Echelle" attributestylesync="true" attributefilterenabled="true"
+	                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Échelle" attributestylesync="true" attributefilterenabled="true"
 	                infopanel="bottom-panel"
 	                infoformat="application/vnd.ogc.gml" featurecount="5"
 	                timefilter="true" timeinterval="year" timecontrol="slider" timemin="1999" timemax="2013" timevalues="1999,2008,2013"
 	                style="rphab_densite@commune"
 	                stylesalias=""
 	                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
-	                attribution="Région Bretagne" 
+	                attribution="INSEE - Région Bretagne" 
 	                metadata=""
 	                metadata-csw="">
 	                <template url="templates/territoire.pop.densite.mst"></template>
 	        </layer>        
 	        <layer id="rp_struct_pop_evolution_geom" name="Évolution de la population de 2008 à 2013 (%)"  visible="false" tiled="false"
 	                searchable="false" queryable="true"
-	                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Echelle" attributestylesync="true" attributefilterenabled="true"
-	                infopanel=""
+	                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Échelle" attributestylesync="true" attributefilterenabled="true"
+	                infopanel="bottom-panel"
 	                infoformat="application/vnd.ogc.gml" featurecount="5"
 	                style="rphab_evol08_13@commune"
 	                stylesalias="Évolution de 2008 à 2013"
 	                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
-	                attribution="Région Bretagne" 
+	                attribution="INSEE - Région Bretagne" 
 	                metadata=""
 	                metadata-csw="">
 	                <template url="templates/territoire.pop.evolution.mst"></template>
 	        </layer>        
 	        <layer id="rp_struct_pop_geom" name="Part de la population selon la catégorie d'âge (%)"  visible="false" tiled="false"
 	                searchable="false" queryable="true"
-	                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Echelle" attributestylesync="true" attributefilterenabled="true"
+	                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Échelle" attributestylesync="true" attributefilterenabled="true"
 	                infopanel="bottom-panel"
 	                infoformat="application/vnd.ogc.gml" featurecount="5"
 	                timefilter="true" timeinterval="year" timecontrol="slider" timemin="1999" timemax="2013" timevalues="1999,2008,2013"
-	                style="rphab_tx0014, rphab_tx1529, rphab_tx3044, rphab_tx4559, rphab_tx6074, rphab_tx75p"
+	                style="rphab_tx0014@commune, rphab_tx1529@commune, rphab_tx3044@commune, rphab_tx4559@commune, rphab_tx6074@commune, rphab_tx75p@commune"
 	                stylesalias="0 - 14 ans, 15 -29 ans, 30 - 44 ans, 45 - 59 ans, 60 -74 ans, 75 ans et plus "
 	                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
-	                attribution="Région Bretagne" 
+	                attribution="INSEE - Région Bretagne" 
 	                metadata=""
 	                metadata-csw="">
 	                <template url="templates/territoire.pop.cat_age.mst"></template>
 	        </layer>	          
 	         <layer id="rp_struct_pop_geom" name="Part de la population selon la CSP"  visible="false" tiled="false"
 	                searchable="false" queryable="true"
-	                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Echelle" attributestylesync="true" attributefilterenabled="true"
+	                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Échelle" attributestylesync="true" attributefilterenabled="true"
 	                infopanel="bottom-panel"
 	                infoformat="application/vnd.ogc.gml" featurecount="5"
 	                timefilter="true" timeinterval="year" timecontrol="slider" timemin="1999" timemax="2013" timevalues="1999,2008,2013"
 	                style="rphab_txcs1@commune,rphab_txcs2@commune,rphab_txcs3@commune,rphab_txcs4@commune,rphab_txcs5@commune,rphab_txcs6@commune,rphab_txcs7@commune,rphab_txcs8@commune"
 	                stylesalias="Agriculteurs exploitants, Artisans - Commerçants - Chefs d'entreprises, Cadres - Professions intellectuelles, Professions intermédiaires, Employés, Ouvriers, Retraités, Autres sans activité professionnelle"
 	                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
-	                attribution="Région Bretagne" 
+	                attribution="INSEE - Région Bretagne" 
 	                metadata=""
 	                metadata-csw="">
 	                <template url="templates/territoire.pop.csp.mst"></template>
+	        </layer>
+	        <layer id="rp_menage_union_geom" name="Nombre de ménages"  visible="false" tiled="false"
+	                searchable="false" queryable="true"
+	                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Échelle" attributestylesync="true" attributefilterenabled="true"
+	                infopanel="bottom-panel"
+	                infoformat="application/vnd.ogc.gml" featurecount="5"
+	                timefilter="true" timeinterval="year" timecontrol="slider" timemin="2008" timemax="2013" timevalues="2008,2013"
+	                style="rpmen_total@commune"
+	                stylesalias=""
+	                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+	                attribution="INSEE - Région Bretagne" 
+	                metadata=""
+	                metadata-csw="">
+	                <template url="templates/territoire.pop.menage.mst"></template>
 	        </layer>                                         
         </theme>
+        <theme name="Logement"  collapsed="false" id="logement" icon="home">
+	        <layer id="rp_logement_union_geom" name="Nombre de logements"  visible="false" tiled="false"
+	                searchable="false" queryable="true"
+	                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Échelle" attributestylesync="true" attributefilterenabled="true"
+	                infopanel="bottom-panel"
+	                infoformat="application/vnd.ogc.gml" featurecount="5"
+	                timefilter="true" timeinterval="year" timecontrol="slider" timemin="2008" timemax="2013" timevalues="2008,2013"
+	                style="rplog_total@commune"
+	                stylesalias=""
+	                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+	                attribution="INSEE - Région Bretagne" 
+	                metadata=""
+	                metadata-csw="">
+	                <template url="templates/territoire.log.all.mst"></template>
+	        </layer>
+	        <layer id="rp_logement_union_geom" name="Part des logements selon le statut d'occupation"  visible="false" tiled="false"
+	                searchable="false" queryable="true"
+	                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Échelle" attributestylesync="true" attributefilterenabled="true"
+	                infopanel="bottom-panel"
+	                infoformat="application/vnd.ogc.gml" featurecount="5"
+	                timefilter="true" timeinterval="year" timecontrol="slider" timemin="2008" timemax="2013" timevalues="2008,2013"
+	                style="rplog_tx_rp@commune,rplog_tx_rsecocc@commune,rplog_tx_logvac@commune"
+	                stylesalias="Résidences principales, Résidences secondaires occupées, Logements vaccants"
+	                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+	                attribution="INSEE - Région Bretagne" 
+	                metadata=""
+	                metadata-csw="">
+	                <template url="templates/territoire.log.all.mst"></template>
+	        </layer>
+	        <layer id="rp_logement_union_geom" name="Part des logements selon le type"  visible="false" tiled="false"
+	                searchable="false" queryable="true"
+	                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Échelle" attributestylesync="true" attributefilterenabled="true"
+	                infopanel="bottom-panel"
+	                infoformat="application/vnd.ogc.gml" featurecount="5"
+	                timefilter="true" timeinterval="year" timecontrol="slider" timemin="2008" timemax="2013" timevalues="2008,2013"
+	                style="rplog_tx_maison@commune, rplog_tx_appart@commune"
+	                stylesalias="Maison, Appartement"
+	                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+	                attribution="INSEE - Région Bretagne" 
+	                metadata=""
+	                metadata-csw="">
+	                <template url="templates/territoire.log.all.mst"></template>
+	        </layer>                                        
+        </theme>
+        <theme name="Économie et Emploi"  collapsed="false" id="economie" icon="university">                                  
+        </theme>
+        <theme name="Marché du travail"  collapsed="false" id="marche_travail" icon="search">                                  
+        </theme>
+
         <theme name="Découpages territoriaux"  collapsed="true" id="territoire" icon="globe"> 
 		<group name="Limites administratives" id="grp1" >
 			<layer id="commune_bdcarto" name="Commune"  visible="false" tiled="false"
 				queryable="true" fields="COMMUNE,INSEE_COM,SUPERFICIE" aliases="Nom,Code INSEE,Superficie"
-                infoformat="application/vnd.ogc.gml" featurecount="5"                
+                infoformat="application/vnd.ogc.gml" featurecount="5"  
+                infopanel=""              
 				sld="http://kartenn.region-bretagne.fr/mviewer-dev/sld/territoire_commune_contour.sld"
 				url="http://geobretagne.fr/geoserver/dreal_b/wms" 
 				attribution="IGN - BDCARTO" 

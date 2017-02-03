@@ -40,7 +40,7 @@
 	                metadata=""
 	                metadata-csw="">   
                     <template url="templates/demo.population.mst"></template>
-              </layer>  
+            </layer>  
             <layer id="arret_ferroviaire" name="Arrêts ferroviaires régionaux"  visible="true" tiled="false" 
                     searchable="true" queryable="true" fields="nom,commune" aliases="nom,commune" secure="false"                   
                     infoformat="application/vnd.ogc.gml" featurecount="20"

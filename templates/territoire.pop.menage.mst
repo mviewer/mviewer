@@ -9,13 +9,13 @@
 			</div>	
 		</div>
 		{{#Commune}}
-			<iframe class="iframe_bottom"src="../ws/territoire/pop.nbr_habitant.commune.php?code_geo={{code_geo}}&time={{datation}}"></iframe>
+			<iframe class="iframe_bottom"src="../ws/territoire/pop.menage.commune.php?code_geo={{code_geo}}&time={{datation}}"></iframe>
 		{{/Commune}}
 		{{#EPCI}}
-			<iframe class="iframe_bottom"src="../ws/territoire/pop.nbr_habitant.epci.php?code_geo={{code_geo}}&time={{datation}}"></iframe>
+			<iframe class="iframe_bottom"src="../ws/territoire/pop.menage.epci.php?code_geo={{code_geo}}&time={{datation}}"></iframe>
 		{{/EPCI}}
 		{{#Pays}}
-			<iframe class="iframe_bottom"src="../ws/territoire/pop.nbr_habitant.pays.php?code_geo={{code_geo}}&time={{datation}}"></iframe>
+			<iframe class="iframe_bottom"src="../ws/territoire/pop.menage.pays.php?code_geo={{code_geo}}&time={{datation}}"></iframe>
 		{{/Pays}}			
 	</li>
 		
@@ -26,12 +26,12 @@
 			color: #2d4059;
 			font-family:"roboto_black";
 			font-size:23px;
-			margin-bottom:3%;
+			margin-bottom:1%;
 			line-height:1;
 		}
 		.iframe_bottom{
 			width:970px;
-			height:285px;
+			height:300px;
 			border: none;
 			overflow:hidden;
 		}

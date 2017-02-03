@@ -1,12 +1,22 @@
 {{#features}}
 	<li class="item">
-		<div class="">
-			<div class="title-feature">{{nom_geo}} ({{code_geo}})</div>
+		<div class="row">
+			<div class="col-xs-7">
+				<div class="title-feature">{{nom_geo}}</div>
+			</div>
+			<div class=" col-xs-3">
+				<span class="critere glyphicon glyphicon-map-marker" aria-hidden="true"><span id="text">{{level}}</span></span>
+			</div>	
 		</div>
-		<iframe class="iframe_right"src="http://172.16.10.39/ws/territoire/pop.evolution.all.php?code_geo={{code_geo}}"></iframe>	
-		<div class="col-xs-12" style="text-align:center; margin-left:-20px;">
-			<span class="critere glyphicon glyphicon-map-marker" aria-hidden="true"><span id="text">{{level}}</span></span>
-		</div>		
+		{{#Commune}}
+			<iframe class="iframe_bottom"src="../ws/territoire/pop.evolution.commune.php?code_geo={{code_geo}}"></iframe>
+		{{/Commune}}
+		{{#EPCI}}
+			<iframe class="iframe_bottom"src="../ws/territoire/pop.evolution.epci.php?code_geo={{code_geo}}"></iframe>
+		{{/EPCI}}
+		{{#Pays}}
+			<iframe class="iframe_bottom"src="../ws/territoire/pop.evolution.pays.php?code_geo={{code_geo}}"></iframe>
+		{{/Pays}}			
 	</li>
 		
 {{/features}}
@@ -16,15 +26,14 @@
 			color: #2d4059;
 			font-family:"roboto_black";
 			font-size:23px;
-			margin-bottom:12px;
-			margin-top:12px;
-			line-height:1.1;
+			margin-bottom:3%;
+			line-height:1;
 		}
-		.iframe_right{
-			width:200px;
-			height:700px;
+		.iframe_bottom{
+			width:970px;
+			height:285px;
 			border: none;
-			margin-left:10px;
+			overflow:hidden;
 		}
 		.critere {
 			color: #fff;			

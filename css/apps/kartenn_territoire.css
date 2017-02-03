@@ -2,18 +2,23 @@
 
 /* Import des fonts*/
 		@font-face {
-		    font-family: "roboto_black";
+		    font-family: 'roboto_black';
 		    src: url('../font/Roboto/Roboto-Black.ttf');
 		}
 		@font-face {
-		    font-family: "roboto_bold";
+		    font-family: 'roboto_bold';
 		    src: url('../font/Roboto/Roboto-Bold.ttf');
 		}
 		@font-face {
-		    font-family: "roboto_regular";
+		    font-family: 'roboto_regular';
 		    src: url('../font/Roboto/Roboto-Regular.ttf');
 		}
-            
+		@font-face {
+		    font-family: 'spotkabold';
+		    src: url('../font/spotkabold.ttf');
+		}
+
+
 /* Modification de l'interface bootstrap*/
 
 /* Barre de navigation du haut*/
@@ -33,11 +38,12 @@
 #mv-navbar a.navbar-brand, .mv-title{
 	color:#ffffff!important;	
 	font-size: 20px;	
-	font-weight: bold;
+	/*font-weight: bold;*/
 }
 p.navbar-text.mv-title{
 	font-size: 18px;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'spotkabold', sans-serif;
+	letter-spacing: 0.5px;
 }
 
 .navbar-default .navbar-toggle{
@@ -62,7 +68,7 @@ p.navbar-text.mv-title{
 }
 
 .gml-item-title {    
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'roboto_regular', sans-serif;
 	color:#2d4059;
     font-size: 24px;
 }
@@ -76,19 +82,21 @@ p.navbar-text.mv-title{
   color: #fff;  
 }
 #right-panel .mv-header h5 {  
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'roboto_bold', sans-serif;
   font-size: 13px;
-  font-weight:600;
 }
 
 /* Barre de gauche*/
 
 #sidebar-wrapper a{
-	font-family:'Open Sans', sans-serif;
-	letter-spacing:-0.2pt;
+	font-family:'roboto_regular', sans-serif;
+	/*letter-spacing:-0.2pt;*/
 	
 }
-
+#menu>li>a{
+	font-family:'roboto_bold';
+	font-weight: normal!important;
+}
 #menu li a:hover{
 	border-left:#2d4059 0px solid;
 	background:#2d4059;
@@ -96,10 +104,9 @@ p.navbar-text.mv-title{
 }
 
 #bottom-panel .mv-header h5{
-	font-family:'Open Sans', sans-serif;
+	font-family:'roboto_bold', sans-serif;
 	color: #2d4059;	
 	font-size:13px;
-	font-weight: 600;
 }
 
 .fa-chevron-circle-down{
@@ -108,21 +115,28 @@ p.navbar-text.mv-title{
 
 #layers-container a {
 	color: #2d4059;
-	font-family: 'Open Sans', sans-serif;	
+	font-family: 'roboto_bold', sans-serif;	
+	font-weight: normal;
 }
 
 .form-group label {
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'roboto_bold', sans-serif!important;
+	font-weight: normal;
 }
 
 #layers-container .mv-layer-options p {
-	font-family: 'Open Sans', sans-serif; 
+	font-family: 'roboto_regular', sans-serif; 
+	margin: 0 0 10px!important;
 }
 
 .form-control{
-	font-family: 'Open Sans', sans-serif; 
+	font-family: 'roboto_regular', sans-serif; 
+	color:#555!important;
 }
 
+.mv-layer-options{
+	color:#555!important;
+}
 /* Style curseur slider Opacité */
 .mv-layer-options  .slider-selection{
 	background:#2d4059;	
@@ -135,12 +149,11 @@ p.navbar-text.mv-title{
 .mv-layer-options .tooltip-inner{
 	background-color:#2d4059;
 	border-radius: 4px;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'roboto_regular', sans-serif;
 }
 .mv-layer-options .tooltip.top .tooltip-arrow{
 	border-top-color:#2d4059;
 }
-
 
 /* Slider temporalité */ 
 
@@ -149,6 +162,9 @@ p.navbar-text.mv-title{
 	-webkit-box-shadow:inset 0 0px 0 rgba(0,0,0,0);
 }
 
+.slider.slider-horizontal .slider-tick-label-container{
+	font-family: 'roboto_regular', sans-serif!important;
+}
 .slider-tick.round.in-selection{
 	background: #2d4059;
 	background-image: none;
@@ -179,7 +195,7 @@ p.navbar-text.mv-title{
 /* Basemap*/ 
 
 ul#basemapslist p {
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'roboto_regular', sans-serif;
 }
 
 ul#basemapslist  li.active{	
@@ -189,19 +205,19 @@ ul#basemapslist  li.active{
 /* Style fenêtre de configuration*/
 
 h3.title{
-	font-family: 'Open Sans', sans-serif;;
+	font-family: 'roboto_regular', sans-serif;;
 	font-size: 24px;
 	color:#2d4059;
 	}
 	
 h4.title{
-    font-family: 'Open Sans', sans-serif;;
+    font-family: 'roboto_regular', sans-serif;;
     font-size: 16px;
     color:#2d4059;
 }
 
 .info{
-	font-family:'Open Sans', sans-serif;
+	font-family:'roboto_regular', sans-serif;
 	}
 
 		

@@ -1,21 +1,21 @@
 {{#features}}
 	<li class="item">
 		<div class="row">
-			<div class="col-xs-4">
-				<div class="title-feature">{{nom_geo}} ({{code_geo}})</div>
+			<div class="col-xs-7">
+				<div class="title-feature">{{nom_geo}}</div>
 			</div>
-			<div class="col-xs-offset-3 col-xs-3">
+			<div class="col-xs-3">
 				<span class="critere glyphicon glyphicon-map-marker" aria-hidden="true"><span id="text">{{level}}</span></span><span class="critere glyphicon glyphicon-calendar" aria-hidden="true" style="margin-left:10px;"><span id="text">{{millesime}}</span></span>
 			</div>	
 		</div>
 		{{#Commune}}
-			<iframe class="iframe_bottom"src="http://172.16.10.39/ws/territoire/pop.csp.commune.php?code_geo={{code_geo}}&time={{datation}}"></iframe>
+			<iframe class="iframe_bottom"src="../ws/territoire/pop.csp.commune.php?code_geo={{code_geo}}&time={{datation}}"></iframe>
 		{{/Commune}}
 		{{#EPCI}}
-			<iframe class="iframe_bottom"src="http://172.16.10.39/ws/territoire/pop.csp.epci.php?code_geo={{code_geo}}&time={{datation}}"></iframe>				
+			<iframe class="iframe_bottom"src="../ws/territoire/pop.csp.epci.php?code_geo={{code_geo}}&time={{datation}}"></iframe>				
 		{{/EPCI}}
 		{{#Pays}}
-			<iframe class="iframe_bottom"src="http://172.16.10.39/ws/territoire/pop.csp.pays.php?code_geo={{code_geo}}&time={{datation}}"></iframe>				
+			<iframe class="iframe_bottom"src="../ws/territoire/pop.csp.pays.php?code_geo={{code_geo}}&time={{datation}}"></iframe>				
 		{{/Pays}}
 					
 	</li>
@@ -27,7 +27,8 @@
 			color: #2d4059;
 			font-family:"roboto_black";
 			font-size:23px;
-			margin-bottom:12px;
+			margin-bottom:3%;
+			line-height:1;
 		}
 		.iframe_bottom{
 			width:1000px;
