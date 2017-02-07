@@ -693,7 +693,7 @@ ul#layers-container {
 }
 
 li.mv-nav-item span {
-  margin-left: -20px;
+  /*margin-left: -20px;*/
 }
 
 .layerdisplay-title span {
@@ -1096,9 +1096,22 @@ li.mv-nav-item {
 }
 
 .level-2 .mv-nav-item a{
-	margin-left:-40px;
-	text-indent: 21px;
+	/*margin-left:-40px;
+	text-indent: 21px;*/
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    display: flex;
 	
+}
+
+.level-2 ul a {    
+    line-height: 1.5em;
+    text-indent: 0;    
+}
+
+.level-2 ul.nav-pills.nav-stacked {
+    padding-left: 20px;
 }
 
 
@@ -1131,7 +1144,8 @@ ul.carousel-inner{
 }
 
 span.state-icon.fa{
-	padding-right:3px;
+	padding-right: 10px;
+    padding-top: 3px;
 }
 
 /******* MAP ********/
