@@ -1095,12 +1095,21 @@ li.mv-nav-item {
 	font-size:12px;
 }
 
+.nav-pills.nav-stacked ul a{
+  line-height: 1.5em;
+  display: flex;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  /*padding-left: 20px;*/
+  text-indent: 8px;
+}
+
 .level-2 .mv-nav-item a{
 	/*margin-left:-40px;
 	text-indent: 21px;*/
     padding-top: 5px;
     padding-bottom: 5px;
-    padding-left: 5px;
+    padding-left: 20px;
     display: flex;
 	
 }
@@ -1111,7 +1120,7 @@ li.mv-nav-item {
 }
 
 .level-2 ul.nav-pills.nav-stacked {
-    padding-left: 20px;
+    padding-left: 0!important;
 }
 
 
