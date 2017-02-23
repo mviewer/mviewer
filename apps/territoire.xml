@@ -30,10 +30,10 @@
     </baselayers> 
     <proxy url=""/>
     <!--<olscompletion url="http://gpp3-wxs.ign.fr/5kiwvtkb2v23y0x8chidxbij/ols/apis/completion"/>-->
-    <olscompletion url="../olscompletion" type="geoportail"/>
-    <!--<olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban"/>-->
-    <elasticsearch url="http://ows.region-bretagne.fr/kartenn/_search" geometryfield="geometry" linkid="search_id" querymode="fussy_like_this" />
-    <searchparameters bbox="true" localities="true" features="true"/>
+    <!--<olscompletion url="../olscompletion" type="geoportail"/>-->
+    <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban"/>
+    <elasticsearch url="http://ows.region-bretagne.fr/kartenn/_search" geometryfield="geometry" doctypes="unite_administrative" linkid="search_id" querymode="fussy_like_this" />
+    <searchparameters bbox="false" localities="true" features="true" static="true"/>
 	<widgets>
        <!--<widget name="gauge"/>-->       
     </widgets> 
