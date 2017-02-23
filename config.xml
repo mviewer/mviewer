@@ -30,127 +30,16 @@
     </baselayers> 
     <authentification url="who" loginurl="?login" logouturl="../j_spring_security_logout" enabled="true"/>
     <proxy url=""/>
-    <!--<olscompletion url="http://gpp3-wxs.ign.fr/5kiwvtkb2v23y0x8chidxbij/ols/apis/completion"/>-->
-    <olscompletion url="../olscompletion" type="geoportail"/>
-    <!--<olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban"/>-->
-    <elasticsearch url="http://ows.region-bretagne.fr/kartenn/_search" geometryfield="geometry" linkid="search_id" querymode="fussy_like_this" />
-    <searchparameters bbox="true" localities="true" features="true"/>
+    <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban"/>
+    <elasticsearch url="http://ows.region-bretagne.fr/kartenn/_search" geometryfield="geometry" linkid="search_id" querymode="fussy_like_this" doctypes="unite_administrative"/>
+    <searchparameters bbox="false" localities="true" features="true" static="true"/>
     <widgets>
        <!--<widget name="gauge"/>-->       
     </widgets> 
 
-    <themes>
-        <theme name="Infrastructures de transports"  collapsed="false" id="transport" icon="train">            
-            <group name="Transports ferroviaires" id="grp1" >
-                 <!--<layer id="ref_trace_OD_2013_2016" name="Trains"  visible="true" tiled="false" namespace="rb"
-                    searchable="false" queryable="true" fields="" aliases=""
-                    customcontrols="true"
-                    infoformat="text/html" featurecount="1"
-                    style=""
-                    stylesalias=""
-                    url="http://kartenn.region-bretagne.fr/geoserver-proxy-test/rb/wms"
-                    attribution="Région Bretagne" 
-                    metadata=""
-                    metadata-csw="" />-->
-                <layer id="troncon_ferroviaire" name="Lignes ferroviaires"  visible="true" tiled="false"
-                    searchable="false" queryable="true" fields="axe" aliases="axe" secure="true"
-                    infoformat="text/html" featurecount="20"
-                    style="transports_ligne_ferr_defaut, transports_lignes_ferr_typologie" 
-                    stylesalias="Par défaut,Type d'infrastructures"
-                    url="http://kartenn.region-bretagne.fr/geoserver-proxy/interne/wms"
-                    attribution="Région Bretagne" 
-                    metadata=""
-                    metadata-csw="" />  
-                <layer id="arret_ferroviaire" name="Arrêts ferroviaires régionaux"  visible="true" tiled="false" 
-                    searchable="true" queryable="true" fields="nom_pa" aliases="nom_pa" secure="true"                   
-                    infoformat="text/html" featurecount="20"
-                    style="transports_arret_ferr_defaut, transports_arret_ferr_borne,transports_arret_ferr_guichet,transports_arret_ferr_info_dynami,transports_arret_ferr_nature,transports_arret_ferr_parking,transports_arret_ferr_velo,transports_arret_ferr_pmr"
-                    stylesalias="Par défaut, Distributeur automatique de billet, Guichet, Information dynamique,Nature des arrêts ferroviaires,Parking voiture,Parking vélo, Assistance PMR"
-                    legendurl="http://kartenn.region-bretagne.fr/doc/transports/icons/gare.svg"
-                    url="http://kartenn.region-bretagne.fr/geoserver-proxy/interne/wms"
-                    attribution="Région Bretagne" 
-                    metadata=""
-                    metadata-csw="" />
-                <layer id="pem_bzh_geom" name="Pôles d'échanges multimodaux"  visible="false" tiled="false"
-                    searchable="false" queryable="false" fields="nom_pa" aliases="nom_pa"
-                    infoformat="text/html" featurecount="20"
-                    style="transports_pem_defaut"
-                    url="http://kartenn.region-bretagne.fr/geoserver-proxy/interne/wms"
-                    attribution="Région Bretagne" 
-                    metadata=""
-                    metadata-csw="" />
-            </group>
-            <group name="Transports routiers régionaux" id="grp2" >
-                <layer id="arret_routier_regional" name="Arrêts routiers régionaux"  visible="false" tiled="false"
-                    searchable="false" queryable="true" secure="true"
-                    infoformat="text/html" featurecount="20"
-                    style="transports_arret_rout_defaut"
-                    url="http://kartenn.region-bretagne.fr/geoserver-proxy/interne/wms"
-                    legendurl="http://kartenn.region-bretagne.fr/doc/transports/icons/arret_rout_reg.svg"
-                    attribution="Région Bretagne" 
-                    metadata=""
-                    metadata-csw="" />
-                <layer id="ligne_routiere_regionale" name="Lignes routières régionales"  visible="false" tiled="false" 
-                    searchable="false" queryable="true" secure="true"
-                    infoformat="text/html" featurecount="20"
-                    style="transports_ligne_rout_reg_defaut" 
-                    url="http://kartenn.region-bretagne.fr/geoserver-proxy/interne/wms"
-                    attribution="Région Bretagne" 
-                    metadata=""
-                    metadata-csw="" />
-            </group>
-            <group name="Transports routiers départementaux" id="grp3" >
-                <layer id="arret_routier_departemental" name="Arrêts routiers départementaux"  visible="false" tiled="false" secure="true"
-                    searchable="false" queryable="true" fields="axe" aliases="axe"
-                    infoformat="text/html" featurecount="20"
-                    style="transports_arret_rout_dep_defaut"
-                    legendurl="http://kartenn.region-bretagne.fr/doc/transports/icons/arret_rout_dep.svg" 
-                    url="http://kartenn.region-bretagne.fr/geoserver-proxy/interne/wms"
-                    attribution="GéoBretagne" 
-                    metadata=""
-                    metadata-csw="" />
-                <layer id="ligne_routiere_departementale" name="Lignes routières départementales"  visible="false" tiled="false" secure="true"
-                    searchable="false" queryable="true" fields="axe" aliases="axe"
-                    infoformat="text/html" featurecount="20"
-                    style="transports_ligne_rout_dep_defaut" 
-                    url="http://kartenn.region-bretagne.fr/geoserver-proxy/interne/wms"
-                    attribution="Région Bretagne" 
-                    metadata=""
-                    metadata-csw="" />
-            </group>        
-            <group name="Autres" id="grp4" >        
-                <layer id="aeroport" name="Aéroports régionaux"  visible="false" tiled="false"
-                    searchable="false" queryable="true" fields="axe" aliases="axe"
-                    infoformat="text/html" featurecount="20"
-                    style="transports_aeroport" 
-                    url="http://kartenn.region-bretagne.fr/geoserver-proxy/interne/wms"
-                    legendurl="http://kartenn.region-bretagne.fr/doc/transports/icons/aeroport.svg" 
-                    attribution="Région Bretagne" 
-                    metadata=""
-                    metadata-csw="" />
-                <layer id="gare_maritime" name="Gares maritimes"  visible="false" tiled="false"
-                    searchable="false" queryable="true" fields="axe" aliases="axe"   
-                    infoformat="text/html" featurecount="20"
-                    sld="http://kartenn.region-bretagne.fr/mviewer-dev/sld/gare_maritime1.sld" 
-                    url="http://geobretagne.fr/geoserver/dreal_b/ows"
-                    legendurl="http://kartenn.region-bretagne.fr/doc/transports/icons/gare_marit.svg" 
-                    attribution="Région Bretagne" 
-                    metadata=""
-                    metadata-csw="" />  
-                <layer id="aire_covoiturage" name="Aires de covoiturage"  visible="false" tiled="false"
-                    searchable="false" queryable="true" fields="axe" aliases="axe"
-                    infoformat="text/html" featurecount="20"
-                    style="transports_aire_covoiturage" 
-                    url="http://kartenn.region-bretagne.fr/geoserver-proxy/interne/wms"
-                    legendurl="http://kartenn.region-bretagne.fr/doc/transports/icons/aire_covoiturage.svg" 
-                    attribution="Région Bretagne" 
-                    metadata=""
-                    metadata-csw="" />  
-            </group>
-        </theme>
-
+    <themes> 
         <theme name="Points d'intérêt"  collapsed="false" id="poi" icon="map-marker">   
-            <layer id="poi_etablissement_scolaire" name="Établissements scolaires"  visible="false" tiled="false" 
+            <layer id="poi_etablissement_scolaire" name="Établissements scolaires"  visible="true" tiled="false" 
                 searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
                 infoformat="text/html" featurecount="20"
                 style="transports_etabliss_scolaire_defaut, transports_etablissement_scolaire_nature"

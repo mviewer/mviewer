@@ -38,7 +38,7 @@ Le fichier de config permet la personnalisation des thèmes/couches du visualise
 
     <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban" attribution="API adresse.data.gouv.fr" />     
     <elasticsearch url="http://ows.region-bretagne.fr/kartenn/_search" geometryfield="geometry" linkid="search_id" querymode="fussy_like_this"/>
-    <searchparameters bbox="true" localities="false" features="true"/>
+    <searchparameters bbox="true" localities="false" features="true" static="layer1"/>
 
     <themes> 
         <theme name="Inventaire du patrimoine"  collapsed="true" id="patrimoine">           
@@ -189,7 +189,7 @@ WMS/WFS. Par convention les types elasticsearch ont le même nom que les couches
 
 ####Prototype
 
-	<elasticsearch url="" geometryfield="" linkid="" [querymode=""] />
+	<elasticsearch url="" geometryfield="" linkid="" [querymode=""] [doctypes=""]/>
 
 ####Attributs
 
@@ -197,6 +197,7 @@ WMS/WFS. Par convention les types elasticsearch ont le même nom que les couches
 * **geometryfield**: Nom du champ utilisé par l'instance elasticsearch pour stocker la géométrie
 * **linkid**: Nom du champ  à utiliser côté serveur wms/wfs pour faire le lien avec la propriété _id des documents elasticsearch.
 * **querymode**: Optional - Query mode used by elasticsearch to find results : fuzzy_like_this ou term - default = fuzzy_like_this.
+* **doctypes**: Optional - types des documents elasticsearch à requêter systématiquement, indépendamment des couches affichées.
 
 ###searchparameters
 
@@ -204,13 +205,14 @@ Options liées à à la recherche d'adresse (olscompletion) et à la recherche d
 
 ####Prototype
 
-	<searchparameters [bbox=""] [localities=""] [features=""]/>
+	<searchparameters [bbox=""] [localities=""] [features=""] [static=""]/>
 
 ####Attributs
 
 * **bbox**: Optional - Recherche d'adresse et/ou d'entités dans l'emprise de la carte : true ou false - defaut = false
 * **localities**: Optional - Utilisation du service d'adresse olscompletion : true ou false - defaut = true
 * **features**: Optional - Utilisation du service de recherche d'entités elasticsearch : true ou false - defaut = true.
+* **static**: Optional - En lien avec le paramètre **doctypes**. Active ou désactive la recherche associée à des documents requêtés systématiquement, indépendamment des couches affichées : true ou false - defaut = false.
 
 ###Noeud themes
 
