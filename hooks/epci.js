@@ -16,6 +16,6 @@ style: new ol.style.Style({
 })        
   });
 mviewer.hooks.epci.handle = function (features) {        
-       mviewer.alert(features[0].properties.nom_geo, "alert-info");
+       /*mviewer.alert(features[0].properties.nom_geo, "alert-info");*/
    };    
 } 

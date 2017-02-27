@@ -1606,3 +1606,32 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
 .logo_techno img{
   width: 10%;
 }
+
+#feature-info {
+     position: absolute;
+     height: 1px;
+     width: 1px;
+     z-index: 100;
+ }
+ 
+ /* custom-tooltip */
+.tooltip-custom {
+    position: fixed;
+}
+.tooltip-custom.tooltip-inner {
+    background-color: #2d4059;
+    padding: 10px 8px 10px;
+    color: #fff;
+    font-family: "roboto_regular";
+    font-size: 13px;
+    letter-spacing: 1;
+}
+.tooltip-custom.tooltip.top .tooltip-custom.tooltip-arrow {
+    border-top-color: #2d4059;
+}
+.tooltip-custom h5 {
+    margin-bottom: 0;
+}
+.tooltip-custom.tooltip.in {
+    opacity: 1;
+}
