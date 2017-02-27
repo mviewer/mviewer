@@ -75,6 +75,7 @@ p.navbar-text.mv-title{
 
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus { 
   background-color:#2d4059;
+  border-left: thick solid #2d4059!important;
 }
 
 #right-panel .mv-header {  
@@ -273,7 +274,7 @@ li.geoportail.list-group-item.disabled{
 	border-color:#2d4059;
 }
 
-.nav-tabs .active .glyphicon {
+.nav-tabs .active .glyphicon, .nav-tabs .active .fa {
   color: #2d4059;  
 }
 
