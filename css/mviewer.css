@@ -1614,9 +1614,6 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
  }
  
  /* custom-tooltip */
-.tooltip-custom {
-    position: fixed;
-}
 .tooltip-custom.tooltip-inner {
     background-color: #2d4059;
     padding: 10px 8px 10px;
@@ -1632,5 +1629,24 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
     margin-bottom: 0;
 }
 .tooltip-custom.tooltip.in {
+    opacity: 1;
+}
+
+/* custom-infopanel */
+.tooltip-infopanel.tooltip-inner {
+    background-color: #2d4059;
+    padding: 10px 8px 10px;
+    color: #fff;
+    font-family: "roboto_regular";
+    font-size: 13px;
+    letter-spacing: 1;
+}
+.tooltip-infopanel.tooltip.top .tooltip-infopanel.tooltip-arrow {
+    border-top-color: #2d4059;
+}
+.tooltip-infopanel h5 {
+    margin-bottom: 0;
+}
+.tooltip-infopanel.tooltip.in {
     opacity: 1;
 }
