@@ -41,9 +41,9 @@
 	/*font-weight: bold;*/
 }
 p.navbar-text.mv-title{
-	font-size: 18px;
+	font-size: 19px;
 	font-family: 'spotkabold', sans-serif;
-	letter-spacing: 0.5px;
+	/*letter-spacing: 0.5px;*/
 }
 
 .navbar-default .navbar-toggle{
