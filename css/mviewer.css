@@ -884,10 +884,9 @@ li[role="presentation"] {
   border-radius: 0;
 }
 
-.nav-tabs .glyphicon {
+.nav-tabs .glyphicon, .nav-tabs .fa {
   color: #ccc;
 }
-
 
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
   border: 0;
@@ -1605,4 +1604,49 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
 
 .logo_techno img{
   width: 10%;
+}
+
+#feature-info {
+     position: absolute;
+     height: 1px;
+     width: 1px;
+     z-index: 100;
+ }
+ 
+ /* custom-tooltip */
+.tooltip-custom.tooltip-inner {
+    background-color: #2d4059;
+    padding: 10px 8px 10px;
+    color: #fff;
+    font-family: "roboto_regular";
+    font-size: 13px;
+    letter-spacing: 1;
+}
+.tooltip-custom.tooltip.top .tooltip-custom.tooltip-arrow {
+    border-top-color: #2d4059;
+}
+.tooltip-custom h5 {
+    margin-bottom: 0;
+}
+.tooltip-custom.tooltip.in {
+    opacity: 1;
+}
+
+/* custom-infopanel */
+.tooltip-infopanel.tooltip-inner {
+    background-color: #2d4059;
+    padding: 10px 8px 10px;
+    color: #fff;
+    font-family: "roboto_regular";
+    font-size: 13px;
+    letter-spacing: 1;
+}
+.tooltip-infopanel.tooltip.top .tooltip-infopanel.tooltip-arrow {
+    border-top-color: #2d4059;
+}
+.tooltip-infopanel h5 {
+    margin-bottom: 0;
+}
+.tooltip-infopanel.tooltip.in {
+    opacity: 1;
 }
