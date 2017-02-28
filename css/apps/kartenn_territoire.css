@@ -73,8 +73,8 @@ p.navbar-text.mv-title{
     font-size: 24px;
 }
 
-.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus { 
-  background-color:#2d4059;
+.popup-content .nav-tabs > li.active > a, .popup-content .nav-tabs > li.active > a:hover, .popup-content .nav-tabs > li.active > a:focus { 
+  /*background-color:#2d4059;*/
   border-left: thick solid #2d4059!important;
 }
 
@@ -82,7 +82,7 @@ p.navbar-text.mv-title{
   background-color: #2d4059;
   color: #fff;  
 }
-#right-panel .mv-header h5 {  
+#right-panel .mv-header h5{  
   font-family: 'roboto_bold', sans-serif;
   font-size: 13px;
 }
@@ -274,7 +274,7 @@ li.geoportail.list-group-item.disabled{
 	border-color:#2d4059;
 }
 
-.nav-tabs .active .glyphicon, .nav-tabs .active .fa {
+.popup-content .nav-tabs .active .glyphicon, .popup-content .nav-tabs .active .fa {
   color: #2d4059;  
 }
 

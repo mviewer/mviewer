@@ -215,15 +215,16 @@ p.text{
     font-size: 24px;
 }
 
-.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus { 
-  background-color:#032e46;
+.popup-content .nav-tabs > li.active > a, .popup-content .nav-tabs > li.active > a:hover, .popup-content .nav-tabs > li.active > a:focus { 
+  /*background-color:#032e46;*/
+  border-left: thick solid #2d4059!important;
 }
 
 #right-panel .mv-header {  
   background-color: #032e46;
   color: #fff;  
 }
-#right-panel .mv-header h5 {  
+#right-panel .mv-header h5{  
   font-family: spotka-alternatemedium;
 }
 
@@ -411,7 +412,7 @@ li.geoportail.list-group-item.disabled{
 	border-color:#032e46;
 }
 
-.nav-tabs .active .glyphicon {
+.popup-content .nav-tabs .active .glyphicon {
   color: #032e46;  
 }
 
