@@ -330,8 +330,8 @@
                 fields="nom_geo" aliases="Nom" 
                 type="hook" style="elsStyle" opacity="0.8" legendurl="img/legend/lycee.png" 
                 url="" 
-                attribution="Région Bretagne" metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25" 
-                metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25"/>
+                attribution="Région Bretagne" metadata="http://kartenn.region-bretagne.fr/geonetwork/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25" 
+                metadata-csw="http://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25"/>
             <!--</group>-->
 		</theme>
 		<theme name="Étiquettes"  collapsed="true" id="etiquette" icon="tag"> 
