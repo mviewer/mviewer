@@ -41,9 +41,9 @@
 	/*font-weight: bold;*/
 }
 p.navbar-text.mv-title{
-	font-size: 19px;
+	font-size: 18px;
 	font-family: 'spotkabold', sans-serif;
-	/*letter-spacing: 0.5px;*/
+	letter-spacing: 0.5px;
 }
 
 .navbar-default .navbar-toggle{
@@ -302,4 +302,48 @@ a:hover{
 
 .tooltip-measure-static:before {
   border-top-color: #2d4059;
+}
+
+ /* custom-tooltip-feature */
+.tooltip-feature.tooltip-inner {
+    background-color: #2d4059;
+    padding: 10px 8px 10px;
+    color: #fff;
+    font-family: "roboto_regular";
+    font-size: 13px;
+    letter-spacing: 1;
+}
+.tooltip.right .tooltip-feature.tooltip-arrow {
+    border-right-color: #2d4059; 
+}
+.tooltip.top .tooltip-feature.tooltip-arrow {
+    border-top-color: #2d4059; 
+}
+.tooltip.left .tooltip-feature.tooltip-arrow {
+    border-left-color: #2d4059; 
+}
+
+.tooltip-feature h5 {
+    margin-bottom: 0;
+}
+.tooltip-feature.tooltip.in {
+    opacity: 1;
+}
+/* custom-tooltip-infopanel */
+.mv-tooltip.tooltip-inner {
+    background-color: #2d4059;
+    padding: 10px 8px 10px;
+    color: #fff;
+    font-family: "roboto_regular";
+    font-size: 13px;
+    letter-spacing: 1;
+}
+.tooltip.right .mv-tooltip.tooltip-arrow {
+    border-right-color: #2d4059; 
+}
+.tooltip.top .mv-tooltip.tooltip-arrow {
+    border-top-color: #2d4059; 
+}
+.tooltip.left .mv-tooltip.tooltip-arrow {
+    border-left-color: #2d4059; 
 }
