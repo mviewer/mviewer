@@ -245,6 +245,46 @@
 		                metadata-csw="">
 		                <template url="templates/territoire.eco.nbr_emploi.mst"></template>
 		        </layer>		        
+	        </group>
+	        <group name="Établissements" id="grp2" >
+	        	<layer id="clap_etablissement_union_geom" name="Part des établissements selon les effectifs (%)"  visible="false" tiled="false"
+		                searchable="false" queryable="true"
+		                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Échelle" attributestylesync="true" attributefilterenabled="true"
+		                infopanel="bottom-panel"
+		                infoformat="application/vnd.ogc.gml" featurecount="5"
+		                style="clapent_tx0sal@commune,clapent_tx1a4sal@commune,clapent_tx5a9sal@commune,clapent_tx10a19sal@commune"
+		                stylesalias="0 salarié, 1 à 4 salariés,5 à 9 salariés,10 à 19 salariés"
+		                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+		                attribution="INSEE - Région Bretagne" 
+		                metadata=""
+		                metadata-csw="">
+		        </layer>
+	        	<layer id="clap_etablissement_union_geom" name="Part des établissements selon le secteur d'activité (%)"  visible="false" tiled="false"
+		                searchable="false" queryable="true"
+		                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Échelle" attributestylesync="true" attributefilterenabled="true"
+		                infopanel="bottom-panel"
+		                infoformat="application/vnd.ogc.gml" featurecount="5"
+		                style="clapent_txagri@commune,clapent_txind@commune,clapent_txconst@commune,clapent_txcts@commune,clapent_txapesas@commune"
+		                stylesalias="Agriculture - Sylviculture et Pêche,Industrie et Artisanat de production, Construction, Commerce - Transports et Services divers, Administration publique - Enseignement - Santé humaine - Action sociale"
+		                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+		                attribution="INSEE - Région Bretagne" 
+		                metadata=""
+		                metadata-csw="">
+		                <template url="templates/"></template>
+		        </layer>
+        		<layer id="clap_etablissement_union_geom" name="Nombre d'établissements"  visible="false" tiled="false"
+		                searchable="false" queryable="true"
+		                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Échelle" attributestylesync="true" attributefilterenabled="true"
+		                infopanel="bottom-panel"
+		                infoformat="application/vnd.ogc.gml" featurecount="5"
+		                style="clapent_total@commune"
+		                stylesalias=""
+		                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+		                attribution="INSEE - Région Bretagne" 
+		                metadata=""
+		                metadata-csw="">
+		                <template url="templates/"></template>
+		        </layer>
 	        </group>                                  
         </theme>
         <theme name="Marché du travail"  collapsed="false" id="marche_travail" icon="search">                                  
