@@ -123,6 +123,9 @@ $(document).ready(function () {
                     </div>
                 </div>
             </div>
+            <div class="nav navbar-nav navbar-right">
+               <button type="button" class="btn btn-default navbar-btn mv-navbar-btn" data-toggle="modal" data-target="#help">?</button>
+            </div>
         </div>        
     </nav>
     <div id="wrapper">
@@ -308,6 +311,18 @@ $(document).ready(function () {
                 </div>
             </div>
         </div>
+        <!-- HELP POPUP -->		
+        <div id="help" class="modal fade" tabindex="-1" role="dialog" >
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" role="document">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Aide</h4>
+                    </div>
+                    <div class="modal-body" ></div> 
+                </div>
+            </div>
+        </div>
         <!-- IMAGE POPUP -->		
         <div id="creditspopup" class="modal fade" tabindex="-1" role="dialog" >
             <div class="modal-dialog">
@@ -380,9 +395,9 @@ $(document).ready(function () {
 		<div id="alerts-zone" ></div>
         <!--HELP LINK -->
 		<div id="bottom-links" >
-            <a href="" class="mv-help" title="Aide à l'utilisation" target="_blank">Aide</a>
+            <a type="button" class="mv-help" title="Aide à l'utilisation" data-toggle="modal" data-target="#help">Aide</a>
             -
-            <a type="button" class="mv-credits" data-toggle="modal" data-target="#creditspopup">Crédits</button>
+            <a type="button" class="mv-credits" data-toggle="modal" data-target="#creditspopup">Crédits</a>
         </div>
         
         <script type="text/javascript" src="lib/simple-slidebar/slidebar_menu.js"></script>

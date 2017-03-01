@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <application title="Kartenn Territoire" logo="" help="" measuretools="true" exportpng="true" style="css/apps/kartenn_territoire.css"/>
+    <application title="Kartenn Territoire" logo="" help="panels/territoires_help.html" measuretools="true" exportpng="true" style="css/apps/kartenn_territoire.css"/>
     <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
     <mapoptions maxzoom="19" projection="EPSG:3857" center="-220750.13768758904,6144925.57790189" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
   
@@ -331,8 +331,15 @@
                 fields="nom_geo" aliases="Nom" 
                 type="hook" style="" opacity="0.8" legendurl="img/legend/lycee.png" 
                 url="" 
-                attribution="Région Bretagne" metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25" 
-                metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25"/>
+                attribution="Région Bretagne" metadata="http://kartenn.region-bretagne.fr/geonetwork/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25" 
+                metadata-csw="http://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25"/>
+                
+            <layer id="v_commune" name="Commune test" visible="true" queryable="false" 
+                fields="nom_geo" aliases="Nom" 
+                type="hook" style="" opacity="0.8" legendurl="img/legend/lycee.png" 
+                url="" 
+                attribution="Région Bretagne" metadata="http://kartenn.region-bretagne.fr/geonetwork/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25" 
+                metadata-csw="http://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25"/>
             <!--</group>-->
 		</theme>
 		<theme name="Étiquettes"  collapsed="true" id="etiquette" icon="tag"> 
