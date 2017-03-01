@@ -265,6 +265,8 @@ Noeud enfant de theme décrivant une couche.
     legendurl=""
 	url=""
 	attribution=""
+    tooltip=""
+    tooltipenabled=""
 	metadata=""
 	metadata-csw="" />
     <template url=""/>
@@ -289,6 +291,8 @@ Ce fichier js doit être placé dans le répertoire hooks/
 * **useproxy**: Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de de crossOrigin lorsque CORS n'est pas activé sur le serveur distant.
 * **fields**: Si les informations retournées par l'interrogation est au format GML, fields représente les attributs à parser pour générer la vignette
 * **aliases**: Si les informations retournées par l'interrogation est au format GML, aliases représente le renommage des champs parsés.
+* **tooltip**: Pour les couches de type vecteur uniquement. Booléen précisant si les entités de la couche sont affichées sous forme d'infobulle au survol de la souris. (Les infobulles ne fonctionnent qu'avec une seule couche à la fois). Valeur par défaut = false.
+* **tooltipenabled**: Précise la couche prioritaire pour l'affichage des infobulles.
 * **secure**: Précise si la couche est protégée ( méchanisme geoserver ) auquel cas un test est affectué pour savoir si la couche est accessible. SI ce n'est pas le cas, la couche est retirée du panneau et de la carte.
 * **infoformat**: Format du GetFeatureInfo. 2 formats sont supportés : text/html et application/vnd.ogc.gml
 * **featurecount**: Nombre d'éléments retournés lors de l'intérrogation
