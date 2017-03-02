@@ -220,7 +220,11 @@ Noeud regroupant les couches par thèmes.
 
 ####Prototype
 
-	<themes>
+	<themes mini="">
+    
+#####Attributs
+
+* **mini**: Booléen qui précise si le panneau de gauche est réduit à l'ouverture de l'application. Défaut = false.
 
 ####Noeud(s) enfant(s) theme
 
@@ -267,7 +271,7 @@ Noeud enfant de theme décrivant une couche.
 	attribution=""
     tooltip=""
     tooltipenabled=""
-	metadata=""
+	metadata=""    
 	metadata-csw="" />
     <template url=""/>
 	</theme> 
