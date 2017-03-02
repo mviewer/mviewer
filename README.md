@@ -271,6 +271,7 @@ Noeud enfant de theme décrivant une couche.
 	attribution=""
     tooltip=""
     tooltipenabled=""
+    expanded=""
 	metadata=""    
 	metadata-csw="" />
     <template url=""/>
@@ -324,6 +325,7 @@ Ce fichier js doit être placé dans le répertoire hooks/
 * **legendurl**: url premettant de récupérer la légende. Si non défini, c'est un getFeatureLegend qui est effectué.
 * **url**: URL de la couche
 * **attribution**: Copyright de la couche.
+* **expanded** : Booléan précisant si le panneau de la couche est agrandi au démarrage. La valeur par défaut est false.
 * **metadata**: Lien vers la fiche de metadonnées complète
 * **metadata-csw**: Requête CSW pour l'affiche dans la popup du détail de la couche.
 
