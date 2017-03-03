@@ -254,12 +254,7 @@ h4.title{
    color: #2d4059;
 }
 
-/* Résultats recherches */
 
-li.elasticsearch.list-group-item.disabled{
-	color: #2d4059;
-	
-}
 
 /* Buttons tools*/
 #drawtoolsoptions .btn-default.active, #drawtoolsoptions .btn-default:active, #drawtoolsoptions .btn-default.focus, #drawtoolsoptions .btn-default:focus {
@@ -267,13 +262,34 @@ li.elasticsearch.list-group-item.disabled{
 	border-color:#2d4059;
 }
 
+/* Résultats recherches */
+
+
+#searchresults{
+	font-family:'roboto_regular'!important;
+	color: #555!important;
+}
+#searchresults{
+color: #555!important;
+}
 /* Search toolbar */
 
 li.geoportail.list-group-item.disabled{
-	background:#2d4059;
+	background-color:#2d4059;
 	border-color:#2d4059;
+	color: white!important;
+	font-family: 'roboto_bold'!important;
 }
-
+li.elasticsearch.list-group-item.disabled{
+	background-color:#2d4059!important;
+	border-color:#2d4059;
+	color: white!important;
+	font-family: 'roboto_bold'!important;
+}
+#searchresults li a:hover{
+	font-family:'roboto_bold'!important;
+	color:#2d4059!important;
+}
 .popup-content .nav-tabs .active .glyphicon, .popup-content .nav-tabs .active .fa {
   color: #2d4059;  
 }
@@ -306,11 +322,11 @@ a:hover{
 
  /* custom-tooltip-feature */
 .tooltip-feature.tooltip-inner {
-    background-color: #2d4059;
-    padding: 10px 8px 10px;
+    background-color: rgba(45, 64, 89, 0.95);
+    padding: 8px 8px 8px;
     color: #fff;
     font-family: "roboto_regular";
-    font-size: 13px;
+    font-size: 12px;
     letter-spacing: 1;
 }
 .tooltip.right .tooltip-feature.tooltip-arrow {
@@ -332,10 +348,10 @@ a:hover{
 /* custom-tooltip-infopanel */
 .mv-tooltip.tooltip-inner {
     background-color: #2d4059;
-    padding: 10px 8px 10px;
+    padding: 8px 8px 8px;
     color: #fff;
     font-family: "roboto_regular";
-    font-size: 13px;
+    font-size: 11px;
     letter-spacing: 1;
 }
 .tooltip.right .mv-tooltip.tooltip-arrow {
@@ -347,3 +363,22 @@ a:hover{
 .tooltip.left .mv-tooltip.tooltip-arrow {
     border-left-color: #2d4059; 
 }
+
+/* BUTTON AIDE*/
+button.btn.btn-default.navbar-btn.mv-navbar-btn{
+	border-radius:50%;
+	width:34px;
+	height:34px;
+	min-width:34px;
+	border: 0px!important;
+	font-family: "roboto_black";
+	color:#2d4059;
+	font-size: 15px;
+}
+button.btn.btn-default.navbar-btn.mv-navbar-btn:hover{
+	background-color: rgba(255, 255, 255, 0.89);
+}
+button.btn.btn-default.navbar-btn.mv-navbar-btn:focus{
+	background-color: rgba(255, 255, 255, 255);
+}
+
