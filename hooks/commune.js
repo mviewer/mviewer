@@ -1,21 +1,22 @@
 {
-mviewer.hooks.epci = {};
-mviewer.hooks.epci.layer = new ol.layer.Vector({
+mviewer.hooks.commune = {};
+mviewer.hooks.commune.layer = new ol.layer.Vector({
         source: new ol.source.Vector({
-            url: "data/epci_simple.geojson",
+            url: "data/commune_simple.geojson",
             format: new ol.format.GeoJSON()
         }),
 style: new ol.style.Style({
           stroke: new ol.style.Stroke({
             color: 'rgba(45, 64,89,255)',
-            width: 1.5
+            width: 0.8,
+            lineDash: [4,4]
           }),
           fill: new ol.style.Fill({
             color: 'rgba(0, 0, 0, 0)'
           })
 })        
   });
-mviewer.hooks.epci.handle = function (features) {        
+mviewer.hooks.commune.handle = function (features) {        
        /*mviewer.alert(features[0].properties.nom_geo, "alert-info");*/
    };    
 } 
