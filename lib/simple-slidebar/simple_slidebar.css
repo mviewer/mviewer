@@ -130,9 +130,9 @@
     #wrapper.toggled-2 #sidebar-wrapper {
         width: 50px;
     }
-    #wrapper.toggled-2 #sidebar-wrapper:hover {
+    /*#wrapper.toggled-2 #sidebar-wrapper:hover {
         width: 250px;
-    }
+    }*/
 
 
     #page-content-wrapper {
