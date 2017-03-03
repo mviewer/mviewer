@@ -1184,7 +1184,8 @@ a:focus{
 
 #layers-container .mv-layer-options p {
 	/*font-family: Open Sans, sans-serif; */
-	margin: 0 0 5px;
+	/*margin: 0 0 5px;*/
+    padding-top: 10px;
 }
 
 .form-control{
