@@ -1,0 +1,90 @@
+{{#features}}
+	<li class="item">
+		<div id="localisation">
+			<div class="title" style="color:#72487f;">
+				<span class="critere glyphicon glyphicon-map-marker" aria-hidden="true"> <span class="title" style="color:#72487f;margin-left:-12px;">{{nom_geo}}</span>
+			</div>
+			
+		</div>
+		<div id="description">
+			<div class="title">
+				Qu'est ce que les fiches de l'Observatoire ?
+			</div>
+			<div class="text">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+			</div>
+		</div>	
+		<div id="telechargement">
+			<div class="title">
+				Accéder aux fiches de l'Observatoire <i>(format .PDF)</i>
+			</div>
+			<div id="button_link">
+				<a href="https://kartenn.region-bretagne.fr/doc/territoire/01-Population.pdf" target="_blank">
+					<div class="button" style="background-color:#268f91;">
+						<img src="templates/icon_pdf.svg" style="width:13%;margin-right:4%;">Fiche population (2016)
+					</div>
+				</a>
+				<a href="https://kartenn.region-bretagne.fr/doc/territoire/01-Economie.pdf" target="_blank">	
+				<div class="button" style="background-color:#f39463;">
+					<img src="templates/icon_pdf.svg" style="width:13%; margin-right:4%;">Fiche économie (2016)
+				</div>
+				</a>
+			</div>
+			<div style="color:#555; margin-top:20px; text-align:justify;">
+				Pour obtenir les fiches de l'Observatoire d'un autre pays, veuillez sélectionner l'entité désirée sur la carte.
+			</div>
+		</div>
+		<div id="source">
+				<i><span style="font-family:'roboto_bold';">Réalisation:</span> Direction de l'aménagement et de l'égalité - Service connaissance, observation, plannification et prospective | Édition 2016</br><span style="font-family:'roboto_bold';">Contact:</span> observatoire@bretagne.bzh </i>
+		</div>
+
+	</li>
+{{/features}}
+
+<style>
+		.item{
+		width:238px;
+		}
+		#description{
+			margin-top:10%;
+		}
+		.title {
+			color: #2d4059;
+			font-family:"roboto_black";
+			font-size:17px;
+			line-height:1;
+			margin-bottom:4%;
+		}
+		.text{
+			font-family:"roboto_regular";
+			text-align:justify;
+		}
+		#localisation{
+			margin-top: 10%;
+   			padding: 10px 12px 8px 12px;
+   			font-family:"roboto_regular";
+   			border-style: solid;
+    		border-width: 2.8px;
+    		border-color:#72487f;
+    		border-radius:3px;
+		}
+		#telechargement{
+			margin-top:10%;
+			font-family:"roboto_regular";
+		}
+		.button{
+   			padding: 10px 12px 10px 12px;
+   			margin-top:2%;
+   			color:white;
+   			border-radius:3px;
+		}
+		.button:hover{
+			opacity:0.9;
+		}
+		#source{
+			font-family:"roboto_regular";
+			font-size:11px; 
+			color:#555; 
+			margin-top:60%;
+		}
+</style>

@@ -4,18 +4,18 @@
 			<div class="col-xs-7">
 				<div class="title-feature">{{nom_geo}}</div>
 			</div>
-			<div class=" col-xs-3">
+			<div class="col-xs-3">
 				<span class="critere glyphicon glyphicon-map-marker" aria-hidden="true"><span id="text">{{level}}</span></span><span class="critere glyphicon glyphicon-calendar" aria-hidden="true" style="margin-left:10px;"><span id="text">2013</span></span>
 			</div>	
 		</div>
 		{{#Commune}}
-			<iframe class="iframe_bottom"src="../ws/territoire/pop.evolution.commune.php?code_geo={{code_geo}}"></iframe>
+			<iframe class="iframe_bottom"src="../ws/territoire/pop.solde.commune.php?code_geo={{code_geo}}"></iframe>
 		{{/Commune}}
 		{{#EPCI}}
-			<iframe class="iframe_bottom"src="../ws/territoire/pop.evolution.epci.php?code_geo={{code_geo}}"></iframe>
+			<iframe class="iframe_bottom"src="../ws/territoire/pop.solde.epci.php?code_geo={{code_geo}}"></iframe>
 		{{/EPCI}}
 		{{#Pays}}
-			<iframe class="iframe_bottom"src="../ws/territoire/pop.evolution.pays.php?code_geo={{code_geo}}"></iframe>
+			<iframe class="iframe_bottom"src="../ws/territoire/pop.solde.pays.php?code_geo={{code_geo}}"></iframe>
 		{{/Pays}}			
 	</li>
 		
@@ -26,12 +26,12 @@
 			color: #2d4059;
 			font-family:"roboto_black";
 			font-size:23px;
-			margin-bottom:3%;
+			margin-bottom:1%;
 			line-height:1;
 		}
 		.iframe_bottom{
 			width:970px;
-			height:285px;
+			height:300px;
 			border: none;
 			overflow:hidden;
 		}
