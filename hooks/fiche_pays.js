@@ -15,7 +15,5 @@ style: new ol.style.Style({
           })
 })        
   });
-mviewer.hooks.fiche_pays.handle = function (features) {        
-       /*mviewer.alert(features[0].properties.nom_geo, "alert-info");*/
-   };    
+mviewer.hooks.fiche_pays.handle = false;
 } 
