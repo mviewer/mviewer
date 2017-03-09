@@ -1,0 +1,13 @@
+{{#features}}
+	<li class="item" style="width:238px;">
+		<iframe class="iframe_right"src="../ws/territoire/mise_a_jour.html"></iframe>
+	</li>
+{{/features}}
+
+<style>
+	.iframe_right{
+		border:none;
+		height:600px;
+
+	}
+</style>

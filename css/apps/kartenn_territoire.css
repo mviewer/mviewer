@@ -1,4 +1,6 @@
-/*--------------------------- THEME KARTENN WET_ASPHALT -------------------------*/
+/******************************************************************************
+--------------------------- CSS KARTENN TERRITOIRE -------------------------
+********************************************************************************/
 
 /* Import des fonts*/
 		@font-face {
@@ -255,7 +257,6 @@ h4.title{
 }
 
 
-
 /* Buttons tools*/
 #drawtoolsoptions .btn-default.active, #drawtoolsoptions .btn-default:active, #drawtoolsoptions .btn-default.focus, #drawtoolsoptions .btn-default:focus {
 	background-color:#2d4059;
@@ -263,7 +264,6 @@ h4.title{
 }
 
 /* Résultats recherches */
-
 
 #searchresults{
 	font-family:'roboto_regular'!important;
@@ -364,6 +364,7 @@ a:hover{
     border-left-color: #2d4059; 
 }
 
+/************** AIDE KARTENN **************/
 /* BUTTON AIDE*/
 button.btn.btn-default.navbar-btn.mv-navbar-btn{
 	border-radius:50%;
@@ -380,5 +381,70 @@ button.btn.btn-default.navbar-btn.mv-navbar-btn:hover{
 }
 button.btn.btn-default.navbar-btn.mv-navbar-btn:focus{
 	background-color: rgba(255, 255, 255, 255);
+}
+
+/*PANEL AIDE*/
+#help .modal-content{
+	font-family: "roboto_regular"!important;
+	height: 880px;
+}
+#help .nav-tabs{
+	border-bottom: 2px solid #2d4059;
+}
+#help .nav-tabs>li>a{
+	border-radius: 0px 0px 0 0px!important;
+	color: #555;
+}
+#help .nav-tabs>li.active>a{
+	background-color: #2d4059;
+	border-color: #2d4059;
+	color: white!important;
+}
+#help .nav-tabs>li>a:hover{
+	border-color: #eee #eee #2d4059!important;
+}
+#help a:hover{
+	color: #2d4059!important;
+}
+#help .modal-title{
+    font-size: 25px;
+    font-family: 'roboto_bold';
+    color: #2d4059;
+}
+#help .modal-header{
+	padding: 40px 40px 30px 40px;
+}
+#help .modal-body{
+	padding: 0px 40px 40px 40px;
+}
+#help .tab-pane h4{
+	font-family: 'roboto_bold';
+    color: #2d4059;
+    font-size: 22px;
+    margin-top: 20px;
+}
+#help .tab-pane h5{
+	font-family: 'roboto_bold';
+    color: #2d4059;
+    font-size: 16px;
+    margin-bottom: 2px;
+}
+#help .tab-pane h6{
+	font-family: 'roboto_bold';
+    color: #2d4059;
+    font-size: 14px;
+    margin-bottom: 2px;
+}
+#help .tab-pane p{
+    color: #555;
+    font-size: 13px;
+    text-align: justify;
+}
+#help .tab-pane .visuel_tx{
+    color: #555;
+    font-size: 13px;
+}
+#help .tab-pane .visuel{
+    text-align: center;
 }
 

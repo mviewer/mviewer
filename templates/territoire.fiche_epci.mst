@@ -2,9 +2,8 @@
 	<li class="item" style="width:238px;">
 		<div id="feature_select">
 			<div class="title" style="color:#72487f;">
-				<span class="critere glyphicon glyphicon-map-marker" aria-hidden="true"> <span class="title" style="color:#72487f;margin-left:-12px;">{{nom_geo}}</span>
+				<span class="glyphicon glyphicon-map-marker" aria-hidden="true"> <span class="title" style="color:#72487f;margin-left:-12px;">{{nom_geo}}</span>
 			</div>
-			
 		</div>
 		<div id="description">
 			<div class="title">
@@ -20,18 +19,13 @@
 			</div>
 			<div id="button_link">
 				<a href="https://kartenn.region-bretagne.fr/doc/territoire/pays/01-Population.pdf" target="_blank">
-					<div class="button" style="background-color:#268f91;">
-						<img src="templates/icon_pdf.svg" style="width:13%;margin-right:4%;">Population (2016)
+					<div class="button" style="background-color:#72487f;">
+						<img src="templates/icon_pdf.svg" style="width:13%;margin-right:4%;">Chiffres clés (2016)
 					</div>
-				</a>
-				<a href="https://kartenn.region-bretagne.fr/doc/territoire/pays/01-Economie.pdf" target="_blank">	
-				<div class="button" style="background-color:#f39463;">
-					<img src="templates/icon_pdf.svg" style="width:13%; margin-right:4%;">Économie (2016)
-				</div>
 				</a>
 			</div>
 			<div style="color:#555; margin-top:20px; text-align:justify;">
-				Pour obtenir les fiches de l'Observatoire d'un autre pays, veuillez sélectionner l'entité désirée sur la carte.
+				Pour obtenir les fiches de l'Observatoire d'un autre EPCI, veuillez sélectionner l'entité désirée sur la carte.
 			</div>
 		</div>
 		<div id="source">

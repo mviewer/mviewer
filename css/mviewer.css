@@ -1192,8 +1192,7 @@ a:focus{
 
 #layers-container .mv-layer-options a{
 	font-weight:normal;
-	font-style: italic;
-	color: #999999;
+	color: #555;
 }
 
 #layers-container .mv-layer-options p {
