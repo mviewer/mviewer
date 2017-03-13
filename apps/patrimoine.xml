@@ -258,7 +258,15 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/les-stalles-en-bretagne/f2596507-5a6b-4360-b0eb-69eb100ab7a2"
 				metadata-csw="" />
-            <layer id="recensement_patrimoine_operation" name="Croix et calvaires de Guer et de la Gacilly (recensement)" visible="false" tiled="false" 
+			<layer id="etude_patrimoine_simple" name="Croix... Guer et La Gacilly (étudiés)" visible="false" tiled="false"
+				queryable="true"
+                infoformat="text/html" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/croix_et_calvaires_guer_la_gacilly_etudies.png"
+				style="	patrimoine_thematique_croix_et_calvaires_Guer_La_Gacilly" 
+				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+				attribution="Service de l'inventaire : Région Bretagne" 
+				metadata="http://patrimoine.region-bretagne.fr/gertrude-diffusion/dossier/presentation-de-l-inventaire-topo-thematique-croix-et-calvaires-de-guer-et-de-la-gacilly/4daed753-e014-4212-b6af-90a35b215788"
+				metadata-csw="" />
+            <layer id="recensement_patrimoine_operation" name="Croix... Guer et La Gacilly (recensés)" visible="false" tiled="false" 
 				searchable="false" queryable="true" 
 				infoformat="text/html" featurecount="20"
                 style="recensement_croix_guer_gacilly"  legendurl="http://kartenn.region-bretagne.fr/img/legend/croix_et_calvaires_guer_la_gacilly.png"
@@ -266,7 +274,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 				attribution="Service de l'inventaire : Région Bretagne" 
 				metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0cf6de5d-9746-44d8-b003-a2dae2e7e585"
 				metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=0cf6de5d-9746-44d8-b003-a2dae2e7e585" /> 
-		     <layer id="croix_calvaire" name="Croix et calvaires (association)" visible="false" tiled="false" 
+			 <layer id="croix_calvaire" name="Croix et calvaires (association)" visible="false" tiled="false" 
 				queryable="true"
                 searchable="true" legendurl="http://kartenn.region-bretagne.fr/img/legend/croix_et_calvaires_association.png"
 				infoformat="text/html" featurecount="20"
