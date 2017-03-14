@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <application title="Kartenn Transports" logo="" help="aide_kartenn_transports.pdf" measuretools="true" exportpng="true" style="css/apps/kartenn_transports.css"/>
+    <application title="Kartenn Transports" logo="" help="aide_kartenn_transports.pdf" measuretools="true" exportpng="true" style="css/apps/kartenn_transports.css" stats="true" statsurl="../ws/kartenn/log.php"/>
     <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
     <mapoptions maxzoom="19" projection="EPSG:3857" center="-220750.13768758904,6144925.57790189" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
   
