@@ -16,7 +16,5 @@ style: new ol.style.Style({
           })
 })        
   });
-mviewer.hooks.commune.handle = function (features) {        
-       /*mviewer.alert(features[0].properties.nom_geo, "alert-info");*/
-   };    
+mviewer.hooks.fiche_epci.handle = false;
 } 
