@@ -18,7 +18,7 @@
 				Accéder aux fiches de l'Observatoire <i>(format .PDF)</i>
 			</div>
 			<div id="button_link">
-				<a href="https://kartenn.region-bretagne.fr/doc/territoire/pays/01-Population.pdf" target="_blank">
+				<a href="https://kartenn.region-bretagne.fr/doc/territoire/epci/chiffres_cles/201605-FicheEPCI_{{code_geo}}.pdf" target="_blank">
 					<div class="button" style="background-color:#72487f;">
 						<img src="templates/icon_pdf.svg" style="width:13%;margin-right:4%;">Chiffres clés (2016)
 					</div>

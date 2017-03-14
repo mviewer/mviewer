@@ -223,8 +223,16 @@ h4.title{
 	font-family:'roboto_regular', sans-serif;
 	}
 
+/*Popover*/
+.popover-content{
+	font-family: 'roboto_regular', sans-serif!important;
+}
+.popover-title{
+	font-family: 'roboto_bold', sans-serif!important; 
+}	
+
 		
-	/* Button right toolbar */
+/* Button right toolbar */
 
 
 #toolstoolbar.btn-warning{
