@@ -1477,6 +1477,11 @@ Utiliser le code Unicode du caractere de la police awesome.
   padding-bottom: 10px;
 }
 
+span.mv-time-player-selection {
+    font-size: xx-large;
+    padding-left: 2px;
+}
+
 
 .leftpanel-btn {  
   position: absolute;
