@@ -314,14 +314,13 @@
                 tooltip="true"
                 attribution="Région Bretagne" metadata="http://kartenn.region-bretagne.fr/geonetwork/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25" 
                 metadata-csw="http://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25"/>	    
-            <layer id="epci" name="Intercommunalité" visible="false" queryable="false" 
+            <layer id="epci" name="Intercommunalité" visible="true" queryable="false" 
                 fields="nom_geo" aliases="Nom" 
                 type="hook" style="" opacity="1" legendurl="img/legend/epci.png" 
                 url="" 
                 tooltip="true" tooltipenabled="true"
                 attribution="Région Bretagne" metadata="http://kartenn.region-bretagne.fr/geonetwork/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25" 
-                metadata-csw="http://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25"/>
-                
+                metadata-csw="http://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25"/>           
             <layer id="pays" name="Pays" visible="false" queryable="false" 
                 fields="nom_geo" aliases="Nom" 
                 type="hook" style="" opacity="1" legendurl="img/legend/pays.png" 
@@ -347,7 +346,7 @@
                 metadata-csw="http://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25">
 				<template url="templates/territoire.fiche_epci.mst"></template>
 			</layer>				
-			<layer id="fiche_pays" name="Fiche pays" visible="true" queryable="true" 
+			<layer id="fiche_pays" name="Fiche pays" visible="false" queryable="true" 
                 fields="nom_geo" aliases="Nom" 
                 type="hook" style="" opacity="1" legendurl="img/legend/fiche_pays.png" 
                 url="" 
