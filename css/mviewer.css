@@ -1,35 +1,14 @@
-/*--------------------------- KARTENN CSS BASIQUE -------------------------*/
-
-/* Import des fonts*/
-@font-face {
-      font-family: 'opensans_bold';
-      src: url('../css/font/Open_sans/OpenSans-Bold.ttf') format('truetype');
-      }
-@font-face {
-      font-family: 'opensans_extrabold';
-      src: url('../css/font/Open_sans/OpenSans-ExtraBold.ttf') format('truetype');
-      }
-@font-face {
-      font-family: 'opensans_semibold';
-      src: url('../css/font/Open_sans/OpenSans-Semibold.ttf') format('truetype');
-      }
-@font-face {
-      font-family: 'Open Sans';
-      src: url('../css/font/Open_sans/OpenSans-Regular.ttf') format('truetype');
-      }
-@font-face {
-      font-family: 'opensans_light';
-      src: url('../css/font/Open_sans/OpenSans-Light.ttf') format('truetype');
-      }                 
-
-/* CSS kartenn*/      
+/******************************************************************************
+--------------------------- CSS MVIEWER BASIQUE -------------------------
+********************************************************************************/
+     
 html, body {
 	width: 100%;
 	height: 100%;
 	margin: 0;
 	padding: 0;
 	font-size: 12.5px;
-	font-family: 'Open Sans', Helvetica, sans-serif;  
+	font-family: Arial, Sans-serif;  
 }
 
 html {
@@ -41,6 +20,14 @@ button:focus {
     outline: none;
 }
 
+a {
+	color: #333;
+}
+
+a:hover{
+	text-decoration: none;
+}
+
 #map {
 	position: fixed;
 	width: 100%;
@@ -49,7 +36,9 @@ button:focus {
     background: url(../img/grid.png) repeat scroll center top #fff;
 }
 
-/* Openlayers 3 css override */
+/*******************************
+------------- OPENLAYERS 3 CSS OVERRIDE
+********************************/
 
 .ol-attribution {
     color: #333333;
@@ -82,6 +71,10 @@ button:focus {
   text-decoration: none;
 }
 
+/*******************************
+------------- SEARCH TOOLBAR
+********************************/
+
 /* search tollbar */
 #searchfield{
 	border:0px;
@@ -95,7 +88,7 @@ button:focus {
 }
 
 .mv-searchtool-delete {    
-    padding-right: 0px;
+    padding-right: 0px; 
     display: none;
 }
 
@@ -123,7 +116,6 @@ a#searchparams {
 	right:65px;
 	top: 60px;
     z-index: 5;
-	font-family: 'Open Sans', sans-serif;
 }
 
 #searchresults li {
@@ -133,9 +125,7 @@ a#searchparams {
 #searchresults li a {
 	font-size: 11px;
 }
-#searchresults li a:hover{
-	font-weight: bold;
-}
+
 #searchresults li.disabled {
     padding: 10px;
 }
@@ -152,9 +142,9 @@ li.geoportail.list-group-item.disabled{
 	border-radius: 0px;
 }
 
-/* popups */
-
-
+/*******************************
+------------- POPUP
+********************************/
 
 /* popup photo */
 .popphoto {
@@ -163,6 +153,9 @@ li.geoportail.list-group-item.disabled{
     max-height: 210px;
 }
 
+/*******************************
+-------------LEGEND LAYER
+********************************/
 /* Legend Panel */
 
 .mv-layer-details img {
@@ -183,22 +176,14 @@ li.geoportail.list-group-item.disabled{
   padding-left: 10px;
 }
 
-
-/* Sous-title: nom des style et des filtres sur attibuts */
+/* Sub-title: nom des styles et des filtres sur attibut */
 
 /*Styles*/
-.selected-sld.fa span{
-  font-family: 'Open Sans';
-  font-style: italic;
-}
 .selected-sld.fa{
   color: #777;
 }
+
 /*Filtres*/
-.selected-attribute.fa span{
-  font-family: 'Open Sans';
-  font-style: italic;
-}
 .selected-attribute.fa{
   color: #777;
 }
@@ -209,7 +194,6 @@ li.geoportail.list-group-item.disabled{
 
 .layerdisplay-subtitle {
 	font-size: 11px;
-	font-family: 'Open Sans';
 	font-style: italic;
     display: -webkit-inline-box;
 }
@@ -225,7 +209,6 @@ li.geoportail.list-group-item.disabled{
 .layerdisplay-subtitle .selected-sld {    
 	padding-right:10px;   
 }
-
 
 .layer-searchable {
   background-image: url(../img/btn/search.png);
@@ -290,14 +273,10 @@ li.geoportail.list-group-item.disabled{
     margin-left: -11px;
 }
 
-
-
 .popup-content {
-    font-family: "Trebuchet MS",Helvetica,sans-serif,sans-serif;
     text-shadow: none;    
     padding-right: 10px;    
 }
-
 
 .ol-popup-closer {
     text-decoration: none;
@@ -322,7 +301,6 @@ li.geoportail.list-group-item.disabled{
 
 #right-panel-ulnav,#bottom-panel-ulnav {
     background: #fff;
-    /*font-size: 12px;*/
 }
 
 ol.bjqs-markers li a{
@@ -421,12 +399,12 @@ ul#basemapslist   p{
 }
 
 ul#basemapslist  li{
-    text-align: center;
-    vertical-align: text-top;
-    cursor: pointer;
-    height: 75px;
-    width: 100px;
-    -webkit-transition: -webkit-transform .5s,bottom .5s,width .5s; 
+   text-align: center;
+   vertical-align: text-top;
+   cursor: pointer;
+   height: 75px;
+   width: 100px;
+   -webkit-transition: -webkit-transform .5s,bottom .5s,width .5s; 
   -moz-transition: -moz-transform .5s,bottom .5s,width .5s;
   -o-transition: -o-transform .5s,bottom .5s,width .5s;
   transition: transform .5s,bottom .5s,width .5s;
@@ -441,7 +419,9 @@ div#backgroundlayerstoolbar-gallery {
   transform: rotate(180deg);  
 }
 
-
+/*******************************
+-------------LEGEND LAYER
+********************************/
 #layers-container-box {
     position: fixed;
     overflow-y: auto;
@@ -465,33 +445,17 @@ div#backgroundlayerstoolbar-gallery {
   width: 35px;
 }
 
-
 .active #layers-container {
     display: block;    
-    /*-webkit-transform: scale3d(1, 1, 1);
--moz-transform: scale3d(1, 1, 1);
--o-transform: scale3d(1, 1, 1);
--ms-transform: scale3d(1, 1, 1);
-transform: scale3d(1, 1, 1);*/
 }
 
 #layers-container {
     display: none;
-   /* -webkit-transition-duration: 1s; 
-    transition-duration: 1s;
-     -webkit-transform-origin: left top; 
-    transform-origin: left top;
-   -webkit-transform: scale3d(0, 0, 0);
--moz-transform: scale3d(0, 0, 0);
--o-transform: scale3d(0,0, 0);
--ms-transform: scale3d(0, 0, 0);
-transform: scale3d(0, 0, 0);*/
 }
 
 #layers-container-box-header span {
   color: #fff;
   padding: 10px;
-  /*transform: rotate(90deg);   */
 }
 
 .active #layers-container-box-header span {
@@ -510,7 +474,6 @@ transform: scale3d(0, 0, 0);*/
 ul#layers-container {
   margin-bottom: 0;
 }
-
 
 .layerdisplay-title .close {
   padding-right: 10px;
@@ -531,6 +494,9 @@ ul#layers-container {
 }
 
 
+/*******************************
+-------------BOTTOM PANEL
+********************************/
 #bottom-panel.toggled {
     -webkit-transform: translate3d(200px,0,0);
     transform: translate3d(200px,0,0);
@@ -550,17 +516,18 @@ ul#layers-container {
    transition: all 0.5s ease;
 }
 
-
-
 #bottom-panel.active {
     height: 350px;
     opacity: 1;
 }
 
-
 #bottom-panel .close {
   margin-top: -45px;
 }
+
+/*******************************
+-------------RIGHT PANEL
+********************************/
 
 #right-panel {
     right: 0px;
@@ -628,8 +595,18 @@ ul#layers-container {
       width: 280px;
 }
 
-/* CSS Fiche info GML */
+#right-panel .mv-header {
+  padding-top: 50px;  
+}
+#right-panel .mv-header h5 {
+  text-align: center;
+  line-height: 2em;
+  margin-bottom: 0;
+}
 
+/*******************************
+-------------CSS Fiche info GML
+********************************/
 .gml-item-title {
     padding-bottom: 6px;
     padding-top: 15px;
@@ -638,20 +615,16 @@ ul#layers-container {
 .gml-item-field-name {
     float: left;
     padding-right: 10px;
-    font-weight: bold;
-	font-family: 'Open Sans', sans-serif; 
 }
 
 .gml-item-field-name::after {
     content: " : ";
 }
 
-.gml-item-field-value{
-	font-family: 'Open Sans', sans-serif; 
-}
  
-/*#bottom-panel .popup-content {  */
-
+/*******************************
+-------------BASEMAP
+********************************/
 
 #backgroundlayerstoolbar-gallery {
 	bottom: .7em;
@@ -678,6 +651,9 @@ ul#layers-container {
 	position: fixed;   
 }
 
+/*******************************
+-------------TOOLBAR OPTIONS
+********************************/
 #zoomtoolbar {
 	position: fixed;
 	top: 65px;
@@ -695,10 +671,6 @@ ul#layers-container {
   right: 70px;
   float: right;
   top: 160px;
-}
-
-li.mv-nav-item span {
-  /*margin-left: -20px;*/
 }
 
 .layerdisplay-title span {
@@ -745,18 +717,14 @@ li.mv-nav-item span {
   opacity: 1;
   white-space: nowrap;
   text-shadow: none;
-  font-family: 'Open Sans', sans-serif;
-  font-weight: normal!important;
 }
 
 .tooltip-measure {
-  opacity: 1;
-  font-weight: bold; 
+  opacity: 1; 
 }
 
 .tooltip-measure-static {
   color: #fff;
-  font-family: 'Open Sans', sans-serif;
 }
 
 .tooltip-measure:before,
@@ -870,10 +838,9 @@ li[role="presentation"] {
 }
 
 
-/* tab vertical */
-.popup-content .tabs-left {
- /* margin-top: 3rem;*/
-}
+/*******************************
+-------------TAB VERTICAL
+********************************/
 
 .popup-content .nav-tabs {
   float: left;
@@ -897,11 +864,9 @@ li[role="presentation"] {
   border: 0;
 }
 
-
 .popup-content .tab-content .tab-pane {
   display: none;
   background-color: #fff;
-
   overflow-y: hidden;
 }
 
@@ -911,58 +876,37 @@ li[role="presentation"] {
 }
 /* vertical tab end */
 
-#right-panel .mv-header {
-  padding-top: 50px;  
-}
-#right-panel .mv-header h5 {
-  text-align: center;
-  line-height: 2em;
-  margin-bottom: 0;
-}
-
 .popup-content .tab-pane {
     padding-left: 2px;
     padding-right: 2px;
 }
 
 
-
-
-/*********** MODIFICATION CSS AGATH**********/
-	
-/****************** Modification de l'interface bootstrap*/
-
-a {
-	color: #333;
-}
-
-a:hover{
-	text-decoration: none;
-}
+/*******************************
+------------- NAVBAR 
+********************************/
 
 #mv-navbar {
 	border-width: 2px;
 }
 
-
-
 #mv-navbar {
 	line-height:1.15;
 }
 
+/*******************************
+------------- SEARCH
+********************************/
 /* Résultats recherches */ 
 
 li.elasticsearch.list-group-item.disabled{
-	background-color: white;
-	font-weight: bold;
-	
+	background-color: white;	
 }
 
 /* Boîte de dialogue paramètre de recherche */ 
 
 #parameterspanel .modal-header{
 	color: #333;
-	font-family: 'Open Sans', sans-serif;
 	font-size: 13px;
 }
 
@@ -973,48 +917,45 @@ li.elasticsearch.list-group-item.disabled{
 
 ul#searchparameters{
 	list-style: none;
-	font-family: 'Open Sans', sans-serif;
 	padding-left: 10px;
 	padding-top:0px;
 	line-height: 1.6;
-	
 }
 
 #searchparameters .mv-param-item a:hover{
 	color:#333;
 }
+
 #searchparameters .mv-param-item a:focus{
 	color:#333;
 	text-decoration:none;
 	outline: none;
 }
+
 /* Boîte de dialogue partager la carte */ 
 
 #sharepanel .modal-header{
 	color: #333;
-	font-family: 'Open Sans', sans-serif;
 	font-size: 13px;
 }
 
 #sharepanel .form-group label {
-	font-weight:normal;
 	color: #333;
-	font-family: 'Open Sans', sans-serif;
 	font-size: 13px;
 }
 
-a#permalinklink{
-	font-family:'Open Sans', sans-serif;
-}
 #sharepanel .btn-group-vertical{
 	margin-top:10%;
 }
 
 .modal-content{
 	border-radius: 0px;
-	font-family: 'Open Sans', sans-serif;
 }
-/******** ICON LOADING *********/
+
+/*******************************
+------------- ICON LOADING 
+********************************/
+
 .loader {
   margin: 4px auto;
   font-size: 3px;
@@ -1030,10 +971,16 @@ a#permalinklink{
   -webkit-animation: load8 1.1s infinite linear;
   animation: load8 1.1s infinite linear; 
 }
+
 .loader, .loader:after {
   border-radius: 50%;  
   width: 7em;
   height: 7em;   
+}
+
+#loading-indicator {
+  width: 35px;  
+  margin-top: -4px;
 }
 
 #loading-indicator .loader, #loading-indicator .loader:after {
@@ -1043,11 +990,7 @@ a#permalinklink{
 }
 
 .mv-layer-indicator .loader {    
-    margin-left: 15px;    
-    border-top: 1.1em solid rgba(3, 46, 70, 0.2);
-    border-right: 1.1em solid rgba(3, 46, 70, 0.2);
-    border-bottom: 1.1em solid rgba(3, 46, 70, 0.2);
-    border-left: 1.1em solid #032e46;
+    margin-left: 15px;
 }
 
 .mv-iframe-indicator {
@@ -1058,46 +1001,33 @@ a#permalinklink{
 
 .mv-iframe-indicator .loader {    
     margin-left: 15px;    
-    border-top: 1.1em solid rgba(3, 46, 70, 0.2);
-    border-right: 1.1em solid rgba(3, 46, 70, 0.2);
-    border-bottom: 1.1em solid rgba(3, 46, 70, 0.2);
-    border-left: 1.1em solid #032e46;
 }
 
 @-webkit-keyframes load8 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
+	  0% {
+	    -webkit-transform: rotate(0deg);
+	    transform: rotate(0deg);
+	  }
+	  100% {
+	    -webkit-transform: rotate(360deg);
+	    transform: rotate(360deg);
+	  }
 }
 @keyframes load8 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
+	  0% {
+	    -webkit-transform: rotate(0deg);
+	    transform: rotate(0deg);
+	  }
+	  100% {
+	    -webkit-transform: rotate(360deg);
+	    transform: rotate(360deg);
+	  }
 }
 
-#loading-indicator {
-  width: 35px;  
-  margin-top: -4px;
-}
 
-/************** Barre gauche*************/
-
-#sidebar-wrapper a{
-}
-
-.sidebar-nav li a:hover{
-}
-
+/*******************************
+------------- NAVBAR 
+********************************/
 .nav-pills li a{
 	border-radius:0px;
 }
@@ -1105,7 +1035,6 @@ a#permalinklink{
 li.level-2{
 	text-indent:9px;
 }
-
 
 li.mv-nav-item {
 	line-height: 33px;
@@ -1117,18 +1046,14 @@ li.mv-nav-item {
   display: flex;
   padding-top: 10px;
   padding-bottom: 10px;
-  /*padding-left: 20px;*/
   text-indent: 8px;
 }
 
 .level-2 .mv-nav-item a{
-	/*margin-left:-40px;
-	text-indent: 21px;*/
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 20px;
     display: flex;
-	
 }
 
 .level-2 ul a {    
@@ -1140,7 +1065,6 @@ li.mv-nav-item {
     padding-left: 0!important;
 }
 
-
 ul#menu {
 	font-weight: bold;
 }
@@ -1149,11 +1073,9 @@ ul.nav-pills.nav-stacked{
 	font-weight: normal;
 }
 
-/* Search toolbar*/
-
-
-
-/************Fenêtre du bas**********/
+/*******************************
+------------- BOTTOM PANEL
+********************************/
 ul.carousel-inner{
 	padding-left:10px;
 }
@@ -1166,39 +1088,80 @@ ul.carousel-inner{
 	padding-left:10px;
 }
 
-.fa-chevron-circle-down{
-}
-
 span.state-icon.fa{
 	padding-right: 10px;
     padding-top: 3px;
 }
 
-/******* MAP ********/
+#bottom-panel-btn {  
+  text-align: center;  
+}
 
-/************* Configuration de la fenêtre de la légende**************/ 
+#bottom-panel-btn .fa-chevron-circle-down {    
+    width: 60px;
+    text-align: center;
+    line-height: 1.6em;
+    background: #fff;    
+    border-radius: 0.4em 0.4em 0 0;
+    font-size: 15px;
+}
+    
+#bottom-panel-btn .fa-chevron-circle-down:hover {        
+    background: #f8f8f8;
+}
+
+.mv-close {
+  margin-top: -24px;
+  position: absolute;
+  cursor: pointer;
+} 
+
+/*******************************
+------------- LEFT PANEL 
+********************************/
+.btn-default:hover{
+	border-color: transparent;
+}
+
+.leftpanel-btn {  
+  position: absolute;
+  bottom: 10px;
+  right: 16px;
+  font-size: large;
+  color: #999;
+}
+
+.leftpanel-btn:hover {  
+   font-size: large;
+}
+
+.leftpanel-btn:before {
+    content: "\f137";
+}
+
+.leftpanel-btn-closed:before {
+    content: "\f138";
+}
+
+
+/*******************************
+------------- LEGEND LAYER
+********************************/
 a:focus{
 	text-decoration: none;
 }
 
 #layers-container a {	
-	font-weight: bold;
 	padding-right:10px;
 }
 
-.form-group label {
-	font-family: 'Open Sans', sans-serif;
-}
-
 #layers-container .mv-layer-options a{
-	font-weight:normal;
 	color: #555;
 }
 
 #layers-container .mv-layer-options p {
-	/*font-family: Open Sans, sans-serif; */
-	/*margin: 0 0 5px;*/
     padding-top: 10px;
+    margin: 0 0 10px!important;
 }
 
 .form-control{
@@ -1239,11 +1202,29 @@ a:focus{
 	border-bottom-right-radius: 0px;
 }
 
-#legend:not(.active){
-
+.mv-layer-summary:focus {
+  outline: none;
 }
-/********* Style curseur slider opacity  */
 
+.mv-layer-summary {
+  padding-left: 5px;
+}
+
+.mv-invisible .layerdisplay-legend {
+  display: flex;
+}
+
+.mv-invisible .layerdisplay-legend:after {    
+    content: "Non visible à cette échelle";
+    line-height: 40px;
+    color: #777777;
+}
+
+.mv-layer-details.mv-invisible {
+    background-color: #f5f5f5;
+}
+
+/* Opacity */
 
 .mv-layer-options .slider-handle {
 	width: 15px;
@@ -1254,8 +1235,6 @@ a:focus{
   height: 5px;
 }
 
-
-
 .mv-layer-options  .slider.slider-horizontal{
 	width: 240px;
 }
@@ -1264,7 +1243,7 @@ a:focus{
 	margin-left:-19px!important;
 }
 
-/* Slider timer*/
+/* Temporalité */
 
 .slider-selection.tick-slider-selection{
 	background-image: none;
@@ -1285,6 +1264,7 @@ a:focus{
 
 .form-group-timer .slider.slider-horizontal{
 	margin-left:11px;
+	margin-top: 10px;
 }
 
 .form-group-opacity .slider.slider-horizontal{
@@ -1292,16 +1272,13 @@ a:focus{
 	width:236px;
 }
 
-
 .slider.slider-horizontal .slider-tick-label-container{
 	margin-top:13px;
-	font-family:'Open Sans', sans-serif;
 }
 
 .tooltip.bottom .tooltip-arrow{
 	margin-left:-8px;
 	left:57%;
-  border-bottom-color:#032e46;
 }
 
 .tooltip.bottom{
@@ -1326,6 +1303,7 @@ a:focus{
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+
 .slider-track-low{
   background-color: #ccc;
   -webkit-box-shadow: none;
@@ -1338,17 +1316,24 @@ a:focus{
   background-image:none;
   -webkit-box-shadow: none; 
   box-shadow:none;
-
 }
 
 .slider.slider-horizontal{
   margin-left: 7px;
 }
 
+.mv-slider-timer {
+  padding-bottom: 10px;
+}
+
+span.mv-time-player-selection {
+    border-radius: 3px;
+    padding: 4px 12px 5px 11px;
+}
+
 /**** Popover *****/
 .popover-content{
 	font-size: 13px;
-	font-family: 'Open Sans', sans-serif;
 	color: #555;
 }
 
@@ -1357,86 +1342,12 @@ a:focus{
 }	
 
 .popover-title{
-	font-family: 'Open Sans', sans-serif; 
-	font-weight: bold;
 	color:#555;
 	border-bottom:none;
 	background-color: #fff;
 	margin-bottom: -4%;
 }
 
-/******* Configuration fenêtre de fond de carte ************/ 
-
-/**** Fenêtre des fonds de carte ****/
-#backgroundlayerstoolbar-gallery{
-	background:#f8f8f8;
-	border-radius:4px ;
-	right:15px;
-	padding-top:3px;
-    z-index: 1;
-}
-
-
-.bglt-btn {
-  width: 26px;
-  text-align: center;
-  line-height: 84px;
-}
-
-#bottom-panel-btn {  
-  text-align: center;  
-}
-
-#bottom-panel-btn .fa-chevron-circle-down {    
-    width: 60px;
-    text-align: center;
-    line-height: 1.6em;
-    background: #fff;    
-    border-radius: 0.4em 0.4em 0 0;
-    font-size: 15px;
-    }
-    
-#bottom-panel-btn .fa-chevron-circle-down:hover {        
-    background: #f8f8f8;
-}
-
-.mv-close {
-  margin-top: -24px;
-  position: absolute;
-  cursor: pointer;
-}    
-
-#backgroundlayerstoolbar-gallery ul li {
-	width: 80px;
-	height: 55px;
-	border: 2px solid #f8f8f8;
-	border-radius:7px;
-	margin:2px;
-    background-size: 80px;
-}
-
-ul#basemapslist {
-	margin-bottom: 3px;
-	margin-right: 3px;
-}
-ul#basemapslist p {
-	margin-left: -6px;
-	margin-right: -6px;
-	font-size: 9px;
-	line-height:1.3;
-	color:#333;
-	opacity:1;
-	background-color:rgba(255,255,255,0);
-	padding-top:53px;
-}
-
-
-/**** Echelle*/ 
-.ol-scale-line-inner{
-	color: #777;
-    border-color: #777;
-    font-family: 'Open Sans', sans-serif;
-}
 /* Icone layers non coches 
 Utiliser le code Unicode du caractere de la police awesome.
 */
@@ -1466,72 +1377,73 @@ Utiliser le code Unicode du caractere de la police awesome.
     cursor: pointer;
 }
 
+/*******************************
+------------- MAP
+********************************/
 
-/**** Button right toolbar */
-
-.btn-default:hover{
-	border-color: transparent;
+/**** Basemap ****/
+#backgroundlayerstoolbar-gallery{
+	background:#f8f8f8;
+	border-radius:4px ;
+	right:15px;
+	padding-top:3px;
+    z-index: 1;
 }
 
-.mv-slider-timer {
-  padding-bottom: 10px;
+.bglt-btn {
+  width: 26px;
+  text-align: center;
+  line-height: 84px;
+}   
+
+#backgroundlayerstoolbar-gallery ul li {
+	width: 80px;
+	height: 55px;
+	border: 2px solid #f8f8f8;
+	border-radius:7px;
+	margin:2px;
+    background-size: 80px;
 }
 
-span.mv-time-player-selection {
-    font-size: xx-large;
-    padding-left: 2px;
+ul#basemapslist {
+	margin-bottom: 3px;
+	margin-right: 3px;
 }
 
-
-.leftpanel-btn {  
-  position: absolute;
-  bottom: 10px;
-  right: 16px;
-  font-size: large;
-  color: #999;
+ul#basemapslist p {
+	margin-left: -6px;
+	margin-right: -6px;
+	font-size: 9px;
+	line-height:1.3;
+	color:#333;
+	opacity:1;
+	background-color:rgba(255,255,255,0);
+	padding-top:53px;
 }
 
-.leftpanel-btn:hover {  
-   font-size: large;
+/* Scale */ 
+.ol-scale-line-inner{
+	color: #777;
+    border-color: #777;
 }
 
-.leftpanel-btn:before {
-    content: "\f137";
-}
-
-.leftpanel-btn-closed:before {
-    content: "\f138";
-}
-
-.mv-layer-summary:focus {
-  outline: none;
-}
-
-.mv-layer-summary {
-  padding-left: 5px;
-}
-
-.mv-invisible .layerdisplay-legend {
-  display: flex;
-}
-
-.mv-invisible .layerdisplay-legend:after {    
-    content: "Non visible à cette échelle";
-    line-height: 40px;
-    color: #777777;
-}
-
-.mv-layer-details.mv-invisible {
-    background-color: #f5f5f5;
-}
-
-/***** Map-pins****/
+/* Map-pins */
 #els_marker path {
   fill: #ee4b4b;
 }
 
+/* custom-tooltip-feature & custom-tooltip-infopanel*/
+.tooltip-feature h5, .mv-tooltip h5 {
+    margin-bottom: 0;
+}
 
-/**************** BUTTON TOOLS ***/
+.tooltip-feature.tooltip.in, .mv-tooltip.tooltip.in {
+    opacity: 1;
+}
+
+/*******************************
+------------- MAP OPTIONS
+********************************/
 
 btn:active, .btn.active, .btn:focus, btn-lg:active, .btn-lg.active, .btn-lg:focus  {
   outline: 0px !important;
@@ -1585,8 +1497,6 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
 	border-radius: 30px;
 }
 
-
-
 #feature-info {
      position: absolute;
      height: 1px;
@@ -1594,10 +1504,13 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
      z-index: 100;
  }
  
- /* custom-tooltip-feature & custom-tooltip-infopanel*/
-.tooltip-feature h5, .mv-tooltip h5 {
-    margin-bottom: 0;
+/*******************************
+------------- HELP PANEL 
+********************************/ 
+#help .modal-header{
+	padding: 40px 40px 30px 40px;
 }
-.tooltip-feature.tooltip.in, .mv-tooltip.tooltip.in {
-    opacity: 1;
+
+#help .modal-body{
+	padding: 0px 40px 40px 40px;
 }
