@@ -283,24 +283,35 @@
 				metadata-csw="" />		
 			
         </theme>
-		<theme name="Population"  collapsed="false" id="population" icon="male">   
-			<layer id="population_bzh" name="Densité (hab/km²)"  visible="false" tiled="false"
-				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
-                infoformat="text/html" featurecount="20"
-				style="transports_pop_densite"
-				url="http://kartenn.region-bretagne.fr/geoserver-proxy/interne/wms"
-				attribution="INSEE - RP2013 - Densité de population par commune" 
-				metadata="https://www.insee.fr/fr/statistiques/2044751#consulter"
-				metadata-csw="" />
-			<layer id="population_bzh" name=" Catégorie d'âge (%)"  visible="false" tiled="false"
-				searchable="false" queryable="true" fields="appellatio" aliases="appellatio"
-                infoformat="text/html" featurecount="20"
-				style="transports_pop_0_14ans,transports_pop_1529ans,transports_pop_3044ans,transports_pop_4559ans,transports_pop_6074ans,transports_pop_7589ans,transports_pop_90ans"
-				stylesalias="0 - 14 ans,15 - 29 ans,30 - 44 ans,45 - 59 ans,60 - 74 ans,75 - 89 ans,90 ans"
-				url="http://kartenn.region-bretagne.fr/geoserver-proxy/interne/wms"
-				attribution="INSEE - RP2013 - Répartition de la population selon les catégories d'âge par commune en 2013" 
-				metadata="https://www.insee.fr/fr/statistiques/2044751#consulter"
-				metadata-csw="" />	
+		<theme name="Population"  collapsed="false" id="population" icon="male"> 
+			<layer id="rp_struct_pop_geom" name="Densité de population (hab/km²)"  visible="false" tiled="false"
+		                searchable="false" queryable="true"
+		                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Échelle" attributestylesync="true" attributefilterenabled="true"
+		                infopanel="bottom-panel"
+		                infoformat="application/vnd.ogc.gml" featurecount="5"
+		                timefilter="true" timeinterval="year" timecontrol="slider" timemin="1999" timemax="2013" timevalues="1999,2008,2013"
+		                style="rphab_densite@commune"
+		                stylesalias=""
+		                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+		                attribution="INSEE - Région Bretagne" 
+		                metadata=""
+		                metadata-csw="">
+		                <template url="templates/territoire.pop.densite.mst"></template>
+		    </layer>
+			<layer id="rp_struct_pop_geom" name="Part de la population selon la catégorie d'âge (%)"  visible="false" tiled="false"
+		                searchable="false" queryable="true"
+		                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Échelle" attributestylesync="true" attributefilterenabled="true"
+		                infopanel="bottom-panel"
+		                infoformat="application/vnd.ogc.gml" featurecount="5"
+		                timefilter="true" timeinterval="year" timecontrol="slider" timemin="1999" timemax="2013" timevalues="1999,2008,2013"
+		                style="rphab_tx0014@commune, rphab_tx1529@commune, rphab_tx3044@commune, rphab_tx4559@commune, rphab_tx6074@commune, rphab_tx75p@commune"
+		                stylesalias="0 - 14 ans, 15 -29 ans, 30 - 44 ans, 45 - 59 ans, 60 -74 ans, 75 ans et plus "
+		                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+		                attribution="INSEE - Région Bretagne" 
+		                metadata=""
+		                metadata-csw="">
+		                <template url="templates/territoire.pop.cat_age.mst"></template>
+		    </layer>	
 		</theme>		
         <theme name="Découpages territoriaux"  collapsed="true" id="territoire" icon="globe"> 
 		<group name="Limites administratives" id="grp1" >
