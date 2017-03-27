@@ -1,0 +1,35 @@
+{{#features}}
+	<li class="item" style="width:238px;">
+		<h3 class="title-feature">Travaux à {{nom}}</h3>
+		<p class="text-feature">		
+			<span style="font-family:'roboto_bold'"> Année :</span> {{annee}}<br/>
+			<span style="font-family:'roboto_bold'"> Type de travaux :</span> {{type_tr}}<br/>
+		</p>
+		<h4 class="subtitle-feature">Information détaillée</h4>
+		<p class="text-feature">		
+			{{info_detail}}
+		</p>
+	</li>
+{{/features}}
+
+<style>
+	.title-feature {
+		color: #2d4059;
+		font-family:"roboto_bold";
+		font-size:23px;
+		margin-bottom:7%;
+		line-height:1;
+	}
+	.subtitle-feature {
+		color: #2d4059;
+		font-family:"roboto_bold";
+		font-size:18px;
+		margin-top:7%;
+		line-height:1;
+	}
+	.text-feature{
+		font-family:"roboto_regular";
+		color:#555;
+		font-size:13px;		
+	}
+</style>

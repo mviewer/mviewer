@@ -1,0 +1,25 @@
+{{#features}}
+	<li class="item" style="width:238px;">
+		<h3 class="title-feature">{{NOM}}</h3>
+		<p class="text-feature">		
+			<span style="font-family:'roboto_bold'"> Commune :</span> {{COMMUNE}}<br/>
+			<span style="font-family:'roboto_bold'"> Type :</span> {{TYPE}}<br/>
+		</p>
+	</li>
+{{/features}}
+
+<style>
+	.title-feature {
+		color: #2d4059;
+		font-family:"roboto_bold";
+		font-size:23px;
+		margin-bottom:1%;
+		line-height:1;
+	}
+	.text-feature{
+		font-family:"roboto_regular";
+		color:#555;
+		font-size:13px;
+		margin-top:10%;
+	}
+</style>

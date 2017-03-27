@@ -15,5 +15,5 @@ style: new ol.style.Style({
           })
 })        
   });
-mviewer.hooks.fiche_epci.handle = false;
+mviewer.hooks.departement.handle = false;
 } 

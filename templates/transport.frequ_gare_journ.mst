@@ -1,0 +1,34 @@
+{{#features}}
+	<li class="item" style="width:238px;">
+		<h3 class="title-feature">{{nom}}</h3>
+		<p class="text-feature">
+			<span style="font-family:'roboto_bold'">Type de fréquentation journalière :</span> {{categorie}}<br/>
+		</p>
+		<h4 class="subtitle-feature">En {{annee}} :</h4>
+		<p class="text-feature" style="margin-top:0px;"> <i>Sources: Chiffres calculés à partir des données Korrigo </i></p>
+		<iframe style="border:none; height:350px; margin-top:10px;" src="http://kartenn.region-bretagne.fr/ws/transports/iframe_freq_journaliere.php?uic={{code_uic}}&time={{time_d}}"></iframe>
+	</li>
+{{/features}}
+
+<style>
+	.title-feature {
+		color: #2d4059;
+		font-family:"roboto_bold";
+		font-size:23px;
+		margin-bottom:1%;
+		line-height:1;
+	}
+	.subtitle-feature {
+		color: #2d4059;
+		font-family:"roboto_bold";
+		font-size:18px;
+		margin-top:7%;
+		line-height:1;
+	}
+	.text-feature{
+		font-family:"roboto_regular";
+		color:#555;
+		font-size:13px;
+		margin-top:10%;
+	}
+</style>
