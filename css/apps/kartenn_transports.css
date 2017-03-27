@@ -584,43 +584,6 @@ button.btn.btn-default.navbar-btn.mv-navbar-btn:focus{
 
 /* ----------------- CSS IFRAME + FONCTIONNALITES ------------ */
 
-/* Button vers Dashboard Gare -- Synthèse */
-.but_link{
-    padding:10px 0 10px 0;
-    font-size:13px;
-    font-family:'roboto_regular', Arial, Sans-serif;
-   	background:rgba(3, 46, 70, 0.9);
-    color:#fff;
-    width:100px;
-    border:1px solid #032e46;
-    margin-left: 25%;
-}
-
-.but_link:hover{
-    background:rgba(3, 46, 70, 1);
-    border:1px solid #032e46;
-}
-
-.but_link p{
-  margin: 0;
-  text-align:center;
-  color:#fff;
-}  
-
-.but_link a{
-  color: #fff;
-  margin-left:13%;
-}
-
-.but_link a:hover{
-  color:#fff;
-}
-
-.but_link a:focus{
-  color:#fff; 
-}
-
-
 /* Fenêtre Template Geoserver */ 
 
 /*----Style fenêtre de configuration - Indicateurs Transports*/					

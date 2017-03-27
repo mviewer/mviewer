@@ -14,14 +14,14 @@
 
 <style>
 	.title-feature {
-		color: #2d4059;
+		color: #032E46;
 		font-family:"roboto_bold";
 		font-size:23px;
 		margin-bottom:7%;
 		line-height:1;
 	}
 	.subtitle-feature {
-		color: #2d4059;
+		color: #032E46;
 		font-family:"roboto_bold";
 		font-size:18px;
 		margin-top:7%;
