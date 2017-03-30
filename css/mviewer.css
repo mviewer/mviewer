@@ -1046,7 +1046,9 @@ li.mv-nav-item {
   display: flex;
   padding-top: 10px;
   padding-bottom: 10px;
-  text-indent: 8px;
+  text-indent: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .level-2 .mv-nav-item a{
