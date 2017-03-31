@@ -47,21 +47,7 @@
 		                metadata=""
 		                metadata-csw="">
 		                <template url="templates/territoire.pop.densite.mst"></template>
-		        </layer> 
-		        <layer id="rp_struct_pop_geom" name="Part de la population selon la catégorie d'âge (%)"  visible="false" tiled="false"
-		                searchable="false" queryable="true"
-		                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Échelle" attributestylesync="true" attributefilterenabled="true"
-		                infopanel="bottom-panel"
-		                infoformat="application/vnd.ogc.gml" featurecount="5"
-		                timefilter="true" timeinterval="year" timecontrol="slider" timemin="1999" timemax="2013" timevalues="1999,2008,2013"
-		                style="rphab_tx0014@commune, rphab_tx1529@commune, rphab_tx3044@commune, rphab_tx4559@commune, rphab_tx6074@commune, rphab_tx75p@commune"
-		                stylesalias="0 - 14 ans, 15 -29 ans, 30 - 44 ans, 45 - 59 ans, 60 -74 ans, 75 ans et plus "
-		                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
-		                attribution="INSEE - Région Bretagne" 
-		                metadata=""
-		                metadata-csw="">
-		                <template url="templates/territoire.pop.cat_age.mst"></template>
-		        </layer>                                    
+		        </layer> 		                                      
         </theme>
         <theme name="Éducation"  collapsed="false" id="education" icon="graduation-cap">   
         	<layer id="poi_etablissement_scolaire" name="Établissements scolaires"  visible="false" tiled="false" 
