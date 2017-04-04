@@ -17,7 +17,7 @@ Fichier config.xml
 Le fichier de config permet la personnalisation des thèmes/couches du visualiseur.
 
 
-###Exemple 
+### Exemple 
 
 	<?xml version="1.0" encoding="UTF-8"?>
 	<config>
@@ -65,15 +65,15 @@ Le fichier de config permet la personnalisation des thèmes/couches du visualise
 
 
 
-###Noeud application
+### Noeud application
 
 Personnalisation de l'application (overriding)
 
-####Prototype 
+#### Prototype 
 
 	 <application title="" logo=""  help="" panelfooterimage="" panelfooterheight="" exportpng="" measuretools="" legend="" legendasimage="" stats="" statsurl=""/>
 
-####Attributs 
+#### Attributs 
 
 * **title**: Titre de l'application || Kartenn.
 * **logo**: Url du logo || img/logo/bandeau_region.png.
@@ -89,47 +89,47 @@ Personnalisation de l'application (overriding)
 * **stats**: Enables stats mode  true/false || false.
 * **statsurl**: url to send stats activity eg (login, ip, application title, date).
 
-###Noeud mapoptions
+### Noeud mapoptions
 
 Représente les configurations de base du visualiseur.
 
-####Prototype 
+#### Prototype 
 
 	 <mapoptions maxzoom="" projection="" center="" zoom="" projextent="" />
 
-####Attributs 
+#### Attributs 
 
 * **maxzoom**: Entier représentant le zoom maximum.
 * **projection**: Projection EPSG des couches présentes sur le visualiseur.
 * **zoom**: Zoom initial du visualiseur
 * **projextent**: Etendue de la projection 
 
-###Noeud baselayers
+### Noeud baselayers
 
 Représente la galerie des fonds de plan
 
-####Prototype 
+#### Prototype 
 
         <baselayers style="">
 
-####Attributs 
+#### Attributs 
 
 * **style**: Soit gallery/default.
 
 
 
-####Noeud(s) enfant(s) de  baselayer(s) 
+#### Noeud(s) enfant(s) de  baselayer(s) 
 
 Représente les fonds de plan.
 
-#####Prototype 
+##### Prototype 
 
 	
 	<baselayer type="" id="" label="" title="" maxscale="" thumbgallery="" url="" layers="" format="" visible="" fromcapacity="" 
 	attribution="" style="" matrixset="" maxzoom=""/>
 
 
-#####Attributs 
+##### Attributs 
 
 * **type**: Type de flux OGC (OSM/WMTS/WMS/fake)
 * **id**: Identifiant du fond de plan
@@ -149,51 +149,51 @@ Représente les fonds de plan.
 
 
 
-###Proxy 
+### Proxy 
 
 Lien vers votre proxy permmettant l'interrogation CROSS DOMAIN des couches.
 Il n'y a pas besoin d'utiliser de proxy pour les données servies par GéoBretagne car CORS est activé (http://enable-cors.org/server.html)
 Mviewer n'est pas fourni avec un proxy Ajax. L'application peut fonctionner avec le proxy de GeorChestra.
 Un proxy cgi peut être utilisé. Plus de détail ici : [proxy] (https://trac.osgeo.org/openlayers/wiki/FrequentlyAskedQuestions#WhydoIneedaProxyHost)
 
-####Prototype
+#### Prototype
 
  
 	<proxy url="" />
  
 
-####Attributs
+#### Attributs
 
 * **url**: Url vers votre proxy 
 
 
-###olscompletion
+### olscompletion
 
 Liens vers service d'autocomplétion et de géocodage.
 
-####Prototype
+#### Prototype
 
 
 	<olscompletion url="" [type=""] attribution="" />
     
 
-####Attributs
+#### Attributs
 
 * **url**: Url du service d'autocomplétion d'adresse
 * **type**: Optional - Type de service utilisé geoportail ou ban - defaut = geoportail
 * **attribution**: Attribution du service de geocodage
 
-###elasticsearch
+### elasticsearch
 
 Liens vers un index elasticsearch. Cette fonctionnalité permet d'interroger un index Elasticsearch à partir d'une saisie libre example
 "Port de Brest". Le résultat retourné est une collection de documents disposant d'un champ commun avec les entités géographiques servies par l'instance
 WMS/WFS. Par convention les types elasticsearch ont le même nom que les couches wms/wfs.
 
-####Prototype
+#### Prototype
 
 	<elasticsearch url="" geometryfield="" linkid="" [querymode=""] [doctypes=""]/>
 
-####Attributs
+#### Attributs
 
 * **url**: Url de l'API Search
 * **geometryfield**: Nom du champ utilisé par l'instance elasticsearch pour stocker la géométrie
@@ -201,51 +201,51 @@ WMS/WFS. Par convention les types elasticsearch ont le même nom que les couches
 * **querymode**: Optional - Query mode used by elasticsearch to find results : fuzzy_like_this ou term - default = fuzzy_like_this.
 * **doctypes**: Optional - types des documents elasticsearch à requêter systématiquement, indépendamment des couches affichées.
 
-###searchparameters
+### searchparameters
 
 Options liées à à la recherche d'adresse (olscompletion) et à la recherche d'entités (elasticsearch).
 
-####Prototype
+#### Prototype
 
 	<searchparameters [bbox=""] [localities=""] [features=""] [static=""]/>
 
-####Attributs
+#### Attributs
 
 * **bbox**: Optional - Recherche d'adresse et/ou d'entités dans l'emprise de la carte : true ou false - defaut = false
 * **localities**: Optional - Utilisation du service d'adresse olscompletion : true ou false - defaut = true
 * **features**: Optional - Utilisation du service de recherche d'entités elasticsearch : true ou false - defaut = true.
 * **static**: Optional - En lien avec le paramètre **doctypes**. Active ou désactive la recherche associée à des documents requêtés systématiquement, indépendamment des couches affichées : true ou false - defaut = false.
 
-###Noeud themes
+### Noeud themes
 
 Noeud regroupant les couches par thèmes.
 
-####Prototype
+#### Prototype
 
 	<themes mini="">
     
-#####Attributs
+##### Attributs
 
 * **mini**: Booléen qui précise si le panneau de gauche est réduit à l'ouverture de l'application. Défaut = false.
 
-####Noeud(s) enfant(s) theme
+#### Noeud(s) enfant(s) theme
 
 Noeud enfant décrivant un thème 
 
-#####Prototype 
+##### Prototype 
 
 	<theme name="" id="" collapsed="">
 
-#####Attributs
+##### Attributs
 	
 * **name**: Nom du thème
 * **id**: Identifiant du thème
 
-######Noeud(s) enfant(s) layer
+###### Noeud(s) enfant(s) layer
 
 Noeud enfant de theme décrivant une couche.
 
-#######Prototype
+####### Prototype
 
 	<layer id="" name="" scalemin="" scalemax="" visible="" tiled="" namespace=""
 	queryable="" fields="" aliases=""
@@ -279,7 +279,7 @@ Noeud enfant de theme décrivant une couche.
     <template url=""/>
 	</theme> 
 
-#######Attributs
+####### Attributs
 
 * **id**: Id de la couche
 * **name**: Nom de la couche
@@ -331,7 +331,7 @@ Ce fichier js doit être placé dans le répertoire hooks/
 * **metadata**: Lien vers la fiche de metadonnées complète
 * **metadata-csw**: Requête CSW pour l'affiche dans la popup du détail de la couche.
 
-#######Noeuds
+####### Noeuds
 
 * **<template>**: contient le template type Mustache (https://github.com/janl/mustache.js) à appliquer à la fiche d'information.
 Pour fonctionner, il faut que le paramètre **infoformat** ait la valeur "application/vnd.ogc.gml".
@@ -341,7 +341,7 @@ Le template peut être un fichier statique ex templates/template1.mst ou directe
 Utilisation		
 -----------
 
-###Paramètres d'URL
+### Paramètres d'URL
 
 Il est possible d'instancier un mviewer avec des paramètres transmis par URL
 
