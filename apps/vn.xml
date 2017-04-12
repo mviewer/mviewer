@@ -212,7 +212,7 @@ L'attribut style = "default" permet d'afficher la liste des couches de fond sous
 					queryable="true"
                     searchable="true" infoformat="text/html" featurecount="20"
 					url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
-					style="ecluse_trafic" 
+					style="ecluse_trafic_echelle" legendurl="http://kartenn.region-bretagne.fr/img/legend/ecluse_trafic.png"
 					attribution="Région Bretagne" 
 					metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=774a2065-339f-4802-a50f-4b84b6ca249f"
 					metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=774a2065-339f-4802-a50f-4b84b6ca249f" />  
