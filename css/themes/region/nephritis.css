@@ -114,8 +114,11 @@ p.navbar-text.mv-title{
 	font-size:13px;
 }
 
-.fa-chevron-circle-down{
-	color:#27AE60;
+.fa-chevron-down{
+	color:#fff;
+}
+#bottom-panel-btn .fa-chevron-down { 
+    background: #27AE60;
 }
 
 /*******************************

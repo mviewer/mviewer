@@ -1091,21 +1091,20 @@ span.state-icon.fa{
   text-align: center;  
 }
 
-#bottom-panel-btn .fa-chevron-circle-down {    
-    width: 60px;
+#bottom-panel-btn .fa-chevron-down {    
+    width: 38px;
     text-align: center;
-    line-height: 1.6em;
-    background: #fff;    
-    border-radius: 0.4em 0.4em 0 0;
+    line-height: 2.6em;    
+    border-radius: 20px;
     font-size: 15px;
 }
     
-#bottom-panel-btn .fa-chevron-circle-down:hover {        
-    background: #f8f8f8;
+#bottom-panel-btn .fa-chevron-down:hover {        
+    background: #ccc;
 }
 
 .mv-close {
-  margin-top: -24px;
+  margin-top: -18px;
   position: absolute;
   cursor: pointer;
 } 
