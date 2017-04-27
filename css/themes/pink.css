@@ -5,19 +5,19 @@
 /* Import des fonts*/
 		@font-face {
 		    font-family: 'roboto_black';
-		    src: url('../../font/Roboto/Roboto-Black.ttf');
+		    src: url('../font/Roboto/Roboto-Black.ttf');
 		}
 		@font-face {
 		    font-family: 'roboto_bold';
-		    src: url('../../font/Roboto/Roboto-Bold.ttf');
+		    src: url('../font/Roboto/Roboto-Bold.ttf');
 		}
 		@font-face {
 		    font-family: 'roboto_regular';
-		    src: url('../../font/Roboto/Roboto-Regular.ttf');
+		    src: url('../font/Roboto/Roboto-Regular.ttf');
 		}
 		@font-face {
 		    font-family: 'spotkabold';
-		    src: url('../../font/spotkabold.ttf');
+		    src: url('../font/spotkabold.ttf');
 		}
 /*******************************
 ------------- NAVBAR 
