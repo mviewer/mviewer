@@ -1,0 +1,44 @@
+{{#features}}
+	<li class="item" style="width:238px;">
+		<h3 class="title-feature">{{ZEM_NOM}}</h3>
+
+		<div class="block_def">
+			<h4 class="title_def" style="color:#ea5455;"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Zone d'emploi</h4>
+			<p >
+			Une zone d'emploi est un espace géographique à l'intérieur duquel la plupart des actifs résident et travaillent, et dans lequel les établissements peuvent trouver l'essentiel de la main d'œuvre nécessaire pour occuper les emplois offerts.</br>
+			Le découpage actualisé se fonde sur les flux de déplacement domicile-travail des actifs observés lors du recensement de 2006.  
+			</p>
+		</div>
+	</li>
+{{/features}}
+
+<style>
+	.title-feature {
+		color: #032E46;
+		font-family:"roboto_bold";
+		font-size:23px;
+		margin-bottom:1%;
+		line-height:1;
+	}
+	.text-feature{
+		font-family:"roboto_regular";
+		color:#555;
+		font-size:13px;
+		margin-top:10%;
+	}
+
+	.block_def{
+		font-family:"roboto_regular";
+		color:#777;
+		background-color: #f5f5f5;
+    	text-align: justify;
+    	font-size: 12px;
+    	padding: 14px;
+    	line-height:1.4;
+    	margin-top:40px;
+	}
+	.title_def{
+		font-family:"roboto_bold";		
+    	text-align: center;
+	}
+</style>

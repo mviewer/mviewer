@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <application title="Nouveau visualiseur thématique" logo="img/logo/geobretagne.png" help="http://geobretagne.fr" measuretools="false" exportpng="true" style="css/apps/kartenn_eolien.css"/>
+    <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
+    <mapoptions maxzoom="19" projection="EPSG:3857" center="-220750.13768758904,6144925.57790189" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
+  
+    <baselayers style="default"><!-- style="default"||gallery" -->                  
+        <baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoPortail" maxscale="1000" thumbgallery="img/basemap/ortho.jpg"
+            url="http://kartenn.region-bretagne.fr/wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" format="image/jpeg" visible="false" fromcapacity="false"
+            attribution="&lt;a href='http://www.geoportail.fr/' target='_blank'>&lt;img src='http://api.ign.fr/geoportail/api/js/latest/theme/geoportal/img/logo_gp.gif'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
+        <baselayer  type="fake" id="fake" label="Carroyage" title="Carroyage" thumbgallery="img/basemap/grid.png" visible="false"  />
+        <baselayer  type="OSM" id="darkmatter" label="Dark Matter" title="CartoDb" thumbgallery="img/basemap/darkmatter.png" 
+            url="http://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png" maxzoom="20" 
+            visible="false" attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="OSM" id="positron" label="Positron" title="CartoDb" thumbgallery="img/basemap/positron.png" 
+            url="http://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20" 
+            visible="true" attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="OSM" id="osm1" label="OpenStreetMap" title="OpenStreetMap" thumbgallery="img/basemap/osm.png" 
+            url="http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
+            attribution="© MapQuest. Données : les contributeurs d'&lt;a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='http://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" visible="false"/>       
+        <baselayer  type="WMTS" id="scan2" label="Cartes IGN" title="GéoPortail" maxscale="2000" thumbgallery="img/basemap/scan.jpg"
+            url="http://kartenn.region-bretagne.fr/wmts" layers="GEOGRAPHICALGRIDSYSTEMS.MAPS" format="image/jpeg" visible="false" fromcapacity="false"
+            attribution="&lt;a href='http://www.geoportail.fr/' target='_blank'>&lt;img src='http://api.ign.fr/geoportail/api/js/latest/theme/geoportal/img/logo_gp.gif'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
+    </baselayers>
+    <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban" attribution="La recherche d'adresse est un service proposé par la BAN"/>
+    <themes>
+        <!--<theme name="Éolien"   id="eolien" icon="cog">   
+        <group name="Infrastructures éoliennes" id="grp1" >         
+            <layer id="eolien_bzh" name="Implantation des éoliennes"  visible="false" tiled="false"
+                searchable="false" queryable="true"                               
+                timefilter="true" timeinterval="year" timecontrol="slider-range" timevalues="2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2016" 
+                infoformat="text/html" featurecount="20"
+                style="demo_eolien_defaut,demo_eolien_hauteur,demo_eolien_puissance"  
+                stylesalias="Par défaut,Hauteur maximum (en m),Puissance nominale (en)"
+                url="http://rec-owsig.cr-bretagne.fr/geoserver/rb/wms"
+                attribution="GéoBretagne" 
+                metadata=""
+                metadata-csw="" />
+        </group>        
+        <group name="Zone de développement" id="grp2" >        
+             <layer id="n_sre_eolien_s_r53" name="Zone favorable (SRE)"  visible="false" tiled="false"
+                searchable="false" queryable="false"
+                sld="http://kartenn.region-bretagne.fr/styles/demo_schema_eolien.sld"  
+                url="http://geobretagne.fr/geoserver/dreal_b/wms"
+                attribution="GéoBretagne" 
+                metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=68ce21d3-9d36-4ed0-b75f-14a7bb9a5ac6"
+                metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=68ce21d3-9d36-4ed0-b75f-14a7bb9a5ac6" />
+             <layer id="n_zde_eolien_s_r53" name="Zone de développement éolien"  visible="false" tiled="false"
+                searchable="false" queryable="false"
+                sld="http://kartenn.region-bretagne.fr/styles/demo_zd_eolien.sld"  
+                url="http://geobretagne.fr/geoserver/dreal_b/wms"
+                attribution="GéoBretagne" 
+                metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=14e58cec-b3b2-4469-8a6b-b0f0f9b16526"
+                metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=14e58cec-b3b2-4469-8a6b-b0f0f9b16526" />       
+         </group>    
+        </theme>-->
+        <theme name="Population"  collapsed="false" id="population" icon="male">
+            <layer id="population_bzh" name=" Catégorie d'âge (%)"  visible="false" tiled="false"
+                searchable="false" queryable="true"
+                attributefilter="true" attributefield="code_insee" attributevalues="56078,56162"  attributelabel="Echelle" attributestylesync="true" attributefilterenabled="false"
+                infopanel="bottom-panel"
+                infoformat="text/html" featurecount="5"
+                style="transports_pop_0_14ans,transports_pop_1529ans,transports_pop_3044ans,transports_pop_4559ans,transports_pop_6074ans,transports_pop_7589ans,transports_pop_90ans"
+                stylesalias="0 - 14 ans,15 - 29 ans,30 - 44 ans,45 - 59 ans,60 - 74 ans,75 - 89 ans,90 ans"
+                url="http://ows.region-bretagne.fr/geoserver/interne/wms"
+                attribution="INSEE - Répartition de la population selon les catégories d'âge par commune en 2013" 
+                metadata=""
+                metadata-csw="" />
+                <layer id="unite_administrative_pop_2013" name="Unités administratives"  visible="true" tiled="false"
+                searchable="false" queryable="true"
+                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Echelle" attributestylesync="true" attributefilterenabled="false"
+                infopanel="bottom-panel"
+                infoformat="text/html" featurecount="5"
+                style="mv_population_2013,mv_population_h_2013"
+                stylesalias="population totale,population masculine"
+                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+                attribution="Région Bretagne" 
+                metadata=""
+                metadata-csw="" />
+                <layer id="unite_administrative_pop_2013" name="Unités administratives 2"  visible="false" tiled="false"
+                searchable="false" queryable="true"
+                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Echelle" attributestylesync="true" attributefilterenabled="false"
+                infopanel="bottom-panel"
+                infoformat="text/html" featurecount="5"
+                style="mv_population_2013,mv_population_h_2013"
+                stylesalias="population totale,population masculine"
+                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+                attribution="Région Bretagne" 
+                metadata=""
+                metadata-csw="" />
+                
+         </theme>  
+         <theme name="Territoires"   id="territoires" icon="home">
+            <layer id="arret_ferroviaire" name="Arrêts ferroviaires régionaux"  visible="false" tiled="false" 
+                    searchable="true" queryable="true" fields="nom,commune" aliases="nom,commune" secure="false"                   
+                    infoformat="application/vnd.ogc.gml" featurecount="20"
+                    
+                    style="transports_arret_ferr_defaut, transports_arret_ferr_borne,transports_arret_ferr_guichet,transports_arret_ferr_info_dynami,transports_arret_ferr_nature,transports_arret_ferr_parking,transports_arret_ferr_velo,transports_arret_ferr_pmr"
+                    stylesalias="Par défaut, Distributeur automatique de billet, Guichet, Information dynamique,Nature des arrêts ferroviaires,Parking voiture,Parking vélo, Assistance PMR"
+                    legendurl="http://kartenn.region-bretagne.fr/doc/transports/icons/gare.svg"
+                    url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+                    attribution="Région Bretagne" 
+                    metadata=""
+                    metadata-csw="">
+                    <template url="templates/template1.mst"></template>
+                    <!--<template><![CDATA[
+                        {{#features}}<li class="item"><b>{{nom}}</b><br/>{{code_uic}}<br/><button class="btn btn-default"/><iframe src="http://kartenn.region-bretagne.fr/ws/transports/iframe_demographie.php?insee_comm={{code_uic}}" /></li>{{/features}}
+                    ]]></template>-->
+              </layer>
+            <!--<layer id="buildup" name="Zones artificialisées"  visible="false" tiled="false"
+                searchable="false" queryable="false"    
+                style=""          
+                opacity="0.5" 
+                timefilter="true" timeinterval="year" timecontrol="slider" timevalues="1975,1990,2000,2014"
+                url="http://geobretagne.fr/geoserver/europe/wms"
+                attribution="© Union Européenne, 1995-2016" 
+                metadata="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=a6354c49-4227-490b-bae4-c0f273a734af"
+                metadata-csw="http://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=a6354c49-4227-490b-bae4-c0f273a734af" />        -->    
+        </theme>    
+       </themes>
+</config>
