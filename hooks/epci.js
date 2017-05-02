@@ -2,7 +2,7 @@
 mviewer.hooks.epci = {};
 mviewer.hooks.epci.layer = new ol.layer.Vector({
         source: new ol.source.Vector({
-            url: "apps/region/territoire/data/epci_simple.geojson",
+            url: "data/epci_simple.geojson",
             format: new ol.format.GeoJSON()
         }),
 style: new ol.style.Style({
