@@ -255,6 +255,7 @@ Noeud enfant de theme décrivant une couche.
     searchid=""
     useproxy=""
     secure=""
+    toplayer=""
 	infoformat="" featurecount=""
 	style=""
     stylesalias=""
@@ -301,6 +302,7 @@ Ce fichier js doit être placé dans le répertoire hooks/
 * **tooltip**: Pour les couches de type vecteur uniquement. Booléen précisant si les entités de la couche sont affichées sous forme d'infobulle au survol de la souris. (Les infobulles ne fonctionnent qu'avec une seule couche à la fois). Valeur par défaut = false.
 * **tooltipenabled**: Précise la couche prioritaire pour l'affichage des infobulles.
 * **secure**: Précise si la couche est protégée ( méchanisme geoserver ) auquel cas un test est affectué pour savoir si la couche est accessible. SI ce n'est pas le cas, la couche est retirée du panneau et de la carte.
+* **toplayer**: Précise si la couche demeure figée". Booléen. Défaut = true.
 * **infoformat**: Format du GetFeatureInfo. 2 formats sont supportés : text/html et application/vnd.ogc.gml
 * **featurecount**: Nombre d'éléments retournés lors de l'intérrogation
 * **style**: Style(s) de la couche. Si plusieurs styles , utiliser la virgule comme séparateur.

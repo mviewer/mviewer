@@ -63,7 +63,8 @@ $(document).ready(function () {
     });
     
     Sortable.create(document.getElementById('layers-container'), {
-        handle: '.layerdisplay-title',        
+        handle: '.layerdisplay-title',  
+        draggable: '.draggable',
         onUpdate: function (evt) {
             var actionMove = { 
                 layerName: $(evt.item).attr("data-layerid"),
