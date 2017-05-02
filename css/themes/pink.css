@@ -1,5 +1,5 @@
 /******************************************************************************
---------------------------- CSS KARTENN TERRITOIRE / PINK -----------------
+--------------------------- CSS THEME MVIEWER / PINK -----------------
 ********************************************************************************/
 
 /* Import des fonts*/
@@ -14,10 +14,6 @@
 		@font-face {
 		    font-family: 'roboto_regular';
 		    src: url('../font/Roboto/Roboto-Regular.ttf');
-		}
-		@font-face {
-		    font-family: 'spotkabold';
-		    src: url('../font/spotkabold.ttf');
 		}
 /*******************************
 ------------- NAVBAR 
@@ -42,7 +38,7 @@
 
 p.navbar-text.mv-title{
 	font-size: 18px;
-	font-family: 'spotkabold', Arial, Sans-serif;
+	font-family: 'roboto_bold', Arial, Sans-serif;
 	letter-spacing: 0.5px;
 }
 
