@@ -1,8 +1,8 @@
-mviewer.customControls.sample = (function() {
+mviewer.customControls.epci = (function() {
     /*
      * Private
      */
-    var _idlayer = 'sample';
+    var _idlayer = 'epci';
     
     
         
@@ -10,13 +10,7 @@ mviewer.customControls.sample = (function() {
         /*
          * Public
          */
-
                 
-        handle: function (features) {
-            //optional - code executed when mouse is over vector features of this layer
-            console.log(features);
-        },  
-        
         init: function () {
             // mandatory - code executed when panel is opened
         
