@@ -322,9 +322,9 @@ Si la couche est de type customlayer, le style n'est pas défini ici.
 * **attributelabel**:  Texte à afficher pour la liste déroulante associée.
 * **attributestylesync**: Booléen qui précise s'il convient d'appliquer un style (sld) spécifique lors du filtre attributaire. Dans ce cas la convention est la suivante : nom_style_courant_attributevalue.
 * **attributefilterenabled**: Booléen précisant si le filtre est activé par défaut (avec la première valeur de la liste attributevalues).
-* **customcontrols**: Booléen. Si actif, il faut déposer un fichier js et un fichier html ayant pour nom l'id de la couche dans le répertoire controls.
-La structure du js doit être la suivante : (../controls/model.js)
-Ce fichier js doit être placé dans le répertoire hooks/
+* **customcontrol**: Booléen précisant si la couche dispose d'un addon html à intégrer. La valeur par défaut est false.
+* **customcontrolpath**: Texte Précisant le répertoire hébergeant les fichiers nécessaires au contrôle. Dans ce pépertoire, il faut déposer un fichier js et un fichier html ayant pour nom l'id de la couche.
+La structure du js doit être la suivante : (../controls/epci.js). Valeur par défaut = customcontrols.
 * **opacity**: Opacité de la couche (1 par défaut)
 * **legendurl**: url premettant de récupérer la légende. Si non défini, c'est un getFeatureLegend qui est effectué.
 * **url**: URL de la couche
