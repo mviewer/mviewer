@@ -284,8 +284,8 @@ Noeud enfant de theme décrivant une couche.
 
 * **id**: Id de la couche
 * **name**: Nom de la couche
-* **type**: Type de la couche (wms|geojson|kml|hook) default=wms. Si hook est définit, il faut instancier un Layer OpenLayers dans un fichier javascript ayant pour nom l'id de la couche.
-Ce fichier js doit être placé dans le répertoire hooks/
+* **type**: Type de la couche (wms|geojson|kml|customlayer) default=wms. Si customlayer est défini, il faut instancier un Layer OpenLayers dans un fichier javascript ayant pour nom l'id de la couche.
+Ce fichier js doit être placé dans le répertoire customlayers/
 * **scalemin**: Echelle minimum de la couche
 * **scalemax**: Echelle maximum de la couche
 * **visible**:  Booléen stipulant est ce que la couche est actuellement visible
@@ -308,7 +308,7 @@ Ce fichier js doit être placé dans le répertoire hooks/
 * **style**: Style(s) de la couche. Si plusieurs styles , utiliser la virgule comme séparateur.
 Si la couche est de type wms, il faut faire référence à un style sld.
 Si la couche est de type geojson, il faut faire référence à un style définit dans lib/featurestyles.js
-Si la couche est de type hook, le style n'est pas défini ici.
+Si la couche est de type customlayer, le style n'est pas défini ici.
 * **stylesalias**: Titres à utiliser pour chaques style. utiliser la virgule comme séparateur si plusieurs styles.
 * **timefilter**: Booléen précisant si la dimension temporelle est activée pour cette couche. Voir (http://docs.geoserver.org/latest/en/user/services/wms/time.html)
 * **timeinterval**: day|month|year
