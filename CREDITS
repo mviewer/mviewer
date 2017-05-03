@@ -3,15 +3,47 @@ Credits
 
 OpenLayers3
 ==========
-http://ol3js.org/ under 2-Clause BSD
-http://www.tldrlegal.com/license/bsd-2-clause-license-(freebsd)
-Many thanks to the OpenLayers3 team
+OpenLayers makes it easy to put a dynamic map in any web page. It can display map tiles, vector data and markers loaded from any source. OpenLayers has been developed to further the use of geographic information of all kinds. It is completely free, Open Source JavaScript, released under the 2-clause BSD License (also known as the FreeBSD).
+https://openlayers.org/
 
 
 JQuery
 ======
+jQuery is a fast, small, and feature-rich JavaScript library.
 https://jquery.org/license/ under MIT Licence
 
-JQUery Mobile Icon Pack (c) Andy Matthews
-========================================
-http://andymatthews.net/code/jquery-mobile-icon-pack/
+Bootstrap
+======
+Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.
+http://getbootstrap.com/
+
+Bootstrap-slider
+======
+A Bootstrap slider component
+https://github.com/seiyria/bootstrap-slider
+
+bootstrap-datepicker
+======
+A datepicker for twitter bootstrap.
+https://github.com/uxsolutions/bootstrap-datepicker/
+
+Sortable
+======
+Sortable — is a JavaScript library for reorderable drag-and-drop lists on modern browsers and touch devices.
+https://github.com/RubaXa/Sortable
+
+Mustache.js
+======
+Logic-less templates with JavaScript
+https://github.com/janl/mustache.js
+
+Proj4
+=====
+JavaScript library to transform coordinates from one coordinate system to another, including datum transformations
+http://proj4js.org/
+
+xml2json
+======
+A simple jQuery plugin that converts XML data, typically from $.ajax requests, to a valid JSON object.
+https://github.com/sparkbuzz/jQuery-xml2json
+
