@@ -269,26 +269,16 @@ $(document).ready(function () {
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h5 class="modal-title">Partager cette carte</h5>
+                        <h4 class="modal-title"><center>Partager cette carte</center></h4>
                     </div>
                     <div class="modal-body" >
                         <div class="row">
                             <div class="col-md-6" >
-                                <div class="btn-group-vertical" role="group" >
-                                    <a type="button" class="btn btn-default" id="permalinklink" href="#" title="lien permanent vers la carte">Lien vers la carte</a>	
-                                    <a type="button" class="btn btn-default" href='#' title='Envoyer vers le visualiseur Georchestra'>
-                                        <img src="img/logo/g.png" alt="georchestra" onclick="mviewer.sendToGeorchestra();" />
-                                    </a>
-                                </div>
+                                <a type="button" class="btn btn-default" id="permalinklink" href="#" title="Lien permanent vers la carte"><img src="img/share/share_link.png" height="100px"></a>
                             </div>
-                            <div id='share' class="col-md-6"> 
-                                <img id="permaqr" src="img/blank.gif" title="QR code vers la carte" alt="QR code" />
+                            <div id='share' class="col-md-6">
+                                <img id="permaqr" src="img/ajax-loader.gif" title="QR code vers la carte" alt="QR code" />
                             </div>
-                            <!-- to georchestra viewer -->
-                            <form id="georchestraForm" target="_blank" method="post" action="http://geobretagne.fr/mapfishapp/" style="display:none;">
-                                <input type="hidden" id="georchestraFormData" name="data" value="" />
-                                <input type="submit" data-role="button"  value="geOrchestra" />
-                            </form> 
                        </div>
                     </div>
                 </div>
