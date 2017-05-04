@@ -119,11 +119,12 @@ a#searchparams {
 }
 
 #searchresults li {
-	padding: 0;
+	padding: 10px;
 }
 
 #searchresults li a {
 	font-size: 11px;
+	margin-left: 5px;
 }
 
 #searchresults li.disabled {
