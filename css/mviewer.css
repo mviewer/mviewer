@@ -176,6 +176,13 @@ li.geoportail.list-group-item.disabled{
   padding-left: 10px;
 }
 
+#btn-remove-layers {
+    display: none;
+}
+.active #btn-remove-layers {
+    display: inline;
+}
+
 /* Sub-title: nom des styles et des filtres sur attibut */
 
 /*Styles*/

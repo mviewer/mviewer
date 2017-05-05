@@ -145,7 +145,7 @@ $(document).ready(function () {
                         <div id="legend" class="active">
                             <div id="layers-container-box-header" >
                                 <a onclick="mviewer.toggleLegend();" title="Afficher/masquer la légende" href="#"> <span class="glyphicon glyphicon-list"></span> </a>
-                                <a onclick="mviewer.removeAllLayers();" title="Supprimer toutes les couches" href="#"> <span class="glyphicon glyphicon-trash"></span> </a>
+                                <a id="btn-remove-layers" onclick="mviewer.removeAllLayers();" title="Supprimer toutes les couches" href="#"> <span class="glyphicon glyphicon-trash"></span> </a>
                             </div>
                             <ul id="layers-container" class="list-group"></ul>
                         </div>
