@@ -481,7 +481,7 @@ button.btn.btn-default.navbar-btn.mv-navbar-btn:focus{
 
 #help .modal-content{
 	font-family: 'roboto_regular', Arial, Sans-serif!important;
-	height: 880px;
+	height: auto;
 }
 
 #help .nav-tabs{
