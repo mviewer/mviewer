@@ -1,7 +1,7 @@
 MVIEWER
 =============
 
-Visualiseur géographique [Kartenn](http://kartenn.region-bretagne.fr/mviewer/) basé sur OpenLayers 3.10.0 et Bootstrap 3.3.6
+Visualiseur géographique [Kartenn](http://kartenn.region-bretagne.fr/kartoviz/) basé sur OpenLayers 3.10.0 et Bootstrap 3.3.6
 
 Déploiement 
 -----------
@@ -71,20 +71,14 @@ Personnalisation de l'application (overriding)
 
 #### Prototype 
 
-	 <application title="" logo=""  help="" panelfooterimage="" panelfooterheight="" exportpng="" measuretools="" legend="" legendasimage="" stats="" statsurl=""/>
+	 <application title="" logo=""  style="" exportpng="" measuretools="" stats="" statsurl=""/>
 
 #### Attributs 
 
 * **title**: Titre de l'application || Kartenn.
 * **logo**: Url du logo || img/logo/bandeau_region.png.
-* **description** : Description du panneau thématiques.
 * **style**: style à utiliser || css/themes/default.css [ressource](https://themeroller.jquerymobile.com/)
-* **help**: Url du fichier d'aide || aide_kartenn.pdf.
-* **panelfooterimage**: Url du fichier image à utiliser en arrière plan du panel footer.
-* **panelfooterheight**: Taille en pixels du footer du panel.
 * **exportpng**: Enables map export as png file  true/false || false. Export is possible only with local layers (same origin) or with layers served with CORS.
-* **legend**: Add button to show legend panel : true || false.
-* **legendasimage**: if true, render the legend in canvas. By this way, it's possible export legend as png file : true/flase || false.
 * **measuretools**: Enables measure tools and tools mode  true/false || false.
 * **stats**: Enables stats mode  true/false || false.
 * **statsurl**: url to send stats activity eg (login, ip, application title, date).
