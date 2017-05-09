@@ -177,7 +177,7 @@ li.geoportail.list-group-item.disabled{
   padding-left: 10px;
 }
 
-#btn-remove-layers {
+#btn-remove-layers, .active.empty  #btn-remove-layers {
     display: none;
 }
 .active #btn-remove-layers {
@@ -435,8 +435,8 @@ div#backgroundlayerstoolbar-gallery {
     overflow-y: auto;
     overflow-x: hidden;
     max-height: 100%;
-    padding-top: 60px;
-    padding-left: 7px;
+    margin-top: 60px;
+    margin-left: 7px;
     max-width: 300px; 
      -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
