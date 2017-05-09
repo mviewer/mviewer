@@ -210,9 +210,9 @@ Options liées à à la recherche d'adresse (olscompletion) et à la recherche d
 * **features**: Optional - Utilisation du service de recherche d'entités elasticsearch : true ou false - defaut = true.
 * **static**: Optional - En lien avec le paramètre **doctypes**. Active ou désactive la recherche associée à des documents requêtés systématiquement, indépendamment des couches affichées : true ou false - defaut = false.
 
-### Noeud themes
+### Noeud themes et sous thèmes
 
-Noeud regroupant les couches par thèmes.
+Noeud regroupant les couches par thèmes et sous-thèmes.
 
 #### Prototype
 
@@ -235,9 +235,18 @@ Noeud enfant décrivant un thème
 * **name**: Nom du thème
 * **id**: Identifiant du thème
 
+
+###### Noeud(s) enfant(s) group
+
+Noeud enfant de theme décrivant un sous-groupe.
+
+####### Prototype
+
+    <group id="" name="">
+
 ###### Noeud(s) enfant(s) layer
 
-Noeud enfant de theme décrivant une couche.
+Noeud enfant de theme ou group décrivant une couche.
 
 ####### Prototype
 
