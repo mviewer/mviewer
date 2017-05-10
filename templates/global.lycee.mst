@@ -11,7 +11,10 @@
 			<span style="font-family:'roboto_bold'"> Secteur :</span> {{secteur_li}}<br/>
 			<span style="font-family:'roboto_bold'"> Réseau :</span> {{reseau_lib}}<br/>			
 		</p>
-		<img src="{{photo}}" class="img-responsive" style="margin-top:5%;" />
+		{{#photo}}
+			<img src="{{photo}}" class="img-responsive" style="margin-top:5%;" />
+		{{/photo}}
+		
 	</li>
 {{/features}}
 
