@@ -250,7 +250,7 @@ Noeud enfant de theme ou group décrivant une couche.
 
 ####### Prototype
 
-	<layer id="" name="" scalemin="" scalemax="" visible="" tiled="" namespace=""
+	<layer id="" name="" scalemin="" scalemax="" visible="" tiled=""
 	queryable="" fields="" aliases=""
     type=""
     filter=""
@@ -293,7 +293,6 @@ Ce fichier js doit être placé dans le répertoire customlayers/
 * **scalemax**: Echelle maximum de la couche
 * **visible**:  Booléen stipulant est ce que la couche est actuellement visible
 * **tiled**: Booléen stipluant est ce que la couche est tuilée
-* **namespace**: Namespace où est située la couche
 * **queryable**: Booléen stipulant est ce que la couche est intérrogeable via un GetFeatureInfo
 * **filter**: Expression CQL permettant de filtrer la couche ex: insee=35000 Ou INTERSECT(the_geom, POINT (-74.817265 40.5296504)) [tutorial] (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial)
 * **searchable**: Booléen précisant si la couche est interrogeable via la barre de recherche
