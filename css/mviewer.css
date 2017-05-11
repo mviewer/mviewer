@@ -1156,6 +1156,10 @@ a:focus{
 	padding-right:10px;
 }
 
+#layers-container-box .active {
+    min-width: 280px;
+}
+
 #layers-container .mv-layer-options a{
 	color: #555;
 }
@@ -1216,13 +1220,15 @@ a:focus{
 }
 
 .mv-invisible .layerdisplay-legend:after {    
-    content: "Non visible à cette échelle";
+    /*content: "Non visible à cette échelle";*/
+    content: "\e106";
     line-height: 40px;
+    font-size:17px;
     color: #777777;
 }
 
 .mv-layer-details.mv-invisible {
-    background-color: #f5f5f5;
+    /*background-color: #f5f5f5;*/
 }
 
 /* Opacity */
