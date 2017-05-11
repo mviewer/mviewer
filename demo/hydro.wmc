@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ViewContext xmlns="http://www.opengis.net/context" version="1.1.0" id="données hydro" xsi:schemaLocation="http://www.opengis.net/context http://schemas.opengis.net/context/1.1.0/context.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <General>
     <Window width="973" height="806"/>
@@ -11,12 +11,12 @@
   <LayerList>
     <Layer queryable="1" hidden="0">
       <Server service="OGC:WMS" version="1.3.0">
-        <OnlineResource xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://geobretagne.fr/geoserver/dreal_b/ows?SERVICE=WMS&amp;"/>
+        <OnlineResource xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geobretagne.fr/geoserver/dreal_b/ows?SERVICE=WMS&amp;"/>
       </Server>
       <Name>hydrometrie_qmj</Name>
       <Title>Situation hydrologique de la Bretagne.</Title>
       <MetadataURL>
-        <OnlineResource xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=34d15ff0-ac1c-48d9-a9bd-a38d60fa0ecc"/>
+        <OnlineResource xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=34d15ff0-ac1c-48d9-a9bd-a38d60fa0ecc"/>
       </MetadataURL>
       <sld:MinScaleDenominator xmlns:sld="http://www.opengis.net/sld">25000</sld:MinScaleDenominator>
       <sld:MaxScaleDenominator xmlns:sld="http://www.opengis.net/sld">559082264.0287179</sld:MaxScaleDenominator>
@@ -41,7 +41,7 @@
           <Name>hydrometrie_qmj</Name>
           <Title/>
           <LegendURL width="20" height="20" format="image/png">
-            <OnlineResource xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://geobretagne.fr/geoserver/dreal_b/ows?service=WMS&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=hydrometrie_qmj"/>
+            <OnlineResource xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geobretagne.fr/geoserver/dreal_b/ows?service=WMS&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=hydrometrie_qmj"/>
           </LegendURL>
         </Style>
       </StyleList>
@@ -64,12 +64,12 @@
     </Layer>
     <Layer queryable="1" hidden="1">
       <Server service="OGC:WMS" version="1.3.0">
-        <OnlineResource xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://geobretagne.fr/geoserver/dreal_b/ows?SERVICE=WMS&amp;"/>
+        <OnlineResource xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geobretagne.fr/geoserver/dreal_b/ows?SERVICE=WMS&amp;"/>
       </Server>
       <Name>hydrometrie_stations_technique</Name>
       <Title>Supervision du réseau hydrométrique en Bretagne</Title>
       <MetadataURL>
-        <OnlineResource xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://geobretagne.fr/geonetwork/apps/georchestra/?uuid=34d15ff0-ac1c-48d9-a9bd-a38d60fa0ecc"/>
+        <OnlineResource xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=34d15ff0-ac1c-48d9-a9bd-a38d60fa0ecc"/>
       </MetadataURL>
       <sld:MinScaleDenominator xmlns:sld="http://www.opengis.net/sld">266.5911979812229</sld:MinScaleDenominator>
       <sld:MaxScaleDenominator xmlns:sld="http://www.opengis.net/sld">559082264.0287179</sld:MaxScaleDenominator>
@@ -94,14 +94,14 @@
           <Name>dreal_hydrometrie_technique</Name>
           <Title/>
           <LegendURL width="20" height="20" format="image/png">
-            <OnlineResource xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://geobretagne.fr/geoserver/dreal_b/ows?service=WMS&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=hydrometrie_stations_technique"/>
+            <OnlineResource xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geobretagne.fr/geoserver/dreal_b/ows?service=WMS&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=hydrometrie_stations_technique"/>
           </LegendURL>
         </Style>
         <Style>
           <Name>dreal_hydrometrie_seuil</Name>
           <Title/>
           <LegendURL width="20" height="20" format="image/png">
-            <OnlineResource xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://geobretagne.fr/geoserver/dreal_b/ows?service=WMS&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=hydrometrie_stations_technique&amp;style=dreal_hydrometrie_seuil"/>
+            <OnlineResource xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geobretagne.fr/geoserver/dreal_b/ows?service=WMS&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=hydrometrie_stations_technique&amp;style=dreal_hydrometrie_seuil"/>
           </LegendURL>
         </Style>
       </StyleList>
