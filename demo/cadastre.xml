@@ -2,7 +2,7 @@
 <config>    
     <application title="Démo cadastre" logo="" help="demo/demo_cadastre_help.html" showhelp="true" measuretools="true" style="css/themes/black.css" />
     <mapoptions maxzoom="20" projection="EPSG:3857" center="-190879,6125293" zoom="19" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
-	<baselayers style="default"><!-- style="default"||gallery" -->
+	<baselayers style="default">
         <baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoBretagne" thumbgallery="img/basemap/ortho.jpg" 
             url="http://tile.geobretagne.fr/gwc02/service/wmts" layers="satellite" format="image/png" visible="true"
             attribution="&lt;a href='http://applications.region-bretagne.fr/geonetwork/?uuid=3a0ac2e3-7af1-4dec-9f36-dae6b5a8c731' target='_blank' >partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver&lt;/a>" style="_null" matrixset="EPSG:3857" fromcapacity="false"/>
@@ -16,38 +16,45 @@
     <proxy url=""/>    
     <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban" attribution="La recherche d'adresse est un service proposé par l'API adresse.data.gouv.fr"/>
     <themes>
-      
         <theme name="Couches de cadastre.gouv.fr"  id="cadastre_gouv2" collapsed="true" icon="tree">             
-             <layer id="AMORCES_CAD,LIEUDIT,CP.CadastralParcel,SUBFISCAL,CLOTURE,DETAIL_TOPO,HYDRO,VOIE_COMMUNICATION,BU.Building,BORNE_REPERE" name="DGFIP"
-                visible="false" tiled="true"
+             <layer id="AMORCES_CAD,LIEUDIT,CP.CadastralParcel,SUBFISCAL,CLOTURE,DETAIL_TOPO,HYDRO,VOIE_COMMUNICATION,BU.Building,BORNE_REPERE"
+                name="DGFIP"
+                visible="false"
+                tiled="true"
                 scalemin="99" scalemax="25000" 
-				queryable="false" fields="" aliases=""
-                infoformat="" featurecount=""
-				style="" 
+				queryable="false" 
 				url="http://kartenn.region-bretagne.fr/ws/cadastre/france.wms" 
 				attribution="Direction générale des Finances publiques – Cadastre ; mise à jour :2015" 
 				metadata="https://www.cadastre.gouv.fr/scpc/html/aide/wms/url_fr.htm#LAYERS / STYLES" 
 				metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=45a6bb22-a2eb-4b81-834b-4ccc86a0591e" />           
         </theme>  
         <theme name="Cadastre Géobretagne"  collapsed="false" id="cadastre" icon="home">  
-			<layer id="cadastre:CP.CadastralZoning" name="Sections" scalemin="0" scalemax="25000" visible="false" tiled="false"
-				queryable="false" fields="" aliases=""
-                infoformat="" featurecount="0"				
+			<layer id="cadastre:CP.CadastralZoning" 
+                name="Sections" 
+                scalemin="0" scalemax="25000" 
+                visible="false"
+                tiled="true"
+				queryable="false"
 				url="https://geobretagne.fr/geoserver/cadastre/wms" 
 				attribution="DGFIP" 
 				metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=0ca82e1d-b487-4879-8185-56b7c4e1a948" 
 				metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0ca82e1d-b487-4879-8185-56b7c4e1a948" />                        
-            <layer id="cadastre:CP.CadastralBuilding" name="Bâti" scalemin="0" scalemax="25000" visible="true" tiled="true"
-				queryable="false" fields="" aliases=""
-                sld="http://kartenn.region-bretagne.fr/styles/bati.sld"
-                infoformat="application/vnd.ogc.gml" featurecount="5"
+            <layer id="cadastre:CP.CadastralBuilding" 
+                name="Bâti" 
+                visible="true" tiled="true"
+                scalemin="0" scalemax="25000" 
+				queryable="false" 
+                sld="http://kartenn.region-bretagne.fr/styles/bati.sld"                
 				url="https://geobretagne.fr/geoserver/cadastre/wms" 
 				attribution="DGFIP" 
 				metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=0ca82e1d-b487-4879-8185-56b7c4e1a948"
 				metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0ca82e1d-b487-4879-8185-56b7c4e1a948" />	
-            <layer id="CP.CadastralParcel" name="Parcelle cadastrale" scalemin="0" scalemax="25000" visible="true" tiled="true"
-				queryable="true" fields="" aliases=""                 
-                infoformat="application/vnd.ogc.gml" featurecount="5"
+            <layer id="CP.CadastralParcel" 
+                name="Parcelle cadastrale" 
+                visible="true" tiled="true"
+                scalemin="0" scalemax="25000" 
+				queryable="true"                 
+                infoformat="application/vnd.ogc.gml" featurecount="1"
 				url="https://geobretagne.fr/geoserver/cadastre/wms" 
 				attribution="DGFIP" 
 				metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=0ca82e1d-b487-4879-8185-56b7c4e1a948" 
