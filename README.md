@@ -21,7 +21,7 @@ Le fichier de config permet la personnalisation des thèmes/couches du visualise
 
 	<?xml version="1.0" encoding="UTF-8"?>
 	<config>
-    <application title="" logo="" help="" description"" style="" panelfooterimage="" panelfooterheight="" exportpng="" measuretools="" legend="" legendasimage="" stats="" statsurl=""/>
+    <application title="" logo="" help="" showhelp="" style="" exportpng="" measuretools="" legend="" stats="" statsurl=""/>
     <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
     <mapoptions maxzoom="18" projection="EPSG:3857" center="-403013.39038929436,6128402.399153711" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
    
@@ -71,12 +71,14 @@ Personnalisation de l'application (overriding)
 
 #### Prototype 
 
-	 <application title="" logo=""  style="" exportpng="" measuretools="" stats="" statsurl=""/>
+	 <application title="" logo=""  help="" showhelp="" style="" exportpng="" measuretools="" stats="" statsurl=""/>
 
 #### Attributs 
 
 * **title**: Titre de l'application || Kartenn.
 * **logo**: Url du logo || img/logo/bandeau_region.png.
+* **help**: Url vers l'aide (fichier html).
+* **showhelp**: Affiche l'aide au démarrage  true/false || false.
 * **style**: style à utiliser || css/themes/default.css [ressource](https://themeroller.jquerymobile.com/)
 * **exportpng**: Enables map export as png file  true/false || false. Export is possible only with local layers (same origin) or with layers served with CORS.
 * **measuretools**: Enables measure tools and tools mode  true/false || false.
