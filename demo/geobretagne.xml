@@ -22,6 +22,7 @@
                 infoformat="text/html" featurecount="1"                
 				style="cd35:PDIPR35-Pedestre,cd35:PDIPR35-Equestre" 
                 stylesalias="Réseau pédestre,Réseau équestre"
+                attributefilter="true" attributefield="REVET" attributevalues="Terre,Empierré,Goudron"  attributelabel="Revêtement" attributestylesync="false" attributefilterenabled="false"
 				url="https://geobretagne.fr/geoserver/cd35/wms" 
 				attribution="GéoBretagne" 
 				metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=075fbf9d-0511-4e99-8bca-fabc13a0cf40"
