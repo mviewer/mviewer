@@ -19,15 +19,16 @@
         <theme name="BAse SIRENE"   id="sirene" icon="barcode">		
             <layer id="sirene_bretagne" name="Base SIRENE"  visible="true" tiled="false"                    
                     queryable="true" fields="" aliases=""
-                    infoformat="text/html" featurecount="1"                      
-                    style="sirene_tefet,sirene_porcheries" 
-                    stylesalias="Nombre de salariés,Porcheries"                    
+                    infoformat="application/vnd.ogc.gml" featurecount="10"                      
+                    style="sirene_tefet,sirene_porcheries,sirene_fastfood,sirene_debitsboisson" 
+                    stylesalias="Nombre de salariés,Porcheries,Restauration,Débits de boisson"                    
                     opacity="1"                     
                     url="http://ows.region-bretagne.fr/geoserver/rb/wms"
                     attribution="Région Bretagne" 
                     metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=6bf9d921-b8eb-4e5f-bbb5-546f7c40dab3"
-                    metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=6bf9d921-b8eb-4e5f-bbb5-546f7c40dab3" />            
-        
-           </theme>        
-       </themes>
+                    metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=6bf9d921-b8eb-4e5f-bbb5-546f7c40dab3" >
+                    <template url="templates/demo.sirene.mst"></template>
+            </layer>        
+       </theme>        
+   </themes>
 </config>
