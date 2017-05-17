@@ -160,10 +160,39 @@ li.geoportail.list-group-item.disabled{
 /* Legend Panel */
 
 .mv-layer-details img {
-  max-width: 250px;
-  max-height: 250px;
+  /*max-width: 250px;
+  max-height: 250px;*/
   padding: 10px 30px 10px 10px;
 }
+
+.big-legend img{
+    max-width: 300px;    
+}
+
+.big-legend:hover{
+    cursor: pointer;   
+}
+.big-legend:hover img{
+    background: rgba(0,0,0,0.3);  
+}
+
+
+.big-legend:hover span.text-big-legend {
+  opacity: 1;  
+}
+
+span.text-big-legend {
+  color: white; 
+  display: table; 
+  position: absolute;
+  top: 25%; 
+  left: 0;
+  opacity: 0;
+  font-size: xx-large;
+  text-align: center;
+}
+
+
 
 #datalist {	
   overflow-y: auto;
