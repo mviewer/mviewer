@@ -68,7 +68,7 @@ Auteurs et licence
 Cette documentation a été réalisée par :
 
 * l'équipe "mviewer"
-* `Gwendall Petit`_ 
+* `Gwendall Petit`_  *(Lab-STICC – CNRS UMR 6285)*
 
 Sauf indication contraire, cette documentation est sous licence **Creative Commons Attribution - Non Commercial - ShareAlike 4.0** (CC-BY-NC-SA_) .
 
