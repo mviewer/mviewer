@@ -7,7 +7,6 @@
 Documentation
 =====================
 
-
 Le panneau de documenation offre aux utilisateurs des informations complémentaires permettant de décrire le contexte de la plateforme, les données diffusées, les points de contact ou toutes autres données nécessaires.
 
 Ouvrir et fermer le panneau
@@ -19,13 +18,10 @@ En cliquant sur le bouton "**?**", un nouveau panneau s'affiche au premier plan 
               :alt: Panneau "Documentation"
               :align: center
 
-
 Pour fermer ce panneau, il vous suffit soit :
 
 * de cliquer sur la croix en haut en droite du cadre,
 * de cliquer en dehors du cadre.
-
-
 
 Configurer le panneau
 ************************************

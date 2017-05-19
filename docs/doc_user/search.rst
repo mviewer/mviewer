@@ -9,13 +9,11 @@ Barre de recherche
 
 La barre de recherche, située en haut à droite de l'interface, permet de rechercher tout type de lieux, comme par exemple des noms de communes, de département ou de région.
 
-
 .. image:: ../_images/user/search/search.png
               :alt: Barre de recherche
               :align: center
 
 Au fur et à mesure que l'utilisateur écrit, le moteur de recherche affiche les propositions correspondantes. Là, l'utilisateur est invité à cliquer sur l'entrée qui correspond à son attente. Dès lors, le navigateur va zoomer sur l'entité sélectionnée.
-
 
 En cliquant sur la **croix** *(à droite de la zone d'écriture)*, l'utilisateur efface le contenu de la zone de texte.
 

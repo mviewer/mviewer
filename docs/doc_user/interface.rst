@@ -63,9 +63,7 @@ Fond de carte
 
 Outil permettant de changer le fond de carte parmi une liste prédéfinie. Pour en savoir plus, consulter la page ":ref:`maps`".
 
-
 Crédits
 -------------------------------------------
 
 Crédits relatifs aux fonds de cartes. Pour en savoir plus, consulter la page ":ref:`credits`".
-

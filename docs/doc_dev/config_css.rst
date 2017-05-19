@@ -15,7 +15,6 @@ Par défaut, une liste de .css est fournie dans le dossier **/css/themes/**
               :alt: Configurer le css
               :align: center
 
-
 Changer l'apparence
 --------------------------------
 
@@ -30,7 +29,6 @@ Par défaut, le fichier associé est **css/themes/default.css**.
 .. image:: ../_images/dev/config_css/config_css_index.png
               :alt: Configurer le css
               :align: center
-
 
 Remarque
 ****************************
