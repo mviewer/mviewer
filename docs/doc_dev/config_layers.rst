@@ -4,8 +4,8 @@
 
 .. _configlayers:
 
-Configurer - Les couches
-=========================
+Configurer - Les thématiques et les couches
+===========================================
 
 La configuration des couches qui seront visibles dans l'interface se fait dans le fichier **config.xml**.
 
@@ -124,3 +124,168 @@ Ce qui donne visuellement ceci :
 .. image:: ../_images/dev/config_layers/layer_tree.png
               :alt: Arborescence par défaut
               :align: center
+              
+Configuration de la liste des thèmes
+-------------------------------------
+
+**Prototype** ``<themes>``
+***************************
+
+.. code-block:: xml
+       :linenos:
+	
+	<themes mini="" />
+
+**Paramètres**
+
+* ``mini``: paramètre optionnel de type booléen (true/false) qui précise si le panneau des thématique est ouvert ou fermé au démarrage de l'application. Valeur par défaut **false**.
+
+
+**Prototype** ``<theme>``
+***************************
+
+Elément enfant de <themes>
+
+.. code-block:: xml
+       :linenos:
+	
+	<theme name=""  collapsed="" id="" icon="" />
+
+**Paramètres**
+
+* ``name``: paramètre obligatoire de type texte qui précise le nom de la thématique.
+* ``id``: paramètre obligatoire de type texte qui affecte un identifiant unique interne à la thématique.
+* ``collapsed``: paramètre optionnel de type booléen (true/false) qui précise si la thématique est fermée au démarrage de l'application. Pour que la thématique soit ouverte au démarrage, il faut choisir l'option **false**. Attention, il ne peut y avoir qu'une thématique ayant ce paramètre à false. Valeur par défaut **true**.
+* ``icon``: paramètre optionnel de type texte qui précise l'icône à utiliser afin d'illustrer la thématique. Les valeurs possibles sont à choisir parmi cette liste : http://fontawesome.io/icons/
+
+
+**Prototype** ``<group>``
+***************************
+
+Elément enfant de ``<theme>``
+
+.. code-block:: xml
+       :linenos:
+	
+	<group name="" />
+
+**Paramètres**
+
+* ``name``: paramètre obligatoire de type texte qui précise le nom du groupe.
+
+Configuration des  couches
+--------------------------
+
+**Prototype** ``<layer>``
+***************************
+
+Elément enfant de ``<theme>`` ou ``<group>``
+
+.. code-block:: xml
+       :linenos:
+	
+	   <layer   id=""
+                name="" 
+                scalemin=""
+                scalemax="" 
+                visible="" 
+                tiled=""
+                queryable="" 
+                fields="" 
+                aliases=""
+                type=""
+                filter=""
+                searchable=""
+                searchid=""
+                useproxy=""
+                secure=""
+                toplayer=""
+                infoformat="" 
+                featurecount=""
+                style=""
+                stylesalias=""
+                timefilter="" 
+                timeinterval="" 
+                timecontrol=""
+                timevalues=""    
+                timemin="" 
+                timemax=""
+                attributefilter=""
+                attributefield=""
+                attributevalues=""
+                opacity=""
+                legendurl=""
+                url=""
+                attribution=""
+                tooltip=""
+                tooltipenabled=""
+                expanded=""
+                metadata=""    
+                metadata-csw="" />
+                <template url=""/>
+        </layer> 
+
+**Paramètres**
+
+* ``name``: paramètre obligatoire de type texte qui précise le nom de la couche.
+* ``id``: paramètre obligatoire de type texte qui renseigne l'identifiant technique de la couche côté serveur WMS ou WFS.
+* ``type``: Type de la couche (wms|geojson|kml|customlayer) default=wms. Si customlayer est défini, il faut instancier un Layer OpenLayers dans un fichier javascript ayant pour nom l'id de la couche. Ce fichier js doit être placé dans le répertoire customlayers/
+* ``scalemin``: Echelle minimum de la couche
+* ``scalemax``: Echelle maximum de la couche
+* ``visible``:  Booléen stipulant est ce que la couche est actuellement visible
+* ``tiled``: Booléen stipluant est ce que la couche est tuilée
+* ``queryable``: Booléen stipulant est ce que la couche est intérrogeable via un GetFeatureInfo
+* ``filter``: Expression CQL permettant de filtrer la couche ex: insee=35000 Ou INTERSECT(the_geom, POINT (-74.817265 40.5296504)) [tutorial] (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial)
+* ``searchable``: Booléen précisant si la couche est interrogeable via la barre de recherche
+* ``searchid``: Nom du champ à utiliser côté WMS afin de faire le lien avec l'_id elasticsearch
+* ``iconsearch``: Lien vers l'image utilisée pour illustrer le résultat d'une recherche ElasticSearch
+* ``useproxy``: Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de de crossOrigin lorsque CORS n'est pas activé sur le serveur distant.
+* ``fields``: Si les informations retournées par l'interrogation est au format GML, fields représente les attributs à parser pour générer la vignette
+* ``aliases``: Si les informations retournées par l'interrogation est au format GML, aliases représente le renommage des champs parsés.
+* ``tooltip``: Pour les couches de type vecteur uniquement. Booléen précisant si les entités de la couche sont affichées sous forme d'infobulle au survol de la souris. (Les infobulles ne fonctionnent qu'avec une seule couche à la fois). Valeur par défaut = false.
+* ``tooltipenabled``: Précise la couche prioritaire pour l'affichage des infobulles.
+* ``secure``: Précise si la couche est protégée ( méchanisme geoserver ) auquel cas un test est affectué pour savoir si la couche est accessible. SI ce n'est pas le cas, la couche est retirée du panneau et de la carte.
+* ``toplayer``: Précise si la couche demeure figée". Booléen. Défaut = true.
+* ``infoformat``: Format du GetFeatureInfo. 2 formats sont supportés : text/html et application/vnd.ogc.gml
+* ``featurecount``: Nombre d'éléments retournés lors de l'intérrogation
+* ``style``: Style(s) de la couche. Si plusieurs styles , utiliser la virgule comme séparateur. Si la couche est de type wms, il faut faire référence à un style sld. Si la couche est de type geojson, il faut faire référence à un style définit dans lib/featurestyles.js. Si la couche est de type customlayer, le style n'est pas défini ici.
+* ``stylesalias``: Titres à utiliser pour chaques style. utiliser la virgule comme séparateur si plusieurs styles.
+* ``timefilter``: Booléen précisant si la dimension temporelle est activée pour cette couche. Voir (http://docs.geoserver.org/latest/en/user/services/wms/time.html)
+* ``timeinterval``: day|month|year
+* ``timecontrol``: calendar|slider|slider-range
+* ``timevalues``: valeurs séparées par des virgules - A utiliser avec le controle slider pour des valeurs non régulières ex (1950, 1976, 1980, 2004).
+* ``timemin``: Date mini format : "yyyy-mm-dd" 
+* ``timemax``: Date mini format : "yyyy-mm-dd"
+* ``attributefilter``:  Booléen précisant si on active la sélection attributaire par menu déroulant
+* ``attributefield``: Nom du champ à utiliser avec le contrôle attributefilter.
+* ``attributevalues``: valeurs séparées par des virgules.
+* ``attributelabel``:  Texte à afficher pour la liste déroulante associée.
+* ``attributestylesync``: Booléen qui précise s'il convient d'appliquer un style (sld) spécifique lors du filtre attributaire. Dans ce cas la convention est la suivante : nom_style_courant_attributevalue.
+* ``attributefilterenabled``: Booléen précisant si le filtre est activé par défaut (avec la première valeur de la liste attributevalues).
+* ``customcontrol``: Booléen précisant si la couche dispose d'un addon html à intégrer. La valeur par défaut est false.
+* ``customcontrolpath``: Texte Précisant le répertoire hébergeant les fichiers nécessaires au contrôle. Dans ce pépertoire, il faut déposer un fichier js et un fichier html ayant pour nom l'id de la couche. La structure du js doit être la suivante : (../controls/epci.js). Valeur par défaut = customcontrols.
+* ``opacity``: Opacité de la couche (1 par défaut)
+* ``legendurl``: url premettant de récupérer la légende. Si non défini, c'est un getFeatureLegend qui est effectué.
+* ``url``: URL de la couche
+* ``attribution``: Copyright de la couche.
+* ``expanded`` : Booléan précisant si le panneau de la couche est agrandi au démarrage. La valeur par défaut est false.
+* ``metadata``: Lien vers la fiche de metadonnées complète
+* ``metadata-csw``: Requête CSW pour l'affiche dans la popup du détail de la couche.
+
+**Prototype** ``<template>``
+******************************
+
+Elément enfant de ``<layer>``
+
+Cet élément optionnel, permet d'associer un template type Mustache (https://github.com/janl/mustache.js) à la fiche d'information de la couche.
+ Pour fonctionner, il faut que le paramètre  ``infoformat`` ait la valeur "application/vnd.ogc.gml".
+ Le template peut être un fichier statique ex templates/template1.mst ou directement saisi dans le noeud <template> avec les balises <![CDATA[ ]]>.
+
+.. code-block:: xml
+       :linenos:
+	
+	   <template   url="" />
+
+**Paramètres**
+
+* ``url``: paramètre optionnel de type url qui indique l'emplacement du template à utiliser.
