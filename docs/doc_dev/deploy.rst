@@ -13,7 +13,6 @@ Le déploiement de **mviewer** se passe en trois étapes :
 2. `Publier`_
 3. `Configurer`_
 
-
 Cloner
 ---------------------
 
@@ -25,7 +24,6 @@ Cloner le projet dans le dossier de votre choix. Pour cela, vous avez deux optio
 .. code-block:: bash
 	
 	git clone https://github.com/geobretagne/mviewer.git
-
 
 Publier
 ---------------------
@@ -46,8 +44,5 @@ Configurer
 ---------------------
 
 Si vous souhaitez publier vos propres couches/thèmes ou bien ajouter/supprimer certaines fonctionnalités, veuillez consulter la page ":ref:`configxml`".
-
-
-
 
 .. _zip: https://github.com/geobretagne/mviewer/archive/master.zip

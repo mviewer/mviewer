@@ -34,7 +34,6 @@ Pour terminer une mesure, faites un double clic-droit avec la souris.
 
 Pour effacer une mesure (distance ou bien surface), il vous suffit de cliquer de nouveau sur l'outil que vous avez utilisé.
 
-
 .. |Mesure| image:: ../_images/user/other_tools/mesure_icon_1.png
               :alt: Outils de mesure
 	      :width: 16 pt
@@ -46,7 +45,6 @@ Pour effacer une mesure (distance ou bien surface), il vous suffit de cliquer de
 .. |Mesure_area| image:: ../_images/user/other_tools/mesure_icon_3.png
               :alt: Mesurer une surface
 	      :width: 16 pt	      
-
 
 Partage de carte
 ------------------------------------------
@@ -66,13 +64,9 @@ Une fois que vous avez cliqué sur l'icone ( |Share_icon| ), une nouvelle fenêt
               :alt: Outils de partage de la carte
               :align: center
 
-
-
 .. |Share_icon| image:: ../_images/user/other_tools/share_icon.png
               :alt: Outil de partage
 	      :width: 16 pt	      
-
-
 
 Export de la carte
 ------------------------------------------
@@ -82,7 +76,6 @@ En cliquant sur l'icone ( |Export_icon| ) la carte est automatiquement exportée
 .. |Export_icon| image:: ../_images/user/other_tools/export_icon.png
               :alt: Outil d'export
 	      :width: 16 pt
-
 
 .. image:: ../_images/user/other_tools/export.png
               :alt: Export de la carte
