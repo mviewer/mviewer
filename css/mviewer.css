@@ -173,7 +173,7 @@ li.geoportail.list-group-item.disabled{
     cursor: pointer;   
 }
 .big-legend:hover img{
-    background: rgba(0,0,0,0.3);  
+    background: rgba(85, 85, 85, 0.62);  
 }
 
 
@@ -182,14 +182,17 @@ li.geoportail.list-group-item.disabled{
 }
 
 span.text-big-legend {
-  color: white; 
-  display: table; 
-  position: absolute;
-  top: 25%; 
-  left: 0;
-  opacity: 0;
-  font-size: xx-large;
-  text-align: center;
+  color: white;
+    display: table;
+    position: absolute;
+    top: 20%;
+    left: 0;
+    opacity: 0;
+    font-size: 15px;
+    text-align: center;
+    margin-left: 50px;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 
