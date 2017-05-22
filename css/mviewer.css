@@ -183,9 +183,8 @@ li.geoportail.list-group-item.disabled{
 
 span.text-big-legend {
   color: white;
-    display: table;
     position: absolute;
-    top: 20%;
+    top:60px;
     left: 0;
     opacity: 0;
     font-size: 15px;
