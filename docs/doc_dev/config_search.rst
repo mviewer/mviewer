@@ -11,7 +11,7 @@ olscompletion
 
 Liens vers service d'autocomplétion et de géocodage.
 
-**Prototype**
+**Syntaxe**
 
 .. code-block:: xml
        :linenos:
@@ -30,7 +30,7 @@ elasticsearch
 
 Liens vers un index **elasticsearch**. Cette fonctionnalité permet d'interroger un index Elasticsearch à  partir d'une saisie libre (exemple "Port de Brest"). Le résultat retourné est une collection de documents disposant d'un champ commun avec les entités géographiques servies par l'instance WMS/WFS. Par convention les types **elasticsearch** ont le même nom que les couches WMS/WFS.
 
-**Prototype**
+**Syntaxe**
 
 .. code-block:: xml
        :linenos:
@@ -51,7 +51,7 @@ searchparameters
 
 Options liées à  la recherche d'adresse *(olscompletion)* et à  la recherche d'entitées *(elasticsearch)*.
 
-**Prototype**
+**Syntaxe**
 
 .. code-block:: xml
        :linenos:

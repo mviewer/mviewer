@@ -9,7 +9,7 @@ Configurer - Application
 
 Personnalisation de l'application
 
-**Prototype**
+**Syntaxe**
 
 .. code-block:: xml
        :linenos:

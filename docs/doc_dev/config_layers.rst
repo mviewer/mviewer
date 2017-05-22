@@ -128,7 +128,7 @@ Ce qui donne visuellement ceci :
 Configuration de la liste des thèmes
 -------------------------------------
 
-**Prototype** ``<themes>``
+**Syntaxe** ``<themes>``
 ***************************
 
 .. code-block:: xml
@@ -141,7 +141,7 @@ Configuration de la liste des thèmes
 * ``mini``: paramètre optionnel de type booléen (true/false) qui précise si le panneau des thématique est ouvert ou fermé au démarrage de l'application. Valeur par défaut **false**.
 
 
-**Prototype** ``<theme>``
+**Syntaxe** ``<theme>``
 ***************************
 
 Elément enfant de <themes>
@@ -159,7 +159,7 @@ Elément enfant de <themes>
 * ``icon``: paramètre optionnel de type texte qui précise l'icône à utiliser afin d'illustrer la thématique. Les valeurs possibles sont à choisir parmi cette liste : http://fontawesome.io/icons/
 
 
-**Prototype** ``<group>``
+**Syntaxe** ``<group>``
 ***************************
 
 Elément enfant de ``<theme>``
@@ -176,7 +176,7 @@ Elément enfant de ``<theme>``
 Configuration des  couches
 --------------------------
 
-**Prototype** ``<layer>``
+**Syntaxe** ``<layer>``
 ***************************
 
 Elément enfant de ``<theme>`` ou ``<group>``
@@ -272,7 +272,7 @@ Elément enfant de ``<theme>`` ou ``<group>``
 * ``metadata``: Lien vers la fiche de metadonnées complète
 * ``metadata-csw``: Requête CSW pour l'affiche dans la popup du détail de la couche.
 
-**Prototype** ``<template>``
+**Syntaxe** ``<template>``
 ******************************
 
 Elément enfant de ``<layer>``

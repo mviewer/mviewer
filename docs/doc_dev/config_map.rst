@@ -7,7 +7,7 @@ Configurer - les options de la carte
 =====================================
 
 
-**Prototype**
+**Syntaxe**
 
 .. code-block:: xml
        :linenos:

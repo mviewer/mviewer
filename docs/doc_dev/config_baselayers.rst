@@ -11,7 +11,7 @@ Configurer - Les couches de fond
 
 Paramétrages de la liste des fonds de plan.
 
-**Prototype**
+**Syntaxe**
 
 .. code-block:: xml
        :linenos:
@@ -48,7 +48,7 @@ un état replié:
 ******************
 Elément enfant de ``<baselayers>`` permettant le paramétrage de chaque fond de plan.
 
-**Prototype**
+**Syntaxe**
 
 .. code-block:: xml
        :linenos:
