@@ -176,7 +176,6 @@ li.geoportail.list-group-item.disabled{
     background: rgba(85, 85, 85, 0.62);  
 }
 
-
 .big-legend:hover span.text-big-legend {
   opacity: 1;  
 }
@@ -867,9 +866,7 @@ input[type=range].mv-range:focus::-ms-fill-upper {
 #right-panel.tab-content {
   padding-top: 150px;
 }
-li[role="presentation"] {
-  max-width: 125px;
-}
+
 
 .popup-content a.left.carousel-control, .popup-content a.right.carousel-control {
   color: #000;
