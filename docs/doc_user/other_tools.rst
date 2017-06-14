@@ -30,7 +30,7 @@ Pour faire une mesure, il vous suffit de dessiner une ligne (ou une surface) à 
               :alt: Comment mesurer
               :align: center
 
-Pour terminer une mesure, faites un double clic-droit avec la souris.
+Pour terminer une mesure, faites un double clic-gauche avec la souris.
 
 Pour effacer une mesure (distance ou bien surface), il vous suffit de cliquer de nouveau sur l'outil que vous avez utilisé.
 

@@ -25,13 +25,14 @@ Paramétrages de la liste des fonds de plan.
 
 * ``style``: paramètre optionnel de type texte à  choisir parmi (default/gallery) et  définissant le style du contrôle permettant de changer de fond de carte. Valeur par défaut **default**.
 
-Le mode "default" active le contrôle suivant :
+Le mode **"default"** active le contrôle suivant :
 
 .. image:: ../_images/dev/config_baselayers/config_baselayers_default.png
               :alt: Configurer la liste des couches de fond
               :align: center
 
-Le mode "gallery" active une liste à deux états :
+Le mode **"gallery"** active une liste à deux états :
+
 un état déplié :
 
 .. image:: ../_images/dev/config_baselayers/config_baselayers_gallery_1.png

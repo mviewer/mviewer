@@ -28,8 +28,8 @@ Pour naviguer dans la carte, l'utilisateur à la possibilité d'utiliser trois o
 À noter qu'il est également possible de naviguer à l'aide de la souris et du clavier :
 
 * Avec la roulette : Zoom + / - ,
-* Double clic-droit : Zoom +
-* Maj + Double clic-droit : Zoom -
-* Clic-droit : déplacement de la carte, sans changer le niveau de zoom.
+* Double clic-gauche : Zoom +
+* Maj + Double clic-gauche : Zoom -
+* Clic-gauche : déplacement de la carte, sans changer le niveau de zoom.
 
-Pour modifier la position de départ du zoom (et donc celle appliquée avec l'outil  |ZoomFull| ), veuillez vous référer à la page "XXXXX".
+Pour modifier la position de départ du zoom (et donc celle appliquée avec l'outil  |ZoomFull| ), veuillez vous référer à la page ":ref:`configmap`".
