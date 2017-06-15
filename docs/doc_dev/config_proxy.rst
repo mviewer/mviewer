@@ -19,4 +19,4 @@ Lien vers votre proxy permmettant l'interrogation CROSS DOMAIN des couches. Il n
 
 **Attributs**
 
-* url: Url vers votre proxy
+* ``url``: Url vers votre proxy

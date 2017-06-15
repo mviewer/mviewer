@@ -35,3 +35,15 @@ Personnalisation de l'application
 * ``measuretools``: paramètre optionnel de type booléen (true/false) activant les outils de mesure. Valeur par défaut **false**.
 * ``stats``: paramètre optionnel de type booléen (true/false) activant l'envoi de stats d'utilisation l'application. Valeur par défaut **false**.
 * ``statsurl``: paramètre optionnel de type url précisant l'url du service reccueillant les données d'utilisation de l'application (ip, application title, date). Ce service n'est pas proposé dans mviewer.
+
+**Exemple**
+
+.. code-block:: xml
+       :linenos:
+	
+	<application title="Exemple" 
+		logo="img/logo/g.png" 
+		help=""  
+		exportpng="false" 
+		measuretools="true"
+		style="css/themes/blue.css"/>
