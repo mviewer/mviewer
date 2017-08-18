@@ -22,6 +22,7 @@ Personnalisation de l'application
 		exportpng="" 
 		measuretools=""	
 		stats=""
+        coordinates=""
 		statsurl=""/>
 
 **Paramètres**
@@ -34,4 +35,5 @@ Personnalisation de l'application
 * ``exportpng``: paramètre optionnel de type booléen (true/false) activant l'export de la carte en png. Valeur par défaut **false**. Attention l'export ne fonctionne qu'avec des couches locales (même origine) ou avec des couches servies avec  `CORS <https://enable-cors.org/>`_ activé.
 * ``measuretools``: paramètre optionnel de type booléen (true/false) activant les outils de mesure. Valeur par défaut **false**.
 * ``stats``: paramètre optionnel de type booléen (true/false) activant l'envoi de stats d'utilisation l'application. Valeur par défaut **false**.
+* ``coordinates``: paramètre optionnel de type booléen (true/false) activant l'affichage des coordonnées GPS lors de l'interrogation. Valeur par défaut **false**.
 * ``statsurl``: paramètre optionnel de type url précisant l'url du service reccueillant les données d'utilisation de l'application (ip, application title, date). Ce service n'est pas proposé dans mviewer.
