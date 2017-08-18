@@ -20,9 +20,9 @@ Liens vers service d'autocomplétion et de géocodage.
 
 **Attributs**
 
-* url: Url du service d'autocomplétion d'adresse
-* type: Optional - Type de service utilisé geoportail ou ban - defaut = geoportail
-* attribution: Attribution du service de geocodage
+* ``url``: Url du service d'autocomplétion d'adresse
+* ``type``: Optional - Type de service utilisé geoportail ou ban - defaut = geoportail
+* ``attribution``: Attribution du service de geocodage
 
 
 elasticsearch
@@ -39,11 +39,11 @@ Liens vers un index **elasticsearch**. Cette fonctionnalité permet d'interroger
 
 **Attributs**
 
-* url: Url de l'API Search
-* geometryfield: Nom du champ utilisé par l'instance elasticsearch pour stocker la géométrie,
-* linkid: Nom du champ à  utiliser côté serveur wms/wfs pour faire le lien avec la propriété _id des documents elasticsearch,
-* querymode *(optionnel)* : Query mode used by elasticsearch to find results : fuzzy_like_this ou term - default = fuzzy_like_this.
-* doctypes *(optionnel)* : types des documents elasticsearch à  requêter systématiquement, indépendamment des couches affichées.
+* ``url``: Url de l'API Search
+* ``geometryfield``: Nom du champ utilisé par l'instance elasticsearch pour stocker la géométrie
+* ``linkid``: Nom du champ à  utiliser côté serveur wms/wfs pour faire le lien avec la propriété _id des documents elasticsearch
+* ``querymode`` *(optionnel)* : Query mode used by elasticsearch to find results : fuzzy_like_this ou term - default = fuzzy_like_this
+* ``doctypes`` *(optionnel)* : types des documents elasticsearch à  requêter systématiquement, indépendamment des couches affichées
 
 
 searchparameters
@@ -60,7 +60,7 @@ Options liées à  la recherche d'adresse *(olscompletion)* et à  la recherch
 
 **Attributs**
 
-* bbox *(optionnel)* : Recherche d'adresse et/ou d'entitées dans l'emprise de la carte : true ou false (defaut = false),
-* localities *(optionnel)* : Utilisation du service d'adresse olscompletion : true ou false (defaut = true),
-* features *(optionnel)* : Utilisation du service de recherche d'entitÃƒÂ©s elasticsearch : true ou false (defaut = true),
-* static: *(optionnel)* : En lien avec le paramètre doctypes. Active ou désactive la recherche associée à  des documents requêtés systématiquement, indépendamment des couches affichées : true ou false (defaut = false).
+* ``bbox`` *(optionnel)* : Recherche d'adresse et/ou d'entitées dans l'emprise de la carte : true ou false (defaut = false),
+* ``localities`` *(optionnel)* : Utilisation du service d'adresse olscompletion : true ou false (defaut = true),
+* ``features`` *(optionnel)* : Utilisation du service de recherche d'entitÃƒÂ©s elasticsearch : true ou false (defaut = true),
+* ``static`` *(optionnel)* : En lien avec le paramètre doctypes. Active ou désactive la recherche associée à  des documents requêtés systématiquement, indépendamment des couches affichées : true ou false (defaut = false).

@@ -7,7 +7,7 @@
 Barre de recherche
 =====================
 
-La barre de recherche, située en haut à droite de l'interface, permet de rechercher tout type de lieux, comme par exemple des noms de communes, de département ou de région.
+La barre de recherche, située en haut à droite de l'interface, permet de rechercher tout type de lieux, comme par exemple des noms de communes, de département ou de région ainsi que, si c'est paramètré, des entités.
 
 .. image:: ../_images/user/search/search.png
               :alt: Barre de recherche

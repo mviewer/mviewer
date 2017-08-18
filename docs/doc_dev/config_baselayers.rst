@@ -25,13 +25,14 @@ Paramétrages de la liste des fonds de plan.
 
 * ``style``: paramètre optionnel de type texte à  choisir parmi (default/gallery) et  définissant le style du contrôle permettant de changer de fond de carte. Valeur par défaut **default**.
 
-Le mode "default" active le contrôle suivant :
+Le mode **"default"** active le contrôle suivant :
 
 .. image:: ../_images/dev/config_baselayers/config_baselayers_default.png
               :alt: Configurer la liste des couches de fond
               :align: center
 
-Le mode "gallery" active une liste à deux états :
+Le mode **"gallery"** active une liste à deux états :
+
 un état déplié :
 
 .. image:: ../_images/dev/config_baselayers/config_baselayers_gallery_1.png
@@ -86,6 +87,21 @@ Elément enfant de ``<baselayers>`` permettant le paramétrage de chaque fond de
 * ``style`` : paramètre optionnel précisant le style à associer à la couche. Paramètre obligatoire pour les couches de type WMTS
 * ``matrixset`` : paramètre optionnel précisant le style à associer à la couche. Paramètre obligatoire pour les couches de type WMTS si le paramètre **fromcapacity** n'est pas activé
 * ``maxzoom``: paramètre optionnel de type numérique définissant le zoom maximum pour la couche.
+
+**Exemple**
+
+.. code-block:: xml
+       :linenos:
+	
+	<baselayer  
+		type="OSM" 
+		id="osm1" 
+		label="OpenStreetMap" 
+		title="OpenSTreetMap" 
+		thumbgallery="img/basemap/osm.png" 
+		url="http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
+		attribution="Données : les contributeurs d'&lt;a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a 	href='http://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" 
+		visible="true"/>
 
 
 .. |CreditsIcon| image:: ../_images/user/credits/credits_icon.png

@@ -1,5 +1,5 @@
 .. Authors : 
-.. mviewer team
+.. mviewer team (Pôle Observation et Information géographique / Région Bretagne)
 .. Gwendall PETIT (Lab-STICC - CNRS UMR 6285 / DECIDE Team)
 
 .. _credits:

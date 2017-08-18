@@ -33,4 +33,4 @@ Par défaut, le fichier associé est **css/themes/default.css**.
 Remarque
 ****************************
 
-A noter qu'un fichier "**themes_css_kartenn.pdf**"" permet de visualiser à l'avance le rendu de chacun des thèmes proposés.
+A noter qu'un fichier `themes_css_kartenn.pdf <http://kartenn.region-bretagne.fr/kartoviz/css/themes/themes_css_kartenn.pdf>`_  permet de visualiser à l'avance le rendu de chacun des thèmes proposés.

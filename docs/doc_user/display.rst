@@ -23,7 +23,7 @@ Là, vous avez la possibilité :
 * de modifier l'opacité *(transparence)*,
 * d'afficher des informations sous la forme d'infobulles *(optionnel)*,
 * de voir la source de la donnée *(optionnel)*,
-* de supprimer la couche *(en cliquant sur l'icone* |display_remove| *)*
+* de supprimer la couche de la carte*(en cliquant sur l'icone* |display_remove| *)*
 
 .. image:: ../_images/user/display/display.png
               :alt: Options sur les couches

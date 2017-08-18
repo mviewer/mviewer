@@ -23,7 +23,7 @@ Comme décrit dans la page ":ref:`configlayers`", les couches peuvent être orga
 	* un (ou plusieurs) groupe(s) *(ce niveau est optionnel)*,
 		* une (ou plusieurs) couche(s).
 
-Par défaut, l'arborescence est repliée et seuls les thèmes sont visibles. En cliquant sur un thème, son contenu *(groupe(s) ou couche(s))* apparaît. Il en va de même sur un groupe qui peut être déplié pour voir apparaître les couches qu'il contient.
+Par défaut, l'arborescence est repliée et seuls les thèmes sont visibles. En cliquant sur un thème, son contenu *(groupe(s) ou couche(s))* apparaît. Il en va de même sur un groupe qui peut être déplié pour voir apparaître les couches qu'il contient. De la même façon, un clic sur un thème / groupe déplié va le replier.
 
 Afficher / cacher des couches
 -----------------------------------
