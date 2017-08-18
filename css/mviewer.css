@@ -1549,3 +1549,9 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
 #help .modal-body{
 	padding: 0px 40px 40px 40px;
 }
+
+#coordinates {
+    color: #ffffff;
+    padding-left: 30%;
+    padding-top: 10px;
+}
