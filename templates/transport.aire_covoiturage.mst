@@ -1,16 +1,21 @@
 
 {{#features}}
 	<li class="item" style="width:238px;">
-		<h3 class="title-feature">{{nom}}</h3>
+		<h3 class="title-feature">{{NOM}}</h3>
 
-		<img src="{{photo}}" class="img-responsive" style="margin-top:5%;" />
+		<img src="{{URL_PHOTO}}" class="img-responsive" style="margin-top:5%;" />
 
 		<p class="text-feature">		
-			<span style="font-family:'roboto_bold'"> Commune :</span> {{commune}}<br/>
-			<span style="font-family:'roboto_bold'"> Code INSEE :</span> {{code_insee}}<br/>
-			<span style="font-family:'roboto_bold'">Infos gare :</span><a target="_blank" href="https://www.ter.sncf.com/bretagne/gares/{{code_uic}}/{{nom}}/pratique"> Accéder à la fiche gare</a><br/><br/>
+			<span style="font-family:'roboto_bold'"> Commune :</span> {{COMMUNE}}<br/>
+			<span style="font-family:'roboto_bold'"> Adresse :</span> {{ADRESSE}}<br/>
+			<span style="font-family:'roboto_bold'"> Etat :</span> {{ETAT}}<br/>
+			<span style="font-family:'roboto_bold'"> Places :</span> {{PLACES}}<br/>
+			<span style="font-family:'roboto_bold'"> Places PMR :</span> {{PLACES_PMR}}<br/>
+			<span style="font-family:'roboto_bold'"> Revêtement :</span> {{REVETEMENT}}<br/>
+			<span style="font-family:'roboto_bold'"> Eclairage :</span> {{ECLAIRAGE}}<br/>
+			<span style="font-family:'roboto_bold'"> Panneau :</span> {{PANNEAU}}<br/>
 
-       </p>
+		</p>
 	</li>
 {{/features}}
 

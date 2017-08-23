@@ -1,0 +1,115 @@
+
+{{#features}}
+	<li class="item" style="width:238px;">
+		<h3 class="title-feature">{{NOM}}<br/>
+		<span style="font-family:'roboto_bold'; font-size:13px;" ><a target="_blank" href={{SITE_WEB}}>Accéder au site internet de la commune</a></span><br/>
+		</h3>
+		
+		<p class="text-feature">
+		
+		</p>
+
+		
+		{{#ELU1}}
+		<img src="{{PHOTO1}}" class="img-responsive" style="margin-top:5%; max-height: 150px;"/>
+		<p class="text-feature">		
+			<span class="subtitle-feature" style="font-family:'roboto_bold'"> {{ELU1}}</span> <br/>
+			<span style="font-family:'roboto_bold'"> {{FCTVIA1}} </span><br/>
+			<span style="font-family:'roboto_bold'"> {{FCTCOM1}} de {{NOM}} </span><br/>
+       </p>
+	   {{/ELU1}}
+	   
+	   {{#ELU2}}
+		<img src="{{PHOTO2}}" class="img-responsive" style="margin-top:5%; max-height: 150px;" />
+		<p class="text-feature">		
+			<span class="subtitle-feature" style="font-family:'roboto_bold'"> {{ELU2}}</span> <br/>
+			<span style="font-family:'roboto_bold'"> {{FCTVIA2}} </span><br/>
+			<span style="font-family:'roboto_bold'"> {{FCTCOM2}} de {{NOM}} </span><br/>
+       </p>
+	   {{/ELU2}}
+	   
+	   {{#ELU3}}
+		<img src="{{PHOTO3}}" class="img-responsive" style="margin-top:5%; max-height: 150px;" />
+		<p class="text-feature">		
+			<span class="subtitle-feature" style="font-family:'roboto_bold'"> {{ELU3}}</span> <br/>
+			<span style="font-family:'roboto_bold'"> {{FCTVIA3}} </span><br/>
+			<span style="font-family:'roboto_bold'"> {{FCTCOM3}} de {{NOM}} </span><br/>
+       </p>
+	   {{/ELU3}}
+	   
+	   {{#ELU4}}
+		<img src="{{PHOTO4}}" class="img-responsive" style="margin-top:5%; max-height: 150px;" />
+		<p class="text-feature">		
+			<span class="subtitle-feature" style="font-family:'roboto_bold'"> {{ELU4}}</span> <br/>
+			<span style="font-family:'roboto_bold'"> {{FCTVIA4}} </span><br/>
+			<span style="font-family:'roboto_bold'"> {{FCTCOM4}} de {{NOM}} </span><br/>
+       </p>
+	   {{/ELU4}}
+	   
+	   {{#ELU5}}
+		<img src="{{PHOTO5}}" class="img-responsive" style="margin-top:5%; max-height: 150px;" />
+		<p class="text-feature">		
+			<span class="subtitle-feature" style="font-family:'roboto_bold'"> {{ELU5}}</span> <br/>
+			<span style="font-family:'roboto_bold'"> {{FCTVIA5}} </span><br/>
+			<span style="font-family:'roboto_bold'"> {{FCTCOM5}} de {{NOM}} </span><br/>
+       </p>
+	   {{/ELU5}}
+	   
+	   {{#ELU6}}
+		<img src="{{PHOTO6}}" class="img-responsive" style="margin-top:5%; max-height: 150px;" />
+		<p class="text-feature">		
+			<span class="subtitle-feature" style="font-family:'roboto_bold'"> {{ELU6}}</span> <br/>
+			<span style="font-family:'roboto_bold'"> {{FCTVIA6}} </span><br/>
+			<span style="font-family:'roboto_bold'"> {{FCTCOM6}} de {{NOM}} </span><br/>
+       </p>
+	   {{/ELU6}}
+	   
+	   {{#ELU7}}
+		<img src="{{PHOTO7}}" class="img-responsive" style="margin-top:5%; max-height: 150px;" />
+		<p class="text-feature">		
+			<span class="subtitle-feature" style="font-family:'roboto_bold'"> {{ELU7}}</span> <br/>
+			<span style="font-family:'roboto_bold'"> {{FCTVIA7}} </span><br/>
+			<span style="font-family:'roboto_bold'"> {{FCTCOM7}} de {{NOM}} </span><br/>
+       </p>
+	   {{/ELU7}}
+	   <br/><br/><br/><br/><br/>
+	</li>
+{{/features}}
+
+<style>
+	.title-feature {
+		color: #032e46;
+		font-family:"roboto_bold";
+		font-size:23px;
+		margin-bottom:1%;
+		line-height:1;
+	}
+	.subtitle-feature {
+		color: #032e46;
+		font-family:"roboto_bold";
+		font-size:18px;
+		margin-top:7%;
+		line-height:1;
+	}
+	.text-feature{
+		font-family:"roboto_regular";
+		color:#555;
+		font-size:13px;
+		margin-top:10%;
+	}
+	.info.N {
+   		background-image: url(http://kartenn.region-bretagne.fr/doc/transports/icons/non_1.png);
+   		background-size: 16px;
+    	background-repeat: no-repeat;
+   	    background-position-x: 0px;
+   	    margin-bottom:3px;
+	}
+	.info.O {
+   		background-image: url(http://kartenn.region-bretagne.fr/doc/transports/icons/oui.png);
+   		background-size: 16px;
+    	background-repeat: no-repeat;
+   	    background-position-x: 0px;
+   	    margin-bottom:3px;
+	}
+</style>
+
