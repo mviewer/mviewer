@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <application title="Val d'Ille - Aubigné" logo="img/logo/logo-via.png" help="mviewer_help.html" panelfooterimage="img/panel-footer.png" panelfooterheight="80px" legend="false" exportpng="false" measuretools="true" legendasimage="false" popup="false" print="false" style="css/themes/black.css"/>
+    <application title="Val d'Ille - Aubigné" logo="img/logo/logo-via.png" help="mviewer_help.html" panelfooterimage="img/panel-footer.png" panelfooterheight="80px" legend="false" exportpng="false" measuretools="true" legendasimage="false" popup="false" print="false" style="css/themes/wet_asphalt.css"/>
 	<mapoptions zoom="12" center="-179742,6154000" projection="EPSG:3857" maxzoom="19"/>  
 		
 	<baselayers style="gallery"><!-- style="default"||gallery" -->   
