@@ -1,51 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
-    <application title="Val d'Ille - Aubigné" logo="img/logo/logo-via.png" help="" panelfooterimage="img/panel-footer.png" panelfooterheight="80px" exportpng="false" legend="false" measuretools="true" legendasimage="false" popup="false" print="false" style="css/themes/black.css"/>
-<mapoptions projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" zoom="12" center="-179742,6154000" projection="EPSG:3857" maxzoom="19"/>  
+    <application title="Val d'Ille - Aubigné" logo="img/logo/logo-via.png" help="mviewer_help.html" panelfooterimage="img/panel-footer.png" panelfooterheight="80px" legend="false" exportpng="false" measuretools="true" legendasimage="false" popup="false" print="false" style="css/themes/black.css"/>
+	<mapoptions zoom="12" center="-179742,6154000" projection="EPSG:3857" maxzoom="19"/>  
 		
-<![CDATA[ ------------------------------BASELAYERS ----------------------------------
-L'attribut style = "gallery" permet d'afficher les fonds de carte dans une liste avec incrustation de vignette pour chaque layer
-L'attribut style = "default" permet d'afficher la liste des couches de fond sous forme d'un groupe de boutons.
-]]>	
-
-
 	<baselayers style="gallery"><!-- style="default"||gallery" -->   
-
-
-			
-       <baselayer  type="WMS" id="photo1" label="Photo aérienne" title="Ortho Géobretagne" thumbgallery="img/basemap/ortho.jpg" url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite" format="image/jpeg" visible="false" attribution="partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver"/>
-		
-        <!--<baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoBretagne" thumbgallery="img/basemap/ortho.jpg" 
-            url="http://tile.geobretagne.fr/gwc02/service/wmts" layers="satellite" format="image/png" visible="false"
-            attribution="&lt;a href='http://applications.region-bretagne.fr/geonetwork/?uuid=3a0ac2e3-7af1-4dec-9f36-dae6b5a8c731' target='_blank' >partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver&lt;/a>" style="_null" matrixset="EPSG:3857" fromcapacity="false"/>-->
-        <!--<baselayer  type="WMS" id="photo2" label="Photo aérienne 1950" title="GéoBretagne" thumbgallery="img/basemap/ortho-ancien.jpg" 
-			url="http://geobretagne.fr/geoserver/photo/wms" layers="satellite-ancien" format="image/jpeg" visible="false" 
-			attribution="&lt;a href='http://applications.region-bretagne.fr/geonetwork/?uuid=048622c5-b333-4c2b-94ec-40a41608dc06' target='_blank' >Partenaires GéoBretagne - IGN&lt;/a>"/>      -->
+        <baselayer  type="WMS" id="photo1" label="Photo aérienne" title="Ortho Géobretagne" thumbgallery="img/basemap/ortho.jpg" url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite" format="image/jpeg" visible="false" attribution="partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver"/>
 		<baselayer  type="OSM" id="osm2" label="Plan" title="Thunderforest Neighbourhood" thumbgallery="img/basemap/mapquest.png" 
 			url="https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=1de58fc34e9443279668517b06a35dc1" 
 			attribution="© Thunderforest. Données : les contributeurs d'&lt;a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='http://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" visible="false"/>
-			
-       <!--  <baselayer  type="OSM" id="osm1" label="25000" title="Open Topo Map" thumbgallery="img/basemap/mapquest.png" 
-			url="https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png" 
-			attribution="© Open Topo Map. Données : les contributeurs d'&lt;a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='http://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" visible="true"/> -->
-			
-			<baselayer  type="OSM" id="positron" label="Plan clair" title="CartoDb" thumbgallery="img/basemap/positron.png" 
+		<baselayer  type="OSM" id="positron" label="Plan clair" title="CartoDb" thumbgallery="img/basemap/positron.png" 
 			url="http://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20" 
-			visible="true" attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
-       
+			visible="true" attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />      
     </baselayers> 
-    <authentification url="who" loginurl="?login" logouturl="../j_spring_security_logout" enabled="true"/>
     <proxy url=""/>
-    <!--<olscompletion url="http://gpp3-wxs.ign.fr/5kiwvtkb2v23y0x8chidxbij/ols/apis/completion"/>-->
-    <!--<olscompletion url="../olscompletion" type="geoportail" attribution="La recherche d'adresse est un service proposé par l'API Géoportail ©"/>-->
     <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban"/>
     <elasticsearch url="http://ows.region-bretagne.fr/kartenn/_search" geometryfield="geometry" linkid="search_id" querymode="fussy_like_this"/>
     <searchparameters bbox="true" localities="true" features="true"/>
-	<widgets>
-       <!--<widget name="gauge"/>-->       
-    </widgets> 
-
+	
     <themes>
 		<theme name="Administratif" collapsed="true" id="ADMINISTRATIF" icon="globe">  
 				<layer 	id="communes_via" 
