@@ -17,7 +17,7 @@
     <elasticsearch url="http://ows.region-bretagne.fr/kartenn/_search" geometryfield="geometry" linkid="search_id" querymode="fussy_like_this"/>
     <searchparameters bbox="true" localities="true" features="true"/>
 	
-    <themes mini="true">
+    <themes mini="">
 		<theme name="Administratif" collapsed="true" id="ADMINISTRATIF" icon="globe">  
 				<layer 	id="communes_via" 
 						name="Communes" 
