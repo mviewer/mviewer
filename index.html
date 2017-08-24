@@ -29,10 +29,23 @@
     <script type="text/javascript" src="lib/bootstrap-slider/9.1.3/bootstrap-slider.min.js"></script>
     <script type="text/javascript" type="text/javascript" src="lib/mviewer.js"></script>
     <script type="text/javascript" src="lib/featurestyles.js"></script>   
-				
+
+<script type="text/javascript">
+
+</script>
+	
 <script type="text/javascript">
 var config = {};
 var widgets = {};
+
+(function () {
+if(/iPhone|iPod|Android|opera mini|blackberry|palm os|palm|hiptop|avantgo|plucker|xiino|blazer|elaine|iris|3g_t|windows ce|opera mobi|windows ce; smartphone;|windows ce;iemobile/i.test(navigator.userAgent)){
+window.location.pathname = window.location.pathname + 'index_mobile.html';
+}
+}());
+
+
+
 $(document).ready(function () {
 	"use strict";    
 	if (window.location.search) {
@@ -41,7 +54,7 @@ $(document).ready(function () {
 	}
     var configFile = (config.config) ? config.config : "config.xml";
     var theme = (config.theme) ? config.theme : null;
-
+	
     $.ajax({
         url: configFile + '?_dc=' + (new Date()).getTime(),
         dataType: "xml",
