@@ -1,0 +1,37 @@
+
+{{#features}}
+	<li class="item" style="width:238px;">
+		<h3 class="title-feature">LIGNE N°{{li_code}}</h3>
+
+		<p class="text-feature">		
+			<span style="font-family:'roboto_bold'"> Nom :</span> {{iti_nom}}<br/>
+			<span style="font-family:'roboto_bold'"> Sens :</span> {{iti_sens}}<br/>
+			<span style="font-family:'roboto_bold'"></span><a target="_blank" href="http://www.breizhgo.com/fr/schedule/line/result/?lineSchedule[network]=network:STAR&lineSchedule[line]=line:STA:{{li_code}}&lineSchedule[route]=route:STA:{{li_code}}"> Accéder à la fiche horaire</a><br/><br/>
+
+       </p>
+	</li>
+{{/features}}
+
+<style>
+	.title-feature {
+		color: #032e46;
+		font-family:"roboto_bold";
+		font-size:23px;
+		margin-bottom:1%;
+		line-height:1;
+	}
+	.subtitle-feature {
+		color: #032e46;
+		font-family:"roboto_bold";
+		font-size:18px;
+		margin-top:7%;
+		line-height:1;
+	}
+	.text-feature{
+		font-family:"roboto_regular";
+		color:#555;
+		font-size:13px;
+		margin-top:10%;
+	}
+</style>
+

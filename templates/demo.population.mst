@@ -1,0 +1,21 @@
+{{#features}}
+	<li class="item">
+		<h2 class="rouge">{{nom_geo}}</h2>
+		{{#Commune}}
+			<h3>C'est une commune !</h3>
+		{{/Commune}}
+		{{#EPCI}}
+			<h3>C'est un EPCI !</h3>
+		{{/EPCI}}
+		{{#Pays}}
+			<h3>C'est un Pays !</h3>
+		{{/Pays}}
+		{{p_pop}}<br/>		
+		{{densite}}<br/>			
+	</li>
+	<style>
+		.rouge {
+			color: red;
+		}
+	</style>	
+{{/features}}

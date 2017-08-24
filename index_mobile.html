@@ -5,9 +5,11 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />	
-	<meta name="description" content="Visualiseur géographique" /> 
+	<meta name="description" content="Visualiseur géographique de la Région Bretagne" /> 
 	
-	<link rel="icon" type="image/png" href="favicon.png" />    
+	<!-- <link rel="icon" type="image/png" href="favicon.png" />     -->
+		<link rel="icon" type="image/gif" href="favicon.gif">
+
     <link href="lib/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link href="lib/simple-slidebar/simple_slidebar.css" rel="stylesheet">
     <link href="lib/bootstrap-datepicker-1.6.1/css/bootstrap-datepicker3.min.css" rel="stylesheet">    
@@ -29,19 +31,10 @@
     <script type="text/javascript" src="lib/bootstrap-slider/9.1.3/bootstrap-slider.min.js"></script>
     <script type="text/javascript" type="text/javascript" src="lib/mviewer.js"></script>
     <script type="text/javascript" src="lib/featurestyles.js"></script>   
-
+				
 <script type="text/javascript">
 var config = {};
 var widgets = {};
-
-(function () {
-if(/iPhone|iPod|Android|opera mini|blackberry|palm os|palm|hiptop|avantgo|plucker|xiino|blazer|elaine|iris|3g_t|windows ce|opera mobi|windows ce; smartphone;|windows ce;iemobile/i.test(navigator.userAgent)){
-window.location.pathname = window.location.pathname + 'index_mobile.html';
-}
-}());
-
-
-
 $(document).ready(function () {
 	"use strict";    
 	if (window.location.search) {
@@ -50,7 +43,7 @@ $(document).ready(function () {
 	}
     var configFile = (config.config) ? config.config : "config.xml";
     var theme = (config.theme) ? config.theme : null;
-	
+
     $.ajax({
         url: configFile + '?_dc=' + (new Date()).getTime(),
         dataType: "xml",
@@ -72,8 +65,7 @@ $(document).ready(function () {
     });
     
     Sortable.create(document.getElementById('layers-container'), {
-        handle: '.layerdisplay-title',  
-        draggable: '.draggable',
+        handle: '.layerdisplay-title',        
         onUpdate: function (evt) {
             var actionMove = { 
                 layerName: $(evt.item).attr("data-layerid"),
@@ -101,7 +93,8 @@ $(document).ready(function () {
 </script>  
 </head>
 <body>
-    <!-- Ajax Loader -->    
+    <!-- Ajax Loader -->
+    <!--<img src="img/loader.gif" id="loading-indicator" style="display:none" />-->
 	<div id="loading-indicator" style="display:none">
 		<div class="loader">Loading...</div>
 	</div>	
@@ -110,7 +103,7 @@ $(document).ready(function () {
         <div class="navbar-header fixed-brand">
             <a type="button" class="navbar-brand menu-toggle" href="#"><span class="glyphicon glyphicon-menu-hamburger"></span></a>            
             <a class="navbar-brand" href="#">
-                <img alt="Logo" src="img/logo/earth-globe.svg" class="mv-logo">
+                <img alt="Logo" src="img/logo/rb_blanc.svg" class="mv-logo">
             </a>
             <!--<a class="navbar-brand" href="#"> Mviewer</a>-->
         </div>        
@@ -119,9 +112,6 @@ $(document).ready(function () {
                 <!--<li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>-->
             </ul>
             <p class="navbar-text mv-title">mViewer</p>
-            <div class="navbar-form navbar-left" id="coordinates">
-                <span class=""></span>
-            </div>
             <div class="navbar-form navbar-left" role="search" id="searchtool">
                 <div class="form-group input-group">
                     <input type="text" class="form-control" placeholder="Rechercher" id="searchfield">
@@ -140,7 +130,7 @@ $(document).ready(function () {
             </div>
         </div>        
     </nav>
-    <div id="wrapper">
+    <div id="wrapper" class="toggled-2">
         <!-- LEFT MENU SIDEBAR -->
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav nav-pills nav-stacked" id="menu"></ul>
@@ -154,18 +144,15 @@ $(document).ready(function () {
                 <div class="row">            
                     <div id="map" tabindex="1" accesskey="1"></div>
                     <div id="layers-container-box" class="">
-                        <div id="legend" class="active">
-                            <div id="layers-container-box-header" >
-                                <a onclick="mviewer.toggleLegend();" title="Afficher/masquer la légende" href="#"> <span class="glyphicon glyphicon-list"></span> </a>
-                                <a id="btn-remove-layers" onclick="mviewer.removeAllLayers();" title="Supprimer toutes les couches" href="#"> <span class="glyphicon glyphicon-trash"></span> </a>
-                            </div>
+                        <div id="legend" class="">
+                            
                             <ul id="layers-container" class="list-group"></ul>
                         </div>
                     </div>
                     <div id="feature-info" class=""></div> 
                     <!-- BOTTOM PANEL -->
                     <div id="bottom-panel">
-                        <div id="bottom-panel-btn" ><i class="mv-close fa fa-chevron-down" title="Fermer ce panneau" onclick="$('#bottom-panel').toggleClass('active')" ></i></div>
+                        <div id="bottom-panel-btn" ><i class="mv-close fa fa-chevron-circle-down" title="Fermer ce panneau" onclick="$('#bottom-panel').toggleClass('active')" ></i></div>
                         <div class="mv-header"><h5>Informations</h5>
                         </div>
                         <div class="popup-content" ></div>
@@ -196,6 +183,7 @@ $(document).ready(function () {
                     class="btn btn-default btn-raised" tabindex="106" accesskey="6">
                      <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
                 </button>
+ 
             </div>		
             <!-- SECOND VERTICAL RIGHT TOOLBAR -->
             <div id="toolstoolbar" class="btn-group-vertical btn-group-sm" role="group" aria-label="true">                
@@ -214,7 +202,16 @@ $(document).ready(function () {
                  <a href="#" id="exportpng" title="Exporter carte au format image" download="carte.png"
                     class="btn btn-default btn-raised"  tabindex="113" accesskey="13" style="display:none;">
                      <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
-                </a>              
+                </a>                
+                <button href="#" onclick="mviewer.print()" id="printbtn" title="Imprimer la carte" tabindex="103" accesskey="3"  
+                    class="btn btn-default btn-raised" style="display:none;" >
+                     <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                </button>  
+				<button onclick="mviewer.toggleLegend();" id="legend" title="Légende" 
+                      class="btn btn-default btn-raised" >
+                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+				</button>	
+				
             </div>
             <div id="drawtoolsoptions" style="display:none;" class="btn-group btn-group-sm" role="group" aria-label="true"> 
                 <button  id="measurelinebtn" title="Mesure linéaire" onclick="mviewer.setTool('measureline');" class="btn btn-default" >
@@ -277,16 +274,26 @@ $(document).ready(function () {
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title"><center>Partager cette carte</center></h4>
+                        <h5 class="modal-title">Partager cette carte</h5>
                     </div>
                     <div class="modal-body" >
                         <div class="row">
                             <div class="col-md-6" >
-                                <a type="button" class="btn btn-default" id="permalinklink" href="#" title="Lien permanent vers la carte"><img src="img/share/share_link.png" height="100px"></a>
+                                <div class="btn-group-vertical" role="group" >
+                                    <a type="button" class="btn btn-default" id="permalinklink" href="#" title="lien permanent vers la carte">Lien vers la carte</a>	
+                                    <a type="button" class="btn btn-default" href='#' title='Envoyer vers le visualiseur Georchestra'>
+                                        <img src="img/logo/g.png" alt="georchestra" onclick="mviewer.sendToGeorchestra();" />
+                                    </a>
+                                </div>
                             </div>
-                            <div id='share' class="col-md-6">
-                                <img id="permaqr" src="img/blank.gif" title="QR code vers la carte" alt="QR code" />
+                            <div id='share' class="col-md-6"> 
+                                <img id="permaqr" src="img/ajax-loader.gif" title="QR code vers la carte" alt="QR code" />
                             </div>
+                            <!-- to georchestra viewer -->
+                            <form id="georchestraForm" target="_blank" method="post" action="http://geobretagne.fr/mapfishapp/" style="display:none;">
+                                <input type="hidden" id="georchestraFormData" name="data" value="" />
+                                <input type="submit" data-role="button"  value="geOrchestra" />
+                            </form> 
                        </div>
                     </div>
                 </div>

@@ -1,15 +1,9 @@
-
 {{#features}}
 	<li class="item" style="width:238px;">
-		<h3 class="title-feature">{{nom}}</h3>
-
-		<img src="{{photo}}" class="img-responsive" style="margin-top:5%;" />
-
+		<h3 class="title-feature">{{site_formation}}</h3>
 		<p class="text-feature">		
-			<span style="font-family:'roboto_bold'"> Commune :</span> {{commune}}<br/>
-			<span style="font-family:'roboto_bold'"> Code INSEE :</span> {{code_insee}}<br/>
-			<span style="font-family:'roboto_bold'">Infos gare :</span><a target="_blank" href="https://www.ter.sncf.com/bretagne/gares/{{code_uic}}/{{nom}}/pratique"> Accéder à la fiche gare</a><br/><br/>
-
+			<span style="font-family:'roboto_bold'"> Commune :</span> {{ville}}<br/>
+			<span style="font-family:'roboto_bold'"> Adresse :</span> {{adresse}}<br/>
        </p>
 	</li>
 {{/features}}
@@ -50,4 +44,3 @@
    	    margin-bottom:3px;
 	}
 </style>
-
