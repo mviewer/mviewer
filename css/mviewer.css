@@ -1555,3 +1555,17 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
     padding-left: 30%;
     padding-top: 10px;
 }
+.toggle-theme-layers {
+    display: none;    
+    float: right;
+    margin-right: 5px;
+}
+.toggle-theme-layers .badge{
+    text-indent: 0;
+    font-size: 9px;
+}
+.opened .toggle-theme-layers {
+    display: inline-block;
+}
+
+
