@@ -449,12 +449,7 @@ ul#basemapslist  li{
 }
 
 div#backgroundlayerstoolbar-gallery {
-  display: inline-flex;
-}
-
-.bglt-btn.mini .fa {  
-  -webkit-transform: rotate(180deg);
-  transform: rotate(180deg);  
+  /*display: inline-flex;*/
 }
 
 /*******************************
@@ -543,7 +538,7 @@ ul#layers-container {
 
 #bottom-panel {
     bottom: 0px;
-    opacity: 0; 
+    opacity: 0;
     height: 0;
     width: 100%;
     background: #fff;
@@ -1418,31 +1413,27 @@ Utiliser le code Unicode du caractere de la police awesome.
 
 /**** Basemap ****/
 #backgroundlayerstoolbar-gallery{
-	background:#f8f8f8;
+	/*background:#f8f8f8;*/
 	border-radius:4px ;
 	right:15px;
 	padding-top:3px;
     z-index: 1;
 }
 
-.bglt-btn {
-  width: 26px;
-  text-align: center;
-  line-height: 84px;
-}   
-
 #backgroundlayerstoolbar-gallery ul li {
-	width: 80px;
-	height: 55px;
-	border: 2px solid #f8f8f8;
+	width: 66px;
+	height: 60px;
+	border: 5px solid #f8f8f8;
 	border-radius:7px;
 	margin:2px;
-    background-size: 80px;
+    background-size: 60px;
 }
 
 ul#basemapslist {
+    list-style-type:none;
 	margin-bottom: 3px;
 	margin-right: 3px;
+    padding-left: 3px;
 }
 
 ul#basemapslist p {
@@ -1453,7 +1444,8 @@ ul#basemapslist p {
 	color:#333;
 	opacity:1;
 	background-color:rgba(255,255,255,0);
-	padding-top:53px;
+	padding-top:37px;
+    text-shadow: 1px 1px #FFFFFF;
 }
 
 /* Scale */ 
