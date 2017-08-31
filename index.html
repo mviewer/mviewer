@@ -16,13 +16,54 @@
 	<link rel="stylesheet" href="lib/openlayers/3/ol.css" type="text/css" />
 	<link rel="stylesheet" href="css/mviewer.css" type="text/css" />
     <style>    
+    	@import url('https://fonts.googleapis.com/css?family=Roboto:600');
+
         div#loading-page {
-            color: #2E5367;
-            padding-top: 25%;
-            padding-left: 25%;
-            font-family: 'roboto_bold', Arial, Sans-serif;
-            font-size: XX-LARGE;
-        }    
+            color: #999;
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            text-align: center;
+            padding-top: 25%;            
+        }
+        #loader-title{
+        	margin-top: 20px;
+        } 
+
+        .single4 {
+           display: inline-block;
+		   width: 50px;
+		   height: 50px;
+		   border-radius: 50%;
+		   border: 6px solid #EEEEEE;
+		   border-top-color: #BFBFBF;
+		   border-bottom-color: #BFBFBF;
+		   -webkit-animation: single4 2.5s infinite ease-in-out;
+		   animation: single4 2.5s infinite ease-in-out;
+		}
+
+		@-webkit-keyframes single4 {
+		   0% {
+		      -webkit-transform: rotate(0deg);
+		      transform: rotate(0deg);
+		   }
+		   100% {
+		      -webkit-transform: rotate(540deg);
+		      transform: rotate(540deg);
+		   }
+		}
+
+		@keyframes single4 {
+		   0% {
+		      -webkit-transform: rotate(0deg);
+		      transform: rotate(0deg);
+		   }
+		   100% {
+		      -webkit-transform: rotate(540deg);
+		      transform: rotate(540deg);
+		   }
+		}
+		}
+
     </style>    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
     <script type="text/javascript" src="lib/proj4js/2.3.6/proj4.js"></script>
@@ -63,7 +104,7 @@ $(document).ready(function () {
             }
             $('head').prepend('<link rel="stylesheet" href="'+style+'" type="text/css" />');
             var map = mviewer.init(xml);
-             setTimeout(function () {
+            setTimeout(function () {
                 $("#loading-page").hide();
                 $("#main").css("opacity", 1).hide();
                 $("#main").fadeIn(1500);                
@@ -105,8 +146,9 @@ $(document).ready(function () {
 </script>  
 </head>
 <body>
-    <div id="loading-page">        
-        Chargement de l'application ...
+    <div id="loading-page">
+    	<div class="single4"></div>   	    
+        <div id="loader-title">Chargement de l'application ...</div>
     </div>
     <div id="main" style="opacity: 0.01;">
     <!-- Ajax Loader -->    
