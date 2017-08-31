@@ -16,7 +16,7 @@
 	<link rel="stylesheet" href="lib/openlayers/3/ol.css" type="text/css" />
 	<link rel="stylesheet" href="css/mviewer.css" type="text/css" />
     <style>    
-    	@import url('https://fonts.googleapis.com/css?family=Roboto:600');
+    	@import url('https://fonts.googleapis.com/css?family=Roboto');
 
         div#loading-page {
             color: #999;
@@ -27,7 +27,12 @@
         }
         #loader-title{
         	margin-top: 20px;
-        } 
+        }
+        #loader-subtitle {
+            margin-top: 5px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
 
         .single4 {
            display: inline-block;
@@ -104,6 +109,11 @@ $(document).ready(function () {
             }
             $('head').prepend('<link rel="stylesheet" href="'+style+'" type="text/css" />');
             var map = mviewer.init(xml);
+            var title = "";
+            if ($(xml).find("application").attr("title")) {
+                title = $(xml).find("application").attr("title");
+                $("#loader-subtitle").text(title);
+            }
             setTimeout(function () {
                 $("#loading-page").hide();
                 $("#main").css("opacity", 1).hide();
@@ -149,6 +159,7 @@ $(document).ready(function () {
     <div id="loading-page">
     	<div class="single4"></div>   	    
         <div id="loader-title">Chargement de l'application ...</div>
+        <div id="loader-subtitle"></div>
     </div>
     <div id="main" style="opacity: 0.01;">
     <!-- Ajax Loader -->    
