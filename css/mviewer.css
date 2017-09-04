@@ -1093,6 +1093,39 @@ li.mv-nav-item {
     padding-left: 0!important;
 }
 
+/* Test alignement liste des thémtiques / navbar */
+
+#menu>li>a {
+    font-family: 'roboto_bold', Arial, Sans-serif;
+    line-height: 2em;
+    display: flex;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-indent: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#menu span.fa-stack {
+    margin-right: 6px;
+    margin-left: 0px;
+    margin-top: -4px;
+}
+
+/* Badge toggle menu*/
+.toggle-theme-layers {
+    display: none;    
+    float: right;
+    margin-left: 5px;
+}
+.toggle-theme-layers .badge{
+    text-indent: 0;
+    font-size: 9px;
+}
+.opened .toggle-theme-layers {
+    display: inline-block;
+}
+
 /*******************************
 ------------- BOTTOM PANEL
 ********************************/
@@ -1542,15 +1575,4 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
     padding-left: 30%;
     padding-top: 10px;
 }
-.toggle-theme-layers {
-    display: none;    
-    float: right;
-    margin-right: 5px;
-}
-.toggle-theme-layers .badge{
-    text-indent: 0;
-    font-size: 9px;
-}
-.opened .toggle-theme-layers {
-    display: inline-block;
-}
+
