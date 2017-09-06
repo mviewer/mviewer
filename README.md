@@ -281,6 +281,7 @@ Noeud enfant de theme ou group décrivant une couche.
     attributevalues=""
     opacity=""
     legendurl=""
+    dynamiclegend=""
 	url=""
 	attribution=""
     tooltip=""
@@ -337,6 +338,7 @@ Si la couche est de type customlayer, le style n'est pas défini ici.
 La structure du js doit être la suivante : (../controls/epci.js). Valeur par défaut = customcontrols.
 * **opacity**: Opacité de la couche (1 par défaut)
 * **legendurl**: url premettant de récupérer la légende. Si non défini, c'est un getFeatureLegend qui est effectué.
+* **dynamiclegend**: Booléen précisant si la légende est liée à l'échelle de la carte et si elle nécessite d'être actualisée à chaque changement d'échelle de la carte.
 * **url**: URL de la couche
 * **attribution**: Copyright de la couche.
 * **expanded** : Booléan précisant si le panneau de la couche est agrandi au démarrage. La valeur par défaut est false.
