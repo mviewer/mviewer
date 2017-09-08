@@ -230,7 +230,14 @@ $(document).ready(function () {
                         <div class="mv-header"><h5>Informations</h5>
                         </div>
                         <div class="popup-content" ></div>
-                    </div>                    
+                    </div>
+                    <!-- RIGHT PANEL -->
+                         <div id="right-panel">
+                            <div class="mv-header"><h5>Informations</h5>        
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close" onclick="$('#right-panel').toggleClass('active')" title="Fermer">×</a>
+                            </div>
+                            <div class="popup-content" ></div>
+                         </div>                    
                   </div>
             </div>		
             <!-- MARKER USED BY SEARCH IN FEATURES FUNCTIONNALITY, TO LOCATE SELECTED FEATURE ON THE MAP-->
@@ -294,13 +301,7 @@ $(document).ready(function () {
         </div>
     </div><!-- END WRAPPER -->   
     
-    <!-- RIGHT PANEL -->
-     <div id="right-panel">
-        <div class="mv-header"><h5>Informations</h5>        
-            <a href="#" class="close" data-dismiss="alert" aria-label="close" onclick="$('#right-panel').toggleClass('active')" title="Fermer">×</a>
-        </div>
-        <div class="popup-content" ></div>
-     </div>
+    
      <!-- SEARCH PARAMETERS PANEL -->
         <div id="parameterspanel" class="modal fade" tabindex="-1" role="dialog" >
             <div class="modal-dialog modal-sm">

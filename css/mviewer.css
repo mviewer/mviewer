@@ -537,7 +537,7 @@ ul#layers-container {
     width: 100%;
     background: #fff;
     position: fixed;
-    z-index: 2;
+    z-index: 4;
     padding-right: 250px;
     -webkit-transition: all 0.5s ease;
    -moz-transition: all 0.5s ease;
@@ -655,7 +655,7 @@ ul#layers-container {
 ********************************/
 
 #backgroundlayerstoolbar-gallery {
-	bottom: .7em;
+	bottom: 15px;
 	right: 50px;
 	float: right;
 	position: fixed;
@@ -665,16 +665,16 @@ ul#layers-container {
 #backgroundlayersbtn {
   background-image: url("../img/basemap/osm.png");
   background-size: 39px 43px;
-  height: 40px;
-  width: 40px;
+  height: 50px;
+  width: 50px;
   border-radius: 25px;
   border: 2.5px solid #f8f8f8;
   box-shadow: 0px 0px 30px 3px rgba(200, 200, 200, 0.5) ;
 }
 
 #backgroundlayerstoolbar-default {
-	bottom: .7em;
-	right: 10px;
+	bottom: 15px;
+	right: 15px;
 	float: right;
 	position: fixed;   
 }
