@@ -303,7 +303,7 @@ Ce fichier js doit être placé dans le répertoire customlayers/
 * **visible**:  Booléen stipulant est ce que la couche est actuellement visible
 * **tiled**: Booléen stipluant est ce que la couche est tuilée
 * **queryable**: Booléen stipulant est ce que la couche est intérrogeable via un GetFeatureInfo
-* **filter**: Expression CQL permettant de filtrer la couche ex: insee=35000 Ou INTERSECT(the_geom, POINT (-74.817265 40.5296504)) [tutorial] (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial)
+* **filter**: Expression CQL permettant de filtrer la couche ex: insee=35000 Ou INTERSECTS(the_geom, POINT (-74.817265 40.5296504)) [tutorial] (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial)
 * **searchable**: Booléen précisant si la couche est interrogeable via la barre de recherche
 * **searchid**: Nom du champ à utiliser côté WMS afin de faire le lien avec l'_id elasticsearch
 * **iconsearch**: Lien vers l'image utilisée pour illustrer le résultat d'une recherche ElasticSearch
