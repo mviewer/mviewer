@@ -341,7 +341,7 @@ span.text-big-legend {
     background: #fff;
 }
 
-ol.bjqs-markers li a{
+/*ol.bjqs-markers li a{
 	padding:5px 10px;
 	background:#000;
 	color:#fff;
@@ -358,24 +358,18 @@ ol.bjqs-markers li a:hover{
 p.bjqs-caption{
 	background: rgba(255,255,255,0.5);
 }*/
-
-.counter-slide {
-  position: absolute;  
-  background-color: #000;
-  color: #fff;
-  border-radius: 5px 5px 5px 5px;
-  padding: 2px 2px 2px 2px;
-}
-
-#right-panel .counter-slide {
-  bottom: 125px;
-  left: 50%;
-  display: none;
+#right-panel span.counter-slide {    
+    font-size: 9px;
+    right: 145px;
+    bottom: 20px;
+    position: fixed;
 }
 
 #bottom-panel .counter-slide {
-  bottom: -10px;
-  left: 50%x; 
+    bottom: 25px;
+    left: 48%;
+    position: absolute;
+    font-size: 9px;
 }
 
 .ui-tabs-panel >ul {
@@ -449,12 +443,7 @@ ul#basemapslist  li{
 }
 
 div#backgroundlayerstoolbar-gallery {
-  display: inline-flex;
-}
-
-.bglt-btn.mini .fa {  
-  -webkit-transform: rotate(180deg);
-  transform: rotate(180deg);  
+  /*display: inline-flex;*/
 }
 
 /*******************************
@@ -543,12 +532,13 @@ ul#layers-container {
 
 #bottom-panel {
     bottom: 0px;
-    opacity: 0; 
+    opacity: 0;
     height: 0;
     width: 100%;
     background: #fff;
     position: fixed;
-    z-index: 2;
+    z-index: 4;
+    padding-right: 250px;
     -webkit-transition: all 0.5s ease;
    -moz-transition: all 0.5s ease;
    transition: all 0.5s ease;
@@ -624,7 +614,7 @@ ul#layers-container {
 }
 
 #right-panel .item.active img {
-    max-width: 280px!important;
+    /*max-width: 280px!important;*/
 }
 
 #right-panel .carousel-inner {
@@ -665,7 +655,7 @@ ul#layers-container {
 ********************************/
 
 #backgroundlayerstoolbar-gallery {
-	bottom: .7em;
+	bottom: 15px;
 	right: 50px;
 	float: right;
 	position: fixed;
@@ -675,16 +665,16 @@ ul#layers-container {
 #backgroundlayersbtn {
   background-image: url("../img/basemap/osm.png");
   background-size: 39px 43px;
-  height: 40px;
-  width: 40px;
+  height: 50px;
+  width: 50px;
   border-radius: 25px;
   border: 2.5px solid #f8f8f8;
   box-shadow: 0px 0px 30px 3px rgba(200, 200, 200, 0.5) ;
 }
 
 #backgroundlayerstoolbar-default {
-	bottom: .7em;
-	right: 10px;
+	bottom: 15px;
+	right: 15px;
 	float: right;
 	position: fixed;   
 }
@@ -1103,6 +1093,39 @@ li.mv-nav-item {
     padding-left: 0!important;
 }
 
+/* Test alignement liste des thémtiques / navbar */
+
+#menu>li>a {
+    font-family: 'roboto_bold', Arial, Sans-serif;
+    line-height: 2em;
+    display: flex;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-indent: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#menu span.fa-stack {
+    margin-right: 6px;
+    margin-left: 0px;
+    margin-top: -4px;
+}
+
+/* Badge toggle menu*/
+.toggle-theme-layers {
+    display: none;    
+    float: right;
+    margin-left: 5px;
+}
+.toggle-theme-layers .badge{
+    text-indent: 0;
+    font-size: 9px;
+}
+.opened .toggle-theme-layers {
+    display: inline-block;
+}
+
 /*******************************
 ------------- BOTTOM PANEL
 ********************************/
@@ -1418,31 +1441,28 @@ Utiliser le code Unicode du caractere de la police awesome.
 
 /**** Basemap ****/
 #backgroundlayerstoolbar-gallery{
-	background:#f8f8f8;
+	/*background:#f8f8f8;*/
 	border-radius:4px ;
 	right:15px;
 	padding-top:3px;
     z-index: 1;
 }
 
-.bglt-btn {
-  width: 26px;
-  text-align: center;
-  line-height: 84px;
-}   
-
-#backgroundlayerstoolbar-gallery ul li {
-	width: 80px;
-	height: 55px;
-	border: 2px solid #f8f8f8;
-	border-radius:7px;
-	margin:2px;
-    background-size: 80px;
+#backgroundlayerstoolbar-gallery ul li {	
+    background-size: 39px 43px;
+    height: 50px;
+    width: 50px;
+    border-radius: 25px;
+    border: 2.5px solid #f8f8f8;
+    box-shadow: 0px 0px 30px 3px rgba(200, 200, 200, 0.5);
+    margin-bottom: 3px;
 }
 
 ul#basemapslist {
+    list-style-type:none;
 	margin-bottom: 3px;
 	margin-right: 3px;
+    padding-left: 3px;
 }
 
 ul#basemapslist p {
@@ -1453,7 +1473,8 @@ ul#basemapslist p {
 	color:#333;
 	opacity:1;
 	background-color:rgba(255,255,255,0);
-	padding-top:53px;
+	padding-top:37px;
+    text-shadow: 1px 1px #FFFFFF;
 }
 
 /* Scale */ 
@@ -1555,3 +1576,4 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
     padding-left: 30%;
     padding-top: 10px;
 }
+

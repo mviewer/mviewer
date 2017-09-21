@@ -89,6 +89,7 @@ Personnalisation de l'application (overriding)
 * **stats**: Enables stats mode  true/false || false.
 * **statsurl**: url to send stats activity eg (login, ip, application title, date).
 * **coordinates**: Affiche les coordonnées GPS lors de l'interrogation true/false || false.
+* **togglealllayersfromtheme**: Ajoute un bouton dans le panneau de gauche pour chaque thématique afin d'afficher/masquer toutes les couches de la thématique.Valeur : true/false || false.
 
 ### Noeud mapoptions
 
@@ -280,6 +281,7 @@ Noeud enfant de theme ou group décrivant une couche.
     attributevalues=""
     opacity=""
     legendurl=""
+    dynamiclegend=""
 	url=""
 	attribution=""
     tooltip=""
@@ -301,7 +303,7 @@ Ce fichier js doit être placé dans le répertoire customlayers/
 * **visible**:  Booléen stipulant est ce que la couche est actuellement visible
 * **tiled**: Booléen stipluant est ce que la couche est tuilée
 * **queryable**: Booléen stipulant est ce que la couche est intérrogeable via un GetFeatureInfo
-* **filter**: Expression CQL permettant de filtrer la couche ex: insee=35000 Ou INTERSECT(the_geom, POINT (-74.817265 40.5296504)) [tutorial] (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial)
+* **filter**: Expression CQL permettant de filtrer la couche ex: insee=35000 Ou INTERSECTS(the_geom, POINT (-74.817265 40.5296504)) [tutorial] (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial)
 * **searchable**: Booléen précisant si la couche est interrogeable via la barre de recherche
 * **searchid**: Nom du champ à utiliser côté WMS afin de faire le lien avec l'_id elasticsearch
 * **iconsearch**: Lien vers l'image utilisée pour illustrer le résultat d'une recherche ElasticSearch
@@ -336,6 +338,7 @@ Si la couche est de type customlayer, le style n'est pas défini ici.
 La structure du js doit être la suivante : (../controls/epci.js). Valeur par défaut = customcontrols.
 * **opacity**: Opacité de la couche (1 par défaut)
 * **legendurl**: url premettant de récupérer la légende. Si non défini, c'est un getFeatureLegend qui est effectué.
+* **dynamiclegend**: Booléen précisant si la légende est liée à l'échelle de la carte et si elle nécessite d'être actualisée à chaque changement d'échelle de la carte.
 * **url**: URL de la couche
 * **attribution**: Copyright de la couche.
 * **expanded** : Booléan précisant si le panneau de la couche est agrandi au démarrage. La valeur par défaut est false.

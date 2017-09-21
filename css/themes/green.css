@@ -224,8 +224,8 @@ ul#basemapslist p {
 	font-family: 'roboto_regular', Arial, Sans-serif;
 }
 
-ul#basemapslist  li.active{	
-    border:2px #71BA51 outset;    
+ul#basemapslist  li.active{
+     box-shadow: 0px 0px 2px 2px #71BA51, 0px 0px 3px 3px rgba(200, 200, 200, 0.5);
 }
 
 .ol-scale-line-inner{
