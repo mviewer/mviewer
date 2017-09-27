@@ -1,5 +1,5 @@
 <config>
-    <application title="Les parcs nationaux d'Afrique du sud" logo="http://boldandfearless.me/wp-content/uploads/2015/11/BrandSouthAfricalogo.jpg" help="" showhelp="false" style="css/themes/ripe_lemon.css" exportpng="true" measuretools="false" />
+    <application title="Les parcs nationaux d'Afrique du sud" logo="demo/afrique_sud/img/south-africa.svg" help="" showhelp="false" style="css/themes/ripe_lemon.css" exportpng="true" measuretools="false" />
     <mapoptions maxzoom="20" projection="EPSG:3857" center="2656629.956024361,-3378428.1620076266" zoom="4" />
     <searchparameters localities="false"/>
     <baselayers style="default">
