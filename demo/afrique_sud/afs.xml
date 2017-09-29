@@ -1,0 +1,58 @@
+<config>
+    <application title="Kartenn South Africa" logo="demo/afrique_sud/img/south-africa.svg" help="" showhelp="false" style="demo/afrique_sud/theme_afs.css" exportpng="true" measuretools="false" />
+    <mapoptions maxzoom="20" projection="EPSG:3857" center="2739503,-3338769" zoom="6" />
+    <searchparameters localities="false"/>
+    <baselayers style="gallery">
+		<baselayer  visible="false" type="OSM" id="positron" label="Positron" title="CartoDb" thumbgallery="img/basemap/positron.png" url="http://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20" attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" /> 
+		<baselayer  visible="false" type="OSM" id="osm" label="OpenStreetMap Hot" title="OpenStreetMap Hot" thumbgallery="img/basemap/osm.png" url="http://{a-c}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png" attribution="Données : les contributeurs d'&lt;a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>&lt;a href='http://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" /> 
+		<baselayer visible="true" type="OSM" id="esriworldimagery" label="Esri world imagery" title="Esri world imagery" thumbgallery="img/basemap/esriworldwide.jpg" url="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"/>
+	</baselayers>
+            <themes mini="true">
+                <theme id="theme-20170921154511" name="Biodiversité" collapsed="true" icon="paw">,
+                	<layer id="parcs_nationaux_afs" name="Parcs nationaux" type="wms" url="http://ows.region-bretagne.fr/geoserver/evt/wms" infoformat="application/vnd.ogc.gml" 
+                		sld="http://kartenn.region-bretagne.fr/styles/demo_afs_parc.sld" 
+                		metadata="http://applications.region-bretagne.fr/geonetwork/?uuid=f03fdc5d-7d41-4c24-93e2-00ef5588eed0" metadata-csw="http://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID&amp;ID=f03fdc5d-7d41-4c24-93e2-00ef5588eed0" queryable="true" visible="true" attribution="Région Bretagne" filter="" fields="" aliases="" style="" stylesalias="" >
+                        <template>
+                            <![CDATA[{{#features}} 
+							<li class="item" style="width:238px;"> 
+							<h3 class="title-feature">{{parc}}</h3> 
+							<p class="text-feature"> 
+								<span>Province:</span> <span class="province">{{province}}</span><br/>	
+								<span>Animal emblématique:</span> <a title="Rechercher des images de {{animal}}" href="https://www.google.fr/search?source=lnms&tbm=isch&sa=X&q=%22{{animal}}%22" target="blank">{{animal}}</a><br/>					 
+							</p> 
+							<img src="{{img}}" class="img-responsive" style="margin-top:5%;" /> 
+							<a type="button" class="btn btn-warning" href="{{site}}" target="_blank">En savoir plus</a> 
+							</li> 
+							{{/features}}
+                            <style>
+                                p>a {
+                                    font-size:x-large;
+                                }
+                                .item>img {
+                                    padding-bottom: 20px;
+                                    }
+                                    .item p {    
+                                        padding-top: 20px;}
+                                    span.province {
+                                    font-size: larger;
+                                    background-color: #feb612;
+                                    color: white;
+                                    padding: 5px;
+                                }
+                            </style>
+                            ]]>
+                        </template>
+                    </layer>
+                </theme>
+                <theme id="adm" name="Limites administratives" collapsed="true" icon="globe">
+                     <layer id="ZAF_adm0" name="Frontières nationales" type="wms" url="http://ows.region-bretagne.fr/geoserver/evt/wms" 
+                		metadata="" metadata-csw="" 
+                		visible="true" attribution="DIVA-GIS">
+                		</layer>
+                    <layer id="ZAF_adm1" name="Provinces Sud-Africaines" type="wms" url="http://ows.region-bretagne.fr/geoserver/evt/wms" 
+                		metadata="" metadata-csw="" 
+                		visible="true" attribution="DIVA-GIS" >
+                		</layer>
+	            </theme>    
+            </themes>
+        </config>
