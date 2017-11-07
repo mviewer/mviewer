@@ -193,15 +193,16 @@ WMS/WFS. Par convention les types elasticsearch ont le même nom que les couches
 
 #### Prototype
 
-	<elasticsearch url="" geometryfield="" linkid="" [querymode=""] [doctypes=""]/>
+	<elasticsearch url="" geometryfield="" linkid="" [querymode=""] [doctypes=""] [version=""]/>
 
 #### Attributs
 
 * **url**: Url de l'API Search
 * **geometryfield**: Nom du champ utilisé par l'instance elasticsearch pour stocker la géométrie
 * **linkid**: Nom du champ  à utiliser côté serveur wms/wfs pour faire le lien avec la propriété _id des documents elasticsearch.
-* **querymode**: Optional - Query mode used by elasticsearch to find results : fuzzy_like_this ou term - default = fuzzy_like_this.
+* **querymode**: Optional - Query mode used by elasticsearch to find results : match ou term ou phrase - default = match.
 * **doctypes**: Optional - types des documents elasticsearch à requêter systématiquement, indépendamment des couches affichées.
+* **version**: version de l'instance elasticsearch. current||1.4 . Défault = "current". 
 
 ### searchparameters
 
