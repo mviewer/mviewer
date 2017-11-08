@@ -35,16 +35,18 @@ Liens vers un index **elasticsearch**. Cette fonctionnalité permet d'interroger
 .. code-block:: xml
        :linenos:
 	
-	   <elasticsearch url="" geometryfield="" linkid="" querymode="" doctypes=""/>
+	   <elasticsearch url="" geometryfield="" linkid="" querymode="" doctypes="" version=""/>
 
 **Attributs**
 
 * ``url``: Url de l'API Search
 * ``geometryfield``: Nom du champ utilisé par l'instance elasticsearch pour stocker la géométrie
 * ``linkid``: Nom du champ à  utiliser côté serveur wms/wfs pour faire le lien avec la propriété _id des documents elasticsearch
-* ``querymode`` *(optionnel)* : Query mode used by elasticsearch to find results : fuzzy_like_this ou term - default = fuzzy_like_this
+* ``querymode`` *(optionnel)* : Query mode used by elasticsearch to find results : match ou term ou phrase - default = match. Le mode match convient pour la recherche libre et naturelle. Le mode phrase permet de faire des recherches sur une phrase et le mode terme permet de faire une recherche sur un terme exact. Il est à noter que l'utilisateur peut activer le mode terme en préfixant sa recherche de # et activer le mode phrase en encadrant sa recherche de "".
 * ``doctypes`` *(optionnel)* : types des documents elasticsearch à  requêter systématiquement, indépendamment des couches affichées
+* ``version`` *(optionnel)* : version de l'instance elasticsearch "current" ou "1.4" (defaut = current)
 
+- Configurer un index elasticSearch ":ref:`configels`".
 
 searchparameters
 --------------------------
@@ -62,5 +64,5 @@ Options liées à  la recherche d'adresse *(olscompletion)* et à  la recherch
 
 * ``bbox`` *(optionnel)* : Recherche d'adresse et/ou d'entitées dans l'emprise de la carte : true ou false (defaut = false),
 * ``localities`` *(optionnel)* : Utilisation du service d'adresse olscompletion : true ou false (defaut = true),
-* ``features`` *(optionnel)* : Utilisation du service de recherche d'entitÃƒÂ©s elasticsearch : true ou false (defaut = true),
+* ``features`` *(optionnel)* : Utilisation du service de recherche d'entitées elasticsearch : true ou false (defaut = true),
 * ``static`` *(optionnel)* : En lien avec le paramètre doctypes. Active ou désactive la recherche associée à  des documents requêtés systématiquement, indépendamment des couches affichées : true ou false (defaut = false).
