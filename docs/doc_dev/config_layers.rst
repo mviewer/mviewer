@@ -239,6 +239,7 @@ Elément enfant de ``<theme>`` ou ``<group>``
 * ``visible``:  Booléen stipulant est ce que la couche est actuellement visible
 * ``style``: Style(s) de la couche. Si plusieurs styles , utiliser la virgule comme séparateur. Si la couche est de type wms, il faut faire référence à un style sld. Si la couche est de type geojson, il faut faire référence à un style définit dans lib/featurestyles.js. Si la couche est de type customlayer, le style n'est pas défini ici.
 * ``stylesalias``: Titres à utiliser pour chaques style. utiliser la virgule comme séparateur si plusieurs styles.
+* ``sld``: Lien vers un SLD stocké sur le web. Dans ce fichier SLD, la balise sld:Name contenue dans sld:NamedLayer doit être égale au nom de la couche.
 * ``tiled``: Booléen stipluant est ce que la couche est tuilée
 * ``opacity``: Opacité de la couche (1 par défaut)
 * ``legendurl``: url premettant de récupérer la légende. Si non défini, c'est un getFeatureLegend qui est effectué.
