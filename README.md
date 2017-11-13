@@ -226,10 +226,10 @@ Options liées à la recherche d'adresse (olscompletion) et à la recherche d'en
 
 * **bbox**: Optional - Recherche d'adresse et/ou d'entités dans l'emprise de la carte : true ou false - defaut = false. 
 Cette option ne fonctionne pas actuellement avec la recherche "fuse" (aucun filtre géographique n'est pour l'instant 
-appliquer à ce type de recherche) ni avec la recherche BAN (cette option donne un poinds plus important aux localités à 
+appliquer à ce type de recherche) ni avec la recherche BAN (cette option donne un poids plus important aux localités à 
 proximité du centre de la carte mais n'applique pas réellement de filtre géographique).
 * **localities**: Optional - Utilisation du service d'adresse olscompletion : true ou false - defaut = true
-* **features**: Optional - Utilisation du service de recherche d'entités (recherches s'appuaynt sur Elasticsearch ou 
+* **features**: Optional - Utilisation du service de recherche d'entités (recherches s'appuyant sur Elasticsearch ou 
 Fuse) : true ou false - defaut = true.
 * **static**: Optional - En lien avec le paramètre **doctypes**. Active ou désactive la recherche associée à des 
 documents requêtés systématiquement, indépendamment des couches affichées : true ou false - defaut = false.
@@ -281,7 +281,7 @@ Nœud enfant de theme ou group décrivant une couche.
     searchable=""
     searchid=""
     fusesearchkeys=""
-    fusesearchresult""
+    fusesearchresult=""
     useproxy=""
     secure=""
     toplayer=""
@@ -319,9 +319,9 @@ un Layer OpenLayers dans un fichier javascript ayant pour nom l'id de la couche.
 Ce fichier js doit être placé dans le répertoire customlayers.
 * **scalemin**: Echelle minimum de la couche.
 * **scalemax**: Echelle maximum de la couche.
-* **visible**:  Booléen stipulant est ce que la couche est actuellement visible.
-* **tiled**: Booléen stipluant est ce que la couche est tuilée.
-* **queryable**: Booléen stipulant est ce que la couche est intérrogeable via un GetFeatureInfo.
+* **visible**:  Booléen stipulant si la couche est actuellement visible.
+* **tiled**: Booléen stipluant si la couche est tuilée.
+* **queryable**: Booléen stipulant si la couche est intérrogeable via un GetFeatureInfo.
 * **filter**: Expression CQL permettant de filtrer la couche. 
 Exemple : insee=35000 ou INTERSECTS(the_geom, POINT (-74.817265 40.5296504)) 
 [tutorial] (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial).
