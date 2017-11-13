@@ -23,7 +23,9 @@ Personnalisation de l'application
 		measuretools=""	
 		stats=""
         coordinates=""
-		statsurl=""/>
+		statsurl=""
+        togglealllayersfromtheme=""        
+        />
 
 **Paramètres**
 
@@ -37,6 +39,7 @@ Personnalisation de l'application
 * ``stats``: paramètre optionnel de type booléen (true/false) activant l'envoi de stats d'utilisation l'application. Valeur par défaut **false**.
 * ``coordinates``: paramètre optionnel de type booléen (true/false) activant l'affichage des coordonnées GPS lors de l'interrogation. Valeur par défaut **false**.
 * ``statsurl``: paramètre optionnel de type url précisant l'url du service reccueillant les données d'utilisation de l'application (ip, application title, date). Ce service n'est pas proposé dans mviewer.
+* ``togglealllayersfromtheme``: Ajoute un bouton dans le panneau de gauche pour chaque thématique afin d'afficher/masquer toutes les couches de la thématique.Valeur : true/false. Valeur par défaut **false**.
 
 **Exemple**
 
