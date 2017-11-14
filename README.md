@@ -326,7 +326,7 @@ Ce fichier js doit être placé dans le répertoire customlayers.
 Exemple : insee=35000 ou INTERSECTS(the_geom, POINT (-74.817265 40.5296504)) 
 [tutorial] (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial).
 * **searchable**: Booléen précisant si la couche est interrogeable via la barre de recherche.
-* **searchengine**: elasticsearch|fuse.
+* **searchengine**: elasticsearch|fuse. Défault=elasticsearch.
 * **searchid**: Nom du champ à utiliser côté WMS afin de faire le lien avec l'_id elasticsearch.
 * **fusesearchkeys**: Chaîne de caractères contenant le liste des champs du fichier GeoJSON à indexer pour la 
 recherche. Les noms des champs doivent être séparés par des virgules. A n'utiliser que si searchengine = fuse.
