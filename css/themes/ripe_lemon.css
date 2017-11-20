@@ -398,23 +398,16 @@ ul#searchparameters{
 
 /* Search toolbar */
 
-li.geoportail.list-group-item.disabled{
-	background-color:#F7CA18;
-	border-color:#F7CA18;
+#searchresults li.list-group-item.disabled {
+	background-color: #F7CA18;
+	border-color: #F7CA18;
 	color: white!important;
 	font-family: 'roboto_bold', Arial, Sans-serif!important;
 }
 
-li.elasticsearch.list-group-item.disabled{
-	background-color:#F7CA18!important;
-	border-color:#F7CA18;
-	color: white!important;
+#searchresults li a:hover {
 	font-family: 'roboto_bold', Arial, Sans-serif!important;
-}
-
-#searchresults li a:hover{
-	font-family:'roboto_bold', Arial, Sans-serif!important;
-	color:#F7CA18!important;
+	color: #F7CA18!important;
 }
 
 .popup-content .nav-tabs .active .glyphicon, .popup-content .nav-tabs .active .fa {
