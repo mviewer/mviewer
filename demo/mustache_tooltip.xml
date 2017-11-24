@@ -1,5 +1,5 @@
 <config>
-    <application title="Démo Fuse" logo="" help="demo/demo_mustache_tooltip_help.html" showhelp="true" style="css/themes/nephritis.css" exportpng="false" measuretools="false" />
+    <application title="Démo Infobulle avec Mustache" logo="" help="demo/demo_mustache_tooltip_help.html" showhelp="true" style="css/themes/nephritis.css" exportpng="false" measuretools="false" />
     <mapoptions maxzoom="20" projection="EPSG:3857" center="-307903.74898791354,6141345.088741366" zoom="8" />
     <searchparameters localities="false" features="true" bbox="false"/>
     <elasticsearch url="http://ows.region-bretagne.fr/kartenn/_search" geometryfield="geometry" querymode="match" linkid="search_id" version="1.4"/>
