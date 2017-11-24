@@ -331,8 +331,8 @@ Exemple : insee=35000 ou INTERSECTS(the_geom, POINT (-74.817265 40.5296504))
 * **fusesearchkeys**: Chaîne de caractères contenant le liste des champs du fichier GeoJSON à indexer pour la 
 recherche. Les noms des champs doivent être séparés par des virgules. A n'utiliser que si searchengine = fuse.
 * **fusesearchresult**: Chaîne de caractères décrivant l'information à afficher dans les résultats de recherche. 
-Cette chaîne contient soit le nom d'un champ de la couche soit un pattern combinant plusieurs noms de champs. Exemple : 
-"$1 ($2)#name|city". A n'utiliser que si searchengine = fuse.
+Cette chaîne contient soit le nom d'un champ de la couche soit un template Mustache combinant plusieurs noms de champs. 
+Exemple : "{{name}} ({{city}})". A n'utiliser que si searchengine = fuse.
 * **iconsearch**: Lien vers l'image utilisée pour illustrer le résultat d'une recherche ElasticSearch.
 * **useproxy**: Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de crossOrigin 
 lorsque CORS n'est pas activé sur le serveur distant.
