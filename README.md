@@ -344,6 +344,10 @@ des champs parsés.
 affichées sous forme d'infobulle au survol de la souris. Les infobulles ne fonctionnent qu'avec une seule couche à la 
 fois. Valeur par défaut = false.
 * **tooltipenabled**: Précise la couche prioritaire pour l'affichage des infobulles.
+* **tooltipcontent**: Chaîne de caractères décrivant l'information à afficher dans les infobulles. 
+Cette chaîne contient soit le nom d'un champ de la couche soit un template Mustache combinant plusieurs noms de champs. 
+Exemple : "{{name}} ({{city}})". A n'utiliser que si les infobulles sont activées sur cette couche 
+(cf. paramètre tooltip)). Paramètre optionnel.
 * **secure**: Précise si la couche est protégée ( méchanisme geoserver ) auquel cas un test est affectué pour savoir 
 si la couche est accessible. SI ce n'est pas le cas, la couche est retirée du panneau et de la carte.
 * **toplayer**: Précise si la couche demeure figée". Booléen. Défaut = true.
