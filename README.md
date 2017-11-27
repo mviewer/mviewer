@@ -204,15 +204,15 @@ recherche suivantes active : "features" et "static".
 
 ### fuse
 
-Fuse est une bibliothèque javascript utilisée par mviewer pour indexer le contenu de couches stockées sous forme de 
-fichiers GeoJSON (cf. http://fusejs.io/). Elle donne une alternative plus légère à l'utilisation d'index Elasticsearch. 
-Contrairement à Elasticsearch, le paramétrage de Fuse ne fait l'objet d'un nœud spécifique. Son paramétrage est réalisé 
-directement au niveau des nœuds des couches concernées à l'aide des attributs "searchable", "searchengine", 
-"fusesearchkeys" et "fusesearchresult".
+Fuse est une bibliothèque javascript utilisée par mviewer pour indexer le contenu de couches de données vecteur légères 
+(cf. http://fusejs.io/). Elle donne une alternative plus simple et économique que la mise en œuvre d'index 
+Elasticsearch. Contrairement à ce dernier, le paramétrage de Fuse ne fait pas l'objet d'un nœud spécifique. Son 
+paramétrage est réalisé directement au niveau des nœuds des couches concernées à l'aide des attributs "searchable", 
+"searchengine", "fusesearchkeys" et "fusesearchresult".
 
 La recherche basée sur Fuse n'est active que pour les couches dont les attributs "searchable" et "searchengine" 
-valent respectivement "true" et "fuse". Cette recherche n'est active que lorsque l'option de recherche est active : 
-"features".
+valent respectivement "true" et "fuse". Cette recherche n'est active que lorsque l'option de recherche suivante est 
+active : "features".
 
 ### searchparameters
 
@@ -328,7 +328,7 @@ Exemple : insee=35000 ou INTERSECTS(the_geom, POINT (-74.817265 40.5296504))
 * **searchable**: Booléen précisant si la couche est interrogeable via la barre de recherche.
 * **searchengine**: elasticsearch|fuse. Défault=elasticsearch.
 * **searchid**: Nom du champ à utiliser côté WMS afin de faire le lien avec l'_id elasticsearch.
-* **fusesearchkeys**: Chaîne de caractères contenant le liste des champs du fichier GeoJSON à indexer pour la 
+* **fusesearchkeys**: Chaîne de caractères contenant le liste des champs de la couche à indexer pour la 
 recherche. Les noms des champs doivent être séparés par des virgules. A n'utiliser que si searchengine = fuse.
 * **fusesearchresult**: Chaîne de caractères décrivant l'information à afficher dans les résultats de recherche. 
 Cette chaîne contient soit le nom d'un champ de la couche soit un template Mustache combinant plusieurs noms de champs. 
