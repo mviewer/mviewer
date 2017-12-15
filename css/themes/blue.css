@@ -155,7 +155,7 @@ p.navbar-text.mv-title{
   font-family: 'roboto_regular', Arial, Sans-serif;
 }
 
-/* Opacité */
+/* OpacitÃ© */
 .mv-layer-options  .slider-selection{
 	background:#032e46;	
 }
@@ -174,7 +174,7 @@ p.navbar-text.mv-title{
 	border-top-color:#032e46;
 }
 
-/* Temporalité */ 
+/* TemporalitÃ© */
 
 .mv-layer-options  .form-group-timer .slider-selection{
 	background:#032e46;
@@ -398,16 +398,9 @@ ul#searchparameters{
 
 /* Search toolbar */
 
-li.geoportail.list-group-item.disabled{
-	background-color:#032e46;
-	border-color:#032e46;
-	color: white!important;
-	font-family: 'roboto_bold', Arial, Sans-serif!important;
-}
-
-li.elasticsearch.list-group-item.disabled{
-	background-color:#032e46!important;
-	border-color:#032e46;
+#searchresults li.list-group-item.disabled {
+	background-color: #032e46;
+	border-color: #032e46;
 	color: white!important;
 	font-family: 'roboto_bold', Arial, Sans-serif!important;
 }

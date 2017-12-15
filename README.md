@@ -63,13 +63,7 @@ Le fichier de config permet la personnalisation des thèmes/couches du visualise
 
 
 
-
-
-
-
-
-
-### Noeud application
+### Nœud application
 
 Personnalisation de l'application (overriding)
 
@@ -91,7 +85,7 @@ Personnalisation de l'application (overriding)
 * **coordinates**: Affiche les coordonnées GPS lors de l'interrogation true/false || false.
 * **togglealllayersfromtheme**: Ajoute un bouton dans le panneau de gauche pour chaque thématique afin d'afficher/masquer toutes les couches de la thématique.Valeur : true/false || false.
 
-### Noeud mapoptions
+### Nœud mapoptions
 
 Représente les configurations de base du visualiseur.
 
@@ -106,7 +100,7 @@ Représente les configurations de base du visualiseur.
 * **zoom**: Zoom initial du visualiseur
 * **projextent**: Etendue de la projection 
 
-### Noeud baselayers
+### Nœud baselayers
 
 Représente la galerie des fonds de plan
 
@@ -120,7 +114,7 @@ Représente la galerie des fonds de plan
 
 
 
-#### Noeud(s) enfant(s) de  baselayer(s) 
+#### Nœud(s) enfant(s) de  baselayer(s) 
 
 Représente les fonds de plan.
 
@@ -187,25 +181,42 @@ Liens vers service d'autocomplétion et de géocodage.
 
 ### elasticsearch
 
-Liens vers un index elasticsearch. Cette fonctionnalité permet d'interroger un index Elasticsearch à partir d'une saisie libre example
+Liens vers un index Elasticsearch. Cette fonctionnalité permet d'interroger un index Elasticsearch à partir d'une saisie libre example
 "Port de Brest". Le résultat retourné est une collection de documents disposant d'un champ commun avec les entités géographiques servies par l'instance
-WMS/WFS. Par convention les types elasticsearch ont le même nom que les couches wms/wfs.
+WMS/WFS. Par convention les types Elasticsearch ont le même nom que les couches wms/wfs.
+
+La recherche basée sur Elasticsearch n'est active que pour les couches dont les attributs "searchable" et "searchengine" 
+valent respectivement "true" et "elasticsearch". Cette recherche n'est active qu'avec au moins l'une des 2 options de 
+recherche suivantes active : "features" et "static".
 
 #### Prototype
 
-	<elasticsearch url="" geometryfield="" linkid="" [querymode=""] [doctypes=""]/>
+	<elasticsearch url="" geometryfield="" linkid="" [querymode=""] [doctypes=""] [version=""]/>
 
 #### Attributs
 
 * **url**: Url de l'API Search
-* **geometryfield**: Nom du champ utilisé par l'instance elasticsearch pour stocker la géométrie
-* **linkid**: Nom du champ  à utiliser côté serveur wms/wfs pour faire le lien avec la propriété _id des documents elasticsearch.
-* **querymode**: Optional - Query mode used by elasticsearch to find results : fuzzy_like_this ou term - default = fuzzy_like_this.
-* **doctypes**: Optional - types des documents elasticsearch à requêter systématiquement, indépendamment des couches affichées.
+* **geometryfield**: Nom du champ utilisé par l'instance Elasticsearch pour stocker la géométrie
+* **linkid**: Nom du champ  à utiliser côté serveur wms/wfs pour faire le lien avec la propriété _id des documents Elasticsearch.
+* **querymode**: Optional - Query mode used by Elasticsearch to find results : match ou term ou phrase - default = match.
+* **doctypes**: Optional - types des documents Elasticsearch à requêter systématiquement, indépendamment des couches affichées.
+* **version**: version de l'instance Elasticsearch. current||1.4 . Défault = "current". 
+
+### fuse
+
+Fuse est une bibliothèque javascript utilisée par mviewer pour indexer le contenu de couches de données vecteur légères 
+(cf. http://fusejs.io/). Elle donne une alternative plus simple et économique que la mise en œuvre d'index 
+Elasticsearch. Contrairement à ce dernier, le paramétrage de Fuse ne fait pas l'objet d'un nœud spécifique. Son 
+paramétrage est réalisé directement au niveau des nœuds des couches concernées à l'aide des attributs "searchable", 
+"searchengine", "fusesearchkeys" et "fusesearchresult".
+
+La recherche basée sur Fuse n'est active que pour les couches dont les attributs "searchable" et "searchengine" 
+valent respectivement "true" et "fuse". Cette recherche n'est active que lorsque l'option de recherche suivante est 
+active : "features".
 
 ### searchparameters
 
-Options liées à à la recherche d'adresse (olscompletion) et à la recherche d'entités (elasticsearch).
+Options liées à la recherche d'adresse (olscompletion) et à la recherche d'entités (elasticsearch ou fuse).
 
 #### Prototype
 
@@ -213,14 +224,19 @@ Options liées à à la recherche d'adresse (olscompletion) et à la recherche d
 
 #### Attributs
 
-* **bbox**: Optional - Recherche d'adresse et/ou d'entités dans l'emprise de la carte : true ou false - defaut = false
+* **bbox**: Optional - Recherche d'adresse et/ou d'entités dans l'emprise de la carte : true ou false - defaut = false. 
+Cette option ne fonctionne pas actuellement avec la recherche "fuse" (aucun filtre géographique n'est pour l'instant 
+appliquer à ce type de recherche) ni avec la recherche BAN (cette option donne un poids plus important aux localités à 
+proximité du centre de la carte mais n'applique pas réellement de filtre géographique).
 * **localities**: Optional - Utilisation du service d'adresse olscompletion : true ou false - defaut = true
-* **features**: Optional - Utilisation du service de recherche d'entités elasticsearch : true ou false - defaut = true.
-* **static**: Optional - En lien avec le paramètre **doctypes**. Active ou désactive la recherche associée à des documents requêtés systématiquement, indépendamment des couches affichées : true ou false - defaut = false.
+* **features**: Optional - Utilisation du service de recherche d'entités (recherches s'appuyant sur Elasticsearch ou 
+Fuse) : true ou false - defaut = true.
+* **static**: Optional - En lien avec le paramètre **doctypes**. Active ou désactive la recherche associée à des 
+documents requêtés systématiquement, indépendamment des couches affichées : true ou false - defaut = false.
 
-### Noeud themes et sous thèmes
+### Nœud themes et sous thèmes
 
-Noeud regroupant les couches par thèmes et sous-thèmes.
+Nœud regroupant les couches par thèmes et sous-thèmes.
 
 #### Prototype
 
@@ -230,9 +246,9 @@ Noeud regroupant les couches par thèmes et sous-thèmes.
 
 * **mini**: Booléen qui précise si le panneau de gauche est réduit à l'ouverture de l'application. Défaut = false.
 
-#### Noeud(s) enfant(s) theme
+#### Nœud(s) enfant(s) theme
 
-Noeud enfant décrivant un thème 
+Nœud enfant décrivant un thème 
 
 ##### Prototype 
 
@@ -244,17 +260,17 @@ Noeud enfant décrivant un thème
 * **id**: Identifiant du thème
 
 
-###### Noeud(s) enfant(s) group
+###### Nœud(s) enfant(s) group
 
-Noeud enfant de theme décrivant un sous-groupe.
+Nœud enfant de theme décrivant un sous-groupe.
 
 ####### Prototype
 
     <group id="" name="">
 
-###### Noeud(s) enfant(s) layer
+###### Nœud(s) enfant(s) layer
 
-Noeud enfant de theme ou group décrivant une couche.
+Nœud enfant de theme ou group décrivant une couche.
 
 ####### Prototype
 
@@ -264,6 +280,8 @@ Noeud enfant de theme ou group décrivant une couche.
     filter=""
     searchable=""
     searchid=""
+    fusesearchkeys=""
+    fusesearchresult=""
     useproxy=""
     secure=""
     toplayer=""
@@ -294,62 +312,87 @@ Noeud enfant de theme ou group décrivant une couche.
 
 ####### Attributs
 
-* **id**: Id de la couche
-* **name**: Nom de la couche
-* **type**: Type de la couche (wms|geojson|kml|customlayer) default=wms. Si customlayer est défini, il faut instancier un Layer OpenLayers dans un fichier javascript ayant pour nom l'id de la couche.
-Ce fichier js doit être placé dans le répertoire customlayers/
-* **scalemin**: Echelle minimum de la couche
-* **scalemax**: Echelle maximum de la couche
-* **visible**:  Booléen stipulant est ce que la couche est actuellement visible
-* **tiled**: Booléen stipluant est ce que la couche est tuilée
-* **queryable**: Booléen stipulant est ce que la couche est intérrogeable via un GetFeatureInfo
-* **filter**: Expression CQL permettant de filtrer la couche ex: insee=35000 Ou INTERSECTS(the_geom, POINT (-74.817265 40.5296504)) [tutorial] (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial)
-* **searchable**: Booléen précisant si la couche est interrogeable via la barre de recherche
-* **searchid**: Nom du champ à utiliser côté WMS afin de faire le lien avec l'_id elasticsearch
-* **iconsearch**: Lien vers l'image utilisée pour illustrer le résultat d'une recherche ElasticSearch
-* **useproxy**: Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de de crossOrigin lorsque CORS n'est pas activé sur le serveur distant.
-* **fields**: Si les informations retournées par l'interrogation est au format GML, fields représente les attributs à parser pour générer la vignette
-* **aliases**: Si les informations retournées par l'interrogation est au format GML, aliases représente le renommage des champs parsés.
-* **tooltip**: Pour les couches de type vecteur uniquement. Booléen précisant si les entités de la couche sont affichées sous forme d'infobulle au survol de la souris. (Les infobulles ne fonctionnent qu'avec une seule couche à la fois). Valeur par défaut = false.
+* **id**: Id de la couche.
+* **name**: Nom de la couche.
+* **type**: Type de la couche (wms|geojson|kml|customlayer) default=wms. Si customlayer est défini, il faut instancier 
+un Layer OpenLayers dans un fichier javascript ayant pour nom l'id de la couche.
+Ce fichier js doit être placé dans le répertoire customlayers.
+* **scalemin**: Echelle minimum de la couche.
+* **scalemax**: Echelle maximum de la couche.
+* **visible**:  Booléen stipulant si la couche est actuellement visible.
+* **tiled**: Booléen stipluant si la couche est tuilée.
+* **queryable**: Booléen stipulant si la couche est intérrogeable via un GetFeatureInfo.
+* **filter**: Expression CQL permettant de filtrer la couche. 
+Exemple : insee=35000 ou INTERSECTS(the_geom, POINT (-74.817265 40.5296504)) 
+[tutorial] (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial).
+* **searchable**: Booléen précisant si la couche est interrogeable via la barre de recherche.
+* **searchengine**: elasticsearch|fuse. Défault=elasticsearch.
+* **searchid**: Nom du champ à utiliser côté WMS afin de faire le lien avec l'_id elasticsearch.
+* **fusesearchkeys**: Chaîne de caractères contenant le liste des champs de la couche à indexer pour la 
+recherche. Les noms des champs doivent être séparés par des virgules. A n'utiliser que si searchengine = fuse.
+* **fusesearchresult**: Chaîne de caractères décrivant l'information à afficher dans les résultats de recherche. 
+Cette chaîne contient soit le nom d'un champ de la couche soit un template Mustache combinant plusieurs noms de champs. 
+Exemple : "{{name}} ({{city}})". A n'utiliser que si searchengine = fuse.
+* **iconsearch**: Lien vers l'image utilisée pour illustrer le résultat d'une recherche ElasticSearch.
+* **useproxy**: Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de crossOrigin 
+lorsque CORS n'est pas activé sur le serveur distant.
+* **fields**: Si les informations retournées par l'interrogation est au format GML, fields représente les attributs à 
+parser pour générer la vignette.
+* **aliases**: Si les informations retournées par l'interrogation est au format GML, aliases représente le renommage 
+des champs parsés.
+* **tooltip**: Pour les couches de type vecteur uniquement. Booléen précisant si les entités de la couche sont 
+affichées sous forme d'infobulle au survol de la souris. Les infobulles ne fonctionnent qu'avec une seule couche à la 
+fois. Valeur par défaut = false.
 * **tooltipenabled**: Précise la couche prioritaire pour l'affichage des infobulles.
-* **secure**: Précise si la couche est protégée ( méchanisme geoserver ) auquel cas un test est affectué pour savoir si la couche est accessible. SI ce n'est pas le cas, la couche est retirée du panneau et de la carte.
+* **tooltipcontent**: Chaîne de caractères décrivant l'information à afficher dans les infobulles. 
+Cette chaîne contient soit le nom d'un champ de la couche soit un template Mustache combinant plusieurs noms de champs. 
+Exemple : "{{name}} ({{city}})". A n'utiliser que si les infobulles sont activées sur cette couche 
+(cf. paramètre tooltip)). Paramètre optionnel.
+* **secure**: Précise si la couche est protégée ( méchanisme geoserver ) auquel cas un test est affectué pour savoir 
+si la couche est accessible. SI ce n'est pas le cas, la couche est retirée du panneau et de la carte.
 * **toplayer**: Précise si la couche demeure figée". Booléen. Défaut = true.
-* **infoformat**: Format du GetFeatureInfo. 2 formats sont supportés : text/html et application/vnd.ogc.gml
-* **featurecount**: Nombre d'éléments retournés lors de l'intérrogation
+* **infoformat**: Format du GetFeatureInfo. 2 formats sont supportés : text/html et application/vnd.ogc.gml.
+* **featurecount**: Nombre d'éléments retournés lors de l'interrogation.
 * **style**: Style(s) de la couche. Si plusieurs styles , utiliser la virgule comme séparateur.
 Si la couche est de type wms, il faut faire référence à un style sld.
-Si la couche est de type geojson, il faut faire référence à un style définit dans lib/featurestyles.js
+Si la couche est de type geojson, il faut faire référence à un style défini dans lib/featurestyles.js.
 Si la couche est de type customlayer, le style n'est pas défini ici.
-* **stylesalias**: Titres à utiliser pour chaques style. utiliser la virgule comme séparateur si plusieurs styles.
-* **timefilter**: Booléen précisant si la dimension temporelle est activée pour cette couche. Voir (http://docs.geoserver.org/latest/en/user/services/wms/time.html)
+* **stylesalias**: Titres à utiliser pour chaque style. Utiliser la virgule comme séparateur si plusieurs styles.
+* **timefilter**: Booléen précisant si la dimension temporelle est activée pour cette couche. Voir 
+(http://docs.geoserver.org/latest/en/user/services/wms/time.html).
 * **timeinterval**: day|month|year
 * **timecontrol**: calendar|slider|slider-range
-* **timevalues**: valeurs séparées par des virgules - A utiliser avec le controle slider pour des valeurs non régulières ex (1950, 1976, 1980, 2004).
+* **timevalues**: Valeurs séparées par des virgules. A utiliser avec le controle slider pour des valeurs non 
+régulières ex (1950, 1976, 1980, 2004).
 * **timemin**: Date mini format : "yyyy-mm-dd" 
 * **timemax**: Date mini format : "yyyy-mm-dd"
-* **attributefilter**:  Booléen précisant si on active la sélection attributaire par menu déroulant
+* **attributefilter**: Booléen précisant si on active la sélection attributaire par menu déroulant.
 * **attributefield**: Nom du champ à utiliser avec le contrôle attributefilter.
-* **attributevalues**: valeurs séparées par des virgules.
+* **attributevalues**: Valeurs séparées par des virgules.
 * **attributelabel**:  Texte à afficher pour la liste déroulante associée.
-* **attributestylesync**: Booléen qui précise s'il convient d'appliquer un style (sld) spécifique lors du filtre attributaire. Dans ce cas la convention est la suivante : nom_style_courant_attributevalue.
-* **attributefilterenabled**: Booléen précisant si le filtre est activé par défaut (avec la première valeur de la liste attributevalues).
+* **attributestylesync**: Booléen qui précise s'il convient d'appliquer un style (sld) spécifique lors du filtre 
+attributaire. Dans ce cas la convention est la suivante : nom_style_courant_attributevalue.
+* **attributefilterenabled**: Booléen précisant si le filtre est activé par défaut (avec la première valeur de la liste 
+attributevalues).
 * **customcontrol**: Booléen précisant si la couche dispose d'un addon html à intégrer. La valeur par défaut est false.
-* **customcontrolpath**: Texte Précisant le répertoire hébergeant les fichiers nécessaires au contrôle. Dans ce pépertoire, il faut déposer un fichier js et un fichier html ayant pour nom l'id de la couche.
+* **customcontrolpath**: Texte Précisant le répertoire hébergeant les fichiers nécessaires au contrôle. Dans ce 
+répertoire, il faut déposer un fichier js et un fichier html ayant pour nom l'id de la couche.
 La structure du js doit être la suivante : (../controls/epci.js). Valeur par défaut = customcontrols.
-* **opacity**: Opacité de la couche (1 par défaut)
+* **opacity**: Opacité de la couche (1 par défaut).
 * **legendurl**: url premettant de récupérer la légende. Si non défini, c'est un getFeatureLegend qui est effectué.
-* **dynamiclegend**: Booléen précisant si la légende est liée à l'échelle de la carte et si elle nécessite d'être actualisée à chaque changement d'échelle de la carte.
-* **url**: URL de la couche
+* **dynamiclegend**: Booléen précisant si la légende est liée à l'échelle de la carte et si elle nécessite d'être 
+actualisée à chaque changement d'échelle de la carte.
+* **url**: URL de la couche.
 * **attribution**: Copyright de la couche.
 * **expanded** : Booléan précisant si le panneau de la couche est agrandi au démarrage. La valeur par défaut est false.
-* **metadata**: Lien vers la fiche de metadonnées complète
+* **metadata**: Lien vers la fiche de metadonnées complète.
 * **metadata-csw**: Requête CSW pour l'affiche dans la popup du détail de la couche.
 
-####### Noeuds
+####### Nœuds
 
 * **<template>**: contient le template type Mustache (https://github.com/janl/mustache.js) à appliquer à la fiche d'information.
 Pour fonctionner, il faut que le paramètre **infoformat** ait la valeur "application/vnd.ogc.gml".
-Le template peut être un fichier statique ex templates/template1.mst ou directement saisi dans le noeud <template> avec les balises <![CDATA[ ]]>.
+Le template peut être un fichier statique ex templates/template1.mst ou directement saisi dans le nœud <template> avec les balises <![CDATA[ ]]>.
 
 
 Utilisation		
