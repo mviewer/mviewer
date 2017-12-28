@@ -37,6 +37,7 @@ a:hover{
 }
 
 #mouse-position{
+    width: auto;
     position: fixed;    
     right: 3%;
     height: 2%;
