@@ -42,12 +42,12 @@ a:hover{
     height: 2%;
     bottom: 3%;
     color: #777;    
-    background-color: rgba(255,255,255,0.8);
+    background-color: rgba(255,255,255,0.7);
     text-align: center;
     max-width : 10%;
     font-size: 0.6vw; 
     font-family: 'roboto_regular', Arial, Sans-serif;
-    outline: rgba(255,255,255,0.8) solid 2px;
+    outline: rgba(255,255,255,0.7) solid 2px;
     border: rgba(119,119,119,0.8) solid 1px;
     border-top-color: rgba(119,119,119,0);    
 }
