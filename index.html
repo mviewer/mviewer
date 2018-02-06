@@ -295,20 +295,14 @@ $(document).ready(function () {
                      tabindex="111" accesskey="11" class="btn btn-default btn-raised">
                      <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
                 </button>
-
-
 								<button id="geolocbtn" type="button" class="btn btn-default" onclick="mviewer.geoloc();"
 										title="Se localiser" tabindex="103" accesskey="3">
 								  	<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
 								</button>
-
-								<!--<a href="#" onclick="mviewer.geoloc();" id="geolocbtn" title="Se localiser" tabindex="103" accesskey="3" class='btn btn-default active'
-									data-role="button" data-iconpos="notext">
-									<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
-								</a>-->
-
-
-
+								<button id="northbtn" type="button" class="btn btn-default" onclick="mviewer.northRotate();"
+										title="Orienté au nord" tabindex="106" accesskey="6">
+								  	<span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
+								</button>
                 <a href="#" id="exportpng" title="Exporter carte au format image" download="carte.png"
                     class="btn btn-default btn-raised"  tabindex="113" accesskey="13" style="display:none;">
                      <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>

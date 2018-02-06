@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <application title="Démo Fonds de plan" logo="" help="demo/demo_fonds_help.html" showhelp="true" exportpng="true" geoloc="true" style="css/themes/green.css"/>
-    <mapoptions maxzoom="18" projection="EPSG:3857" center="-188398.16546588816,6126752.674427088" zoom="13" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
+    <mapoptions maxzoom="18" projection="EPSG:3857" rotation = "true" center="-188398.16546588816,6126752.674427088" zoom="13" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
    	<baselayers style="gallery">
         <baselayer  type="WMS" id="photo2" label="Photo aérienne 1950" title="GéoBretagne" thumbgallery="img/basemap/ortho-ancien.jpg"
 			url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite-ancien" format="image/jpeg" visible="false"
