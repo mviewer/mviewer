@@ -1,469 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <application 
-        mouseposition="true" 
-        popup="true" 
-        title="Pintatlas ADN" 
-        logo="" 
-        help="mviewer_help.html" 
-        measuretools="true" 
-        exportpng="true" 
-        style="css/themes/wet_asphalt.css" 
-        togglealllayersfromtheme="true" />
-    <mapoptions 
-        maxzoom="19" 
-        projection="EPSG:3857" 
-        center="597431.8130769376, 5588769.760098946" 
-        zoom="9" 
-        projextent="312168.8235166598, 5434978.459189172, 899205.2007468134, 5732777.121388218" />
-
-    <baselayers 
-        style="gallery">
-        <!-- style="default"||gallery" -->
-        <!--baselayer 
-        type="OSM" 
-        id="darkmatter" 
-        label="Dark Matter" 
-        title="CartoDb" 
-        thumbgallery="img/basemap/darkmatter.png" 
-        url="http://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png" 
-        maxzoom="20" visible="true" 
-        attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>"-->
-        <baselayer 
-            type="OSM" 
-            id="stamen_toner" 
-            label="Stamen Toner Light" 
-            title="OpenStreetMap" 
-            thumbgallery="img/basemap/osm_jh.png" 
-            url="http://{a-c}.tile.stamen.com/toner-lite/{z}/{x}/{y}.png" 
-            attribution=" MapQuest. Donn�es : les contributeurs d'&lt;a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='http://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" visible="false" />
-        <baselayer 
-            type="OSM" 
-            id="esri-world-topo-map" 
-            label="Esri World Topo Map" 
-            title="Esri World Topo Map" 
-            thumbgallery="img/basemap/esri-world-topo-map.png" 
-            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}.png" 
-            attribution=" MapQuest. Donn�es : les contributeurs d'&lt;a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='http://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" 
-            visible="false" />
-        <baselayer 
-            type="OSM" 
-            id="esri-world-imagery" 
-            label="Esri World Imagery" 
-            title="Esri World Imagery" 
-            thumbgallery="img/basemap/esri-world-imagery.png" 
-            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.png" 
-            attribution=" MapQuest. Donn�es : les contributeurs d'&lt;a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='http://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" visible="false" />
-        <baselayer 
-            type="OSM" 
-            id="pitney-bowes-streets" 
-            label="Pitney Bows Streets" 
-            title="CartoDb" 
-            thumbgallery="img/basemap/pitney-bowes-streets.png" 
-            url="http://{a-c}.basemaps.cartocdn.com/pitney-bowes-streets/{z}/{x}/{y}.png" 
-            maxzoom="20" 
-            visible="true" 
-            attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
-        <!--baselayer 
-        type="OSM" 
-        id="pitney-bowes-dark" 
-        label="Pitney Bows Dark" 
-        title="CartoDb" 
-        thumbgallery="img/basemap/pitney-bowes-dark.png" 
-        url="http://{a-c}.basemaps.cartocdn.com/pitney-bowes-dark/{z}/{x}/{y}.png" 
-        maxzoom="20" 
-        visible="true" 
-        attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>"-->
-        <baselayer 
-            type="OSM" 
-            id="osm1" 
-            label="OpenStreetMap" 
-            title="OpenStreetMap" 
-            thumbgallery="img/basemap/osm.png" 
+    <application title="Mviewer" mouseposition="false" logo="" help="mviewer_help.html" measuretools="true" exportpng="true" style="css/themes/wet_asphalt.css" togglealllayersfromtheme="true"/>    
+    <mapoptions maxzoom="19" projection="EPSG:3857" center="-220750.13768758904,6144925.57790189" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
+  
+    <baselayers style="default"><!-- style="default"||gallery" -->
+        <baselayer  type="fake" id="fake" label="Carroyage" title="Carroyage" thumbgallery="img/basemap/grid.png" visible="false"  />
+        <baselayer  type="OSM" id="darkmatter" label="Dark Matter" title="CartoDb" thumbgallery="img/basemap/darkmatter.png" 
+            url="http://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png" maxzoom="20" 
+            visible="false" attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="OSM" id="positron" label="Positron" title="CartoDb" thumbgallery="img/basemap/positron.png" 
+            url="http://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20" 
+            visible="true" attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="OSM" id="osm1" label="OpenStreetMap" title="OpenStreetMap" thumbgallery="img/basemap/osm.png" 
             url="http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
-            attribution=" MapQuest. Données : les contributeurs d'&lt;a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='http://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" 
-            visible="false" />
-    </baselayers>
-    <proxy url="" />
-    <olscompletion url="https://api-adresse.data.gouv.fr/search" type="ban" />
-    <searchparameters bbox="false" localities="true" features="false" />
+            attribution="© MapQuest. Données : les contributeurs d'&lt;a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='http://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" visible="false"/>
+    </baselayers>     
+    <proxy url=""/>
+    <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban"/>
+    <searchparameters bbox="false" localities="true" features="false" />   
 
-    <themes>
-        <!--Theme is large group of themes or layers directly -->
-        <theme name="Phase" collapsed="true" id="phase" icon="copy">
-            <group name="Etude d'opportunité" id="etude_opp">
-                <layer 
-                    id="l49:opportunites_agg" 
-                    name="Opportunités" 
-                    visible="false" 
-                    queryable="true" 
-                    fields="id_opp,lot,cdd,id_prog,id_nro,id_reseau,insee,com_dep,emprise,nom,support,travaux,typ_reseaux,cables, typ_cable,fibres, prev_starr,lg_prev_st, gc_typ_mut,gc_typ_int,longueur,debut_trvx,prog_dsp,moa,moe, moe_bpe, ent_tvx, commentair,statut" 
-                    aliases="ID opportunité,Lot,Chargé de déploiement, ID programmation,Nom NRO,ID réseau,Code INSEE, Commune de départ,Emprise,Nom,Travaux, Support,Type de réseau, Cables,Type de cables, Fibres, Prévision Starr,Longueur de la prévision Starr, Type de GC mutualisé, Type de GC d'interconnexion, Longueur, Début des travaux,Programmation DSP,MOA,MOE, MOE BPE, Entreprise travaux,Commentaire,Statut" 
-                    infoformat="application/vnd.ogc.gml" 
-                    attribution="Source : Metis Réseaux" 
-                    url="https://production.metis-map.fr/geoserver/wms" >
-                    <template 
-                        url="templates/phase_opportunite_agg.mst" />
-                </layer>
-                <layer 
-                    id="l49:numerisation_agg" 
-                    name="Numérisation des travaux" 
-                    visible="false" 
-                    queryable="true" 
-                    fields="id_opp,nom,lot,cdd,id_prog,id_nro,id_reseau,statut,emprise,support,travaux,typ_reseau, debut_trvx,prog_dsp,longueur,moa,commentaire,envoi_moe" 
-                    aliases="ID opportunité,Nom,Lot,Chargé de déploiement, ID programmation,Nom NRO,ID réseau,Statut,Emprise,Support,Travaux,Type de réseau, Début travaux,Programmation DSP,Longueur,MOA,Commentaire, Semaine d'envoi MOE" 
-                    infoformat="application/vnd.ogc.gml" 
-                    attribution="Source : Metis Réseaux" 
-                    url="https://production.metis-map.fr/geoserver/wms" >
-                    <template 
-                        url="templates/phase_numerisation_agg.mst" />
-                </layer>
-            </group>
-            <group 
-                name="Diagnostique" 
-                id="diag"></group>
-            <group 
-                name="PRO" 
-                id="pro"></group>
-            <group 
-                name="Support" 
-                id="support">
-                <layer 
-                    id="l49:vue_chambres_a_creer" 
-                    name="Chambres ADN à  créeer" 
-                    visible="false" 
-                    queryable="true" 
-                    fields="id_coord,fonction, statut_coord,url" 
-                    aliases="ID coordination, Fonction, Statut de la coordination,URL" 
-                    infoformat="application/vnd.ogc.gml" 
-                    attribution="Source : Syndicat Mixte Ardèche Drôme Numérique (2017)" 
-                    url="https://production.metis-map.fr/geoserver/wms" >
-                    <template 
-                        url="templates/phase_vue_chambres_a_creer.mst" />
-                </layer>
-                <!--layer 
-                id="l49:vue_chambres_existantes" 
-                name="Chambres existantes"  
-                visible="false" 
-                queryable="true" 
-                fields="id_coord, statut_coord,implant, nature, ref_chambr,code_ch1, url" 
-                aliases="ID coordination, Statut de la coordination,Implantation, Nature, Référence, Code CH1, URL" infoformat="application/vnd.ogc.gml" 
-                url="https://production.metis-map.fr/geoserver/wms"-->
-                <layer 
-                    id="l49:vue_chambres_existantes" 
-                    name="Chambres existantes" 
-                    visible="false" 
-                    queryable="true" 
-                    infoformat="application/vnd.ogc.gml" 
-                    attribution="Source : Metis Réseaux" 
-                    url="https://production.metis-map.fr/geoserver/wms">
-                    <template 
-                        url="templates/phase_vue_chambres_existantes.mst" />
-                </layer>
-            </group>
+    <themes> 
+    	<theme name="Population"  collapsed="false" id="habitant" icon="group">
+    		<layer id="rp_struct_pop_geom" name="Densité de population (hab/km²)"  visible="false" tiled="false"
+		            searchable="false" queryable="false"
+	                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Échelle" attributestylesync="true" attributefilterenabled="true"
+	                infopanel="bottom-panel"
+	                infoformat="application/vnd.ogc.gml" featurecount="5"
+	                timefilter="true" timeinterval="year" timecontrol="slider" timemin="1999" timemax="2013" timevalues="1999,2008,2013"
+	                style="rphab_densite@commune"
+	                stylesalias=""
+	                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+	                attribution="Sources: INSEE (RP) - OpenStreetMap | Traitements: Région Bretagne - Service connaissance, observation, planification et prospective" 
+	                metadata="http://kartenn.region-bretagne.fr/geonetwork/?uuid=26324529-e0b7-450c-9506-2dcdca608f5f"
+	                metadata-csw="http://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=26324529-e0b7-450c-9506-2dcdca608f5f">
+		        </layer>
+		</theme>         
+    	<theme name="Environnement"  collapsed="false" id="environnement" icon="leaf"> 
+        	<layer id="reserve_naturelle_regionale" name="Réserves naturelles régionales"  visible="false" tiled="false"
+                    searchable="false" queryable="true" fields="axe" aliases="axe"   
+                    infoformat="application/vnd.ogc.gml" featurecount="20"
+                    sld="http://kartenn.region-bretagne.fr/styles/reserve_naturelle.sld" 
+                    url="http://ows.region-bretagne.fr:80/geoserver/rb/wms"
+                    legendurl="http://kartenn.region-bretagne.fr/doc/icons_region/reserve_naturelle.svg" 
+                    attribution="Source: Région Bretagne" 
+                    metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=77f8fc52-ae57-41d1-8f08-7b121b013f51"
+                    metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=77f8fc52-ae57-41d1-8f08-7b121b013f51" >
+		            <template url="templates/global.reserve_naturelle_reg.mst"></template>
+		    </layer>                               
         </theme>
-        <theme 
-            name="Réseau ADN" 
-            collapsed="true" 
-            id="adn" 
-            icon="wifi">
-            <group 
-                name="Découpage" 
-                id="decoupage">
-                <layer 
-                    id="l49:nro_znro" 
-                    name="NRO/ZNRO" 
-                    visible="false" 
-                    queryable="true" 
-                    fields="nro_ref,annee_pr, nb_majic,nb_tech,nb_plu,nb_total, comment" 
-                    aliases="Nom NRO,Année programmation, Nombre MAJIC, Nombre tech, Nombre plu, Nombre total, Commentaire" infoformat="application/vnd.ogc.gml" 
-                    attribution="Source : Syndicat Mixte Ardèche Drôme Numérique (2017)" url="https://production.metis-map.fr/geoserver/wms" >
-                    <template 
-                        url="templates/reseau_adn_l49_nro_znro.mst" />
-                </layer>
-                <layer 
-                    id="l49:sro_zsro" 
-                    name="SRO/ZSRO" 
-                    visible="false" 
-                    queryable="true" 
-                    fields="msro_ref,annee_pr, nb_majic,nb_tech,nb_plu,nb_total, comment" 
-                    aliases="Nom MSRO,Année programmation, Nombre MAJIC, Nombre tech, Nombre plu, Nombre total, Commentaire" attribution="Source : Syndicat Mixte Ardèche Drôme Numérique (2017)" 
-                    infoformat="application/vnd.ogc.gml" 
-                    url="https://production.metis-map.fr/geoserver/wms" >
-                    <template 
-                        url="templates/reseau_adn_l49_sro_zsro.mst" />
-                </layer>
-                <layer 
-                    id="l49:adn_programmation" 
-                    name="Programmation ADN" 
-                    visible="false" 
-                    queryable="true" 
-                    fields="pr,phase,total_pris,prises_uti,cout_prise,communes,epci" 
-                    attribution="Source : Syndicat Mixte Ardèche Drôme Numérique (2017)" 
-                    aliases="ID programmation, Phase,Nombre de prises total, Prises utilisées, Coût, Commune,EPCI 2012" 
-                    infoformat="application/vnd.ogc.gml" 
-                    url="https://production.metis-map.fr/geoserver/wms" >
-                    <template 
-                        url="templates/reseau_adn_l49_adn_programmation.mst" />
-                </layer>
-                <layer 
-                    id="l49:adn_lots_geographiques" 
-                    name="Lots géographiques" 
-                    visible="false" 
-                    queryable="true" 
-                    fields="label,cdd" 
-                    aliases="Lot,Chargé de déploiement" 
-                    infoformat="application/vnd.ogc.gml" 
-                    attribution="Source : Syndicat Mixte Ardèche Drôme Numérique (2017)" 
-                    url="https://production.metis-map.fr/geoserver/wms" >
-                    <template url="templates/reseau_adn_l49_adn_lots_geographiques.mst" />
-                </layer>
-            </group>
-            <group 
-                name="Déploiement réalisé" 
-                id="dep_realises">
-                <layer 
-                    id="l49:vue_cables" 
-                    name="Cables" 
-                    visible="false" 
-                    queryable="true" 
-                    fields="reference, equipement,soustype,modele,diametre,nbr_tubes,nbr_fibres,statut" 
-                    aliases="Référence,Equipement,Sous-Type,Modéle,Diamètre,Nombre de tubes, Nombre de fibres,Statut" 
-                    attribution="Source : Syndicat Mixte Ardèche Drôme Numérique (2017)" 
-                    infoformat="application/vnd.ogc.gml" 
-                    url="https://production.metis-map.fr/geoserver/wms" >
-                    <template 
-                        url="templates/reseau_adn_l49_vue_cables.mst" />
-                </layer>
-                <layer 
-                    id="l49:vue_chambres_adn_exist" 
-                    name="Chambres ADN" 
-                    visible="false" 
-                    queryable="true" 
-                    fields="reference,equipement,modele,address,codeinsee,statut" 
-                    aliases="Référence,Equipement,Modéle,Adresse,Code INSEE,Statut" 
-                    infoformat="application/vnd.ogc.gml" 
-                    attribution="Source : Syndicat Mixte Ardèche Drôme Numérique (2017)" 
-                    url="https://production.metis-map.fr/geoserver/wms" >
-                    <template 
-                        url="templates/reseau_adn_l49_vue_chambres_adn_exist.mst" />
-                </layer>
-                <layer id="l49:vue_souterrain" 
-                    name="Souterrain" 
-                    visible="false" 
-                    attribution="Source : Syndicat Mixte Ardèche Drôme Numérique (2017)" 
-                    queryable="true" 
-                    fields="reference,equipement,modele,fourreaux,statut" 
-                    aliases="Référence,Equipement,Modéle,Nombre de fourreaux,Statut" 
-                    infoformat="application/vnd.ogc.gml" 
-                    url="https://production.metis-map.fr/geoserver/wms" >
-                    <template 
-                        url="templates/reseau_adn_l49_vue_souterrain.mst" />
-                </layer>
-                <layer 
-                    id="l49:vue_adr_shl" 
-                    name="Shelters" 
-                    visible="false" 
-                    queryable="true" 
-                    attribution="Source : Syndicat Mixte Ardèche Drôme Numérique (2017)" 
-                    fields="user_ref, soustype,address,location,codeinsee,statut" 
-                    aliases="Référence utilisateur,Type,Adresse,Commune,Code INSEE,Statut" 
-                    infoformat="application/vnd.ogc.gml" 
-                    url="https://production.metis-map.fr/geoserver/wms" >
-                    <template 
-                        url="templates/reseau_adn_l49_vue_adr_shl.mst" />
-                </layer>
-            </group>
-            <group name="Déploiement à réaliser" id="dep_futur">
-                <layer 
-                    id="l49:vue_starr_transport" 
-                    name="Starr transport" 
-                    visible="false" 
-                    queryable="true" 
-                    fields="id_element,id_reseau,support,sites,prises,fibres,fibres_p2p,fibres_pon,fibres_res,cables,longueur,cout,nom_nro"
-                    aliases="ID,ID réseau,Support,Sites,Prises,Fibres,Fibres p2p,Fibres pon,Fibres res,Cables,Longueur,Coût,Nom NRO" 
-                    attribution="Source : Starr (2017)" 
-                    infoformat="application/vnd.ogc.gml" 
-                    url="https://production.metis-map.fr/geoserver/wms">
-                     <template 
-                        url="templates/reseau_adn_l49_vue_starr_transport.mst" />
-                </layer>
-                <layer 
-                    id="l49:vue_starr_liens" 
-                    name="Starr lien" 
-                    visible="false" 
-                    queryable="true" 
-                    fields="id_element,id_reseau,support,sites,prises,fibres,fibres_p2p,fibres_pon,fibres_res,cables,longueur,cout,nom_nro"
-                    aliases="ID,ID réseau,Support,Sites,Prises,Fibres,Fibres p2p,Fibres pon,Fibres res,Cables,Longueur,Coût,Nom NRO" 
-                    attribution="Source : Starr (2017)" 
-                    infoformat="application/vnd.ogc.gml" 
-                    url="https://production.metis-map.fr/geoserver/wms">
-                    <template 
-                        url="templates/reseau_adn_l49_vue_starr_liens.mst" />
-                </layer>
-            </group>
+        <theme name="Éducation"  collapsed="false" id="education" icon="graduation-cap">  
+		    <layer id="lycee" name="Lycées"  visible="false" tiled="false"
+                searchable="false" queryable="true" fields="axe" aliases="axe" 
+                attributefilter="true" attributefield="secteur_li" 
+				attributevalues="Public,Privé sous contrat avec l'éducation nationale"  attributelabel="Filtre" attributestylesync="false" attributefilterenabled="false"  
+                infoformat="application/vnd.ogc.gml" featurecount="20"
+                sld="http://kartenn.region-bretagne.fr/styles/lycee_secteur.sld" 
+                url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+                attribution="Source: Région Bretagne" 
+                metadata="http://kartenn.region-bretagne.fr/geonetwork/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25"
+                metadata-csw="http://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25" >	   
+                <template url="templates/global.lycee.mst"></template> 
+		    </layer>                             
         </theme>
-        <theme name="Enedis" collapsed="true" id="enedis" icon="bolt">
-            <layer 
-                id="l49:troncon_aerien" 
-                name="Tronçons aériens" 
-                visible="false" 
-                queryable="true" fields="nature,designatio,nom_commun,code_insee" 
-                aliases="Nature du tronçon,Désignation, Commune, Code INSEE" 
-                attribution="Source : ERDF (2017)" 
-                infoformat="application/vnd.ogc.gml" 
-                url="https://production.metis-map.fr/geoserver/wms" >
-                <template 
-                    url="templates/enedis_l49_troncon_aerien.mst" />
-            </layer>
-
-        </theme>
-        <theme name="Orange" collapsed="true" id="orange" icon="tty">
-            <layer 
-                id="l49:vue_arciti" 
-                name="ArcIti" 
-                visible="false" 
-                queryable="true" 
-                fields="compositio,mode_pose,longueur" 
-                aliases="Composition,Mode de pose, Longueur" 
-                infoformat="application/vnd.ogc.gml" 
-                attribution="Source : Orange (2017)" 
-                url="https://production.metis-map.fr/geoserver/wms" >
-                 <template 
-                    url="templates/orange_l49_vue_arciti.mst" />
-                </layer>
-            <layer id="l49:vue_chambres_ft" 
-                name="Chambres FT" 
-                visible="false" 
-                attribution="Source : Orange (2017)" 
-                queryable="true" 
-                fields="code_ch1,ref_chambr,ref_note,code_com,cle_mkt2,implant" 
-                aliases="Numéro de chambre, Type de chambre, Type de chambre spécifique, Code commune, Clé MKT2,Type d'implantation " 
-                infoformat="application/vnd.ogc.gml" 
-                url="https://production.metis-map.fr/geoserver/wms" >
-                 <template 
-                    url="templates/orange_l49_vue_chambres_ft.mst" />
-                </layer>
-        </theme>
-        <theme name="Territoire" collapsed="false" id="territoire" icon="globe">
-            <group name="Bâtiments" id="batiments">
-                <layer 
-                    id="l49:vue_adn_suf_majic_2016" 
-                    name="Bâtiments raccordables" 
-                    visible="false" 
-                    queryable="true" 
-                    fields="adresse,insee,commune,nb_total,nom_sro,nature,type,proprio" 
-                    aliases="Adresse,Code INSEE,Commune,Nombre,Nom SRO,Nature,Type,Propriétaire" 
-                    infoformat="application/vnd.ogc.gml" 
-                    attribution="Source : MAJIC 2016" 
-                    url="https://production.metis-map.fr/geoserver/wms" > 
-                    <template 
-                        url="templates/territoire_l49_vue_adn_suf_majic_2016.mst" />
+        <theme name="Transports"  collapsed="false" id="transport" icon="bus"> 
+        	<group name="Transport ferroviaire" id="grp1" >
+                <layer id="troncon_ferroviaire" name="Lignes ferroviaires"  visible="false" tiled="false"
+                    searchable="false" queryable="true" fields="axe" aliases="axe"
+                    infoformat="application/vnd.ogc.gml" featurecount="20"
+                    style="ligne_ferroviaire_defaut" 
+					stylesalias="Par défaut"
+                    url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+                    attribution="Source: Région Bretagne" 
+					metadata="http://kartenn.region-bretagne.fr/geonetwork/?uuid=0da27e88-4da6-423e-ba4c-dbcad9128cd2"
+					metadata-csw="http://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0da27e88-4da6-423e-ba4c-dbcad9128cd2">
+		            <template url="templates/transport.ligne_ferroviaire.mst"></template>
+		        </layer>
+                <layer id="arret_ferroviaire" name="Arrêts ferroviaires régionaux"  visible="false" tiled="false" 
+                    searchable="true" queryable="true" fields="" aliases=""                    
+                    infoformat="application/vnd.ogc.gml" featurecount="20"
+                    style="arret_ferroviaire_defaut, arret_ferroviaire_nature"
+                    stylesalias="Par défaut,Nature des arrêts ferroviaires"
+                    legendurl="http://kartenn.region-bretagne.fr/doc/icons_region/gare_ter.svg"
+                    url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+                    attribution="Source: Région Bretagne" 
+                    metadata="http://kartenn.region-bretagne.fr/geonetwork/?uuid=4a9d13f7-17be-4a98-9f8f-907cf223072f"
+					metadata-csw="http://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=4a9d13f7-17be-4a98-9f8f-907cf223072f" >
+                    <template url="templates/global.arret_ferroviaire.mst"></template>
                 </layer>
             </group>
-            <group name="Limites administratives" id="limites_admin">
-                <!--layer 
-                id="l49:communes" 
-                name="Communes" 
-                type="geojson" 
-                legendurl="img/legend/communes_opt.png" 
-                url="https://geoserver.metis-map.fr/geoserver/wfs?SERVICE=WFS&amp;REQUEST=GETFEATURE&amp;TYPENAME=l49:communes&amp;outputFormat=application/json&amp;srsName=EPSG:4326" 
-                fields="commune,codinsee,dpt,region,epci_2012" 
-                aliases="Commune,Code INSEE,Département,Région,EPCI 2012" visible="true" /-->
-                <layer 
-                    id="l49:communes" 
-                    name="Communes" 
-                    visible="true" 
-                    url="https://production.metis-map.fr/geoserver/wms" 
-                    queryable="true" 
-                    fields="commune,codinsee,dpt,region,epci_2012" 
-                    aliases="Commune,Code INSEE,Département,Région,EPCI 2012" 
-                    infoformat="application/vnd.ogc.gml" 
-                    featurecount="2" > 
-                    <template url="templates/territoire_l49_communes.mst" />
-                </layer>
-                <layer 
-                    id="epci" 
-                    name="Intercommunauté" 
-                    visible="false" 
-                    url="customlayers/epci.js" 
-                    queryable="true" 
-                    legendurl="img/legend/epci.png" 
-                    fields="nom_epci" 
-                    aliases="EPCI" 
-                    type="customlayer" 
-                    tooltip="true" 
-                    attribution="Source : OpenStreetMap (2015)" 
-                    infoformat="application/vnd.ogc.gml" >
-                     <template 
-                        url="templates/territoire_l49_epci.mst" />
-                </layer>
+		    <group name="Transport maritime" id="grp2" >	    
+                <layer id="gare_maritime" name="Gares maritimes"  visible="false" tiled="false"
+                    searchable="false" queryable="true" fields="axe" aliases="axe"   
+                    infoformat="application/vnd.ogc.gml" featurecount="20"
+                    sld="http://kartenn.region-bretagne.fr/styles/gare_maritime.sld" 
+                    url="https://geobretagne.fr/geoserver/dreal_b/ows"
+                    legendurl="http://kartenn.region-bretagne.fr/doc/icons_region/gare_maritime.svg" 
+                    attribution="Source: DREAL Bretagne" 
+                    metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=ffcb4e72-a01b-44f0-8da3-95a5b13c6e42"
+                    metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=ffcb4e72-a01b-44f0-8da3-95a5b13c6e42" >
+		            <template url="templates/global.gare_maritime.mst"></template>
+		        </layer>
+		        <layer id="port" name="Ports"  visible="false" tiled="false"
+                    searchable="false" queryable="true" fields="axe" aliases="axe"   
+                    infoformat="application/vnd.ogc.gml" featurecount="20"
+                    sld="http://kartenn.region-bretagne.fr/styles/port.sld" 
+                    url="http://ows.region-bretagne.fr:80/geoserver/rb/wms"
+                    legendurl="http://kartenn.region-bretagne.fr/doc/icons_region/port.svg" 
+                    attribution="Source: Région Bretagne" 
+                    metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=c55c4fba-6a37-48ea-8754-a1bf770a684b"
+                    metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=c55c4fba-6a37-48ea-8754-a1bf770a684b" >
+		            <template url="templates/global.port.mst"></template>
+		        </layer>	
             </group>
-            <group name="Limites cadastrales" id="limites_cad">    
-                <layer 
-                    id="l49:cadastre_26_07" 
-                    name="Cadastre" 
-                    visible="false" 
-                    queryable="false" 
-                    attribution="Source : EDIGEO (2018)" 
-                    url="https://production.metis-map.fr/geoserver/wms" />
-            </group>
+        </theme>                    
+        <theme name="Découpages territoriaux"  collapsed="true" id="territoire" icon="globe"> 
+        <layer id="commune" name="Commune" visible="false" queryable="false" 
+                fields="nom_geo" aliases="Nom" 
+                type="customlayer" style="" opacity="1" legendurl="img/legend/commune.png" 
+                url="customlayers/commune.js" 
+                tooltip="true"
+                attribution="Source: GéoBretagne" 
+                metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=b08e6cb1-236c-49b7-88f9-42b500d274d5" 
+                metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=b08e6cb1-236c-49b7-88f9-42b500d274d5"/>	    
+            <layer id="epci" name="Intercommunalité" visible="true" queryable="false" 
+                fields="nom_geo" aliases="Nom"
+                customcontrol="true"
+                type="customlayer" style="" opacity="1" legendurl="img/legend/epci.png" 
+                url="customlayers/epci.js" 
+                tooltip="true" tooltipenabled="true"
+                attribution="Source: GéoBretagne" 
+                metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=2298d744-49cb-4fcb-9487-26f916fecdff" 
+                metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=2298d744-49cb-4fcb-9487-26f916fecdff"/>       
         </theme>
 
-        <theme name="Analyse thématique" collapsed="true" id="analyse_thematique" icon="cogs">
-            <layer 
-                id="l49:vue_grille_densite_50_nb_suf" 
-                name="Grille de densité des bâtiments raccordables" 
-                visible="false" 
-                queryable="true" 
-                fields="nb_suf, radius" 
-                aliases="Nombre de bâtiments raccordables,Rayon du cluster" 
-                attribution="Source : Metis Réseaux" 
-                infoformat="application/vnd.ogc.gml" 
-                url="https://production.metis-map.fr/geoserver/wms" >
-                 <template 
-                    url="templates/territoire_l49_vue_grille_densite_50_nb_suf.mst" />
-                </layer>
-            <layer 
-                id="l49:vue_cluster_suf" 
-                name="Cluster des bâtiments raccordables" 
-                visible="false" 
-                queryable="true" 
-                fields="nb_suf" 
-                aliases="Nombre de bâtiments raccordables" 
-                attribution="Source : Metis Réseaux" 
-                infoformat="application/vnd.ogc.gml" 
-                url="https://production.metis-map.fr/geoserver/wms" >
-                <template 
-                    url="templates/territoire_l49_vue_grille_densite_50_nb_suf.mst" />
-                </layer>
-            <layer 
-                id="l49:heatmap" 
-                name="Carte de chaleur des bâtiments raccordables" 
-                visible="false" 
-                queryable="false" 
-                legendurl="img/legend/heatmap_opt.png" 
-                attribution="Source : Metis Reseaux" 
-                url="https://production.metis-map.fr/geoserver/wms" />
-            <layer 
-                id="l49:vue_communes_centroides" 
-                name="Proportion de GC à créer par commune" 
-                visible="false" 
-                queryable="true" 
-                fields="emprise_mob" 
-                aliases="Nombre total de ml" 
-                attribution="Source : Metis Réseaux" 
-                infoformat="application/vnd.ogc.gml" 
-                url="https://production.metis-map.fr/geoserver/wms" >
-                <template 
-                    url="templates/territoire_l49_vue_communes_centroides.mst" />
-                </layer>
-            <layer 
-                id="l49:vue_emprises_mobilisables_26_07" 
-                name="Priorisation du GC à créer" 
-                visible="false" 
-                queryable="false" 
-                attribution="Source : Metis Réseaux" 
-                url="https://production.metis-map.fr/geoserver/wms" />
-        </theme>
     </themes>
 </config>
