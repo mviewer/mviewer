@@ -353,7 +353,9 @@ Exemple : "{{name}} ({{city}})". A n'utiliser que si les infobulles sont activé
 * **secure**: Précise si la couche est protégée ( méchanisme geoserver ) auquel cas un test est affectué pour savoir 
 si la couche est accessible. SI ce n'est pas le cas, la couche est retirée du panneau et de la carte.
 * **toplayer**: Précise si la couche demeure figée". Booléen. Défaut = true.
-* **infoformat**: Format du GetFeatureInfo. 2 formats sont supportés : text/html et application/vnd.ogc.gml.
+* **infoformat**: Format du GetFeatureInfo. 2 formats sont supportés : text/html, application/vnd.ogc.gml (pour 
+GeoServer et MapServer), application/vnd.esri.wms_raw_xml ou application/vnd.esri.wms_featureinfo_xml (pour ArcGIS 
+Server).
 * **featurecount**: Nombre d'éléments retournés lors de l'interrogation.
 * **style**: Style(s) de la couche. Si plusieurs styles , utiliser la virgule comme séparateur.
 Si la couche est de type wms, il faut faire référence à un style sld.
@@ -392,9 +394,11 @@ actualisée à chaque changement d'échelle de la carte.
 
 ####### Nœuds
 
-* **<template>**: contient le template type Mustache (https://github.com/janl/mustache.js) à appliquer à la fiche d'information.
-Pour fonctionner, il faut que le paramètre **infoformat** ait la valeur "application/vnd.ogc.gml".
-Le template peut être un fichier statique ex templates/template1.mst ou directement saisi dans le nœud <template> avec les balises <![CDATA[ ]]>.
+* **<template>**: contient le template type Mustache (https://github.com/janl/mustache.js) à appliquer à la fiche 
+d'information. Pour fonctionner, il faut que le paramètre **infoformat** ait la valeur "application/vnd.ogc.gml" (pour 
+GeoServer et MapServer), voire "application/vnd.esri.wms_raw_xml" ou "application/vnd.esri.wms_featureinfo_xml" (pour 
+ArcGIS Server). Le template peut être un fichier statique ex templates/template1.mst ou directement saisi dans le nœud 
+<template> avec les balises <![CDATA[ ]]>.
 
 
 Utilisation		
@@ -405,6 +409,9 @@ Utilisation
 Il est possible d'instancier un mviewer avec des paramètres transmis par URL
 
 * **config**: Fichier de configuration à charger ex: mviewer/?config=demo/l93.xml
-* **theme**: Theme css à utiliser ex: ?theme=geobretagne pour charger le theme doit être dans css/themes/geobretagne.css.
-* **wmc**: liste des contextes OGC WMC (séparés par des virgules) à charger afin d'alimenter le panel de gauche ex: mviewer/?wmc=demo/hydro.wmc
-* **popup**: true ou false. Si true, Une popup s'affiche sur la carte afin d'afficher le résultat de l'interrogation de couches.
+* **theme**: Theme css à utiliser ex: ?theme=geobretagne pour charger le theme doit être dans 
+css/themes/geobretagne.css.
+* **wmc**: liste des contextes OGC WMC (séparés par des virgules) à charger afin d'alimenter le panel de gauche ex : 
+mviewer/?wmc=demo/hydro.wmc
+* **popup**: true ou false. Si true, Une popup s'affiche sur la carte afin d'afficher le résultat de l'interrogation de 
+couches.
