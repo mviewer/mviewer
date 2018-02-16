@@ -99,7 +99,7 @@ a:hover{
 
 #searchtool {	
 	width:220px;
-	position: fixed;
+	/*position: fixed;*/
 	right:50px;    
 	top: 3px;
 }
@@ -125,14 +125,26 @@ a#searchparams {
 #adresse-attribution {
   font-size: 10px;
 }
+@media (max-width: 767px){
+	#searchresults {
+		max-width:300px;
+		min-width: 246px;
+		position: fixed;
+		left:50px;
+		top: 150px;
+		z-index: 5;
+	}
+}
 
-#searchresults {
-    max-width:300px;	
-    min-width: 246px;
-	position: fixed;
-	right:65px;
-	top: 60px;
-    z-index: 5;
+@media (min-width: 768px) {
+	#searchresults {
+		max-width:300px;
+		min-width: 246px;
+		position: fixed;
+		right:65px;
+		top: 60px;
+		z-index: 5;
+	}
 }
 
 #searchresults li {
@@ -937,6 +949,10 @@ input[type=range].mv-range:focus::-ms-fill-upper {
 	line-height:1.15;
 }
 
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border-color: transparent;
+    box-shadow: none;
+}
 /*******************************
 ------------- SEARCH
 ********************************/

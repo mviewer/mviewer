@@ -174,33 +174,45 @@ $(document).ready(function () {
             <a class="navbar-brand" href="#">
                 <img alt="Logo" src="img/logo/earth-globe.svg" class="mv-logo">
             </a>
+			<a type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" href="#">
+				<span class="glyphicon glyphicon-search"></span>
+			</a>
             <!--<a class="navbar-brand" href="#"> Mviewer</a>-->
         </div>        
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">            
-            <ul class="nav navbar-nav">
-                <!--<li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>-->
-            </ul>
-            <p class="navbar-text mv-title">mViewer</p>
-            <div class="navbar-form navbar-left" id="coordinates">
-                <span class=""></span>
-            </div>
-            <div class="navbar-form navbar-left" role="search" id="searchtool">
-                <div class="form-group input-group">
-                    <input type="text" class="form-control" placeholder="Rechercher" id="searchfield">
-                    <div class="input-group-btn">
-                        <button type="button" class="btn btn-default mv-searchtool-delete">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </button>
-                        <button type="button" class="btn btn-default" aria-label="Help" data-toggle="modal" data-target="#parameterspanel">
-                            <span class="glyphicon glyphicon-option-vertical"></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="nav navbar-nav navbar-right">
-               <button type="button" class="btn btn-default navbar-btn mv-navbar-btn" data-toggle="modal" data-target="#help">?</button>
-            </div>
-        </div>        
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="navbar-text mv-title hidden-xs hidden-sm hidden-md">
+					mViewer
+				</li>
+				<li class="hidden-xs hidden-sm hidden-md">
+					<div class="navbar-form navbar-left" id="coordinates">
+						<span class=""></span>
+					</div>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<div class="navbar-form" role="search" id="searchtool">
+						<div class="form-group input-group">
+							<input type="text" class="form-control" placeholder="Rechercher" id="searchfield">
+							<div class="input-group-btn">
+								<button type="button" class="btn btn-default mv-searchtool-delete">
+									<span class="glyphicon glyphicon-remove"></span>
+								</button>
+								<button type="button" class="btn btn-default" aria-label="Help" data-toggle="modal" data-target="#parameterspanel">
+									<span class="glyphicon glyphicon-option-vertical"></span>
+								</button>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li class="hidden-xs hidden-sm hidden-md">
+					<div class="nav navbar-nav">
+					   <button type="button" class="btn btn-default navbar-btn mv-navbar-btn" data-toggle="modal" data-target="#help">?</button>
+					</div>
+				</li>
+			</ul>
+        </div>       
     </nav>
     <div id="wrapper">
         <!-- LEFT MENU SIDEBAR -->
@@ -281,6 +293,14 @@ $(document).ready(function () {
                      tabindex="111" accesskey="11" class="btn btn-default btn-raised">
                      <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
                 </button>
+				<button id="geolocbtn" type="button" class="btn btn-default" onclick="mviewer.geoloc();"
+										title="Se localiser" tabindex="103" accesskey="3">
+					<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+				</button>
+				<button id="northbtn" type="button" class="btn btn-default" onclick="mviewer.northRotate();"
+						title="Orienté au nord" tabindex="106" accesskey="6">
+					<span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
+				</button>
                  <a href="#" id="exportpng" title="Exporter carte au format image" download="carte.png"
                     class="btn btn-default btn-raised"  tabindex="113" accesskey="13" style="display:none;">
                      <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>

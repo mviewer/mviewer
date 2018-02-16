@@ -79,6 +79,7 @@ Personnalisation de l'application (overriding)
 * **showhelp**: Affiche l'aide au démarrage  true/false || false.
 * **style**: style à utiliser || css/themes/default.css [ressource](https://themeroller.jquerymobile.com/)
 * **exportpng**: Enables map export as png file  true/false || false. Export is possible only with local layers (same origin) or with layers served with CORS.
+* **geoloc**: Enables map geolocation true/false || false. Need https connection.
 * **measuretools**: Enables measure tools and tools mode  true/false || false.
 * **stats**: Enables stats mode  true/false || false.
 * **statsurl**: url to send stats activity eg (login, ip, application title, date).
@@ -98,6 +99,7 @@ Représente les configurations de base du visualiseur.
 * **maxzoom**: Entier représentant le zoom maximum.
 * **projection**: Projection EPSG des couches présentes sur le visualiseur.
 * **zoom**: Zoom initial du visualiseur
+* **rotation**: Active la possibilité de rotation de la carte (par defaut false). Si activé ajout du bouton Nord.
 * **projextent**: Etendue de la projection 
 
 ### Nœud baselayers
