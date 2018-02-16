@@ -1563,12 +1563,9 @@ btn:active, btn.active, .btn-default.active, .btn-default:active, btn:focus, btn
 	border-bottom-right-radius: 0px;
 }
 
-button#measureareabtn{
+button.button-tools{
 	border-radius:0px;
 	border:0px;
-}
-button#measurelinebtn{
-	border-radius:0px;
 }
 
 .form-control{
