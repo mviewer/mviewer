@@ -36,6 +36,23 @@ a:hover{
     background: url(../img/grid.png) repeat scroll center top #fff;
 }
 
+#mouse-position{
+    width: auto;
+    position: fixed;    
+    right: 6%;
+    height: 15px;
+    bottom: 11px;
+    color: #777;    
+    background-color: rgba(255,255,255,0.7);
+    text-align: center;    
+    font-size: 10px; 
+    font-family: 'roboto_regular', Arial, Sans-serif;
+    outline: rgba(255,255,255,0.7) solid 2px;
+    border: rgba(119,119,119,0.8) solid 1px;
+    border-top-color: rgba(119,119,119,0);    
+}
+
+
 /*******************************
 ------------- OPENLAYERS 3 CSS OVERRIDE
 ********************************/
@@ -82,7 +99,7 @@ a:hover{
 
 #searchtool {	
 	width:220px;
-	position: fixed;
+	/*position: fixed;*/
 	right:50px;    
 	top: 3px;
 }
@@ -108,14 +125,26 @@ a#searchparams {
 #adresse-attribution {
   font-size: 10px;
 }
+@media (max-width: 767px){
+	#searchresults {
+		max-width:300px;
+		min-width: 246px;
+		position: fixed;
+		left:50px;
+		top: 150px;
+		z-index: 5;
+	}
+}
 
-#searchresults {
-    max-width:300px;	
-    min-width: 246px;
-	position: fixed;
-	right:65px;
-	top: 60px;
-    z-index: 5;
+@media (min-width: 768px) {
+	#searchresults {
+		max-width:300px;
+		min-width: 246px;
+		position: fixed;
+		right:65px;
+		top: 60px;
+		z-index: 5;
+	}
 }
 
 #searchresults li {
@@ -920,6 +949,10 @@ input[type=range].mv-range:focus::-ms-fill-upper {
 	line-height:1.15;
 }
 
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border-color: transparent;
+    box-shadow: none;
+}
 /*******************************
 ------------- SEARCH
 ********************************/
@@ -1530,12 +1563,9 @@ btn:active, btn.active, .btn-default.active, .btn-default:active, btn:focus, btn
 	border-bottom-right-radius: 0px;
 }
 
-button#measureareabtn{
+button.button-tools{
 	border-radius:0px;
 	border:0px;
-}
-button#measurelinebtn{
-	border-radius:0px;
 }
 
 .form-control{
