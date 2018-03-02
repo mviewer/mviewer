@@ -19,7 +19,7 @@
     <baselayer visible="true" id="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg" title="Esri world imagery" label="Esri world imagery" type="OSM" url="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"  ></baselayer> 
 </baselayers>
 <themes mini="false">    	
-    <theme name="Morbihan"  collapsed="true" id="ocs56" icon="file-text"> 
+    <theme name="Morbihan"  collapsed="false" id="ocs56" icon="file-text"> 
         <layer id="ocs56" name="Couverture" visible="true" queryable="true"
             type="customlayer" opacity="0.5" legendurl="img/blank.gif"
             url="customlayers/ocs56.js"
