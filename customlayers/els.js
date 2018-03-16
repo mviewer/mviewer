@@ -22,90 +22,73 @@ var els2GeoJSON = function (data) {
 var vectorSource = new ol.source.Vector({
   format: new ol.format.GeoJSON(),
   loader: function(extent, resolution, projection) {
-     var filter = {"match_all" : {}};
-     if (mviewer.customLayers.els.filter) {
-        filter = {
-                    "match": {
-                        "_all":{
-                            "query": mviewer.customLayers.els.filter
+   var filter = {"match_all" : {}};
+   if (mviewer.customLayers.els.filter) {
+    filter = {
+        "match": {
+            "_all":{
+                "query": mviewer.customLayers.els.filter
                             //,"fuzziness":"AUTO"
                         }
                     }
                 };
-     }
-     var proj = projection.getCode();
-     var e = ol.proj.transformExtent(extent, proj, 'EPSG:4326');
-     var url = "http://ows.region-bretagne.fr/kartenn/_search?type=etude_patrimoine_simple";
-     /*var geofilter = JSON.stringify({
-        "from" : 0, "size" : 5000,
-        "query": {
-            "bool" : {
-                "must" : {
-                    "match_all" : {}
-                },
-                "filter" : {
-                    "geo_shape" : {
-                        "geometry" : {
-                            "shape":{"type":"envelope","coordinates":[[e[0], e[1]],[e[2],e[3]]] }
-                        }
-                    }
-                }
             }
-        }
-    });*/
-
-    var geofilter = JSON.stringify({
-        "from" : 0, "size" : 5000,
-        "query": {
-            "bool": {
-                "must": [
-                filter,
-                {
+            var proj = projection.getCode();
+            var e = ol.proj.transformExtent(extent, proj, 'EPSG:4326');
+            var url = "http://ows.region-bretagne.fr/kartenn/_search?type=etude_patrimoine_simple";
+            var geofilter = JSON.stringify({
+                "from" : 0, "size" : 5000,
+                "query": {
                     "bool": {
-                        "should":[{
-                            "type":{
-                                "value":"etude_patrimoine_simple"
+                        "must": [
+                        filter,
+                        {
+                            "bool": {
+                                "should":[{
+                                    "type":{
+                                        "value":"etude_patrimoine_simple"
+                                    }
+                                }]
                             }
-                        }]
-                    }
-                }],
-                "filter": {
-                    "geo_shape":{
-                        "geometry": {
-                            "shape":{
-                                "type":"envelope",
-                                "coordinates":[[e[0], e[1]],[e[2],e[3]]]
+                        }],
+                        "filter": {
+                            "geo_shape":{
+                                "geometry": {
+                                    "shape":{
+                                        "type":"envelope",
+                                        "coordinates":[[e[0], e[1]],[e[2],e[3]]]
+                                    }
+                                }
                             }
                         }
                     }
                 }
-            }
-        }
-    });
-     var xhr = new XMLHttpRequest();
-     xhr.open('POST', url);
-     var onError = function() {
-       vectorSource.removeLoadedExtent(extent);
-     }
-     xhr.onerror = onError;
-     xhr.onload = function() {
-       if (xhr.status == 200) {
-         vectorSource.addFeatures(
+            });
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', url);
+            var onError = function() {
+             vectorSource.removeLoadedExtent(extent);
+         }
+         xhr.onerror = onError;
+         xhr.onload = function() {
+             if (xhr.status == 200) {
+               vectorSource.addFeatures(
              //vectorSource.getFormat().readFeatures(xhr.responseText));
-             vectorSource.getFormat().readFeatures(els2GeoJSON(JSON.parse(xhr.responseText)),{ dataProjection: 'EPSG:4326', featureProjection: proj})
-         );
-       } else {
-         onError();
+             vectorSource.getFormat().readFeatures(els2GeoJSON(JSON.parse(xhr.responseText)),{ dataProjection: 'EPSG:4326',
+                featureProjection: proj})
+             );
+           } else {
+               onError();
+           }
        }
-     }
-     xhr.send(geofilter);
+       xhr.send(geofilter);
    },
    strategy: ol.loadingstrategy.bbox
- });
+});
 
 mviewer.customLayers.els.layer = new ol.layer.Vector({
-        source: vectorSource,
-        style: mviewer.featureStyles.circle1
+    source: vectorSource,
+    style: mviewer.featureStyles.circle1
 });
 mviewer.customLayers.els.handle = false;
 }
