@@ -29,19 +29,19 @@
 	                timefilter="true" timeinterval="year" timecontrol="slider" timemin="1999" timemax="2013" timevalues="1999,2008,2013"
 	                style="rphab_densite@commune"
 	                stylesalias=""
-	                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+	                url="https://ows.region-bretagne.fr/geoserver/rb/wms"
 	                attribution="Sources: INSEE (RP) - OpenStreetMap | Traitements: Région Bretagne - Service connaissance, observation, planification et prospective" 
-	                metadata="http://kartenn.region-bretagne.fr/geonetwork/?uuid=26324529-e0b7-450c-9506-2dcdca608f5f"
-	                metadata-csw="http://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=26324529-e0b7-450c-9506-2dcdca608f5f">
+	                metadata="https://kartenn.region-bretagne.fr/geonetwork/?uuid=26324529-e0b7-450c-9506-2dcdca608f5f"
+	                metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=26324529-e0b7-450c-9506-2dcdca608f5f">
 		        </layer>
 		</theme>         
     	<theme name="Environnement"  collapsed="false" id="environnement" icon="leaf"> 
         	<layer id="reserve_naturelle_regionale" name="Réserves naturelles régionales"  visible="false" tiled="false"
                     searchable="false" queryable="true" fields="axe" aliases="axe"   
                     infoformat="application/vnd.ogc.gml" featurecount="20"
-                    sld="http://kartenn.region-bretagne.fr/styles/reserve_naturelle.sld" 
-                    url="http://ows.region-bretagne.fr:80/geoserver/rb/wms"
-                    legendurl="http://kartenn.region-bretagne.fr/doc/icons_region/reserve_naturelle.svg" 
+                    sld="https://kartenn.region-bretagne.fr/styles/reserve_naturelle.sld" 
+                    url="https://ows.region-bretagne.fr:80/geoserver/rb/wms"
+                    legendurl="https://kartenn.region-bretagne.fr/doc/icons_region/reserve_naturelle.svg" 
                     attribution="Source: Région Bretagne" 
                     metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=77f8fc52-ae57-41d1-8f08-7b121b013f51"
                     metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=77f8fc52-ae57-41d1-8f08-7b121b013f51" >
@@ -54,11 +54,11 @@
                 attributefilter="true" attributefield="secteur_li" 
 				attributevalues="Public,Privé sous contrat avec l'éducation nationale"  attributelabel="Filtre" attributestylesync="false" attributefilterenabled="false"  
                 infoformat="application/vnd.ogc.gml" featurecount="20"
-                sld="http://kartenn.region-bretagne.fr/styles/lycee_secteur.sld" 
-                url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+                sld="https://kartenn.region-bretagne.fr/styles/lycee_secteur.sld" 
+                url="https://ows.region-bretagne.fr/geoserver/rb/wms" 
                 attribution="Source: Région Bretagne" 
-                metadata="http://kartenn.region-bretagne.fr/geonetwork/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25"
-                metadata-csw="http://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25" >	   
+                metadata="https://kartenn.region-bretagne.fr/geonetwork/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25"
+                metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25" >	   
                 <template url="templates/global.lycee.mst"></template> 
 		    </layer>                             
         </theme>
@@ -69,10 +69,10 @@
                     infoformat="application/vnd.ogc.gml" featurecount="20"
                     style="ligne_ferroviaire_defaut" 
 					stylesalias="Par défaut"
-                    url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+                    url="https://ows.region-bretagne.fr/geoserver/rb/wms"
                     attribution="Source: Région Bretagne" 
-					metadata="http://kartenn.region-bretagne.fr/geonetwork/?uuid=0da27e88-4da6-423e-ba4c-dbcad9128cd2"
-					metadata-csw="http://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0da27e88-4da6-423e-ba4c-dbcad9128cd2">
+					metadata="https://kartenn.region-bretagne.fr/geonetwork/?uuid=0da27e88-4da6-423e-ba4c-dbcad9128cd2"
+					metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0da27e88-4da6-423e-ba4c-dbcad9128cd2">
 		            <template url="templates/transport.ligne_ferroviaire.mst"></template>
 		        </layer>
                 <layer id="arret_ferroviaire" name="Arrêts ferroviaires régionaux"  visible="false" tiled="false" 
@@ -80,11 +80,11 @@
                     infoformat="application/vnd.ogc.gml" featurecount="20"
                     style="arret_ferroviaire_defaut, arret_ferroviaire_nature"
                     stylesalias="Par défaut,Nature des arrêts ferroviaires"
-                    legendurl="http://kartenn.region-bretagne.fr/doc/icons_region/gare_ter.svg"
-                    url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+                    legendurl="https://kartenn.region-bretagne.fr/doc/icons_region/gare_ter.svg"
+                    url="https://ows.region-bretagne.fr/geoserver/rb/wms"
                     attribution="Source: Région Bretagne" 
-                    metadata="http://kartenn.region-bretagne.fr/geonetwork/?uuid=4a9d13f7-17be-4a98-9f8f-907cf223072f"
-					metadata-csw="http://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=4a9d13f7-17be-4a98-9f8f-907cf223072f" >
+                    metadata="https://kartenn.region-bretagne.fr/geonetwork/?uuid=4a9d13f7-17be-4a98-9f8f-907cf223072f"
+					metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=4a9d13f7-17be-4a98-9f8f-907cf223072f" >
                     <template url="templates/global.arret_ferroviaire.mst"></template>
                 </layer>
             </group>
@@ -92,9 +92,9 @@
                 <layer id="gare_maritime" name="Gares maritimes"  visible="false" tiled="false"
                     searchable="false" queryable="true" fields="axe" aliases="axe"   
                     infoformat="application/vnd.ogc.gml" featurecount="20"
-                    sld="http://kartenn.region-bretagne.fr/styles/gare_maritime.sld" 
+                    sld="https://kartenn.region-bretagne.fr/styles/gare_maritime.sld" 
                     url="https://geobretagne.fr/geoserver/dreal_b/ows"
-                    legendurl="http://kartenn.region-bretagne.fr/doc/icons_region/gare_maritime.svg" 
+                    legendurl="https://kartenn.region-bretagne.fr/doc/icons_region/gare_maritime.svg" 
                     attribution="Source: DREAL Bretagne" 
                     metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=ffcb4e72-a01b-44f0-8da3-95a5b13c6e42"
                     metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=ffcb4e72-a01b-44f0-8da3-95a5b13c6e42" >
@@ -103,9 +103,9 @@
 		        <layer id="port" name="Ports"  visible="false" tiled="false"
                     searchable="false" queryable="true" fields="axe" aliases="axe"   
                     infoformat="application/vnd.ogc.gml" featurecount="20"
-                    sld="http://kartenn.region-bretagne.fr/styles/port.sld" 
-                    url="http://ows.region-bretagne.fr:80/geoserver/rb/wms"
-                    legendurl="http://kartenn.region-bretagne.fr/doc/icons_region/port.svg" 
+                    sld="https://kartenn.region-bretagne.fr/styles/port.sld" 
+                    url="https://ows.region-bretagne.fr:80/geoserver/rb/wms"
+                    legendurl="https://kartenn.region-bretagne.fr/doc/icons_region/port.svg" 
                     attribution="Source: Région Bretagne" 
                     metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=c55c4fba-6a37-48ea-8754-a1bf770a684b"
                     metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=c55c4fba-6a37-48ea-8754-a1bf770a684b" >
