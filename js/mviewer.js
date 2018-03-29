@@ -67,13 +67,6 @@ mviewer = (function () {
     var _map = null;
 
     /**
-     * Property: _wgs84Sphere
-     * {ol.Sphere} Sphere used to calculate area an length measures
-     */
-
-    var _wgs84Sphere = new ol.Sphere(6378137);
-
-    /**
      * Property: _crossorigin
      * The crossOrigin attribute for loaded images. Note that you must provide a crossOrigin value
      * if you want to access pixel data with the Canvas renderer for export png for example.
@@ -202,6 +195,8 @@ mviewer = (function () {
      * {OpenLayers.Control.WMSGetFeatureInfo}
      */
 
+    var _getFeatureInfoControlEnabled = false;
+
     var _description = false;
 
     /**
@@ -305,57 +300,7 @@ mviewer = (function () {
 
     var _renderer = 'canvas';
 
-    /**
-     * The help measure tooltip message.
-     * @type {Element}
-     */
-
-    var _helpMeasureTooltipMessage;
-
-    /**
-     * Overlay to show the help messages.
-     * @type {ol.Overlay}
-     */
-
-    var _helpMeasureTooltip;
-
-    /**
-     * The measure result tooltip element.
-     * @type {Element}
-     */
-
-    var _measureTooltipResult;
-
-
-    /**
-     * Overlay to show the measurement.
-     * @type {ol.Overlay}
-     */
-    var _measureTooltip;
-
-    var _modMeasureEnabled = false;
-
     var _featureTooltip;
-    /**
-     * _sketch - Currently drawn feature.
-     * @type {ol.Feature}
-     */
-
-    var _sketch;
-
-    /**
-     * _draw - Openlayers draw interaction used by measure tools.
-     * @type {ol.interaction.Draw}
-     */
-
-    var _draw;
-
-    /**
-     * _sourceMesure - Openlayers vector source used to store measure draws.
-     * @type {ol.source.Vector}
-     */
-
-    var _sourceMesure;
 
     var _sourceEls;
 
@@ -423,155 +368,6 @@ mviewer = (function () {
         $( "[data-layerid='"+layername+"']").remove();
         _map.removeLayer(_overLayers[layername].layer);
         delete _overLayers[layername];
-    };
-
-    /**
-     * Handle pointer move used by measure tools.
-     * @param {ol.MapBrowserEvent} evt
-     */
-
-    var _pointerMoveHandler = function(evt) {
-        if (evt.dragging) {
-            return;
-        }
-        /** @type {string} */
-        var helpMsg = 'Cliquer pour débuter la mesure';
-        if (_sketch) {
-            var geom = (_sketch.getGeometry());
-            if (geom instanceof ol.geom.Polygon) {
-                helpMsg = 'Cliquer pour poursuivre le polygone';
-            } else if (geom instanceof ol.geom.LineString) {
-                helpMsg = 'Cliquer pour poursuivre la ligne';
-            }
-        }
-        _helpMeasureTooltipMessage.innerHTML = helpMsg;
-        _helpMeasureTooltip.setPosition(evt.coordinate);
-        $(_helpMeasureTooltipMessage).removeClass('hidden');
-    };
-
-    /**
-     * measure format length output
-     * @param {ol.geom.LineString} line
-     * @return {string}
-     */
-
-    var _measureFormatLength = function(line) {
-        var length = 0;
-        var coordinates = line.getCoordinates();
-        for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
-            var c1 = ol.proj.transform(coordinates[i], _projection, 'EPSG:4326');
-            var c2 = ol.proj.transform(coordinates[i + 1], _projection, 'EPSG:4326');
-            length += _wgs84Sphere.haversineDistance(c1, c2);
-        }
-        var output;
-        if (length > 100) {
-            output = (Math.round(length / 1000 * 100) / 100) + ' ' + 'km';
-        } else {
-            output = (Math.round(length * 100) / 100) + ' ' + 'm';
-        }
-        return output;
-    };
-
-    /**
-     * format length output
-     * @param {ol.geom.Polygon} polygon
-     * @return {string}
-     */
-
-    var _measureFormatArea = function(polygon) {
-        var geom = /** @type {ol.geom.Polygon} */(polygon.clone().transform(
-            _projection, 'EPSG:4326'));
-        var coordinates = geom.getLinearRing(0).getCoordinates();
-        var area = Math.abs(_wgs84Sphere.geodesicArea(coordinates));
-        var output;
-        if (area > 10000) {
-            output = (Math.round(area / 1000000 * 100) / 100) + ' ' + 'km<sup>2</sup>';
-        } else {
-            output = (Math.round(area * 100) / 100) + ' ' + 'm<sup>2</sup>';
-        }
-        return output;
-    };
-
-    /**
-     * Creates a new help tooltip
-     */
-
-    _createHelpTooltip = function () {
-        if (_helpMeasureTooltipMessage) {
-            _helpMeasureTooltipMessage.parentNode.removeChild(_helpMeasureTooltipMessage);
-        }
-        _helpMeasureTooltipMessage = document.createElement('div');
-        _helpMeasureTooltipMessage.className = 'tooltip hidden';
-        _helpMeasureTooltip = new ol.Overlay({
-            element: _helpMeasureTooltipMessage,
-            offset: [15, 0],
-            positioning: 'center-left'
-        });
-        _map.addOverlay(_helpMeasureTooltip);
-    };
-
-    /**
-     * Creates a new measure tooltip
-     */
-
-    var _createMeasureTooltip = function () {
-        if (_measureTooltipResult) {
-            _measureTooltipResult.parentNode.removeChild(_measureTooltipResult);
-        }
-        _measureTooltipResult = document.createElement('div');
-        _measureTooltipResult.className = 'tooltip2 tooltip-measure';
-        _measureTooltip = new ol.Overlay({
-            element: _measureTooltipResult,
-            offset: [0, -15],
-            positioning: 'bottom-center'
-        });
-        _map.addOverlay(_measureTooltip);
-    };
-
-    var _addMeasureInteraction = function (type) {
-        _map.on('pointermove', _pointerMoveHandler);
-        $(_map.getViewport()).on('mouseout', function() {
-            $(_helpMeasureTooltipMessage).addClass('hidden');
-        });
-        _draw = new ol.interaction.Draw({
-            source: _sourceMesure,
-            type: /** @type {ol.geom.GeometryType} */ (type),
-            style: mviewer.featureStyles.drawStyle
-        });
-        _map.addInteraction(_draw);
-        _createMeasureTooltip();
-        _createHelpTooltip();
-        var listener;
-
-        _draw.on('drawstart', function(evt) {
-            _clearOldMeasures();
-            // set sketch
-            _sketch = evt.feature;
-            /** @type {ol.Coordinate|undefined} */
-            var tooltipCoord = evt.coordinate;
-            listener = _sketch.getGeometry().on('change', function(evt) {
-                var geom = evt.target;
-                var output;
-                if (geom instanceof ol.geom.Polygon) {
-                    output = _measureFormatArea(/** @type {ol.geom.Polygon} */ (geom));
-                    tooltipCoord = geom.getInteriorPoint().getCoordinates();
-                } else if (geom instanceof ol.geom.LineString) {
-                    output = _measureFormatLength( /** @type {ol.geom.LineString} */ (geom));
-                    tooltipCoord = geom.getLastCoordinate();
-                }
-                _measureTooltipResult.innerHTML = output;
-                _measureTooltip.setPosition(tooltipCoord);
-            });
-        }, this);
-
-        _draw.on('drawend', function(evt) {
-            _measureTooltipResult.className = 'tooltip2 tooltip-measure-static';
-            _measureTooltip.setOffset([0, -7]);
-            _sketch = null;
-            _measureTooltipResult = null;
-            _createMeasureTooltip();
-            ol.Observable.unByKey(listener);
-        }, this);
     };
 
      /**
@@ -914,7 +710,7 @@ mviewer = (function () {
     };
 
     var _mouseOverFeature = function (evt) {
-        if (evt.dragging ||  _modMeasureEnabled) {
+        if (evt.dragging ||  measure.enabled()) {
             return;
         }
         if (!_featureTooltip) {
@@ -997,6 +793,8 @@ mviewer = (function () {
             _map.un('singleclick', _getFeatureInfoListener);
             _map.on('pointermove', _mouseOverFeature);
          }
+
+         _getFeatureInfoControlEnabled = activation;
     };
 
     var _convertScale2Resolution = function (scale) {
@@ -1095,74 +893,6 @@ mviewer = (function () {
     };
 
     /**
-     * Private Method: _clearOldMeasures
-     *
-     */
-
-    var _clearOldMeasures = function () {
-        _sourceMesure.clear();
-        $(".tooltip-measure-static").remove();
-    };
-
-    /**
-     * Private Method: _resetDrawTool
-     *
-     */
-
-    var _resetDrawTool = function () {
-       _clearOldMeasures();
-       _map.removeOverlay(_helpMeasureTooltip);
-       _map.removeOverlay(_measureTooltip);
-       _map.un('pointermove', _pointerMoveHandler);
-       _map.removeInteraction(_draw);
-       _modMeasureEnabled = false;
-    };
-
-    /**
-     * Private Method: _deactivateTools
-     *
-     */
-
-    var _deactivateTools = function () {
-        _getFeatureInfoControl(false);
-        _resetDrawTool();
-    };
-
-    /**
-     * Private Method: _clearTools
-     *
-     */
-
-    var _clearTools = function () {
-        $("#infobtn").removeClass('active');
-        $('#measurelinebtn').removeClass('active');
-        $("#measurebtn").removeClass("active");
-        $('#measureareabtn').removeClass('active');
-        $("#drawtoolsoptions").hide();
-    };
-
-    /**
-     * Private Method: _initTools
-     *
-     */
-
-    var _initTools = function () {
-        _sourceMesure = new ol.source.Vector();
-        var vector = new ol.layer.Vector({
-           source: _sourceMesure,
-           style: mviewer.featureStyles.measureStyle
-        });
-        _map.addLayer(vector);
-        $("#zoomtoolbar button, #toolstoolbar button, #toolstoolbar a").tooltip({
-            placement: 'left',
-            trigger: 'hover',
-            html: true,
-            container: 'body',
-            template: mviewer.templates.tooltip
-        });
-    };
-
-    /**
      * Geoloalisation
      * Private Method: _initGeolocation
      *
@@ -1217,6 +947,32 @@ mviewer = (function () {
             _overlayFeatureLayer.set('mviewerid', 'featureoverlay');
             _map.addLayer(_overlayFeatureLayer);
         /*}*/
+    };
+
+    /**
+     * Private Method: initTools
+     * Tools can be set or unset. Only one tool can be enabled like a switch.
+     * The defautl enabled tool is info (getFeatureInfo control)
+     * Tools must have this methods : enable & disabled
+     *
+     */
+
+    _initTools = function () {
+        //GetFeatureInfo tool
+        mviewer.tools.info = {
+            "enable": function () {_getFeatureInfoControl(true);},
+            "toggle":  function () {_getFeatureInfoControl(!_getFeatureInfoControlEnabled);},
+            "disable":  function () {_getFeatureInfoControl(false);},
+            "enabled" : _getFeatureInfoControlEnabled
+        };
+        //Measure tool
+        if ($(_options).find("application").attr("measuretools") === "true") {
+            //Load measure moadule
+            mviewer.tools.measure = measure;
+            mviewer.tools.measure.init(_map);
+        }
+        //Activate GetFeatureInfo tool
+        mviewer.setTool('info');
     };
 
     /**
@@ -2467,31 +2223,32 @@ mviewer = (function () {
          *
          */
 
-        setTool: function (tool, origin) {
-            if (($("#measurebtn").hasClass("active")) && (origin === 'measurebtn')) {
-                tool = 'info';
+        setTool: function (tool, option) {
+            //Deactivate active Tool if new tool is different
+            if (mviewer.tools.activeTool && mviewer.tools[mviewer.tools.activeTool]) {
+                mviewer.tools[mviewer.tools.activeTool].disable();
             }
-            _deactivateTools();
-            _clearTools();
-            switch (tool) {
-            case 'info':
-                _getFeatureInfoControl(true);
-                $("#infobtn").addClass("active");
-                break;
-            case 'measureline':
-                $("#drawtoolsoptions").show();
-                _addMeasureInteraction('LineString');
-                $('#measurelinebtn').addClass("active");
-                $("#measurebtn").addClass("active");
-                _modMeasureEnabled = true;
-                break;
-            case 'measurearea':
-                 $("#drawtoolsoptions").show();
-                 _addMeasureInteraction('Polygon');
-                 $('#measureareabtn').addClass("active");
-                 $("#measurebtn").addClass("active");
-                  _modMeasureEnabled = true;
-                break;
+            //Activate new tool
+            if (mviewer.tools[tool]) {
+                mviewer.tools[tool].enable(option);
+                mviewer.tools.activeTool = tool;
+            }
+        },
+
+        /**
+         * Public Method: setTool
+         *
+         */
+
+        unsetTool: function (tool) {
+            //Deactivate active Tool
+            if (mviewer.tools.activeTool === tool  && mviewer.tools[tool]) {
+                mviewer.tools[tool].disable();
+            }
+            //activate getFeatureInfo
+            if (tool !== 'info') {
+                mviewer.tools.info.enable();
+                mviewer.tools.activeTool = 'info';
             }
         },
 
@@ -2750,11 +2507,6 @@ mviewer = (function () {
                 $("#exportpng").show();
             } else {
                  $("#exportpng").remove();
-            }
-            if ((!applicationOverride.attr("measuretools")) || (applicationOverride.attr("measuretools")==="false")){
-                $(".mv-modetools").remove();
-            } else {
-                $("#measurebtn").show();
             }
             if ((!applicationOverride.attr("mouseposition")) || (applicationOverride.attr("mouseposition")==="false")){
                 $("#mouse-position").hide();
@@ -3311,11 +3063,11 @@ mviewer = (function () {
                 } // fin de else
 
                 _initDataList();
-                _initTools();
                 _initSearch();
                 _initPanelsPopup();
                 _initVectorOverlay();
                 _initGeolocation();
+                _initTools();
 
                 //PERMALINK
                 if (config.lb && $.grep(_backgroundLayers, function (n) {
@@ -3334,10 +3086,6 @@ mviewer = (function () {
                         _showCheckedLayers();
                     }
                 }
-
-                //Activate GetFeatureInfo mode
-                _getFeatureInfoControl(true);
-                $("#infobtn").addClass('ui-btn-active');
 
                 //Export PNG
                 if (applicationOverride.attr("exportpng") && document.getElementById('exportpng')) {
@@ -3389,6 +3137,8 @@ mviewer = (function () {
         customLayers: {},
 
         customControls: {},
+
+        tools: { activeTool: false},
 
         /**
          * Public Method: getElasticsearchUrl
