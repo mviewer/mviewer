@@ -1,43 +1,6 @@
 var mviewer = mviewer || {};
 mviewer.featureStyles = {};
 
-mviewer.featureStyles.drawStyle = new ol.style.Style({
-    fill: new ol.style.Fill({
-        color: 'rgba(255, 255, 255, 0.5)'
-    }),
-    stroke: new ol.style.Stroke({
-        color: '#2fc2c3',
-        lineDash: [10, 10],
-        width: 2
-    }),
-    image: new ol.style.Circle({
-        radius: 5,
-        stroke: new ol.style.Stroke({
-            color: '#2fc2c3',
-            width: 2
-        }),
-        fill: new ol.style.Fill({
-            color: 'rgba(255, 255, 255, 0.2)'
-        })
-    })
-});
-
-mviewer.featureStyles.measureStyle = new ol.style.Style({
-    fill: new ol.style.Fill({
-        color: 'rgba(47, 194, 195, 0.2)'
-    }),
-    stroke: new ol.style.Stroke({
-        color: '#2fc2c3',
-        width: 2
-    }),
-    image: new ol.style.Circle({
-        radius: 7,
-        fill: new ol.style.Fill({
-            color: '#2fc2c3'
-        })
-    })
-});
-
 mviewer.featureStyles.elsStyle = new ol.style.Style({
     fill: new ol.style.Fill({
         color: 'rgba(47, 194, 195, 0.2)'
