@@ -6,7 +6,7 @@ mviewer.templates.tooltip = [
         '<div class="mv-tooltip tooltip-arrow"></div>',
         '<div class="mv-tooltip tooltip-inner"></div>',
     '</div>'].join("");
-    
+
 mviewer.templates.theme = [
     '<li class="{{cls}}" id="theme-layers-{{id}}" >',
         '<a href="#">',
@@ -90,7 +90,7 @@ mviewer.templates.layerControl = [
             '<div class="row">',
                 '<div class="col-md-12">',
                     '<a data-layerid="{{layerid}}" class="layer-tooltip"',
-                        ' onclick="mviewer.toggleTooltip(this);" id="{{layerid}}-layer-tooltip" href="#">',
+                        ' onclick="info.toggleTooltipLayer(this);" id="{{layerid}}-layer-tooltip" href="#">',
                         '<span class="state-icon fa mv-unchecked"></span>Afficher les infobulles',
                         '<input type="checkbox" class="hidden" value="false">',
                     '</a>',
@@ -167,20 +167,47 @@ mviewer.templates.backgroundLayerControlGallery = [
         '</a></li>'
 ].join("");
 
-mviewer.templates.infoPanel = [
-    '<div  role="tabpanel" class="tab-pane" id="slide-{{panel}}-{{id}}" >',
-    '<div id="carousel-{{panel}}-{{id}}" div class="carousel slide" data-interval="false">',
-    '<ul class="carousel-inner" role="listbox"></ul>',
-    '<a class="left carousel-control" href="#carousel-{{panel}}-{{id}}" ',
-    'role="button" data-slide="prev">',
-    '<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>',
-    '<span class="sr-only">Previous</span>',
-    '</a>',
-    '<a class="right carousel-control" href="#carousel-{{panel}}-{{id}}" ',
-    'role="button" data-slide="next">',
-    '<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>',
-    '<span class="sr-only">Next</span>',
-    '</a>',
-    '<span class="badge counter-slide"></span>',
-    '</div> </div>'
-].join("");
+mviewer.templates.featureInfo = {};
+mviewer.templates.featureInfo.template1 = [
+    '<div id="{{panel}}-selector">',
+        '<div class="row">',
+            '<div class="col-md-12">',
+                '<div class="tabs-left">',
+                    '<ul class="nav nav-tabs">',
+                    '{{#layers}}',
+                        '<li title="{{name}}" class="{{#firstlayer}}active{{/firstlayer}}" data-layerid="{{layerid}}">',
+                            '<a onclick="mviewer.setInfoPanelTitle(this,\'{{panel}}\');" title="{{name}}" href="#slide-{{panel}}-{{id}}" data-toggle="tab">',
+                                '<span class="fa {{theme_icon}}"></span>',
+                            '</a>',
+                        '</li>',
+                    '{{/layers}}',
+                    '</ul>',
+                    '<div class="tab-content">',
+                    '{{#layers}}',
+                        '<div  role="tabpanel" class="{{#firstlayer}}active in {{/firstlayer}}tab-pane" id="slide-{{panel}}-{{id}}" >',
+                            '<div id="carousel-{{panel}}-{{id}}" div class="carousel slide" data-interval="false">',
+                            '<ul class="carousel-inner" role="listbox">',
+                            '{{{html}}}',
+                            '</ul>',
+                            '{{#manyfeatures}}',
+                                '<a class="left carousel-control" href="#carousel-{{panel}}-{{id}}" ',
+                                'role="button" data-slide="prev">',
+                                '<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>',
+                                '<span class="sr-only">Previous</span>',
+                                '</a>',
+                                '<a class="right carousel-control" href="#carousel-{{panel}}-{{id}}" ',
+                                'role="button" data-slide="next">',
+                                '<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>',
+                                '<span class="sr-only">Next</span>',
+                                '</a>',
+                                '<span class="badge counter-slide">1/{{nbfeatures}}</span>',
+                            '{{/manyfeatures}}',
+                            '</div>',
+                        '</div>',
+                    '{{/layers}}',
+                    '</div>',
+                 '</div>',
+            '</div>',
+        '</div>',
+    '</div>'
+].join("")
