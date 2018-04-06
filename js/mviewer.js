@@ -46,13 +46,6 @@ mviewer = (function () {
     };
 
     /**
-     * Property: _mvReady
-     * Boolean. The getFeatureInfo state
-     */
-
-    var _mvReady = true;
-
-    /**
      * Property: _options
      * XML. The application configuration
      */
@@ -98,21 +91,6 @@ mviewer = (function () {
     var _mapOptions = null;
 
     /**
-     * Property: _popupInfos
-     * {Boolean}  Render getFeatureInfos in popup
-     */
-
-    //var _popupInfos = true;
-
-     /**
-     * Property: _queryMapCoordinate
-     * {Array} Coordinate of the queryMap click
-     */
-
-    var _queryMapCoordinate = null;
-
-
-    /**
      * Property: _extent
      * {OpenLayers.Bounds} The initial extent of the map
      */
@@ -145,13 +123,6 @@ mviewer = (function () {
      */
 
     var _overLayers = {};
-
-    /**
-     * Property: _queryableLayers
-     * Array of {OpenLayers.Layers.WMS} .
-     */
-
-    var _queryableLayers = [];
 
     /**
      * Property: _vectorLayers
@@ -190,21 +161,6 @@ mviewer = (function () {
 
     var _themes = null;
 
-    /**
-     * Property: _getFeatureInfo
-     * {OpenLayers.Control.WMSGetFeatureInfo}
-     */
-
-    var _getFeatureInfoControlEnabled = false;
-
-    var _description = false;
-
-    /**
-     * Property: _description
-     * String
-     */
-
-    var _getFeatureInfo = null;
 
     /**
      * Property: _overlay
@@ -300,15 +256,29 @@ mviewer = (function () {
 
     var _renderer = 'canvas';
 
-    var _featureTooltip;
+    /**
+     * Property: _sourceEls
+     * @type {ol.source.Vector}
+     * Used to highlight ELS vector features
+     */
 
     var _sourceEls;
 
+    /**
+     * Property: _sourceOverlay
+     * @type {ol.source.Vector}
+     * Used to highlight vector features
+     */
+
     var _sourceOverlay;
 
-    var _overlayFeatureLayer = false;
+    /**
+     * Property: _overlayFeatureLayer
+     * @type {ol.layer.Vector}
+     * Used to highlight vector features
+     */
 
-    var _activeTooltipLayer;
+    var _overlayFeatureLayer = false;
 
 
     /**
@@ -332,346 +302,13 @@ mviewer = (function () {
             $("#alerts-zone").append(item);
     };
 
-    /**
-     * _testConfig
-     * @param {xml} config xml to test
-     */
-
-    var _testConfig = function (xml) {
-        var score = 0;
-        var nbtests = 2;
-        //test doublon name layers
-        var test = [];
-        var doublons = 0;
-        $('layer',xml).each(function() {
-            var name = $(this).attr("name");
-            if ($.inArray(name, test)) {
-                test.push(name);
-            } else {
-                doublons = 1;
-                console.log("doublon " + name + " in layers");
-            }
-        });
-        score+=(doublons === 0);
-        //test = 1 baselayer visible
-        test = $(xml).find( 'baselayer[visible="true"]').length;
-        if (test === 1) {
-            score+=1;
-        } else {
-            console.log(test + " baselayer(s) visible(s)");
-        }
-        //Résultats tests
-        console.log("tests config :" + ((score/nbtests)===1));
-    };
-
     var _removeLayer = function (layername) {
         $( "[data-layerid='"+layername+"']").remove();
         _map.removeLayer(_overLayers[layername].layer);
         delete _overLayers[layername];
     };
 
-     /**
-     * Private Method: _queryMap()
-     *
-     */
 
-    var _queryMap = function (evt, options) {
-        var queryType = "map"; // default behaviour
-        var featureInfosHtml = {'right-panel':[], 'bottom-panel':[]}; // structured html infos are put here
-
-        var tabs = {'right-panel': Array(_map.getLayers().getLength()), 'bottom-panel': Array(_map.getLayers().getLength())};
-        var id_tab = {'right-panel' : 0, 'bottom-panel' : 0 };
-        if (options) {
-            // used to link elasticsearch feature with wms getFeatureinfo
-            var layer = options.layer;
-            var featureid = options.featureid;
-            queryType = options.type;
-        }
-        if (!_mvReady) {
-            return False;
-        }
-        if (_captureCoordinates) {
-            var hdms = ol.coordinate.toStringHDMS(ol.proj.transform(evt.coordinate, _projection.getCode(), 'EPSG:4326'));
-            var hdms2 = hdms.replace(/ /g,"").replace("N","N - ");
-            $("#coordinates span").text(hdms2);
-        }
-        //Request vector layers
-        if (queryType === 'map') {
-            var pixel = evt.pixel;
-            var vectorLayers = {};
-            var format = new ol.format.GeoJSON();
-            _map.forEachFeatureAtPixel(pixel, function(feature, layer) {
-                var l = layer.get('mviewerid');
-
-                if (l != 'featureoverlay') {
-                    var queryable = _overLayers[l].queryable;
-                    if (queryable) {
-                        if (vectorLayers[l] && vectorLayers[l].features) {
-                            vectorLayers[l].features.push({properties: feature.getProperties()});
-                        } else {
-                            vectorLayers[l] = {features:[]};
-                            vectorLayers[l].features.push({properties: feature.getProperties()});
-                        }
-                     }
-                }
-            });
-            for(var layerid in vectorLayers) {
-                if (mviewer.customLayers[layerid] && mviewer.customLayers[layerid].handle) {
-                    mviewer.customLayers[layerid].handle(vectorLayers[layerid].features);
-                } else if (mviewer.customControls[layerid] && mviewer.customControls[layerid].handle){
-                    mviewer.customControls[layerid].handle(vectorLayers[layerid].features);
-                } else {
-                    var l = _overLayers[layerid];
-                    if (l) {
-                        var panel = l.infospanel;
-                        id_tab[panel]+=1;
-                        var name = l.name;
-                        var theme = l.theme;
-                        var theme_icon = "glyphicon-triangle-right";
-                        if ($(_options).find('theme[id="'+theme+'"]').attr("icon")) {
-                            theme_icon = "fa-lg fa-" + $(_options).find('theme[id="'+theme+'"]').attr("icon");
-                        }
-                        tabs[panel].splice(l.rank,1,
-                            ['<li title="'+name+'">',
-                                '<a onclick="mviewer.setInfoPanelTitle(this,\''+panel+'\');" title="'+name+'" ',
-                                'href="#slide-'+panel+'-'+id_tab[panel]+'" data-toggle="tab">',
-                                '<span class="fa '+theme_icon+'"></span>',
-                                '</a></li>'].join(" "));
-
-                        var slide = $(Mustache.render(mviewer.templates.infoPanel, {"panel": panel, "id": id_tab[panel]}));
-                        if (_overLayers[layerid].template) {
-                            $(slide).find("ul").append(applyTemplate(vectorLayers[layerid].features, _overLayers[layerid]));
-                        } else {
-                            $(slide).find("ul").append(createContentHtml(vectorLayers[layerid].features, _overLayers[layerid]));
-                        }
-                        $(slide).find("li.item").first().addClass("active");
-
-                        if (vectorLayers[layerid].features.length === 1) {
-                            $(slide).find(".carousel-control").remove();
-                            $(slide).find(".counter-slide") .remove();
-                        } else {
-                            var totalItems = $(slide).find("li.item").length;
-                            $(slide).find("li.item").each(function (i, item) {
-                                $(item).attr("data-counter",(i+1)+'/'+totalItems);
-                            });
-                            $(slide).find(".counter-slide").text("1/"+ totalItems);
-                        }
-                        if (slide) {
-                            featureInfosHtml[panel].push(slide);
-                        }
-                     }
-                }
-            }
-        }
-        //Request wms layers
-        var featureInfoByLayer = [];
-        var visibleLayers = [];
-            if (layer) {
-                 visibleLayers.push(_overLayers[layer].layer);
-            } else {
-                visibleLayers =  $.grep( _queryableLayers, function( l, i ) {return l.getVisible();});
-            }
-            $(".popup-content").html('');
-            _queryMapCoordinate = evt.coordinate;
-            var urls = [];
-            var params;
-            for (var i = 0; i < visibleLayers.length; i++) {
-                if (visibleLayers[i] instanceof ol.layer.Vector === false) {
-                    params = {'INFO_FORMAT': _overLayers[visibleLayers[i].get("mviewerid")].infoformat,
-                        'FEATURE_COUNT': _overLayers[visibleLayers[i].get("mviewerid")].featurecount
-                    };
-                    var url = visibleLayers[i].getSource().getGetFeatureInfoUrl(
-                        evt.coordinate, _map.getView().getResolution(), _map.getView().getProjection(), params
-                    );
-                    if (layer && featureid) {
-                        url+= '&CQL_FILTER='+_overLayers[layer].searchid+'%3D%27'+featureid+'%27';
-                    }
-                    urls.push({url:url, layerinfos: _overLayers[visibleLayers[i].get('mviewerid')]});
-                }
-            }
-
-            var requests = [];
-            var carrousel=false;
-            var callback = function (result) {
-                $.each(featureInfoByLayer, function (index, response) {
-                    var layerinfos = response.layerinfos;
-                    var panel = layerinfos.infospanel;
-                    var contentType = response.contenttype;
-                    var layerResponse = response.response;
-                    var slide = null;
-                    id_tab[panel]+=1;
-                    var name = layerinfos.name;
-                    var theme = layerinfos.theme;
-                    var layerid = layerinfos.layerid;
-                    var theme_icon = "fa-lg fa-chevron-circle-right";
-                    if ($(_options).find('theme[id="'+theme+'"]').attr("icon")) {
-                        theme_icon = "fa-lg fa-" + $(_options).find('theme[id="'+theme+'"]').attr("icon");
-                    }
-                    var xml = null;
-                    var html = null;
-
-                    switch (contentType.split(";")[0]) {
-                        case "text/html":
-                            if ((typeof layerResponse === 'string')
-                                && (layerResponse.search('<!--nodatadetect--><!--nodatadetect-->')<0)
-                                && (layerResponse.search('<!--nodatadetect-->\n<!--nodatadetect-->')<0)) {
-                                html = layerResponse;
-                            }
-                            break;
-                        case "application/vnd.ogc.gml":
-                            if ($.isXMLDoc(layerResponse)) {
-                                xml = layerResponse;
-                            } else {
-                                xml = $.parseXML(layerResponse);
-                            }
-                            break;
-                        case "application/vnd.esri.wms_raw_xml":
-                        case "application/vnd.esri.wms_featureinfo_xml":
-                            if ($.isXMLDoc(layerResponse)) {
-                                xml = layerResponse;
-                            } else {
-                                xml = $.parseXML(layerResponse);
-                            }
-                            break;
-                        default :
-                            _message("Ce format de réponse : " + contentType +" n'est pas pris en charge");
-                    }
-                    if (html) {
-                        tabs[panel].splice(response.layerinfos.rank,1,
-                            ['<li title="'+name+'" data-layerid="'+layerid+'">',
-                                '<a onclick="mviewer.setInfoPanelTitle(this,\''+panel+'\');" title="'+name+'" ',
-                                'href="#slide-'+panel+'-'+id_tab[panel]+'" data-toggle="tab">',
-                                '<span class="fa '+theme_icon+'"></span>',
-                                '</a></li>'].join(" "));
-                        slide = $(Mustache.render(mviewer.templates.infoPanel, {"panel": panel, "id": id_tab[panel]}));
-
-                        //test si présence d'une classe .carrousel eg template geoserver.
-                        //Les éléments trouvés servent à la création d'un carrousel dédié
-                        var carrousel_data=$(layerResponse).find(".carrousel li").addClass("item");
-                        carrousel_data.first().addClass("active");
-                        if(carrousel_data.length == 0){
-                            $(slide).find("ul").append('<li class="item active">'+layerResponse+'</li>');
-                            $(slide).find(".carousel-control").remove();
-                        }
-                        else {
-                            for( var i=0; i<carrousel_data.length; i++){
-                                var page = $(slide).find("ul").append(carrousel_data[i]);
-                                if (carrousel_data.length > 1) {
-                                    var li = $(page).find("li")[i];
-                                    $(li).append('<span class="badge counter-slide">'+(i+1)+'/'+carrousel_data.length+'</span>');
-                                } else {
-                                    $(slide).find(".carousel-control").remove();
-                                }
-
-                            }
-                            // ajout des ctrls du carrousel
-                        }
-                    } else {
-                        if (xml) {
-                            var obj = _parseXML(xml);
-                            if (obj.features.length > 0) {
-                                tabs[panel].splice(response.layerinfos.rank,1,
-                                    ['<li title="'+name+'" data-layerid="'+layerid+'">',
-                                        '<a onclick="mviewer.setInfoPanelTitle(this,\''+panel+'\');" title="'+name+'" ',
-                                        'href="#slide-'+panel+'-'+id_tab[panel]+'" data-toggle="tab">',
-                                        '<span class="fa '+theme_icon+'"></span>',
-                                        '</a></li>'].join(" "));
-                                slide = $(Mustache.render(mviewer.templates.infoPanel, {"panel": panel, "id": id_tab[panel]}));
-                                if (layerinfos.template) {
-                                    $(slide).find("ul").append(applyTemplate(obj.features.reverse(), layerinfos));
-                                } else {
-                                    $(slide).find("ul").append(createContentHtml(obj.features.reverse(), layerinfos));
-                                }
-                                $(slide).find("li.item").first().addClass("active");
-                            }
-                            if (obj.features.length === 1) {
-                                $(slide).find(".carousel-control").remove();
-                                $(slide).find(".counter-slide").remove();
-                            } else {
-                                 var totalItems = $(slide).find("li.item").length;
-                                 $(slide).find("li.item").each(function (i, item) {
-                                    $(item).attr("data-counter",(i+1)+'/'+totalItems);
-                                 });
-                                 $(slide).find(".counter-slide").text("1/"+ totalItems);
-                            }
-                        }
-                    }
-                    if (slide) {
-                        featureInfosHtml[panel].push(slide);
-                    }
-                });
-                $.each(featureInfosHtml, function (panel, value) {
-                    if(featureInfosHtml[panel].length>0){
-                        $("#"+panel+" .popup-content").append([
-                            '<div id="'+panel+'-selector">',
-                                '<div class="row">',
-                                    '<div class="col-md-12">',
-                                        '<div class="tabs-left">',
-                                            '<ul class="nav nav-tabs"></ul>',
-                                            '<div class="tab-content"></div></div></div></div>'].join(" "));
-                        $("#"+panel+"-selector .tab-content").append(featureInfosHtml[panel]);
-                        tabs[panel] = tabs[panel].filter(function(n){ return n != undefined });
-                        $("#"+panel+"-selector .nav-tabs").prepend(tabs[panel].reverse());
-                        $("[href='#slide-"+panel+"-1']").closest("li").addClass("active");
-                        $("#"+panel+"-selector .tab-pane").first().addClass("active in");
-                        var title = $("[href='#slide-"+panel+"-1']").closest("li").attr("title");
-                        $("#"+panel+" .mv-header h5").text(title);
-
-                        if (!$('#'+panel).hasClass("active")) {
-                            $('#'+panel).toggleClass("active");
-                        }
-                        $("#"+panel+" .popup-content iframe[class!='chartjs-hidden-iframe']").each(function( index) {
-                            $(this).on('load',function () {
-                                    $(this).closest("li").find(".mv-iframe-indicator").hide();
-                            });
-                            $(this).closest("li").append(['<div class="mv-iframe-indicator" >',
-                                '<div class="loader">Loading...</div>',
-                                '</div>'].join(""));
-                        });
-                        $("#"+panel+" .popup-content img").click(function(){mviewer.popupPhoto($(this).attr("src"))});
-                        $("#"+panel+" .popup-content img").on("vmouseover",function(){$(this).css('cursor', 'pointer');})
-                            .attr("title","Cliquez pour agrandir cette image");
-                        $(".popup-content .nav-tabs li>a").tooltip('destroy').tooltip({
-                            animation: false,
-                            trigger: 'hover',
-                            container: 'body',
-                            placement: 'right',
-                            html: true,
-                            template: mviewer.templates.tooltip
-                       });
-                       $('.carousel.slide').on('slide.bs.carousel', function (e) {
-                          $(e.currentTarget).find(".counter-slide").text($(e.relatedTarget).attr("data-counter"));
-                       });
-                       mviewer.showLocation(_projection.getCode(), _queryMapCoordinate[0], _queryMapCoordinate[1]);
-
-                    } else {
-                        $('#'+panel).removeClass("active");
-                    }
-                });
-                $('#loading-indicator').hide();
-                _mvReady = true;
-
-            };
-
-            var ajaxFunction = function () {
-                for (var request, i = -1; request = urls[++i];) {
-                    requests.push($.ajax({
-                        url: _ajaxURL(request.url),
-                        layer: request.layerinfos,
-                        success: function (response, textStatus, request) {
-                            featureInfoByLayer.push({response:response,layerinfos:this.layer,
-                                contenttype:request.getResponseHeader("Content-Type")});
-                        }
-                    }));
-                }
-            };
-
-            // using $.when.apply() we can execute a function when all the requests
-            // in the array have completed
-            $.when.apply(new ajaxFunction(), requests).done(function (result) {
-                callback(result)
-            });
-    };
 
     var _getlegendurl = function (layer, scale) {
         var sld = "";
@@ -695,201 +332,8 @@ mviewer = (function () {
         return legendUrl;
     };
 
-    /**
-     * Private Method: _getFeatureInfoControl
-     *
-     */
-
-    var _getFeatureInfoListener = function (evt) {
-        $('#loading-indicator').show();
-
-        // Clear search results
-        _clearSearchResults();
-
-        _queryMap(evt);
-    };
-
-    var _mouseOverFeature = function (evt) {
-        if (evt.dragging ||  measure.enabled()) {
-            return;
-        }
-        if (!_featureTooltip) {
-            _featureTooltip = $('#feature-info');
-            _featureTooltip.tooltip({
-                animation: false,
-                trigger: 'manual',
-                container: 'body',
-                html: true,
-                template: mviewer.templates.tooltip
-            });
-        }
-        var pixel = _map.getEventPixel(evt.originalEvent);
-
-        var feature = _map.forEachFeatureAtPixel(pixel, function (feature, layer) {
-            var ret = false;
-            var layerid = layer.get('mviewerid');
-            if (_activeTooltipLayer === false || (_activeTooltipLayer && layerid !== _activeTooltipLayer)) {
-                ret = false;
-            } else {
-                if (feature instanceof ol.Feature) {
-                    feature.set('mviewerid', layerid);
-                    ret = feature.clone();
-                 } else {
-                    ret = new ol.Feature({
-                      geometry: new ol.geom.Point(ol.extent.getCenter(feature.getGeometry().getExtent()))
-                    });
-                    ret.setProperties(feature.getProperties());
-                    ret.set('mviewerid', layerid);
-                 }
-            }
-            return ret;
-        });
-        _sourceOverlay.clear();
-        if (feature && Object.keys(feature.getProperties()).length > 1) {
-            $("#map").css("cursor", "pointer");
-            var l = _overLayers[feature.get('mviewerid')];
-            if (l && ((l.fields && l.fields.length > 0) || l.tooltipcontent)) {
-                _sourceOverlay.addFeature(feature);
-
-                var title;
-                var tooltipcontent = l.tooltipcontent;
-                if ( tooltipcontent ) {
-                    if (tooltipcontent.indexOf('{{')  === -1 && tooltipcontent.indexOf('}}')  === -1) {
-                        // one specific field
-                        title = feature.getProperties()[tooltipcontent];
-                    } else {
-                        // a Mustache template
-                        title = Mustache.render(tooltipcontent, feature.getProperties());
-                    }
-                } else {
-                    title = (feature.getProperties()["name"] || feature.getProperties()["label"] ||
-                        feature.getProperties()["title"] || feature.getProperties()["nom"] ||
-                        feature.getProperties()[l.fields[0]]);
-                }
-
-                _featureTooltip.css({
-                    left: (pixel[0]) + 'px',
-                    top: (pixel[1] - 15) + 'px'
-                });
-                _featureTooltip.tooltip('hide')
-                    .attr('data-original-title', title)
-                    .tooltip('fixTitle')
-                    .tooltip('show');
-            } else {
-                _featureTooltip.tooltip('hide');
-            }
-        } else {
-            _featureTooltip.tooltip('hide');
-            $("#map").css("cursor", "");
-        }
-    };
-
-    var _getFeatureInfoControl = function (activation) {
-        //WMS
-        if (activation === true) {
-            _map.on('singleclick', _getFeatureInfoListener);
-            _map.on('pointermove', _mouseOverFeature);
-         } else {
-            _map.un('singleclick', _getFeatureInfoListener);
-            _map.on('pointermove', _mouseOverFeature);
-         }
-
-         _getFeatureInfoControlEnabled = activation;
-    };
-
     var _convertScale2Resolution = function (scale) {
          return scale * 0.28/1000;
-    };
-
-    var applyTemplate = function (olfeatures, olayer) {
-        var tpl = olayer.template;
-        var obj = {features: []};
-        var activeAttributeValue = false;
-        if (olayer.attributefilter && olayer.layer.getSource().getParams()['CQL_FILTER']) {
-            var activeFilter = olayer.layer.getSource().getParams()['CQL_FILTER'];
-            activeAttributeValue = activeFilter.split('=')[1].replace(/\'/g, "");
-        }
-        olfeatures.forEach(function(feature){
-            if (activeAttributeValue) {
-                feature.properties[activeAttributeValue] = true;
-            }
-            obj.features.push(feature.properties);
-        });
-        var rendered = Mustache.render(tpl, obj);
-        return rendered;
-    };
-
-
-    /**
-     * Private Method: createContentHtml
-     *
-     * Parameter features
-     * Parameter olayer
-     *
-     * returns html content to display in panel
-     */
-
-    var createContentHtml = function (features, olayer) {
-        var html = '';
-        var counter = 0;
-        features.forEach(function (feature) {
-            var nbimg = 0;
-            counter+=1;
-            var attributes = feature.properties;
-            var fields = (olayer.fields) ? olayer.fields : $.map(attributes, function (value, key) {
-                if (typeof value !== "object") {
-                    return key;
-                }
-            });
-            var featureTitle = feature.properties[fields[0]];
-            var li = '<li class="item" ><div class="gml-item" ><div class="gml-item-title">'
-            if (typeof featureTitle != 'undefined') {
-                li += featureTitle;
-            }
-            li += '</div>';
-
-            var aliases = (olayer.fields) ? olayer.aliases : false;
-            fields.forEach(function (f) {
-                if (attributes[f] && f != fields[0]) { // si valeur != null
-                    fieldValue = attributes[f];
-                    if ((typeof fieldValue == "string") && ((fieldValue.indexOf("http://") == 0) ||
-                        (fieldValue.indexOf("https://") == 0))){
-                        if (fieldValue.toLowerCase().match( /(.jpg|.png|.bmp)/ )) {
-                            li += '<a onclick="mviewer.popupPhoto(\'' +  fieldValue + '\')" >' +
-                            '<img class="popphoto" src="' + fieldValue + '" alt="image..." ></a>';
-                        } else {
-                            li += '<p><a href="' + fieldValue + '" target="_blank">' + getAlias(f, aliases, fields) + '</a></p>';
-                        }
-                    } else {
-                        li +=  '<div class="gml-item-field"><div class="gml-item-field-name">' +
-                        getAlias(f, aliases, fields) + '</div><div class="gml-item-field-value" > ' + fieldValue + '</div></div>';
-                    }
-                }
-            });
-            li += '</div></li>';
-            html += $(li)[0].outerHTML + "\n";
-        });
-        return html;
-    };
-
-    /**
-     * Private Method: getAlias
-     *
-     * Parameter value
-     * Parameter aliases
-     * Parameter fields
-     *
-     * returns alias for a field
-     */
-
-    var getAlias = function (value, aliases, fields) {
-        var alias = "";
-        if (aliases) {
-            alias = aliases[$.inArray(value, fields)];
-        } else {
-            alias = value.substring(0, 1).toUpperCase() + value.substring(1, 50).toLowerCase();
-        }
-        return alias;
     };
 
     /**
@@ -934,37 +378,34 @@ mviewer = (function () {
 
     /**
      * Private Method: initVectorOverlay
-     *
+     * this layer is used to render ol.Feature in methods
+     * - zoomToLocation
+     * - zoomToFeature
+     * - showFeature
      */
 
     var _initVectorOverlay = function () {
-        /*if (_vectorLayers.length > 0) {*/
-            _sourceOverlay = new ol.source.Vector();
-            _overlayFeatureLayer = new ol.layer.Vector({
-                source: _sourceOverlay,
-                style: mviewer.featureStyles.highlight
-            });
-            _overlayFeatureLayer.set('mviewerid', 'featureoverlay');
-            _map.addLayer(_overlayFeatureLayer);
-        /*}*/
+        _sourceOverlay = new ol.source.Vector();
+        _overlayFeatureLayer = new ol.layer.Vector({
+            source: _sourceOverlay,
+            style: mviewer.featureStyles.highlight
+        });
+        _overlayFeatureLayer.set('mviewerid', 'featureoverlay');
+        _map.addLayer(_overlayFeatureLayer);
     };
 
     /**
      * Private Method: initTools
      * Tools can be set or unset. Only one tool can be enabled like a switch.
-     * The defautl enabled tool is info (getFeatureInfo control)
-     * Tools must have this methods : enable & disabled
+     * The default enabled tool is info (getFeatureInfo control)
+     * Tools must have this methods : enable & disabled & init
      *
      */
 
     _initTools = function () {
         //GetFeatureInfo tool
-        mviewer.tools.info = {
-            "enable": function () {_getFeatureInfoControl(true);},
-            "toggle":  function () {_getFeatureInfoControl(!_getFeatureInfoControlEnabled);},
-            "disable":  function () {_getFeatureInfoControl(false);},
-            "enabled" : _getFeatureInfoControlEnabled
-        };
+        mviewer.tools.info = info;
+        mviewer.tools.info.init(_map, _options, _captureCoordinates, _sourceOverlay);
         //Measure tool
         if ($(_options).find("application").attr("measuretools") === "true") {
             //Load measure moadule
@@ -1359,7 +800,7 @@ mviewer = (function () {
                             }
                             if  (_overLayers[data.hits.hits[i]._type] ) {
                                 //icon = _overLayers[data.hits.hits[i]._type].iconsearch;
-                                action_click += 'mviewer.queryLayer(' + point[0] + ',' + point[1] + ',\'EPSG:4326\',\''+
+                                action_click += 'mviewer.tools.info.queryLayer(' + point[0] + ',' + point[1] + ',\'EPSG:4326\',\''+
                                 data.hits.hits[i]._type+'\',\''+ data.hits.hits[i]._id+'\');';
                                 action_over = 'mviewer.flash('+'\'EPSG:4326\',' + point[0] + ',' + point[1] + ');';
                             }
@@ -1461,9 +902,6 @@ mviewer = (function () {
         if (oLayer.scale && oLayer.scale.min) { l.setMinResolution(_convertScale2Resolution(oLayer.scale.min)); }
         l.set('name', oLayer.name);
         l.set('mviewerid', oLayer.id);
-        if (oLayer.queryable) {
-            _queryableLayers.push(l);
-        }
 
         if (oLayer.searchable) {
             switch (oLayer.searchengine) {
@@ -1979,7 +1417,6 @@ mviewer = (function () {
                 l.set('name', oLayer.name);
                 l.set('mviewerid', oLayer.id);
                 themeLayers[oLayer.id].layer = l;
-                _queryableLayers.push(l);
                 _overLayers[oLayer.id] = themeLayers[oLayer.id];
                 if (oLayer.scale) {
                     _scaledDependantLayers.push(oLayer);
@@ -1989,85 +1426,6 @@ mviewer = (function () {
 
         });
         return {title: title, extent:map_extent, layers:themeLayers};
-    };
-
-     /**
-     * Private Method:  parseXML
-     *
-     */
-    var _parseXML = function (xml) {
-        var results = $.xml2json(xml);
-        var list = [];
-        var o = {features: []};
-        // GEOSERVER
-        if (results.featureMember) {
-            if ($.isArray(results.featureMember) === false) {
-                list.push(results.featureMember);
-            } else {
-                list = results.featureMember;
-            }
-            for (var j=0; j<list.length; j++) {
-                var obj=list[j];
-                for(var prop in obj) {
-                    if(obj.hasOwnProperty(prop))
-                        o.features.push({layername:prop, properties:obj[prop]});
-                }
-            }
-        } else if (results.FeatureInfoCollection) {
-            // ArcGIS Server
-            var feat_info_col_list = [];
-
-            if ($.isArray(results.FeatureInfoCollection) === false) {
-                feat_info_col_list.push(results.FeatureInfoCollection);
-            } else {
-                feat_info_col_list = results.FeatureInfoCollection;
-            }
-
-            for (var i=0; i<feat_info_col_list.length; i++) {
-                feat_info_col = feat_info_col_list[i];
-                var feat_info_list = [];
-                var layer_name = feat_info_col.layername;
-
-                if ($.isArray(feat_info_col.FeatureInfo) === false) {
-                    feat_info_list.push(feat_info_col.FeatureInfo);
-                } else {
-                    for (var j=0; j<feat_info_col.FeatureInfo.length ;j++) {
-                        feat_info_list.push(feat_info_col.FeatureInfo[j]);
-                    }
-                }
-
-                for (var k=0; k<feat_info_list.length; k++) {
-                    var field_obj=feat_info_list[k];
-                    var feat_obj = {};
-                    for (var field in field_obj.Field) {
-                        feat_obj[field_obj.Field[field].FieldName] = field_obj.Field[field].FieldValue;
-                    }
-                    o.features.push({layername:layer_name, properties:feat_obj});
-                }
-            }
-        } else {
-            // MAPSERVER Huge hack
-            for (var p in results) {
-                if (typeof(results[p]) === 'object') {
-                    //Search for response type : layername_layer & layername_feature
-                    var mslayer = p.substring(0,p.search('_layer')); //eg. STQ_layer
-                    if (results[mslayer + '_layer'] && results[mslayer + '_layer'][mslayer + '_feature']) {
-                        if ($.isArray(results[mslayer + '_layer'][mslayer + '_feature']) === false) {
-                            o.features.push({layername:mslayer, properties:results[mslayer + '_layer'][mslayer + '_feature']});
-                        } else {
-                            for (var k=0; k<results[mslayer + '_layer'][mslayer + '_feature'].length ;k++) {
-                                o.features.push({
-                                    layername:mslayer,
-                                    properties:results[mslayer + '_layer'][mslayer + '_feature'][k]
-                                });
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        return o;
     };
 
     var _initWMTSMatrixsets = function () {
@@ -2479,7 +1837,7 @@ mviewer = (function () {
          */
 
         init: function (xml) {
-            _testConfig(xml);
+            utils.testConfiguration(xml);
             _options = xml;
             //Application customization (logo, title, helpfile) /
             var applicationOverride = $(xml).find("application");
@@ -2713,9 +2071,10 @@ mviewer = (function () {
                 var doublons = {};
                 $(themes.get().reverse()).each(function () {
                     var themeid = $(this).attr("id");
+                    var icon = "fa-lg fa-" + ($(this).attr("icon") || "globe");
                     _themes[themeid] = {};
                     _themes[themeid].id = themeid;
-                    _themes[themeid].icon = $(this).attr("icon");
+                    _themes[themeid].icon = icon;
                     _themes[themeid].name = $(this).attr("name");
                     _themes[themeid].groups = false;
                     // test group
@@ -2755,7 +2114,7 @@ mviewer = (function () {
                             var mvid;
                             var oLayer = {};
                             //var clean_ident = layerId.replace(':','__').split(",").join("_");
-                            var clean_ident = layerId.replace(/:|,|\./g,'');
+                            var clean_ident = layerId.replace(/:|,| |\./g,'');
                             if (_overLayers[clean_ident] ) {
                                 doublons[clean_ident] += 1;
                                 mvid = clean_ident + "dbl"+doublons[clean_ident];
@@ -2764,6 +2123,7 @@ mviewer = (function () {
                                 doublons[clean_ident] = 0;
                             }
                             oLayer.id = mvid;
+                            oLayer.icon = icon;
                             oLayer.layername = layerId;
                             oLayer.type = $(this).attr("type") || "wms";
                             oLayer.theme = themeid;
@@ -3113,11 +2473,6 @@ mviewer = (function () {
                 //Handle zoom change
                 _map.getView().on('change:resolution', _mapZoomChange);
 
-                $("#layers-container-box, #sidebar-wrapper, #bottom-panel, #right-panel").on('mouseover', function() {
-                    if (_featureTooltip) {
-                        $('#feature-info').tooltip('hide');
-                    }
-                });
                 if (_showhelp_startup) {
                     $("#help").modal('show');
                 }
@@ -3194,20 +2549,6 @@ mviewer = (function () {
             }
             setTimeout(clear, duration*2);
 
-        },
-
-        /**
-         * Public Method: queryLayer
-         *
-         */
-
-        queryLayer: function (x, y, proj, layer, featureid) {
-            (x,y,16);
-            var pt = ol.proj.transform([x, y], proj, _projection.getCode());
-            var p = _map.getPixelFromCoordinate(pt);
-            $('#loading-indicator').show();
-            _queryMap({coordinate:[pt[0],pt[1]]},{type: 'feature', layer: layer, featureid:featureid});
-            _clearSearchField();
         },
 
         /**
@@ -3299,19 +2640,6 @@ mviewer = (function () {
         },
 
         /**
-         * Public Method: lonlat2osmtile
-         * from http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#Zoom_levels
-         *
-         */
-        //Not used but great
-        lonlat2osmtile: function (lon, lat, zoom) {
-            var x = Math.floor((lon+180)/360*Math.pow(2,zoom));
-            var y = Math.floor((1-Math.log(Math.tan(lat*Math.PI/180) + 1/Math.cos(lat*Math.PI/180))/Math.PI)/2 *Math.pow(2,zoom));
-            var osmtile = 'http://tile.openstreetmap.org/' +zoom+'/'+x + '/'+y+'.png';
-            return osmtile;
-        },
-
-        /**
          * Public Method: sendToGeorchestra
          *
          */
@@ -3335,26 +2663,6 @@ mviewer = (function () {
                 $("#georchestraFormData").val(JSON.stringify(params));
                 $("#georchestraForm").submit();
             }
-        },
-
-        /**
-         *
-         * Public Method: iconOnLocalisation
-         *
-         */
-        iconOnLocalisation: function (x,y) {
-
-            iconFeature = new ol.Feature({
-                geometry: new ol.geom.Point([x,y])
-            });
-            iconFeature.setStyle(new ol.style.Style({
-                image: new ol.style.Icon({
-                    src: '/img/legend/mapiconscollection-markers/zoom_rouge.png'
-                })
-            }));
-            _sourceLocalisation.clear();
-            _sourceLocalisation.addFeature(iconFeature);
-
         },
 
         /**
@@ -3642,7 +2950,7 @@ mviewer = (function () {
                 mviewer.customControls[layer.layerid].init();
             }
             if (layer.type === 'customlayer' && layer.tooltip && layer.tooltipenabled) {
-                this.toggleTooltip($('.layer-tooltip[data-layerid="'+layer.layerid+'"]')[0]);
+                info.toggleTooltipLayer($('.layer-tooltip[data-layerid="'+layer.layerid+'"]')[0]);
             }
             if (layer.expanded) {
                 this.toggleLayerOptions($('.mv-layer-details[data-layerid="'+layer.layerid+'"]')[0]);
@@ -3706,22 +3014,7 @@ mviewer = (function () {
             $("#menu-toggle-2,.menu-toggle").toggleClass("closed");
             $('#menu ul').hide();
         },
-        toggleTooltip: function (el) {
-            var a = $(el);
-            if ( a.find("input").val() === 'false' ) {
-                //On désactive l'ancien tooltip
-                $(".layer-tooltip span.mv-checked").closest("a").find("input").val(false);
-                $(".layer-tooltip span.mv-checked").removeClass("mv-checked").addClass("mv-unchecked");
-                //On active le nouveau tooltip
-                a.find("span").removeClass("mv-unchecked").addClass("mv-checked");
-                a.find("input").val(true);
-                _activeTooltipLayer = a.attr("data-layerid");
-            } else {
-                a.find("span").removeClass("mv-checked").addClass("mv-unchecked");
-                a.find("input").val(false);
-                _activeTooltipLayer =  false;
-            }
-        },
+
         toggleLegend: function () {
             $("#legend").toggleClass("active");
         },
@@ -4005,7 +3298,13 @@ mviewer = (function () {
             //var newStatus = _getThemeStatus(themeid);
             _setThemeStatus(themeid);
             e.stopPropagation();
-        }
+        },
+
+        getLayers: function () {
+            return _overLayers;
+        },
+
+        ajaxURL : _ajaxURL
 
     }; // fin return
 
