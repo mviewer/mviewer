@@ -652,7 +652,7 @@ var info = (function () {
         var p = _map.getPixelFromCoordinate(pt);
         $('#loading-indicator').show();
         _queryMap({coordinate:[pt[0],pt[1]]},{type: 'feature', layer: layer, featureid:featureid});
-        /*TODO _clearSearchField(); */
+        search.clearSearchField();
     };
 
      /**

@@ -739,7 +739,8 @@ var search = (function () {
         options: _searchparams,
         showFeature: _showFeature,
         zoomToFeature: _zoomToFeature,
-        clear: _clear
+        clear: _clear,
+        clearSearchField: _clearSearchField
     };
 
 })();
