@@ -129,7 +129,7 @@ mviewer = (function () {
      * Array of {ol.layer.Vector} .
      */
 
-    var _vectorLayers = [];
+    var _vectorLayers = [];    
 
     /**
      * Property: _scaledDependantLayers
@@ -155,6 +155,20 @@ mviewer = (function () {
     var _overlay = null;
 
     /**
+     * Property: _olsCompletionUrl
+     * String. The OpenLs url used by the geocode control
+     */
+
+    var _olsCompletionUrl = null;
+
+    /**
+     * Property: _olsCompletionType
+     * String. The service type used by the geocode control (geoportail or ban)
+     */
+
+    var _olsCompletionType = null;    
+
+    /**
      * Property: _marker
      * marker used to locate features on the map.
      * @type {ol.Overlay}
@@ -170,6 +184,14 @@ mviewer = (function () {
      */
 
     var _renderer = 'canvas';
+
+    /**
+     * Property: _sourceEls
+     * @type {ol.source.Vector}
+     * Used to highlight ELS vector features
+     */
+
+    var _sourceEls;
 
     /**
      * Property: _sourceOverlay
@@ -261,7 +283,7 @@ mviewer = (function () {
           source: _sourceGeolocation
         });
         _map.addLayer(layerposition);
-    };
+    };   
 
     /**
      * Private Method: initVectorOverlay
@@ -301,7 +323,7 @@ mviewer = (function () {
         }
         //Activate GetFeatureInfo tool
         mviewer.setTool('info');
-    };
+    };    
 
     /**
      * Private Method: _initPanelsPopup
@@ -381,7 +403,6 @@ mviewer = (function () {
         if (oLayer.searchable) {
             search.processSearchableLayer(oLayer);
         }
-
         if (oLayer.scale) {
             _scaledDependantLayers.push(oLayer);
         }
@@ -1000,6 +1021,12 @@ mviewer = (function () {
             source.addFeature(feature);
         },
 
+        showFeature: function (featureid) {
+            var feature = _sourceEls.getFeatureById(featureid).clone();
+            _sourceOverlay.clear();
+            _sourceOverlay.addFeature(feature);
+        },
+
         /**
          * Public Method: setTool
          *
@@ -1396,7 +1423,7 @@ mviewer = (function () {
                     }
                 });
             }
-
+            
             var bl = $(xml).find('baselayer');
             var th = $(xml).find('theme');
             //baselayertoolbar
@@ -1598,7 +1625,7 @@ mviewer = (function () {
                             oLayer.searchable = ($(this).attr("searchable") == "true") ? true : false;
                             if (oLayer.searchable) {
                                 oLayer = search.configSearchableLayer(oLayer, this);
-                            }
+                            }                            
                             oLayer.infoformat = $(this).attr("infoformat");
                             oLayer.checked = ($(this).attr("visible") == "true") ? true : false;
                             oLayer.visiblebydefault = ($(this).attr("visible") == "true") ? true : false;
@@ -1616,6 +1643,13 @@ mviewer = (function () {
                                     oLayer.aliases = $(this).attr("fields").split(",");
                                 }
                             }
+
+                            if($(this).attr("iconsearch")){
+                                oLayer.iconsearch=$(this).attr("iconsearch");
+                            } else {
+                                oLayer.iconsearch="img/star.svg";
+                            }
+
                             if ($(this).attr("scalemin") || $(this).attr("scalemax")) {
                                 oLayer.scale = {};
                                 if ($(this).attr("scalemin")) {
@@ -1857,6 +1891,15 @@ mviewer = (function () {
                 return _map;
         },
 
+        /**
+         * Public Method: getOlsCompletionUrl
+         *
+         */
+
+        getOlsCompletionUrl: function () {
+            return _olsCompletionUrl;
+        },
+
         customLayers: {},
 
         customControls: {},
@@ -1864,6 +1907,15 @@ mviewer = (function () {
         tools: { activeTool: false},
 
         /**
+         * Public Method: getElasticsearchUrl
+         *
+         */
+
+        getElasticsearchUrl: function () {
+            return _elasticSearchUrl;
+        },
+
+         /**
          * Public Method: popupPhoto
          *
          */
@@ -1879,10 +1931,35 @@ mviewer = (function () {
          */
 
         zoomToLocation: function (x, y, zoom, lib) {
-            search.clear();
+            if (_sourceEls && _sourceOverlay) {
+                _sourceEls.clear();
+                _sourceOverlay.clear();
+            }
             var ptResult = ol.proj.transform([x, y], 'EPSG:4326', _projection.getCode());
             _map.getView().setCenter(ptResult);
             _map.getView().setZoom(zoom);
+        },
+
+        /**
+         * Public Method: zoomToLocation
+         *
+         */
+
+        zoomToFeature: function (featureid) {
+            var feature = _sourceEls.getFeatureById(featureid).clone();
+            _sourceEls.clear();
+            _sourceOverlay.clear();
+            _sourceOverlay.addFeature(feature);
+            var boundingExtent = feature.getGeometry().getExtent();
+            var duration = 2000;
+            _map.getView().fit(boundingExtent, { size: _map.getSize(),
+                padding: [0, $("#sidebar-wrapper").width(), 0, 0], duration: duration});
+
+            function clear() {
+                _sourceOverlay.clear();
+            }
+            setTimeout(clear, duration*2);
+
         },
 
         /**
@@ -2352,7 +2429,28 @@ mviewer = (function () {
         toggleLegend: function () {
             $("#legend").toggleClass("active");
         },
+        toggleParameter: function (li) {
+            var span = $(li).find("span");
+            var parameter = false;
+            if (span.hasClass('mv-unchecked') === true ) {
+                span.removeClass('mv-unchecked').addClass('mv-checked');
+                parameter = true;
+            } else {
+                span.removeClass('mv-checked').addClass('mv-unchecked');
+            }
+            switch (li.id) {
+                case "param_search_bbox":
+                    _searchparams.bbox = parameter;
+                    break;
+                case "param_search_localities":
+                    _searchparams.localities = parameter;
+                    break;
+                case "param_search_features":
+                    _searchparams.features = parameter;
+                    break;
+            }
 
+        },
         toggleLayerOptions: function (el) {
             $(el).closest("li").find(".mv-layer-options").slideToggle();
             //hack slider js
@@ -2616,8 +2714,8 @@ mviewer = (function () {
         getLayers: function () {
             return _overLayers;
         },
-
-        getLonLatZfromGeometry : _getLonLatZfromGeometry,
+        
+        getLonLatZfromGeometry: _getLonLatZfromGeometry,
 
         ajaxURL : _ajaxURL
 
