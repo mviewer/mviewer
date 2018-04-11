@@ -263,7 +263,7 @@ var info = (function () {
                             }
                             break;
                         default :
-                            _message("Ce format de réponse : " + contentType +" n'est pas pris en charge");
+                            mviewer.alert("Ce format de réponse : " + contentType +" n'est pas pris en charge", "alert-warning");
                     }
                     if (html) {
                         //test si présence d'une classe .feature eg template geoserver.
@@ -651,7 +651,7 @@ var info = (function () {
         var pt = ol.proj.transform([x, y], proj, _projection.getCode());
         var p = _map.getPixelFromCoordinate(pt);
         $('#loading-indicator').show();
-        queryMap({coordinate:[pt[0],pt[1]]},{type: 'feature', layer: layer, featureid:featureid});
+        _queryMap({coordinate:[pt[0],pt[1]]},{type: 'feature', layer: layer, featureid:featureid});
         /*TODO _clearSearchField(); */
     };
 
