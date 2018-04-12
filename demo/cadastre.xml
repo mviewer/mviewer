@@ -41,10 +41,10 @@
 				metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0ca82e1d-b487-4879-8185-56b7c4e1a948" />                        
             <layer id="cadastre:CP.CadastralBuilding" 
                 name="Bâti" 
-                visible="true" tiled="true"
+                visible="true" tiled="false"
                 scalemin="0" scalemax="25000" 
 				queryable="false" 
-                sld="http://kartenn.region-bretagne.fr/styles/bati.sld"                
+                sld="https://kartenn.region-bretagne.fr/styles/bati.sld"
 				url="https://geobretagne.fr/geoserver/cadastre/wms" 
 				attribution="DGFIP" 
 				metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=0ca82e1d-b487-4879-8185-56b7c4e1a948"
