@@ -124,8 +124,8 @@ $(document).ready(function () {
                 $("#loading-page").hide();
                 $("#main").css("opacity", 1).hide();
                 $("#main").fadeIn(1500);
+                map.updateSize();
             }, 2000);
-            map.updateSize();
             $( "#map" ).focus();
         }, // fin success config
         error: function (request, status, error) {

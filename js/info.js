@@ -672,7 +672,7 @@ var info = (function () {
         _sourceOverlay = sourceOverlay;
         $.each(_overLayers, function (i, layer) {
             if (layer.queryable) {
-                _queryableLayers.push(layer.layer);
+                _addQueryableLayer(layer);
             }
         });
         $("#layers-container-box, #sidebar-wrapper, #bottom-panel, #right-panel").on('mouseover', function() {
@@ -749,6 +749,15 @@ var info = (function () {
         }
     };
 
+    /**
+     * Public Method: addQueryableLayer
+     * @param el {oLayer}
+     */
+
+    var _addQueryableLayer = function (oLayer) {
+        _queryableLayers.push(oLayer.layer);
+    };
+
     return {
         init: init,
         enable: enable,
@@ -756,7 +765,8 @@ var info = (function () {
         disable: disable,
         enabled : enabled,
         toggleTooltipLayer: toggleTooltipLayer,
-        queryLayer: queryLayer
+        queryLayer: queryLayer,
+        addQueryableLayer: _addQueryableLayer
     };
 
 })();

@@ -190,6 +190,9 @@ var search = (function () {
                 $(".mv-searchtool-delete").addClass("active");
             }
         });
+
+        mviewer.zoomToFeature = search.zoomToFeature;
+        mviewer.showFeature = search.showFeature;
     };
 
     var _search = function (value) {
@@ -525,7 +528,7 @@ var search = (function () {
                                 action_click = 'mviewer.zoomToFeature(\'feature.'+i+'\');';
                                 feature.setId( "feature." +i);
                                 _sourceEls.addFeature(feature);
-                                action_over = 'search.showFeature(\'feature.'+i+'\');';
+                                action_over = 'mviewer.showFeature(\'feature.'+i+'\');';
                             } else {
                                 action_click = 'mviewer.zoomToLocation('  + point[0] + ',' + point[1]  + ',14);';
                                 action_over = 'mviewer.flash('+'\'EPSG:4326\',' + point[0] + ',' + point[1] + ');';

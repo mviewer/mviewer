@@ -21,11 +21,29 @@ mviewer = (function () {
         "+units=m +no_defs");
 
     var _WMTSTileMatrix = {};
+
     var _WMTSTileResolutions = {};
+
+    /**
+     * Property: _proxy
+     * Ajax proxy to use for crossdomain requests
+     * It could be georchestra security-proxy
+     */
 
     var _proxy = "";
 
+    /**
+     * Property: _authentification
+     * Its possible behind georchestra security-proxy.
+     * allows working with protected layers
+     */
+
     var _authentification = {enabled:false};
+
+    /**
+     * Property: _ajaxURL
+     *
+     */
 
     var _ajaxURL = function (url) {
         // relative path
@@ -54,7 +72,7 @@ mviewer = (function () {
 
     /**
      * Property: _map
-     * {OpenLayers.Map} The map
+     * {ol.Map} The map
      */
 
     var _map = null;
@@ -129,7 +147,7 @@ mviewer = (function () {
      * Array of {ol.layer.Vector} .
      */
 
-    var _vectorLayers = [];    
+    var _vectorLayers = [];
 
     /**
      * Property: _scaledDependantLayers
@@ -166,7 +184,7 @@ mviewer = (function () {
      * String. The service type used by the geocode control (geoportail or ban)
      */
 
-    var _olsCompletionType = null;    
+    var _olsCompletionType = null;
 
     /**
      * Property: _marker
@@ -184,14 +202,6 @@ mviewer = (function () {
      */
 
     var _renderer = 'canvas';
-
-    /**
-     * Property: _sourceEls
-     * @type {ol.source.Vector}
-     * Used to highlight ELS vector features
-     */
-
-    var _sourceEls;
 
     /**
      * Property: _sourceOverlay
@@ -237,8 +247,6 @@ mviewer = (function () {
         delete _overLayers[layername];
     };
 
-
-
     var _getlegendurl = function (layer, scale) {
         var sld = "";
         var legendUrl = "";
@@ -283,14 +291,12 @@ mviewer = (function () {
           source: _sourceGeolocation
         });
         _map.addLayer(layerposition);
-    };   
+    };
 
     /**
      * Private Method: initVectorOverlay
      * this layer is used to render ol.Feature in methods
      * - zoomToLocation
-     * - zoomToFeature
-     * - showFeature
      */
 
     var _initVectorOverlay = function () {
@@ -323,7 +329,7 @@ mviewer = (function () {
         }
         //Activate GetFeatureInfo tool
         mviewer.setTool('info');
-    };    
+    };
 
     /**
      * Private Method: _initPanelsPopup
@@ -869,6 +875,7 @@ mviewer = (function () {
                 l.set('mviewerid', oLayer.id);
                 themeLayers[oLayer.id].layer = l;
                 _overLayers[oLayer.id] = themeLayers[oLayer.id];
+                info.addQueryableLayer(_overLayers[oLayer.id]);
                 if (oLayer.scale) {
                     _scaledDependantLayers.push(oLayer);
                 }
@@ -1019,12 +1026,6 @@ mviewer = (function () {
                 proj, _map.getView().getProjection().getCode()));
             var feature = new ol.Feature(geom);
             source.addFeature(feature);
-        },
-
-        showFeature: function (featureid) {
-            var feature = _sourceEls.getFeatureById(featureid).clone();
-            _sourceOverlay.clear();
-            _sourceOverlay.addFeature(feature);
         },
 
         /**
@@ -1423,7 +1424,7 @@ mviewer = (function () {
                     }
                 });
             }
-            
+
             var bl = $(xml).find('baselayer');
             var th = $(xml).find('theme');
             //baselayertoolbar
@@ -1625,7 +1626,7 @@ mviewer = (function () {
                             oLayer.searchable = ($(this).attr("searchable") == "true") ? true : false;
                             if (oLayer.searchable) {
                                 oLayer = search.configSearchableLayer(oLayer, this);
-                            }                            
+                            }
                             oLayer.infoformat = $(this).attr("infoformat");
                             oLayer.checked = ($(this).attr("visible") == "true") ? true : false;
                             oLayer.visiblebydefault = ($(this).attr("visible") == "true") ? true : false;
@@ -1834,9 +1835,9 @@ mviewer = (function () {
                 } // fin de else
 
                 _initDataList();
+                _initVectorOverlay();
                 search.init(xml, _map, _sourceOverlay);
                 _initPanelsPopup();
-                _initVectorOverlay();
                 _initGeolocation();
                 _initTools();
 
@@ -1891,29 +1892,11 @@ mviewer = (function () {
                 return _map;
         },
 
-        /**
-         * Public Method: getOlsCompletionUrl
-         *
-         */
-
-        getOlsCompletionUrl: function () {
-            return _olsCompletionUrl;
-        },
-
         customLayers: {},
 
         customControls: {},
 
         tools: { activeTool: false},
-
-        /**
-         * Public Method: getElasticsearchUrl
-         *
-         */
-
-        getElasticsearchUrl: function () {
-            return _elasticSearchUrl;
-        },
 
          /**
          * Public Method: popupPhoto
@@ -1931,8 +1914,7 @@ mviewer = (function () {
          */
 
         zoomToLocation: function (x, y, zoom, lib) {
-            if (_sourceEls && _sourceOverlay) {
-                _sourceEls.clear();
+            if (_sourceOverlay) {
                 _sourceOverlay.clear();
             }
             var ptResult = ol.proj.transform([x, y], 'EPSG:4326', _projection.getCode());
@@ -1940,27 +1922,7 @@ mviewer = (function () {
             _map.getView().setZoom(zoom);
         },
 
-        /**
-         * Public Method: zoomToLocation
-         *
-         */
 
-        zoomToFeature: function (featureid) {
-            var feature = _sourceEls.getFeatureById(featureid).clone();
-            _sourceEls.clear();
-            _sourceOverlay.clear();
-            _sourceOverlay.addFeature(feature);
-            var boundingExtent = feature.getGeometry().getExtent();
-            var duration = 2000;
-            _map.getView().fit(boundingExtent, { size: _map.getSize(),
-                padding: [0, $("#sidebar-wrapper").width(), 0, 0], duration: duration});
-
-            function clear() {
-                _sourceOverlay.clear();
-            }
-            setTimeout(clear, duration*2);
-
-        },
 
         /**
          * Public Method: showLocation
@@ -2714,7 +2676,7 @@ mviewer = (function () {
         getLayers: function () {
             return _overLayers;
         },
-        
+
         getLonLatZfromGeometry: _getLonLatZfromGeometry,
 
         ajaxURL : _ajaxURL
