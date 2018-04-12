@@ -675,7 +675,18 @@ var info = (function () {
                 _addQueryableLayer(layer);
             }
         });
-        $("#layers-container-box, #sidebar-wrapper, #bottom-panel, #right-panel").on('mouseover', function() {
+        var noTooltipZone = [
+            "#layers-container-box",
+            "#sidebar-wrapper",
+            "#bottom-panel",
+            "#right-panel",
+            "#mv-navbar",
+            "#zoomtoolbar",
+            "#toolstoolbar",
+            "#backgroundlayerstoolbar-default",
+            "#backgroundlayerstoolbar-gallery"
+        ];
+        $(noTooltipZone.join(", ")).on('mouseover', function() {
             if (_featureTooltip) {
                 $('#feature-info').tooltip('hide');
             }
