@@ -20,10 +20,6 @@ mviewer = (function () {
         "+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 " +
         "+units=m +no_defs");
 
-    var _WMTSTileMatrix = {};
-
-    var _WMTSTileResolutions = {};
-
     /**
      * Property: _proxy
      * Ajax proxy to use for crossdomain requests
@@ -637,8 +633,8 @@ mviewer = (function () {
                         projection: _projection,
                         tileGrid: new ol.tilegrid.WMTS({
                             origin: ol.extent.getTopLeft(projectionExtent),
-                            resolutions: _WMTSTileResolutions[matrixset],
-                            matrixIds: _WMTSTileMatrix[matrixset]
+                            resolutions: utils.getWMTSTileResolutions(matrixset),
+                            matrixIds: utils.getWMTSTileMatrix(matrixset)
                         })
                     })
                 });
@@ -884,27 +880,6 @@ mviewer = (function () {
 
         });
         return {title: title, extent:map_extent, layers:themeLayers};
-    };
-
-    var _initWMTSMatrixsets = function () {
-        var projectionExtent = _projection.getExtent();
-        var size = ol.extent.getWidth(projectionExtent) / 256;
-        _WMTSTileMatrix = {'EPSG:3857': [], 'EPSG:4326': [],'EPSG:2154': [],'PM':[]};
-        _WMTSTileResolutions = {'EPSG:3857': [], 'EPSG:4326': [],'EPSG:2154': [],'PM':[]};
-        for (var z = 0; z < 22; ++z) {
-            // generate resolutions and matrixIds arrays for this GEOSERVER WMTS
-            _WMTSTileResolutions['EPSG:3857'][z] = size / Math.pow(2, z);
-            _WMTSTileMatrix['EPSG:3857'][z] = 'EPSG:3857:' + z;
-            _WMTSTileResolutions['EPSG:4326'][z] = size / Math.pow(2, z);
-            _WMTSTileMatrix['EPSG:4326'][z] = 'EPSG:4326:' + z;
-            _WMTSTileResolutions['EPSG:2154'][z] = size / Math.pow(2, z);
-            _WMTSTileMatrix['EPSG:2154'][z] = 'EPSG:2154:' + z;
-        }
-        for (var z = 0; z < 20; ++z) {
-            // generate resolutions and matrixIds arrays for this GEOPORTAIL WMTS
-            _WMTSTileResolutions['PM'][z] = size / Math.pow(2, z);
-            _WMTSTileMatrix['PM'][z] = z;
-        }
     };
 
     var _flash = function (feature, source) {
@@ -1349,7 +1324,7 @@ mviewer = (function () {
                     });
             }
 
-            _initWMTSMatrixsets();
+            utils.initWMTSMatrixsets(_projection);
 
             var overlays = [];
 
