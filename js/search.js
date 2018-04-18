@@ -566,10 +566,10 @@ var search = (function () {
         oLayer.queryable = ($(this).attr("queryable") == "true") ? true : false;*/
 
     var _configSearchableLayer = function (oLayer, params) {
-        oLayer.searchid = ($(params).attr("searchid"))? $(params).attr("searchid") : _elasticSearchLinkid;
-        oLayer.searchengine = ($(params).attr("searchengine")) ? $(params).attr("searchengine") : 'elasticsearch';
-        oLayer.fusesearchkeys = ($(params).attr("fusesearchkeys")) ? $(params).attr("fusesearchkeys") : '';
-        oLayer.fusesearchresult = ($(params).attr("fusesearchresult")) ? $(params).attr("fusesearchresult") : '';
+        oLayer.searchid = (params.searchid)? params.searchid : _elasticSearchLinkid;
+        oLayer.searchengine = (params.searchengine) ? params.searchengine : 'elasticsearch';
+        oLayer.fusesearchkeys = (params.fusesearchkeys) ? params.fusesearchkeys : '';
+        oLayer.fusesearchresult = (params.fusesearchresult) ? params.fusesearchresult : '';
         return oLayer;
     };
 
@@ -623,31 +623,35 @@ var search = (function () {
         }
     };
 
-    var _init = function (xml, map, sourceOverlay) {
+    var _init = function (configuration, map, sourceOverlay) {
         _map = map;
         _sourceOverlay = sourceOverlay;
         _projection = _map.getView().getProjection();
         _overLayers = mviewer.getLayers();
-        _olsCompletionUrl = $(xml).find('olscompletion').attr("url");
-        $("#adresse-attribution").text($(xml).find('olscompletion').attr("attribution"));
-        _olsCompletionType = $(xml).find('olscompletion').attr("type") || "geoportail";
-        _elasticSearchUrl = $(xml).find('elasticsearch').attr("url");
-        _elasticSearchQuerymode = $(xml).find('elasticsearch').attr("querymode");
-        _elasticSearchGeometryfield = $(xml).find('elasticsearch').attr("geometryfield");
-        _elasticSearchDocTypes = $(xml).find('elasticsearch').attr("doctypes");
-        _elasticSearchVersion = $(xml).find('elasticsearch').attr("version") || "1.4";
-        // common id between elasticsearch document types (_id)  and geoserver featureTypes
-        _elasticSearchLinkid = $(xml).find('elasticsearch').attr("linkid") || "featureid";
+        if (configuration.olscompletion) {
+            _olsCompletionUrl = configuration.olscompletion.url;
+            $("#adresse-attribution").text(configuration.olscompletion.attribution);
+            _olsCompletionType = configuration.olscompletion.type || "geoportail";
+        }
+        if (configuration.elasticsearch) {
+            _elasticSearchUrl = configuration.elasticsearch.url;
+            _elasticSearchQuerymode = configuration.elasticsearch.querymode;
+            _elasticSearchGeometryfield = configuration.elasticsearch.geometryfield;
+            _elasticSearchDocTypes = configuration.elasticsearch.doctypes;
+            _elasticSearchVersion = configuration.elasticsearch.version || "1.4";
+            // common id between elasticsearch document types (_id)  and geoserver featureTypes
+            _elasticSearchLinkid = configuration.elasticsearch.linkid || "featureid";
+        }
 
         if (!_olsCompletionUrl)  {
             _searchparams.localities = false;
         }
-        if ($(xml).find('searchparameters').attr("bbox") && $(xml).find('searchparameters').attr("localities") &&
-            $(xml).find('searchparameters').attr("features")) {
-            _searchparams.bbox = ($(xml).find('searchparameters').attr("bbox") === "true");
-            _searchparams.localities = ($(xml).find('searchparameters').attr("localities") === "true");
-            _searchparams.features = ($(xml).find('searchparameters').attr("features") === "true");
-            _searchparams.static = ($(xml).find('searchparameters').attr("static") === "true");
+        if (configuration.searchparameters && configuration.searchparameters.bbox &&
+            configuration.searchparameters.localities && configuration.searchparameters.features) {
+            _searchparams.bbox = (configuration.searchparameters.bbox === "true");
+            _searchparams.localities = (configuration.searchparameters.localities === "true");
+            _searchparams.features = (configuration.searchparameters.features === "true");
+            _searchparams.static = (configuration.searchparameters.static === "true");
         }
         if (_searchparams.localities===false && _searchparams.features===false) {
             $("#searchtool").remove();

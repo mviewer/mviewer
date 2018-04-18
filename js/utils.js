@@ -49,6 +49,55 @@ var utils = (function () {
         //Résultats tests
         console.log("tests config :" + ((score/nbtests)===1));
     };
+    
+     /**
+     * _testConfig
+     * @param {xml} config xml to test
+     */
+
+    var _testConfiguration2 = function (conf) {
+        var score = 0;
+        var nbtests = 2;
+        //test doublon name layers
+        var test = [];
+        var doublons = 0;
+        var layers = [];
+        conf.themes.theme.forEach(function (theme) {
+            if (theme.layer) {
+                layers = layers.concat(theme.layer);
+            }
+            theme.group.forEach(function (group) {
+                if (group.layer) {
+                    layers = layers.concat(group.layer);
+                }
+            });
+        });
+        layers.forEach(function(layer) {
+            var name = layer.name;
+            if ($.inArray(name, test)) {
+                test.push(name);
+            } else {
+                doublons = 1;
+                console.log("doublon " + name + " in layers");
+            }
+        });
+        
+        score+=(doublons === 0);
+        //test = 1 baselayer visible
+        var test = 0;
+        conf.baselayers.baselayer.forEach(function(baselayer) {
+            if (baselayer.visible === "true") {
+                test += 1;
+            }
+        });        
+        if (test === 1) {
+            score+=1;
+        } else {
+            console.log(test + " baselayer(s) visible(s)");
+        }
+        //Résultats tests
+        console.log("tests config :" + ((score/nbtests)===1));
+    };
 
     var _initWMTSMatrixsets = function (projection) {
         var projectionExtent = projection.getExtent();
@@ -82,6 +131,7 @@ var utils = (function () {
     return {
         lonlat2osmtile: _lonlat2osmtile,
         testConfiguration: _testConfiguration,
+        testConfiguration2: _testConfiguration2,
         initWMTSMatrixsets: _initWMTSMatrixsets,
         getWMTSTileMatrix : _getWMTSTileMatrix,
         getWMTSTileResolutions: _getWMTSTileResolutions

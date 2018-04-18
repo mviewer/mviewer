@@ -83,6 +83,7 @@
     <script type="text/javascript" src="lib/fuse/fuse.min.js"></script>
     <script type="text/javascript" src="js/extend.js"></script>
     <script type="text/javascript" src="js/utils.js"></script>
+    <script type="text/javascript" src="js/configuration.js"></script>
     <script type="text/javascript" type="text/javascript" src="js/measure.js"></script>
     <script type="text/javascript" type="text/javascript" src="js/info.js"></script>
     <script type="text/javascript" type="text/javascript" src="js/search.js"></script>
@@ -106,20 +107,26 @@ $(document).ready(function () {
         url: configFile + '?_dc=' + (new Date()).getTime(),
         dataType: "xml",
         success: function (xml) {
+            //get JSON conf from xml;
+            var _conf = configuration.parseXML(xml);
+            console.log(_conf);
+
             var style = "css/themes/default.css";
-            if ($(xml).find("application").attr("style") && $(xml).find("application").attr("style").match("css")) {
-                style = $(xml).find("application").attr("style");
-            }
-            if (theme) {
-                style = "css/themes/" + theme + ".css";
+            if (_conf.application.style.match("css")) {
+                style = _conf.application.style;
             }
             $('head').prepend('<link rel="stylesheet" href="' + style + '" type="text/css" />');
-            var map = mviewer.init(xml);
             var title = "";
-            if ($(xml).find("application").attr("title")) {
-                title = $(xml).find("application").attr("title");
+            if (_conf.application.title) {
+                title = _conf.application.title;
                 $("#loader-subtitle").text(title);
             }
+            //load conf
+            configuration.load(_conf);
+            //create map from conf
+
+            var map = mviewer.getMap();
+
             setTimeout(function () {
                 $("#loading-page").hide();
                 $("#main").css("opacity", 1).hide();

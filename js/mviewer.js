@@ -60,13 +60,6 @@ mviewer = (function () {
     };
 
     /**
-     * Property: _options
-     * XML. The application configuration
-     */
-
-    var _options = null;
-
-    /**
      * Property: _map
      * {ol.Map} The map
      */
@@ -87,8 +80,6 @@ mviewer = (function () {
     var _showhelp_startup = false;
 
     var _captureCoordinates = false;
-
-    var _toggleAllLayersFromTheme = false;
 
     /**
      * Property: _projection
@@ -222,6 +213,73 @@ mviewer = (function () {
      */
 
     var _geoloc = false;
+    
+    var _setVariables = function () {
+        _proxy = configuration.getProxy();
+    };
+
+    var _initMap = function (mapoptions) {
+        _zoom = parseInt(mapoptions.zoom) || 8;
+        if (mapoptions.rotation === "true" ) {
+            _rotation = true;
+        } else {
+             $("#northbtn").hide();
+        }
+        _center = mapoptions.center.split(",").map(Number);
+        //Projection
+        switch (mapoptions.projection) {
+            case "EPSG:3857":
+            case "EPSG:4326":
+                _projection = ol.proj.get(mapoptions.projection);
+                break;
+
+            default:
+                _projection = new ol.proj.Projection({
+                    code: mapoptions.projection,
+                    extent: mapoptions.projextent.split(",").map(function(item) {return parseFloat(item);})
+                });
+        }
+        utils.initWMTSMatrixsets(_projection);
+        var overlays = [];
+        //Create overlay (red pin) used by showLocation method
+        //TODO rename els_marker to mv-marker
+        _marker = new ol.Overlay({ positioning: 'bottom-center', element: $("#els_marker")[0], stopEvent: false})
+        overlays.push(_marker);
+        _map = new ol.Map({
+            target: 'map',
+            controls: [
+                //new ol.control.FullScreen(),
+                new ol.control.ScaleLine(),
+                new ol.control.Attribution({label: "\u00a9"}),
+                new ol.control.MousePosition({
+                    projection: _projection.getCode(),
+                    undefinedHTML: 'y , x',
+                    className: 'custom-mouse-position',
+                    target: document.getElementById('mouse-position'),
+                    coordinateFormat: function(coordinate) {
+                        let getCoord = ol.coordinate.toStringHDMS(ol.proj.transform(coordinate,
+                            _projection.getCode(), 'EPSG:4326'));
+                        let coordStr = getCoord.replace(/ /g,"").replace("N","N - ");
+                        return coordStr;
+                    }
+                }),
+            ],
+            overlays: overlays,
+            renderer: _renderer,
+            view: new ol.View({
+                projection: _projection,
+                maxZoom: mapoptions.maxzoom || 19,
+                center: _center,
+                enableRotation: _rotation,
+                zoom: _zoom
+            })
+        });
+
+         _map.on('moveend', _mapChange);
+        //Handle zoom change
+        _map.getView().on('change:resolution', _mapZoomChange);
+        return _map;
+    };
 
     /**
      * _message Show message method.
@@ -237,7 +295,7 @@ mviewer = (function () {
             $("#alerts-zone").append(item);
     };
 
-    var _removeLayer = function (layername) {
+    var _deleteLayer = function (layername) {
         $( "[data-layerid='"+layername+"']").remove();
         _map.removeLayer(_overLayers[layername].layer);
         delete _overLayers[layername];
@@ -316,9 +374,9 @@ mviewer = (function () {
     _initTools = function () {
         //GetFeatureInfo tool
         mviewer.tools.info = info;
-        mviewer.tools.info.init(_map, _options, _captureCoordinates, _sourceOverlay);
+        mviewer.tools.info.init(_map, _captureCoordinates, _sourceOverlay);
         //Measure tool
-        if ($(_options).find("application").attr("measuretools") === "true") {
+        if (configuration.getConfiguration().application.measuretools === "true") {
             //Load measure moadule
             mviewer.tools.measure = measure;
             mviewer.tools.measure.init(_map);
@@ -333,9 +391,9 @@ mviewer = (function () {
      */
 
     var _initPanelsPopup = function () {
-        if ($(_options).find("application").attr("help")) {
+        if (configuration.getConfiguration().application.help) {
             $.ajax({
-                url: $(_options).find("application").attr("help"),
+                url: configuration.getConfiguration().application.help,
                 dataType: "text",
                 success: function (html) {
                     $("#help .modal-body").append(html);
@@ -450,6 +508,7 @@ mviewer = (function () {
         var htmlListGroup = '';
         var reverse_themes = [];
         var crossorigin = '';
+        _themes = configuration.getThemes();
         $.each(_themes, function (id, theme) {
             reverse_themes.push(theme);
         });
@@ -467,7 +526,7 @@ mviewer = (function () {
                 toggleAllLayers: false,
                 cls: ""
             };
-             if (_toggleAllLayersFromTheme) {
+             if (configuration.getConfiguration().application.togglealllayersfromtheme === "true") {
                  view.toggleAllLayers = true;
                  classes.push("empty");
              }
@@ -493,7 +552,7 @@ mviewer = (function () {
             }
             htmlListGroup += Mustache.render(mviewer.templates.theme, view);
         });
-        var panelMini = $(_options).find("themes").attr("mini");
+        var panelMini = configuration.getConfiguration().themes.mini;
         if (panelMini && (panelMini === 'true')) {
             mviewer.toggleMenu(false);
             mviewer.toggleLegend(false);
@@ -501,10 +560,12 @@ mviewer = (function () {
         $("#menu").html(htmlListGroup);
         initMenu();
         // Open theme item if set to collapsed=false
-        var expanded_theme = $(_options).find('theme[collapsed="false"]').attr("id");
-        $("#theme-layers-"+expanded_theme+">a").click();
+        var expanded_theme = $.grep(configuration.getConfiguration().themes.theme, function(obj){return obj.collapsed === "false";});
+        if (expanded_theme.length > 0) {
+            $("#theme-layers-"+expanded_theme[0].id+">a").click();
+        }
         //Add remove and add layers button on them
-        if (_toggleAllLayersFromTheme) {
+        if (configuration.getConfiguration().application.togglealllayersfromtheme === "true") {
             $(".toggle-theme-layers").on("click",mviewer.toggleAllThemeLayers);
         }
     };
@@ -583,53 +644,53 @@ mviewer = (function () {
      * params - [ xml ] a baselayer node    present in config.xml.
      */
 
-    var _createBaseLayer = function (params) {
+    var _createBaseLayer = function (baselayer) {
         var l;
-        switch (params.attr("type")) {
+        switch (baselayer.type) {
         case "fake":
             var l = new ol.layer.Layer({});
             _backgroundLayers.push(l);
-            l.set('name', params.attr("label"));
-            l.set('blid', params.attr("id"));
+            l.set('name', baselayer.label);
+            l.set('blid', baselayer.id);
             break;
         case "WMS":
             l =  new ol.layer.Tile({
                 source: new ol.source.TileWMS({
-                    url: params.attr("url"),
+                    url: baselayer.url,
                     crossOrigin: _crossorigin,
-                    maxZoom: params.attr("maxzoom") || 18,
+                    maxZoom: baselayer.maxzoom || 18,
                     params: {
-                        'LAYERS': params.attr("layers"),
+                        'LAYERS': baselayer.layers,
                         'VERSION': '1.1.1',
-                        'FORMAT': params.attr("format"),
+                        'FORMAT': baselayer.format,
                         'TRANSPARENT': false,
                         'TILED': true
                     },
                     attributions: [new ol.Attribution({
-                        html: params.attr("attribution")
+                        html: baselayer.attribution
                     })]
                 }),
                 visible: false
             });
-            l.set('name', params.attr("label"));
-            l.set('blid', params.attr("id"));
+            l.set('name', baselayer.label);
+            l.set('blid', baselayer.id);
 
             _backgroundLayers.push(l);
             _map.addLayer(l);
             break;
         case "WMTS":
-            if (params.attr("fromcapacity") == "false") {
-                var matrixset = params.attr("matrixset");
+            if (baselayer.fromcapacity === "false") {
+                var matrixset = baselayer.matrixset;
                 var projectionExtent = _projection.getExtent();
                 l = new ol.layer.Tile({
                     source: new ol.source.WMTS({
-                        url:  params.attr("url"),
+                        url:  baselayer.url,
                         crossOrigin: _crossorigin,
-                        layer: params.attr("layers"),
+                        layer: baselayer.layers,
                         matrixSet: matrixset,
-                        style: params.attr("style"),
-                        format: params.attr('format'),
-                        attributions: [new ol.Attribution({html:params.attr("attribution")})],
+                        style: baselayer.style,
+                        format: baselayer.format,
+                        attributions: [new ol.Attribution({html:baselayer.attribution})],
                         projection: _projection,
                         tileGrid: new ol.tilegrid.WMTS({
                             origin: ol.extent.getTopLeft(projectionExtent),
@@ -639,14 +700,14 @@ mviewer = (function () {
                     })
                 });
                 l.setVisible(false);
-                l.set('name', params.attr("label"));
-                l.set('blid', params.attr("id"));
+                l.set('name', baselayer.label);
+                l.set('blid', baselayer.id);
                 _map.addLayer(l);
                 _backgroundLayers.push(l);
             }
             else {
                 $.ajax({
-                    url:_ajaxURL(params.attr("url")),
+                    url:_ajaxURL(baselayer.url),
                     dataType: "xml",
                     data: {
                         SERVICE: "WMTS",
@@ -656,18 +717,18 @@ mviewer = (function () {
                     success: function (xml) {
                         var getCapabilitiesResult = (new ol.format.WMTSCapabilities()).read(xml);
                         var WMTSOptions = ol.source.WMTS.optionsFromCapabilities( getCapabilitiesResult, {
-                            layer: params.attr("layers"),
-                            matrixSet: params.attr("matrixset"),
-                            format: params.attr('format'),
-                            style: params.attr("style")
+                            layer: baselayer.layers,
+                            matrixSet: baselayer.matrixset,
+                            format:baselayer.format,
+                            style: baselayer.style
                         });
-                        WMTSOptions.attributions = [new ol.Attribution({html:params.attr("attribution")})];
+                        WMTSOptions.attributions = [new ol.Attribution({html:baselayer.attribution})];
                         l = new ol.layer.Tile({ source: new ol.source.WMTS(WMTSOptions) });
-                        l.set('name', params.attr("label"));
-                        l.set('blid', params.attr("id"));
+                        l.set('name', baselayer.label);
+                        l.set('blid', baselayer.id);
                         _map.getLayers().insertAt(0,l);
                         _backgroundLayers.push(l);
-                        if( params.attr("visible") == 'true' ) {
+                        if( baselayer.visible === 'true' ) {
                             l.setVisible(true);
                         } else {
                             l.setVisible(false);
@@ -680,17 +741,17 @@ mviewer = (function () {
         case "OSM":
             l = new ol.layer.Tile({
                 source: new ol.source.OSM({
-                    url: params.attr("url"),
+                    url: baselayer.url,
                     crossOrigin: 'anonymous',
-                    maxZoom: params.attr("maxzoom") || 18,
+                    maxZoom: baselayer.maxzoom || 18,
                     attributions: [new ol.Attribution({
-                        html: params.attr("attribution")
+                        html: baselayer.attribution
                     })]
                 }),
                 visible: false
             });
-            l.set('name', params.attr("label"));
-            l.set('blid', params.attr("id"));
+            l.set('name', baselayer.label);
+            l.set('blid', baselayer.id);
             _backgroundLayers.push(l);
             _map.addLayer(l);
             break;
@@ -1104,10 +1165,10 @@ mviewer = (function () {
                     l.setVisible(false);
                  }
             }
-            if ($(_options).find("baselayers").attr("style") === 'default') {
+            if (configuration.getConfiguration().baselayers.style === 'default') {
                 //get the next thumb
-                var thumb = $(_options).find('baselayer[id="'+_backgroundLayers[nexid].get('blid')+'"]').attr("thumbgallery");
-                var title = $(_options).find('baselayer[id="'+_backgroundLayers[nexid].get('blid')+'"]').attr("label");
+                var thumb = configuration.getConfiguration().baselayers.baselayer[nexid].thumbgallery;
+                var title = configuration.getConfiguration().baselayers.baselayer[nexid].label;
                 $("#backgroundlayersbtn").css("background-image", 'url("'+thumb+'")');
                 $("#backgroundlayersbtn").attr("title", title);
                 $("#backgroundlayersbtn").tooltip('destroy').tooltip({
@@ -1119,7 +1180,7 @@ mviewer = (function () {
                  });
             }
             $.each(_backgroundLayers, function (id, layer) {
-                var opt = $(_options).find("baselayers").attr("style");
+                var opt = configuration.getConfiguration().baselayers.style;
                 var elem = (opt === "gallery") ? $('#' + layer.get('blid') + '_btn')
                     .closest('li') : $('#' + layer.get('blid') + '_btn');
                 if (layer.getVisible()) {
@@ -1263,608 +1324,14 @@ mviewer = (function () {
          *
          */
 
-        init: function (xml) {
-            utils.testConfiguration(xml);
-            _options = xml;
-            //Application customization (logo, title, helpfile) /
-            var applicationOverride = $(xml).find("application");
-            if (applicationOverride.attr("title")) {
-                document.title = applicationOverride.attr("title");
-                $(".mv-title").text(applicationOverride.attr("title"));
-            }
-            if ((applicationOverride.attr("stats") === "true" ) && applicationOverride.attr("statsurl")) {
-                $.get(applicationOverride.attr("statsurl") +"?app=" + document.title);
-            }
-            if (applicationOverride.attr("logo")) {
-                $(".mv-logo").attr("src", applicationOverride.attr("logo"));
-            }
-            if (applicationOverride.attr("showhelp") === "true" ) {
-                _showhelp_startup = true;
-            }
-            if (applicationOverride.attr("coordinates") === "true" ) {
-                _captureCoordinates = true;
-            }
-            if (applicationOverride.attr("togglealllayersfromtheme") === "true" ) {
-                _toggleAllLayersFromTheme = true;
-            }
-            if (applicationOverride.attr("exportpng") === "true" ) {
-                _crossorigin = "anonymous";
-                $("#exportpng").show();
-            } else {
-                 $("#exportpng").remove();
-            }
-            if ((!applicationOverride.attr("mouseposition")) || (applicationOverride.attr("mouseposition")==="false")){
-                $("#mouse-position").hide();
-            }
-            if (applicationOverride.attr("geoloc")==="true") {
-                _geoloc = true;
-            } else {
-                 $("#geolocbtn").hide();
-            }
-            //map options
-            var options = $(xml).find("mapoptions");
-            _zoom = parseInt(options.attr("zoom")) || 8;
-            if (options.attr("rotation") === "true" ) {
-                _rotation = true;
-            } else {
-                 $("#northbtn").hide();
-            }
-            _center = options.attr("center").split(",").map(Number);
-            //Projection
-            switch (options.attr("projection")) {
-                case "EPSG:3857":
-                case "EPSG:4326":
-                    _projection = ol.proj.get(options.attr("projection"));
-                    break;
-
-                default:
-                    _projection = new ol.proj.Projection({
-                        code: options.attr("projection"),
-                        extent: options.attr("projextent").split(",").map(function(item) {return parseFloat(item);})
-                    });
-            }
-
-            utils.initWMTSMatrixsets(_projection);
-
-            var overlays = [];
-
-            $("#popup-content").append('<div data-role="ui-content">' +
-                '<p>Cliquer sur la carte afin de procéder à l\'interrogation des données</p></div>');
-
-
-            _marker = new ol.Overlay({ positioning: 'bottom-center', element: $("#els_marker")[0], stopEvent: false})
-            overlays.push(_marker);
-
-            if (config.x && config.y && config.z) {
-                _center =   [parseFloat(config.x), parseFloat(config.y)];
-                _zoom = parseInt(config.z);
-            }
-            _map = new ol.Map({
-                target: 'map',
-                controls: [
-                    //new ol.control.FullScreen(),
-                    new ol.control.ScaleLine(),
-                    new ol.control.Attribution({label: "\u00a9"}),
-                    new ol.control.MousePosition({
-                        projection: _projection.getCode(),
-                        undefinedHTML: 'y , x',
-                        className: 'custom-mouse-position',
-                        target: document.getElementById('mouse-position'),
-                        coordinateFormat: function(coordinate) {
-                            let getCoord = ol.coordinate.toStringHDMS(ol.proj.transform(coordinate,
-                                _projection.getCode(), 'EPSG:4326'));
-                            let coordStr = getCoord.replace(/ /g,"").replace("N","N - ");
-                            return coordStr;
-                        }
-                    }),
-                ],
-                overlays: overlays,
-                renderer: _renderer,
-                view: new ol.View({
-                    projection: _projection,
-                    maxZoom: options.attr("maxzoom") || 19,
-                    center: _center,
-                    enableRotation: _rotation,
-                    zoom: _zoom
-                })
-            });
-            _proxy = $(xml).find('proxy').attr("url");
-            _authentification.enabled = $(xml).find('authentification').attr("enabled")=="true"?true:false;
-            if (_authentification.enabled) {
-                _authentification.url = $(xml).find('authentification').attr("url");
-                _authentification.loginurl = $(xml).find('authentification').attr("loginurl");
-                _authentification.logouturl = $(xml).find('authentification').attr("logouturl");
-                $.ajax({
-                    url: _authentification.url, success: function (response) {
-                        //test georchestra proxy
-                        if(response.proxy == "true") {
-                            $("#login").show();
-                            if (response.user !="") {
-                                $("#login").attr("href",_authentification.logouturl);
-                                $("#login").attr("title","Se déconnecter");
-                                console.log("Bonjour " + response.user);
-                            } else {
-                                var url="";
-                                if (location.search=="") {
-                                    url=_authentification.loginurl;
-                                } else {
-                                    url=location.href  + _authentification.loginurl.replace("?","&");
-                                }
-                                $("#login").attr("href",url);
-                            }
-                        } else {
-                            console.log(["Kartenn n'a pas détecté la présence du security-proxy georChestra.",
-                                "L'accès aux couches protégées et à l'authentification n'est donc pas possible"].join("\n"));
-                        }
-                    }
-                });
-            }
-
-            var bl = $(xml).find('baselayer');
-            var th = $(xml).find('theme');
-            //baselayertoolbar
-            var baselayerControlStyle = $(xml).find('baselayers').attr("style");
-            if (baselayerControlStyle === "gallery") {
-                $("#backgroundlayerstoolbar-default").remove();
-            } else {
-                $("#backgroundlayerstoolbar-gallery").remove();
-            }
-            $(bl).each(function () {
-                _createBaseLayer($(this));
-                if (baselayerControlStyle === "gallery") {
-                    $("#basemapslist").append(Mustache.render(mviewer.templates.backgroundLayerControlGallery, $.xml2json(this)));
-                }
-            });
-            if (baselayerControlStyle === "gallery") {
-                $("#basemapslist li").tooltip({
-                    placement: 'left',
-                    trigger: 'hover',
-                    html: true,
-                    container: 'body',
-                    template: mviewer.templates.tooltip
-                });
-            }
-            _themes = {};
-            var themeLayers = {};
-            if (config.wmc) {
-                var reg=new RegExp("[,]+", "g");
-                var wmcs=config.wmc.split(reg);
-                for (var i=0; i<wmcs.length; i++) {
-                    (function(key) {
-                        var wmcid = "wmc"+key ;
-                        $.ajax({
-                            url:_ajaxURL(wmcs[key]),
-                            dataType: "xml",
-                            success: function (xml) {
-                                var wmc = _parseWMCResponse(xml, wmcid);
-                                _themes[wmcid] = {};
-                                _themes[wmcid].collapsed = false;
-                                _themes[wmcid].id = wmcid;
-                                _themes[wmcid].layers = {};
-                                _themes[wmcid].icon = "chevron-circle-right";
-                                console.log ("adding "+wmc.title+" category");
-                                _map.getView().fit(wmc.extent, { size: _map.getSize(),
-                                    padding: [0, $("#sidebar-wrapper").width(), 0, 0]});
-                                _themes[wmcid].layers = wmc.layers;
-                                _themes[wmcid].name = wmc.title;
-                                _initDataList();
-                                _showCheckedLayers();
-                            }
-                        });
-                    })(i);
-                }
-            } else {
-                var themes = $(xml).find('theme');
-                var layerRank = 0;
-                var doublons = {};
-                $(themes.get().reverse()).each(function () {
-                    var themeid = $(this).attr("id");
-                    var icon = "fa-lg fa-" + ($(this).attr("icon") || "globe");
-                    _themes[themeid] = {};
-                    _themes[themeid].id = themeid;
-                    _themes[themeid].icon = icon;
-                    _themes[themeid].name = $(this).attr("name");
-                    _themes[themeid].groups = false;
-                    // test group
-                    if ($(this).find("group").length) {
-                        var groups = $(this).find("group");
-                        _themes[themeid].groups = {};
-                        groups.each(function () {
-                            _themes[themeid].groups[$(this).attr("id")] = {name: $(this).attr("name"), layers: {}};
-                        });
-
-                        }
-                        _themes[themeid].layers = {};
-                        var layersXml = $(this).find('layer');
-                        $(layersXml.get().reverse()).each(function () {
-                            layerRank+=1;
-                            var layerId = $(this).attr("id");
-                            console.log(themeid,layerId);
-                            var secureLayer = ($(this).attr("secure") == "true") ? true : false;
-                            if (secureLayer) {
-                                $.ajax({
-                                    dataType: "xml",
-                                    layer: layerId,
-                                    url:  _ajaxURL($(this).attr("url")+ "?REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.3.0"),
-                                    success: function (result) {
-                                        //Find layer in capabilities
-                                        var name = this.layer;
-                                        var layer = $(result).find('Layer>Name').filter(function() {
-                                            return $(this).text() == name;
-                                        });
-                                        if (layer.length === 0) {
-                                            //remove this layer from map and panel
-                                            _removeLayer(this.layer);
-                                        }
-                                    }
-                                });
-                            }
-                            var mvid;
-                            var oLayer = {};
-                            //var clean_ident = layerId.replace(':','__').split(",").join("_");
-                            var clean_ident = layerId.replace(/:|,| |\./g,'');
-                            if (_overLayers[clean_ident] ) {
-                                doublons[clean_ident] += 1;
-                                mvid = clean_ident + "dbl"+doublons[clean_ident];
-                            } else {
-                                mvid = clean_ident;
-                                doublons[clean_ident] = 0;
-                            }
-                            oLayer.id = mvid;
-                            oLayer.icon = icon;
-                            oLayer.layername = layerId;
-                            oLayer.type = $(this).attr("type") || "wms";
-                            oLayer.theme = themeid;
-                            oLayer.rank = layerRank;
-                            oLayer.name = $(this).attr("name");
-                            oLayer.title = $(this).attr("name");
-                            oLayer.layerid = mvid;
-                            oLayer.infospanel = $(this).attr("infopanel") ||'right-panel';
-                            oLayer.featurecount = $(this).attr("featurecount");
-                            //styles
-                            if ($(this).attr("style") && $(this).attr("style") != "") {
-                                var styles = $(this).attr("style").split(",");
-                                oLayer.style = styles[0];
-                                if (styles.length > 1) {
-                                    oLayer.styles = styles.toString();
-                                }
-                            } else {
-                               oLayer.style="";
-                            }
-                            if ($(this).attr("stylesalias") && $(this).attr("stylesalias") != "") {
-                                oLayer.stylesalias = $(this).attr("stylesalias");
-                            } else {
-                                if (oLayer.styles) {
-                                    oLayer.stylesalias = oLayer.styles;
-                                }
-                            }
-                            oLayer.toplayer =  ($(this).attr("toplayer") == "true") ? true : false;
-                            oLayer.draggable = true;
-                            if (oLayer.toplayer) {
-                                _topLayer = oLayer.id;
-                                oLayer.draggable = false;
-                            }
-                            oLayer.sld = $(this).attr("sld") || null;
-                            oLayer.filter = $(this).attr("filter");
-                            oLayer.opacity = parseFloat($(this).attr("opacity") || "1");
-                            oLayer.tooltip =  ($(this).attr("tooltip") == "true") ? true : false;
-                            oLayer.tooltipenabled =  ($(this).attr("tooltipenabled") == "true") ? true : false;
-                            oLayer.tooltipcontent = ($(this).attr("tooltipcontent")) ? $(this).attr("tooltipcontent") : '';
-                            oLayer.expanded =  ($(this).attr("expanded") == "true") ? true : false;
-                            oLayer.timefilter =  ($(this).attr("timefilter") &&
-                                $(this).attr("timefilter") == "true") ? true : false;
-                            if (oLayer.timefilter && $(this).attr("timeinterval")) {
-                                oLayer.timeinterval = $(this).attr("timeinterval") || "day";
-                            }
-                            oLayer.timecontrol = $(this).attr("timecontrol") || "calendar";
-                            if ($(this).attr("timevalues") && $(this).attr("timevalues").search(",")) {
-                                oLayer.timevalues = $(this).attr("timevalues").split(",");
-                            }
-                            oLayer.timemin = $(this).attr("timemin") || new Date().getFullYear() -5;
-                            oLayer.timemax = $(this).attr("timemax") || new Date().getFullYear();
-
-                            oLayer.attributefilter =  ($(this).attr("attributefilter") &&
-                                $(this).attr("attributefilter") == "true") ? true : false;
-                            oLayer.attributefield = $(this).attr("attributefield");
-                            oLayer.attributelabel = $(this).attr("attributelabel") || "Attributs";
-                            if ($(this).attr("attributevalues") && $(this).attr("attributevalues").search(",")) {
-                                oLayer.attributevalues = $(this).attr("attributevalues").split(",");
-                            }
-                            oLayer.attributestylesync =  ($(this).attr("attributestylesync") &&
-                                $(this).attr("attributestylesync") == "true") ? true : false;
-                            oLayer.attributefilterenabled =  ($(this).attr("attributefilterenabled") &&
-                                $(this).attr("attributefilterenabled") == "true") ? true : false;
-                            if (oLayer.attributestylesync && oLayer.attributefilterenabled && oLayer.attributevalues) {
-                                oLayer.style = [oLayer.style.split('@')[0], '@',
-                                oLayer.attributevalues[0].sansAccent().toLowerCase()].join("");
-                            }
-                            oLayer.customcontrol = ($(this).attr("customcontrol") == "true") ? true : false;
-                            oLayer.customcontrolpath = $(this).attr("customcontrolpath") || "customcontrols";
-                            oLayer.attribution = $(this).attr("attribution");
-                            oLayer.metadata = $(this).attr("metadata");
-                            oLayer.metadatacsw = $(this).attr("metadata-csw");
-                            if (oLayer.metadata) {
-                                oLayer.summary = '<a href="'+oLayer.metadata+'" target="_blank">En savoir plus</a>';
-                            }
-                            oLayer.url = $(this).attr("url");
-                            //Mustache template
-                            if ($(this).find("template") && $(this).find("template").attr("url")) {
-                                $.get($(this).find("template").attr("url"), function(template) {
-                                    oLayer.template = template;
-                                });
-                            } else if ($(this).find("template") && $(this).find("template").text()) {
-                                oLayer.template = $(this).find("template").text();
-                            } else {
-                                oLayer.template = false;
-                            }
-                            oLayer.queryable = ($(this).attr("queryable") == "true") ? true : false;
-                            oLayer.searchable = ($(this).attr("searchable") == "true") ? true : false;
-                            if (oLayer.searchable) {
-                                oLayer = search.configSearchableLayer(oLayer, this);
-                            }
-                            oLayer.infoformat = $(this).attr("infoformat");
-                            oLayer.checked = ($(this).attr("visible") == "true") ? true : false;
-                            oLayer.visiblebydefault = ($(this).attr("visible") == "true") ? true : false;
-                            oLayer.tiled = ($(this).attr("tiled") == "true") ? true : false;
-                            //oLayer.ns = ($(this).attr("namespace")) ? $(this).attr("namespace") : null;
-                            oLayer.dynamiclegend = ($(this).attr("dynamiclegend") == "true") ? true : false;
-                            oLayer.legendurl=($(this).attr("legendurl"))? $(this).attr("legendurl") : _getlegendurl(oLayer);
-                            if (oLayer.legendurl === "false") {oLayer.legendurl = "";}
-                            oLayer.useproxy = ($(this).attr("useproxy") == "true") ? true : false;
-                            if ($(this).attr("fields")) {
-                                oLayer.fields = $(this).attr("fields").split(",");
-                                if ($(this).attr("aliases")) {
-                                    oLayer.aliases = $(this).attr("aliases").split(",");
-                                } else {
-                                    oLayer.aliases = $(this).attr("fields").split(",");
-                                }
-                            }
-
-                            if($(this).attr("iconsearch")){
-                                oLayer.iconsearch=$(this).attr("iconsearch");
-                            } else {
-                                oLayer.iconsearch="img/star.svg";
-                            }
-
-                            if ($(this).attr("scalemin") || $(this).attr("scalemax")) {
-                                oLayer.scale = {};
-                                if ($(this).attr("scalemin")) {
-                                    oLayer.scale.min = parseInt($(this).attr("scalemin"));
-                                }
-                                if ($(this).attr("scalemax")) {
-                                    oLayer.scale.max = parseInt($(this).attr("scalemax"));
-                                }
-                            }
-                            if (oLayer.customcontrol) {
-                                var customcontrolpath = oLayer.customcontrolpath;
-                                $.ajax({
-                                    url: customcontrolpath + '/' + oLayer.id +'.js',
-                                    layer: oLayer.id,
-                                    dataType: "script",
-                                    success : function (customLayer, textStatus, request) {
-                                        $.ajax({
-                                            url: customcontrolpath +'/'  +this.layer +'.html',
-                                            layer: oLayer.id,
-                                            dataType: "text",
-                                            success: function (html) {
-                                                mviewer.customControls[this.layer].form = html;
-                                                if ($('.mv-layer-details[data-layerid="'+this.layer+'"]').length === 1) {
-                                                    //append the existing mv-layers-details panel
-                                                    $('.mv-layer-details[data-layerid="'+this.layer+'"]')
-                                                        .find('.mv-custom-controls').append(html);
-                                                    mviewer.customControls[this.layer].init();
-                                                }
-                                            }
-                                        });
-                                    },
-                                    error: function () {
-                                        alert( "error customControl" );
-                                    }
-                                });
-                            }
-
-                            themeLayers[oLayer.id] = oLayer;
-                            var l= null;
-                            if (oLayer.type === 'wms') {
-                                var wms_params = {
-                                    'LAYERS': $(this).attr("id"),
-                                    'STYLES':(themeLayers[oLayer.id].style)? themeLayers[oLayer.id].style : '',
-                                    'FORMAT': 'image/png',
-                                    'TRANSPARENT': true
-                                };
-                                var source;
-                                if (oLayer.filter) {
-                                    wms_params['CQL_FILTER'] = oLayer.filter;
-                                }
-                                if (oLayer.attributefilter && oLayer.attributefilterenabled &&
-                                    oLayer.attributevalues.length > 1) {
-                                    wms_params['CQL_FILTER'] = oLayer.attributefield + "='" + oLayer.attributevalues[0] + "'";
-                                }
-                                if (oLayer.sld) {
-                                    wms_params['SLD'] = oLayer.sld;
-                                }
-                                switch (oLayer.tiled) {
-                                    case true:
-                                        wms_params['TILED'] = true;
-                                        source = new ol.source.TileWMS({
-                                            url: $(this).attr("url"),
-                                            crossOrigin: _crossorigin,
-                                            tileLoadFunction: function (imageTile, src) {
-                                                if (oLayer.useproxy) {
-                                                    src = _proxy + encodeURIComponent(src);
-                                                }
-                                                imageTile.getImage().src = src;
-                                            },
-                                            params: wms_params
-                                        });
-                                        l = new ol.layer.Tile({
-                                            source: source
-                                        });
-                                        break;
-                                    case false:
-                                        source = new ol.source.ImageWMS({
-                                            url: $(this).attr("url"),
-                                            crossOrigin: _crossorigin,
-                                            imageLoadFunction: function (imageTile, src) {
-                                                if (oLayer.useproxy) {
-                                                    src = _proxy + encodeURIComponent(src);
-                                                }
-                                                imageTile.getImage().src = src;
-                                            }, params: wms_params
-                                        });
-                                        l = new ol.layer.Image({
-                                            source:source
-                                        });
-                                        break;
-                                }
-                                source.set('layerid', oLayer.layerid);
-                                source.on('imageloadstart', function(event) {
-                                    //console.log('imageloadstart event',event);
-                                    $("#loading-" + event.target.get('layerid')).show();
-                                });
-
-                                source.on('imageloadend', function(event) {
-                                    //console.log('imageloadend event',event);
-                                    $("#loading-" + event.target.get('layerid')).hide();
-                                });
-
-                                source.on('imageloaderror', function(event) {
-                                    //console.log('imageloaderror event',event);
-                                    $("#loading-" + event.target.get('layerid')).hide();
-                                });
-                                source.on('tileloadstart', function(event) {
-                                    //console.log('imageloadstart event',event);
-                                    $("#loading-" + event.target.get('layerid')).show();
-                                });
-
-                                source.on('tileloadend', function(event) {
-                                    //console.log('imageloadend event',event);
-                                    $("#loading-" + event.target.get('layerid')).hide();
-                                });
-
-                                source.on('tileloaderror', function(event) {
-                                    //console.log('imageloaderror event',event);
-                                    $("#loading-" + event.target.get('layerid')).hide();
-                                });
-                                _processLayer(oLayer, l);
-                            } //end wms
-                            if (oLayer.type === 'geojson') {
-                                l = new ol.layer.Vector({
-                                    source: new ol.source.Vector({
-                                        url: $(this).attr("url"),
-                                        format: new ol.format.GeoJSON()
-                                    })
-                                });
-                                if (oLayer.style && mviewer.featureStyles[oLayer.style]) {
-                                    l.setStyle(mviewer.featureStyles[oLayer.style]);
-                                }
-                                _vectorLayers.push(l);
-                                _processLayer(oLayer, l);
-                            }// end geojson
-
-                            if (oLayer.type === 'kml') {
-                                l = new ol.layer.Vector({
-                                    source: new ol.source.Vector({
-                                        url: $(this).attr("url"),
-                                        format: new ol.format.KML()
-                                    })
-                                });
-                                _vectorLayers.push(l);
-                                _processLayer(oLayer, l);
-                            }// end kml
-
-                            if (oLayer.type === 'customlayer') {
-                                var hook_url = 'customLayers/' + oLayer.id + '.js';
-                                if (oLayer.url && oLayer.url.slice(-3)==='.js') {
-                                    hook_url = oLayer.url;
-                                }
-                                $.ajax({
-                                    url: hook_url,
-                                    dataType: "script",
-                                    success : function (customLayer, textStatus, request) {
-                                        if (mviewer.customLayers[oLayer.id].layer) {
-                                            var l = mviewer.customLayers[oLayer.id].layer;
-                                            if (oLayer.style && mviewer.featureStyles[oLayer.style]) {
-                                                l.setStyle(mviewer.featureStyles[oLayer.style]);
-                                            }
-                                            _vectorLayers.push(l);
-                                            _processLayer(oLayer, l);
-                                        }
-                                        // This seems to be useless. To be removed?
-                                        if (mviewer.customLayers[oLayer.id].handle) {
-                                        }
-                                        _showCheckedLayers();
-                                    },
-                                    error: function (request, textStatus, error) {
-                                        console.log( "error custom Layer : " + error );
-                                    }
-                                });
-                            }
-                            if ($(this).parent().is("group")) {
-                                _themes[themeid].groups[$(this).parent().attr("id")].layers[oLayer.id] = oLayer;
-                            } else {
-                                _themes[themeid].layers[oLayer.id] = oLayer;
-                            }
-                        }); //fin each layer
-                    }); // fin each theme
-                } // fin de else
-
+        init: function () {
+                _setVariables();
                 _initDataList();
                 _initVectorOverlay();
-                search.init(xml, _map, _sourceOverlay);
+                search.init(configuration.getConfiguration(), _map, _sourceOverlay);
                 _initPanelsPopup();
                 _initGeolocation();
                 _initTools();
-
-                //PERMALINK
-                if (config.lb && $.grep(_backgroundLayers, function (n) {
-                    return n.get('blid') === config.lb;
-                })[0]) {
-
-                    this.setBaseLayer(config.lb);
-                } else {
-                    this.setBaseLayer($(xml).find('baselayers').find('[visible="true"]').attr("id"));
-                }
-
-                if (config.l) {
-                    _setVisibleOverLayers(config.l);
-                } else {
-                    if (!config.wmc) {
-                        _showCheckedLayers();
-                    }
-                }
-
-                //Export PNG
-                if (applicationOverride.attr("exportpng") && document.getElementById('exportpng')) {
-                    var exportPNGElement = document.getElementById('exportpng');
-                    if ('download' in exportPNGElement) {
-                        exportPNGElement.addEventListener('click', function(e) {
-                            _map.once('postcompose', function(event) {
-                                try {
-                                    var canvas = event.context.canvas;
-                                    exportPNGElement.href = canvas.toDataURL('image/png');
-                                }
-                                catch(err) {
-                                    _message(err);
-                                }
-                            });
-                            _map.renderSync();
-                        }, false);
-                    } else {
-                        $("#exportpng").hide();
-                    }
-                } else {
-                    $("#exportpng").hide();
-                }
-                _map.on('moveend', _mapChange);
-                //Handle zoom change
-                _map.getView().on('change:resolution', _mapZoomChange);
-
-                if (_showhelp_startup) {
-                    $("#help").modal('show');
-                }
-
-                return _map;
         },
 
         customLayers: {},
@@ -2304,7 +1771,7 @@ mviewer = (function () {
                 this.toggleLayerOptions($('.mv-layer-details[data-layerid="'+layer.layerid+'"]')[0]);
             }
             $("#legend").removeClass("empty");
-            if (_toggleAllLayersFromTheme) {
+            if (configuration.getConfiguration().application.togglealllayersfromtheme === "true") {
                 var newStatus = _getThemeStatus(layer.theme);
                 _setThemeStatus(layer.theme, newStatus);
             }
@@ -2333,7 +1800,7 @@ mviewer = (function () {
             if ($("#layers-container .list-group-item").length === 0) {
                 $("#legend").addClass("empty");
             }
-            if (_toggleAllLayersFromTheme) {
+            if (configuration.getConfiguration().application.togglealllayersfromtheme === "true") {
                 var newStatus = _getThemeStatus(layer.theme);
                 _setThemeStatus(layer.theme, newStatus);
             }
@@ -2532,8 +1999,8 @@ mviewer = (function () {
             }
             nexid=(nexid+1)%_backgroundLayers.length;
             //get the next thumb
-            var thumb = $(_options).find('baselayer[id="'+_backgroundLayers[nexid].get('blid')+'"]').attr("thumbgallery");
-            var title = $(_options).find('baselayer[id="'+_backgroundLayers[nexid].get('blid')+'"]').attr("label");
+            var thumb = configuration.getConfiguration().baselayers.baselayer[nexid].thumbgallery;
+            var title = configuration.getConfiguration().baselayers.baselayer[nexid].label;
             $("#backgroundlayersbtn").css("background-image", 'url("'+thumb+'")');
             $("#backgroundlayersbtn").attr("data-original-title", title);
             $("#backgroundlayersbtn").tooltip('hide').tooltip({
@@ -2652,9 +2119,32 @@ mviewer = (function () {
             return _overLayers;
         },
 
+        getVectorLayers: function () {
+            return _vectorLayers;
+        },
+
         getLonLatZfromGeometry: _getLonLatZfromGeometry,
 
-        ajaxURL : _ajaxURL
+        ajaxURL : _ajaxURL,
+
+        parseWMCResponse: _parseWMCResponse,
+        
+        showCheckedLayers: _showCheckedLayers,
+        
+        initDataList: _initDataList,
+
+        deleteLayer: _deleteLayer,
+
+        processLayer: _processLayer,
+
+        initMap: _initMap,
+
+        getLegendUrl: _getlegendurl,
+
+        createBaseLayer: _createBaseLayer,
+        
+        setVisibleOverLayers: _setVisibleOverLayers
+
 
     }; // fin return
 

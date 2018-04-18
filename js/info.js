@@ -658,15 +658,13 @@ var info = (function () {
      /**
      * Public Method: init
      * @param map {ol.Map}
-     * @param options {mviewer.options}
      * @param captureCoordinates {mviewer.options.application.coordinates}
      * @param sourceOverlay {ol.source.Vector}
      */
 
-    var init = function (map, options, captureCoordinates, sourceOverlay) {
+    var init = function (map, captureCoordinates, sourceOverlay) {
         _map = map;
         _projection = _map.getView().getProjection();
-        _options = options;
         _overLayers = mviewer.getLayers();
         _captureCoordinatesOnClick = captureCoordinates;
         _sourceOverlay = sourceOverlay;
