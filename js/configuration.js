@@ -85,7 +85,7 @@ var configuration = (function () {
 
     var _load = function (conf) {
         _configuration = conf;
-        utils.testConfiguration2(conf);
+        utils.testConfiguration(conf);
         //apply application customization
         if (conf.application.title) {
             document.title = conf.application.title;
