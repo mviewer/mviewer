@@ -18,44 +18,12 @@ var utils = (function () {
         return osmtile;
     };
 
-    /**
-     * _testConfig
-     * @param {xml} config xml to test
-     */
-
-    var _testConfiguration = function (xml) {
-        var score = 0;
-        var nbtests = 2;
-        //test doublon name layers
-        var test = [];
-        var doublons = 0;
-        $('layer',xml).each(function() {
-            var name = $(this).attr("name");
-            if ($.inArray(name, test)) {
-                test.push(name);
-            } else {
-                doublons = 1;
-                console.log("doublon " + name + " in layers");
-            }
-        });
-        score+=(doublons === 0);
-        //test = 1 baselayer visible
-        test = $(xml).find( 'baselayer[visible="true"]').length;
-        if (test === 1) {
-            score+=1;
-        } else {
-            console.log(test + " baselayer(s) visible(s)");
-        }
-        //Résultats tests
-        console.log("tests config :" + ((score/nbtests)===1));
-    };
-    
      /**
      * _testConfig
      * @param {xml} config xml to test
      */
 
-    var _testConfiguration2 = function (conf) {
+    var _testConfiguration = function (conf) {
         var score = 0;
         var nbtests = 2;
         //test doublon name layers
@@ -81,7 +49,7 @@ var utils = (function () {
                 console.log("doublon " + name + " in layers");
             }
         });
-        
+
         score+=(doublons === 0);
         //test = 1 baselayer visible
         var test = 0;
@@ -89,7 +57,7 @@ var utils = (function () {
             if (baselayer.visible === "true") {
                 test += 1;
             }
-        });        
+        });
         if (test === 1) {
             score+=1;
         } else {
@@ -131,7 +99,6 @@ var utils = (function () {
     return {
         lonlat2osmtile: _lonlat2osmtile,
         testConfiguration: _testConfiguration,
-        testConfiguration2: _testConfiguration2,
         initWMTSMatrixsets: _initWMTSMatrixsets,
         getWMTSTileMatrix : _getWMTSTileMatrix,
         getWMTSTileResolutions: _getWMTSTileResolutions
