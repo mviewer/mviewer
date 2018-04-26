@@ -623,10 +623,10 @@ var search = (function () {
         }
     };
 
-    var _init = function (configuration, map, sourceOverlay) {
-        _map = map;
-        _sourceOverlay = sourceOverlay;
-        _projection = _map.getView().getProjection();
+    var _init = function (configuration) {
+        _map = mviewer.getMap();
+        _sourceOverlay = mviewer.getSourceOverlay();
+        _projection = mviewer.getProjection();
         _overLayers = mviewer.getLayers();
         if (configuration.olscompletion) {
             _olsCompletionUrl = configuration.olscompletion.url;

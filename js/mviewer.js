@@ -28,13 +28,9 @@ mviewer = (function () {
 
     var _proxy = "";
 
-    /**
-     * Property: _authentification
-     * Its possible behind georchestra security-proxy.
-     * allows working with protected layers
-     */
+    var _geolocation;
 
-    var _authentification = {enabled:false};
+    var _sourceGeolocation;
 
     /**
      * Property: _ajaxURL
@@ -66,20 +62,6 @@ mviewer = (function () {
 
     var _map = null;
 
-    /**
-     * Property: _crossorigin
-     * The crossOrigin attribute for loaded images. Note that you must provide a crossOrigin value
-     * if you want to access pixel data with the Canvas renderer for export png for example.
-     * See https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image for more detail.
-     */
-
-    var _crossorigin = null;
-
-    var _print = false;
-
-    var _showhelp_startup = false;
-
-    var _captureCoordinates = false;
 
     /**
      * Property: _projection
@@ -87,20 +69,6 @@ mviewer = (function () {
      */
 
     var _projection = null;
-
-    /**
-     * Property: _mapOptions
-     * {Object}  hash of map options
-     */
-
-    var _mapOptions = null;
-
-    /**
-     * Property: _extent
-     * {OpenLayers.Bounds} The initial extent of the map
-     */
-
-    var _extent = null;
 
     /**
      * Property: _center
@@ -130,13 +98,6 @@ mviewer = (function () {
     var _overLayers = {};
 
     /**
-     * Property: _vectorLayers
-     * Array of {ol.layer.Vector} .
-     */
-
-    var _vectorLayers = [];
-
-    /**
      * Property: _scaledDependantLayers
      * Array of {OpenLayers.Layers.WMS} .
      */
@@ -151,27 +112,6 @@ mviewer = (function () {
      */
 
     var _themes = null;
-
-
-    /**
-     * Property: _overlay
-     */
-
-    var _overlay = null;
-
-    /**
-     * Property: _olsCompletionUrl
-     * String. The OpenLs url used by the geocode control
-     */
-
-    var _olsCompletionUrl = null;
-
-    /**
-     * Property: _olsCompletionType
-     * String. The service type used by the geocode control (geoportail or ban)
-     */
-
-    var _olsCompletionType = null;
 
     /**
      * Property: _marker
@@ -206,14 +146,6 @@ mviewer = (function () {
 
     var _overlayFeatureLayer = false;
 
-
-    /**
-     * Property: _geoloc
-     * Bool. Activate geolocalisation in the map
-     */
-
-    var _geoloc = false;
-    
     var _setVariables = function () {
         _proxy = configuration.getProxy();
     };
@@ -374,12 +306,12 @@ mviewer = (function () {
     _initTools = function () {
         //GetFeatureInfo tool
         mviewer.tools.info = info;
-        mviewer.tools.info.init(_map, _captureCoordinates, _sourceOverlay);
+        mviewer.tools.info.init();
         //Measure tool
         if (configuration.getConfiguration().application.measuretools === "true") {
             //Load measure moadule
             mviewer.tools.measure = measure;
-            mviewer.tools.measure.init(_map);
+            mviewer.tools.measure.init();
         }
         //Activate GetFeatureInfo tool
         mviewer.setTool('info');
@@ -645,6 +577,7 @@ mviewer = (function () {
      */
 
     var _createBaseLayer = function (baselayer) {
+        var crossorigin = configuration.getCrossorigin();
         var l;
         switch (baselayer.type) {
         case "fake":
@@ -657,7 +590,7 @@ mviewer = (function () {
             l =  new ol.layer.Tile({
                 source: new ol.source.TileWMS({
                     url: baselayer.url,
-                    crossOrigin: _crossorigin,
+                    crossOrigin: crossorigin,
                     maxZoom: baselayer.maxzoom || 18,
                     params: {
                         'LAYERS': baselayer.layers,
@@ -685,7 +618,7 @@ mviewer = (function () {
                 l = new ol.layer.Tile({
                     source: new ol.source.WMTS({
                         url:  baselayer.url,
-                        crossOrigin: _crossorigin,
+                        crossOrigin: crossorigin,
                         layer: baselayer.layers,
                         matrixSet: matrixset,
                         style: baselayer.style,
@@ -853,6 +786,7 @@ mviewer = (function () {
      */
 
     var _parseWMCResponse = function (response, wmcid) {
+        var crossorigin = configuration.getCrossorigin();
         var wmc = $('ViewContext', response);
         var wmc_extent = {};
         wmc_extent.srs=$(wmc).find('General > BoundingBox').attr('SRS');
@@ -894,7 +828,6 @@ mviewer = (function () {
                 oLayer.format = $(this).find("FormatList  > Format[current='1']").text();
                 oLayer.visiblebydefault = oLayer.checked;
                 oLayer.tiled = false;
-                //oLayer.ns = (oLayer.id.split(':').length > 0) ? oLayer.id.split(':')[0] : null;
                 oLayer.legendurl = _getlegendurl(oLayer);
                 oLayer.opacity = parseFloat($(this).find("opacity").text() || "1");
                 var minscale = parseFloat($(this).find("MinScaleDenominator").text());
@@ -915,7 +848,7 @@ mviewer = (function () {
                 var l = new ol.layer.Image({
                     source: new ol.source.ImageWMS({
                         url: oLayer.url,
-                        crossOrigin: _crossorigin,
+                        crossOrigin: crossorigin,
                         params: {
                             'LAYERS': oLayer.id,
                             'STYLES':oLayer.style,
@@ -1267,7 +1200,6 @@ mviewer = (function () {
                 if (_overlayFeatureLayer) {
                     _map.removeLayer(_overlayFeatureLayer);
                     _map.getLayers().setAt(_map.getLayers().getArray().length, _overlayFeatureLayer);
-                    //_map.getLayers().forEach(function(layer,id) {console.log(layer.get('mviewerid'))});
                 }
                 _map.render();
             }
@@ -1302,15 +1234,6 @@ mviewer = (function () {
         },
 
         /**
-         * Public Method: getInitialExtent
-         *
-         */
-
-        getInitialExtent: function () {
-            return _extent;
-        },
-
-        /**
          * Public Method: getMap
          *
          */
@@ -1328,7 +1251,7 @@ mviewer = (function () {
                 _setVariables();
                 _initDataList();
                 _initVectorOverlay();
-                search.init(configuration.getConfiguration(), _map, _sourceOverlay);
+                search.init(configuration.getConfiguration());
                 _initPanelsPopup();
                 _initGeolocation();
                 _initTools();
@@ -1395,17 +1318,13 @@ mviewer = (function () {
 
         geoloc: function () {
             if ($("#geolocbtn").hasClass('btn-default')){
-
               $("#geolocbtn").removeClass('btn-default');
               $("#geolocbtn").addClass('btn-success');
-
               _geolocation.setTracking(true);
-
               _geolocation.once('change', function(evt) {
                 _map.getView().setZoom(18);
               });
               geolocON = _geolocation.on('change', function(evt) {
-
                 coordinates = _geolocation.getPosition();
                 _map.getView().setCenter(coordinates);
                 iconFeature = new ol.Feature({
@@ -1423,7 +1342,6 @@ mviewer = (function () {
                 _sourceGeolocation.clear();
                 _sourceGeolocation.addFeature(iconFeature);
                 _sourceGeolocation.addFeature(accuracyFeature);
-
             });
           } else if ($("#geolocbtn").hasClass('btn-success')){
             $("#geolocbtn").removeClass('btn-success');
@@ -1431,8 +1349,7 @@ mviewer = (function () {
             _geolocation.setTracking(false);
             //_geolocation.unByKey(geolocON);
             _sourceGeolocation.clear();
-
-        }
+          }
         },
 
         /**
@@ -2039,10 +1956,6 @@ mviewer = (function () {
                     //Activation de l'item suivant
                     var _next_tab = tab.next();
                     _next_tab.find("a").click();
-                    /*var _next_info = info.next();
-                    _next_tab.addClass("active");
-                    _next_info.addClass("active");
-                    _next_tab.find("a").click();*/
                     tab.remove();
                     info.remove();
                 } else {
@@ -2110,7 +2023,6 @@ mviewer = (function () {
                     });
                 }
             }
-            //var newStatus = _getThemeStatus(themeid);
             _setThemeStatus(themeid);
             e.stopPropagation();
         },
@@ -2119,8 +2031,8 @@ mviewer = (function () {
             return _overLayers;
         },
 
-        getVectorLayers: function () {
-            return _vectorLayers;
+        getBackgroundLayers: function () {
+            return _backgroundLayers;
         },
 
         getLonLatZfromGeometry: _getLonLatZfromGeometry,
@@ -2128,9 +2040,9 @@ mviewer = (function () {
         ajaxURL : _ajaxURL,
 
         parseWMCResponse: _parseWMCResponse,
-        
+
         showCheckedLayers: _showCheckedLayers,
-        
+
         initDataList: _initDataList,
 
         deleteLayer: _deleteLayer,
@@ -2141,8 +2053,14 @@ mviewer = (function () {
 
         getLegendUrl: _getlegendurl,
 
+        getProjection: function () { return _projection; },
+
+        getSourceOverlay: function () { return _sourceOverlay; },
+
+        setTopLayer: function (layer) { _topLayer = layer; },
+
         createBaseLayer: _createBaseLayer,
-        
+
         setVisibleOverLayers: _setVisibleOverLayers
 
 

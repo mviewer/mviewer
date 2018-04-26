@@ -7,11 +7,11 @@ var configuration = (function () {
     /* INTERNAL */
     var _configuration = null;
 
-    var _rotation = false;
-
     var _showhelp_startup = false;
 
     var _defaultBaseLayer = "";
+
+    var _captureCoordinates = false;
 
     /**
      * Property: _crossorigin
@@ -33,15 +33,9 @@ var configuration = (function () {
     /* EXTERNAL */
 
     /**
-     * Property: _backgroundLayers
-     * Array -  of  OpenLayers.Layer
-     */
-
-    var _backgroundLayers = [];
-
-    /**
      * Property: _themes
      * {object} hash of all overlay Layers (for each sub theme) - static.
+     * from mviewer.js
      */
 
     var _themes = null;
@@ -76,7 +70,7 @@ var configuration = (function () {
             }
             theme.group.forEach(function (group) {
                 if (!Array.isArray(group.layer)) {
-                    group.layer = [theme.layer];
+                    group.layer = [group.layer];
                 }
             });
             if (theme.layer) {
@@ -121,9 +115,7 @@ var configuration = (function () {
         if ((!conf.application.mouseposition) || (conf.application.mouseposition ==="false")){
             $("#mouse-position").hide();
         }
-        if (conf.application.geoloc ==="true") {
-            _geoloc = true;
-        } else {
+        if (!conf.application.geoloc || !conf.application.geoloc ==="true") {
              $("#geolocbtn").hide();
         }
 
@@ -327,7 +319,7 @@ var configuration = (function () {
                     oLayer.toplayer =  (layer.toplayer === "true") ? true : false;
                     oLayer.draggable = true;
                     if (oLayer.toplayer) {
-                        _topLayer = oLayer.id;
+                        mviewer.setTopLayer(oLayer.id);
                         oLayer.draggable = false;
                     }
                     oLayer.sld = layer.sld || null;
@@ -531,7 +523,7 @@ var configuration = (function () {
                         if (oLayer.style && mviewer.featureStyles[oLayer.style]) {
                             l.setStyle(mviewer.featureStyles[oLayer.style]);
                         }
-                        mviewer.getVectorLayers().push(l);
+                        //mviewer.getVectorLayers().push(l);
                         mviewer.processLayer(oLayer, l);
                     }// end geojson
 
@@ -542,7 +534,7 @@ var configuration = (function () {
                                 format: new ol.format.KML()
                             })
                         });
-                        mviewer.getVectorLayers().push(l);
+                        //mviewer.getVectorLayers().push(l);
                         mviewer.processLayer(oLayer, l);
                     }// end kml
 
@@ -560,8 +552,8 @@ var configuration = (function () {
                                     if (oLayer.style && mviewer.featureStyles[oLayer.style]) {
                                         l.setStyle(mviewer.featureStyles[oLayer.style]);
                                     }
-                                    mviewer.getVectorLayers().push(l);
-                                   mviewer.processLayer(oLayer, l);
+                                    //mviewer.getVectorLayers().push(l);
+                                    mviewer.processLayer(oLayer, l);
                                 }
                                 // This seems to be useless. To be removed?
                                 if (mviewer.customLayers[oLayer.id].handle) {
@@ -593,7 +585,7 @@ var configuration = (function () {
                             exportPNGElement.href = canvas.toDataURL('image/png');
                         }
                         catch(err) {
-                            _message(err);
+                            mviewer.alert(err, "alert-info");
                         }
                     });
                     _map.renderSync();
@@ -608,7 +600,7 @@ var configuration = (function () {
          mviewer.init();
 
         //PERMALINK
-        if (config.lb && $.grep(_backgroundLayers, function (n) {
+        if (config.lb && $.grep(mviewer.getBackgroundLayers(), function (n) {
             return n.get('blid') === config.lb;
         })[0]) {
             mviewer.setBaseLayer(config.lb);
@@ -633,8 +625,10 @@ var configuration = (function () {
     return {
         parseXML: _parseXML,
         load: _load,
-        getThemes: function () { return _themes;},
-        getProxy: function () { return _proxy;},
+        getThemes: function () { return _themes; },
+        getProxy: function () { return _proxy; },
+        getCrossorigin: function () { return _crossorigin; },
+        getCaptureCoordinates: function () { return _captureCoordinates; },
         getConfiguration: function () { return _configuration; }
     };
 

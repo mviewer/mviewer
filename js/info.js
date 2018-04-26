@@ -21,6 +21,7 @@ var info = (function () {
 
     var _mvReady = true;
 
+
     /**
      * Property: _overLayers
      * {object} hash of all overlay Layers (static)
@@ -42,6 +43,8 @@ var info = (function () {
      */
 
     var _clickCoordinates = null;
+
+    var _captureCoordinatesOnClick = false;
 
     /**
      * Property: _toolEnabled
@@ -143,7 +146,7 @@ var info = (function () {
             var format = new ol.format.GeoJSON();
             _map.forEachFeatureAtPixel(pixel, function(feature, layer) {
                 var l = layer.get('mviewerid');
-                if (l != 'featureoverlay') {
+                if (l != 'featureoverlay' && l != 'elasticsearch') {
                     var queryable = _overLayers[l].queryable;
                     if (queryable) {
                         if (vectorLayers[l] && vectorLayers[l].features) {
@@ -657,17 +660,14 @@ var info = (function () {
 
      /**
      * Public Method: init
-     * @param map {ol.Map}
-     * @param captureCoordinates {mviewer.options.application.coordinates}
-     * @param sourceOverlay {ol.source.Vector}
      */
 
-    var init = function (map, captureCoordinates, sourceOverlay) {
-        _map = map;
-        _projection = _map.getView().getProjection();
+    var init = function () {
+        _map = mviewer.getMap();
+        _projection = mviewer.getProjection();
         _overLayers = mviewer.getLayers();
-        _captureCoordinatesOnClick = captureCoordinates;
-        _sourceOverlay = sourceOverlay;
+        _captureCoordinatesOnClick = configuration.getCaptureCoordinates();
+        _sourceOverlay = mviewer.getSourceOverlay();
         $.each(_overLayers, function (i, layer) {
             if (layer.queryable) {
                 _addQueryableLayer(layer);

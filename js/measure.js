@@ -352,9 +352,9 @@ var measure = (function () {
      * @param {ol.Map}
      */
 
-    var _initMeasureTool = function (map) {
-        _map = map
-        _projection = _map.getView().getProjection().getCode();
+    var _initMeasureTool = function () {
+        _map = mviewer.getMap();
+        _projection = mviewer.getProjection().getCode();
         _sourceMesure = new ol.source.Vector();
         var vector = new ol.layer.Vector({
            source: _sourceMesure,
