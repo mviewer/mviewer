@@ -122,12 +122,6 @@ var configuration = (function () {
         //map options
         _map = mviewer.initMap(conf.mapoptions);
 
-        //Get  x, y & z url parameters if exists
-        if (config.x && config.y && config.z) {
-            _center =   [parseFloat(config.x), parseFloat(config.y)];
-            _zoom = parseInt(config.z);
-        }
-
         if (conf.proxy && conf.proxy.url) {
             _proxy = conf.proxy.url;
         }
@@ -598,23 +592,7 @@ var configuration = (function () {
         }
 
          mviewer.init();
-
-        //PERMALINK
-        if (config.lb && $.grep(mviewer.getBackgroundLayers(), function (n) {
-            return n.get('blid') === config.lb;
-        })[0]) {
-            mviewer.setBaseLayer(config.lb);
-        } else {
-            mviewer.setBaseLayer(_defaultBaseLayer);
-        }
-
-        if (config.l) {
-            mviewer.setVisibleOverLayers(config.l);
-        } else {
-            if (!config.wmc) {
-               mviewer.showCheckedLayers();
-            }
-        }
+         mviewer.setBaseLayer(_defaultBaseLayer);
 
         if (_showhelp_startup) {
             $("#help").modal('show');

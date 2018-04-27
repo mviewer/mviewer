@@ -125,6 +125,25 @@ $(document).ready(function () {
 
             var map = mviewer.getMap();
 
+            //PERMALINK
+            //Get  x, y & z url parameters if exists
+            if (config.x && config.y && config.z) {
+                var center =   [parseFloat(config.x), parseFloat(config.y)];
+                var zoom = parseInt(config.z);
+                map.getView().setCenter(center);
+                map.getView().setZoom(zoom);
+            }
+            //Get backgroundlayer value if exists
+            if (config.lb && $.grep(mviewer.getBackgroundLayers(), function (n) {
+                return n.get('blid') === config.lb;
+            })[0]) {
+                mviewer.setBaseLayer(config.lb);
+            }
+            //get visible layers
+            if (config.l) {
+                mviewer.setVisibleOverLayers(config.l);
+            }
+            mviewer.showCheckedLayers();
             setTimeout(function () {
                 $("#loading-page").hide();
                 $("#main").css("opacity", 1).hide();

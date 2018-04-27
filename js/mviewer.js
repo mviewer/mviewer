@@ -715,7 +715,9 @@ mviewer = (function () {
         var layers = decodeURIComponent(lst).split(",");
         for (var i = 0; i < layers.length; i++) {
             var l = _getLayerByName(layers[i]);
-            (l.src)?l.src.setVisible(true):l.setVisible(true);
+            if (l) {
+                (l.src)?l.src.setVisible(true):l.setVisible(true);
+            }
         }
         _overwiteThemeProperties(layers);
     };
@@ -759,7 +761,9 @@ mviewer = (function () {
                     mviewer.toggleLayer(li);
                 } else {
                     l.checked = false;
-                    l.layer.setVisible(false);
+                    if (l.layer) {
+                        l.layer.setVisible(false);
+                    }
                     l.visiblebydefault = false;
                 }
             });
@@ -772,7 +776,9 @@ mviewer = (function () {
                         mviewer.toggleLayer(li);
                     } else {
                         l.checked = false;
-                        l.layer.setVisible(false);
+                        if (l.layer) {
+                            l.layer.setVisible(false);
+                        }
                         l.visiblebydefault = false;
                     }
                 });
@@ -1407,6 +1413,9 @@ mviewer = (function () {
         }, // fin function tools toolbar
 
         addLayer: function (layer) {
+            if (!layer) {
+                return;
+            }
             var classes = ["list-group-item", "mv-layer-details"];
             if (!layer.toplayer) {
                 classes.push("draggable");
