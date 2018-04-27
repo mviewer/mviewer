@@ -287,6 +287,7 @@ Nœud enfant de theme ou group décrivant une couche.
     useproxy=""
     secure=""
     toplayer=""
+    exclusive=""
 	infoformat="" featurecount=""
 	style=""
     stylesalias=""
@@ -353,6 +354,7 @@ Exemple : "{{name}} ({{city}})". A n'utiliser que si les infobulles sont activé
 * **secure**: Précise si la couche est protégée ( méchanisme geoserver ) auquel cas un test est affectué pour savoir 
 si la couche est accessible. SI ce n'est pas le cas, la couche est retirée du panneau et de la carte.
 * **toplayer**: Précise si la couche demeure figée". Booléen. Défaut = true.
+* **exclusive**:  Si ce paramètre à la valeur true, l'affichage de la couche exclusive entrainera automatiquement le masquage de toute autre couche ayant également le paramètre exclusive. Booléen. Défaut = false.
 * **infoformat**: Format du GetFeatureInfo. 2 formats sont supportés : text/html, application/vnd.ogc.gml (pour 
 GeoServer et MapServer), application/vnd.esri.wms_raw_xml ou application/vnd.esri.wms_featureinfo_xml (pour ArcGIS 
 Server).

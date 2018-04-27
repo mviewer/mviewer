@@ -123,6 +123,8 @@ mviewer = (function () {
 
     var _topLayer = false;
 
+    var _exclusiveLayer;
+
     /**
      * Property: renderer
      * @type {ol.Renderer}
@@ -1415,6 +1417,16 @@ mviewer = (function () {
         addLayer: function (layer) {
             if (!layer) {
                 return;
+            }
+            if (layer.exclusive) {
+                //remove previous exclusive layer if exists
+                if (_exclusiveLayer) {
+                    var el = $(".mv-layer-details[data-layerid='"+_exclusiveLayer+"']");
+                    if (el.length > 0) {
+                        mviewer.removeLayer(el);
+                    }
+                }
+                _exclusiveLayer = layer.layerid;
             }
             var classes = ["list-group-item", "mv-layer-details"];
             if (!layer.toplayer) {
