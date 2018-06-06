@@ -93,25 +93,3 @@ var createTextStyle = function(feature, resolution) {
         rotation: rotation
     });
 };
-
-mviewer.featureStyles.lycee = function(feature, resolution) {
-    var fillcolor = "#ffffff";
-    if(feature.get('secteur_li') === 'Public') {
-        fillcolor = '#336699';
-    } else if(feature.get('secteur_li') === "Privé sous contrat avec l'éducation nationale") {
-        fillcolor = '#CC0000';
-    }
-    return [new ol.style.Style({
-        image: new ol.style.Circle({
-            fill: new ol.style.Fill({
-                color: fillcolor
-            }),
-            stroke: new ol.style.Stroke({
-                color: "#ffffff",
-                width: 4
-            }),
-            radius: 9
-        }),
-        text: createTextStyle(feature, resolution)
-    })];
-};
