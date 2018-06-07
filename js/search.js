@@ -381,7 +381,8 @@ var search = (function () {
                     var xyz = mviewer.getLonLatZfromGeometry(geom, 'EPSG:4326', zoom);
                     str += '<li class="fuse list-group-item" data-icon="false" title="' + result_label + '">' +
                         '<a href="#" onclick="mviewer.zoomToLocation('
-                        + xyz.lon + ',' + xyz.lat + ',' + xyz.zoom + ');">'
+                        + xyz.lon + ',' + xyz.lat + ',' + xyz.zoom + ');mviewer.showLocation(\'EPSG:4326\','
+                        + xyz.lon + ',' + xyz.lat +');">'
                         + result_label + '</a></li>';
                 });
             }
