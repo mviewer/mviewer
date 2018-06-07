@@ -382,7 +382,8 @@ var search = (function () {
                     str += '<li class="fuse list-group-item" data-icon="false" title="' + result_label + '">' +
                         '<a href="#" onclick="mviewer.zoomToLocation('
                         + xyz.lon + ',' + xyz.lat + ',' + xyz.zoom + ');mviewer.showLocation(\'EPSG:4326\','
-                        + xyz.lon + ',' + xyz.lat +');">'
+                        + xyz.lon + ',' + xyz.lat +');" '
+                        + 'onmouseover="mviewer.flash(\'EPSG:4326\',' + xyz.lon + ',' + xyz.lat + ');" >'
                         + result_label + '</a></li>';
                 });
             }
