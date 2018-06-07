@@ -1431,6 +1431,8 @@ mviewer = (function () {
             var classes = ["list-group-item", "mv-layer-details"];
             if (!layer.toplayer) {
                 classes.push("draggable");
+            } else {
+                classes.push("toplayer");
             }
 
             var view = {
