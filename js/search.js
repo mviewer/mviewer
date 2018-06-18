@@ -558,6 +558,7 @@ var search = (function () {
                     error: function (xhr, ajaxOptions, thrownError) {
                         mviewer.alert("Problème avec l'instance Elasticsearch.\n" +  thrownError + "\n Désactivation du service.", "alert-warning");
                         _searchparams.features = false;
+                        _searchparams.static = false;
                         $('#param_search_features span').removeClass('mv-checked').addClass('mv-unchecked');
                     }
                 });
