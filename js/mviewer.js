@@ -714,12 +714,23 @@ mviewer = (function () {
      */
 
     var _setVisibleOverLayers = function (lst) {
+        var errors = [];
+        var errorLayers =[];
         var layers = decodeURIComponent(lst).split(",");
         for (var i = 0; i < layers.length; i++) {
             var l = _getLayerByName(layers[i]);
             if (l) {
                 (l.src)?l.src.setVisible(true):l.setVisible(true);
+            } else {
+                errors.push(i);
             }
+        }
+        errors.forEach(function(err) {
+            errorLayers.push(layers[err]);
+            delete layers[err];
+        });
+        if (errorLayers.length > 0) {
+            mviewer.alert("Couche(s) "+ errorLayers.join(", ") + " non disponible(s)", "alert-danger");
         }
         _overwiteThemeProperties(layers);
     };
