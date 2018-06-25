@@ -110,7 +110,7 @@ $(document).ready(function () {
             //get JSON conf from xml;
             var _conf = configuration.parseXML(xml);
             var style = "css/themes/default.css";
-            if (_conf.application.style.match("css")) {
+            if (_conf.application.style && _conf.application.style.match("css")) {
                 style = _conf.application.style;
             }
             $('head').prepend('<link rel="stylesheet" href="' + style + '" type="text/css" />');
