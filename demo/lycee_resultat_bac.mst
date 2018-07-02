@@ -20,7 +20,7 @@
             <div class="panel-body panel-graph"> 
             	<img src="http://kartenn.region-bretagne.fr/portail-idd/img/icon-lyc.svg" style="width:30%;">  
             	<p style="margin:-5px 0px -5px 0px!important;">
-            		<span id="effectifs_{{code_rne}}" class="number"></span><span class="number" style="font-size:30px;"> eleves</span>
+                    <span id="effectifs_{{code_rne}}" class="number"></span><span class="number" style="font-size:30px;"> élèves</span>
             	</p>
             	<p class="title-number">Effectifs<br><span class="sub-number"><i>de la seconde a la terminale</i></span></p>
             </div>
@@ -29,12 +29,16 @@
             <div class="panel-body panel-graph"> 
                 <canvas class="chart1" id="chart1_{{code_rne}}" ></canvas>
             </div>
-        </div>		 
-        <div >
-			<canvas class="chart2" id="chart2_{{code_rne}}" ></canvas>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body panel-graph">
+			    <canvas class="chart2" id="chart2_{{code_rne}}" ></canvas>
+            </div>
 		</div>
-		<div >
-			<canvas class="chart3" id="chart3_{{code_rne}}" ></canvas>
+		<div class="panel panel-default">
+            <div class="panel-body panel-graph">
+			    <canvas class="chart3" id="chart3_{{code_rne}}" ></canvas>
+            </div>
 		</div>			
 		<p>* Valeur ajoutée :  Différence entre taux attendus et taux obtenus</p>
 	</li>		
