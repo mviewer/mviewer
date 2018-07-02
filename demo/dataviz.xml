@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <application title="Résultat BAC par lycée" logo="" help="mviewer_help.html" measuretools="true" exportpng="true" style="css/themes/wet_asphalt.css" togglealllayersfromtheme="true"/>    
+    <application title="Résultat BAC par lycée" logo="" help="mviewer_help.html" measuretools="true" exportpng="true" style="css/themes/wet_asphalt.css" templaterightinfopanel="default"/>    
     <mapoptions maxzoom="19" projection="EPSG:3857" center="-220750.13768758904,6144925.57790189" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
     <baselayers style="default"><!-- style="default"||gallery" -->
         <baselayer  type="OSM" id="darkmatter" label="Dark Matter" title="CartoDb" thumbgallery="img/basemap/darkmatter.png" 
@@ -17,8 +17,8 @@
     <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban"/>
     <searchparameters localities="false" features="true" bbox="false"/> 
 
-    <themes> 
-    	<theme name="Lycée"  collapsed="false" id="habitant" icon="group">
+    <themes mini="true"> 
+    	<theme name="Lycée"  collapsed="true" id="habitant" icon="group">
     		<layer id="lycee_resultat_bac" name="Résultats BAC"  visible="true"  queryable="true"
                     legendurl="demo/lycee.png"
                     fields="nom,code_rne,photo,secteur_li"
