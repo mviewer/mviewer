@@ -168,7 +168,7 @@ mviewer.templates.backgroundLayerControlGallery = [
 ].join("");
 
 mviewer.templates.featureInfo = {};
-mviewer.templates.featureInfo.template1 = [
+mviewer.templates.featureInfo.default = [
     '<div id="{{panel}}-selector">',
         '<div class="row">',
             '<div class="col-md-12">',
@@ -210,4 +210,94 @@ mviewer.templates.featureInfo.template1 = [
             '</div>',
         '</div>',
     '</div>'
-].join("")
+].join("");
+mviewer.templates.featureInfo.brut = [
+    '<div id="{{panel}}-selector">',
+        '<div class="row">',
+            '<div class="col-md-12">',
+                '<div class="list-group" style="height:100%;width:100%;overflow-y: scroll;padding-bottom: 82px;">',
+                '{{#layers}}',
+                  '<div class="panel panel-primary">',
+                  '<div class="panel-heading"> <h3 class="panel-title">{{name}}</h3> </div>',
+                  '<div class="panel-body">',
+                  '<ul class="list-group-item" data-layerid="{{layerid}}" style="padding-right:0px;">',
+                    '{{{html}}}',
+                  '</ul>',
+                  '</div></div>',
+                '{{/layers}}',
+                '</div>',
+            '</div>',
+        '</div>',
+    '</div>'
+].join("");
+
+mviewer.templates.featureInfo.accordion = [
+    '<div id="{{panel}}-selector">',
+        '<div class="row">',
+            '<div class="col-md-12">',
+                '<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="list-style: none;">',
+                '{{#layers}}',
+                  '<div class="panel">',
+                    '<div class="panel-heading mv-theme" role="tab" id="heading-{{panel}}-{{id}}">',
+                      '<h4 class="panel-title">',
+                        '<a role="button" data-toggle="collapse" data-parent="#accordion" href="#accordion-{{panel}}-{{id}}" aria-expanded="{{#firstlayer}}true{{/firstlayer}}{{^firstlayer}}false{{/firstlayer}}" aria-controls="accordion-{{panel}}-{{id}}">',
+                        '{{name}}',
+                        '</a>',
+                      '</h4>',
+                    '</div>',
+                    '<div id="accordion-{{panel}}-{{id}}" class="panel-collapse collapse {{#firstlayer}}in{{/firstlayer}}" role="tabpanel" aria-labelledby="heading-{{panel}}-{{id}}">',
+                      '<div class="panel-body">',
+                      '{{{html}}}',
+                      '</div>',
+                    '</div>',
+                  '</div>',
+                '{{/layers}}',
+                '</div>',
+            '</div>',
+        '</div>',
+    '</div>'
+].join("");
+
+mviewer.templates.featureInfo.accordion = [
+    '<div id="{{panel}}-selector">',
+        '<div class="row">',
+            '<div class="col-md-12">',
+                '<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="list-style: none;">',
+                '{{#layers}}',
+                  '<div class="panel">',
+                    '<div class="panel-heading mv-theme" role="tab" id="heading-{{panel}}-{{id}}">',
+                      '<h4 class="panel-title">',
+                        '<a role="button" data-toggle="collapse" data-parent="#accordion" href="#accordion-{{panel}}-{{id}}" aria-expanded="{{#firstlayer}}true{{/firstlayer}}{{^firstlayer}}false{{/firstlayer}}" aria-controls="accordion-{{panel}}-{{id}}">',
+                        '{{name}}',
+                        '</a>',
+                      '</h4>',
+                    '</div>',
+                    '<div id="accordion-{{panel}}-{{id}}" class="panel-collapse collapse {{#firstlayer}}in{{/firstlayer}}" role="tabpanel" aria-labelledby="heading-{{panel}}-{{id}}">',
+                      '<div class="panel-body">',
+                                '<div id="carousel-{{panel}}-{{id}}" div class="carousel slide" data-interval="false">',
+                            '<ul class="carousel-inner" role="listbox">',
+                            '{{{html}}}',
+                            '</ul>',
+                            '{{#manyfeatures}}',
+                                '<a class="left carousel-control" href="#carousel-{{panel}}-{{id}}" ',
+                                'role="button" data-slide="prev">',
+                                '<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>',
+                                '<span class="sr-only">Previous</span>',
+                                '</a>',
+                                '<a class="right carousel-control" href="#carousel-{{panel}}-{{id}}" ',
+                                'role="button" data-slide="next">',
+                                '<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>',
+                                '<span class="sr-only">Next</span>',
+                                '</a>',
+                                '<span class="badge counter-slide">1/{{nbfeatures}}</span>',
+                            '{{/manyfeatures}}',
+                            '</div>',
+                      '</div>',
+                    '</div>',
+                  '</div>',
+                '{{/layers}}',
+                '</div>',
+            '</div>',
+        '</div>',
+    '</div>'
+].join("");

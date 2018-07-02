@@ -73,9 +73,14 @@ p.navbar-text.mv-title{
   border-left: thick solid #2E5367!important;
 }
 
-#right-panel .mv-header {  
+#right-panel .mv-header {
   background-color: #2E5367;
-  color: #fff;  
+  color: #fff;
+}
+
+.mv-theme {
+  background-color: #2E5367;
+  color: #fff;
 }
 
 #right-panel .mv-header h5{  

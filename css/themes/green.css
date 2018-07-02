@@ -78,6 +78,11 @@ p.navbar-text.mv-title{
   color: #fff;  
 }
 
+.mv-theme {
+  background-color: #71BA51;
+  color: #fff;
+}
+
 #right-panel .mv-header h5{  
   font-family: 'roboto_bold', sans-serif;
   font-size: 13px;

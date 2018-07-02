@@ -21,6 +21,7 @@ var info = (function () {
 
     var _mvReady = true;
 
+    var _panelsTemplate = {"right-panel": "default", "bottom-panel": "default"};
 
     /**
      * Property: _overLayers
@@ -315,7 +316,7 @@ var info = (function () {
 
                 $.each(views, function (panel, view) {
                     if (views[panel].layers.length > 0){
-                        var template = Mustache.render(mviewer.templates.featureInfo.template1, view);
+                        var template = Mustache.render(mviewer.templates.featureInfo[_panelsTemplate[panel]], view);
                         $("#"+panel+" .popup-content").append(template);
                         //TODO reorder tabs like in theme panel
 
@@ -668,6 +669,12 @@ var info = (function () {
         _projection = mviewer.getProjection();
         _overLayers = mviewer.getLayers();
         _captureCoordinatesOnClick = configuration.getCaptureCoordinates();
+        if (configuration.getConfiguration().application.templaterightinfopanel) {
+            _panelsTemplate["right-panel"] = configuration.getConfiguration().application.templaterightinfopanel;
+        }
+        if (configuration.getConfiguration().application.templatebottominfopanel) {
+            _panelsTemplate["bottom-panel"] = configuration.getConfiguration().application.templatebottominfopanel;
+        }
         _sourceOverlay = mviewer.getSourceOverlay();
         $.each(_overLayers, function (i, layer) {
             if (layer.queryable) {

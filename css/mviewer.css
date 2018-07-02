@@ -624,7 +624,7 @@ ul#layers-container {
   position: absolute;
   left: 0px;
   height: 100%;
-  width: auto;
+  width: 100%;
   padding: 0 0 0 0;
 }
 
