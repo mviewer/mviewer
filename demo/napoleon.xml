@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+<application
+    title="Démo Cadastre"
+    logo=""
+    help=""
+    style="css/themes/default.css"
+    exportpng="false"
+    showhelp="false"
+    coordinates="false"
+    measuretools="false"
+    togglealllayersfromtheme="false">
+</application>
+<mapoptions maxzoom="20" projection="EPSG:3857" center="-352314,5998082" zoom="13" />
+<searchparameters bbox="false" localities="false" features="false" static="false"/>
+<baselayers style="default"> 
+    <baselayer visible="false" id="positron" thumbgallery="img/basemap/positron.png" title="CartoDb" label="Positron" type="OSM" url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution="Map tiles by  &lt;a href=&quot;https://cartodb.com/attributions&quot;&gt;CartoDb&lt;/a&gt;, under  &lt;a href=&quot;https://creativecommons.org/licenses/by/3.0/&quot;&gt;CC BY 3.0 &lt;/a&gt;"  ></baselayer> 
+    <baselayer visible="true" id="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg" title="Esri world imagery" label="Esri world imagery" type="OSM" url="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"  ></baselayer> 
+</baselayers>
+<themes mini="false"> 
+    <theme id="theme-20180710144351" name="Cadastre historique" collapsed="true" icon="envira">
+        <layer 
+            id="napoleo"
+            legendurl="img/blank.gif"
+            name="Tableau d'assemblage"
+            type="customlayer"
+            url="customlayers/napoleo.js"
+            customcontrol="true"
+            visible="true"     
+            expanded="true"
+            metadata="https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/b4080a88-798d-4533-9582-ec9a985d8102"
+            metadata-csw="https://geobretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID&amp;ID=b4080a88-798d-4533-9582-ec9a985d8102"
+            attribution="Région Bretagne"
+            queryable="false">
+        </layer>
+    </theme> 
+</themes>
+</config>

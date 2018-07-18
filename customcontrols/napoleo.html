@@ -1,0 +1,32 @@
+<div class="row">
+    <style>
+        .icon-flipped {
+            transform: scaleX(-1);
+            -moz-transform: scaleX(-1);
+            -webkit-transform: scaleX(-1);
+            -ms-transform: scaleX(-1);
+        }
+    </style>
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <select id="napoleo-select" placeholder="Choisir une commune" class="form-control" onchange="mviewer.customControls.napoleo.updateTA(this);">
+        </select>
+      </div>
+      <div class="col-md-10 col-md-offset-1 btn-group">
+         <button class="btn btn-default" 
+            onclick="mviewer.customControls.napoleo.zoomToTA()">
+            <i class="glyphicon glyphicon-zoom-in"></i>
+       </button>
+        <button class="btn btn-default" 
+            onclick="mviewer.getMap().getView().setRotation(mviewer.getMap().getView().getRotation() + (-90 * Math.PI / 180))">
+            <i class="glyphicon glyphicon-repeat icon-flipped"></i>
+        </button>
+        <button class="btn btn-default" 
+            onclick="mviewer.getMap().getView().setRotation(mviewer.getMap().getView().getRotation() + (90 * Math.PI / 180))">
+            <i class="glyphicon glyphicon-repeat"></i>
+       </button>
+      </div>
+    </div>
+    <div class="row">   
+  </div>
+</div>
