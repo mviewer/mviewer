@@ -103,6 +103,9 @@ var configuration = (function () {
         if (conf.application.titlehelp) {
             $("#help h4.modal-title").text(conf.application.titlehelp);
         }
+        if (conf.application.iconhelp) {
+            $("#iconhelp span").attr('class',"fa fa-"+conf.application.iconhelp);
+        }
         if (conf.application.coordinates === "true" ) {
             _captureCoordinates = true;
         }
