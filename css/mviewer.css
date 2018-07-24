@@ -447,6 +447,12 @@ p.navbar-text.mv-title{
     margin-right: 24px;
 }
 
+button.btn.btn-default.navbar-btn.mv-navbar-btn{
+  border: 0px;
+  border-radius: 0px;
+  font-size: 15px;
+}
+
 div#datalist {
   max-width: 300px;
 }

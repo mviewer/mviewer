@@ -69,7 +69,7 @@ Personnalisation de l'application (overriding)
 
 #### Prototype 
 
-	 <application title="" logo=""  help="" showhelp="" style="" exportpng="" measuretools="" stats="" statsurl="" coordinates=""/>
+	 <application title="" logo=""  help="" showhelp="" titlehelp="" iconhelp="" style="" exportpng="" measuretools="" stats="" statsurl="" coordinates=""/>
 
 #### Attributs 
 
@@ -77,6 +77,8 @@ Personnalisation de l'application (overriding)
 * **logo**: Url du logo || img/logo/bandeau_region.png.
 * **help**: Url vers l'aide (fichier html).
 * **showhelp**: Affiche l'aide au démarrage  true/false || false.
+* **titlehelp**: Titre de la fenêtre modale aide || Documentation.
+* **iconhelp**: Icône du bouton de la fenêtre modale aide (les valeurs possibles sont disponibles sur https://fontawesome.com/icons)  || ?.
 * **style**: style à utiliser || css/themes/default.css [ressource](https://themeroller.jquerymobile.com/)
 * **exportpng**: Enables map export as png file  true/false || false. Export is possible only with local layers (same origin) or with layers served with CORS.
 * **geoloc**: Enables map geolocation true/false || false. Need https connection.

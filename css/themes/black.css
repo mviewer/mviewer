@@ -457,14 +457,7 @@ a#permalinklink{
 /* Help button */
 
 button.btn.btn-default.navbar-btn.mv-navbar-btn{
-	border-radius:50%;
-	width:34px;
-	height:34px;
-	min-width:34px;
-	border: 0px!important;
-	font-family: 'roboto_black', Arial, Sans-serif;
 	color:#000000;
-	font-size: 15px;
 }
 
 button.btn.btn-default.navbar-btn.mv-navbar-btn:hover{
