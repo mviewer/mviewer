@@ -100,6 +100,9 @@ var configuration = (function () {
         if (conf.application.showhelp === "true" ) {
             _showhelp_startup = true;
         }
+        if (conf.application.titlehelp) {
+            $("#help h4.modal-title").text(conf.application.titlehelp);
+        }
         if (conf.application.coordinates === "true" ) {
             _captureCoordinates = true;
         }
