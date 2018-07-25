@@ -26,8 +26,10 @@ mviewer.customControls.napoleo = (function() {
             var extent = _map.getView().calculateExtent(mviewer.getMap().getSize());
             _vectorSource.forEachFeatureIntersectingExtent(extent, function(feature) {
                 var prop = feature.getProperties();
-                $("#napoleo-select").append('<option label="' + prop.label
-                    + '" value="' + prop.id + '">' + prop.label + '</option>');
+                if ($("#napoleo-select option[value='"+ prop.id+"']").length === 0) {
+                    $("#napoleo-select").append('<option label="' + prop.label
+                        + '" value="' + prop.id + '">' + prop.label + '</option>');
+                }
             });
         }
     };
