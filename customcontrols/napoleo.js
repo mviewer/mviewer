@@ -8,7 +8,8 @@ mviewer.customControls.napoleo = (function() {
     var _data = {};
     var _vectorSource = new ol.source.Vector();
 
-    $.getJSON("http://kartenn.region-bretagne.fr/img/cadastre_napoleonien/data.json", function(data) {
+    //$.getJSON("http://kartenn.region-bretagne.fr/img/cadastre_napoleonien/data.json", function(data) {
+    $.getJSON("demo/data.json", function(data) {
         $.each(data, function(id, item) {
             _data[item.id] = item;
             var feature = new ol.Feature({
@@ -45,13 +46,19 @@ mviewer.customControls.napoleo = (function() {
             // mandatory - code executed when panel is opened
             _map.on('moveend', _updateList);
 
-        },        
+        },
 
         updateTA: function(select) {
             var data = _data[select.value];
+            var url = data.url;
+            console.log($("#napoleo-quality:checked").val());
+            if (!$("#napoleo-quality:checked").val() === true) {
+                console.log("HD");
+                url = url.replace("/hd/","/ld/");
+            }
             var source = new ol.source.ImageStatic({
                 attributions: '© <a href="https://geobretagne.com">GéoBretagne</a>',
-                url: data.url,
+                url: url,
                 imageExtent: data.extent,
                 imageSize: data.imageSize,
                 projection: 'EPSG:3857'
@@ -59,12 +66,23 @@ mviewer.customControls.napoleo = (function() {
             source.on('imageloadstart', function(event) {
                 $("#loading-" + _idlayer).show();
             });
+            source.on('imageloaderror', function(event) {
+                $("#loading-" + _idlayer).hide();
+                mviewer.alert("Erreur. Image introuvable", "alert-info")
+            });
             source.on('imageloadend', function(event) {
                 $("#loading-" + _idlayer).hide();
             });
-            mviewer.customLayers.napoleo.layer.setSource(source);            
+            mviewer.customLayers.napoleo.layer.setSource(source);
         },
-        
+
+        updateQuality: function () {
+            var select = $("#napoleo-select")[0];
+            if (select.value != "Communes...") {
+                this.updateTA(select);
+            }
+        },
+
         zoomToTA: function () {
             var data = _data[$("#napoleo-select option:selected").val()];
             _map.getView().fit(data.extent, _map.getSize());

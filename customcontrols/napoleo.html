@@ -12,21 +12,25 @@
         <select id="napoleo-select" placeholder="Choisir une commune" class="form-control" onchange="mviewer.customControls.napoleo.updateTA(this);">
         </select>
       </div>
-      <div class="col-md-10 col-md-offset-1 btn-group">
-         <button class="btn btn-default" 
+    </div>
+      <div class="row" style="padding-top:3px;">
+      <div class="col-md-6 col-md-offset-1 btn-group">
+         <button class="btn btn-default"
             onclick="mviewer.customControls.napoleo.zoomToTA()">
             <i class="glyphicon glyphicon-zoom-in"></i>
        </button>
-        <button class="btn btn-default" 
+        <button class="btn btn-default"
             onclick="mviewer.getMap().getView().setRotation(mviewer.getMap().getView().getRotation() + (-90 * Math.PI / 180))">
             <i class="glyphicon glyphicon-repeat icon-flipped"></i>
         </button>
-        <button class="btn btn-default" 
+        <button class="btn btn-default"
             onclick="mviewer.getMap().getView().setRotation(mviewer.getMap().getView().getRotation() + (90 * Math.PI / 180))">
             <i class="glyphicon glyphicon-repeat"></i>
        </button>
       </div>
+      <div class="col-md-3 col-md-offset-1 checkbox">
+          <label><input id="napoleo-quality" type="checkbox" checked="checked" value="true" onchange="mviewer.customControls.napoleo.updateQuality();">HD</label>
+      </div>
     </div>
-    <div class="row">   
   </div>
 </div>
