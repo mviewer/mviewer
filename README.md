@@ -302,6 +302,7 @@ Nœud enfant de theme ou group décrivant une couche.
     attributefilter=""
     attributefield=""
     attributevalues=""
+    attributeoperator=""
     opacity=""
     legendurl=""
     dynamiclegend=""
@@ -377,6 +378,7 @@ régulières ex (1950, 1976, 1980, 2004).
 * **attributefilter**: Booléen précisant si on active la sélection attributaire par menu déroulant.
 * **attributefield**: Nom du champ à utiliser avec le contrôle attributefilter.
 * **attributevalues**: Valeurs séparées par des virgules.
+* **attributeoperator**: Opérateur utilisé pour construire le filtre. (=|like). Defaut = "=". Attention dans le cas de like, le wildcard est harcodé : %
 * **attributelabel**:  Texte à afficher pour la liste déroulante associée.
 * **attributestylesync**: Booléen qui précise s'il convient d'appliquer un style (sld) spécifique lors du filtre 
 attributaire. Dans ce cas la convention est la suivante : nom_style_courant_attributevalue.

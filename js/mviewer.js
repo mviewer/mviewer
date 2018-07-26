@@ -1675,7 +1675,7 @@ mviewer = (function () {
             //Only for second and more loads
             if (oLayer.attributefilter && oLayer.layer.getSource().getParams()['CQL_FILTER']) {
                 var activeFilter = oLayer.layer.getSource().getParams()['CQL_FILTER'];
-                var activeAttributeValue = activeFilter.split('=')[1].replace(/\'/g, "");
+                var activeAttributeValue = activeFilter.split(oLayer.attributeoperator)[1].replace(/\%|'/g, "");
                 $("#"+layer.layerid+"-attributes-selector option[value='"+activeAttributeValue+"']").prop("selected", true);
                 $('.mv-layer-details[data-layerid="'+layer.layerid+'"] .layerdisplay-subtitle .selected-attribute span')
                     .text(activeAttributeValue);
@@ -1827,7 +1827,7 @@ mviewer = (function () {
                 var attributeValue = 'all';
                 var styleBase = style.split('@')[0];
                 if (_source.getParams().CQL_FILTER) {
-                    attributeValue = _source.getParams().CQL_FILTER.split('=')[1].replace(/\'/g, "");
+                    attributeValue = _source.getParams().CQL_FILTER.split(" " + _layerDefinition.attributeoperator + " ")[1].replace(/\'/g, "");
                 }
                 if ( attributeValue != 'all' ) {
                     style = [styleBase, '@', attributeValue.toLowerCase().sansAccent()].join("");
@@ -1847,14 +1847,25 @@ mviewer = (function () {
 
         },
 
+        makeCQL_Filter: function (fld,operator,value) {
+            var cql_filter = "";
+            if (operator == "=") {
+                    cql_filter = fld + " = " + "'" + value.replace("'","''") + "'";
+                } else if (operator == "like") {
+                    cql_filter = fld + " like " + "'%" + value.replace("'","''") + "%'";
+                }
+            return cql_filter;
+        },
+
         setLayerAttribute: function (layerid, attributeValue, selectCtrl) {
             var _layerDefinition = _overLayers[layerid];
             var _source = _layerDefinition.layer.getSource();
             if ( attributeValue === 'all' ) {
                 delete _source.getParams()['CQL_FILTER'];
             } else {
-                _source.getParams()['CQL_FILTER'] = _layerDefinition.attributefield +
-                "='" + attributeValue.replace("'","''") + "'";
+                var cql_filter = this.makeCQL_Filter(_layerDefinition.attributefield, _layerDefinition.attributeoperator,
+                    attributeValue);
+                _source.getParams()['CQL_FILTER'] = cql_filter;
             }
             if (_layerDefinition.attributestylesync) {
                 //need update legend ad style applied to the layer
