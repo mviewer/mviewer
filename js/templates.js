@@ -100,7 +100,7 @@ mviewer.templates.layerControl = [
         '{{#attribution}}',
             '<div class="row">',
                 '<div class="col-md-12">',
-                    '<p>{{attribution}}',
+                    '<p>{{{attribution}}}',
                     '{{#metadata}}',
                         '<a href="#" role="button" id="{{layerid}}-layer-summary" tabindex="10" data-trigger="focus"',
                             ' data-toggle="popover" class="mv-layer-summary" data-html="true"',
