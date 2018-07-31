@@ -607,7 +607,7 @@ var info = (function () {
         // set this value as property like 'value= true'. This allows use this value in Mustache template
         if (olayer.attributefilter && olayer.layer.getSource().getParams()['CQL_FILTER']) {
             var activeFilter = olayer.layer.getSource().getParams()['CQL_FILTER'];
-            activeAttributeValue = activeFilter.split(olayer.attributeoperator)[1].replace(/\'/g, "");
+            activeAttributeValue = activeFilter.split(" " + olayer.attributeoperator + " ")[1].replace(/\'/g, "");
         }
         olfeatures.forEach(function(feature){
             if (activeAttributeValue) {
