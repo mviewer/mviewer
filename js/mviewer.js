@@ -198,6 +198,9 @@ mviewer = (function () {
                     }
                 }),
             ],
+            interactions: ol.interaction.defaults({
+              doubleClickZoom: false
+            }),
             overlays: overlays,
             renderer: _renderer,
             view: new ol.View({
