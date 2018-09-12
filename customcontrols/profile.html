@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-md-12">
+        <style>
+            #profile_options {
+            padding-top: 10px;
+        }
+      </style>
+        <button class="btn btn-default" onclick="mviewer.customControls.profile.drawLine();">Tracer un profil en long
+            <span class="glyphicon glyphicon-signal" aria-hidden="true"></span>
+        </button>
+        <button title="Options" class="btn btn-default" type="button" data-toggle="collapse" data-target="#profile_options" aria-expanded="false">
+            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+        </button>
+        <div class="collapse" id="profile_options">
+            <form class="panel panel-default">
+                <div class="panel-heading">Options</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="profile-referentiel" style="padding-top:8px;">Référentiel</label>
+                        <div class="col-md-8">
+                            <select id="profile-referentiel" class="form-control" onchange="mviewer.customControls.profile.updateOptions()">
+                                <option label="bdalti" value="bdalti">bdalti</option>
+                                <option label="srtm" value="srtm">srtm</option>
+                                <option label="litto3d" value="litto3d">litto3d</option>
+                                <option label="litto3d bathy" value="litto3d bathy">litto3d bathy</option>
+                                <option label="MNT 5m ss ouvrages - Megalis" value="MNT 5m ss ouvrages - Megalis">MNT 5m ss ouvrages - Megalis</option>
+                                <option label="MNT 5m av. ouvrages - Megalis" value="MNT 5m av. ouvrages - Megalis">MNT 5m av. ouvrages - Megalis</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="profile-frequence" style="padding-top:8px;">Fréquence</label>
+                        <div class="col-md-8">
+                            <select id="profile-frequence" class="form-control" onchange="mviewer.customControls.profile.updateOptions()">
+                                <option label="200 m" value="200">200</option>
+                                <option label="100 m" value="100">100</option>
+                                <option label="25 m" value="25">25</option>
+                                <option label="5 m" value="5">5</option>
+                                <option label="1 m" value="1">1</option>
+                                <option label="0 m" value="0">0</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel-footer">
+                    <button disabled id="profile-update" title="Appliquer" class="btn btn-default" onclick="mviewer.customControls.profile.updateChart();" type="button">Mettre à jour</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="panel-graph">
+            <canvas class="chart1" id="chart1"></canvas>
+        </div>
+
+
+    </div>
+</div>
