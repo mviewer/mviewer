@@ -1886,6 +1886,7 @@ mviewer = (function () {
                 });
                 $('.mv-nav-item[data-layerid="'+layerid+'"]').attr("data-legendurl",legendUrl).data("legendurl",legendUrl);
             }
+            _source.updateParams("dc=" + new Date().valueOf());
             _source.changed();
             $('.mv-layer-details[data-layerid="'+layerid+'"] .layerdisplay-subtitle .selected-attribute span')
                 .text(selectCtrl.options[selectCtrl.selectedIndex].label);
