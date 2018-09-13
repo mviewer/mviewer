@@ -98,8 +98,10 @@ mviewer.customControls.profile = (function() {
     };
 
     var _updateChart = function(dataxml) {
-        if ($(dataxml).find("ProcessSucceeded").length > 0) {
-            var result = JSON.parse($(dataxml).find("Output").find("Data").find("LiteralData").text());
+        var response = $.xml2json(dataxml);
+        console.log(response);
+        if (response.Status.ProcessSucceeded) {
+            var result = JSON.parse(response.ProcessOutputs.Output.Data.LiteralData);
             var mydata = {
                 "labels": [],
                 "data": []
@@ -115,7 +117,7 @@ mviewer.customControls.profile = (function() {
             });
             _drawChart(mydata);
         } else {
-            mviewer.alert($(dataxml).find("ExceptionText").text(), "alert-warning");
+            mviewer.alert(response.Status.ProcessFailed.ExceptionReport.Exception.ExceptionText, "alert-info");
         }
         $("#loading-profile").hide();
     };
@@ -184,7 +186,7 @@ mviewer.customControls.profile = (function() {
             dataType: "xml",
             success: _updateChart,
             error: function(xhr, ajaxOptions, thrownError) {
-                mviewer.alert("Problème avec la requête.\n" + thrownError, "alert-warning");
+                mviewer.alert("Problème avec la requête.\n" + thrownError, "alert-info");
                 $("#loading-profile").hide();
             }
         });
@@ -256,7 +258,7 @@ mviewer.customControls.profile = (function() {
             if (_feature) {
                 _executeWPS(_feature);
             } else {
-                mviewer.alert("Veuillez tracer une ligne...", "alert-success");
+                mviewer.alert("Veuillez tracer une ligne...", "alert-info");
             }
         },
 
