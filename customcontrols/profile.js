@@ -36,9 +36,20 @@ mviewer.customControls.profile = (function() {
 
 
     var _initChart = function() {
+        var target = parseInt($("#profile-view").val()) || 0;
+        var height = ["150px", "200px"]
+        console.log( "Initialisation" );
+        var chartPanel = ['<div class="profile-addon panel-graph" style="height: '+height[target]+';">',
+            '<canvas class="chart1" id="profile-chart"></canvas></div>'].join("");
+
+        if (target === 0) {
+            $("#profile-addon").append(chartPanel);
+        } else {
+            $("#bottom-panel .popup-content").append(chartPanel);
+        }
         var options = {
             responsive: true,
-            maintainAspectRatio: true,
+            maintainAspectRatio: false,
             spanGaps: false,
             elements: {
                 line: {
@@ -70,7 +81,7 @@ mviewer.customControls.profile = (function() {
                 }
             }
         };
-        _chart = new Chart('chart1', {
+        _chart = new Chart("profile-chart", {
             type: 'line',
             data: {
                 labels: [],
@@ -92,10 +103,19 @@ mviewer.customControls.profile = (function() {
     };
 
     var _drawChart = function(data) {
+        var chart_target = parseInt($("#profile-view").val());
+        // test if element exists
         _chart.data.labels = data.labels;
         _chart.data.datasets[0].data = data.data;
         _chart.update();
+        if (chart_target == 1) {
+            $("#bottom-panel").addClass("active").css("max-height", 250);
+        } else {
+            $("#bottom-panel").removeClass("active");
+        }
+
     };
+
 
     var _updateChart = function(dataxml) {
         var response = $.xml2json(dataxml);
@@ -262,6 +282,13 @@ mviewer.customControls.profile = (function() {
             }
         },
 
+        updateTarget: function (target) {
+            _chart.destroy();
+            $(".profile-addon.panel-graph").remove();
+            _initChart();
+            this.updateChart();
+        },
+
         updateOptions: function(e) {
             _enableUpdate = true;
             $("#profile-update").prop('disabled', false);
@@ -271,12 +298,13 @@ mviewer.customControls.profile = (function() {
             // mandatory - code executed when panel is closed
             _draw = null;
             _line = null;
-            _chart = null;
+            _chart.destroy();
             _rawdata = null;
             _sequence = null;
             _referentiel = null;
             _feature = null;
             _enableUpdate = null;
+            $(".profile-addon.panel-graph").remove();
             mviewer.hideLocation();
             mviewer.customLayers.profile.layer.getSource().clear();
             info.enable();

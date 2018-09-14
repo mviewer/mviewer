@@ -1,9 +1,10 @@
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12" id="profile-addon">
         <style>
             #profile_options {
             padding-top: 10px;
-        }
+            }
+
       </style>
         <button class="btn btn-default" onclick="mviewer.customControls.profile.drawLine();">Tracer un profil en long
             <span class="glyphicon glyphicon-signal" aria-hidden="true"></span>
@@ -43,17 +44,22 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="profile-view" style="padding-top:8px;">Affichage</label>
+                        <div class="col-md-8">
+                            <select id="profile-view" class="form-control" onchange="mviewer.customControls.profile.updateTarget(this.value)">
+                                <option label="mini dans ce bloc" value="0">mini dans ce bloc</option>
+                                <option label="maxi dans le panneau d'information" value="1">maxi dans le panneau d'information</option>
+                            </select>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="panel-footer">
                     <button disabled id="profile-update" title="Appliquer" class="btn btn-default" onclick="mviewer.customControls.profile.updateChart();" type="button">Mettre à jour</button>
                 </div>
             </form>
         </div>
-
-        <div class="panel-graph">
-            <canvas class="chart1" id="chart1"></canvas>
-        </div>
-
 
     </div>
 </div>
