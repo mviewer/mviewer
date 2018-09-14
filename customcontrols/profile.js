@@ -47,6 +47,9 @@ mviewer.customControls.profile = (function() {
         } else {
             $("#bottom-panel .popup-content").append(chartPanel);
         }
+        $(".profile-addon.panel-graph").mouseout(function() {
+            mviewer.hideLocation();
+        });
         var options = {
             responsive: true,
             maintainAspectRatio: false,
@@ -225,9 +228,6 @@ mviewer.customControls.profile = (function() {
             // hack to hide slider opacity
             $(".mv-layer-options[data-layerid='profile'] .form-group-opacity").hide();
 
-            $(".panel-graph").mouseout(function() {
-                mviewer.hideLocation();
-            });
             if (typeof Chart === 'function') {
                 _initChart();
             } else {
