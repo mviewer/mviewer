@@ -25,7 +25,7 @@ var utils = (function () {
 
     var _testConfiguration = function (conf) {
         var score = 0;
-        var nbtests = 2;
+        var nbtests = 3;
         //test doublon name layers
         var test = [];
         var doublons = 0;
@@ -63,6 +63,23 @@ var utils = (function () {
         } else {
             console.log(test + " baselayer(s) visible(s)");
         }
+
+        // test validité sld
+        var sld_reg = /^(?:http(s)?:\/\/)?[\w-./@]+.(sld|SLD)$/i;
+        var sld_test = 1;
+        layers.forEach(function(layer) {
+            if (layer.sld) {
+                var name = layer.name;
+                var slds = layer.sld.split(",");
+                slds.forEach(function (sld, i) {
+                    if (!sld_reg.test(sld)) {
+                        sld_test = 0;
+                        console.log("sld " + sld + "\nnon valide pour la couche " + name);
+                    }
+                });
+            }
+        });
+        score+=sld_test;
         //Résultats tests
         console.log("tests config :" + ((score/nbtests)===1));
     };
