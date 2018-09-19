@@ -18,6 +18,56 @@ var utils = (function () {
         return osmtile;
     };
 
+    var _tests = {};
+
+    _tests.sld = function (layers) {
+        var regexp = /^(?:http(s)?:\/\/)?[\w-./@]+.(sld|SLD)$/i;
+        var test = 1;
+        layers.forEach(function(layer) {
+            if (layer.sld) {
+                var name = layer.name;
+                var slds = layer.sld.split(",");
+                slds.forEach(function (sld, i) {
+                    if (!regexp.test(sld)) {
+                        test = 0;
+                        console.log("sld " + sld + "\nnon valide pour la couche " + name);
+                    }
+                });
+            }
+        });
+        return test;
+    };
+
+    _tests.layerNameDuplicates = function (layers) {
+        var test = 1;
+        var duplicates = [];
+        layers.forEach(function(layer) {
+            var name = layer.name;
+            if ($.inArray(name, duplicates)) {
+                duplicates.push(name);
+            } else {
+                test = 0;
+                console.log("doublon " + name + " in layers");
+            }
+        });
+        return test;
+    };
+
+    _tests.oneBaseLayerVisible = function (baselayers) {
+        var visibleBaseLayers = 0;
+        var test = 1;
+        baselayers.baselayer.forEach(function(baselayer) {
+            if (baselayer.visible === "true") {
+                visibleBaseLayers += 1;
+            }
+        });
+        if (visibleBaseLayers !== 1) {
+            test = 0;
+            console.log(visibleBaseLayers + " baselayer(s) visible(s)");
+        }
+        return test;
+    }
+
      /**
      * _testConfig
      * @param {xml} config xml to test
@@ -25,11 +75,9 @@ var utils = (function () {
 
     var _testConfiguration = function (conf) {
         var score = 0;
-        var nbtests = 3;
-        //test doublon name layers
-        var test = [];
-        var doublons = 0;
+        var nbtests = 0;
         var layers = [];
+        //Get all layers
         conf.themes.theme.forEach(function (theme) {
             if (theme.layer) {
                 layers = layers.concat(theme.layer);
@@ -40,46 +88,19 @@ var utils = (function () {
                 }
             });
         });
-        layers.forEach(function(layer) {
-            var name = layer.name;
-            if ($.inArray(name, test)) {
-                test.push(name);
-            } else {
-                doublons = 1;
-                console.log("doublon " + name + " in layers");
-            }
-        });
 
-        score+=(doublons === 0);
         //test = 1 baselayer visible
-        var test = 0;
-        conf.baselayers.baselayer.forEach(function(baselayer) {
-            if (baselayer.visible === "true") {
-                test += 1;
-            }
-        });
-        if (test === 1) {
-            score+=1;
-        } else {
-            console.log(test + " baselayer(s) visible(s)");
-        }
+        score += _tests.oneBaseLayerVisible(conf.baselayers);
+        nbtests += 1;
+
+        //Test doublons de noms dans les couches
+        score += _tests.layerNameDuplicates(layers);
+        nbtests += 1;
 
         // test validité sld
-        var sld_reg = /^(?:http(s)?:\/\/)?[\w-./@]+.(sld|SLD)$/i;
-        var sld_test = 1;
-        layers.forEach(function(layer) {
-            if (layer.sld) {
-                var name = layer.name;
-                var slds = layer.sld.split(",");
-                slds.forEach(function (sld, i) {
-                    if (!sld_reg.test(sld)) {
-                        sld_test = 0;
-                        console.log("sld " + sld + "\nnon valide pour la couche " + name);
-                    }
-                });
-            }
-        });
-        score+=sld_test;
+        score += _tests.sld(layers);
+        nbtests += 1;
+
         //Résultats tests
         console.log("tests config :" + ((score/nbtests)===1));
     };
