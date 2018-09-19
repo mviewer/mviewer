@@ -309,11 +309,31 @@ var configuration = (function () {
                     } else {
                        oLayer.style="";
                     }
+                    oLayer.sld = layer.sld || null;
+                    //slds
+                    if (oLayer.sld) {
+                        var styles = layer.sld.split(",");
+                        //default style is the first
+                        oLayer.sld = styles[0];
+                        // test if multi styles
+                        if (styles.length > 1) {
+                            oLayer.styles = styles.toString();
+                        }
+                    }
                     if (layer.stylesalias && layer.stylesalias !== "") {
                         oLayer.stylesalias = layer.stylesalias;
                     } else {
                         if (oLayer.styles) {
-                            oLayer.stylesalias = oLayer.styles;
+                            if (oLayer.styles.search("http") >= 0) {
+                                var sldaliases =[];
+                                var regex =  /[^/]+$/i;
+                                oLayer.styles.split(",").forEach(function (sld, i) {
+                                    sldaliases.push(regex.exec(sld)[0].split("@")[0]);
+                                });
+                                oLayer.stylesalias = sldaliases.join(",");
+                            } else {
+                                oLayer.stylesalias = oLayer.styles;
+                            }
                         }
                     }
                     oLayer.toplayer =  (layer.toplayer === "true") ? true : false;
@@ -322,7 +342,6 @@ var configuration = (function () {
                         mviewer.setTopLayer(oLayer.id);
                         oLayer.draggable = false;
                     }
-                    oLayer.sld = layer.sld || null;
                     oLayer.filter = layer.filter;
                     oLayer.opacity = parseFloat(layer.opacity || "1");
                     oLayer.tooltip =  (layer.tooltip === "true") ? true : false;
@@ -354,8 +373,13 @@ var configuration = (function () {
                     oLayer.attributefilterenabled =  (layer.attributefilterenabled &&
                         layer.attributefilterenabled === "true") ? true : false;
                     if (oLayer.attributestylesync && oLayer.attributefilterenabled && oLayer.attributevalues) {
-                        oLayer.style = [oLayer.style.split('@')[0], '@',
-                        oLayer.attributevalues[0].sansAccent().toLowerCase()].join("");
+                        if (oLayer.style) {
+                            oLayer.style = [oLayer.style.split('@')[0], '@',
+                            oLayer.attributevalues[0].sansAccent().toLowerCase()].join("");
+                        } else if (oLayer.sld) {
+                            oLayer.sld = [oLayer.sld.split('@')[0], '@',
+                            oLayer.attributevalues[0].sansAccent().toLowerCase(), ".sld"].join("");
+                        }
                     }
                     oLayer.customcontrol = (layer.customcontrol === "true") ? true : false;
                     oLayer.customcontrolpath = layer.customcontrolpath || "customcontrols";
@@ -451,7 +475,7 @@ var configuration = (function () {
                         }
                         if (oLayer.attributefilter && oLayer.attributefilterenabled &&
                             oLayer.attributevalues.length > 1) {
-                            wms_params['CQL_FILTER'] = mviewer.makeCQL_Filter(oLayer.attributefield, oLayer.attributeoperator, oLayer.attributevalues[0]);                    
+                            wms_params['CQL_FILTER'] = mviewer.makeCQL_Filter(oLayer.attributefield, oLayer.attributeoperator, oLayer.attributevalues[0]);
                         }
                         if (oLayer.sld) {
                             wms_params['SLD'] = oLayer.sld;

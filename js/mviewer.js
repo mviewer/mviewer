@@ -246,6 +246,10 @@ mviewer = (function () {
         }
         if (layer.legendurl && layer.styles && (layer.styles.split(",").length === 1)) {
             legendUrl = layer.legendurl;
+        } else if (layer.sld) {
+            legendUrl = layer.url + '?service=WMS&Version=1.3.0&request=GetLegendGraphic&SLD_VERSION=1.1.0'+
+            '&format=image%2Fpng&width=30&height=20&layer=' + layer.layername + '&style=' + sld+
+            '&legend_options=fontName:Open%20Sans;fontAntiAliasing:true;fontColor:0x777777;fontSize:10.5;dpi:96&TRANSPARENT=true';
         } else {
             legendUrl = layer.url + '?service=WMS&Version=1.3.0&request=GetLegendGraphic&SLD_VERSION=1.1.0'+
             '&format=image%2Fpng&width=30&height=20&layer=' + layer.layername + '&style=' + layer.style + sld+
@@ -1836,8 +1840,14 @@ mviewer = (function () {
                     style = [styleBase, '@', attributeValue.toLowerCase().sansAccent()].join("");
                 }
             }
-            _source.getParams()['STYLES'] = style;
-            _layerDefinition.style = style;
+            if (_layerDefinition.sld) {
+                style += ".sld";
+                _source.getParams()['SLD'] = style;
+                _layerDefinition.sld = style;
+            } else {
+                _source.getParams()['STYLES'] = style;
+                _layerDefinition.style = style;
+            }
             _source.changed();
             var styleLabel = $(selectCtrl).find("option[value='"+styleBase+"'], option[value='"+styleRef+"']").attr("label");
             $('.mv-layer-details[data-layerid="'+layerid+'"] .layerdisplay-subtitle .selected-sld span').text(styleLabel);
@@ -1872,16 +1882,27 @@ mviewer = (function () {
             }
             if (_layerDefinition.attributestylesync) {
                 //need update legend ad style applied to the layer
-                var currentStyle =  _layerDefinition.style;
+                var currentStyle;
                 var newStyle;
+                if (_layerDefinition.sld) {
+                    currentStyle =  _layerDefinition.sld;
+                } else {
+                    currentStyle =  _layerDefinition.style;
+                }
                 //Respect this convention in sld naming : stylename@attribute eg style1@departement plus no accent no Capitale.
                 if (attributeValue != 'all') {
                     newStyle = [currentStyle.split("@")[0], "@", attributeValue.sansAccent().toLowerCase()].join("");
                 } else {
                     newStyle = currentStyle.split("@")[0];
                 }
-                _source.getParams()['STYLES'] = newStyle;
-                _layerDefinition.style = newStyle;
+                if (_layerDefinition.sld) {
+                    newStyle += ".sld";
+                    _source.getParams()['SLD'] = newStyle;
+                    _layerDefinition.sld = newStyle;
+                } else {
+                    _source.getParams()['STYLES'] = newStyle;
+                    _layerDefinition.style = newStyle;
+                }
                 var legendUrl = _getlegendurl(_layerDefinition);
                 $("#legend-" + layerid).fadeOut( "slow", function() {
                     // Animation complete
@@ -1889,7 +1910,7 @@ mviewer = (function () {
                 });
                 $('.mv-nav-item[data-layerid="'+layerid+'"]').attr("data-legendurl",legendUrl).data("legendurl",legendUrl);
             }
-            _source.updateParams("dc=" + new Date().valueOf());
+            _source.updateParams({"dc": new Date().valueOf()});
             _source.changed();
             $('.mv-layer-details[data-layerid="'+layerid+'"] .layerdisplay-subtitle .selected-attribute span')
                 .text(selectCtrl.options[selectCtrl.selectedIndex].label);
