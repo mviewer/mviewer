@@ -101,6 +101,10 @@ var info = (function () {
         return [$(tmp).html()];
     }
 
+    var _formatHTMLContent = function (features, layer) {
+        return _customizeHTML(createContentHtml(features, layer), features.length);
+    };
+
     /**
      * Private Method: _clickOnMap
      *
@@ -161,7 +165,7 @@ var info = (function () {
             });
             for(var layerid in vectorLayers) {
                 if (mviewer.customLayers[layerid] && mviewer.customLayers[layerid].handle) {
-                    mviewer.customLayers[layerid].handle(vectorLayers[layerid].features);
+                    mviewer.customLayers[layerid].handle(vectorLayers[layerid].features, views);
                 } else if (mviewer.customControls[layerid] && mviewer.customControls[layerid].handle){
                     mviewer.customControls[layerid].handle(vectorLayers[layerid].features);
                 } else {
@@ -783,6 +787,7 @@ var info = (function () {
         enabled : enabled,
         toggleTooltipLayer: toggleTooltipLayer,
         queryLayer: queryLayer,
+        formatHTMLContent: _formatHTMLContent,
         addQueryableLayer: _addQueryableLayer
     };
 
