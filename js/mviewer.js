@@ -1841,7 +1841,9 @@ mviewer = (function () {
                 }
             }
             if (_layerDefinition.sld) {
-                style += ".sld";
+                if (!/.(sld|SLD)$/.test(style)) {
+                    style += ".sld";
+                }
                 _source.getParams()['SLD'] = style;
                 _layerDefinition.sld = style;
             } else {
