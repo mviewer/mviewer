@@ -24,7 +24,7 @@ var utils = (function () {
         var regexp = /^(?:http(s)?:\/\/)?[\w-./@]+.(sld|SLD)$/i;
         var test = 1;
         layers.forEach(function(layer) {
-            if (layer.sld) {
+            if (layer && layer.sld) {
                 var name = layer.name;
                 var slds = layer.sld.split(",");
                 slds.forEach(function (sld, i) {
@@ -42,12 +42,14 @@ var utils = (function () {
         var test = 1;
         var duplicates = [];
         layers.forEach(function(layer) {
-            var name = layer.name;
-            if ($.inArray(name, duplicates)) {
-                duplicates.push(name);
-            } else {
-                test = 0;
-                console.log("doublon " + name + " in layers");
+            if (layer) {
+                var name = layer.name;
+                if ($.inArray(name, duplicates)) {
+                    duplicates.push(name);
+                } else {
+                    test = 0;
+                    console.log("doublon " + name + " in layers");
+                }
             }
         });
         return test;

@@ -249,13 +249,16 @@ var configuration = (function () {
                     theme.group.forEach(function (group) {
                         if (group.layer) {
                             group.layer.forEach(function(layer) {
-                                layer.group = group.id;
+                                if (layer) {
+                                    layer.group = group.id;
+                                }
                             });
                             layers = layers.concat(group.layer);
                         }
                     });
                 }
                 layers.reverse().forEach( function (layer) {
+                   if (layer) { /* to escape group without layer */
                     layerRank+=1;
                     var layerId = layer.id;
                     var secureLayer = (layer.secure === "true") ? true : false;
@@ -596,7 +599,7 @@ var configuration = (function () {
                     } else {
                         _themes[themeid].layers[oLayer.id] = oLayer;
                     }
-                }); //fin each layer
+                   }}); //fin each layer
             }); // fin each theme
         } // fin de else
 
