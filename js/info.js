@@ -413,8 +413,18 @@ var info = (function () {
                 ret = false;
             } else {
                 if (feature instanceof ol.Feature) {
-                    feature.set('mviewerid', layerid);
-                    ret = feature.clone();
+                    //test if cluster
+                    if (typeof feature.get('features') === 'undefined') {
+                        feature.set('mviewerid', layerid);
+                        ret = feature.clone();
+                    } else {
+                        ret = feature.get('features')[0].clone();
+                        var clustercount = feature.get('features').length;
+                        if (clustercount > 1) {
+                            ret.set('mv_clustercount', clustercount -1);
+                        }
+                        ret.set('mviewerid', layerid);
+                    }
                  } else {
                     ret = new ol.Feature({
                       geometry: new ol.geom.Point(ol.extent.getCenter(feature.getGeometry().getExtent()))

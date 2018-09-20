@@ -591,7 +591,11 @@ var search = (function () {
                     keys: oLayer.fusesearchkeys.split(',')
                 };
 
+
                 var layerSource = l.getSource();
+                if (l.getSource().source) {/* clusters */
+                    layerSource = l.getSource().getSource();
+                }
                 layerSource.on('change', function(event) {
                     var source = event.target;
 
