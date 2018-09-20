@@ -363,10 +363,11 @@ GeoServer et MapServer), application/vnd.esri.wms_raw_xml ou application/vnd.esr
 Server).
 * **featurecount**: Nombre d'éléments retournés lors de l'interrogation.
 * **style**: Style(s) de la couche. Si plusieurs styles , utiliser la virgule comme séparateur.
-Si la couche est de type wms, il faut faire référence à un style sld.
+Si la couche est de type wms, il faut faire référence à un ou plusieurs styles sld internes (Présents dans les capacités de la couche).
 Si la couche est de type geojson, il faut faire référence à un style défini dans lib/featurestyles.js.
 Si la couche est de type customlayer, le style n'est pas défini ici.
-* **stylesalias**: Titres à utiliser pour chaque style. Utiliser la virgule comme séparateur si plusieurs styles.
+* **sld**: Style(s) externes de la couche. Si plusieurs styles , utiliser la virgule comme séparateur. S'applique uniquement aux layers WMS. Il faut indiquer l'URL résolvable par le serveur WMS du ou des sld.
+* **stylesalias**: Titres à utiliser pour chaque style. Utiliser la virgule comme séparateur si plusieurs styles. Valable aussi pour les sld.
 * **timefilter**: Booléen précisant si la dimension temporelle est activée pour cette couche. Voir 
 (http://docs.geoserver.org/latest/en/user/services/wms/time.html).
 * **timeinterval**: day|month|year
@@ -380,8 +381,8 @@ régulières ex (1950, 1976, 1980, 2004).
 * **attributevalues**: Valeurs séparées par des virgules.
 * **attributeoperator**: Opérateur utilisé pour construire le filtre. (=|like). Defaut = "=". Attention dans le cas de like, le wildcard est harcodé : %
 * **attributelabel**:  Texte à afficher pour la liste déroulante associée.
-* **attributestylesync**: Booléen qui précise s'il convient d'appliquer un style (sld) spécifique lors du filtre 
-attributaire. Dans ce cas la convention est la suivante : nom_style_courant_attributevalue.
+* **attributestylesync**: Booléen qui précise s'il convient d'appliquer un style (sld) spécifique lors du filtrage 
+attributaire. Dans ce cas la convention est la suivante pour le nommage des styles à utiliser : nom_style@attributevalue ou url_style_externe@attributevalue.sld
 * **attributefilterenabled**: Booléen précisant si le filtre est activé par défaut (avec la première valeur de la liste 
 attributevalues).
 * **customcontrol**: Booléen précisant si la couche dispose d'un addon html à intégrer. La valeur par défaut est false.
