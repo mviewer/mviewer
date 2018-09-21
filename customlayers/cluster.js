@@ -22,13 +22,18 @@
 
     var clusterStyle = function(feature) {
         var size = feature.get('features').length;
+        var max_radius = 40;
+        var max_value = 500;
+        var radius = 10 + Math.sqrt(size)*(max_radius / Math.sqrt(max_value));
+        var radius2 = radius *80 /100 ;
+        console.log(radius, radius2);
         if (size == 1) {
             return uniqueStyle;
         } else {
             return [
                 new ol.style.Style({
                     image: new ol.style.Circle({
-                        radius: 20,
+                        radius: radius,
                         fill: new ol.style.Fill({
                             color: 'rgba(236, 240, 241,0.7)'
                         })
@@ -36,7 +41,7 @@
                 }),
                 new ol.style.Style({
                     image: new ol.style.Circle({
-                        radius: 15,
+                        radius: radius2,
                         fill: new ol.style.Fill({
                             color: 'rgba(231, 76, 60, 0.7)'
                         })
@@ -56,7 +61,7 @@
 
     cl.layer = new ol.layer.Vector({
         source: new ol.source.Cluster({
-            distance: 40,
+            distance: 50,
             source: new ol.source.Vector({
                 url: "https://geobretagne.fr/geoserver/dreal_b/wfs?service=WFS&version=1.0.0&request=GetFeature&typeNames=dreal_b:projets-environnement-diffusion&outputFormat=application/json&srsName=EPSG:4326&bbox=-6,47,0,49",
                 format: new ol.format.GeoJSON()
