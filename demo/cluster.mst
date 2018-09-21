@@ -1,0 +1,30 @@
+{{#features}}
+<li class="item">
+    <h3>{{dc_title}}</h3>
+    <h4>{{location}}</h4>
+    <ul>
+        <li><strong>date</strong> : {{dc_date}}</li>
+        <li><strong>maîtrise d'ouvrage</strong> : {{dc_contributor}}</li>
+        <li><strong>thématique</strong> : {{dc_subject_theme}}</li>
+        <li><strong>nature</strong> : {{dc_subject_category}}</li>
+        <li><strong>type de procédure</strong> : {{dc_type}}</li>
+        <li><strong>nom du bureau d'étude</strong> : </li>
+        <li><strong>auteur de l'étude</strong> : {{vp_creator_corporatename}}</li>
+        <li><strong>date de la préfecture</strong> : </li>
+        <li><strong>localisation</strong> : {{codepostal}} {{location}}</li>
+        <li><strong>études d'impact</strong> : {{dc_relation_expertise_etudeimpact}}</li>
+    </ul>
+    <hr />
+    <p class="text-center">
+        <a target="_blank" class="btn btn-primary" href="{{url_fiche_id}}">fiche descriptive</a>
+    </p>
+    <hr />
+    <p class="text-center">
+    <a href="https://www.projets-environnement.gouv.fr/"><img alt="MTES" src="https://s3-eu-west-1.amazonaws.com/aws-ec2-eu-1-opendatasoft-staticfileset/cgdd-sprint/logo"></a>
+    <br />
+    diffusé par {{diffuseur}} (<a href="{{licence}}">licence</a>)
+    <br />
+    source {{source}}
+    </p>
+</li>
+{{/features}}

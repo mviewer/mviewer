@@ -24,8 +24,9 @@
                 searchengine="fuse"
                 fusesearchkeys="dc_title,dc_contributor"
                 fusesearchresult="{{date}} {{dc_title}} {{dc_contributor}} {{codepostal}}"
-                tooltipcontent="{{dc_title}} et {{mv_clustercount}} autre(s) dossier(s)"
-                />
+                tooltipcontent="{{dc_title}} et {{mv_clustercount}} autre(s) dossier(s)">
+                <template url="demo/cluster.mst"/>
+                </layer>
         </theme>
     </themes>
 </config>
