@@ -101,10 +101,6 @@ var info = (function () {
         return [$(tmp).html()];
     }
 
-    var _formatHTMLContent = function (features, layer) {
-        return _customizeHTML(createContentHtml(features, layer), features.length);
-    };
-
     /**
      * Private Method: _clickOnMap
      *
@@ -184,7 +180,6 @@ var info = (function () {
                         } else {
                             html_result = createContentHtml(features, l);
                         }
-                        html_result = _customizeHTML(html_result, features.length);
                         //Set view with layer info & html formated features
                         views[panel].layers.push({
                             "panel": panel,
@@ -297,7 +292,6 @@ var info = (function () {
                                 } else {
                                     html_result.push(createContentHtml(features.reverse(), layerinfos));
                                 }
-                                html_result = _customizeHTML(html_result, features.length);
                             }
                         }
                     }
@@ -604,7 +598,7 @@ var info = (function () {
             li += '</div></li>';
             html += $(li)[0].outerHTML + "\n";
         });
-        return html;
+        return _customizeHTML(html, features.length);
     };
 
     /**
@@ -630,7 +624,7 @@ var info = (function () {
             obj.features.push(feature.properties);
         });
         var rendered = Mustache.render(tpl, obj);
-        return rendered;
+        return _customizeHTML(rendered, olfeatures.length);
     };
 
     /**
@@ -797,7 +791,8 @@ var info = (function () {
         enabled : enabled,
         toggleTooltipLayer: toggleTooltipLayer,
         queryLayer: queryLayer,
-        formatHTMLContent: _formatHTMLContent,
+        formatHTMLContent: createContentHtml,
+        templateHTMLContent: applyTemplate,
         addQueryableLayer: _addQueryableLayer
     };
 
