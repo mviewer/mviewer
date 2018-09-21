@@ -26,7 +26,6 @@
         var max_value = 500;
         var radius = 10 + Math.sqrt(size)*(max_radius / Math.sqrt(max_value));
         var radius2 = radius *80 /100 ;
-        console.log(radius, radius2);
         if (size == 1) {
             return uniqueStyle;
         } else {
