@@ -357,11 +357,12 @@ var search = (function () {
             var results = _fuseSearchData[layerid].search(val);
             var zoom = 15;
             var max_results = 5;
+            var str = "";
             if (results.length > 0) {
                 // We only display the first results
                 results = results.slice(0, max_results);
 
-                var str = '<li class="fuse list-group-item disabled">' + layername + '</li>';
+                str = '<li class="fuse list-group-item disabled">' + layername + '</li>';
                 results.forEach(function(element){
                     /*
                      * 2 cases, one specific field or a Mustache template for combining fields in a string. Examples:
