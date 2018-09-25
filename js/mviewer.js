@@ -264,6 +264,67 @@ mviewer = (function () {
         return legendUrl;
     };
 
+
+     //{styles:stylePublic, label: "Public", geometry: "Point"}
+    /**
+     * _drawVectorLegend draw vector legend  method.
+     * @param {String} layerid
+     * @param {Array} items. Array of {styles:ol.styles , label: string, geometry: Point|Polygon|LineString)
+     */
+
+    var _drawVectorLegend = function (layerid, items) {
+        var canvas = document.getElementById("vector-legend-" + layerid);
+        if (canvas) {
+            var marginTop = 15;
+            var marginLeft = 15;
+            var itemHeight = 20;
+            var horizontalSpace = 10;
+            verticalPosition = 0;
+            var geomWidth = 25;
+            var geomHeight = 15;
+            var verticalSpace = itemHeight - geomHeight;
+            var ctx = canvas.getContext('2d');
+            vectorContext = ol.render.toContext(ctx, {
+                size: [250, (items.length * itemHeight) + marginTop]
+            });
+            items.forEach( function (item, id) {
+                var geometry;
+                verticalPosition+= itemHeight;
+                switch (item.geometry) {
+                    case 'Point':
+                        geometry = new ol.geom.Point([marginLeft + (geomWidth/2),
+                            verticalPosition - (geomHeight/2)]);
+                        break;
+
+                    case 'LineString':
+                        geometry = new ol.geom.LineString([[marginLeft, -marginTop + verticalPosition],
+                            [marginLeft + geomWidth, -marginTop + verticalPosition + geomHeight]]);
+                        break;
+
+                    case 'Polygon':
+                        geometry = new ol.geom.Polygon([[
+                            [marginLeft, -marginTop + verticalPosition],
+                            [marginLeft, -marginTop + verticalPosition + geomHeight],
+                            [marginLeft + geomWidth, -marginTop + verticalPosition + geomHeight],
+                            [marginLeft + geomWidth, -marginTop + verticalPosition],
+                            [marginLeft, -marginTop + verticalPosition]]]);
+                        break;
+                }
+
+                item.styles.forEach(function (style) {
+                    vectorContext.setStyle(style);
+                    vectorContext.drawGeometry(geometry);
+                });
+                ctx.fillStyle = 'rgba(153, 153, 153, 1)';
+                var fontsize = 12;
+                ctx.font = fontsize + 'px roboto_regular, Arial, Sans-serif';
+                ctx.textAlign = "left";
+                ctx.fillText(item.label ,marginLeft + geomWidth + horizontalSpace, verticalPosition - (geomHeight - fontsize));
+
+            });
+        }
+    };
+
     var _convertScale2Resolution = function (scale) {
          return scale * 0.28/1000;
     };
@@ -1508,6 +1569,14 @@ mviewer = (function () {
             } else {
                 $("#layers-container").prepend(item);
             }
+
+            //Dynamic vector Legend
+            if (layer.vectorlegend  && mviewer.customLayers[layer.layerid] && mviewer.customLayers[layer.layerid].legend) {
+                _drawVectorLegend( layer.layerid, mviewer.customLayers[layer.layerid].legend.items );
+                //Remove classic getLegendUrl
+                $("#legend-"+layer.layerid).remove();
+            }
+
             _setLayerScaleStatus(layer, _calculateScale(_map.getView().getResolution()));
             $("#"+layer.layerid+"-layer-opacity").slider({});
             $("#"+layer.layerid+"-layer-summary").popover({container: 'body', html: true});
@@ -2133,7 +2202,9 @@ mviewer = (function () {
 
         createBaseLayer: _createBaseLayer,
 
-        setVisibleOverLayers: _setVisibleOverLayers
+        setVisibleOverLayers: _setVisibleOverLayers,
+
+        drawVectorLegend: _drawVectorLegend
 
 
     }; // fin return

@@ -69,6 +69,7 @@ mviewer.templates.layerControl = [
             '<div id="loading-{{layerid}}" class="mv-layer-indicator" style="display:none">',
                 '<div class="loader">Loading...</div>',
             '</div>',
+            '<canvas class="vector-legend" id="vector-legend-{{layerid}}" width="250" height="0"/>',
             '<img class="mv-legend" {{crossorigin}} id="legend-{{layerid}}" src="{{legendurl}}"',
                 ' alt="Légende non disponible" onload="mviewer.legendSize(this)"',
                 ' onError="this.onerror=null;this.src=\'img/nolegend.png\';"/>',

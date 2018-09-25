@@ -306,6 +306,7 @@ Nœud enfant de theme ou group décrivant une couche.
     opacity=""
     legendurl=""
     dynamiclegend=""
+    vectorlegend=""
 	url=""
 	attribution=""
     tooltip=""
@@ -393,6 +394,7 @@ La structure du js doit être la suivante : (../controls/epci.js). Valeur par d�
 * **legendurl**: url premettant de récupérer la légende. Si non défini, c'est un getFeatureLegend qui est effectué.
 * **dynamiclegend**: Booléen précisant si la légende est liée à l'échelle de la carte et si elle nécessite d'être 
 actualisée à chaque changement d'échelle de la carte.
+* **vectorlegend**: Booléen précisant si la légende pour les couches de type vecteur (customlayer) est dynamiquement créeé 
 * **url**: URL de la couche.
 * **attribution**: Copyright de la couche.
 * **expanded** : Booléan précisant si le panneau de la couche est agrandi au démarrage. La valeur par défaut est false.

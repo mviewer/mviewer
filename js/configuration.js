@@ -414,6 +414,7 @@ var configuration = (function () {
                     oLayer.visiblebydefault = (oLayer.checked) ? true : false;
                     oLayer.tiled = (layer.tiled === "true") ? true : false;
                     oLayer.dynamiclegend = (layer.dynamiclegend === "true") ? true : false;
+                    oLayer.vectorlegend =  (layer.vectorlegend === "true") ? true : false;
                     oLayer.legendurl=(layer.legendurl)? layer.legendurl : mviewer.getLegendUrl(oLayer);
                     if (oLayer.legendurl === "false") {oLayer.legendurl = "";}
                     oLayer.useproxy = (layer.useproxy === "true") ? true : false;
