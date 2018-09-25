@@ -1,6 +1,7 @@
 {
     mviewer.customLayers.cluster = {};
     var cl = mviewer.customLayers.cluster;
+    cl.legend = { items:[] };
     var uniqueStyle = [
         new ol.style.Style({
             image: new ol.style.Circle({
@@ -8,7 +9,14 @@
                 fill: new ol.style.Fill({
                     color: 'rgba(231, 76, 60, 0.7)'
                 })
-            })
+            }),
+            stroke: new ol.style.Stroke({
+            color: 'blue',
+            width: 3
+          }),
+          fill: new ol.style.Fill({
+            color: 'rgba(0, 0, 255, 0.1)'
+          })
         }),
         new ol.style.Style({
             image: new ol.style.Circle({
@@ -19,6 +27,42 @@
             })
         })
     ];
+    cl.legend.items.push({styles:uniqueStyle, label: "Dossier", geometry: "Point"});
+    var manyStyle = function (radius, radius2, size) {
+        return [
+            new ol.style.Style({
+                image: new ol.style.Circle({
+                    radius: radius,
+                    fill: new ol.style.Fill({
+                        color: 'rgba(236, 240, 241,0.7)'
+                    })
+                }),
+                stroke: new ol.style.Stroke({
+                    color: 'red',
+                    width: 3
+              }),
+              fill: new ol.style.Fill({
+                color: 'rgba(0, 0, 255, 0.1)'
+              })
+            }),
+            new ol.style.Style({
+                image: new ol.style.Circle({
+                    radius: radius2,
+                    fill: new ol.style.Fill({
+                        color: 'rgba(231, 76, 60, 0.7)'
+                    })
+                }),
+                text: new ol.style.Text({
+                    font: '12px roboto_regular, Arial, Sans-serif',
+                    text: size.toString(),
+                    fill: new ol.style.Fill({
+                        color: '#fff'
+                    })
+                })
+            })
+        ];
+    };
+    cl.legend.items.push({styles:manyStyle(10,10,7), label: "Groupe de dossiers", geometry: "Point"});
 
     var clusterStyle = function(feature) {
         var size = feature.get('features').length;
@@ -29,33 +73,8 @@
         if (size == 1) {
             return uniqueStyle;
         } else {
-            return [
-                new ol.style.Style({
-                    image: new ol.style.Circle({
-                        radius: radius,
-                        fill: new ol.style.Fill({
-                            color: 'rgba(236, 240, 241,0.7)'
-                        })
-                    })
-                }),
-                new ol.style.Style({
-                    image: new ol.style.Circle({
-                        radius: radius2,
-                        fill: new ol.style.Fill({
-                            color: 'rgba(231, 76, 60, 0.7)'
-                        })
-                    }),
-                    text: new ol.style.Text({
-                        font: '12px roboto_regular, Arial, Sans-serif',
-                        text: size.toString(),
-                        fill: new ol.style.Fill({
-                            color: '#fff'
-                        })
-                    })
-                })
-            ];
+            return manyStyle(radius, radius2, size);
         }
-
     };
 
     cl.layer = new ol.layer.Vector({
