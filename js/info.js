@@ -401,6 +401,9 @@ var info = (function () {
         var pixel = _map.getEventPixel(evt.originalEvent);
 
         var feature = _map.forEachFeatureAtPixel(pixel, function (feature, layer) {
+            if (layer.get('mviewerid') === 'featureoverlay') {
+                return;
+            }
             var ret = false;
             var layerid = layer.get('mviewerid');
             if (_activeTooltipLayer === false || (_activeTooltipLayer && layerid !== _activeTooltipLayer)) {
@@ -429,13 +432,26 @@ var info = (function () {
             }
             return ret;
         });
-        _sourceOverlay.clear();
+        //hack to check if feature is yet overlayed
+        var newFeature = false;
+        if (feature && _sourceOverlay.getFeatures().length > 0) {
+            if (feature.getProperties() === _sourceOverlay.getFeatures()[0].getProperties()) {
+                newFeature = false;
+            } else {
+                newFeature = true;
+            }
+        } else if (feature && _sourceOverlay.getFeatures().length === 0) {
+            newFeature = true;
+        }
+
         if (feature && Object.keys(feature.getProperties()).length > 1) {
             $("#map").css("cursor", "pointer");
             var l = _overLayers[feature.get('mviewerid')];
             if (l && ((l.fields && l.fields.length > 0) || l.tooltipcontent)) {
-                _sourceOverlay.addFeature(feature);
-
+                if (newFeature) {
+                    _sourceOverlay.clear();
+                    _sourceOverlay.addFeature(feature);
+                }
                 var title;
                 var tooltipcontent = l.tooltipcontent;
                 if ( tooltipcontent ) {
@@ -466,6 +482,7 @@ var info = (function () {
         } else {
             _featureTooltip.tooltip('hide');
             $("#map").css("cursor", "");
+            _sourceOverlay.clear();
         }
     };
 
