@@ -9,14 +9,7 @@
                 fill: new ol.style.Fill({
                     color: 'rgba(231, 76, 60, 0.7)'
                 })
-            }),
-            stroke: new ol.style.Stroke({
-            color: 'blue',
-            width: 3
-          }),
-          fill: new ol.style.Fill({
-            color: 'rgba(0, 0, 255, 0.1)'
-          })
+            })
         }),
         new ol.style.Style({
             image: new ol.style.Circle({
