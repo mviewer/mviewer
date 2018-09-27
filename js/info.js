@@ -587,7 +587,7 @@ var info = (function () {
                     return key;
                 }
             });
-            var featureTitle = feature.properties[fields[0]];
+            var featureTitle = feature.properties.title || feature.properties.name || feature.properties[fields[0]];
             var li = '<li class="item" ><div class="gml-item" ><div class="gml-item-title">'
             if (typeof featureTitle != 'undefined') {
                 li += featureTitle;
