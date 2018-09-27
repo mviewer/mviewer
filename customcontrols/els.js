@@ -4,6 +4,12 @@ mviewer.customControls.els = (function() {
      */
     var _idlayer = 'els';
 
+    var _updateLayer = function() {
+        var values = $("#els_search_queries").tagsinput('items');
+        mviewer.customLayers.els.filter = values;
+        mviewer.customLayers.els.layer.getSource().getSource().clear(true);
+    };
+
 
 
     return {
@@ -11,25 +17,32 @@ mviewer.customControls.els = (function() {
          * Public
          */
 
-        init: function () {
+        init: function() {
             // mandatory - code executed when panel is opened
+            $("#els_search_queries").tagsinput({
+                tagClass: 'label label-mv'
+            });
+            $("#els_search_queries").on('itemAdded', function(event) {
+                _updateLayer();
+            });
+            $("#els_search_queries").on('itemRemoved', function(event) {
+                _updateLayer();
+            });
 
         },
 
-        updateLayer: function (value) {
+        updateLayer: function(value) {
             if (value.length > 2) {
-                mviewer.customLayers.els.filter = value;
-            } else {
-                mviewer.customLayers.els.filter = false;
+                $("#els_search_queries").tagsinput('add', value);
+                $("#els_input").val("");
             }
 
-            mviewer.customLayers.els.layer.getSource().clear();
-
         },
 
-        destroy: function () {
+        destroy: function() {
             // mandatory - code executed when panel is closed
+            $("#els_search_queries").tagsinput('removeAll');
         }
-     };
+    };
 
 }());

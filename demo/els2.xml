@@ -15,8 +15,8 @@
 <olscompletion type="ban" url="https://api-adresse.data.gouv.fr/search/" attribution="" />
 <searchparameters bbox="false" localities="true" features="false" static="false"/>
 <baselayers style="default"> 
-    <baselayer visible="false" id="positron" thumbgallery="img/basemap/positron.png" title="CartoDb" label="Positron" type="OSM" url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution="Map tiles by  &lt;a href=&quot;https://cartodb.com/attributions&quot;&gt;CartoDb&lt;/a&gt;, under  &lt;a href=&quot;https://creativecommons.org/licenses/by/3.0/&quot;&gt;CC BY 3.0 &lt;/a&gt;"  ></baselayer> 
-    <baselayer visible="true" id="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg" title="Esri world imagery" label="Esri world imagery" type="OSM" url="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"  ></baselayer>
+    <baselayer visible="true" id="positron" thumbgallery="img/basemap/positron.png" title="CartoDb" label="Positron" type="OSM" url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution="Map tiles by  &lt;a href=&quot;https://cartodb.com/attributions&quot;&gt;CartoDb&lt;/a&gt;, under  &lt;a href=&quot;https://creativecommons.org/licenses/by/3.0/&quot;&gt;CC BY 3.0 &lt;/a&gt;"  ></baselayer> 
+    <baselayer visible="false" id="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg" title="Esri world imagery" label="Esri world imagery" type="OSM" url="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"  ></baselayer>
 </baselayers>
 <themes mini="false">    	
     <theme name="Elasticsearch"  collapsed="false" id="elasticsearch" icon="file-text">
@@ -24,9 +24,10 @@
             type="customlayer" opacity="0.8" legendurl="img/blank.gif"
             url="customlayers/els.js"
             customcontrol="true"
+            vectorlegend="true"
             expanded="true"
             tooltip="true" tooltipenabled="true" tooltipcontent="{{title}} "
-            attribution="Source: RB: ElasticSearch"
+            attribution="Source: Région Bretagne"
             metadata=""
             metadata-csw="">
         </layer>
