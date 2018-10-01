@@ -51,9 +51,9 @@ mviewer.customControls.napoleo = (function() {
             var data = _data[select.value];
             var url = data.url;
             console.log($("#napoleo-quality:checked").val());
-            if (!$("#napoleo-quality:checked").val() === true) {
+            if ($("#napoleo-quality:checked").val() === true) {
                 console.log("HD");
-                url = url.replace("/hd/","/ld/");
+                url = url.replace("/ld/","/hd/");
             }
             var source = new ol.source.ImageStatic({
                 attributions: '© <a href="https://geobretagne.com">GéoBretagne</a>',
