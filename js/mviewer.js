@@ -32,6 +32,82 @@ mviewer = (function () {
 
     var _sourceGeolocation;
 
+    var _events = {
+        _confLoaded: false,
+        _overLayersLoaded: 0,
+        _overLayersTotal: 0,
+        overLayersLoadedListener: function(val) {},
+        set overLayersLoaded(val) {
+            this._overLayersLoaded = val;
+            this.overLayersLoadedListener(val);
+        },
+        get overLayersLoaded() {
+            return this._overLayersLoaded;
+        },
+        set overLayersTotal(val) {
+            this._overLayersTotal = val;
+        },
+        get overLayersTotal() {
+            return this._overLayersTotal;
+        },
+        confLoadedListener: function(val) {},
+        set confLoaded(val) {
+            this._confLoaded = val;
+            this.confLoadedListener(val);
+        },
+        get confLoaded() {
+            return this._confLoaded;
+        },
+        registerOverLayersLoadedListener: function(listener) {
+            this.overLayersLoadedListener = listener;
+        },
+        registerConfLoadedListener: function(listener) {
+            this.confLoadedListener = listener;
+        }
+    };
+
+    _events.registerOverLayersLoadedListener(function(val) {
+        if (val === _events.overLayersTotal && _events.confLoaded === true) {
+            _overLayersReady();
+        }
+    });
+
+    _events.registerConfLoadedListener(function(val) {
+        if (_events.overLayersLoaded === _events.overLayersTotal && val === true) {
+            _overLayersReady();
+        }
+    });
+
+    var _overLayersReady = function () {
+        mviewer.init();
+        console.log(configuration.getThemes());
+        mviewer.setBaseLayer(configuration.getDefaultBaseLayer());
+        _applyPermalink();
+        _showCheckedLayers();
+    };
+
+    var _applyPermalink = function () {
+        //Get  x, y & z url parameters if exists
+        if (config.x && config.y && config.z) {
+            var center =   [parseFloat(config.x), parseFloat(config.y)];
+            var zoom = parseInt(config.z);
+            _map.getView().setCenter(center);
+            _map.getView().setZoom(zoom);
+        }
+        //Get backgroundlayer value if exists
+        if (config.lb && $.grep(_backgroundLayers, function (n) {
+            return n.get('blid') === config.lb;
+        })[0]) {
+            mviewer.setBaseLayer(config.lb);
+        }
+        //get visible layers
+        if (config.l) {
+            _setVisibleOverLayers(config.l);
+        }
+    };
+
+
+
     /**
      * Property: _ajaxURL
      *
@@ -497,6 +573,7 @@ mviewer = (function () {
             });
         }
         _map.addLayer(l);
+        _events.overLayersLoaded += 1;
     };
 
 
@@ -769,8 +846,31 @@ mviewer = (function () {
     var _getVisibleOverLayers = function () {
         var layers = [];
         $.each(_overLayers, function (i, item) {
+            var layerparams = [];
             if (item.layer.getVisible()) {
-                layers.push(item.name);
+                layerparams.push(item.layerid);
+                if (item.type === "wms") {
+                    //get current style if many styles
+                    var source = item.layer.getSource();
+                    if(item.styles && source.getParams().STYLES) {
+                        layerparams.push(source.getParams().STYLES.trim());
+                    } else {
+                        layerparams.push("");
+                    }
+                    //get current filter if necessary
+                    if (item.attributefilter && source.getParams()['CQL_FILTER']) {
+                        layerparams.push(source.getParams()['CQL_FILTER'].trim());
+                    } else {
+                        layerparams.push("");
+                    }
+                    //get current time filter if necessary
+                    if (item.timefilter && source.getParams()['TIME']) {
+                        layerparams.push(source.getParams()['TIME']);
+                    }
+
+                }
+
+                layers.push(layerparams.join("*").replace(/\*$/i, ""));
             }
         });
         return layers.join(",");
@@ -785,14 +885,48 @@ mviewer = (function () {
         var errors = [];
         var errorLayers =[];
         var layers = decodeURIComponent(lst).split(",");
-        for (var i = 0; i < layers.length; i++) {
-            var l = _getLayerByName(layers[i]);
+        var layersWithOptions = {};
+        layers.forEach(function (layer, i) {
+            //search layer by id or by name in overLayers collection
+            //layer with options - layername*style*cql_filter*time
+            var layerWithOptions = layer.split("*");
+            var richLayer = {};
+            var layerIdOrName = layerWithOptions[0];
+            switch (layerWithOptions.length) {
+                case 2:
+                    richLayer.style = layerWithOptions[1];
+                    break;
+                case 3:
+                    richLayer.style = layerWithOptions[1];
+                    richLayer.filter = layerWithOptions[2];
+                    break;
+                case 4:
+                    richLayer.style = layerWithOptions[1];
+                    richLayer.filter = layerWithOptions[2];
+                    richLayer.time = layerWithOptions[3];
+                    break;
+            }
+
+            var l = false;
+            if (mviewer.getLayers()[layerIdOrName] && mviewer.getLayers()[layerIdOrName].layer) {
+                //layerIdOrName is layerid
+                l =  mviewer.getLayers()[layerIdOrName].layer;
+                richLayer.layerid = layerIdOrName;
+                richLayer.name = mviewer.getLayers()[layerIdOrName].name;
+            } else {
+                //layerIdOrName is layername
+                l = _getLayerByName(layerIdOrName);
+                richLayer.name = layerIdOrName;
+                richLayer.layerid = l.get("mviewerid");
+            }
+            layersWithOptions[richLayer.layerid] = richLayer;
+
             if (l) {
                 (l.src)?l.src.setVisible(true):l.setVisible(true);
             } else {
                 errors.push(i);
             }
-        }
+        });
         errors.forEach(function(err) {
             errorLayers.push(layers[err]);
             delete layers[err];
@@ -800,7 +934,7 @@ mviewer = (function () {
         if (errorLayers.length > 0) {
             mviewer.alert("Couche(s) "+ errorLayers.join(", ") + " non disponible(s)", "alert-danger");
         }
-        _overwiteThemeProperties(layers);
+        _overwiteThemeProperties(layersWithOptions);
     };
 
     /**
@@ -829,41 +963,60 @@ mviewer = (function () {
     /**
      * Private Method: _overwiteThemeProperties
      *
-     * Parameter: layers (Array of strings)
+     * Parameter: layers (Hash of richlayers (layerid, style, filter))
      */
 
-    var _overwiteThemeProperties = function (layers) {
+    var _overwiteThemeProperties = function (layersWithOptions) {
+        var showLayer = function (layerControler, layerOptions) {
+            layerControler.checked = true;
+            layerControler.visiblebydefault = true;
+            var li = $(".mv-nav-item[data-layerid='"+layerControler.layerid+"']");
+            if (layerOptions.style && layerControler.type === "wms") {
+                layerControler.layer.getSource().getParams()['STYLES'] = layerOptions.style;
+                layerControler.style = layerOptions.style;
+            }
+            if (layerOptions.filter && layerControler.type === "wms") {
+                layerControler.layer.getSource().getParams()['CQL_FILTER'] = layerOptions.filter;
+                layerControler.filter = layerOptions.filter;
+            }
+            mviewer.toggleLayer(li);
+            if (layerOptions.time && layerControler.type === "wms") {
+                //layerControler.layer.getSource().getParams()['TIME'] = layerOptions.time;
+                var timeControl = $("#"+layerControler.layerid+"-layer-timefilter");
+                if (timeControl.hasClass("mv-slider-timer")) {
+                    timeControl.slider('setValue', layerControler.timevalues.indexOf(layerOptions.time), true, true);
+                }
+            }
+
+        };
+
+        var hideLayer = function (layerControler) {
+            layerControler.checked = false;
+            if (layerControler.layer) {
+                layerControler.layer.setVisible(false);
+            }
+            layerControler.visiblebydefault = false;
+        };
         $.each(_themes, function (i, theme) {
             $.each(theme.layers, function (j, l) {
-                if (layers.indexOf(l.name) != -1) {
-                    l.checked = true;
-                    l.visiblebydefault = true;
-                    var li = $(".mv-nav-item[data-layerid='"+l.id+"']");
-                    mviewer.toggleLayer(li);
+                if (layersWithOptions[l.layerid]) {
+                    var options = layersWithOptions[l.layerid];
+                    showLayer(l, options);
                 } else {
-                    l.checked = false;
-                    if (l.layer) {
-                        l.layer.setVisible(false);
-                    }
-                    l.visiblebydefault = false;
+                    hideLayer(l);
                 }
             });
              $.each(theme.groups, function (g, group) {
                  $.each(group.layers, function (i, l) {
-                    if (layers.indexOf(l.name) != -1) {
-                        l.checked = true;
-                        l.visiblebydefault = true;
-                        var li = $(".mv-nav-item[data-layerid='"+l.id+"']");
-                        mviewer.toggleLayer(li);
+                    if (layersWithOptions[l.layerid]) {
+                        var options = layersWithOptions[l.layerid];
+                        showLayer(l, options);
                     } else {
-                        l.checked = false;
-                        if (l.layer) {
-                            l.layer.setVisible(false);
-                        }
-                        l.visiblebydefault = false;
+                        hideLayer(l);
                     }
                 });
              });
+
         });
     };
 
@@ -1751,7 +1904,7 @@ mviewer = (function () {
             //Only for second and more loads
             if (oLayer.attributefilter && oLayer.layer.getSource().getParams()['CQL_FILTER']) {
                 var activeFilter = oLayer.layer.getSource().getParams()['CQL_FILTER'];
-                var activeAttributeValue = activeFilter.split(oLayer.attributeoperator)[1].replace(/\%|'/g, "");
+                var activeAttributeValue = activeFilter.split(oLayer.attributeoperator)[1].replace(/\%|'/g, "").trim();
                 $("#"+layer.layerid+"-attributes-selector option[value='"+activeAttributeValue+"']").prop("selected", true);
                 $('.mv-layer-details[data-layerid="'+layer.layerid+'"] .layerdisplay-subtitle .selected-attribute span')
                     .text(activeAttributeValue);
@@ -2172,19 +2325,11 @@ mviewer = (function () {
             return _overLayers;
         },
 
-        getBackgroundLayers: function () {
-            return _backgroundLayers;
-        },
-
         getLonLatZfromGeometry: _getLonLatZfromGeometry,
 
         ajaxURL : _ajaxURL,
 
         parseWMCResponse: _parseWMCResponse,
-
-        showCheckedLayers: _showCheckedLayers,
-
-        initDataList: _initDataList,
 
         deleteLayer: _deleteLayer,
 
@@ -2202,9 +2347,9 @@ mviewer = (function () {
 
         createBaseLayer: _createBaseLayer,
 
-        setVisibleOverLayers: _setVisibleOverLayers,
+        drawVectorLegend: _drawVectorLegend,
 
-        drawVectorLegend: _drawVectorLegend
+        events: function () { return _events; }
 
 
     }; // fin return

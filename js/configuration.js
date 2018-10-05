@@ -196,6 +196,8 @@ var configuration = (function () {
         if (config.wmc) {
             var reg=new RegExp("[,]+", "g");
             var wmcs=config.wmc.split(reg);
+            var processedWMC = 0;
+            var nbOverLayers = 0;
             for (var i=0; i<wmcs.length; i++) {
                 (function(key) {
                     var wmcid = "wmc"+key ;
@@ -204,6 +206,7 @@ var configuration = (function () {
                         dataType: "xml",
                         success: function (xml) {
                             var wmc = mviewer.parseWMCResponse(xml, wmcid);
+                            processedWMC += 1;
                             _themes[wmcid] = {};
                             _themes[wmcid].collapsed = false;
                             _themes[wmcid].id = wmcid;
@@ -213,15 +216,32 @@ var configuration = (function () {
                             _map.getView().fit(wmc.extent, { size: _map.getSize(),
                                 padding: [0, $("#sidebar-wrapper").width(), 0, 0]});
                             _themes[wmcid].layers = wmc.layers;
+                            nbOverLayers += Object.keys(wmc.layers).length;
+                            if (processedWMC === wmcs.length) {
+                                mviewer.events().overLayersTotal = nbOverLayers;
+                            }
                             _themes[wmcid].name = wmc.title;
-                            mviewer.initDataList();
-                            mviewer.showCheckedLayers();
+                            mviewer.events().overLayersLoaded += Object.keys(wmc.layers).length;
                         }
                     });
                 })(i);
             }
         } else {
             var themes = conf.themes.theme;
+            var nbOverLayers = 0;
+            themes.forEach(function (theme) {
+                if (theme.layer) {
+                    nbOverLayers += theme.layer.length;
+                }
+                if (theme.group.length > 0) {
+                    theme.group.forEach(function (group) {
+                        if (group.layer && group.layer.length > 0) {
+                            nbOverLayers += group.layer.length;
+                        }
+                    });
+                }
+            });
+            mviewer.events().overLayersTotal = nbOverLayers;
             var layerRank = 0;
             var doublons = {};
             conf.themes.theme.reverse().forEach(function(theme) {
@@ -553,7 +573,6 @@ var configuration = (function () {
                         if (oLayer.style && mviewer.featureStyles[oLayer.style]) {
                             l.setStyle(mviewer.featureStyles[oLayer.style]);
                         }
-                        //mviewer.getVectorLayers().push(l);
                         mviewer.processLayer(oLayer, l);
                     }// end geojson
 
@@ -564,7 +583,6 @@ var configuration = (function () {
                                 format: new ol.format.KML()
                             })
                         });
-                        //mviewer.getVectorLayers().push(l);
                         mviewer.processLayer(oLayer, l);
                     }// end kml
 
@@ -582,13 +600,8 @@ var configuration = (function () {
                                     if (oLayer.style && mviewer.featureStyles[oLayer.style]) {
                                         l.setStyle(mviewer.featureStyles[oLayer.style]);
                                     }
-                                    //mviewer.getVectorLayers().push(l);
                                     mviewer.processLayer(oLayer, l);
                                 }
-                                // This seems to be useless. To be removed?
-                                if (mviewer.customLayers[oLayer.id].handle) {
-                                }
-                                mviewer.showCheckedLayers();
                             },
                             error: function (request, textStatus, error) {
                                 console.log( "error custom Layer : " + error );
@@ -627,12 +640,17 @@ var configuration = (function () {
             $("#exportpng").hide();
         }
 
-         mviewer.init();
-         mviewer.setBaseLayer(_defaultBaseLayer);
+         //mviewer.init();
+         if (nbOverLayers === 0) {
+             mviewer.init();
+             mviewer.setBaseLayer(_defaultBaseLayer);
+         }
 
         if (_showhelp_startup) {
             $("#help").modal('show');
         }
+        mviewer.events().confLoaded = true;
+        console.log("finished");
 
     };
 
@@ -640,6 +658,7 @@ var configuration = (function () {
         parseXML: _parseXML,
         load: _load,
         getThemes: function () { return _themes; },
+        getDefaultBaseLayer: function () { return _defaultBaseLayer; },
         getProxy: function () { return _proxy; },
         getCrossorigin: function () { return _crossorigin; },
         getCaptureCoordinates: function () { return _captureCoordinates; },
