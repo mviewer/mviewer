@@ -1,0 +1,76 @@
+{{#features}}
+	<li class="item" style="width:238px;">
+		<h3 class="title-feature">{{title}}</h3>
+        {{#lien_image}}
+			<img src="{{lien_image}}" class="img-responsive" />
+        {{/lien_image}}
+		<p class="text-feature">
+			{{#datation}}
+				<span style="font-family:'roboto_bold'"> Datation :</span> {{datation}}<br/>
+			{{/datation}}
+			<span style="font-family:'roboto_bold'"> Commune : </span>{{commune}}<br/>			
+			<span style="font-family:'roboto_bold'"> Localisation :</span> {{adresse}} {{lieudit}} {{commune}}<br/>
+			{{#murs}}
+				<span style="font-family:'roboto_bold'"> Materiaux murs:</span> {{murs}}<br/>
+			{{/murs}}
+			{{#toit}}
+				<span style="font-family:'roboto_bold'">Toiture  :</span> {{toit}}<br/>
+			{{/toit}}
+			<div id="{{search_id}}"><div>
+			
+        </p>
+	</li>
+{{/features}}
+
+<style>
+	.title-feature {
+		color: #BA88A4;
+		font-family:"roboto_bold";
+		font-size:16px;
+		margin-bottom:1%;
+		line-height:1;
+	}
+	.subtitle-feature {
+		color: #BA88A4;
+		font-family:"roboto_bold";
+		font-size:14px;
+		margin-top:7%;
+		line-height:1;
+	}
+	.text-feature{
+		font-family:"roboto_regular";
+		color:#555;
+		font-size:13px;
+		margin-top:10%;
+	}
+	
+	.but_link{
+	    padding:5px 0 5px 0;
+	    font-size:14px;
+	    font-family:"roboto_bold";
+	   	background:#BA88A4;
+	    color:#fff;
+	    width:150px;
+	    border:1px solid #69003f;
+	    margin-left: 10%;
+	}
+	.but_link:hover{
+	    background:#69003f;
+	    border:1px solid #69003f;
+	}
+	.but_link p{
+	  margin: 0;
+	  text-align:center;
+	  color:#fff;
+	} 
+	.but_link a{
+	  color: #fff;
+	}
+	.but_link a:hover{
+	  color:#fff;
+	}
+	.but_link a:focus{
+	  color:#fff; 
+	}
+
+</style>

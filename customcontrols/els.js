@@ -5,9 +5,9 @@ mviewer.customControls.els = (function() {
     var _idlayer = 'els';
 
     var _updateLayer = function() {
-        var values = $("#els_search_queries").tagsinput('items');
+        var values = $("#els_search_queries").tagsinput('items') || [];
         mviewer.customLayers.els.filter = values;
-        mviewer.customLayers.els.layer.getSource().getSource().clear(true);
+        mviewer.customLayers.els.layer.getSource().clear(true);
     };
 
 
@@ -19,22 +19,35 @@ mviewer.customControls.els = (function() {
 
         init: function() {
             // mandatory - code executed when panel is opened
-            $("#els_search_queries").tagsinput({
-                tagClass: 'label label-mv'
+            $.getJSON("demo/collection.json", function(data){
+                $("#els_search_queries").tagsinput({
+                    typeahead: {
+                        source: data
+                    },
+                    freeInput: false,
+                    tagClass: 'label label-mv'
+                });
+                $("#els_search_queries").on('itemAdded', function(event) {
+                    _updateLayer();
+                    setTimeout(function(){
+                        $(">input[type=text]",".bootstrap-tagsinput").val("");
+                    }, 1);
+                });
+                $("#els_search_queries").on('itemRemoved', function(event) {
+                    _updateLayer();
+                });
+
             });
-            $("#els_search_queries").on('itemAdded', function(event) {
-                _updateLayer();
-            });
-            $("#els_search_queries").on('itemRemoved', function(event) {
-                _updateLayer();
-            });
+            //mviewer.getMap().on('moveend', _updateLayer);
+
+
 
         },
 
-        updateLayer: function(value) {
-            if (value.length > 2) {
-                $("#els_search_queries").tagsinput('add', value);
-                $("#els_input").val("");
+        updateLayer: function(ctrl) {
+            if (ctrl.value.length > 2) {
+                $("#els_search_queries").tagsinput('add', ctrl.value);
+                $(ctrl).val("");
             }
 
         },
@@ -42,6 +55,7 @@ mviewer.customControls.els = (function() {
         destroy: function() {
             // mandatory - code executed when panel is closed
             $("#els_search_queries").tagsinput('removeAll');
+            //mviewer.getMap().on('moveend', _updateLayer);
         }
     };
 

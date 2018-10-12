@@ -2,6 +2,7 @@
     mviewer.customLayers.els = {};
     var els = mviewer.customLayers.els;
     els.filter = false;
+    els.mode = "AND"; /*AND | OR*/
     var els2GeoJSON = function(data) {
         var geojson = {
             "type": "FeatureCollection",
@@ -10,7 +11,7 @@
         var getProperties = function(source) {
             var properties = {};
             for (var propertyName in source) {
-                if (!["geometry", "@timestamp", "@version", "search_id"].includes(propertyName)) {
+                if (!["geometry", "@timestamp", "@version"].includes(propertyName)) {
                     properties[propertyName] = source[propertyName];
                 }
             }
@@ -18,6 +19,7 @@
         };
         data.hits.hits.forEach(function(item) {
             var properties = getProperties(item._source);
+            properties.type = item._type;
             var feature = {
                 "type": "Feature",
                 "id": item._id,
@@ -48,13 +50,14 @@
             });
             filter = {
                 "bool": {
-                    "should": matchQueries
+                    "should": matchQueries,
+                    "minimum_should_match": (els.mode === "AND")? matchQueries.length: 1
                 }
             };
         }
         var proj = projection.getCode();
         var e = ol.proj.transformExtent(extent, proj, 'EPSG:4326');
-        var url = "http://ows.region-bretagne.fr/kartenn/_search?type=etude_patrimoine_simple";
+        var url = "http://ows.region-bretagne.fr/kartenn/_search?";
         var geofilter = JSON.stringify({
             "from": 0,
             "size": 5000,
@@ -67,6 +70,11 @@
                                 "should": [{
                                     "type": {
                                         "value": "etude_patrimoine_simple"
+                                    }
+                                },
+                                {
+                                    "type": {
+                                        "value": "recensement_patrimoine"
                                     }
                                 }]
                             }
@@ -114,80 +122,44 @@
     els.legend = {
         items: []
     };
-    var uniqueStyle = [
-        new ol.style.Style({
-            image: new ol.style.Circle({
-                radius: 10,
-                fill: new ol.style.Fill({
-                    color: 'rgba(231, 76, 60, 0.7)'
-                })
-            })
-        }),
-        new ol.style.Style({
-            image: new ol.style.Circle({
-                radius: 8,
-                fill: new ol.style.Fill({
-                    color: 'rgba(236, 240, 241,7.0)'
-                })
-            })
-        })
-    ];
-    els.legend.items.push({
-        styles: uniqueStyle,
-        label: "Elément patrimonial",
-        geometry: "Point"
-    });
-    var manyStyle = function(radius, radius2, size) {
-        return [
-            new ol.style.Style({
-                image: new ol.style.Circle({
-                    radius: radius,
-                    fill: new ol.style.Fill({
-                        color: 'rgba(236, 240, 241,0.7)'
-                    })
-                }),
-                stroke: new ol.style.Stroke({
-                    color: 'red',
-                    width: 3
-                }),
-                fill: new ol.style.Fill({
-                    color: 'rgba(0, 0, 255, 0.1)'
-                })
+    var styleEtude = [new ol.style.Style({
+        image: new ol.style.Circle({
+            fill: new ol.style.Fill({
+                color: 'rgba(255, 118, 117,1.0)'
             }),
-            new ol.style.Style({
-                image: new ol.style.Circle({
-                    radius: radius2,
-                    fill: new ol.style.Fill({
-                        color: 'rgba(231, 76, 60, 0.7)'
-                    })
-                }),
-                text: new ol.style.Text({
-                    font: '12px roboto_regular, Arial, Sans-serif',
-                    text: size.toString(),
-                    fill: new ol.style.Fill({
-                        color: '#fff'
-                    })
-                })
-            })
-        ];
-    };
-    els.legend.items.push({
-        styles: manyStyle(10, 10, 7),
-        label: "Eléments patrimoniaux",
-        geometry: "Point"
-    });
+            stroke: new ol.style.Stroke({
+                color: "#ffffff",
+                width: 4
+            }),
+            radius: 9
+        })
+    })];
 
-    var clusterStyle = function(feature) {
-        var size = feature.get('features').length;
-        var max_radius = 40;
-        var max_value = 500;
-        var radius = 10 + Math.sqrt(size) * (max_radius / Math.sqrt(max_value));
-        var radius2 = radius * 80 / 100;
-        if (size == 1) {
-            return uniqueStyle;
-        } else {
-            return manyStyle(radius, radius2, size);
+    var styleRecensement = [new ol.style.Style({
+        image: new ol.style.Circle({
+            fill: new ol.style.Fill({
+                color: 'rgba(99, 110, 114,1.0)'
+            }),
+            stroke: new ol.style.Stroke({
+                color: "#ffffff",
+                width: 4
+            }),
+            radius: 9
+        })
+    })];
+
+    els.legend.items.push({styles:styleEtude, label: "Etudes", geometry: "Point"});
+    els.legend.items.push({styles:styleRecensement, label: "Recensement", geometry: "Point"});
+
+
+    var typeStyle = function(feature) {
+        var stl;
+        if(feature.get('type') === 'recensement_patrimoine') {
+            stl = styleRecensement;
+        } else if(feature.get('type') === 'etude_patrimoine_simple') {
+            stl = styleEtude;
         }
+        return stl;
     };
 
     var vectorSource = new ol.source.Vector({
@@ -195,26 +167,26 @@
         strategy: ol.loadingstrategy.bbox
     });
 
-
-    var clusterSource = new ol.source.Cluster({
-        distance: 50,
-        strategy: ol.loadingstrategy.bbox,
-        source: vectorSource
-    });
     mviewer.customLayers.els.layer = new ol.layer.Vector({
-        source: clusterSource,
-        style: clusterStyle
+        source: vectorSource,
+        style: typeStyle
     });
-    els.handle = function(clusters, views) {
-        if (clusters.length > 0 && clusters[0].properties.features) {
-            var features = clusters[0].properties.features;
-            var elements = [];
-            var l = mviewer.getLayer("els");
-            features.forEach(function(feature, i) {
-                elements.push({
-                    properties: feature.getProperties()
-                });
+    els.handle = function(features, views) {
+        var extraTemplate = ['<h4>{{titre_courant}}</h4>',
+            '<p>{{operation}}</p>',
+            '{{#photo_1}}<img src="{{photo_1}}" class="img-responsive" style="margin-top:5%;" />{{/photo_1}}',
+            '{{#lien_image}}<img src="{{lien_image}}" class="img-responsive" style="margin-top:5%;" />{{/lien_image}}'
+        ].join(" ");
+        var extendHTML = function (wfsfeatures) {
+            wfsfeatures.forEach(function (wfsfeature, i) {
+                var html = Mustache.render(extraTemplate, wfsfeature.properties);
+                $(document.getElementById(wfsfeature.properties.search_id)).append(html);
             });
+
+        };
+
+        var renderHTML = function (elements) {
+            var l = mviewer.getLayer("els");
             var html;
             if (l.template) {
                 html = info.templateHTMLContent(elements, l);
@@ -232,7 +204,44 @@
                 "theme_icon": l.icon,
                 "html": html
             });
+        };
+        // Get additional infos via wfs for each feature
+        var search_ids = [];
+        var featuretypes = [];
+        features.forEach(function(feature, i) {
+            if (feature.properties && feature.properties.search_id) {
+                search_ids.push("'" + feature.properties.search_id + "'");
+                if (featuretypes.indexOf(feature.properties.type) === -1) {
+                    featuretypes.push(feature.properties.type);
+                }
+            }
+        });
+        if (search_ids.length > 0) {
+            var wfs_url = 'http://ows.region-bretagne.fr/geoserver/rb/wfs';
+            var wfs_params = {
+                "REQUEST": "getFeature",
+                "TYPENAME": featuretypes.join(","),
+                "VERSION": "2.0.0",
+                "SERVICE": "WFS",
+                "outputFormat": "application/json",
+                "CQL_FILTER" : "search_id IN (" + search_ids.join(",") + ")"
+            }
+
+            $.ajax({
+                type: "GET",
+                async:true,
+                url: wfs_url,
+                data: wfs_params,
+                dataType: "json",
+                success: function (data) {
+                    extendHTML(data.features);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(thrownError);
+                }
+            });
         }
+        renderHTML(features);
 
     };
 }

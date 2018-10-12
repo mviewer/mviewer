@@ -30,6 +30,7 @@
             attribution="Source: Région Bretagne"
             metadata=""
             metadata-csw="">
+            <template url="demo/patrimoine.mst" />
         </layer>
     </theme>
 </themes>

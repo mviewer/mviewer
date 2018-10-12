@@ -10,9 +10,25 @@
             .bootstrap-tagsinput {
                 min-width: 100%;
             }
+
+            .bootstrap-tagsinput input[type="text"] {
+                min-width: inherit;
+            }
+
+            .dropdown-menu {
+                width: 80%;
+                position:static;
+            }
+
+
+            .dropdown-menu li.active>a, .dropdown-menu li.active>a:focus, .dropdown-menu li.active>a:hover {
+                background-color: #2e5367;
+                color: #fff!important;
+            }
+
         </style>
             <label for="els_search_queries">Rechercher des éléments patrimoniaux :</label>
-            <input type="text" placeholder="ex: bateau" value="" data-role="tagsinput" id="els_search_queries" class="form-control"/>
+            <input type="text" placeholder="Dénomination, datation, matériaux" value="" data-role="tagsinput" id="els_search_queries" class="form-control"/>
         </div>
     </div>
 </div>

@@ -1247,7 +1247,7 @@ a:focus{
 }
 
 #layers-container-box .active {
-    min-width: 280px;
+    /*min-width: 280px;*/
 }
 
 #layers-container .mv-layer-options a{
