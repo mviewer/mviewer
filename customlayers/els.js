@@ -19,7 +19,14 @@
         };
         data.hits.hits.forEach(function(item) {
             var properties = getProperties(item._source);
+            var prop = {};
+            if (item._type === "etude_patrimoine_simple") {
+                prop.source = "dossiers d'études complets";
+            } else {
+                prop.source = "recensement avant étude";
+            }
             properties.type = item._type;
+            properties.source = prop.source;
             var feature = {
                 "type": "Feature",
                 "id": item._id,
@@ -172,10 +179,43 @@
         style: typeStyle
     });
     els.handle = function(features, views) {
-        var extraTemplate = ['<h4>{{titre_courant}}</h4>',
-            '<p>{{operation}}</p>',
-            '{{#photo_1}}<img src="{{photo_1}}" class="img-responsive" style="margin-top:5%;" />{{/photo_1}}',
-            '{{#lien_image}}<img src="{{lien_image}}" class="img-responsive" style="margin-top:5%;" />{{/lien_image}}'
+        var extraTemplate = [
+            '{{#lien_image}}',
+            '<img src="{{lien_image}}" class="img-responsive" />',
+            '{{/lien_image}}',
+            '{{#photo_1}}',
+            '<img src="{{photo_1}}" class="img-responsive" />',
+            '{{/photo_1}}',
+            '<p class="text-feature">',
+            '{{#datation_principale}}',
+            '<span > Datation :</span> {{datation_principale}}<br/>',
+            '{{/datation_principale}}',
+            '<span > Commune : </span>{{commune}}<br/>',
+            '{{#localisation}}',
+            '<span> Localisation :</span> {{localisation}}<br/>',
+            '{{/localisation}}',
+            '{{^localisation}}',
+            '<span > Localisation :</span> {{adresse}} {{lieudit}} {{commune}}<br/>',
+            '{{/localisation}}',
+            '{{#cadre_etude}}',
+            '<span > Enquête(s) :</span> {{cadre_etude}}<br/>',
+            '{{/cadre_etude}}',
+            '{{#date_bordereau}}',
+            '<span > Date(s) de bordereau  :</span> {{date_bordereau}}<br/>',
+            '{{/date_bordereau}}',
+            '{{#lien_dossier}}',
+            '<div class="but_link">',
+            '<p> <a href="{{lien_dossier}}" target=_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Lien vers dossier</a>',
+            '</p>',
+            '</div>',
+            '{{/lien_dossier}}',
+            '{{#url}}',
+            '<div class="but_link">',
+            '<p> <a href="{{url}}" target=_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Lien vers notice</a>',
+            '</p>',
+            '</div>',
+            '{{/url}}',
+            '</p>'
         ].join(" ");
         var extendHTML = function (wfsfeatures) {
             wfsfeatures.forEach(function (wfsfeature, i) {

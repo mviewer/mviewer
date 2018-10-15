@@ -1,23 +1,22 @@
 {{#features}}
 	<li class="item" style="width:238px;">
 		<h3 class="title-feature">{{title}}</h3>
-        {{#lien_image}}
-			<img src="{{lien_image}}" class="img-responsive" />
-        {{/lien_image}}
+		<p class="subtitle-feature" >Source: {{source}}</p>
 		<p class="text-feature">
+            {{#denomination}}
+                <span> Dénomination :</span> {{denomination}}<br/>
+            {{/denomination}}
 			{{#datation}}
-				<span style="font-family:'roboto_bold'"> Datation :</span> {{datation}}<br/>
+				<span> Datation :</span> {{datation}}<br/>
 			{{/datation}}
-			<span style="font-family:'roboto_bold'"> Commune : </span>{{commune}}<br/>			
-			<span style="font-family:'roboto_bold'"> Localisation :</span> {{adresse}} {{lieudit}} {{commune}}<br/>
 			{{#murs}}
-				<span style="font-family:'roboto_bold'"> Materiaux murs:</span> {{murs}}<br/>
+				<span> Materiaux murs:</span> {{murs}}<br/>
 			{{/murs}}
 			{{#toit}}
-				<span style="font-family:'roboto_bold'">Toiture  :</span> {{toit}}<br/>
+				<span> Matériaux toiture  :</span> {{toit}}<br/>
 			{{/toit}}
-			<div id="{{search_id}}"><div>
-			
+			<div class="wfs_complements" id="{{search_id}}"><div>
+
         </p>
 	</li>
 {{/features}}
@@ -43,8 +42,10 @@
 		font-size:13px;
 		margin-top:10%;
 	}
-	
-	.but_link{
+	.text-feature span{
+		font-family:"roboto_bold";
+	}
+    .but_link{
 	    padding:5px 0 5px 0;
 	    font-size:14px;
 	    font-family:"roboto_bold";
@@ -62,7 +63,7 @@
 	  margin: 0;
 	  text-align:center;
 	  color:#fff;
-	} 
+	}
 	.but_link a{
 	  color: #fff;
 	}
@@ -70,7 +71,8 @@
 	  color:#fff;
 	}
 	.but_link a:focus{
-	  color:#fff; 
+	  color:#fff;
 	}
+
 
 </style>
