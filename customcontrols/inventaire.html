@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="row">
+        <div class="form-group col-md-10 col-md-offset-1 form-group">
+            <style>
+            .label-mv {
+                background-color: #2e5367;
+                font-size: 125%;
+                padding: 2px 2px 2px 5px;
+            }
+            .bootstrap-tagsinput {
+                min-width: 100%;
+            }
+
+            .bootstrap-tagsinput input[type="text"] {
+                min-width: inherit;
+            }
+
+            .dropdown-menu {
+                width: 80%;
+                position:static;
+            }
+
+
+            .dropdown-menu li.active>a, .dropdown-menu li.active>a:focus, .dropdown-menu li.active>a:hover {
+                background-color: #2e5367;
+                color: #fff!important;
+            }
+
+            #inventaire_search_message {
+                padding-top: 5px;
+                padding-left: 5px;
+            }
+
+        </style>
+            <label for="inventaire_search_queries">Rechercher des éléments patrimoniaux :</label>
+            <input type="text" placeholder="Dénomination, datation, matériaux" value="" data-role="tagsinput" id="inventaire_search_queries" class="form-control"/>
+        </div>
+    </div>
+    <span id="inventaire_search_message"><i></i></span>
+</div>
