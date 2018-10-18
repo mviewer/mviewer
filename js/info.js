@@ -301,7 +301,7 @@ var info = (function () {
                         views[panel].layers.push({
                             "panel": panel,
                             "id": id,
-                            "firstlayer": (id === 1),
+                            "firstlayer": false,
                             "manyfeatures": (features.length > 1),
                             "nbfeatures": features.length,
                             "name": name,
@@ -314,6 +314,7 @@ var info = (function () {
 
                 $.each(views, function (panel, view) {
                     if (views[panel].layers.length > 0){
+                        views[panel].layers[0].firstlayer=true;
                         var template = Mustache.render(mviewer.templates.featureInfo[_panelsTemplate[panel]], view);
                         $("#"+panel+" .popup-content").append(template);
                         //TODO reorder tabs like in theme panel
