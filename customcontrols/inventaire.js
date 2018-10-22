@@ -6,6 +6,8 @@ mviewer.customControls.inventaire = (function() {
 
     var _zoomlevel = false;
 
+    var defaultValue = false;
+
     var _updateLayer = function() {
         var values = $("#inventaire_search_queries").tagsinput('items') || [];
         mviewer.customLayers.inventaire.setFilter(values);
@@ -29,6 +31,7 @@ mviewer.customControls.inventaire = (function() {
 
         init: function() {
             // mandatory - code executed when panel is opened
+            var defaultValue = "manoir";
             $.getJSON("demo/collection.json", function(data){
                 $("#inventaire_search_queries").tagsinput({
                     typeahead: {
@@ -46,6 +49,9 @@ mviewer.customControls.inventaire = (function() {
                 $("#inventaire_search_queries").on('itemRemoved', function(event) {
                     _updateLayer();
                 });
+                if (defaultValue) {
+                    $("#inventaire_search_queries").tagsinput("add", "manoir");
+                }
 
             });
             mviewer.getMap().on('moveend', _mapChanged);
