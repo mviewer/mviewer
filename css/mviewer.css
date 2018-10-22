@@ -1616,4 +1616,35 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
 .vector-legend {
     padding-left: 10px;
 }
+/*accordion template*/
+#right-panel .panel-collapse .carousel-inner  {
+    padding-left: 0px;
+    padding-right: 0px;
+    width: 100%;
+}
+
+#right-panel .panel-collapse .carousel-inner .item {
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 100%;
+}
+
+#right-panel .panel-collapse .panel-body  {
+    padding: 0;
+}
+
+#right-panel .panel-collapse .left.carousel-control span, #right-panel .panel-collapse .right.carousel-control span  {
+    border-radius: 5px;
+    background: #fff;
+}
+
+#accordion.panel-group .panel+.panel {
+    margin-top: 0;
+}
+/* to scroll in accordion */
+
+#accordion .panel-collapse.collapse.in{
+  overflow-y: auto;
+  max-height:600px;
+}
 

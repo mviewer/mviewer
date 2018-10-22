@@ -235,10 +235,10 @@ mviewer.customLayers.inventaire = (function () {
         var features = clusters[0].properties.features;
             var extraTemplate = [
                 '{{#lien_image}}',
-                '<img src="{{lien_image}}" class="img-responsive" />',
+                '<img src="{{lien_image}}" class="img-responsive center-block" />',
                 '{{/lien_image}}',
                 '{{#photo_1}}',
-                '<img src="{{photo_1}}" class="img-responsive" />',
+                '<img src="{{photo_1}}" class="img-responsive center-block" />',
                 '{{/photo_1}}',
                 '<p class="text-feature">',
                 '{{#datation_principale}}',
@@ -259,7 +259,7 @@ mviewer.customLayers.inventaire = (function () {
                 '{{/date_bordereau}}',
                 '{{#lien_dossier}}',
                 '<div class="but_link">',
-                '<p> <a href="{{lien_dossier}}" target=_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Lien vers dossier</a>',
+                '<p> <a href="{{lien_dossier}}" target=_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Dossier complet</a>',
                 '</p>',
                 '</div>',
                 '{{/lien_dossier}}',
