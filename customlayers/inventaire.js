@@ -1,10 +1,12 @@
 mviewer.customLayers.inventaire = (function () {
 
     _filter = false;
+    _ready = false;
     _mode = "AND"; /*AND | OR*/
     _maxfeatures = 5000;
     _maxrequestedfeatures = 50;
     _featurescount = null;
+    _searchinfields = [ "denomination", "datation", "murs", "toit" ];
 
     var _els2GeoJSON = function(data) {
         var geojson = {
@@ -56,6 +58,15 @@ mviewer.customLayers.inventaire = (function () {
                         }
                     }
                 };
+                if (_searchinfields.length > 0) {
+                    matchQuery = {
+                        "multi_match" : {
+                            "query":    text,
+                            "operator": "and",
+                            "fields": _searchinfields
+                        }
+                    };
+                }
                 matchQueries.push(matchQuery);
             });
             filter = {
@@ -70,7 +81,7 @@ mviewer.customLayers.inventaire = (function () {
         var url = "http://ows.region-bretagne.fr/kartenn/_search?";
         var geofilter = JSON.stringify({
             "from": 0,
-            "size": _maxfeatures,
+            "size": (_ready)? _maxfeatures: 10,
             "query": {
                 "bool": {
                     "must": [
@@ -351,7 +362,7 @@ mviewer.customLayers.inventaire = (function () {
         handle: _handle,
         legend: _legend,
         mode: _mode,
-        setFilter: function (val) { _filter = val; },
+        setFilter: function (val) { _filter = val; _ready = true; },
         getFilter: function () { return _filter; }
     };
 

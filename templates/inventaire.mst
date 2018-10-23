@@ -1,6 +1,7 @@
 {{#features}}
 	<li class="inventaire item" style="width:100%;">
 		<h3 class="title-feature">{{title}}</h3>
+        <p class="source" ><i>Source: <strong>{{source}}</strong></i></p>
 		<p class="text-feature">
             {{#denomination}}
                 <span> Dénomination :</span> {{denomination}}<br/>
@@ -15,7 +16,6 @@
 				<span> Matériaux toiture  :</span> {{toit}}<br/>
 			{{/toit}}
 			<div class="wfs_complements" id="{{search_id}}" style="padding-left:0px;"><div>
-            <p class="source" >Source: {{source}}</p>
 
         </p>
 	</li>

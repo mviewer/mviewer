@@ -6,12 +6,17 @@ mviewer.customControls.inventaire = (function() {
 
     var _zoomlevel = false;
 
-    var defaultValue = false;
+    var _defaultValue = "maison,18e siècle,ardoise";
+
+    var _lastValues = false;
+
+    var _collection = false;
 
     var _updateLayer = function() {
         var values = $("#inventaire_search_queries").tagsinput('items') || [];
         mviewer.customLayers.inventaire.setFilter(values);
-        mviewer.customLayers.inventaire.layer.getSource().getSource().clear(true);
+        mviewer.customLayers.inventaire.layer.getSource().getSource().clear(false);
+        _lastValues = values.join(",");
     };
 
     var _mapChanged = function (e) {
@@ -20,6 +25,34 @@ mviewer.customControls.inventaire = (function() {
             _updateLayer();
         }
         _zoomlevel = newZoomlevel;
+    };
+
+    var _initForm = function () {
+        $("#inventaire_search_queries").tagsinput({
+            typeahead: {
+                source: _collection
+            },
+            freeInput: false,
+            tagClass: 'label label-mv'
+        });
+        if (_defaultValue && !_lastValues) {
+            $("#inventaire_search_queries").tagsinput("add", _defaultValue);
+            _defaultValue = false;
+            _updateLayer();
+        } else if (_lastValues) {
+            $("#inventaire_search_queries").tagsinput("add", _lastValues);
+            _defaultValue = false;
+            _updateLayer();
+        }
+        $("#inventaire_search_queries").on('itemAdded', function(event) {
+            _updateLayer();
+            setTimeout(function(){
+                $(">input[type=text]",".bootstrap-tagsinput").val("");
+            }, 1);
+        });
+        $("#inventaire_search_queries").on('itemRemoved', function(event) {
+            _updateLayer();
+        });
     };
 
 
@@ -31,40 +64,16 @@ mviewer.customControls.inventaire = (function() {
 
         init: function() {
             // mandatory - code executed when panel is opened
-            var defaultValue = "manoir";
-            $.getJSON("demo/collection.json", function(data){
-                $("#inventaire_search_queries").tagsinput({
-                    typeahead: {
-                        source: data
-                    },
-                    freeInput: false,
-                    tagClass: 'label label-mv'
+            if (!_collection) {
+                $.getJSON("demo/collection.json", function(data){
+                    _collection = data;
+                    _initForm();
                 });
-                $("#inventaire_search_queries").on('itemAdded', function(event) {
-                    _updateLayer();
-                    setTimeout(function(){
-                        $(">input[type=text]",".bootstrap-tagsinput").val("");
-                    }, 1);
-                });
-                $("#inventaire_search_queries").on('itemRemoved', function(event) {
-                    _updateLayer();
-                });
-                if (defaultValue) {
-                    $("#inventaire_search_queries").tagsinput("add", "manoir");
-                }
-
-            });
+            } else {
+                _initForm();
+            }
             mviewer.getMap().on('moveend', _mapChanged);
 
-
-
-        },
-
-        updateLayer: function(ctrl) {
-            if (ctrl.value.length > 2) {
-                $("#inventaire_search_queries").tagsinput('add', ctrl.value);
-                $(ctrl).val("");
-            }
 
         },
 
