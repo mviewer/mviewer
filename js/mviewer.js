@@ -2039,10 +2039,10 @@ mviewer = (function () {
             $(el).closest("li").find(".mv-layer-options").slideToggle();
             //hack slider js
             $(el).closest("li").find(".mv-slider-timer").slider('relayout');
-            if ($(el).find("span").hasClass("glyphicon glyphicon-plus")) {
-                $(el).find("span").removeClass("glyphicon glyphicon-plus").addClass("glyphicon glyphicon-minus");
+            if ($(el).find(".layerdisplay-title span").hasClass("glyphicon glyphicon-plus")) {
+                $(el).find(".layerdisplay-title span").removeClass("glyphicon glyphicon-plus").addClass("glyphicon glyphicon-minus");
             } else {
-                $(el).find("span").removeClass("glyphicon glyphicon-minus").addClass("glyphicon glyphicon-plus");
+                $(el).find(".layerdisplay-title span").removeClass("glyphicon glyphicon-minus").addClass("glyphicon glyphicon-plus");
             }
         },
 
