@@ -2072,6 +2072,7 @@ mviewer = (function () {
                 _source.getParams()['STYLES'] = style;
                 _layerDefinition.style = style;
             }
+            _source.updateParams({"dc": new Date().valueOf()});
             _source.changed();
             var styleLabel = $(selectCtrl).find("option[value='"+styleBase+"'], option[value='"+styleRef+"']").attr("label");
             $('.mv-layer-details[data-layerid="'+layerid+'"] .layerdisplay-subtitle .selected-sld span').text(styleLabel);
