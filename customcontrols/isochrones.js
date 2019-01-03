@@ -42,10 +42,10 @@ mviewer.customControls.isochrones = (function() {
                 $(item).css("background-color", $(item).attr("data-fill"));
                 $(item).css("border", ["solid", $(item).attr("data-stroke"), "2px"].join (" "));
             });
-            info.disable();
         },
 
         getXY: function () {
+              info.disable();
               _draw = new ol.interaction.Draw({
                 type: 'Point'
               });
@@ -53,6 +53,7 @@ mviewer.customControls.isochrones = (function() {
                  _xy = ol.proj.transform(event.feature.getGeometry().getCoordinates(),'EPSG:3857', 'EPSG:4326');
                  mviewer.getMap().removeInteraction(_draw);
                  mviewer.showLocation('EPSG:4326', _xy[0], _xy[1]);
+                 info.enable();
               });
               mviewer.getMap().addInteraction(_draw);
 
@@ -120,7 +121,6 @@ mviewer.customControls.isochrones = (function() {
             _xy = null;
             mviewer.hideLocation();
             mviewer.customLayers.isochrones.layer.getSource().clear();
-            info.enable();
         }
      };
 

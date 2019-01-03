@@ -402,7 +402,7 @@ var info = (function () {
         var pixel = _map.getEventPixel(evt.originalEvent);
 
         var feature = _map.forEachFeatureAtPixel(pixel, function (feature, layer) {
-            if (layer.get('mviewerid') === 'featureoverlay') {
+            if (!layer || layer.get('mviewerid') === 'featureoverlay') {
                 return;
             }
             var ret = false;
