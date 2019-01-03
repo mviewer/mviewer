@@ -182,11 +182,16 @@ var measure = (function () {
         var coordinates = geom.getLinearRing(0).getCoordinates();
         var area = Math.abs(_wgs84Sphere.geodesicArea(coordinates));
         var output;
-        if (area > 10000) {
-            output = (Math.round(area / 1000000 * 100) / 100) + ' ' + 'km<sup>2</sup>';
-        } else {
+        if (area <= 0) {
+            output = 0;
+        } else if (area < 10000) {
             output = (Math.round(area * 100) / 100) + ' ' + 'm<sup>2</sup>';
+        } else if (area < 1000000) {
+            output = (Math.round(area / 10000 * 100) / 100) + ' ' + 'ha';
+        } else if (area >= 1000000) {
+            output = (Math.round(area / 1000000 * 100) / 100) + ' ' + 'km<sup>2</sup>';
         }
+
         return output;
     };
 
