@@ -15,10 +15,10 @@ var measure = (function () {
     var _projection;
     /**
      * Property: _wgs84Sphere
-     * @type {ol.Sphere} Sphere used to calculate area an length measures
+     * @type {ol.sphere} Sphere used to calculate area an length measures
      */
 
-    var _wgs84Sphere = new ol.Sphere(6378137);
+    var _wgs84Sphere = ol.sphere;
 
     /**
      * The help measure tooltip message.
@@ -159,7 +159,7 @@ var measure = (function () {
         for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
             var c1 = ol.proj.transform(coordinates[i], _projection, 'EPSG:4326');
             var c2 = ol.proj.transform(coordinates[i + 1], _projection, 'EPSG:4326');
-            length += _wgs84Sphere.haversineDistance(c1, c2);
+            length += _wgs84Sphere.getDistance(c1, c2);
         }
         var output;
         if (length > 100) {
@@ -177,10 +177,7 @@ var measure = (function () {
      */
 
     var _measureFormatArea = function(polygon) {
-        var geom = /** @type {ol.geom.Polygon} */(polygon.clone().transform(
-            _projection, 'EPSG:4326'));
-        var coordinates = geom.getLinearRing(0).getCoordinates();
-        var area = Math.abs(_wgs84Sphere.geodesicArea(coordinates));
+        var area = Math.abs(_wgs84Sphere.getArea(polygon));
         var output;
         if (area <= 0) {
             output = 0;

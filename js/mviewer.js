@@ -20,6 +20,8 @@ mviewer = (function () {
         "+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 " +
         "+units=m +no_defs");
 
+    ol.proj.proj4.register(proj4);
+
     /**
      * Property: _proxy
      * Ajax proxy to use for crossdomain requests
@@ -259,8 +261,8 @@ mviewer = (function () {
             target: 'map',
             controls: [
                 //new ol.control.FullScreen(),
+                new ol.control.Attribution({ collapsible: true }),
                 new ol.control.ScaleLine(),
-                new ol.control.Attribution({label: "\u00a9"}),
                 new ol.control.MousePosition({
                     projection: _projection.getCode(),
                     undefinedHTML: 'y , x',
@@ -728,7 +730,7 @@ mviewer = (function () {
         var l;
         switch (baselayer.type) {
         case "fake":
-            var l = new ol.layer.Layer({});
+            var l = new ol.layer.Base({});
             _backgroundLayers.push(l);
             l.set('name', baselayer.label);
             l.set('blid', baselayer.id);
@@ -746,9 +748,7 @@ mviewer = (function () {
                         'TRANSPARENT': false,
                         'TILED': true
                     },
-                    attributions: [new ol.Attribution({
-                        html: baselayer.attribution
-                    })]
+                    attributions:  baselayer.attribution
                 }),
                 visible: false
             });
@@ -770,7 +770,7 @@ mviewer = (function () {
                         matrixSet: matrixset,
                         style: baselayer.style,
                         format: baselayer.format,
-                        attributions: [new ol.Attribution({html:baselayer.attribution})],
+                        attributions: baselayer.attribution,
                         projection: _projection,
                         tileGrid: new ol.tilegrid.WMTS({
                             origin: ol.extent.getTopLeft(projectionExtent),
@@ -802,7 +802,7 @@ mviewer = (function () {
                             format:baselayer.format,
                             style: baselayer.style
                         });
-                        WMTSOptions.attributions = [new ol.Attribution({html:baselayer.attribution})];
+                        WMTSOptions.attributions = baselayer.attribution;
                         l = new ol.layer.Tile({ source: new ol.source.WMTS(WMTSOptions) });
                         l.set('name', baselayer.label);
                         l.set('blid', baselayer.id);
@@ -824,9 +824,7 @@ mviewer = (function () {
                     url: baselayer.url,
                     crossOrigin: 'anonymous',
                     maxZoom: baselayer.maxzoom || 18,
-                    attributions: [new ol.Attribution({
-                        html: baselayer.attribution
-                    })]
+                    attributions: baselayer.attribution
                 }),
                 visible: false
             });
