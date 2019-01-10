@@ -219,6 +219,7 @@ var configuration = (function () {
                             nbOverLayers += Object.keys(wmc.layers).length;
                             if (processedWMC === wmcs.length) {
                                 mviewer.events().overLayersTotal = nbOverLayers;
+                                mviewer.events().confLoaded = true;
                             }
                             _themes[wmcid].name = wmc.title;
                             mviewer.events().overLayersLoaded += Object.keys(wmc.layers).length;
@@ -656,7 +657,7 @@ var configuration = (function () {
         }
 
          //mviewer.init();
-         if (nbOverLayers === 0) {
+         if (!config.wmc && nbOverLayers === 0) {
              mviewer.init();
              mviewer.setBaseLayer(_defaultBaseLayer);
          }
@@ -664,7 +665,11 @@ var configuration = (function () {
         if (_showhelp_startup) {
             $("#help").modal('show');
         }
-        mviewer.events().confLoaded = true;
+
+        if (!config.wmc) {
+            mviewer.events().confLoaded = true;
+        }
+
         console.log("finished");
 
     };
