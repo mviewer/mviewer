@@ -211,7 +211,7 @@ var configuration = (function () {
                             _themes[wmcid].collapsed = false;
                             _themes[wmcid].id = wmcid;
                             _themes[wmcid].layers = {};
-                            _themes[wmcid].icon = "chevron-circle-right";
+                            _themes[wmcid].icon = "fas fa-chevron-circle-right";
                             console.log ("adding "+wmc.title+" category");
                             _map.getView().fit(wmc.extent, { size: _map.getSize(),
                                 padding: [0, $("#sidebar-wrapper").width(), 0, 0]});
