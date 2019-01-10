@@ -38,6 +38,18 @@ var utils = (function () {
         return test;
     };
 
+    _tests.icons = function (themes) {
+        var test = 1;
+        themes.theme.forEach(function(theme) {
+            if (theme && theme.icon && theme.icon.indexOf(".") === -1) {
+                if (theme.icon.indexOf(" ") === -1) {
+                    test = 0;
+                    console.log("Problème Icone thématique " + theme.name + " : " + theme.icon + "\nnotation dépréciée avec font-awesome 5.6.3. Utiliser une notation du type 'fas fa-" + theme.icon);
+                }
+            }
+        });
+    };
+
     _tests.layerNameDuplicates = function (layers) {
         var test = 1;
         var duplicates = [];
@@ -101,6 +113,10 @@ var utils = (function () {
 
         // test validité sld
         score += _tests.sld(layers);
+        nbtests += 1;
+
+        // test icons fontawesome
+        score += _tests.icons(conf.themes);
         nbtests += 1;
 
         //Résultats tests

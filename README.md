@@ -1,7 +1,7 @@
 MVIEWER
 =============
 
-Visualiseur géographique [Kartenn](http://kartenn.region-bretagne.fr/kartoviz/) basé sur OpenLayers 3.10.0 et Bootstrap 3.3.6
+Visualiseur géographique [Kartenn](http://kartenn.region-bretagne.fr/kartoviz/) basé sur OpenLayers 5.3.0 et Bootstrap 3.3.6
 
 [Démos] (http://kartenn.region-bretagne.fr/kartoviz/demo/)
 
@@ -256,12 +256,14 @@ Nœud enfant décrivant un thème
 
 ##### Prototype 
 
-	<theme name="" id="" collapsed="">
+	<theme name="" id="" collapsed="" icon="">
 
 ##### Attributs
 	
 * **name**: Nom du thème
 * **id**: Identifiant du thème
+* **icon*: "icone à utiliser pour symbolyser la thématique. Les icônes "free" de fontawesome peuvent être utilisée. Il faut alors utiliser la classe de l'icône exemple "fas fa-scholl". https://fontawesome.com/icons/school?style=solid. Une autre possibilité est d'uliser une classe css personnelle mobilisant une image. Il faut alors mettre la classe précédée d'un point comme valeur. exemple ".monicon-svg"
+* **colapsed**:  La thématique est condensée dans le panneau de gauche true ou false - defaut = true. Une seule thématique peut avoir la valeur false.
 
 
 ###### Nœud(s) enfant(s) group

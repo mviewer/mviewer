@@ -246,7 +246,22 @@ var configuration = (function () {
             var doublons = {};
             conf.themes.theme.reverse().forEach(function(theme) {
                 var themeid = theme.id;
-                var icon = "fa-lg fa-" + (theme.icon || "globe");
+                //test icon value
+                // with fontawesome 4.6.3 "school" parameter becomes css classes "fa fa-school"
+                // in fontawesome 5.6.3 fa fa-school is deprecated. Use "fas fa-school" instead.
+                // to preserve compatibility with fontawesome ol notation, it is necessary to test this value.
+                var test = (theme.icon || "fas fa-globe").trim();
+                var icon = "";
+                if (test.indexOf(".") === 0) {
+                    // use custom css class to render svg icon for example
+                    icon = test.substring(1);
+                } else if (test.indexOf(" ") > 0) {
+                    // use 5.6.3 notation eg. "fas fa-school"
+                    icon = test;
+                } else {
+                    // use 4.6.3 notation eg. "fa fa-school". deprecated.
+                    icon = "fa fa-" + test;
+                }
                 _themes[themeid] = {};
                 _themes[themeid].id = themeid;
                 _themes[themeid].icon = icon;

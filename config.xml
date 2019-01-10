@@ -20,7 +20,7 @@
     <searchparameters bbox="false" localities="true" features="false" />   
 
     <themes> 
-    	<theme name="Population"  collapsed="false" id="habitant" icon="group">
+        <theme name="Population"  collapsed="false" id="habitant" icon="fas fa-users">
     		<layer id="rp_struct_pop_geom" name="Densité de population (hab/km²)"  visible="false" tiled="false"
 		            searchable="false" queryable="false"
 	                attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Échelle" attributestylesync="true" attributefilterenabled="true"
@@ -35,7 +35,7 @@
 	                metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=26324529-e0b7-450c-9506-2dcdca608f5f">
 		        </layer>
 		</theme>         
-    	<theme name="Environnement"  collapsed="false" id="environnement" icon="leaf"> 
+        <theme name="Environnement"  collapsed="false" id="environnement" icon="fas fa-leaf">
         	<layer id="reserve_naturelle_regionale" name="Réserves naturelles régionales"  visible="false" tiled="false"
                     searchable="false" queryable="true" fields="axe" aliases="axe"   
                     infoformat="application/vnd.ogc.gml" featurecount="20"
@@ -48,7 +48,7 @@
 		            <template url="templates/global.reserve_naturelle_reg.mst"></template>
 		    </layer>                               
         </theme>
-        <theme name="Éducation"  collapsed="false" id="education" icon="graduation-cap">  
+        <theme name="Éducation"  collapsed="false" id="education" icon="fas fa-graduation-cap">
 		    <layer id="lycee" name="Lycées"  visible="false" tiled="false"
                 searchable="false" queryable="true" fields="axe" aliases="axe" 
                 attributefilter="true" attributefield="secteur_li" 
@@ -62,7 +62,7 @@
                 <template url="templates/global.lycee.mst"></template> 
 		    </layer>                             
         </theme>
-        <theme name="Transports"  collapsed="false" id="transport" icon="bus"> 
+        <theme name="Transports"  collapsed="false" id="transport" icon="fas fa-bus">
         	<group name="Transport ferroviaire" id="grp1" >
                 <layer id="troncon_ferroviaire" name="Lignes ferroviaires"  visible="false" tiled="false"
                     searchable="false" queryable="true" fields="axe" aliases="axe"
@@ -113,7 +113,7 @@
 		        </layer>	
             </group>
         </theme>                    
-        <theme name="Découpages territoriaux"  collapsed="true" id="territoire" icon="globe"> 
+        <theme name="Découpages territoriaux"  collapsed="true" id="territoire" icon="fas fa-globe">
         <layer id="commune" name="Commune" visible="false" queryable="false" 
                 fields="nom_geo" aliases="Nom" 
                 type="customlayer" style="" opacity="1" legendurl="img/legend/commune.png" 

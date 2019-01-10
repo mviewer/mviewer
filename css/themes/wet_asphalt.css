@@ -148,18 +148,6 @@ p.navbar-text.mv-title{
 	color:#555!important;
 }
 
-/* Sub-title layers */
-.selected-sld.fa span{
-  font-style: italic;
-  font-family: 'roboto_regular', Arial, Sans-serif;
-}
-
-/*Filtres*/
-.selected-attribute.fa span{
-  font-style: italic;
-  font-family: 'roboto_regular', Arial, Sans-serif;
-}
-
 /* Opacité */
 .mv-layer-options  .slider-selection{
 	background:#2E5367;	
