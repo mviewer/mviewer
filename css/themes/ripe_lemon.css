@@ -1,564 +1,348 @@
+@charset "UTF-8";
 /******************************************************************************
---------------------------- CSS THEME MVIEWER / RIPE_LEMON -----------------
+--------------------------- CSS THEME MVIEWER / RIPE_LEMON -------------------
 ********************************************************************************/
-
-/* Import des fonts*/
-		@font-face {
-		    font-family: 'roboto_black';
-		    src: url('../font/Roboto/Roboto-Black.ttf');
-		}
-		@font-face {
-		    font-family: 'roboto_bold';
-		    src: url('../font/Roboto/Roboto-Bold.ttf');
-		}
-		@font-face {
-		    font-family: 'roboto_regular';
-		    src: url('../font/Roboto/Roboto-Regular.ttf');
-		}
 /*******************************
-------------- NAVBAR 
+------------- FONTS -----------
 ********************************/
-.navbar-default{
-	border-color:#F7CA18;
-}
+@font-face {
+  font-family: 'roboto_bold';
+  src: url("../font/Roboto/Roboto-Bold.ttf"); }
 
-#mv-navbar{
-	border-color:#F7CA18;
-	background-color: #F7CA18;
-}
+@font-face {
+  font-family: 'roboto_regular';
+  src: url("../font/Roboto/Roboto-Regular.ttf"); }
 
-.navbar-header.fixed-brand{
-	background-color: #F7CA18;
-}
-	
-#mv-navbar a.navbar-brand, .mv-title{
-	color:#ffffff!important;	
-	font-size: 20px;
-}
-
-p.navbar-text.mv-title{
-	font-size: 18px;
-	font-family: 'roboto_bold', Arial, Sans-serif;
-	letter-spacing: 0.5px;
-}
-
-.navbar-default .navbar-toggle{
-	border-color: #ffffff;
-}
-	
-.glyphicon-th-large:before{
-	color:#ffffff;
-}
-
-.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover{
-	background-color:#F7CA18;
-}
-
-.ol-control button {
-  color: #fff!important;
-  background-color: #F7CA18!important;
-}
-
-.ol-control button:focus, .ol-control button:hover {  
-  background-color: #F7CA18;
-}
-
-.gml-item-title {    
-    font-family: 'roboto_regular', Arial, Sans-serif;
-	color:#F7CA18;
-    font-size: 24px;
-}
-
-.popup-content .nav-tabs > li.active > a, .popup-content .nav-tabs > li.active > a:hover, .popup-content .nav-tabs > li.active > a:focus { 
-  border-left: thick solid #F7CA18!important;
-}
-
-#right-panel .mv-header {  
-  background-color: #F7CA18;
-  color: #fff;  
-}
-
+/*******************************
+------------- GENERAL -----------
+********************************/
 .mv-theme {
-  background-color: #F7CA18;
-  color: #fff;
-}
-
-#right-panel .mv-header h5{  
-  font-family: 'roboto_bold', sans-serif;
-  font-size: 13px;
-}
+  background-color: #f7ca18;
+  color: white; }
 
 /*******************************
-------------- MENU
+------------- NAVBAR -----------
 ********************************/
+#mv-navbar {
+  border-color: #f7ca18;
+  background-color: #f7ca18;
+  /* Help button */ }
+  #mv-navbar .navbar-brand {
+    color: white;
+    font-size: 20px; }
+  #mv-navbar .mv-title {
+    color: white;
+    font-size: 18px;
+    font-family: "roboto_bold", Arial, Sans-serif;
+    letter-spacing: 0.5px; }
+  #mv-navbar .navbar-toggle {
+    border-color: #f7ca18;
+    color: white; }
+  #mv-navbar .mv-navbar-btn {
+    color: #f7ca18; }
 
-#sidebar-wrapper a{
-	font-family:'roboto_regular', Arial, Sans-serif;
-}
+/*******************************
+------------- MAP CONTROLS -----
+********************************/
+#map .ol-control button {
+  color: white;
+  background-color: #f7ca18; }
+#map .ol-control button:focus, #map #map .ol-control button:hover {
+  background-color: #f7ca18; }
+#map .ol-scale-line-inner {
+  font-family: "roboto_regular", Arial, Sans-serif; }
 
-#menu>li>a{
-	font-family:'roboto_bold', Arial, Sans-serif;
-}
+/*******************************
+------------- LEFT PANEL -------
+********************************/
+/* thematic title */
+#menu > li > a {
+  font-family: "roboto_bold", Arial, Sans-serif; }
 
-#menu li a:hover{
-	border-left:#F7CA18 0px solid;
-	background:#F7CA18;
-	color: #f8f8f8;
-}
+/* group & layer title */
+#sidebar-wrapper a {
+  font-family: "roboto_regular", Arial, Sans-serif; }
+
+/* all titles hover */
+#menu li a:hover {
+  border-left: #f7ca18 0px solid;
+  background: #f7ca18;
+  color: #f8f8f8; }
+
+/*******************************
+------------- RIGHT PANEL ------
+********************************/
+/* Titre de la couche interrogée active */
+#right-panel .mv-header {
+  background-color: #f7ca18; }
+  #right-panel .mv-header h5 {
+    color: white;
+    font-family: "roboto_bold", Arial, Sans-serif;
+    font-size: 13px;
+    background-color: #f7ca18; }
 
 /*******************************
 ------------- BOTTOM PANEL
 ********************************/
-#bottom-panel .mv-header h5{
-	font-family:'roboto_bold', Arial, Sans-serif;
-	color: #F7CA18;	
-	font-size:13px;
-}
+/* Titre de la couche interrogée active */
+#bottom-panel .mv-header h5 {
+  font-family: "roboto_bold", Arial, Sans-serif;
+  color: #f7ca18;
+  font-size: 13px; }
 
-.fa-chevron-down{
-	color:#fff;
-}
-#bottom-panel-btn .fa-chevron-down { 
-    background: #F7CA18;
-}
+/* Boutton de fermeture */
+#bottom-panel-btn .fa-chevron-down {
+  background: #f7ca18;
+  color: white; }
 
 /*******************************
--------------LEGEND LAYER
-********************************/
-
-#layers-container a {
-	color: #F7CA18;
-	font-family: 'roboto_bold', Arial, Sans-serif;
-}
-
-.form-group label {
-	font-family: 'roboto_bold', Arial, Sans-serif;
-}
-
-#layers-container .mv-layer-options p {
-	font-family: 'roboto_regular', Arial, Sans-serif;
-}
-
-.form-control{
-	font-family: 'roboto_regular', Arial, Sans-serif;
-	color:#555!important;
-}
-
-.mv-layer-options{
-	color:#555!important;
-}
-
-/* Opacité */
-.mv-layer-options  .slider-selection{
-	background:#F7CA18;	
-}
-
-.mv-layer-options .slider-handle {
-    background: #F7CA18;
-}
-
-.mv-layer-options .tooltip-inner{
-	background-color:#F7CA18;
-	border-radius: 4px;
-	font-family: 'roboto_regular', Arial, Sans-serif;
-}
-
-.mv-layer-options .tooltip.top .tooltip-arrow{
-	border-top-color:#F7CA18;
-}
-
-/* Temporalité */ 
-
-.mv-layer-options  .form-group-timer .slider-selection{
-	background:#F7CA18;
-	-webkit-box-shadow:inset 0 0px 0 rgba(0,0,0,0);
-}
-
-.slider.slider-horizontal .slider-tick-label-container{
-	font-family:'roboto_regular', Arial, Sans-serif;
-}
-
-.slider-tick.round.in-selection{
-	background: #F7CA18;
-	background-image: none;
-	-webkit-box-shadow:inset 0 0px 0 rgba(0,0,0,0);
-}
-
-.form-group-timer .slider-tick.round{
-	background:#F7CA18;
-	background-image:none;
-	-webkit-box-shadow:inset 0 0px 0 rgba(0,0,0,0);
-	opacity: 1;
-}
-
-.form-group-timer .tooltip.bottom .tooltip-arrow{
-	border-bottom-color:#F7CA18;
-}
-
-.mv-layer-options  .form-group-timer .slider-track-high{
-	background:#F7CA18;	
-}
-
-#layers-container-box-header {
-  background-color: #F7CA18;
-}
-
-span.mv-time-player-selection {
-    color: #fff;
-    font-size: 13px;
-    background-color: #F7CA18;
-}
-
-/*******************************
-------------- BASEMAP
-********************************/
-
-ul#basemapslist p {
-	font-family: 'roboto_regular', Arial, Sans-serif;
-}
-
-ul#basemapslist  li.active{	    
-    box-shadow: 0px 0px 2px 2px #F7CA18, 0px 0px 3px 3px rgba(200, 200, 200, 0.5);
-}
-
-.ol-scale-line-inner{
-    font-family: 'roboto_regular', Arial, Sans-serif;
-}
-
-/*******************************
-------------- RIGHT PANEL
-********************************/
-
-h3.title{
-	font-family: 'roboto_regular', Arial, Sans-serif;
-	font-size: 24px;
-	color:#F7CA18;
-	}
-	
-h4.title{
-    font-family: 'roboto_regular', Arial, Sans-serif;
-    font-size: 16px;
-    color:#F7CA18;
-}
-
-.info{
-	font-family:'roboto_regular', Arial, Sans-serif;
-	}
-
-/*******************************
-------------- POPOVER
-********************************/
-.popover-content{
-	font-family: 'roboto_regular', sans-serif!important;
-}
-
-.popover-title{
-	font-family: 'roboto_bold', sans-serif!important; 
-}	
-
-/*******************************
-------------- POPUP
+------------- INFO FEATURE------
 ********************************/
 .popup-content {
-    font-family: 'roboto_regular', Arial, Sans-serif;  
-}
+  font-family: "roboto_regular", Arial, Sans-serif; }
 
+.popup-content .nav-tabs > li.active > a,
+.popup-content .nav-tabs > li.active > a:hover,
+.popup-content .nav-tabs > li.active > a:focus {
+  border: 0;
+  border-left: thick solid #f7ca18; }
 
-/*******************************
-------------- BUTTON RIGHT TOOLBAR
-********************************/
-#toolstoolbar.btn-warning{
-	background-color: #F7CA18;
-	border-color: #F7CA18;
-}
-
-#toolstoolbar.btn-warning:hover{
-	background-color: #F7CA18;
-	border-color: #F7CA18;
-}
-
-#alerts-zone .alert.alert-info {
-  background-color: #F7CA18;
-  color: #fff;
-}
-
-#alerts-zone .close {  
-  color: #fff;
-  text-shadow: 0 1px 0 #000;  
-}
-
-.datepicker .active {
-    background-color: #F7CA18!important;
-}
-
-.leftpanel-btn:hover {
-   color: #F7CA18;
-}
-
-/* Buttons tools*/
-#drawtoolsoptions .btn-default.active, #drawtoolsoptions .btn-default:active, #drawtoolsoptions .btn-default.focus, #drawtoolsoptions .btn-default:focus {
-	background-color:#F7CA18;
-	border-color:#F7CA18;
-}
-
-/* Tooltip measure */
-
-.tooltip2 {
-  background: #F7CA18;
-  font-family: 'roboto_regular', Arial, Sans-serif;
-}
-
-.tooltip-measure-static {
-  background-color: #F7CA18;
-  font-family: 'roboto_regular', Arial, Sans-serif;
-}
-
-.tooltip-measure:before,
-.tooltip-measure-static:before {
-  border-top: 6px solid #F7CA18;
-}
-
-.tooltip-measure-static:before {
-  border-top-color: #F7CA18;
-}
-
- /* custom-tooltip-feature */
-.tooltip-feature.tooltip-inner {
-    background-color: rgba(51, 51, 51, 0.95);
-    padding: 8px 8px 8px;
-    color: #fff;
-    font-family: "roboto_regular", Arial, Sans-serif;
-    font-size: 12px;
-    letter-spacing: 1;
-}
-
-.tooltip.right .tooltip-feature.tooltip-arrow {
-    border-right-color: rgba(51, 51, 51, 0.95);
-}
-
-.tooltip.top .tooltip-feature.tooltip-arrow {
-    border-top-color: rgba(51, 51, 51, 0.95);
-}
-
-.tooltip.left .tooltip-feature.tooltip-arrow {
-    border-left-color: rgba(51, 51, 51, 0.95);
-}
-
-.tooltip-feature h5 {
-    margin-bottom: 0;
-}
-
-.tooltip-feature.tooltip.in {
-    opacity: 1;
-}
-
-/* Custom-tooltip-infopanel */
-.mv-tooltip.tooltip-inner {
-    background-color: #F7CA18;
-    padding: 8px 8px 8px;
-    color: #fff;
-    font-family: "roboto_regular", Arial, Sans-serif;
-    font-size: 11px;
-    letter-spacing: 1;
-}
-
-.tooltip.right .mv-tooltip.tooltip-arrow {
-    border-right-color: #F7CA18; 
-}
-
-.tooltip.top .mv-tooltip.tooltip-arrow {
-    border-top-color: #F7CA18; 
-}
-
-.tooltip.left .mv-tooltip.tooltip-arrow {
-    border-left-color: #F7CA18; 
-}
-
-/*******************************
-------------- SEARCH TOOLBAR
-********************************/
-
-/* Searchresult */
-
-#searchresults{
-	font-family:'roboto_regular',Arial, Sans-serif!important;
-	color: #555!important;
-}
-
-ul#searchparameters{
-	font-family: 'roboto_regular',Arial, Sans-serif;
-}
-
-/* Search toolbar */
-
-#searchresults li.list-group-item.disabled {
-	background-color: #F7CA18;
-	border-color: #F7CA18;
-	color: white!important;
-	font-family: 'roboto_bold', Arial, Sans-serif!important;
-}
-
-#searchresults li a:hover {
-	font-family: 'roboto_bold', Arial, Sans-serif!important;
-	color: #F7CA18!important;
-}
-
-.popup-content .nav-tabs .active .glyphicon, .popup-content .nav-tabs .active .fa {
-  color: #F7CA18;  
-}
-
-a:hover{
-	color: #F7CA18;
-}
-
-#searchtool .btn-default{
-	color:#F7CA18;
-}
-
-#parameterspanel .modal-header{
-	color: #333;
-	font-size: 13px;
-	font-family: 'roboto_regular', Arial, Sans-serif!important;
-}
-
-/*******************************
-------------- MAP OPTIONS
-********************************/
-
-/* Partager la carte*/
-#sharepanel{
-	font-family:'roboto_regular', Arial, Sans-serif;
-}
-
-a#permalinklink{
-	font-family:'roboto_regular', Arial, Sans-serif;
-}
-
-.modal-content{
-	font-family: 'roboto_regular', Arial, Sans-serif;
-}
-
-/*******************************
-------------- HELP / DOCUMENTATION
-********************************/
-
-/* Help button */
-
-button.btn.btn-default.navbar-btn.mv-navbar-btn{
-	border-radius:50%;
-	width:34px;
-	height:34px;
-	min-width:34px;
-	border: 0px!important;
-	font-family: 'roboto_black', Arial, Sans-serif;
-	color:#F7CA18;
-	font-size: 15px;
-}
-
-button.btn.btn-default.navbar-btn.mv-navbar-btn:hover{
-	background-color: rgba(255, 255, 255, 0.89);
-}
-
-button.btn.btn-default.navbar-btn.mv-navbar-btn:focus{
-	background-color: rgba(255, 255, 255, 255);
-}
-
-/* Help panel */
-
-#help .modal-content{
-	font-family: 'roboto_regular', Arial, Sans-serif!important;
-	height: auto;
-}
-
-#help .nav-tabs{
-	border-bottom: 2px solid #F7CA18;
-}
-
-#help .nav-tabs>li>a{
-	border-radius: 0px 0px 0 0px!important;
-	color: #555;
-}
-
-#help .nav-tabs>li.active>a{
-	background-color: #F7CA18;
-	border-color: #F7CA18;
-	color: white!important;
-}
-
-#help .nav-tabs>li>a:hover{
-	border-color: #eee #eee #F7CA18!important;
-}
-
-#help a:hover{
-	color: #F7CA18!important;
-}
-
-#help .modal-title{
-    font-size: 25px;
-    font-family: 'roboto_bold', Arial, Sans-serif;
-    color: #F7CA18;
-}
-
-#help .tab-pane h4{
-	font-family: 'roboto_bold', Arial, Sans-serif;
-    color: #F7CA18;
-    font-size: 22px;
-    margin-top: 20px;
-}
-
-#help .tab-pane h5{
-	font-family: 'roboto_bold', Arial, Sans-serif;
-    color: #F7CA18;
-    font-size: 16px;
-    margin-bottom: 2px;
-}
-
-#help .tab-pane h6{
-	font-family: 'roboto_bold', Arial, Sans-serif;
-    color: #F7CA18;
-    font-size: 14px;
-    margin-bottom: 2px;
-}
-
-#help .tab-pane p{
-    color: #555;
-    font-size: 13px;
-    text-align: justify;
-}
-
-#help .tab-pane .visuel_tx{
-    color: #555;
-    font-size: 13px;
-}
-
-#help .tab-pane .visuel{
-    text-align: center;
-}
+.popup-content .nav-tabs .active .glyphicon,
+.popup-content .nav-tabs .active .fa {
+  color: #f7ca18; }
 
 /*******************************
 -------------CSS Fiche info GML
 ********************************/
 .gml-item-field-name {
-	font-family: 'roboto_regular', Arial, Sans-serif;
-}
+  font-family: "roboto_regular", Arial, Sans-serif; }
 
-.gml-item-field-value{
-	font-family: 'roboto_regular', Arial, Sans-serif;
-}
- 
+.gml-item-field-value {
+  font-family: "roboto_regular", Arial, Sans-serif; }
+
+.gml-item-title {
+  font-family: "roboto_regular", Arial, Sans-serif;
+  color: #f7ca18;
+  font-size: 24px; }
+
+/*******************************
+-------------LAYERS PANEL ------
+********************************/
+#layers-container-box-header {
+  background-color: #f7ca18; }
+
+#layers-container {
+  /* Opacité */
+  /* Temporalité */ }
+  #layers-container a {
+    color: #f7ca18;
+    font-family: "roboto_bold", Arial, Sans-serif; }
+  #layers-container .mv-layer-options {
+    color: #555555; }
+  #layers-container .mv-layer-options p {
+    font-family: "roboto_regular", Arial, Sans-serif; }
+  #layers-container .form-group label {
+    font-family: "roboto_bold", Arial, Sans-serif; }
+  #layers-container .form-control {
+    font-family: "roboto_regular", Arial, Sans-serif;
+    color: #555555; }
+  #layers-container .datepicker .active {
+    background-color: #f7ca18; }
+  #layers-container .mv-layer-options .slider-selection {
+    background: #f7ca18; }
+  #layers-container .mv-layer-options .slider-handle {
+    background: #f7ca18; }
+  #layers-container .mv-layer-options .tooltip-inner {
+    background-color: #f7ca18;
+    border-radius: 4px;
+    font-family: "roboto_regular", Arial, Sans-serif; }
+  #layers-container .mv-layer-options .tooltip.top .tooltip-arrow {
+    border-top-color: #f7ca18; }
+  #layers-container .mv-layer-options .form-group-timer .slider-selection {
+    background: #f7ca18;
+    -webkit-box-shadow: inset 0 0px 0 rgba(0, 0, 0, 0); }
+  #layers-container .slider.slider-horizontal .slider-tick-label-container {
+    font-family: "roboto_regular", Arial, Sans-serif; }
+  #layers-container .slider-tick.round.in-selection {
+    background: #f7ca18;
+    background-image: none;
+    -webkit-box-shadow: inset 0 0px 0 rgba(0, 0, 0, 0); }
+  #layers-container .form-group-timer .slider-tick.round {
+    background: #f7ca18;
+    background-image: none;
+    -webkit-box-shadow: inset 0 0px 0 rgba(0, 0, 0, 0);
+    opacity: 1; }
+  #layers-container .form-group-timer .tooltip.bottom .tooltip-arrow {
+    border-bottom-color: #f7ca18; }
+  #layers-container .mv-layer-options .form-group-timer .slider-track-high {
+    background: #f7ca18; }
+  #layers-container span.mv-time-player-selection {
+    color: white;
+    font-size: 13px;
+    background-color: #f7ca18; }
+
+/*******************************
+------------- POPOVER
+********************************/
+body .popover-content {
+  font-family: "roboto_regular", Arial, Sans-serif; }
+
+body .popover-title {
+  font-family: "roboto_bold", Arial, Sans-serif; }
+
+/*******************************
+---------- BASEMAP CONTROL -----
+********************************/
+#basemapslist li.active {
+  box-shadow: 0px 0px 2px 2px #f7ca18, 0px 0px 3px 3px rgba(200, 200, 200, 0.5); }
+
+/*******************************
+--------- BUTTONS RIGHT TOOLBAR
+********************************/
+#toolstoolbar .btn-default.enabled {
+  background-color: #f7ca18;
+  border-color: #f7ca18; }
+
+#drawtoolsoptions .btn-default.active,
+#drawtoolsoptions .btn-default:active,
+#drawtoolsoptions .btn-default:focus,
+#drawtoolsoptions .btn-default.focus {
+  background-color: #f7ca18;
+  border-color: #f7ca18; }
+
+/*******************************
+------------- ALERTS --------
+********************************/
+#alerts-zone .alert.alert-info {
+  background-color: #f7ca18;
+  color: white; }
+
+#alerts-zone .close {
+  color: white;
+  text-shadow: 0 1px 0 #000; }
+
+/*******************************
+------------- TOOLTIPS --------
+********************************/
+.tooltip2 {
+  background: #f7ca18;
+  font-family: "roboto_regular", Arial, Sans-serif; }
+
+.tooltip-measure-static {
+  background-color: #f7ca18;
+  font-family: "roboto_regular", Arial, Sans-serif; }
+
+.tooltip-measure:before,
+.tooltip-measure-static:before {
+  border-top: 6px solid #f7ca18; }
+
+.tooltip-measure-static:before {
+  border-top-color: #f7ca18; }
+
+/* Custom-tooltip-infopanel */
+.mv-tooltip.tooltip-inner {
+  background-color: #f7ca18;
+  padding: 8px 8px 8px;
+  color: white;
+  font-family: "roboto_regular", Arial, Sans-serif;
+  font-size: 11px;
+  letter-spacing: 1; }
+
+.tooltip.right .mv-tooltip.tooltip-arrow {
+  border-right-color: #f7ca18; }
+
+.tooltip.top .mv-tooltip.tooltip-arrow {
+  border-top-color: #f7ca18; }
+
+.tooltip.left .mv-tooltip.tooltip-arrow {
+  border-left-color: #f7ca18; }
+
+/*******************************
+------------- SEARCH TOOLBAR
+********************************/
+#searchtool .btn-default {
+  color: #f7ca18; }
+
+#parameterspanel {
+  font-family: "roboto_regular", Arial, Sans-serif; }
+  #parameterspanel .modal-header {
+    color: #555555;
+    font-size: 13px; }
+
+/* Search results */
+#searchresults {
+  font-family: "roboto_regular", Arial, Sans-serif;
+  color: #555555; }
+  #searchresults li.list-group-item.disabled {
+    background-color: #f7ca18;
+    border-color: #f7ca18;
+    color: white;
+    font-family: "roboto_bold", Arial, Sans-serif; }
+  #searchresults li a:hover {
+    font-family: "roboto_bold", Arial, Sans-serif;
+    color: #f7ca18; }
+
+/* Partager la carte*/
+#sharepanel {
+  font-family: "roboto_regular", Arial, Sans-serif; }
+
+/*******************************
+------------- HELP PANEL -----
+********************************/
+#help .nav-tabs {
+  border-bottom: 2px solid #f7ca18; }
+#help .nav-tabs > li > a {
+  border-radius: 0px 0px 0 0px;
+  color: #555555; }
+#help .nav-tabs > li.active > a {
+  background-color: #f7ca18;
+  border-color: #f7ca18;
+  color: white; }
+#help .nav-tabs > li.active > a:hover {
+  color: #555555; }
+#help .nav-tabs > li > a:hover {
+  border-color: #eeeeee #eeeeee #f7ca18;
+  color: #f7ca18; }
+#help .modal-title {
+  font-size: 25px;
+  font-family: "roboto_bold", Arial, Sans-serif;
+  color: #f7ca18; }
+#help .tab-pane h4 {
+  font-family: "roboto_bold", Arial, Sans-serif;
+  color: #f7ca18;
+  font-size: 22px;
+  margin-top: 20px; }
+#help .tab-pane h5 {
+  font-family: "roboto_bold", Arial, Sans-serif;
+  color: #f7ca18;
+  font-size: 16px;
+  margin-bottom: 2px; }
+#help .tab-pane h6 {
+  font-family: "roboto_bold", Arial, Sans-serif;
+  color: #f7ca18;
+  font-size: 14px;
+  margin-bottom: 2px; }
+#help .tab-pane p {
+  color: #555555;
+  font-size: 13px;
+  text-align: justify; }
+#help .tab-pane .visuel_tx {
+  color: #555555;
+  font-size: 13px; }
+#help .tab-pane .visuel {
+  text-align: center; }
+
 /*******************************
 -------------LOADER INDICATOR
 ********************************/
-.mv-layer-indicator .loader {    
-    border-top: 1.1em solid rgba(3, 46, 70, 0.2);
-    border-right: 1.1em solid rgba(3, 46, 70, 0.2);
-    border-bottom: 1.1em solid rgba(3, 46, 70, 0.2);
-    border-left: 1.1em solid #F7CA18;
-}
+.mv-layer-indicator .loader {
+  border-top: 1.1em solid rgba(3, 46, 70, 0.2);
+  border-right: 1.1em solid rgba(3, 46, 70, 0.2);
+  border-bottom: 1.1em solid rgba(3, 46, 70, 0.2);
+  border-left: 1.1em solid #f7ca18; }
 
-.mv-iframe-indicator .loader {     
-    border-top: 1.1em solid rgba(3, 46, 70, 0.2);
-    border-right: 1.1em solid rgba(3, 46, 70, 0.2);
-    border-bottom: 1.1em solid rgba(3, 46, 70, 0.2);
-    border-left: 1.1em solid #F7CA18;
-}
+.mv-iframe-indicator .loader {
+  border-top: 1.1em solid rgba(3, 46, 70, 0.2);
+  border-right: 1.1em solid rgba(3, 46, 70, 0.2);
+  border-bottom: 1.1em solid rgba(3, 46, 70, 0.2);
+  border-left: 1.1em solid #f7ca18; }

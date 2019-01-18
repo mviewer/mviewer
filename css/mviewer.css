@@ -54,7 +54,7 @@ a:hover{
 
 
 /*******************************
-------------- OPENLAYERS 3 CSS OVERRIDE
+------------- OPENLAYERS CSS OVERRIDE
 ********************************/
 
 .ol-attribution {
@@ -921,9 +921,9 @@ input[type=range].mv-range:focus::-ms-fill-upper {
   color: #ccc;
 }
 
-.popup-content .nav-tabs > li.active > a, .popup-content .nav-tabs > li.active > a:hover, .popup-content .nav-tabs > li.active > a:focus {
+/*.popup-content .nav-tabs > li.active > a, .popup-content .nav-tabs > li.active > a:hover, .popup-content .nav-tabs > li.active > a:focus {
   border: 0;
-}
+}*/
 
 .popup-content .tab-content .tab-pane {
   display: none;
@@ -970,10 +970,10 @@ li.elasticsearch.list-group-item.disabled{
 
 /* Boîte de dialogue paramètre de recherche */ 
 
-#parameterspanel .modal-header{
+/*#parameterspanel .modal-header{
 	color: #333;
 	font-size: 13px;
-}
+}*/
 
 .modal-header{
 	border-bottom:none;
@@ -1135,7 +1135,6 @@ li.mv-nav-item {
 /* Test alignement liste des thémtiques / navbar */
 
 #menu>li>a {
-    font-family: 'roboto_bold', Arial, Sans-serif;
     line-height: 2em;
     display: flex;
     padding-top: 5px;
@@ -1206,33 +1205,6 @@ span.state-icon.far{
   position: absolute;
   cursor: pointer;
 } 
-
-/*******************************
-------------- LEFT PANEL 
-********************************/
-.btn-default:hover{
-	border-color: transparent;
-}
-
-.leftpanel-btn {  
-  position: absolute;
-  bottom: 10px;
-  right: 16px;
-  font-size: large;
-  color: #999;
-}
-
-.leftpanel-btn:hover {  
-   font-size: large;
-}
-
-.leftpanel-btn:before {
-    content: "\f137";
-}
-
-.leftpanel-btn-closed:before {
-    content: "\f138";
-}
 
 
 /*******************************

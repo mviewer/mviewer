@@ -1555,9 +1555,8 @@ mviewer = (function () {
          */
 
         geoloc: function () {
-            if ($("#geolocbtn").hasClass('btn-default')){
-              $("#geolocbtn").removeClass('btn-default');
-              $("#geolocbtn").addClass('btn-success');
+            if (!$("#geolocbtn").hasClass('enabled')){
+              $("#geolocbtn").addClass('enabled');
               _geolocation.setTracking(true);
               _geolocation.once('change', function(evt) {
                 _map.getView().setZoom(18);
@@ -1581,11 +1580,9 @@ mviewer = (function () {
                 _sourceGeolocation.addFeature(iconFeature);
                 _sourceGeolocation.addFeature(accuracyFeature);
             });
-          } else if ($("#geolocbtn").hasClass('btn-success')){
-            $("#geolocbtn").removeClass('btn-success');
-            $("#geolocbtn").addClass('btn-default');
+          } else {
+            $("#geolocbtn").removeClass('enabled');
             _geolocation.setTracking(false);
-            //_geolocation.unByKey(geolocON);
             _sourceGeolocation.clear();
           }
         },
