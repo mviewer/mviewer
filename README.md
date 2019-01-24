@@ -136,8 +136,9 @@ Représente les fonds de plan.
 * **label**: Titre du fond de plan
 * **title**: Sous-titre du fond de plan
 * **maxscale**: Echelle max du fond de plan
-* **thumbgallery**: Imagette pour le fond de plan ( dans le cas du style gallery).
+* **thumbgallery**: Imagette pour le fond de plan (dans le cas du style gallery).
 * **url**: Url du service ogc
+* **tiled**: Indique si le paramètre "TILED=true" doit être inséré dans les requêtes WMS (pour des couches disponibles en WMS-C). Valeur par défaut : true.
 * **layers**: Nom de la ressource ogc
 * **format**: Format image du fond de plan 
 * **visible**: Visibilité du fond de plan
