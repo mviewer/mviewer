@@ -729,110 +729,113 @@ mviewer = (function () {
         var crossorigin = configuration.getCrossorigin();
         var l;
         switch (baselayer.type) {
-        case "fake":
-            var l = new ol.layer.Base({});
-            _backgroundLayers.push(l);
-            l.set('name', baselayer.label);
-            l.set('blid', baselayer.id);
-            break;
-        case "WMS":
-            l =  new ol.layer.Tile({
-                source: new ol.source.TileWMS({
-                    url: baselayer.url,
-                    crossOrigin: crossorigin,
-                    maxZoom: baselayer.maxzoom || 18,
-                    params: {
-                        'LAYERS': baselayer.layers,
-                        'VERSION': '1.1.1',
-                        'FORMAT': baselayer.format,
-                        'TRANSPARENT': false,
-                        'TILED': true
-                    },
-                    attributions:  baselayer.attribution
-                }),
-                visible: false
-            });
-            l.set('name', baselayer.label);
-            l.set('blid', baselayer.id);
-
-            _backgroundLayers.push(l);
-            _map.addLayer(l);
-            break;
-        case "WMTS":
-            if (baselayer.fromcapacity === "false") {
-                var matrixset = baselayer.matrixset;
-                var projectionExtent = _projection.getExtent();
-                l = new ol.layer.Tile({
-                    source: new ol.source.WMTS({
-                        url:  baselayer.url,
-                        crossOrigin: crossorigin,
-                        layer: baselayer.layers,
-                        matrixSet: matrixset,
-                        style: baselayer.style,
-                        format: baselayer.format,
-                        attributions: baselayer.attribution,
-                        projection: _projection,
-                        tileGrid: new ol.tilegrid.WMTS({
-                            origin: ol.extent.getTopLeft(projectionExtent),
-                            resolutions: utils.getWMTSTileResolutions(matrixset),
-                            matrixIds: utils.getWMTSTileMatrix(matrixset)
-                        })
-                    })
-                });
-                l.setVisible(false);
+            case "fake":
+                l = new ol.layer.Base({});
+                _backgroundLayers.push(l);
                 l.set('name', baselayer.label);
                 l.set('blid', baselayer.id);
-                _map.addLayer(l);
-                _backgroundLayers.push(l);
-            }
-            else {
-                $.ajax({
-                    url:_ajaxURL(baselayer.url),
-                    dataType: "xml",
-                    data: {
-                        SERVICE: "WMTS",
-                        VERSION: "1.0.0",
-                        REQUEST: "GetCapabilities"
-                    },
-                    success: function (xml) {
-                        var getCapabilitiesResult = (new ol.format.WMTSCapabilities()).read(xml);
-                        var WMTSOptions = ol.source.WMTS.optionsFromCapabilities( getCapabilitiesResult, {
-                            layer: baselayer.layers,
-                            matrixSet: baselayer.matrixset,
-                            format:baselayer.format,
-                            style: baselayer.style
-                        });
-                        WMTSOptions.attributions = baselayer.attribution;
-                        l = new ol.layer.Tile({ source: new ol.source.WMTS(WMTSOptions) });
-                        l.set('name', baselayer.label);
-                        l.set('blid', baselayer.id);
-                        _map.getLayers().insertAt(0,l);
-                        _backgroundLayers.push(l);
-                        if( baselayer.visible === 'true' ) {
-                            l.setVisible(true);
-                        } else {
-                            l.setVisible(false);
-                        }
-                    }
+                break;
+            case "WMS":
+                var params = {
+                                'LAYERS': baselayer.layers,
+                                'VERSION': '1.1.1',
+                                'FORMAT': baselayer.format,
+                                'TRANSPARENT': false
+                };
+                if (baselayer.tiled !== "false") {
+                    params.TILED = true;
+                }
+                l =  new ol.layer.Tile({
+                    source: new ol.source.TileWMS({
+                        url: baselayer.url,
+                        crossOrigin: crossorigin,
+                        maxZoom: baselayer.maxzoom || 18,
+                        params: params,
+                        attributions:  baselayer.attribution
+                    }),
+                    visible: false
                 });
-            }
-            break;
+                l.set('name', baselayer.label);
+                l.set('blid', baselayer.id);
 
-        case "OSM":
-            l = new ol.layer.Tile({
-                source: new ol.source.OSM({
-                    url: baselayer.url,
-                    crossOrigin: 'anonymous',
-                    maxZoom: baselayer.maxzoom || 18,
-                    attributions: baselayer.attribution
-                }),
-                visible: false
-            });
-            l.set('name', baselayer.label);
-            l.set('blid', baselayer.id);
-            _backgroundLayers.push(l);
-            _map.addLayer(l);
-            break;
+                _backgroundLayers.push(l);
+                _map.addLayer(l);
+                break;
+            case "WMTS":
+                if (baselayer.fromcapacity === "false") {
+                    var matrixset = baselayer.matrixset;
+                    var projectionExtent = _projection.getExtent();
+                    l = new ol.layer.Tile({
+                        source: new ol.source.WMTS({
+                            url:  baselayer.url,
+                            crossOrigin: crossorigin,
+                            layer: baselayer.layers,
+                            matrixSet: matrixset,
+                            style: baselayer.style,
+                            format: baselayer.format,
+                            attributions: baselayer.attribution,
+                            projection: _projection,
+                            tileGrid: new ol.tilegrid.WMTS({
+                                origin: ol.extent.getTopLeft(projectionExtent),
+                                resolutions: utils.getWMTSTileResolutions(matrixset),
+                                matrixIds: utils.getWMTSTileMatrix(matrixset)
+                            })
+                        })
+                    });
+                    l.setVisible(false);
+                    l.set('name', baselayer.label);
+                    l.set('blid', baselayer.id);
+                    _map.addLayer(l);
+                    _backgroundLayers.push(l);
+                }
+                else {
+                    $.ajax({
+                        url:_ajaxURL(baselayer.url),
+                        dataType: "xml",
+                        data: {
+                            SERVICE: "WMTS",
+                            VERSION: "1.0.0",
+                            REQUEST: "GetCapabilities"
+                        },
+                        success: function (xml) {
+                            var getCapabilitiesResult = (new ol.format.WMTSCapabilities()).read(xml);
+                            var WMTSOptions = ol.source.WMTS.optionsFromCapabilities( getCapabilitiesResult, {
+                                layer: baselayer.layers,
+                                matrixSet: baselayer.matrixset,
+                                format:baselayer.format,
+                                style: baselayer.style
+                            });
+                            WMTSOptions.attributions = baselayer.attribution;
+                            l = new ol.layer.Tile({ source: new ol.source.WMTS(WMTSOptions) });
+                            l.set('name', baselayer.label);
+                            l.set('blid', baselayer.id);
+                            _map.getLayers().insertAt(0,l);
+                            _backgroundLayers.push(l);
+                            if( baselayer.visible === 'true' ) {
+                                l.setVisible(true);
+                            } else {
+                                l.setVisible(false);
+                            }
+                        }
+                    });
+                }
+                break;
+
+            case "OSM":
+                l = new ol.layer.Tile({
+                    source: new ol.source.OSM({
+                        url: baselayer.url,
+                        crossOrigin: 'anonymous',
+                        maxZoom: baselayer.maxzoom || 18,
+                        attributions: baselayer.attribution
+                    }),
+                    visible: false
+                });
+                l.set('name', baselayer.label);
+                l.set('blid', baselayer.id);
+                _backgroundLayers.push(l);
+                _map.addLayer(l);
+                break;
         }
     };
 
