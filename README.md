@@ -7,6 +7,13 @@ Visualiseur géographique [Kartenn](http://kartenn.region-bretagne.fr/kartoviz/)
 
 [Documentation] (http://mviewerdoc.readthedocs.io/fr/latest/)
 
+[Générateur d'applications] (https://github.com/geobretagne/mviewerstudio/)
+
+
+Feuille de route 
+-----------
+https://github.com/geobretagne/mviewer/wiki/Feuille-de-route
+
 Déploiement 
 -----------
 
