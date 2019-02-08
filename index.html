@@ -104,7 +104,30 @@ $(document).ready(function () {
         $.extend(config, $.parseJSON('{"' + decodeURIComponent(window.location.search.substring(1)
             .replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}'));
     }
-    var configFile = (config.config) ? config.config : "config.xml";
+
+    // Search for a config param
+    var configFile = (config.config);
+
+    // If no config param, search for a fragment (#)
+    if (!config.config) {
+        var fragment = window.location.hash.split('#')[1];
+        if (fragment) {
+            configFile = fragment;
+            if (!configFile.startsWith("/")) {
+                configFile = "/".concat(configFile)
+            }
+            configFile = "apps".concat(configFile);
+            if (!configFile.endsWith(".xml")) {
+                configFile = configFile.concat(".xml");
+            }
+        }
+    }
+
+    // If no config param nor fragment then use the default config file
+    if (!configFile) {
+        configFile = "config.xml";
+    }
+
     var theme = (config.theme) ? config.theme : null;
 
     $.ajax({
