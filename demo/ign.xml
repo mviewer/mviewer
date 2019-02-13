@@ -18,7 +18,7 @@
     <baselayer visible="true" id="scan_ign" thumbgallery="img/basemap/scan.jpg" title="GéoPortail" label="Cartes IGN" type="WMTS" url="http://gpp3-wxs.ign.fr/ji4u0speulnptszwipl2s63u/wmts" layers="GEOGRAPHICALGRIDSYSTEMS.MAPS" format="image/jpeg" fromcapacity="false" attribution="&lt;a href='http://www.geoportail.fr/' target='_blank'&gt;&lt;img src='https://api.ign.fr/geoportail/api/js/latest/theme/geoportal/img/logo_gp.gif'&gt;&lt;/a&gt;" style="normal" matrixset="PM" maxzoom="22"  ></baselayer> 
 </baselayers>
 <themes mini="false"> 
-    <theme id="theme-20180911082704" name="WMS IGN" collapsed="true" icon="caret-right">
+    <theme id="theme-20180911082704" name="WMS IGN" collapsed="true" icon="fas fa-caret-right">
          <layer 
             id="CADASTRALPARCELS.PARCELS"
             name="Cadastre (BD Parcellaire IGN)"

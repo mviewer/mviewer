@@ -18,7 +18,7 @@
     <searchparameters bbox="true" localities="false" features="false"/>	
 
     <themes mini="true">              
-        <theme name="Limites administratives"  collapsed="true" id="territoire" icon="caret-right">  
+        <theme name="Limites administratives"  collapsed="true" id="territoire" icon="fas fa-caret-right">
 			<layer id="commune_bdcarto" name="Commune filtrées" visible="true" tiled="false" 
 				queryable="true" fields="NOM_COM,INSEE_COM,POPULATION" aliases="Nom,Code INSEE,POPULATION"
                 infoformat="application/vnd.ogc.gml" featurecount="5"                
