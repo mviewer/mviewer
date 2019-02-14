@@ -32,7 +32,7 @@ Le fichier de config permet la personnalisation des thèmes/couches du visualise
 
 	<?xml version="1.0" encoding="UTF-8"?>
 	<config>
-    <application title="" logo="" help="" showhelp="" style="" exportpng="" measuretools="" legend="" stats="" statsurl="" coordinates=""/>
+    <application title="" logo="" help="" showhelp="" style="" exportpng="" measuretools="" legend="" stats="" statsurl="" coordinates="" translate=""/>
     <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
     <mapoptions maxzoom="18" projection="EPSG:3857" center="-403013.39038929436,6128402.399153711" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
    
@@ -76,7 +76,7 @@ Personnalisation de l'application (overriding)
 
 #### Prototype 
 
-	 <application title="" logo=""  help="" showhelp="" titlehelp="" iconhelp="" style="" exportpng="" measuretools="" stats="" statsurl="" coordinates=""/>
+	 <application title="" logo=""  help="" showhelp="" titlehelp="" iconhelp="" style="" exportpng="" measuretools="" stats="" statsurl="" coordinates="" translate=""/>
 
 #### Attributs 
 
@@ -94,6 +94,7 @@ Personnalisation de l'application (overriding)
 * **statsurl**: url to send stats activity eg (login, ip, application title, date).
 * **coordinates**: Affiche les coordonnées GPS lors de l'interrogation true/false || false.
 * **togglealllayersfromtheme**: Ajoute un bouton dans le panneau de gauche pour chaque thématique afin d'afficher/masquer toutes les couches de la thématique.Valeur : true/false || false.
+* **translate**: Ajoute deux boutons (français, anglais) pour permettre de changer la langue de l'interface à la volée (cf. Translate pour plus d'informations). Valeur : true/false || false.
 
 ### Nœud mapoptions
 
@@ -434,3 +435,29 @@ css/themes/geobretagne.css.
 mviewer/?wmc=demo/hydro.wmc
 * **popup**: true ou false. Si true, Une popup s'affiche sur la carte afin d'afficher le résultat de l'interrogation de 
 couches.
+
+### Fonctionnement de Translate
+
+Si **translate=true**, alors deux boutons vont être ajoutés dans l'interface (français et anglais). L'emplacement de ces boutons est lié avec l'attribut **showhelp** car l'intérêt est de rendre ces boutons accessibles dès le chargement de l'interface. Ainsi, si **showhelp=true**, alors les boutons seront en haut à gauche de la fenêtre d'aide sinon, ils seront en haut à droite du visualiseur, à côté du bouton permettant d'afficher la fenêtre d'aide.
+
+La traduction des textes est liée à la classe **lang** et à l'attribut **key-lang**. Les textes se trouvent dans le fichier ([__translate.json__](translate.json)). La valeur de "key-lang" correspond à la "key" à indiquer dans le fichier.
+
+Ainsi, pour rajouter du texte dans l'interface qui nécessite d'être traduit, il faut écrire ce texte de cette manière :
+```html
+<p class="lang" key-lang="mon paragraphe 1">Voici un texte en français</p>
+```
+Et ajouter dans le fichier ([__translate.json__](translate.json)) :
+```
+{
+  "en": {
+    "mon paragraphe 1" : "Here is a text in english"
+    },
+  "fr": {
+    "mon paragraphe 1" : "Voici un texte en français"
+    }
+}
+```
+
+Concernant le nom des layers, la valeur de **key-lang** doit correspondre au **name** de la couche, du groupe, du thème.
+
+La **class** et le **key-lang** des couches sont automatiquement ajoutés par le Mviewer, ce qui n'est pas le cas des balises de texte que vous pouvez ajouter. La traduction de la légende des couches n'est pas gérée, il faut donc que gériez cela à partir d'un **customcontrol** avec du Javascript (ou autre) pour le faire.

@@ -11,6 +11,7 @@
  * along with mviewer.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 mviewer = (function () {
     /*
      * Private
@@ -478,6 +479,58 @@ mviewer = (function () {
                 success: function (html) {
                     $("#help .modal-body").append(html);
                 }
+            });
+        }
+    };
+
+    /**
+     * Private Method: _initTranslate
+     *
+     */
+
+    var _initTranslate = function () {
+        if (configuration.getConfiguration().application.translate === "true") {
+            //initialise la langue
+            var langSelected = "fr";
+            var _arrLang = {};
+            $.ajax({
+                url: "translate.json",
+                dataType: "text",
+                success: function (html) {
+                    // must be JSON object
+                    _arrLang = JSON.parse(html);
+                }
+            });
+            //translate function
+            $(function(){
+                $(".translate").click(function(){
+                  // test if the user click on button
+                  // language or on layer to change or get lang
+                  if ($(this).attr("idLang")){
+                    var lang = $(this).attr("idLang");
+                    langSelected = lang;
+                  } else {
+                    var lang = langSelected;
+                  }
+                  $(".lang").each(function(index, element){
+                    // pour changer un placeholder
+                    if ($(this).attr("placeholder")){
+                      $(this).attr("placeholder",_arrLang[lang][$(this).attr("key-lang")]);
+                    // pour changer le titre en survol
+                    } else if ($(this).attr("title")) {
+                      $(this).attr("title",_arrLang[lang][$(this).attr("key-lang")]);
+                    // pour prendre en compte le data-original-title de bootstrap
+                    } else if ($(this).attr("accesskey")){
+                      $(this).attr("data-original-title",_arrLang[lang][$(this).attr("key-lang")]);
+                    // pour prendre en compte le alt d'une image
+                    } else if ($(this).attr("alt")){
+                      $(this).attr("alt",_arrLang[lang][$(this).attr("key-lang")]);
+                    // pour changer le texte
+                    } else {
+                      $(this).text(_arrLang[lang][$(this).attr("key-lang")]);
+                    }
+                  });
+                });
             });
         }
     };
@@ -1494,6 +1547,7 @@ mviewer = (function () {
                 _initVectorOverlay();
                 search.init(configuration.getConfiguration());
                 _initPanelsPopup();
+                _initTranslate();
                 _initGeolocation();
                 _initTools();
         },

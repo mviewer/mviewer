@@ -124,6 +124,20 @@ var configuration = (function () {
         if (!conf.application.geoloc || !conf.application.geoloc ==="true") {
              $("#geolocbtn").hide();
         }
+        // translate fr eng
+        if (conf.application.translate === "true"){
+            if (conf.application.showhelp === "true") {
+                $(".modal-content").before("\
+                <button class='translate' idLang='en'>&#x1F1EC;&#x1F1E7;</button>\
+                <button class='translate' idLang='fr'>&#x1F1EB;&#x1F1F7;</button>");
+            } else {
+                $(".navbar-right").append("\
+                <li style='display: inline;margin: 11px 24px 0px -10px;'>\
+                <button class='translate' idLang='en'>&#x1F1EC;&#x1F1E7;</button>\
+                <button class='translate' idLang='fr'>&#x1F1EB;&#x1F1F7;</button>\
+                </li>");
+            }
+        }
 
         //map options
         _map = mviewer.initMap(conf.mapoptions);

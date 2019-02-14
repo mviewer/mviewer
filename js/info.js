@@ -320,8 +320,14 @@ var info = (function () {
                         //TODO reorder tabs like in theme panel
 
                         var title = $("[href='#slide-"+panel+"-1']").closest("li").attr("title");
-                        $("#"+panel+" .mv-header h5").text(title);
-
+                        // change key-lang value
+                        $("#"+panel+" .mv-header h5").attr("key-lang",title);
+                        // find the key-lang to get the translation in layercontrol
+                        $(".lang").each(function(index){
+                            if ($(this).attr("key-lang") == title) {
+                                $("#"+panel+" .mv-header h5").text($(this).text());
+                            }
+                        });
                         if (!$('#'+panel).hasClass("active")) {
                             $('#'+panel).toggleClass("active");
                         }
