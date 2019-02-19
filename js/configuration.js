@@ -45,8 +45,9 @@ var configuration = (function () {
      * Ajax proxy to use for crossdomain requests
      * It could be georchestra security-proxy
      */
-
     var _proxy = "";
+
+    var _hideProtectedLayers = true;
 
     var _parseXML = function (xml) {
         var _conf = $.xml2json(xml);
