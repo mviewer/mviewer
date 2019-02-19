@@ -190,6 +190,9 @@ var configuration = (function () {
         if (conf.application.togglealllayersfromtheme === "true" ) {
             _toggleAllLayersFromTheme = true;
         }
+        if (conf.application.hideprotectedlayers === "false" ) {
+            _hideProtectedLayers = false;
+        }
         if (conf.application.exportpng === "true" ) {
             _crossorigin = "anonymous";
             $("#exportpng").show();
@@ -416,8 +419,10 @@ var configuration = (function () {
                                     return $(this).text() == name;
                                 });
                                 if (layer.length === 0) {
-                                    //remove this layer from map and panel
-                                    mviewer.deleteLayer(this.layer);
+                                    if (_hideProtectedLayers) {
+                                        //remove this layer from map and panel
+                                        mviewer.deleteLayer(this.layer);
+                                    }
                                 }
                             }
                         });
@@ -578,6 +583,7 @@ var configuration = (function () {
                             oLayer.scale.max = parseInt(layer.scalemax);
                         }
                     }
+                    oLayer.secure = (layer.secure === "true") ? true : false;
                     if (oLayer.customcontrol) {
                         var customcontrolpath = oLayer.customcontrolpath;
                         $.ajax({

@@ -1879,6 +1879,10 @@ mviewer = (function () {
                 view.timeControl = true;
             }
 
+            if (layer.secure) {
+                view.secure = true;
+            }
+
             var item = Mustache.render(mviewer.templates.layerControl, view);
             if (layer.customcontrol && mviewer.customControls[layer.layerid] && mviewer.customControls[layer.layerid].form) {
                 item = $(item).find('.mv-custom-controls').append(mviewer.customControls[layer.layerid].form).closest(".mv-layer-details");
