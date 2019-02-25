@@ -94,7 +94,7 @@ Personnalisation de l'application (overriding)
 * **statsurl**: url to send stats activity eg (login, ip, application title, date).
 * **coordinates**: Affiche les coordonnées GPS lors de l'interrogation true/false || false.
 * **togglealllayersfromtheme**: Ajoute un bouton dans le panneau de gauche pour chaque thématique afin d'afficher/masquer toutes les couches de la thématique.Valeur : true/false || false.
-* **translate**: Ajoute deux boutons (français, anglais) pour permettre de changer la langue de l'interface à la volée (cf. Translate pour plus d'informations). Valeur : true/false || false.
+* **translate**: Ajoute autant de boutons qu'il y a de langues indiquées et séparées par une virgule (fr,en,all) pour permettre de changer la langue de l'interface à la volée (cf. Translate pour plus d'informations).
 
 ### Nœud mapoptions
 
@@ -438,7 +438,7 @@ couches.
 
 ### Fonctionnement de Translate
 
-Si **translate=true**, alors deux boutons vont être ajoutés dans l'interface (français et anglais). L'emplacement de ces boutons est lié avec l'attribut **showhelp** car l'intérêt est de rendre ces boutons accessibles dès le chargement de l'interface. Ainsi, si **showhelp=true**, alors les boutons seront en haut à gauche de la fenêtre d'aide sinon, ils seront en haut à droite du visualiseur, à côté du bouton permettant d'afficher la fenêtre d'aide.
+Si **translate="fr,en"**, alors deux boutons vont être ajoutés dans l'interface (français et anglais) et possèderont le même texte qu'indiqué dans cette variable. L'emplacement de ces boutons est lié avec l'attribut **showhelp** car l'intérêt est de rendre ces boutons accessibles dès le chargement de l'interface. Ainsi, si **showhelp=true**, alors les boutons seront en haut à gauche de la fenêtre d'aide sinon, ils seront en haut à droite du visualiseur, à côté du bouton permettant d'afficher la fenêtre d'aide.
 
 La traduction des textes est liée à la classe **lang** et à l'attribut **key-lang**. Les textes se trouvent dans le fichier ([__translate.json__](translate.json)). La valeur de "key-lang" correspond à la "key" à indiquer dans le fichier.
 
@@ -457,6 +457,8 @@ Et ajouter dans le fichier ([__translate.json__](translate.json)) :
     }
 }
 ```
+
+Il est possible d'ajouter une troisième langue en ajoutant "it" dans le fichier config.xml et le même texte dans dans le fichier translate.json. Les valeurs de langues sont liées entre elles, ce ne sont pas des mots clés. Il est donc tout à fait possible d'écrire **translate="français,english"** tant que les termes sont identiques entre les deux fichiers.
 
 Concernant le nom des layers, la valeur de **key-lang** doit correspondre au **name** de la couche, du groupe, du thème.
 

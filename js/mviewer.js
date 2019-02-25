@@ -489,50 +489,65 @@ mviewer = (function () {
      */
 
     var _initTranslate = function () {
-        if (configuration.getConfiguration().application.translate === "true") {
-            //initialise la langue
-            var langSelected = "fr";
-            var _arrLang = {};
-            $.ajax({
-                url: "translate.json",
-                dataType: "text",
-                success: function (html) {
-                    // must be JSON object
-                    _arrLang = JSON.parse(html);
-                }
-            });
-            //translate function
-            $(function(){
-                $(".translate").click(function(){
-                  // test if the user click on button
-                  // language or on layer to change or get lang
-                  if ($(this).attr("idLang")){
-                    var lang = $(this).attr("idLang");
-                    langSelected = lang;
-                  } else {
-                    var lang = langSelected;
-                  }
-                  $(".lang").each(function(index, element){
-                    // pour changer un placeholder
-                    if ($(this).attr("placeholder")){
-                      $(this).attr("placeholder",_arrLang[lang][$(this).attr("key-lang")]);
-                    // pour changer le titre en survol
-                    } else if ($(this).attr("title")) {
-                      $(this).attr("title",_arrLang[lang][$(this).attr("key-lang")]);
-                    // pour prendre en compte le data-original-title de bootstrap
-                    } else if ($(this).attr("accesskey")){
-                      $(this).attr("data-original-title",_arrLang[lang][$(this).attr("key-lang")]);
-                    // pour prendre en compte le alt d'une image
-                    } else if ($(this).attr("alt")){
-                      $(this).attr("alt",_arrLang[lang][$(this).attr("key-lang")]);
-                    // pour changer le texte
-                    } else {
-                      $(this).text(_arrLang[lang][$(this).attr("key-lang")]);
-                    }
-                  });
-                });
-            });
+      if (configuration.getConfiguration().application.translate) {
+        //identifie les langues presentes, la premiere est celle employée au départ
+        langs = configuration.getConfiguration().application.translate.split(",");
+        //ajoute les boutons
+        if (configuration.getConfiguration().application.showhelp === "true") {
+          for (i = 0; i < langs.length; ++i){
+            $(".modal-content").before("<button class='translate' idLang='"+langs[i]+"'>"+langs[i]+"</button>");
+          }
+        } else {
+          for (i = 0; i < langs.length; ++i){
+            $(".navbar-right").append("\
+            <li style='display: inline;margin: 11px 24px 0px -10px;'><button class='translate' idLang='"+langs[i]+"'>"+langs[i]+"</button></li>");
+          }
         }
+        
+        //initialise la langue et recupere les textes
+        var langSelected = langs[0];
+        var _arrLang = {};
+        $.ajax({
+            url: "translate.json",
+            dataType: "text",
+            success: function (html) {
+                // must be JSON object
+                _arrLang = JSON.parse(html);
+            }
+        });
+
+        //translate function
+        $(function(){
+            $(".translate").click(function(){
+              // test if the user click on button
+              // language or on layer to change or get lang
+              if ($(this).attr("idlang")){
+                var lang = $(this).attr("idlang");
+                langSelected = lang;
+              } else {
+                var lang = langSelected;
+              }
+              $(".lang").each(function(index, element){
+                // pour changer un placeholder
+                if ($(this).attr("placeholder")){
+                  $(this).attr("placeholder",_arrLang[lang][$(this).attr("key-lang")]);
+                // pour changer le titre en survol
+                } else if ($(this).attr("title")) {
+                  $(this).attr("title",_arrLang[lang][$(this).attr("key-lang")]);
+                // pour prendre en compte le data-original-title de bootstrap
+                } else if ($(this).attr("accesskey")){
+                  $(this).attr("data-original-title",_arrLang[lang][$(this).attr("key-lang")]);
+                // pour prendre en compte le alt d'une image
+                } else if ($(this).attr("alt")){
+                  $(this).attr("alt",_arrLang[lang][$(this).attr("key-lang")]);
+                // pour changer le texte
+                } else {
+                  $(this).text(_arrLang[lang][$(this).attr("key-lang")]);
+                }
+              });
+            });
+        });
+      }
     };
 
     /**
