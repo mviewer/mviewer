@@ -110,5 +110,8 @@
     "Crédits" : "Crédits",
     "À propos du Mviewer" : "À propos du Mviewer",
     "Lien vers la documentation" : "Lien vers la documentation"
-    }
+    },
+  "all": {
+    "Titre" : "Simfen all"
+  }
 }

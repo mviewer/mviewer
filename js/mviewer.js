@@ -492,27 +492,35 @@ mviewer = (function () {
       if (configuration.getConfiguration().application.translate) {
         //identifie les langues presentes, la premiere est celle employée au départ
         langs = configuration.getConfiguration().application.translate.split(",");
-        //ajoute les boutons
-        if (configuration.getConfiguration().application.showhelp === "true") {
-          for (i = 0; i < langs.length; ++i){
-            $(".modal-content").before("<button class='translate' idLang='"+langs[i]+"'>"+langs[i]+"</button>");
+        // ajoute un bouton uniquement s'il y a plus d'une langue
+        if (langs.length > 1){
+          //ajoute les boutons
+          if (configuration.getConfiguration().application.showhelp === "true") {
+            for (i = 0; i < langs.length; ++i){
+              $(".modal-content").before("<button class='translate' idLang='"+langs[i]+"'>"+langs[i]+"</button>");
+            }
+          } else {
+            for (i = 0; i < langs.length; ++i){
+              $(".navbar-right").append("\
+              <li style='display: inline;margin: 11px 24px 0px -10px;'><button class='translate' idLang='"+langs[i]+"'>"+langs[i]+"</button></li>");
+            }
           }
         } else {
-          for (i = 0; i < langs.length; ++i){
-            $(".navbar-right").append("\
-            <li style='display: inline;margin: 11px 24px 0px -10px;'><button class='translate' idLang='"+langs[i]+"'>"+langs[i]+"</button></li>");
-          }
+          // ajoute en caché le bouton pour simuler un click dessus pour initialiser la premiere langue
+          $(".modal-content").before("<button style='display:none;' class='translate' idLang='"+langs[0]+"'>"+langs[0]+"</button>");
         }
-        
+
         //initialise la langue et recupere les textes
         var langSelected = langs[0];
         var _arrLang = {};
         $.ajax({
-            url: "translate.json",
+            url: configuration.getConfiguration().application.translatefile,//"translate.json",
             dataType: "text",
             success: function (html) {
                 // must be JSON object
                 _arrLang = JSON.parse(html);
+                //active la langue directement
+                $(".translate").each(function(){if ($(this).attr("idlang") === langSelected){$(this).click();}});
             }
         });
 
@@ -2418,6 +2426,7 @@ mviewer = (function () {
         drawVectorLegend: _drawVectorLegend,
 
         events: function () { return _events; }
+
 
 
     }; // fin return
