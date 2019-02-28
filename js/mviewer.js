@@ -781,9 +781,11 @@ mviewer = (function () {
         $("#menu").html(htmlListGroup);
         initMenu();
         // Open theme item if set to collapsed=false
-        var expanded_theme = $.grep(configuration.getConfiguration().themes.theme, function(obj){return obj.collapsed === "false";});
-        if (expanded_theme.length > 0) {
-            $("#theme-layers-"+expanded_theme[0].id+">a").click();
+        if (configuration.getConfiguration().themes.theme !== undefined) {
+            var expanded_theme = $.grep(configuration.getConfiguration().themes.theme, function(obj){return obj.collapsed === "false";});
+            if (expanded_theme.length > 0) {
+                $("#theme-layers-"+expanded_theme[0].id+">a").click();
+            }
         }
         //Add remove and add layers button on them
         if (configuration.getConfiguration().application.togglealllayersfromtheme === "true") {

@@ -58,32 +58,30 @@ var configuration = (function () {
             _conf.baselayers.baselayer = [_conf.baselayers.baselayer];
         }
         _conf.baselayers = _conf.baselayers;
-        if (!Array.isArray(_conf.themes.theme)) {
-            if (_conf.themes.theme) {
-                _conf.themes.theme = [_conf.themes.theme];
-            } else {
-                _conf.themes.theme = [];
-            }
+        if ((_conf.themes.theme !== undefined) && !Array.isArray(_conf.themes.theme)) {
+            _conf.themes.theme = [_conf.themes.theme];
         }
-        _conf.themes.theme.forEach(function (theme) {
-            if (theme.group) {
-                if (!Array.isArray(theme.group)) {
-                    theme.group = [theme.group];
+        if (_conf.themes.theme !== undefined) {
+            _conf.themes.theme.forEach(function (theme) {
+                if (theme.group) {
+                    if (!Array.isArray(theme.group)) {
+                        theme.group = [theme.group];
+                    }
+                } else {
+                    theme.group = [];
                 }
-            } else {
-                theme.group = [];
-            }
-            theme.group.forEach(function (group) {
-                if (!Array.isArray(group.layer)) {
-                    group.layer = [group.layer];
+                theme.group.forEach(function (group) {
+                    if (!Array.isArray(group.layer)) {
+                        group.layer = [group.layer];
+                    }
+                });
+                if (theme.layer) {
+                    if (!Array.isArray(theme.layer)) {
+                        theme.layer = [theme.layer];
+                    }
                 }
             });
-            if (theme.layer) {
-                if (!Array.isArray(theme.layer)) {
-                    theme.layer = [theme.layer];
-                }
-            }
-        });
+        }
 
         return _conf;
     };
@@ -334,10 +332,7 @@ var configuration = (function () {
                  mviewer.events().overLayersTotal = nbOverLayers;
                  mviewer.events().confLoaded = true;
             });
-
-
-
-        } else {
+        } else if (conf.themes.theme !== undefined) {
             var themes = conf.themes.theme;
             var nbOverLayers = 0;
             themes.forEach(function (theme) {

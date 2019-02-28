@@ -40,14 +40,16 @@ var utils = (function () {
 
     _tests.icons = function (themes) {
         var test = 1;
-        themes.theme.forEach(function(theme) {
-            if (theme && theme.icon && theme.icon.indexOf(".") === -1) {
-                if (theme.icon.indexOf(" ") === -1) {
-                    test = 0;
-                    console.log("Problème Icone thématique " + theme.name + " : " + theme.icon + "\nnotation dépréciée avec font-awesome 5.6.3. Utiliser une notation du type 'fas fa-" + theme.icon);
+        if (themes.theme !== undefined) {
+            themes.theme.forEach(function(theme) {
+                if (theme && theme.icon && theme.icon.indexOf(".") === -1) {
+                    if (theme.icon.indexOf(" ") === -1) {
+                        test = 0;
+                        console.log("Problème Icone thématique " + theme.name + " : " + theme.icon + "\nnotation dépréciée avec font-awesome 5.6.3. Utiliser une notation du type 'fas fa-" + theme.icon);
+                    }
                 }
-            }
-        });
+            });
+        }
         return test;
     };
 
@@ -93,16 +95,18 @@ var utils = (function () {
         var nbtests = 0;
         var layers = [];
         //Get all layers
-        conf.themes.theme.forEach(function (theme) {
-            if (theme.layer) {
-                layers = layers.concat(theme.layer);
-            }
-            theme.group.forEach(function (group) {
-                if (group.layer) {
-                    layers = layers.concat(group.layer);
+        if (conf.themes.theme !== undefined) {
+            conf.themes.theme.forEach(function (theme) {
+                if (theme.layer) {
+                    layers = layers.concat(theme.layer);
                 }
+                theme.group.forEach(function (group) {
+                    if (group.layer) {
+                        layers = layers.concat(group.layer);
+                    }
+                });
             });
-        });
+        }
 
         //test = 1 baselayer visible
         score += _tests.oneBaseLayerVisible(conf.baselayers);
