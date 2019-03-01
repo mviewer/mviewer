@@ -173,10 +173,9 @@ var search = (function () {
         });
 
         $(document).on("keyup", "#searchfield", function (e) {
-            if (e.keyCode == 13 && $('#searchresults li').length > 0) {
-                var firstitem = $('#searchresults').find('li')[1];
-                var firstlink = $(firstitem).find("a");
-                $(firstlink).trigger('click');
+            if (e.keyCode == 13 && $('#searchresults a').length > 1) {
+                var firstitem = $('#searchresults').find('a')[1];
+                $(firstitem).trigger('click');
                 return;
             }
             var chars = $(this).val().length;
@@ -212,7 +211,7 @@ var search = (function () {
                     success: function (data) {
                         var zoom = 12;
                         var res = data.results;
-                        var str = '<li class="geoportail list-group-item disabled">Localités</li>';
+                        var str = '<a class="geoportail list-group-item disabled">Localités</a>';
                         //var str = '';
                         for (var i = 0, len = res.length; i < len && i < 5; i++) {
                              switch (res[i].classification) {
@@ -234,10 +233,10 @@ var search = (function () {
                                     zoom = 17;
                                     break;
                                 }
-                            str += '<li class="geoportail list-group-item" ><a href="#" onclick="mviewer.zoomToLocation(' +
+                            str += '<a class="geoportail list-group-item" href="#" onclick="mviewer.zoomToLocation(' +
                             res[i].x + ',' + res[i].y + ',' + zoom + ',\'' + res[i].fulltext.replace("'", "*") + '\');" '+
                             'onmouseover="mviewer.flash('+'\'EPSG:4326\',' + res[i].x + ',' + res[i].y + ');"> ' +
-                            res[i].fulltext + '</a></li>';
+                            res[i].fulltext + '</a>';
                         }
                         $(".geoportail").remove()
                         if (res.length > 0) {
@@ -262,7 +261,7 @@ var search = (function () {
                     success: function (data) {
                         var zoo = 0;
                         var res = data.features;
-                        var str = '<li class="geoportail list-group-item disabled">Localités</li>';
+                        var str = '<a class="geoportail list-group-item disabled">Localités</a>';
                         for (var i = 0, len = res.length; i < len && i < 5; i++) {
                             switch(res[i].properties.type) {
                                 case 'city':
@@ -283,11 +282,12 @@ var search = (function () {
                                 default:
                                     zoom = 14;
                             }
-                            str += '<li class="geoportail list-group-item" data-icon="false" title="' +
-                            res[i].properties.context+' - ' + res[i].properties.type+'" >' +
-                            '<a href="#" onclick="mviewer.zoomToLocation(' + res[i].geometry.coordinates[0] + ',' +
+                            str += '<a class="geoportail list-group-item" href="#" title="' +
+                            res[i].properties.context+' - ' + res[i].properties.type +
+                            '" onclick="mviewer.zoomToLocation('+
+                            res[i].geometry.coordinates[0] + ',' +
                             res[i].geometry.coordinates[1] + ',' + zoom + ',\'' +
-                            res[i].properties.name.replace("'", "*") + '\');">' + res[i].properties.label + '</a></li>';
+                            res[i].properties.name.replace("'", "*") + '\');">' + res[i].properties.label + '</a>';
                         }
                         $(".geoportail").remove();
                         $("#searchresults").append(str);
@@ -362,7 +362,7 @@ var search = (function () {
                 // We only display the first results
                 results = results.slice(0, max_results);
 
-                str = '<li class="fuse list-group-item disabled">' + layername + '</li>';
+                str = '<a class="fuse list-group-item disabled">' + layername + '</a>';
                 results.forEach(function(element){
                     /*
                      * 2 cases, one specific field or a Mustache template for combining fields in a string. Examples:
@@ -380,12 +380,12 @@ var search = (function () {
                     }
                     var geom = new ol.format.GeoJSON().readGeometry(element.geometry);
                     var xyz = mviewer.getLonLatZfromGeometry(geom, 'EPSG:4326', zoom);
-                    str += '<li class="fuse list-group-item" data-icon="false" title="' + result_label + '">' +
-                        '<a href="#" onclick="mviewer.zoomToLocation('
+                    str += '<a class="fuse list-group-item" title="' + result_label + '" ' +
+                        'href="#" onclick="mviewer.zoomToLocation('
                         + xyz.lon + ',' + xyz.lat + ',' + xyz.zoom + ');mviewer.showLocation(\'EPSG:4326\','
                         + xyz.lon + ',' + xyz.lat +');" '
                         + 'onmouseover="mviewer.flash(\'EPSG:4326\',' + xyz.lon + ',' + xyz.lat + ');" >'
-                        + result_label + '</a></li>';
+                        + result_label + '</a>';
                 });
             }
             $("#searchresults").append(str);
@@ -515,7 +515,7 @@ var search = (function () {
                     //contentType: "application/json; charset=utf-8",
                     success: function (data) {
                         _sourceEls.clear();
-                        var str = '<li class="elasticsearch list-group-item disabled" >Entités</li>';
+                        var str = '<a class="elasticsearch list-group-item disabled" >Entités</a>';
                         var format = new ol.format.GeoJSON();
                         var nb = data.hits.hits.length;
                         for (var i = 0, nb ; i < nb && i < 5; i++) {
@@ -543,13 +543,13 @@ var search = (function () {
                                 action_over = 'mviewer.flash('+'\'EPSG:4326\',' + point[0] + ',' + point[1] + ');';
                             }
 
-                            str += '<li class="elasticsearch list-group-item" data-icon="false" ><a href="#" ' +
+                            str += '<a class="elasticsearch list-group-item" href="#" ' +
                             'onclick="'+action_click+ '" ' +
                             'onmouseover="'+action_over+'" ' +
                             'title="('+ data.hits.hits[i]._type + ') ' +
                             $.map(data.hits.hits[i]._source, function(el) {
                                 if (typeof(el)==='string') {return el};
-                            }).join(", \n")+'">' + title + '</a></li>';
+                            }).join(", \n")+'">' + title + '</a>';
                         }
                         $(".elasticsearch").remove();
                         if (nb > 0) {
