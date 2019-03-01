@@ -97,13 +97,6 @@ a:hover{
 	border:0px;
 }
 
-#searchtool {	
-	width:220px;
-	/*position: fixed;*/
-	right:50px;    
-	top: 3px;
-}
-
 .mv-searchtool-delete {    
     padding-right: 0px; 
     display: none;
@@ -126,17 +119,27 @@ a#searchparams {
   font-size: 10px;
 }
 @media (max-width: 767px){
+    #searchtool {
+        margin-right:5px;
+        margin-left:5px;
+        top: 3px;
+    }
 	#searchresults {
-		max-width:300px;
-		min-width: 246px;
-		position: fixed;
-		left:50px;
-		top: 150px;
-		z-index: 5;
+		padding: 0px 30px 0px 30px;
+        margin-top: -10px;
 	}
+    /*  Modal popup close*/
+    .modal .close {
+        font-size: 30px;
+    }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
+    #searchtool {
+        width:220px;
+        margin-right:50px;
+        top: 3px;
+    }
 	#searchresults {
 		max-width:300px;
 		min-width: 246px;
@@ -147,22 +150,18 @@ a#searchparams {
 	}
 }
 
-#searchresults li {
-	padding: 10px;
-}
-
-#searchresults li a {
+#searchresults a {
 	font-size: 11px;
 	margin-left: 5px;
 }
 
-#searchresults li.disabled {
+#searchresults a.disabled {
     padding: 10px;
 }
 
-li.geoportail.list-group-item.disabled{
+#searchresults a.list-group-item.disabled{
 	color:#fff;
-	font-size:13px!important;
+	font-size:13px;
 }
 
 #searchtool .btn-default{
@@ -181,6 +180,10 @@ li.geoportail.list-group-item.disabled{
     cursor: pointer;
     max-width:100%;
     max-height: 210px;
+}
+
+#imagepopup {
+    z-index: 2000;
 }
 
 /*******************************
@@ -497,14 +500,20 @@ div#backgroundlayerstoolbar-gallery {
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
 }
+@media (min-width: 992px){
+    #layers-container-box-header {
+      height: 35px;
+      min-width: 35px;
+    }
 
-#layers-container-box-header {
-  height: 35px;
-  min-width: 35px;
+    #legend:not(.active) {
+      width: 35px;
+    }
 }
-
-#legend:not(.active) {
-  width: 35px;
+@media (max-width: 991px){
+    #layers-container-box-header {
+        display: none;
+    }
 }
 
 .active #layers-container {
@@ -707,11 +716,22 @@ ul#layers-container {
   box-shadow: 0px 0px 30px 3px rgba(200, 200, 200, 0.5) ;
 }
 
-#backgroundlayerstoolbar-default {
-	bottom: 15px;
-	right: 15px;
-	float: right;
-	position: fixed;   
+
+@media (min-width: 992px) {
+    #backgroundlayerstoolbar-default {
+        bottom: 15px;
+        right: 15px;
+        float: right;
+        position: fixed;
+    }
+}
+
+@media (max-width: 991px) {
+    #backgroundlayerstoolbar-default {
+        bottom: 35px;
+        left: 10px;
+        position: fixed;
+    }
 }
 
 /*******************************
@@ -999,10 +1019,10 @@ ul#searchparameters{
 
 /* Boîte de dialogue partager la carte */ 
 
-#sharepanel .modal-header{
+/*#sharepanel .modal-header{
 	color: #333;
 	font-size: 13px;
-}
+}*/
 
 #sharepanel .form-group label {
 	color: #333;
@@ -1093,6 +1113,13 @@ ul#searchparameters{
 /*******************************
 ------------- NAVBAR 
 ********************************/
+
+@media (max-width: 767px){
+    .sidebar-nav {
+        margin-top: 0px;
+        width:auto;
+    }
+}
 .nav-pills li a{
 	border-radius:0px;
 }
@@ -1210,6 +1237,12 @@ span.state-icon.far{
 /*******************************
 ------------- LEGEND LAYER
 ********************************/
+
+.mv-layer-remove {
+    float: right;
+    right: 10px;
+    opacity: .5;
+}
 a:focus{
 	text-decoration: none;
 }
@@ -1650,4 +1683,36 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
     background: url(../img/logo/worldwide.svg) no-repeat scroll;
     background-size: 16px 16px;
     margin-top: 9px;
+}
+
+.mv-nav>li{
+    display: inline-block;
+}
+
+.xs .menu-toggle,
+.xs #sidebar-wrapper,
+.xs  #layers-container-box {
+    display:none;
+}
+
+#wrapper.xs {
+    padding-left: 0;
+}
+
+.xl .menu-toggle,
+.xl #sidebar-wrapper,
+.xl  #layers-container-box {
+    display:block;
+}
+
+#wrapper.xl {
+    padding-left: 250px;
+}
+
+#wrapper.xs.toggled-2 #map {
+    margin-left: 200px;
+}
+
+.modal .sidebar-nav {
+    margin-top: 10px;
 }
