@@ -1651,3 +1651,8 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
     background-size: 16px 16px;
     margin-top: 9px;
 }
+
+#button-translate-navbar-right{
+  display: inline;
+  margin: 11px 24px 0px -10px;
+}

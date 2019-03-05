@@ -497,17 +497,17 @@ mviewer = (function () {
           //ajoute les boutons
           if (configuration.getConfiguration().application.showhelp === "true") {
             for (i = 0; i < langs.length; ++i){
-              $(".modal-content").before("<button class='translate' idLang='"+langs[i]+"'>"+langs[i]+"</button>");
+              $("#help .modal-content").before("<button class='translate' idLang='"+langs[i]+"'>"+langs[i]+"</button>");
             }
           } else {
             for (i = 0; i < langs.length; ++i){
               $(".navbar-right").append("\
-              <li style='display: inline;margin: 11px 24px 0px -10px;'><button class='translate' idLang='"+langs[i]+"'>"+langs[i]+"</button></li>");
+              <li id='button-translate-navbar-right'><button class='translate' idLang='"+langs[i]+"'>"+langs[i]+"</button></li>");
             }
           }
         } else {
           // ajoute en caché le bouton pour simuler un click dessus pour initialiser la premiere langue
-          $(".modal-content").before("<button style='display:none;' class='translate' idLang='"+langs[0]+"'>"+langs[0]+"</button>");
+          $("#help .modal-content").before("<button style='display:none;' class='translate' idLang='"+langs[0]+"'>"+langs[0]+"</button>");
         }
 
         //initialise la langue et recupere les textes
