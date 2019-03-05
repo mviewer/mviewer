@@ -273,12 +273,12 @@ body .popover-title {
 #searchresults {
   font-family: "roboto_regular", Arial, Sans-serif;
   color: #555555; }
-  #searchresults li.list-group-item.disabled {
+  #searchresults a.list-group-item.disabled {
     background-color: #032e46;
     border-color: #032e46;
     color: white;
     font-family: "roboto_bold", Arial, Sans-serif; }
-  #searchresults li a:hover {
+  #searchresults a:hover {
     font-family: "roboto_bold", Arial, Sans-serif;
     color: #032e46; }
 
@@ -346,3 +346,25 @@ body .popover-title {
   border-right: 1.1em solid rgba(3, 46, 70, 0.2);
   border-bottom: 1.1em solid rgba(3, 46, 70, 0.2);
   border-left: 1.1em solid #032e46; }
+
+#mv-navbar {
+  font-family: "roboto_bold", Arial, Sans-serif; }
+
+#mv-navbar.navbar-default .navbar-nav > li > a {
+  color: white; }
+
+@media (max-width: 991px) {
+  #legend-modal .modal-header,
+  #modal-panel .modal-header,
+  #sharepanel .modal-header,
+  #thematic-modal .modal-header {
+    background: #032e46;
+    color: white; }
+
+  #legend-modal .modal-header .close,
+  #sharepanel .modal-header .close,
+  #modal-panel .modal-header .close,
+  #thematic-modal .modal-header .close {
+    color: white;
+    opacity: .9;
+    padding-bottom: 7px; } }

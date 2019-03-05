@@ -182,22 +182,23 @@ $(document).ready(function () {
         <div class="loader">Loading...</div>
     </div>
     <!-- NAVBAR -->
+    <!-- NAVBAR -->
     <nav class="navbar navbar-default no-margin navbar-fixed-top" id="mv-navbar">
         <div class="navbar-header fixed-brand">
             <a type="button" class="navbar-brand menu-toggle" href="#"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
             <a class="navbar-brand" href="#">
                 <img alt="Logo" src="img/logo/earth-globe.svg" class="mv-logo">
             </a>
+            <a class="navbar-brand mv-title lang" key-lang="Titre" href="#">mViewer</a>
             <a type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" href="#">
-                <span class="glyphicon glyphicon-search"></span>
+                <span class="glyphicon glyphicon-menu-hamburger"></span>
             </a>
-            <!--<a class="navbar-brand" href="#"> Mviewer</a>-->
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="navbar-text mv-title hidden-xs hidden-sm hidden-md lang" key-lang="Titre">
-                    mViewer
-                </li>
+            <ul class="nav navbar-nav mv-nav">
+                <li class="hidden-lg hidden-md"><a href="#" data-toggle="modal" data-target="#thematic-modal">Données</a></li>
+                <li class="hidden-lg hidden-md"><a href="#" data-toggle="modal" data-target="#legend-modal">Affichage</a></li>
+                <li class="hidden-lg hidden-md"><a href="#" data-toggle="modal" data-target="#help">Aide</a></li>
                 <li class="hidden-xs hidden-sm hidden-md">
                     <div class="navbar-form navbar-left" id="coordinates">
                         <span class=""></span>
@@ -220,21 +221,19 @@ $(document).ready(function () {
                         </div>
                     </div>
                 </li>
-                <li class="hidden-xs hidden-sm hidden-md">
+                <li class="hidden-xs hidden-sm">
                     <div class="nav navbar-nav">
                        <button id="iconhelp" type="button" class="btn btn-default navbar-btn mv-navbar-btn" data-toggle="modal" data-target="#help"><span class="fas fa-question"></span></button>
                     </div>
                 </li>
+                <!-- SEARCH RESULTS  -->
+                <div id="searchresults" class="list-group" ></div>
             </ul>
         </div>
     </nav>
     <div id="wrapper">
         <!-- LEFT MENU SIDEBAR -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav nav-pills nav-stacked" id="menu"></ul>
-            <!--<div id="menu-toggle-2" ><span class="fa leftpanel-btn"></span></div>-->
-        </div>
-
+        <div id="sidebar-wrapper"></div>
         <!-- Page Content -->
         <div id="page-content-wrapper" >
             <div class="container-fluid xyz" >
@@ -370,11 +369,12 @@ $(document).ready(function () {
                     </div>
                     <div class="modal-body" >
                         <div class="row">
-                            <div class="col-md-6" >
-                                <a type="button" class="btn btn-default lang" key-lang="Lien permanent vers la carte" id="permalinklink" href="#" title="Lien permanent vers la carte"><img src="img/share/share_link.png" height="100px"></a>
+                            <div class="col-md-6 col-sm-6 col-xs-6" >
+                                <a type="button" class="btn btn-defaul lang" key-lang="Lien permanent vers la carte" id="permalinklink" href="#" title="Lien permanent vers la carte"><img src="img/share/share_link.png" height="100px"></a>
                             </div>
-                            <div id='share' class="col-md-6">
+                            <div id='share' class="col-md-6 col-sm-6 col-xs-6">
                                 <img id="permaqr" src="img/blank.gif" class="lang" key-lang="QR code vers la carte" title="QR code vers la carte" alt="QR code" />
+
                             </div>
                        </div>
                     </div>
@@ -408,6 +408,44 @@ $(document).ready(function () {
                         <h4 class="modal-title" class="lang" key-lang="DOCUMENTATION">DOCUMENTATION</h4>
                     </div>
                     <div class="modal-body" ></div>
+                </div>
+            </div>
+        </div>
+        <!-- THEMATIC POPUP -->
+        <div id="thematic-modal" class="modal fade" tabindex="-1" role="dialog" >
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content" role="document">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Thématiques</h4>
+                    </div>
+                    <div class="modal-body" ></div>
+                </div>
+            </div>
+        </div>
+        <!-- LEGEND POPUP -->
+        <div id="legend-modal" class="modal fade" tabindex="-1" role="dialog" >
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content" role="document">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Légende</h4>
+                    </div>
+                    <div class="modal-body" ></div>
+                </div>
+            </div>
+        </div>
+        <!-- FEATUREINFO POPUP -->
+        <div id="modal-panel" class="modal fade" tabindex="-1" role="dialog" >
+            <div class="modal-dialog modal-md">
+                <div class="modal-content" role="document">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <div class="mv-header"><h5>Informations</h5></div>
+                    </div>
+                    <div class="modal-body" >
+                        <div class="popup-content"></div>
+                    </div>
                 </div>
             </div>
         </div>

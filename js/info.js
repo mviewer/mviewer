@@ -21,7 +21,7 @@ var info = (function () {
 
     var _mvReady = true;
 
-    var _panelsTemplate = {"right-panel": "default", "bottom-panel": "default"};
+    var _panelsTemplate = {"right-panel": "default", "bottom-panel": "default", "modal-panel": "default"};
 
     /**
      * Property: _overLayers
@@ -124,7 +124,8 @@ var info = (function () {
         var queryType = "map"; // default behaviour
         var views = {
             "right-panel":{ "panel": "right-panel", "layers": []},
-            "bottom-panel":{ "panel": "bottom-panel", "layers": []}
+            "bottom-panel":{ "panel": "bottom-panel", "layers": []},
+            "modal-panel": { "panel": "modal-panel", "layers": []}
         };
         if (options) {
             // used to link elasticsearch feature with wms getFeatureinfo
@@ -229,6 +230,9 @@ var info = (function () {
                 $.each(featureInfoByLayer, function (index, response) {
                     var layerinfos = response.layerinfos;
                     var panel = layerinfos.infospanel;
+                    if (configuration.getConfiguration().mobile) {
+                        panel = 'modal-panel';
+                    }
                     var contentType = response.contenttype;
                     var layerResponse = response.response;
                     var name = layerinfos.name;
@@ -315,11 +319,17 @@ var info = (function () {
                 $.each(views, function (panel, view) {
                     if (views[panel].layers.length > 0){
                         views[panel].layers[0].firstlayer=true;
-                        var template = Mustache.render(mviewer.templates.featureInfo[_panelsTemplate[panel]], view);
+                        var template = "";
+                        if (configuration.getConfiguration().mobile) {
+                            template = Mustache.render(mviewer.templates.featureInfo.accordion, view);
+                        } else {
+                            template = Mustache.render(mviewer.templates.featureInfo[_panelsTemplate[panel]], view);
+                        }
                         $("#"+panel+" .popup-content").append(template);
                         //TODO reorder tabs like in theme panel
 
                         var title = $("[href='#slide-"+panel+"-1']").closest("li").attr("title");
+
                         // change key-lang value
                         $("#"+panel+" .mv-header h5").attr("key-lang",title);
                         // find the key-lang to get the translation in layercontrol
@@ -328,8 +338,15 @@ var info = (function () {
                                 $("#"+panel+" .mv-header h5").text($(this).text());
                             }
                         });
-                        if (!$('#'+panel).hasClass("active")) {
-                            $('#'+panel).toggleClass("active");
+
+                        $("#"+panel+" .mv-header h5").text(title);
+
+                        if (configuration.getConfiguration().mobile) {
+                            $("#modal-panel").modal("show");
+                        } else {
+                            if (!$('#'+panel).hasClass("active")) {
+                                $('#'+panel).toggleClass("active");
+                            }
                         }
                         $("#"+panel+" .popup-content iframe[class!='chartjs-hidden-iframe']").each(function( index) {
                             $(this).on('load',function () {
@@ -703,6 +720,7 @@ var info = (function () {
         _captureCoordinatesOnClick = configuration.getCaptureCoordinates();
         if (configuration.getConfiguration().application.templaterightinfopanel) {
             _panelsTemplate["right-panel"] = configuration.getConfiguration().application.templaterightinfopanel;
+            _panelsTemplate["modal-panel"] = configuration.getConfiguration().application.templaterightinfopanel;
         }
         if (configuration.getConfiguration().application.templatebottominfopanel) {
             _panelsTemplate["bottom-panel"] = configuration.getConfiguration().application.templatebottominfopanel;

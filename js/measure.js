@@ -386,13 +386,6 @@ var measure = (function () {
         $(buttonoptions).insertAfter("#toolstoolbar");
 
         _map.addLayer(vector);
-        $("#zoomtoolbar button, #toolstoolbar button, #toolstoolbar a").tooltip({
-            placement: 'left',
-            trigger: 'hover',
-            html: true,
-            container: 'body',
-            template: mviewer.templates.tooltip
-        });
     };
 
     return {
