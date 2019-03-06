@@ -173,13 +173,13 @@ $(document).ready(function () {
 <body>
     <div id="loading-page">
         <div class="single4"></div>
-        <div id="loader-title">Chargement de l'application ...</div>
+        <div id="loader-title" class="lang" key-lang="Chargement de l'application ...">Chargement de l'application ...</div>
         <div id="loader-subtitle"></div>
     </div>
     <div id="main" style="opacity: 0.01;">
     <!-- Ajax Loader -->
     <div id="loading-indicator" style="display:none">
-        <div class="loader">Loading...</div>
+        <div class="loader lang" key-lang="Chargement...">Chargement...</div>
     </div>
     <!-- NAVBAR -->
     <!-- NAVBAR -->
@@ -196,9 +196,9 @@ $(document).ready(function () {
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav mv-nav">
-                <li class="hidden-lg hidden-md"><a href="#" data-toggle="modal" data-target="#thematic-modal">Données</a></li>
-                <li class="hidden-lg hidden-md"><a href="#" data-toggle="modal" data-target="#legend-modal">Affichage</a></li>
-                <li class="hidden-lg hidden-md"><a href="#" data-toggle="modal" data-target="#help">Aide</a></li>
+                <li class="hidden-lg hidden-md"><a href="#" data-toggle="modal" data-target="#thematic-modal"><div class="lang" key-lang="Données">Données</div></a></li>
+                <li class="hidden-lg hidden-md"><a href="#" data-toggle="modal" data-target="#legend-modal"><div class="lang" key-lang="Affichage">Affichage</div></a></li>
+                <li class="hidden-lg hidden-md"><a href="#" data-toggle="modal" data-target="#help"><div class="lang" key-lang="Aide">Aide</div></a></li>
                 <li class="hidden-xs hidden-sm hidden-md">
                     <div class="navbar-form navbar-left" id="coordinates">
                         <span class=""></span>
@@ -370,7 +370,7 @@ $(document).ready(function () {
                     <div class="modal-body" >
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-xs-6" >
-                                <a type="button" class="btn btn-defaul lang" key-lang="Lien permanent vers la carte" id="permalinklink" href="#" title="Lien permanent vers la carte"><img src="img/share/share_link.png" height="100px"></a>
+                                <a type="button" class="btn btn-default lang" key-lang="Lien permanent vers la carte" id="permalinklink" href="#" title="Lien permanent vers la carte"><img src="img/share/share_link.png" height="100px"></a>
                             </div>
                             <div id='share' class="col-md-6 col-sm-6 col-xs-6">
                                 <img id="permaqr" src="img/blank.gif" class="lang" key-lang="QR code vers la carte" title="QR code vers la carte" alt="QR code" />
@@ -417,7 +417,7 @@ $(document).ready(function () {
                 <div class="modal-content" role="document">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Thématiques</h4>
+                        <h4 class="modal-title lang" key-lang="Thématiques">Thématiques</h4>
                     </div>
                     <div class="modal-body" ></div>
                 </div>
@@ -429,7 +429,7 @@ $(document).ready(function () {
                 <div class="modal-content" role="document">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Légende</h4>
+                        <h4 class="modal-title lang" key-lang="Légende">Légende</h4>
                     </div>
                     <div class="modal-body" ></div>
                 </div>
@@ -441,7 +441,7 @@ $(document).ready(function () {
                 <div class="modal-content" role="document">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <div class="mv-header"><h5>Informations</h5></div>
+                        <div class="mv-header"><h5 class="lang" key-lang="Informations">Informations</h5></div>
                     </div>
                     <div class="modal-body" >
                         <div class="popup-content"></div>

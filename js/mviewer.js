@@ -514,10 +514,11 @@ mviewer = (function () {
               $("#help .modal-content").before("<button class='translate' idLang='"+langs[i]+"'>"+langs[i]+"</button>");
             }
           } else {
+            $(".navbar-right").append("<li id='button-translate-navbar-right'>");
             for (i = 0; i < langs.length; ++i){
-              $(".navbar-right").append("\
-              <li id='button-translate-navbar-right'><button class='translate' idLang='"+langs[i]+"'>"+langs[i]+"</button></li>");
+              $("#button-translate-navbar-right").append("<button class='translate' idLang='"+langs[i]+"'>"+langs[i]+"</button>");
             }
+            $("#button-translate-navbar-right").append("</li>");
           }
         } else {
           // ajoute en caché le bouton pour simuler un click dessus pour initialiser la premiere langue

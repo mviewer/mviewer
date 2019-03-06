@@ -1,6 +1,12 @@
 {
   "en": {
+    "Chargement de l'application ..." : "Loading the application ...",
+    "Chargement..." : "Loading...",
   	"Titre" : "Simfen eng",
+    "Données" : "Data",
+    "Affichage" : "Display",
+    "Thématiques" : "Thematics",
+    "Légende" : "Legend",
   	"Rechercher" : "Search",
   	"Paramètres de recherche" : "Search parameters",
   	"Rechercher dans l'emprise de la carte" : "Search in the grip of the map",
@@ -56,7 +62,13 @@
     "Lien vers la documentation" : "Link to the documentation"
     },
   "fr": {
+    "Chargement de l'application ..." : "Chargement de l'application ...",
+    "Chargement..." : "Chargement...",
   	"Titre" : "Simfen",
+    "Données" : "Données",
+    "Affichage" : "Affichage",
+    "Thématiques" : "Thématiques",
+    "Légende" : "Légende",
   	"Rechercher" : "Rechercher",
   	"Paramètres de recherche" : "Paramètres de recherche",
   	"Rechercher dans l'emprise de la carte" : "Rechercher dans l'emprise de la carte",
