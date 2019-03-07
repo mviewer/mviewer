@@ -508,22 +508,23 @@ mviewer = (function () {
         langs = configuration.getConfiguration().application.translate.split(",");
         // ajoute un bouton uniquement s'il y a plus d'une langue
         if (langs.length > 1){
-          //ajoute les boutons
           if (configuration.getConfiguration().application.showhelp === "true") {
-            for (i = 0; i < langs.length; ++i){
-              $("#help .modal-content").before("<button class='translate' idLang='"+langs[i]+"'>"+langs[i]+"</button>");
+              $("#help .modal-content").before("<select id='dropdowntranslate'>");
+              for (i = 0; i < langs.length; ++i){
+                $("#dropdowntranslate").append("<option value='"+langs[i]+"' class='translate' idLang='"+langs[i]+"'>"+langs[i]+"</option>");
+              }
+              $("#help .modal-content").append("</select>");
+            } else {
+              $(".navbar-right").append("<li id='button-translate-navbar-right'><select id='dropdowntranslate'>");
+              for (i = 0; i < langs.length; ++i){
+                $("#dropdowntranslate").append("<option value='"+langs[i]+"' class='translate' idLang='"+langs[i]+"'>"+langs[i]+"</option>");
+              }
+              $("#button-translate-navbar-right").append("</select></li>");
             }
           } else {
-            $(".navbar-right").append("<li id='button-translate-navbar-right'>");
-            for (i = 0; i < langs.length; ++i){
-              $("#button-translate-navbar-right").append("<button class='translate' idLang='"+langs[i]+"'>"+langs[i]+"</button>");
-            }
-            $("#button-translate-navbar-right").append("</li>");
+            // ajoute en caché le bouton pour simuler un click dessus pour initialiser la premiere langue
+            $("#help .modal-content").before("<button style='display:none;' class='translate' idLang='"+langs[0]+"'>"+langs[0]+"</button>");
           }
-        } else {
-          // ajoute en caché le bouton pour simuler un click dessus pour initialiser la premiere langue
-          $("#help .modal-content").before("<button style='display:none;' class='translate' idLang='"+langs[0]+"'>"+langs[0]+"</button>");
-        }
 
         //initialise la langue et recupere les textes
         var langSelected = langs[0];
