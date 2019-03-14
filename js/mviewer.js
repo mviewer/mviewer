@@ -502,76 +502,97 @@ mviewer = (function () {
      *
      */
 
-    var _initTranslate = function () {
-      if (configuration.getConfiguration().application.translate) {
-        //identifie les langues presentes, la premiere est celle employée au départ
-        langs = configuration.getConfiguration().application.translate.split(",");
-        // ajoute un bouton uniquement s'il y a plus d'une langue
-        if (langs.length > 1){
-          if (configuration.getConfiguration().application.showhelp === "true") {
-              $("#help .modal-content").before("<select id='dropdowntranslate'>");
-              for (i = 0; i < langs.length; ++i){
-                $("#dropdowntranslate").append("<option value='"+langs[i]+"' class='translate' idLang='"+langs[i]+"'>"+langs[i]+"</option>");
-              }
-              $("#help .modal-content").append("</select>");
-            } else {
-              $(".navbar-right").append("<li id='button-translate-navbar-right'><select id='dropdowntranslate'>");
-              for (i = 0; i < langs.length; ++i){
-                $("#dropdowntranslate").append("<option value='"+langs[i]+"' class='translate' idLang='"+langs[i]+"'>"+langs[i]+"</option>");
-              }
-              $("#button-translate-navbar-right").append("</select></li>");
-            }
-          } else {
-            // ajoute en caché le bouton pour simuler un click dessus pour initialiser la premiere langue
-            $("#help .modal-content").before("<button style='display:none;' class='translate' idLang='"+langs[0]+"'>"+langs[0]+"</button>");
-          }
+    var _initTranslate = function() {
+        if (configuration.getConfiguration().application.translate) {
+            //identifie les langues presentes, la premiere est celle employée au départ
+            langs = configuration.getConfiguration().application.translate.split(",");
+            var langitems = [];
+                langs.forEach(function(lang) {
+                    langitems.push('<li><a href="#" idlang="' + lang + '"></span>' + lang + '</a></li>');
+                });
+            // ajoute un bouton uniquement s'il y a plus d'une langue
+            if (langs.length > 1) {
+                var dropdown = ['<li class="dropdown">',
+                                    '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Langue<span class="caret"></span></a>',
+                                    '<ul class="dropdown-menu mv-translate">',
+                                        langitems.join(""),
+                                    '</ul>',
+                                '</li>'
+                                ].join("");
 
-        //initialise la langue et recupere les textes
-        var langSelected = langs[0];
-        var _arrLang = {};
-        $.ajax({
-            url: configuration.getConfiguration().application.translatefile,//"translate.json",
-            dataType: "text",
-            success: function (html) {
-                // must be JSON object
-                _arrLang = JSON.parse(html);
-                //active la langue directement
-                $(".translate").each(function(){if ($(this).attr("idlang") === langSelected){$(this).click();}});
-            }
-        });
-
-        //translate function
-        $(function(){
-            $(".translate").click(function(){
-              // test if the user click on button
-              // language or on layer to change or get lang
-              if ($(this).attr("idlang")){
-                var lang = $(this).attr("idlang");
-                langSelected = lang;
-              } else {
-                var lang = langSelected;
-              }
-              $(".lang").each(function(index, element){
-                // pour changer un placeholder
-                if ($(this).attr("placeholder")){
-                  $(this).attr("placeholder",_arrLang[lang][$(this).attr("key-lang")]);
-                // pour changer le titre en survol
-                } else if ($(this).attr("title")) {
-                  $(this).attr("title",_arrLang[lang][$(this).attr("key-lang")]);
-                // pour prendre en compte le data-original-title de bootstrap
-                } else if ($(this).attr("accesskey")){
-                  $(this).attr("data-original-title",_arrLang[lang][$(this).attr("key-lang")]);
-                // pour prendre en compte le alt d'une image
-                } else if ($(this).attr("alt")){
-                  $(this).attr("alt",_arrLang[lang][$(this).attr("key-lang")]);
-                // pour changer le texte
+                if (configuration.getConfiguration().application.showhelp === "true") {
+                    $("#help .modal-header").append('<ul class="nav">' + dropdown + '</ul>');
                 } else {
-                  $(this).text(_arrLang[lang][$(this).attr("key-lang")]);
+                    $(".mv-nav").append(dropdown);
                 }
-              });
+                
+            } else {
+                // ajoute le bouton de l'unique langue pour l'activer et y faire reference lors de l'ajout d'elements
+                var dropdown = ['<li class="dropdown" style="visibility:hidden;">',
+                                    '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Langue<span class="caret"></span></a>',
+                                    '<ul class="dropdown-menu mv-translate">',
+                                        langitems.join(""),
+                                    '</ul>',
+                                '</li>'
+                                ].join("");
+                $(".mv-nav").append(dropdown);
+            }
+
+            $(".mv-translate li a").click(function(e) {
+                var language = $(e.currentTarget).text();
+                var idlang = $(e.currentTarget).attr("idlang");
+                $(e.currentTarget).closest(".dropdown").find(".dropdown-toggle").text(language);
+                translate_f(idlang);
             });
-        });
-      }
+
+            //fonction pour effectuer une traduction en ajoutant une couche (impossible de changer au debut car les textes n'existent pas)
+            $(function(){
+                $(".mv-nav-item").click(function(e) {
+                    var idlang = $(".dropdown a")[0].innerHTML;
+                    var layerid = $(e.currentTarget).attr("data-layerid");
+                    //attend que la couche soit ajoutees pour la traduire
+                    $("#layers-container li").each(function(i){
+                        if ($(this).attr("data-layerid")==layerid){
+                            translate_f(idlang);
+                        }
+                    });
+                });
+            });
+
+            //initialise la langue et recupere les textes
+            var _arrLang = {};
+            $.ajax({
+                url: configuration.getConfiguration().application.translatefile,
+                dataType: "text",
+                success: function(html) {
+                    // must be JSON object
+                    _arrLang = JSON.parse(html);
+                    //active la première langue
+                    $(".mv-translate li a").first().click();
+                }
+            });
+
+            var translate_f = function(lang) {
+                $(".lang").each(function(index, element) {
+                    // pour changer un placeholder
+                    if ($(this).attr("placeholder")) {
+                        $(this).attr("placeholder", _arrLang[lang][$(this).attr("key-lang")]);
+                        // pour changer le titre en survol
+                    } else if ($(this).attr("title")) {
+                        $(this).attr("title", _arrLang[lang][$(this).attr("key-lang")]);
+                        // pour prendre en compte le data-original-title de bootstrap
+                    } else if ($(this).attr("accesskey")) {
+                        $(this).attr("data-original-title", _arrLang[lang][$(this).attr("key-lang")]);
+                        // pour prendre en compte le alt d'une image
+                    } else if ($(this).attr("alt")) {
+                        $(this).attr("alt", _arrLang[lang][$(this).attr("key-lang")]);
+                        // pour changer le texte
+                    } else {
+                        $(this).text(_arrLang[lang][$(this).attr("key-lang")]);
+                    }
+                });
+            };
+        }
     };
 
     /**

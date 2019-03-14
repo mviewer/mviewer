@@ -332,12 +332,6 @@ var info = (function () {
 
                         // change key-lang value
                         $("#"+panel+" .mv-header h5").attr("key-lang",title);
-                        // find the key-lang to get the translation in layercontrol
-                        $(".lang").each(function(index){
-                            if ($(this).attr("key-lang") == title) {
-                                $("#"+panel+" .mv-header h5").text($(this).text());
-                            }
-                        });
 
                         $("#"+panel+" .mv-header h5").text(title);
 
@@ -346,6 +340,12 @@ var info = (function () {
                         } else {
                             if (!$('#'+panel).hasClass("active")) {
                                 $('#'+panel).toggleClass("active");
+                                var idlang = $(".dropdown a")[0].innerHTML;
+                                $(".mv-translate li a").each(function(){
+                                    if ($(this).attr("idlang")==idlang){
+                                        $(this).click();
+                                    }
+                                });
                             }
                         }
                         $("#"+panel+" .popup-content iframe[class!='chartjs-hidden-iframe']").each(function( index) {
@@ -366,11 +366,11 @@ var info = (function () {
                             placement: 'right',
                             html: true,
                             template: mviewer.templates.tooltip
-                       });
-                       $('.carousel.slide').on('slide.bs.carousel', function (e) {
-                          $(e.currentTarget).find(".counter-slide").text($(e.relatedTarget).attr("data-counter"));
-                       });
-                       mviewer.showLocation(_projection.getCode(), _clickCoordinates[0], _clickCoordinates[1]);
+                        });
+                        $('.carousel.slide').on('slide.bs.carousel', function (e) {
+                            $(e.currentTarget).find(".counter-slide").text($(e.relatedTarget).attr("data-counter"));
+                        });
+                        mviewer.showLocation(_projection.getCode(), _clickCoordinates[0], _clickCoordinates[1]);
 
                     } else {
                         $('#'+panel).removeClass("active");
