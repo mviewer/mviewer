@@ -340,14 +340,17 @@ var info = (function () {
                         } else {
                             if (!$('#'+panel).hasClass("active")) {
                                 $('#'+panel).toggleClass("active");
-                                var idlang = $(".dropdown a")[0].innerHTML;
-                                $(".mv-translate li a").each(function(){
-                                    if ($(this).attr("idlang")==idlang){
-                                        $(this).click();
-                                    }
-                                });
                             }
                         }
+                        
+                        // quand le panel s'ouvre, effectue une traduction
+                        var idlang = $(".dropdown a")[0].innerHTML;
+                        $(".mv-translate li a").each(function(){
+                            if ($(this).attr("idlang")==idlang){
+                                $(this).click();
+                            }
+                        });
+
                         $("#"+panel+" .popup-content iframe[class!='chartjs-hidden-iframe']").each(function( index) {
                             $(this).on('load',function () {
                                     $(this).closest("li").find(".mv-iframe-indicator").hide();
@@ -379,7 +382,6 @@ var info = (function () {
                 $('#loading-indicator').hide();
                 search.clearSearchField();
                 _mvReady = true;
-
             };
 
             var ajaxFunction = function () {
