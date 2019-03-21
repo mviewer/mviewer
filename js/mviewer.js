@@ -469,7 +469,7 @@ mviewer = (function () {
         mviewer.setTool('info');
         //Activate tooltips on tools buttons
         if (!configuration.getConfiguration().mobile) {
-            $("#zoomtoolbar button, #toolstoolbar button, #toolstoolbar a").tooltip({
+            $("#backgroundlayersbtn, #zoomtoolbar button, #toolstoolbar button, #toolstoolbar a").tooltip({
                 placement: 'left',
                 trigger: 'hover',
                 html: true,
@@ -1449,14 +1449,16 @@ mviewer = (function () {
                 var thumb = configuration.getConfiguration().baselayers.baselayer[nexid].thumbgallery;
                 var title = configuration.getConfiguration().baselayers.baselayer[nexid].label;
                 $("#backgroundlayersbtn").css("background-image", 'url("'+thumb+'")');
-                $("#backgroundlayersbtn").attr("title", title);
-                $("#backgroundlayersbtn").tooltip('destroy').tooltip({
-                    placement: 'left',
-                    trigger: 'hover',
-                    html: true,
-                    container: 'body',
-                    template: mviewer.templates.tooltip
-                 });
+                if (!configuration.getConfiguration().mobile) {
+                    $("#backgroundlayersbtn").attr("title", title);
+                    $("#backgroundlayersbtn").tooltip('destroy').tooltip({
+                        placement: 'left',
+                        trigger: 'hover',
+                        html: true,
+                        container: 'body',
+                        template: mviewer.templates.tooltip
+                     });
+                }
             }
             $.each(_backgroundLayers, function (id, layer) {
                 var opt = configuration.getConfiguration().baselayers.style;
