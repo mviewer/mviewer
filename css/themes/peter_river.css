@@ -369,12 +369,13 @@ body .popover-title {
   #sharepanel .modal-header,
   #thematic-modal .modal-header {
     background: #3498db;
-    color: white; }
+    color: white;
+    padding: 12px 15px;
+    font-family: "roboto_regular", Arial, Sans-serif; }
 
   #legend-modal .modal-header .close,
   #sharepanel .modal-header .close,
   #modal-panel .modal-header .close,
   #thematic-modal .modal-header .close {
     color: white;
-    opacity: .9;
-    padding-bottom: 7px; } }
+    opacity: .9; } }
