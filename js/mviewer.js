@@ -2320,14 +2320,16 @@ mviewer = (function () {
             var thumb = configuration.getConfiguration().baselayers.baselayer[nexid].thumbgallery;
             var title = configuration.getConfiguration().baselayers.baselayer[nexid].label;
             $("#backgroundlayersbtn").css("background-image", 'url("'+thumb+'")');
-            $("#backgroundlayersbtn").attr("data-original-title", title);
-            $("#backgroundlayersbtn").tooltip('hide').tooltip({
-                placement: 'top',
-                trigger: 'hover',
-                html: true,
-                container: 'body',
-                template: mviewer.templates.tooltip
-            });
+            if (!configuration.getConfiguration().mobile) {
+                $("#backgroundlayersbtn").attr("data-original-title", title);
+                $("#backgroundlayersbtn").tooltip('hide').tooltip({
+                    placement: 'top',
+                    trigger: 'hover',
+                    html: true,
+                    container: 'body',
+                    template: mviewer.templates.tooltip
+                });
+            }
         },
 
         /**
