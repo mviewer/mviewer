@@ -274,13 +274,23 @@ body .popover-title {
   font-family: "roboto_regular", Arial, Sans-serif;
   color: #555555; }
   #searchresults a.list-group-item.disabled {
-    background-color: #f62459;
-    border-color: #f62459;
-    color: white;
     font-family: "roboto_bold", Arial, Sans-serif; }
   #searchresults a:hover {
     font-family: "roboto_bold", Arial, Sans-serif;
     color: #f62459; }
+
+.searchresults-title {
+  background-color: #f62459;
+  border-color: #f62459;
+  color: white;
+  font-family: "roboto_bold", Arial, Sans-serif; }
+
+.searchresults-title .close,
+.searchresults-title .close:hover,
+.searchresults-title .close:focus,
+.searchresults-title .close:active,
+.searchresults-title .close:visited {
+  color: white; }
 
 /* Partager la carte*/
 #sharepanel {

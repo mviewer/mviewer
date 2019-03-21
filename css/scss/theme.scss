@@ -398,10 +398,7 @@ body .popover-title{
 	font-family:$font-regular;
 	color: $text-color-1;
 
-    a.list-group-item.disabled {
-        background-color: $theme-color-1;
-        border-color: $theme-color-1;
-        color: $theme-color-2;
+    a.list-group-item.disabled {        
         font-family: $font-bold;
     }
 
@@ -410,6 +407,22 @@ body .popover-title{
         color: $theme-color-1;
     }
 
+}
+
+.searchresults-title {
+    background-color: $theme-color-1;
+    border-color: $theme-color-1;
+    color: $theme-color-2;
+    font-family: "roboto_bold", Arial, Sans-serif;   
+}
+
+.searchresults-title .close,
+.searchresults-title .close:hover,
+.searchresults-title .close:focus,
+.searchresults-title .close:active,
+.searchresults-title .close:visited
+ {
+   color: $theme-color-2;
 }
 
 
