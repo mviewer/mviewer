@@ -9,7 +9,7 @@
     <themes mini="false">
         <theme id="theme-20171106150925" name="Clusters" collapsed="false" icon="book">
             <layer id="cluster"
-                name="Projets soumis à étude d'impacte"
+                name="Projets soumis à étude d'impact"
                 visible="true"
                 type="customlayer"
                 expanded="true"
