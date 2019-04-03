@@ -274,13 +274,23 @@ body .popover-title {
   font-family: "roboto_regular", Arial, Sans-serif;
   color: #555555; }
   #searchresults a.list-group-item.disabled {
-    background-color: #27ae60;
-    border-color: #27ae60;
-    color: white;
     font-family: "roboto_bold", Arial, Sans-serif; }
   #searchresults a:hover {
     font-family: "roboto_bold", Arial, Sans-serif;
     color: #27ae60; }
+
+.searchresults-title {
+  background-color: #27ae60;
+  border-color: #27ae60;
+  color: white;
+  font-family: "roboto_bold", Arial, Sans-serif; }
+
+.searchresults-title .close,
+.searchresults-title .close:hover,
+.searchresults-title .close:focus,
+.searchresults-title .close:active,
+.searchresults-title .close:visited {
+  color: white; }
 
 /* Partager la carte*/
 #sharepanel {
@@ -359,12 +369,13 @@ body .popover-title {
   #sharepanel .modal-header,
   #thematic-modal .modal-header {
     background: #27ae60;
-    color: white; }
+    color: white;
+    padding: 12px 15px;
+    font-family: "roboto_regular", Arial, Sans-serif; }
 
   #legend-modal .modal-header .close,
   #sharepanel .modal-header .close,
   #modal-panel .modal-header .close,
   #thematic-modal .modal-header .close {
     color: white;
-    opacity: .9;
-    padding-bottom: 7px; } }
+    opacity: .9; } }

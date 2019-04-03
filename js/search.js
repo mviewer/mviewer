@@ -134,7 +134,9 @@ var search = (function () {
      */
 
     var _clearSearchResults = function () {
-        $("#searchresults").html("");
+        $("#searchresults .list-group-item").remove();
+        $("#searchresults").hide();
+
     };
 
     /**
@@ -145,7 +147,6 @@ var search = (function () {
     var _clearSearchField = function () {
         _clearSearchResults();
         $("#searchfield").val("");
-        $(".mv-searchtool-delete").removeClass("active");
     };
 
     /**
@@ -165,7 +166,7 @@ var search = (function () {
             _map.addLayer(vector);
         }
 
-        $("#searchtool .mv-searchtool-delete").click(function () {
+        $(".searchresults-title .close").click(function () {
             _clearSearchField();
             if (_sourceEls) {
                 _sourceEls.clear();
@@ -180,13 +181,10 @@ var search = (function () {
             }
             var chars = $(this).val().length;
             if (chars === 0) {
-                $(".mv-searchtool-delete").removeClass("active");
             } else if ((chars >0) && (chars < 3)) {
-                $("#searchresults").html("");
-                $(".mv-searchtool-delete").addClass("active");
+                $("#searchresults .list-group-item").remove();
             } else {
                 _search($(this).val());
-                $(".mv-searchtool-delete").addClass("active");
             }
         });
 
@@ -241,7 +239,7 @@ var search = (function () {
                         }
                         $(".geoportail").remove()
                         if (res.length > 0) {
-                             $("#searchresults").append(str);
+                             $("#searchresults").append(str).show();
                         }
                     }
                 });
@@ -292,7 +290,7 @@ var search = (function () {
                             res[i].properties.name.replace("'", "*") + '\');">' + res[i].properties.label + '</a>';
                         }
                         $(".geoportail").remove();
-                        $("#searchresults").append(str);
+                        $("#searchresults").append(str).show();
                     }
                 });
             }
@@ -390,7 +388,7 @@ var search = (function () {
                         + result_label + '</a>';
                 });
             }
-            $("#searchresults").append(str);
+            $("#searchresults").append(str).show();
         }
     };
 
@@ -555,7 +553,7 @@ var search = (function () {
                         }
                         $(".elasticsearch").remove();
                         if (nb > 0) {
-                            $("#searchresults").prepend(str);
+                            $("#searchresults").prepend(str).show();
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
