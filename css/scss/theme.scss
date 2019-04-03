@@ -398,10 +398,7 @@ body .popover-title{
 	font-family:$font-regular;
 	color: $text-color-1;
 
-    a.list-group-item.disabled {
-        background-color: $theme-color-1;
-        border-color: $theme-color-1;
-        color: $theme-color-2;
+    a.list-group-item.disabled {        
         font-family: $font-bold;
     }
 
@@ -410,6 +407,22 @@ body .popover-title{
         color: $theme-color-1;
     }
 
+}
+
+.searchresults-title {
+    background-color: $theme-color-1;
+    border-color: $theme-color-1;
+    color: $theme-color-2;
+    font-family: $font-bold; 
+}
+
+.searchresults-title .close,
+.searchresults-title .close:hover,
+.searchresults-title .close:focus,
+.searchresults-title .close:active,
+.searchresults-title .close:visited
+ {
+   color: $theme-color-2;
 }
 
 
@@ -525,13 +538,14 @@ body .popover-title{
     #thematic-modal .modal-header {
         background: $theme-color-1;
         color: $theme-color-2;
+        padding: 12px 15px;
+        font-family: $font-regular;
     }
     #legend-modal .modal-header .close,
     #sharepanel .modal-header .close,
     #modal-panel .modal-header .close,
     #thematic-modal .modal-header .close {
         color: $theme-color-2;
-        opacity: .9;
-        padding-bottom: 7px;
+        opacity: .9;        
     }
 }
