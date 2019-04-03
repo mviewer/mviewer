@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <application title="Mviewer" mouseposition="false" logo="" help="mviewer_help.html" showhelp="false" measuretools="true" exportpng="true" style="css/themes/wet_asphalt.css" togglealllayersfromtheme="true" translate="true"/>    
+    <application title="Mviewer" mouseposition="false" logo="" help="mviewer_help.html" showhelp="false" measuretools="true" exportpng="true" style="css/themes/wet_asphalt.css" togglealllayersfromtheme="true" translate="en,fr" translatefile="translate/translate.json"/>    
     <mapoptions maxzoom="19" projection="EPSG:3857" center="-220750.13768758904,6144925.57790189" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
   
     <baselayers style="default"><!-- style="default"||gallery" -->

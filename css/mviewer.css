@@ -137,7 +137,7 @@ a#searchparams {
 @media (min-width: 992px) {
     #searchtool {
         width:220px;
-        margin-right:50px;
+        margin-right:10px;
         top: 3px;
     }
 	#searchresults {
@@ -1688,7 +1688,11 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
 
 #button-translate-navbar-right{
   display: inline;
-  margin: 11px 24px 0px -10px;
+  padding: 10px 18px;
+  margin-left: -20px;
+}
+
+#dropdowntranslate{
 }
 
 .mv-nav>li{
