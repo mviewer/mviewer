@@ -209,7 +209,7 @@ var search = (function () {
                     success: function (data) {
                         var zoom = 12;
                         var res = data.results;
-                        var str = '<a class="geoportail list-group-item disabled">Localités</a>';
+                        var str = '<a class="geoportail list-group-item disabled lang" key-lang="Localités">Localités</a>';
                         //var str = '';
                         for (var i = 0, len = res.length; i < len && i < 5; i++) {
                              switch (res[i].classification) {
@@ -259,7 +259,7 @@ var search = (function () {
                     success: function (data) {
                         var zoo = 0;
                         var res = data.features;
-                        var str = '<a class="geoportail list-group-item disabled">Localités</a>';
+                        var str = '<a class="geoportail list-group-item disabled lang" key-lang="Localités">Localités</a>';
                         for (var i = 0, len = res.length; i < len && i < 5; i++) {
                             switch(res[i].properties.type) {
                                 case 'city':
@@ -513,7 +513,7 @@ var search = (function () {
                     //contentType: "application/json; charset=utf-8",
                     success: function (data) {
                         _sourceEls.clear();
-                        var str = '<a class="elasticsearch list-group-item disabled" >Entités</a>';
+                        var str = '<a class="elasticsearch list-group-item disabled lang" key-lang="Entités">Entités</a>';
                         var format = new ol.format.GeoJSON();
                         var nb = data.hits.hits.length;
                         for (var i = 0, nb ; i < nb && i < 5; i++) {

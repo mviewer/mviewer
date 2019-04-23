@@ -1720,3 +1720,16 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
 .modal .sidebar-nav {
     margin-top: 10px;
 }
+
+/*******************************
+------------- TRANSLATE
+********************************/
+
+#button-translate-navbar-right{
+  display: inline;
+  padding: 10px 18px;
+  margin-left: -20px;
+}
+
+#dropdowntranslate{
+}

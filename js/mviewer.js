@@ -497,6 +497,104 @@ mviewer = (function () {
     };
 
     /**
+     * Private Method: _initTranslate
+     *
+     */
+
+    var _initTranslate = function() {
+        if (configuration.getConfiguration().application.translate) {
+            //identifie les langues presentes, la premiere est celle employée au départ
+            langs = configuration.getConfiguration().application.translate.split(",");
+            var langitems = [];
+                langs.forEach(function(lang) {
+                    langitems.push('<li><a href="#" idlang="' + lang + '"></span>' + lang + '</a></li>');
+                });
+            // ajoute un bouton uniquement s'il y a plus d'une langue
+            if (langs.length > 1) {
+                var dropdown = ['<li class="dropdown">',
+                                    '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Langue<span class="caret"></span></a>',
+                                    '<ul class="dropdown-menu mv-translate">',
+                                        langitems.join(""),
+                                    '</ul>',
+                                '</li>'
+                                ].join("");
+
+                if (configuration.getConfiguration().application.showhelp === "true") {
+                    $("#help .modal-header").append('<ul class="nav">' + dropdown + '</ul>');
+                } else {
+                    $(".mv-nav").append(dropdown);
+                }
+
+            } else {
+                // ajoute le bouton de l'unique langue pour l'activer et y faire reference lors de l'ajout d'elements
+                var dropdown = ['<li class="dropdown" style="visibility:hidden;">',
+                                    '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Langue<span class="caret"></span></a>',
+                                    '<ul class="dropdown-menu mv-translate">',
+                                        langitems.join(""),
+                                    '</ul>',
+                                '</li>'
+                                ].join("");
+                $(".mv-nav").append(dropdown);
+            }
+
+            $(".mv-translate li a").click(function(e) {
+                var language = $(e.currentTarget).text();
+                var idlang = $(e.currentTarget).attr("idlang");
+                $(e.currentTarget).closest(".dropdown").find(".dropdown-toggle").text(language);
+                translate_f(idlang);
+            });
+
+            //fonction pour effectuer une traduction en ajoutant une couche (impossible de changer au debut car les textes n'existent pas)
+            $(function(){
+                $(".mv-nav-item").click(function(e) {
+                    var idlang = $(".dropdown a")[0].innerHTML;
+                    var layerid = $(e.currentTarget).attr("data-layerid");
+                    //attend que la couche soit ajoutees pour la traduire
+                    $("#layers-container li").each(function(i){
+                        if ($(this).attr("data-layerid")==layerid){
+                            translate_f(idlang);
+                        }
+                    });
+                });
+            });
+
+            //initialise la langue et recupere les textes
+            var _arrLang = {};
+            $.ajax({
+                url: configuration.getConfiguration().application.translatefile,
+                dataType: "text",
+                success: function(html) {
+                    // must be JSON object
+                    _arrLang = JSON.parse(html);
+                    //active la première langue
+                    $(".mv-translate li a").first().click();
+                }
+            });
+
+            var translate_f = function(lang) {
+                $(".lang").each(function(index, element) {
+                    // pour changer un placeholder
+                    if ($(this).attr("placeholder")) {
+                        $(this).attr("placeholder", _arrLang[lang][$(this).attr("key-lang")]);
+                        // pour changer le titre en survol
+                    } else if ($(this).attr("title")) {
+                        $(this).attr("title", _arrLang[lang][$(this).attr("key-lang")]);
+                        // pour prendre en compte le data-original-title de bootstrap
+                    } else if ($(this).attr("accesskey")) {
+                        $(this).attr("data-original-title", _arrLang[lang][$(this).attr("key-lang")]);
+                        // pour prendre en compte le alt d'une image
+                    } else if ($(this).attr("alt")) {
+                        $(this).attr("alt", _arrLang[lang][$(this).attr("key-lang")]);
+                        // pour changer le texte
+                    } else {
+                        $(this).text(_arrLang[lang][$(this).attr("key-lang")]);
+                    }
+                });
+            };
+        }
+    };
+
+    /**
      * Private Method: _mapChange
      *
      *Parameter e - event
@@ -1603,6 +1701,7 @@ mviewer = (function () {
                 search.init(configuration.getConfiguration());
                 _initPanelsPopup();
                 _initGeolocation();
+                _initTranslate();
                 _initTools();
         },
 

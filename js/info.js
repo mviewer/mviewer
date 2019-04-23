@@ -329,6 +329,8 @@ var info = (function () {
                         //TODO reorder tabs like in theme panel
 
                         var title = $("[href='#slide-"+panel+"-1']").closest("li").attr("title");
+                        // change key-lang value
+                        $("#"+panel+" .mv-header h5").attr("key-lang",title);
                         $("#"+panel+" .mv-header h5").text(title);
 
                         if (configuration.getConfiguration().mobile) {
@@ -338,6 +340,14 @@ var info = (function () {
                                 $('#'+panel).toggleClass("active");
                             }
                         }
+
+                        var idlang = $(".dropdown a")[0].innerHTML;
+                        $(".mv-translate li a").each(function(){
+                            if ($(this).attr("idlang")==idlang){
+                                $(this).click();
+                            }
+                        });
+
                         $("#"+panel+" .popup-content iframe[class!='chartjs-hidden-iframe']").each(function( index) {
                             $(this).on('load',function () {
                                     $(this).closest("li").find(".mv-iframe-indicator").hide();
