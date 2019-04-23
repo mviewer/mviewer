@@ -196,13 +196,13 @@ $(document).ready(function () {
 <body>
     <div id="loading-page">
         <div class="single4"></div>
-        <div id="loader-title">Chargement de l'application ...</div>
+        <div id="loader-title" class="lang" key-lang="Chargement de l'application ...">Chargement de l'application ...</div>
         <div id="loader-subtitle"></div>
     </div>
     <div id="main" style="opacity: 0.01;">
     <!-- Ajax Loader -->
     <div id="loading-indicator" style="display:none">
-        <div class="loader">Loading...</div>
+        <div class="loader lang" key-lang="Chargement...">Loading...</div>
     </div>
     <!-- NAVBAR -->
     <!-- NAVBAR -->
@@ -212,16 +212,16 @@ $(document).ready(function () {
             <a class="navbar-brand" href="#">
                 <img alt="Logo" src="img/logo/earth-globe.svg" class="mv-logo">
             </a>
-            <a class="navbar-brand mv-title" href="#">mViewer</a>
+            <a class="navbar-brand mv-title lang" key-lang="Titre" href="#">mViewer</a>
             <a type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" href="#">
                 <span class="glyphicon glyphicon-menu-hamburger"></span>
             </a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav mv-nav">
-                <li class="hidden-lg hidden-md"><a href="#" data-toggle="modal" data-target="#thematic-modal">Données</a></li>
-                <li class="hidden-lg hidden-md"><a href="#" data-toggle="modal" data-target="#legend-modal">Affichage</a></li>
-                <li class="hidden-lg hidden-md"><a href="#" data-toggle="modal" data-target="#help">Aide</a></li>
+                <li class="hidden-lg hidden-md"><a href="#" data-toggle="modal" data-target="#thematic-modal"><div class="lang" key-lang="Données">Données</div></a></li>
+                <li class="hidden-lg hidden-md"><a href="#" data-toggle="modal" data-target="#legend-modal"><div class="lang" key-lang="Affichage">Affichage</div></a></li>
+                <li class="hidden-lg hidden-md"><a href="#" data-toggle="modal" data-target="#help"><div class="lang" key-lang="Aide">Aide</div></a></li>
                 <li class="hidden-xs hidden-sm hidden-md">
                     <div class="navbar-form navbar-left" id="coordinates">
                         <span class=""></span>
@@ -232,7 +232,7 @@ $(document).ready(function () {
                 <li>
                     <div class="navbar-form" role="search" id="searchtool">
                         <div class="form-group input-group">
-                            <input type="text" class="form-control" placeholder="Rechercher" id="searchfield">
+                            <input type="text" class="form-control lang" placeholder="Rechercher" id="searchfield" key-lang="Rechercher">
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-default" aria-label="Help" data-toggle="modal" data-target="#parameterspanel">
                                     <span class="glyphicon glyphicon-option-vertical"></span>
@@ -267,8 +267,8 @@ $(document).ready(function () {
                     <div id="layers-container-box" class="">
                         <div id="legend" class="active">
                             <div id="layers-container-box-header" >
-                                <a onclick="mviewer.toggleLegend();" title="Afficher/masquer la légende" href="#"> <span class="glyphicon glyphicon-list"></span> </a>
-                                <a id="btn-remove-layers" onclick="mviewer.removeAllLayers();" title="Supprimer toutes les couches" href="#"> <span class="glyphicon glyphicon-trash"></span> </a>
+                                <a onclick="mviewer.toggleLegend();" title="Afficher/masquer la légende" href="#" class="lang" key-lang="Afficher/masquer la légende"> <span class="glyphicon glyphicon-list"></span> </a>
+                                <a id="btn-remove-layers" onclick="mviewer.removeAllLayers();" title="Supprimer toutes les couches" href="#" class="lang" key-lang="Supprimer toutes les couches"> <span class="glyphicon glyphicon-trash"></span> </a>
                             </div>
                             <ul id="layers-container" class="list-group"></ul>
                         </div>
@@ -276,15 +276,15 @@ $(document).ready(function () {
                     <div id="feature-info" class=""></div>
                     <!-- BOTTOM PANEL -->
                     <div id="bottom-panel">
-                        <div id="bottom-panel-btn" ><i class="mv-close fas fa-chevron-down" title="Fermer ce panneau" onclick="$('#bottom-panel').toggleClass('active')" ></i></div>
-                        <div class="mv-header"><h5>Informations</h5>
+                        <div id="bottom-panel-btn" ><i class="mv-close fas fa-chevron-down" title="Fermer ce panneau" onclick="$('#bottom-panel').toggleClass('active')" class="lang" key-lang="Fermer ce panneau"></i></div>
+                        <div class="mv-header"><h5 class="lang" key-lang="Informations">Informations</h5>
                         </div>
                         <div class="popup-content" ></div>
                     </div>
                     <!-- RIGHT PANEL -->
                          <div id="right-panel">
-                            <div class="mv-header"><h5>Informations</h5>
-                                <a href="#" class="close" data-dismiss="alert" aria-label="close" onclick="$('#right-panel').toggleClass('active')" title="Fermer">×</a>
+                            <div class="mv-header"><h5 class="lang" key-lang="Informations">Informations</h5>
+                                <a href="#" class="close lang" data-dismiss="alert" aria-label="close" onclick="$('#right-panel').toggleClass('active')" title="Fermer" key-lang="Fermer">×</a>
                             </div>
                             <div class="popup-content" ></div>
                          </div>
@@ -307,38 +307,38 @@ $(document).ready(function () {
             <!-- FIRST VERTICAL RIGHT TOOLBAR -->
             <div id="zoomtoolbar" class="btn-group-vertical btn-group-sm" role="group" aria-label="true">
                 <button href="#" onclick="mviewer.zoomIn();" title="Zoom avant (zoom fenêtre : shift + clic sur la carte)"
-                    class="btn btn-default btn-raised" tabindex="104" accesskey="4" >
+                    class="btn btn-default btn-raised lang" key-lang="Zoom avant (zoom fenêtre : shift + clic sur la carte)" tabindex="104" accesskey="4" >
                      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </button>
                 <button href="#" id="toto" onclick="mviewer.zoomToInitialExtent();"
-                    title="Revenir à l'étendue géographique de départ" class="btn btn-default btn-raised" tabindex="105" accesskey="5">
+                    title="Revenir à l'étendue géographique de départ" class="btn btn-default btn-raised lang" key-lang="Revenir à l'étendue géographique de départ" tabindex="105" accesskey="5">
                      <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                 </button>
                 <button href="#" onclick="mviewer.zoomOut();" title="Zoom arrière"
-                    class="btn btn-default btn-raised" tabindex="106" accesskey="6">
+                    class="btn btn-default btn-raised lang" key-lang="Zoom arrière" tabindex="106" accesskey="6">
                      <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
                 </button>
             </div>
             <!-- SECOND VERTICAL RIGHT TOOLBAR -->
             <div id="toolstoolbar" class="btn-group-vertical btn-group-sm" role="group" aria-label="true">
-                <a class="btn btn-default btn-raised" type="button" href="?login" id="login" title="Se connecter" tabindex="110" accesskey="10"
+                <a class="btn btn-default btn-raised lang" key-lang="Se connecter" type="button" href="?login" id="login" title="Se connecter" tabindex="110" accesskey="10"
                     style="display:none;">
                     <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
                 </a>
                 <button data-toggle="modal" data-target="#sharepanel" onclick="mviewer.mapShare();" id="sharebtn" title="Partager cette carte"
-                     tabindex="111" accesskey="11" class="btn btn-default btn-raised">
+                     tabindex="111" accesskey="11" class="btn btn-default btn-raised lang" key-lang="Partager cette carte">
                      <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
                 </button>
-                <button id="geolocbtn" type="button" class="btn btn-default btn-raised" onclick="mviewer.geoloc();"
+                <button id="geolocbtn" type="button" class="btn btn-default btn-raised lang" key-lang="Se localiser" onclick="mviewer.geoloc();"
                                         title="Se localiser" tabindex="103" accesskey="3">
                     <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
                 </button>
-                <button id="northbtn" type="button" class="btn btn-default btn-raised" onclick="mviewer.northRotate();"
+                <button id="northbtn" type="button" class="btn btn-default btn-raised lang" key-lang="Orienté au nord" onclick="mviewer.northRotate();"
                         title="Orienté au nord" tabindex="106" accesskey="6">
                     <span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
                 </button>
                  <a href="#" id="exportpng" title="Exporter carte au format image" download="carte.png"
-                    class="btn btn-default btn-raised"  tabindex="113" accesskey="13" style="display:none;">
+                    class="btn btn-default btn-raised lang" key-lang="Exporter carte au format image" tabindex="113" accesskey="13" style="display:none;">
                      <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
                 </a>
             </div>
@@ -358,23 +358,23 @@ $(document).ready(function () {
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h5 class="modal-title">Paramètres de recherche</h5>
+                        <h5 class="modal-title lang" key-lang="Paramètres de recherche">Paramètres de recherche</h5>
                     </div>
                     <div class="modal-body" >
                         <ul id="searchparameters">
                             <li class="mv-param-item" id="param_search_bbox" onclick="search.toggleParameter(this)" >
                                 <a href="#" ><span class="state-icon far mv-unchecked"></span>
-                                Rechercher dans l'emprise de la carte
+                                    <div class="lang" style="display:inline;" key-lang="Rechercher dans l'emprise de la carte">Rechercher dans l'emprise de la carte</div>
                                </a>
                             </li>
                             <li class="mv-param-item" id="param_search_localities" onclick="search.toggleParameter(this)" >
                                 <a href="#" ><span class="state-icon far mv-unchecked"></span>
-                                Rechercher des adresses
+                                    <div class="lang" style="display:inline;" key-lang="Rechercher des adresses">Rechercher des adresses</div>
                                 </a>
                             </li>
                             <li class="mv-param-item" id="param_search_features" onclick="search.toggleParameter(this)" >
                                 <a href="#" ><span class="state-icon far mv-unchecked"></span>
-                                Rechercher des entités
+                                    <div class="lang" style="display:inline;" key-lang="Rechercher des entités">Rechercher des entités</div>
                                </a>
                            </li>
                         </ul>
@@ -389,15 +389,15 @@ $(document).ready(function () {
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title"><center>Partager cette carte</center></h4>
+                        <h4 class="modal-title lang" key-lang="Partager cette carte"><center>Partager cette carte</center></h4>
                     </div>
                     <div class="modal-body" >
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-xs-6" >
-                                <a type="button" class="btn btn-default" id="permalinklink" href="#" title="Lien permanent vers la carte"><img src="img/share/share_link.png" height="100px"></a>
+                                <a type="button" class="btn btn-default lang" key-lang="Lien permanent vers la carte" id="permalinklink" href="#" title="Lien permanent vers la carte"><img src="img/share/share_link.png" height="100px"></a>
                             </div>
                             <div id='share' class="col-md-6 col-sm-6 col-xs-6">
-                                <img id="permaqr" src="img/blank.gif" title="QR code vers la carte" alt="QR code" />
+                                <img id="permaqr" src="img/blank.gif" class="lang" key-lang="QR code vers la carte" title="QR code vers la carte" alt="QR code" />
                             </div>
                        </div>
                     </div>
@@ -428,7 +428,7 @@ $(document).ready(function () {
                 <div class="modal-content" role="document">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">DOCUMENTATION</h4>
+                        <h4 class="modal-title lang" key-lang="DOCUMENTATION">DOCUMENTATION</h4>
                     </div>
                     <div class="modal-body" ></div>
                 </div>
@@ -440,7 +440,7 @@ $(document).ready(function () {
                 <div class="modal-content" role="document">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Thématiques</h4>
+                        <h4 class="modal-title lang" key-lang="Thématiques">Thématiques</h4>
                     </div>
                     <div class="modal-body" ></div>
                 </div>
@@ -452,7 +452,7 @@ $(document).ready(function () {
                 <div class="modal-content" role="document">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Options d'affichage</h4>
+                        <h4 class="modal-title lang" key-lang="Options d'affichage">Options d'affichage</h4>
                     </div>
                     <div class="modal-body" ></div>
                 </div>
@@ -464,7 +464,7 @@ $(document).ready(function () {
                 <div class="modal-content" role="document">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Informations</h4>
+                        <h4 class="modal-title lang" key-lang="Informations">Informations</h4>
                     </div>
                     <div class="modal-body" >
                         <div class="popup-content"></div>

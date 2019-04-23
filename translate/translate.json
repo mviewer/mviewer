@@ -59,7 +59,8 @@
     "Lexique" : "Lexicon",
     "Crédits" : "Credits",
     "À propos du Mviewer" : "About Mviewer",
-    "Lien vers la documentation" : "Link to the documentation"
+    "Lien vers la documentation" : "Link to the documentation",
+    "Options d'affichage" : "Display options"
     },
   "fr": {
     "Chargement de l'application ..." : "Chargement de l'application ...",
@@ -121,7 +122,8 @@
     "Lexique" : "Lexique",
     "Crédits" : "Crédits",
     "À propos du Mviewer" : "À propos du Mviewer",
-    "Lien vers la documentation" : "Lien vers la documentation"
+    "Lien vers la documentation" : "Lien vers la documentation",
+    "Options d'affichage" : "Options d'affichage"
     },
   "all": {
     "Titre" : "Mviewer all"
