@@ -97,7 +97,6 @@
 
 <script type="text/javascript">
 var config = {};
-var widgets = {};
 $(document).ready(function () {
     "use strict";
     if (window.location.search) {
@@ -134,30 +133,34 @@ $(document).ready(function () {
         url: configFile + '?_dc=' + (new Date()).getTime(),
         dataType: "xml",
         success: function (xml) {
-            //get JSON conf from xml;
-            var _conf = configuration.parseXML(xml);
-            var style = "css/themes/default.css";
-            if (!theme && _conf.application.style && _conf.application.style.match("css")) {
-                style = _conf.application.style;
-            } else if (theme) {
-                style = "css/themes/" + theme + ".css";
-            }
-            $('head').prepend('<link rel="stylesheet" href="' + style + '" type="text/css" />');
-            var title = "";
-            if (_conf.application.title) {
-                title = _conf.application.title;
-                $("#loader-subtitle").text(title);
-            }
             //load conf
-            configuration.load(_conf);
-
-            setTimeout(function () {
-                $("#loading-page").hide();
-                $("#main").css("opacity", 1).hide();
-                $("#main").fadeIn(1500);
-                mviewer.getMap().updateSize();
-            }, 2000);
+            $( document ).on( "configurationCompleted", function (e, eData) {
+                //get JSON conf from xml;
+                var _conf = configuration.parseXML(eData.xml);
+                var style = "css/themes/default.css";
+                if (!theme && _conf.application.style && _conf.application.style.match("css")) {
+                    style = _conf.application.style;
+                } else if (theme) {
+                    style = "css/themes/" + theme + ".css";
+                }
+                $('head').prepend('<link rel="stylesheet" href="' + style + '" type="text/css" />');
+                var title = "";
+                if (_conf.application.title) {
+                    title = _conf.application.title;
+                    $("#loader-subtitle").text(title);
+                }
+                configuration.load(_conf);
+                setTimeout(function () {
+                    $("#loading-page").hide();
+                    $("#main").css("opacity", 1).hide();
+                    $("#main").fadeIn(1500);
+                    mviewer.getMap().updateSize();
+                }, 2000);
             $( "#map" ).focus();
+            });
+
+            configuration.complete(xml);
+
         }, // fin success config
         error: function (request, status, error) {
             mviewer.alert("Fichier de configuration : " + configFile + " non trouvé ou incorrect !", "alert-danger");

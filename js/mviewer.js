@@ -119,7 +119,7 @@ mviewer = (function () {
      *
      */
 
-    var _ajaxURL = function (url) {
+    var _ajaxURL = function (url, optionalProxy) {
         // relative path
         if (url.indexOf('http')!=0) {
             return url;
@@ -129,7 +129,9 @@ mviewer = (function () {
             return url;
         }
         else {
-            if (_proxy) {
+            if (optionalProxy) {
+                return  optionalProxy + encodeURIComponent(url);
+            } else if (_proxy) {
                 return  _proxy + encodeURIComponent(url);
             } else {
                 return url;

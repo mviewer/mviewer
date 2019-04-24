@@ -83,6 +83,71 @@ var configuration = (function () {
         return _conf;
     };
 
+    var _complete = function (conf) {
+        /*
+         * Des thèmes externes (présents dans d'autres configuration peuvent être automatiquement chargés
+         * par référence au fichier xml utilisé (url=) et à l'id de la thématique (id=).
+         * Attention si la configuration externe est sur un autre domaine, il faut alors utiliser un proxy Ajax
+         * ou alors s'assurer que CORS est activé sur le serveur distant.
+         * Les thématiques externes peuvent utiliser des ressources particulières (templates, customLayer, sld...)
+         * si les URLs de ces ressources sont absolues et accessibles.
+        */
+
+        //Recherche des thématiques externes
+        var extraConf = $(conf).find("theme").filter(function (idx, theme) {
+            if ($(theme).attr("id") && $(theme).attr("url") && $(theme).attr("url").indexOf("http") > -1 ) {
+                return theme;
+            }
+        });
+
+        var requests = [];
+        var ajaxFunction = function () {
+            // Préparation des requêtes Ajax pour récupérer les thématiques externes
+            extraConf.toArray().forEach(function(theme) {
+                var url = $(theme).attr("url");
+                var id = $(theme).attr("id");
+                var proxy = false;
+                if ($(conf).find("proxy").attr("url")) {
+                    proxy = $(conf).find("proxy").attr("url");
+                }
+                requests.push($.ajax({
+                    url: mviewer.ajaxURL(url, proxy),
+                    crossDomain : true,
+                    themeId: id,
+                    success: function (response, textStatus, request) {
+                        //Si thématique externe récupérée, on la charge dans la configuration courante
+                        var node = $(response).find("theme#" + this.themeId);
+                        if (node.length > 0) {
+                            $(conf).find("theme#" + this.themeId).replaceWith(node);
+                        } else {
+                            $(conf).find("theme#" + this.themeId).remove();
+                            console.log("La thématique " + this.themeId + " n'a pu être trouvée dans " + this.url );
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        //Si la thématique n'est pas récupérable, on supprime la thématique dans la configuration courante
+                        console.log(this.url + " n'est pas accessible. La thématique n'a pu être chargée");
+                        $(conf).find("theme#" + this.themeId).remove();
+                    }
+                }));
+            });
+        };
+
+        $.when.apply(new ajaxFunction(), requests).done(function (result) {
+            //Lorsque toutes les thématiques externes sont récupérées,
+            // on initialise le chargement de l'application avec le trigger configurationCompleted
+            $(document).trigger("configurationCompleted", { "xml": conf});
+        }).fail(function(err) {
+            // Si une erreur a été rencontrée, initialise également le chargement de l'application
+            // avec le trigger configurationCompleted
+            $(document).trigger("configurationCompleted", { "xml": conf});
+        });
+
+
+
+
+    };
+
     var _load = function (conf) {
         _configuration = conf;
         utils.testConfiguration(conf);
@@ -431,7 +496,7 @@ var configuration = (function () {
                     oLayer.url = layer.url;
                     //Mustache template
                     if (layer.template && layer.template.url) {
-                        $.get(layer.template.url, function(template) {
+                        $.get(mviewer.ajaxURL(layer.template.url, _proxy), function(template) {
                             oLayer.template = template;
                         });
                     } else if (layer.template) {
@@ -608,7 +673,7 @@ var configuration = (function () {
                             hook_url = oLayer.url;
                         }
                         $.ajax({
-                            url: hook_url,
+                            url: mviewer.ajaxURL(hook_url),
                             dataType: "script",
                             success : function (customLayer, textStatus, request) {
                                 if (mviewer.customLayers[oLayer.id].layer) {
@@ -677,6 +742,7 @@ var configuration = (function () {
     return {
         parseXML: _parseXML,
         load: _load,
+        complete: _complete,
         getThemes: function () { return _themes; },
         getDefaultBaseLayer: function () { return _defaultBaseLayer; },
         getProxy: function () { return _proxy; },
