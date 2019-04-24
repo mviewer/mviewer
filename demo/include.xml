@@ -17,7 +17,7 @@
     <searchparameters localities="false"/>   
     <themes mini="false">
         <theme id="zae" url="https://geobretagne.fr/pub/dreal_b/apps/obsfoncier/config.xml" />        
-        <theme id="rando" url="http://172.16.10.30/mviewer/demo/geobretagne.xml" />			
+        <theme id="rando" url="http://kartenn.region-bretagne.fr/kartoviz/demo/geobretagne.xml" />			
         <theme name="Supervision"  collapsed="true" id="hydrometrie" icon="fas fa-chart-line">  
 			<layer id="hydrometrie_stations_technique" name="Supervision du réseau hydro." visible="true" tiled="true"
 				queryable="true" fields="" aliases=""
