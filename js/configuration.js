@@ -58,7 +58,11 @@ var configuration = (function () {
         }
         _conf.baselayers = _conf.baselayers;
         if (!Array.isArray(_conf.themes.theme)) {
-            _conf.themes.theme = [_conf.themes.theme];
+            if (_conf.themes.theme) {
+                _conf.themes.theme = [_conf.themes.theme];
+            } else {
+                _conf.themes.theme = [];
+            }
         }
         _conf.themes.theme.forEach(function (theme) {
             if (theme.group) {
@@ -263,35 +267,58 @@ var configuration = (function () {
             var wmcs=config.wmc.split(reg);
             var processedWMC = 0;
             var nbOverLayers = 0;
-            for (var i=0; i<wmcs.length; i++) {
-                (function(key) {
-                    var wmcid = "wmc"+key ;
-                    $.ajax({
-                        url: mviewer.ajaxURL(wmcs[key]),
+
+
+
+            var requests = [];
+            var ajaxFunction = function () {
+                // Préparation des requêtes Ajax pour récupérer les thématiques externes
+                wmcs.forEach(function(url, idx) {
+                    var wmcid = "wmc" + idx;
+                    requests.push($.ajax({
+                        url: mviewer.ajaxURL(url, _proxy),
+                        crossDomain : true,
+                        wmcid: wmcid,
                         dataType: "xml",
-                        success: function (xml) {
-                            var wmc = mviewer.parseWMCResponse(xml, wmcid);
+                        success: function (response, textStatus, request) {
+                            var wmc = mviewer.parseWMCResponse(response, this.wmcid);
+                            $.each(wmc.layers, function (idx, layer) {
+                                mviewer.processLayer(layer, layer.layer);
+                                mviewer.events().overLayersLoaded += 1;
+                            });
                             processedWMC += 1;
                             _themes[wmcid] = {};
                             _themes[wmcid].collapsed = false;
                             _themes[wmcid].id = wmcid;
+                            _themes[wmcid].name = wmc.title;
                             _themes[wmcid].layers = {};
                             _themes[wmcid].icon = "fas fa-chevron-circle-right";
-                            console.log ("adding "+wmc.title+" category");
                             _map.getView().fit(wmc.extent, { size: _map.getSize(),
                                 padding: [0, $("#sidebar-wrapper").width(), 0, 0]});
                             _themes[wmcid].layers = wmc.layers;
+                            _themes[wmcid].name = wmc.title;
                             nbOverLayers += Object.keys(wmc.layers).length;
                             if (processedWMC === wmcs.length) {
                                 mviewer.events().overLayersTotal = nbOverLayers;
                                 mviewer.events().confLoaded = true;
                             }
-                            _themes[wmcid].name = wmc.title;
-                            mviewer.events().overLayersLoaded += Object.keys(wmc.layers).length;
+
+                        },
+                        error: function(xhr, status, error) {
+                           console.log(error);
                         }
-                    });
-                })(i);
-            }
+                    }));
+                });
+            };
+
+            $.when.apply(new ajaxFunction(), requests).done(function (result) {
+                 mviewer.events().overLayersLoaded = nbOverLayers;
+            }).fail(function(err) {
+               console.log(error);
+            });
+
+
+
         } else {
             var themes = conf.themes.theme;
             var nbOverLayers = 0;

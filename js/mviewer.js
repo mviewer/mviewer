@@ -333,11 +333,11 @@ mviewer = (function () {
         } else if (layer.sld) {
             legendUrl = layer.url + '?service=WMS&Version=1.3.0&request=GetLegendGraphic&SLD_VERSION=1.1.0'+
             '&format=image%2Fpng&width=30&height=20&layer=' + layer.layername + '&style=' + sld+
-            '&legend_options=fontName:Open%20Sans;fontAntiAliasing:true;fontColor:0x777777;fontSize:10.5;dpi:96&TRANSPARENT=true';
+            '&legend_options=fontName:Open%20Sans;fontAntiAliasing:true;fontColor:0x777777;fontSize:10;dpi:96&TRANSPARENT=true';
         } else {
             legendUrl = layer.url + '?service=WMS&Version=1.3.0&request=GetLegendGraphic&SLD_VERSION=1.1.0'+
             '&format=image%2Fpng&width=30&height=20&layer=' + layer.layername + '&style=' + layer.style + sld+
-            '&legend_options=fontName:Open%20Sans;fontAntiAliasing:true;fontColor:0x777777;fontSize:10.5;dpi:96&TRANSPARENT=true';
+            '&legend_options=fontName:Open%20Sans;fontAntiAliasing:true;fontColor:0x777777;fontSize:10;dpi:96&TRANSPARENT=true';
         }
         if (layer.dynamiclegend) {
             if (!scale) {
@@ -1164,12 +1164,17 @@ mviewer = (function () {
                 oLayer.metadata = $(this).find('MetadataURL > OnlineResource').attr('xlink:href');
                 //fixme
                 if (oLayer.metadata && oLayer.metadata.search('geonetwork') > 1) {
-                    var mdid = oLayer.metadata.split('uuid=')[1];
+                    var mdid = oLayer.metadata.split('#/metadata/')[1];
                     oLayer.metadatacsw = oLayer.metadata.substring(0,oLayer.metadata.search('geonetwork')) +
                         'geonetwork/srv/eng/csw?SERVICE=CSW&VERSION=2.0.2&REQUEST=GetRecordById&elementSetName=full&ID=' +
                         mdid;
                 }
                 oLayer.style = $(this).find("StyleList  > Style[current='1'] > Name").text();
+                oLayer.sld = ($(this).find("StyleList  > Style[current='1'] > SLD > OnlineResource").attr('xlink:href'));
+                if (!oLayer.sld && $(this).find("StyleList  > Style > Name").length > 1) {
+                    oLayer.styles = $(this).find("StyleList  > Style > Name").map(function (id,name) { return $(name).text(); }).toArray().join(",");
+                    oLayer.stylesalias = oLayer.styles;
+                }
                 oLayer.url = $(this).find('Server > OnlineResource').attr('xlink:href');
                 oLayer.queryable = true;
                 oLayer.infoformat = 'text/html';
@@ -1193,18 +1198,23 @@ mviewer = (function () {
                 oLayer.theme = wmcid;
                 console.log("wmc", oLayer);
                 themeLayers[oLayer.id] = oLayer;
+                var wms_params = {
+                    'LAYERS': oLayer.id,
+                    'STYLES':oLayer.style,
+                    'FORMAT': 'image/png',
+                    'TRANSPARENT': true
+                };
+                if (oLayer.sld) {
+                    wms_params['SLD'] = oLayer.sld;
+                }
                 var l = new ol.layer.Image({
                     source: new ol.source.ImageWMS({
                         url: oLayer.url,
                         crossOrigin: crossorigin,
-                        params: {
-                            'LAYERS': oLayer.id,
-                            'STYLES':oLayer.style,
-                            'FORMAT': 'image/png',
-                            'TRANSPARENT': true
-                        }
+                        params: wms_params
                     })
                 });
+
                 l.setVisible(oLayer.checked);
                 l.setOpacity(oLayer.opacity);
                 if (oLayer.scale && oLayer.scale.max) { l.setMaxResolution(_convertScale2Resolution(oLayer.scale.max)); }
@@ -1217,7 +1227,6 @@ mviewer = (function () {
                 if (oLayer.scale) {
                     _scaledDependantLayers.push(oLayer);
                 }
-                _map.addLayer(l);
             }
 
         });
