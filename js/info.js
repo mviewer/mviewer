@@ -169,6 +169,9 @@ var info = (function () {
                     var l = _overLayers[layerid];
                     if (l) {
                         var panel = l.infospanel;
+                        if (configuration.getConfiguration().mobile) {
+                            panel = 'modal-panel';
+                        }
                         var name = l.name;
                         var theme = l.theme;
                         var theme_icon = l.icon;
