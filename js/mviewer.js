@@ -1223,7 +1223,6 @@ mviewer = (function () {
                 l.set('mviewerid', oLayer.id);
                 themeLayers[oLayer.id].layer = l;
                 _overLayers[oLayer.id] = themeLayers[oLayer.id];
-                info.addQueryableLayer(_overLayers[oLayer.id]);
                 if (oLayer.scale) {
                     _scaledDependantLayers.push(oLayer);
                 }
