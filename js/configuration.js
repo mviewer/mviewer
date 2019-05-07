@@ -299,7 +299,7 @@ var configuration = (function () {
                             nbOverLayers += Object.keys(wmc.layers).length;
                         },
                         error: function(xhr, status, error) {
-                           console.log(error);
+                           console.log("WMC " + this.url + " not found");
                         }
                     }));
                 });
@@ -309,7 +309,8 @@ var configuration = (function () {
                  mviewer.events().overLayersTotal = nbOverLayers;
                  mviewer.events().confLoaded = true;
             }).fail(function(err) {
-               console.log(err);
+                 mviewer.events().overLayersTotal = nbOverLayers;
+                 mviewer.events().confLoaded = true;
             });
 
 
