@@ -1302,8 +1302,9 @@ mviewer = (function () {
 
     var _getLonLatZfromGeometry = function (geometry, proj, maxzoom) {
         var xyz = {};
-        if (geometry.getType() === "Point") {
-            var coordinates = geometry.getCoordinates();
+        //For Point or multiPoints with one point
+        if (geometry.getType() === "Point" || geometry.getPoints().length === 1) {
+            var coordinates = geometry.getPoints()[0].flatCoordinates;
             xyz = { lon: coordinates[0],
                     lat: coordinates[1],
                     zoom: maxzoom || 15
