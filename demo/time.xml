@@ -15,10 +15,10 @@
     </baselayers> 
     <proxy url=""/> 
     <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban" attribution="La recherche d'adresse est un service proposé par l'API adresse.data.gouv.fr"/>
-    <themes mini="true"> 
-        <theme name="Temporalité"   id="tempo" icon="calendar">		
+    <themes mini="false"> 
+        <theme name="Temporalité"   id="tempo" icon="far fa-calendar-alt">		
             <layer id="buildup" name="Zones artificialisées"  visible="true" tiled="false"
-                    searchable="false" queryable="false"    
+                    searchable="false" queryable="false" expanded="true"
                     style=""          
                     opacity="0.5" 
                     timefilter="true" timeinterval="year" timecontrol="slider" timevalues="1975,1990,2000,2014"

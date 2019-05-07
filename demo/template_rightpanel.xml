@@ -20,7 +20,7 @@
     <searchparameters bbox="false" localities="false" features="false" />
 
     <themes>    	
-        <theme name="Données"  collapsed="false" id="data" icon="graduation-cap">
+        <theme name="Données"  collapsed="false" id="data" icon="fas fa-graduation-cap">
 		    <layer id="lycee" name="Lycées"  visible="true" tiled="false"
                 searchable="false" queryable="true" fields="axe" aliases="axe"
                 attributefilter="true" attributefield="secteur_li"

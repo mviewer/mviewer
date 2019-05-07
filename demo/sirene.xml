@@ -15,10 +15,11 @@
     </baselayers> 
     <proxy url=""/> 
     <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban" attribution="La recherche d'adresse est un service proposé par l'API adresse.data.gouv.fr"/>
-    <themes mini="true"> 
-        <theme name="BAse SIRENE"   id="sirene" icon="barcode">		
+    <themes mini="false"> 
+        <theme name="Base SIRENE"   id="sirene" icon="fas fa-barcode" collapsed="false">		
             <layer id="sirene_bretagne" name="Base SIRENE"  visible="true" tiled="false"                    
                     queryable="true" fields="" aliases=""
+                    expanded="true"
                     infoformat="application/vnd.ogc.gml" featurecount="10"                      
                     style="sirene_tefet,sirene_porcheries,sirene_fastfood,sirene_debitsboisson" 
                     stylesalias="Nombre de salariés,Porcheries,Restauration,Débits de boisson"                    

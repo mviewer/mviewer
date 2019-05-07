@@ -16,7 +16,7 @@
     <proxy url=""/> 
     <searchparameters localities="false"/>   
     <themes mini="false">        
-        <theme name="Styling"   id="rando" icon="blind">           
+        <theme name="Styling"   id="rando" icon="fas fa-chart-line">           
             <layer id="lycee" name="Lycées" visible="false" tiled="false"
 				queryable="true" fields="" aliases=""
                 infoformat="text/html" featurecount="1"                

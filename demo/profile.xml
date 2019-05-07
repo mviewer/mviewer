@@ -20,7 +20,7 @@
     <baselayer visible="true" id="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg" title="Esri world imagery" label="Esri world imagery" type="OSM" url="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"  ></baselayer>
 </baselayers>
 <themes mini="false">    	
-    <theme name="Outils"  collapsed="false" id="profile" icon="area-chart">
+    <theme name="Outils"  collapsed="false" id="profile" icon="fas fa-chart-area">
         <layer id="profile" name="Profil en long (WPS)" visible="true" queryable="false"
             type="customlayer" opacity="0.8" legendurl="img/blank.gif"
             url="customlayers/profile.js"

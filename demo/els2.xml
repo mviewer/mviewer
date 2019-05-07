@@ -19,7 +19,7 @@
     <baselayer visible="false" id="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg" title="Esri world imagery" label="Esri world imagery" type="OSM" url="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"  ></baselayer>
 </baselayers>
 <themes mini="false">
-    <theme name="Elasticsearch"  collapsed="false" id="elasticsearch" icon="search">
+    <theme name="Elasticsearch"  collapsed="false" id="elasticsearch" icon="fas fa-search">
         <layer id="inventaire" name="Rechercher dans l'inventaire" visible="true" queryable="true"
             type="customlayer" opacity="0.8"
             url="customlayers/inventaire.js"

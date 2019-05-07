@@ -18,7 +18,7 @@
     <searchparameters localities="false" features="true" bbox="false"/> 
 
     <themes mini="true"> 
-    	<theme name="Lycée"  collapsed="true" id="habitant" icon="group">
+    	<theme name="Lycée"  collapsed="true" id="habitant" icon="fas fa-users">
     		<layer id="lycee_resultat_bac" name="Résultats BAC"  visible="true"  queryable="true"
                     legendurl="demo/lycee.png"
                     fields="nom,code_rne,photo,secteur_li"

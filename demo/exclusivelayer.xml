@@ -16,7 +16,7 @@
     <proxy url=""/> 
     <searchparameters localities="false"/>   
     <themes mini="false"> 
-        <theme name="Randonnée"   id="rando" icon="blind" collapsed="false">  
+        <theme name="Randonnée"   id="rando" icon="fas fa-leaf" collapsed="false">  
 			<layer id="pdipr_35" name="PDIPR 35" visible="true" tiled="false" exclusive="true"
 				queryable="true" fields="" aliases=""
                 infoformat="text/html" featurecount="1"                

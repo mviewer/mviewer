@@ -19,7 +19,7 @@
     <baselayer visible="true" id="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg" title="Esri world imagery" label="Esri world imagery" type="OSM" url="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"  ></baselayer>
 </baselayers>
 <themes mini="false">    	
-    <theme name="isochrones"  collapsed="false" id="isochrones" icon="file-text">
+    <theme name="isochrones"  collapsed="false" id="isochrones" icon="fas fa-car">
         <layer id="isochrones" name="Isochrones" visible="true" queryable="false"
             type="customlayer" opacity="0.8" legendurl="img/blank.gif"
             url="customlayers/isochrones.js"

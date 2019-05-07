@@ -18,7 +18,7 @@
     <baselayer visible="true" id="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg" title="Esri world imagery" label="Esri world imagery" type="OSM" url="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"  ></baselayer> 
 </baselayers>
 <themes mini="false"> 
-    <theme id="theme-20180710144351" name="Cadastre historique" collapsed="true" icon="envira">
+    <theme id="theme-20180710144351" name="Cadastre historique" collapsed="true" icon="fas fa-envira">
         <layer 
             id="napoleo"
             legendurl="img/blank.gif"

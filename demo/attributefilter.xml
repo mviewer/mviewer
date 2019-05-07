@@ -9,7 +9,7 @@
     <proxy url=""/> 
     <searchparameters localities="false"/>   
     <themes mini="false"> 
-        <theme name="Filtres attributaires"   id="rando" icon="blind" collapsed="false">
+        <theme name="Filtres attributaires"   id="rando" icon="fas fa-blind" collapsed="false">
             <layer id="etude_patrimoine_simple" name="Patrimoine" visible="true" tiled="false" expanded="true"
                 queryable="true"
                 infoformat="application/vnd.ogc.gml" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/chateaux_19e.png"                
