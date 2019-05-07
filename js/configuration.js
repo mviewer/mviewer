@@ -284,7 +284,6 @@ var configuration = (function () {
                             var wmc = mviewer.parseWMCResponse(response, this.wmcid);
                             $.each(wmc.layers, function (idx, layer) {
                                 mviewer.processLayer(layer, layer.layer);
-                                mviewer.events().overLayersLoaded += 1;
                             });
                             processedWMC += 1;
                             _themes[wmcid] = {};
@@ -298,11 +297,6 @@ var configuration = (function () {
                             _themes[wmcid].layers = wmc.layers;
                             _themes[wmcid].name = wmc.title;
                             nbOverLayers += Object.keys(wmc.layers).length;
-                            if (processedWMC === wmcs.length) {
-                                mviewer.events().overLayersTotal = nbOverLayers;
-                                mviewer.events().confLoaded = true;
-                            }
-
                         },
                         error: function(xhr, status, error) {
                            console.log(error);
@@ -312,9 +306,10 @@ var configuration = (function () {
             };
 
             $.when.apply(new ajaxFunction(), requests).done(function (result) {
-                 mviewer.events().overLayersLoaded = nbOverLayers;
+                 mviewer.events().overLayersTotal = nbOverLayers;
+                 mviewer.events().confLoaded = true;
             }).fail(function(err) {
-               console.log(error);
+               console.log(err);
             });
 
 
