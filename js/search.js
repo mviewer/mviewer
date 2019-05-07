@@ -551,7 +551,7 @@ var search = (function () {
                         }
                         $(".elasticsearch").remove();
                         if (nb > 0) {
-                            $("#searchresults").prepend(str).show();
+                            $("#searchresults").append(str).show();
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
