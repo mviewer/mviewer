@@ -2154,11 +2154,12 @@ mviewer = (function () {
         toggleLayerOptions: function (el) {
             $(el).closest("li").find(".mv-layer-options").slideToggle();
             //hack slider js
+            console.log(el);
             $(el).closest("li").find(".mv-slider-timer").slider('relayout');
-            if ($(el).find("span").hasClass("glyphicon glyphicon-plus")) {
-                $(el).find("span").removeClass("glyphicon glyphicon-plus").addClass("glyphicon glyphicon-minus");
+            if ($(el).find("span.state-icon").hasClass("glyphicon glyphicon-plus")) {
+                $(el).find("span.state-icon").removeClass("glyphicon glyphicon-plus").addClass("glyphicon glyphicon-minus");
             } else {
-                $(el).find("span").removeClass("glyphicon glyphicon-minus").addClass("glyphicon glyphicon-plus");
+                $(el).find("span.state-icon").removeClass("glyphicon glyphicon-minus").addClass("glyphicon glyphicon-plus");
             }
         },
 
