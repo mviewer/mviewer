@@ -328,7 +328,9 @@ mviewer = (function () {
         if (layer.sld) {
             sld = '&SLD=' + encodeURIComponent(layer.sld);
         }
-        if (layer.legendurl && layer.styles && (layer.styles.split(",").length === 1)) {
+        if (layer.legendurl && !layer.styles) {
+            legendUrl = layer.legendurl;
+        } else if (layer.legendurl && layer.styles && (layer.styles.split(",").length === 1)) {
             legendUrl = layer.legendurl;
         } else if (layer.sld) {
             legendUrl = layer.url + '?service=WMS&Version=1.3.0&request=GetLegendGraphic&SLD_VERSION=1.1.0'+
