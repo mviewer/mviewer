@@ -96,19 +96,19 @@
     <script type="text/javascript" src="js/featurestyles.js"></script>
 
 <script type="text/javascript">
-var config = {};
+var API = {};
 $(document).ready(function () {
     "use strict";
     if (window.location.search) {
-        $.extend(config, $.parseJSON('{"' + decodeURIComponent(window.location.search.substring(1)
+        $.extend(API, $.parseJSON('{"' + decodeURIComponent(window.location.search.substring(1)
             .replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}'));
     }
 
     // Search for a config param
-    var configFile = (config.config);
+    var configFile = (API.config);
 
     // If no config param, search for a fragment (#)
-    if (!config.config) {
+    if (!API.config) {
         var fragment = window.location.hash.split('#')[1];
         if (fragment) {
             configFile = fragment;
@@ -127,7 +127,7 @@ $(document).ready(function () {
         configFile = "config.xml";
     }
 
-    var theme = (config.theme) ? config.theme : null;
+    var theme = (API.theme) ? API.theme : null;
 
     $.ajax({
         url: configFile + '?_dc=' + (new Date()).getTime(),

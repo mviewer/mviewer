@@ -94,21 +94,21 @@ mviewer = (function () {
 
     var _applyPermalink = function () {
         //Get  x, y & z url parameters if exists
-        if (config.x && config.y && config.z) {
-            var center =   [parseFloat(config.x), parseFloat(config.y)];
-            var zoom = parseInt(config.z);
+        if (API.x && API.y && API.z) {
+            var center =   [parseFloat(API.x), parseFloat(API.y)];
+            var zoom = parseInt(API.z);
             _map.getView().setCenter(center);
             _map.getView().setZoom(zoom);
         }
         //Get backgroundlayer value if exists
-        if (config.lb && $.grep(_backgroundLayers, function (n) {
-            return n.get('blid') === config.lb;
+        if (API.lb && $.grep(_backgroundLayers, function (n) {
+            return n.get('blid') === API.lb;
         })[0]) {
-            mviewer.setBaseLayer(config.lb);
+            mviewer.setBaseLayer(API.lb);
         }
         //get visible layers
-        if (config.l) {
-            _setVisibleOverLayers(config.l);
+        if (API.l) {
+            _setVisibleOverLayers(API.l);
         }
     };
 
@@ -1571,18 +1571,18 @@ mviewer = (function () {
         setPermalink: function () {
             var c = _map.getView().getCenter();
             var linkParams = {};
-            if (!config.wmc){
+            if (!API.wmc){
                 linkParams.x = encodeURIComponent(Math.round(c[0]));
                 linkParams.y = encodeURIComponent(Math.round(c[1]));
                 linkParams.z = encodeURIComponent(_map.getView().getZoom());
                 linkParams.l = encodeURIComponent(_getVisibleOverLayers());
             }
             linkParams.lb = encodeURIComponent(this.getActiveBaseLayer());
-            if (config.config) {
-                linkParams.config = config.config;
+            if (API.config) {
+                linkParams.config = API.config;
             }
-            if (config.wmc) {
-                linkParams.wmc = config.wmc;
+            if (API.wmc) {
+                linkParams.wmc = API.wmc;
             }
 
             var url = window.location.href.split('?')[0].replace('#','') + '?' + $.param(linkParams);

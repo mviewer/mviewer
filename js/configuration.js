@@ -262,9 +262,9 @@ var configuration = (function () {
 
         _themes = {};
         var themeLayers = {};
-        if (config.wmc) {
-            var reg=new RegExp("[,]+", "g");
-            var wmcs=config.wmc.split(reg);
+        if (API.wmc) {
+            var reg = new RegExp("[,]+", "g");
+            var wmcs = API.wmc.split(reg);
             var processedWMC = 0;
             var nbOverLayers = 0;
 
@@ -745,7 +745,7 @@ var configuration = (function () {
         }
 
          //mviewer.init();
-         if (!config.wmc && nbOverLayers === 0) {
+         if (!API.wmc && nbOverLayers === 0) {
              mviewer.init();
              mviewer.setBaseLayer(_defaultBaseLayer);
          }
@@ -754,7 +754,7 @@ var configuration = (function () {
             $("#help").modal('show');
         }
 
-        if (!config.wmc) {
+        if (!API.wmc) {
             mviewer.events().confLoaded = true;
         }
 
