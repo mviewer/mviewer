@@ -757,9 +757,6 @@ var configuration = (function () {
         if (!API.wmc) {
             mviewer.events().confLoaded = true;
         }
-
-        console.log("finished");
-
     };
 
     return {

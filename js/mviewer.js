@@ -74,19 +74,18 @@ mviewer = (function () {
 
     _events.registerOverLayersLoadedListener(function(val) {
         if (val === _events.overLayersTotal && _events.confLoaded === true) {
-            _overLayersReady();
+            $(document).trigger("layersLoaded");
         }
     });
 
     _events.registerConfLoadedListener(function(val) {
         if (_events.overLayersLoaded === _events.overLayersTotal && val === true) {
-            _overLayersReady();
+            $(document).trigger("layersLoaded");
         }
     });
 
     var _overLayersReady = function () {
         mviewer.init();
-        console.log(configuration.getThemes());
         mviewer.setBaseLayer(configuration.getDefaultBaseLayer());
         _applyPermalink();
         _showCheckedLayers();
@@ -1198,7 +1197,6 @@ mviewer = (function () {
                 }
 
                 oLayer.theme = wmcid;
-                console.log("wmc", oLayer);
                 themeLayers[oLayer.id] = oLayer;
                 var wms_params = {
                     'LAYERS': oLayer.id,
@@ -2470,6 +2468,8 @@ mviewer = (function () {
         createBaseLayer: _createBaseLayer,
 
         drawVectorLegend: _drawVectorLegend,
+
+        overLayersReady: _overLayersReady,
 
         events: function () { return _events; }
 

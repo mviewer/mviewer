@@ -133,6 +133,9 @@ $(document).ready(function () {
         url: configFile + '?_dc=' + (new Date()).getTime(),
         dataType: "xml",
         success: function (xml) {
+            $( document ).on( "layersLoaded", function (e) {
+                mviewer.overLayersReady();
+            });
             //load conf
             $( document ).on( "configurationCompleted", function (e, eData) {
                 //get JSON conf from xml;
