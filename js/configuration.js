@@ -156,9 +156,10 @@ var configuration = (function () {
         _configuration = conf;
         utils.testConfiguration(conf);
         //apply application customization
-        if (conf.application.title) {
-            document.title = conf.application.title;
-            $(".mv-title").text(conf.application.title);
+        if (conf.application.title || API.title) {
+            var title = API.title || conf.application.title;
+            document.title = title;
+            $(".mv-title").text(title);
         }
         if (conf.application.stats === "true" && conf.application.statsurl) {
             $.get(conf.application.statsurl +"?app=" + document.title);

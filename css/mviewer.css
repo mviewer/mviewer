@@ -1720,3 +1720,27 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
 .modal .sidebar-nav {
     margin-top: 10px;
 }
+
+.xs.mode-u #btn-mode-su-menu {
+    position: fixed;
+    top:30px;
+    left:10px;
+}
+
+.xs.mode-u #zoomtoolbar {
+    top: 10px;
+}
+
+.xs.mode-u #toolstoolbar {
+    top: 110px;
+}
+
+.xs.mode-s #btn-mode-su-menu {
+    position: fixed;
+    top:75px;
+    left:10px;
+}
+
+.xs.mode-s .mv-layer-remove, .xs.mode-u .mv-layer-remove{
+    display:none;
+}

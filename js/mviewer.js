@@ -482,6 +482,14 @@ mviewer = (function () {
         }
     };
 
+    var _initShare = function () {
+        var displayMode =  API.mode || 'd';
+        $("#mv-display-mode input").filter('[value="'+  displayMode +'"]').attr('checked', true);
+        $( "#mv-display-mode input" ).change(function() {
+            mviewer.setPermalink();
+        });
+    };
+
     /**
      * Private Method: _initPanelsPopup
      *
@@ -623,14 +631,22 @@ mviewer = (function () {
      *
      */
 
-    var _updateViewPort = function (s) {
+    var _updateViewPort = function (s, displayMode) {
         _mediaSize = s;
         if (s === "xs") {
             $("#wrapper, #main").removeClass("xl").addClass("xs");
             $("#menu").appendTo("#thematic-modal .modal-body");
             $("#legend").appendTo("#legend-modal .modal-body");
             configuration.getConfiguration().mobile = true;
-
+            if (displayMode) {
+                 $("#wrapper, #main").addClass("mode-" + displayMode);
+                 $("#page-content-wrapper").append(['<a id="btn-mode-su-menu" class="btn btn-default" ',
+                    'type="button" href="#" data-toggle="modal" data-target="#legend-modal">',
+                    '<span class="glyphicon glyphicon-menu-hamburger"></span></a>'].join(""));
+                 if (displayMode === "u") {
+                    $("#mv-navbar").remove();
+                 }
+            }
         } else {
             $("#wrapper, #main").removeClass("xs").addClass("xl");
             $("#menu").appendTo("#sidebar-wrapper");
@@ -640,12 +656,16 @@ mviewer = (function () {
     };
 
     /**
-     * Private Method: _initMobile
+     * Private Method: _initDisplayMode
      *
      */
 
-    var _initMobile = function () {
-        if ($(window).width() < 992 ) {
+    var _initDisplayMode = function () {
+        var displayMode = "d"; /* d :default, s: simple, u: ultrasimple */
+        if (API.mode && (API.mode === "s" || API.mode === "u")) {
+            displayMode = API.mode;
+        }
+        if ($(window).width() < 992 || displayMode !== "d") {
             _mediaSize = "xs";
             configuration.getConfiguration().mobile = true;
         } else {
@@ -653,26 +673,27 @@ mviewer = (function () {
             configuration.getConfiguration().mobile = false;
         }
         if (_mediaSize === "xs") {
-            _updateViewPort("xs");
+            _updateViewPort("xs", displayMode);
         }
-        $(window).resize(function() {
-            var w = $(this).width();
-            var s = "";
-            if (w < 768) {
-                s = 'xs';
-            } else if (w < 992) {
-                s = 'sm';
-            } else if (w < 1200) {
-                s = 'md';
-            } else if (w >= 1200) {
-                s = 'lg';
-            }
-            if (s !== _bsize) {
-                _bsize = s;
-                _updateMedia(_bsize);
-            }
-        });
-
+        if (displayMode === "d") {
+            $(window).resize(function() {
+                var w = $(this).width();
+                var s = "";
+                if (w < 768) {
+                    s = 'xs';
+                } else if (w < 992) {
+                    s = 'sm';
+                } else if (w < 1200) {
+                    s = 'md';
+                } else if (w >= 1200) {
+                    s = 'lg';
+                }
+                if (s !== _bsize) {
+                    _bsize = s;
+                    _updateMedia(_bsize);
+                }
+            });
+        }
         if (configuration.getConfiguration().mobile) {
             $("#thematic-modal .modal-body").append('<ul class="sidebar-nav nav-pills nav-stacked" id="menu"></ul>');
             $("#legend").appendTo("#legend-modal .modal-body");
@@ -1585,6 +1606,7 @@ mviewer = (function () {
             if (API.wmc) {
                 linkParams.wmc = API.wmc;
             }
+            linkParams.mode = $('input[name=mv-display-mode]:checked').val();
 
             var url = window.location.href.split('?')[0].replace('#','') + '?' + $.param(linkParams);
             $("#permalinklink").attr('href',url).attr("target", "_blank");
@@ -1608,13 +1630,14 @@ mviewer = (function () {
 
         init: function () {
                 _setVariables();
-                _initMobile();
+                _initDisplayMode();
                 _initDataList();
                 _initVectorOverlay();
                 search.init(configuration.getConfiguration());
                 _initPanelsPopup();
                 _initGeolocation();
                 _initTools();
+                _initShare();
         },
 
         customLayers: {},
