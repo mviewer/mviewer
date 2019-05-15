@@ -48,6 +48,7 @@ var utils = (function () {
                 }
             }
         });
+        return test;
     };
 
     _tests.layerNameDuplicates = function (layers) {
