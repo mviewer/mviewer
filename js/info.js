@@ -558,6 +558,19 @@ var info = (function () {
                     o.features.push({layername:layer_name, properties:feat_obj});
                 }
             }
+        } else if (results.member) {
+             if ($.isArray(results.member) === false) {
+                list.push(results.member);
+            } else {
+                list = results.member;
+            }
+            for (var j=0; j<list.length; j++) {
+                var obj=list[j];
+                for(var prop in obj) {
+                    if(obj.hasOwnProperty(prop))
+                        o.features.push({layername:prop, properties:obj[prop]});
+                }
+            }
         } else {
             // MAPSERVER Huge hack
             for (var p in results) {
