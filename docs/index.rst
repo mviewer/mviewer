@@ -18,7 +18,7 @@ Ci-dessous vous trouverez une documentation pour les utilisateurs ou administrat
 mviewer
 ~~~~~~~
 
-mviewer est un Visualiseur géographique basé sur OpenLayers 3.10.0 et Bootstrap 3.3.6.
+mviewer est un Visualiseur géographique basé sur OpenLayers 5.3.0 et Bootstrap 3.3.6.
 
 L'ensemble des sources de ce projet peut être trouvé sur le dépôt GitHub_ .
 
