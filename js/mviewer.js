@@ -86,8 +86,15 @@ mviewer = (function () {
 
     var _overLayersReady = function () {
         mviewer.init();
-        mviewer.setBaseLayer(configuration.getDefaultBaseLayer());
         _applyPermalink();
+         //Get backgroundlayer value if exists
+        if (API.lb && $.grep(_backgroundLayers, function (n) {
+            return n.get('blid') === API.lb;
+        })[0]) {
+            mviewer.setBaseLayer(API.lb);
+        } else {
+            mviewer.setBaseLayer(configuration.getDefaultBaseLayer());
+        }
         _showCheckedLayers();
     };
 
@@ -98,12 +105,6 @@ mviewer = (function () {
             var zoom = parseInt(API.z);
             _map.getView().setCenter(center);
             _map.getView().setZoom(zoom);
-        }
-        //Get backgroundlayer value if exists
-        if (API.lb && $.grep(_backgroundLayers, function (n) {
-            return n.get('blid') === API.lb;
-        })[0]) {
-            mviewer.setBaseLayer(API.lb);
         }
         //get visible layers
         if (API.l) {
@@ -1528,7 +1529,7 @@ mviewer = (function () {
 
         bgtoogle: function () {
             $("#backgroundlayerstoolbar-gallery .no-active").toggle();
-            $("#backgroundlayerstoolbar-gallery .bglt-btn").toggleClass("mini");
+            //$("#backgroundlayerstoolbar-gallery .bglt-btn").toggleClass("mini");
         },
 
         /**
