@@ -194,6 +194,9 @@ var configuration = (function () {
         if (!conf.application.geoloc || !conf.application.geoloc ==="true") {
              $("#geolocbtn").hide();
         }
+        if(!conf.application.studio){
+            $('#studiolink').remove();
+        }
 
         //map options
         _map = mviewer.initMap(conf.mapoptions);
