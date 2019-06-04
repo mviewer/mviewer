@@ -196,6 +196,9 @@ var configuration = (function () {
         }
         if(!conf.application.studio){
             $('#studiolink').remove();
+        }        
+        if(conf.application.home){
+            $('.mv-logo').parent().attr('href', conf.application.home);
         }
 
         //map options
