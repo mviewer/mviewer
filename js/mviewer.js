@@ -1592,8 +1592,10 @@ mviewer = (function () {
             // get xml config file
             var configFile = API.config ? API.config : 'config.xml';
             // get domain url and clean
+            console.log( window.location.href.split('?')[0]);
             var splitStr = window.location.href.split('?')[0].replace('#','').split('/');
-            splitStr = splitStr.slice(1,splitStr.length-1).join('/');
+            
+            splitStr = splitStr.slice(0,splitStr.length-1).join('/');
             // create absolute config file url
             var url = splitStr + '/' + configFile;
             // send config file to studio
