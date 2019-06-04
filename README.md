@@ -95,6 +95,7 @@ Personnalisation de l'application (overriding)
 * **coordinates**: Affiche les coordonnées GPS lors de l'interrogation true/false || false.
 * **togglealllayersfromtheme**: Ajoute un bouton dans le panneau de gauche pour chaque thématique afin d'afficher/masquer toutes les couches de la thématique.Valeur : true/false || false.
 * **studio**: Lien vers le mviewerstudio pour modifier la carte en cours
+* **home**: Lien vers le portail de l'éditeur de la carte
 
 ### Nœud mapoptions
 
