@@ -1349,7 +1349,6 @@ mviewer = (function () {
      */
 
     return {
-
         flash:  function (proj,x,y) {
             var source, vector;
             var vectorLayer = _getLayerByName("flash");
@@ -1774,6 +1773,7 @@ mviewer = (function () {
          */
 
         sendToGeorchestra: function () {
+            console.log("test");
             var params = {
                 "services": [],
                 "layers" : []

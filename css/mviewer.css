@@ -1745,3 +1745,13 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
 .xs.mode-s .mv-layer-remove, .xs.mode-u .mv-layer-remove{
     display:none;
 }
+
+#shareToMapfish {
+  border-radius: 0px;
+  border: none;
+  padding-left:0px;
+}
+#shareToMapfish:hover {
+  background-color: transparent;
+  color: green;
+}
