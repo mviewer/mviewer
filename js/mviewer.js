@@ -720,8 +720,18 @@ mviewer = (function () {
         var reverse_themes = [];
         var crossorigin = '';
         _themes = configuration.getThemes();
+		var topics = false;
+		if (API.topics) {
+			topics = API.topics.split(",");
+		}
         $.each(_themes, function (id, theme) {
-            reverse_themes.push(theme);
+			if (topics) {
+				if (topics.indexOf(theme.id) >= 0) {
+					reverse_themes.push(theme);
+				}
+			} else {
+				reverse_themes.push(theme);
+			}
         });
 
         $.each(reverse_themes.reverse(), function (id, theme) {
