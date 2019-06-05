@@ -2180,10 +2180,10 @@ mviewer = (function () {
             $(el).closest("li").find(".mv-layer-options").slideToggle();
             //hack slider js
             $(el).closest("li").find(".mv-slider-timer").slider('relayout');
-            if ($(el).find("span.state-icon").hasClass("glyphicon glyphicon-plus")) {
-                $(el).find("span.state-icon").removeClass("glyphicon glyphicon-plus").addClass("glyphicon glyphicon-minus");
+            if ($(el).find("span.state-icon").hasClass("glyphicon glyphicon-chevron-down")) {
+                $(el).find("span.state-icon").removeClass("glyphicon glyphicon-chevron-down").addClass("glyphicon glyphicon-chevron-up");
             } else {
-                $(el).find("span.state-icon").removeClass("glyphicon glyphicon-minus").addClass("glyphicon glyphicon-plus");
+                $(el).find("span.state-icon").removeClass("glyphicon glyphicon-chevron-up").addClass("glyphicon glyphicon-chevron-down");
             }
         },
 

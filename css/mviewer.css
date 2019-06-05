@@ -1245,7 +1245,7 @@ span.state-icon.far{
 .mv-layer-remove {
     float: right;
     right: 10px;
-    opacity: .5;
+    font-size: 14px;
 }
 a:focus{
 	text-decoration: none;
@@ -1328,6 +1328,12 @@ a:focus{
 
 .mv-layer-details.mv-invisible {
     /*background-color: #f5f5f5;*/
+}
+
+a.icon-options{
+  display:block;
+  text-align:center;
+  outline: none;
 }
 
 /* Opacity */
