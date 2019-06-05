@@ -200,6 +200,9 @@ var configuration = (function () {
         if(conf.application.home){
             $('.mv-logo').parent().attr('href', conf.application.home);
         }
+        if(conf.application.mapfishurl){
+            $('#georchestraForm').attr('action', conf.application.mapfishurl);
+        }
 
         //map options
         _map = mviewer.initMap(conf.mapoptions);
