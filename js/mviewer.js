@@ -641,7 +641,7 @@ mviewer = (function () {
             configuration.getConfiguration().mobile = true;
             if (displayMode) {
                  $("#wrapper, #main").addClass("mode-" + displayMode);
-                 $("#page-content-wrapper").append(['<a id="btn-mode-su-menu" class="btn btn-default" ',
+                 $("#page-content-wrapper").append(['<a id="btn-mode-su-menu" class="btn btn-sm btn-default" ',
                     'type="button" href="#" data-toggle="modal" data-target="#legend-modal">',
                     '<span class="glyphicon glyphicon-menu-hamburger"></span></a>'].join(""));
                  if (displayMode === "u") {

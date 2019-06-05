@@ -1739,6 +1739,7 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
     position: fixed;
     top:75px;
     left:10px;
+    border-radius: 0px;
 }
 
 .xs.mode-s .mv-layer-remove, .xs.mode-u .mv-layer-remove{
