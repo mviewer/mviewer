@@ -167,8 +167,16 @@ var configuration = (function () {
         if (conf.application.logo) {
             $(".mv-logo").attr("src", conf.application.logo);
         }
-        if (conf.application.showhelp === "true" ) {
+        if (conf.application.showhelp === "true") {
             _showhelp_startup = true;
+        }
+        if(API.popup){
+            _showhelp_startup = API.popup && API.popup === "true" ? true : false;
+            if(API.popup === "true"){
+                _showhelp_startup = true;
+            } else if (API.popup === "false"){
+                _showhelp_startup = false;
+            }
         }
         if (conf.application.titlehelp) {
             $("#help h4.modal-title").text(conf.application.titlehelp);
