@@ -265,6 +265,13 @@ span.text-big-legend {
 
 .layerdisplay-title {
     padding-left: 10px;
+    cursor: move;
+}
+
+.mv-grip {
+    color: #999;
+    margin-left: -5px;
+    padding-right: 5px;
 }
 
 .layerdisplay-subtitle {
@@ -1294,7 +1301,7 @@ a:focus{
 }
 
 .list-group-item{
-	border:1px solid #ffffff;
+	border:1px solid #ddd;
 }
 .list-group-item:first-child{
 	border-top-left-radius: 0px;
