@@ -51,11 +51,8 @@ mviewer.templates.theme = [
 
 mviewer.templates.layerControl = [
     '<li class="{{cls}}" data-layerid="{{layerid}}" data-title=" {{title}}">',
-        '<div class="row layerdisplay-title" >',
-            '<a href="#" aria-label="Options" onclick="mviewer.toggleLayerOptions(this);" title="Options" >',
-                '<span class="state-icon glyphicon glyphicon-plus"></span>{{title}}',
-            '</a>',
-            '<a href="#" class="mv-layer-remove" aria-label="close" onclick="mviewer.removeLayer(this)" title="Supprimer" ><span class="glyphicon glyphicon-trash"></span></a>',
+        '<div class="row layerdisplay-title" ><a>{{title}}</a>',
+            '<a href="#" class="mv-layer-remove" aria-label="close" onclick="mviewer.removeLayer(this)" title="Supprimer" ><span class="glyphicon glyphicon-remove"></span></a>',
         '</div>',
         '<div class="layerdisplay-subtitle">',
         '{{#styleControl}}',
@@ -74,6 +71,9 @@ mviewer.templates.layerControl = [
                 ' alt="Légende non disponible" onload="mviewer.legendSize(this)"',
                 ' onError="this.onerror=null;this.src=\'img/nolegend.png\';"/>',
         '</div>',
+        '<a href="#" aria-label="Options" onclick="mviewer.toggleLayerOptions(this);" title="Options" class="icon-options">',
+                '<span class="state-icon glyphicon glyphicon-chevron-down"></span>',
+        '</a>',
         '<div class="mv-layer-options" style="display: none;" data-layerid="{{layerid}}" >',
             '<div class="row">',
                 '<div class="col-md-12">',
