@@ -59,7 +59,7 @@ mviewer.templates.layerControl = [
             '<div class="selected-sld fas"><span></span></div>',
         '{{/styleControl}}',
         '{{#attributeControl}}',
-            '<div class="selected-attribute fas"><span></span></div>',
+            '<div class="selected-attribute fas"><span>Par défaut</span></div>',
         '{{/attributeControl}}',
         '</div>',
         '<div class="row layerdisplay-legend">',
