@@ -641,7 +641,7 @@ mviewer = (function () {
             configuration.getConfiguration().mobile = true;
             if (displayMode) {
                  $("#wrapper, #main").addClass("mode-" + displayMode);
-                 $("#page-content-wrapper").append(['<a id="btn-mode-su-menu" class="btn btn-default" ',
+                 $("#page-content-wrapper").append(['<a id="btn-mode-su-menu" class="btn btn-sm btn-default" ',
                     'type="button" href="#" data-toggle="modal" data-target="#legend-modal">',
                     '<span class="glyphicon glyphicon-menu-hamburger"></span></a>'].join(""));
                  if (displayMode === "u") {
@@ -720,8 +720,18 @@ mviewer = (function () {
         var reverse_themes = [];
         var crossorigin = '';
         _themes = configuration.getThemes();
+		var topics = false;
+		if (API.topics) {
+			topics = API.topics.split(",");
+		}
         $.each(_themes, function (id, theme) {
-            reverse_themes.push(theme);
+			if (topics) {
+				if (topics.indexOf(theme.id) >= 0) {
+					reverse_themes.push(theme);
+				}
+			} else {
+				reverse_themes.push(theme);
+			}
         });
 
         $.each(reverse_themes.reverse(), function (id, theme) {
@@ -1349,7 +1359,6 @@ mviewer = (function () {
      */
 
     return {
-
         flash:  function (proj,x,y) {
             var source, vector;
             var vectorLayer = _getLayerByName("flash");
@@ -1585,6 +1594,22 @@ mviewer = (function () {
                 _map.render();
             }
         },
+        /**
+         * Public Method: openStudio
+         */
+        openStudio: function() {
+            // get xml config file
+            var configFile = API.config ? API.config : 'config.xml';
+            // get domain url and clean
+            var splitStr = window.location.href.split('?')[0].replace('#','').split('/');            
+            splitStr = splitStr.slice(0,splitStr.length-1).join('/');
+            // create absolute config file url
+            var url = splitStr + '/' + configFile;
+            // send config file to studio
+            if(url) {
+                window.open(configuration.getConfiguration().application.studio + url, '_blank');
+            }
+        },
 
         /**
          * Public Method: setPermalink
@@ -1758,6 +1783,7 @@ mviewer = (function () {
          */
 
         sendToGeorchestra: function () {
+            console.log("test");
             var params = {
                 "services": [],
                 "layers" : []
@@ -2180,10 +2206,10 @@ mviewer = (function () {
             $(el).closest("li").find(".mv-layer-options").slideToggle();
             //hack slider js
             $(el).closest("li").find(".mv-slider-timer").slider('relayout');
-            if ($(el).find("span.state-icon").hasClass("glyphicon glyphicon-plus")) {
-                $(el).find("span.state-icon").removeClass("glyphicon glyphicon-plus").addClass("glyphicon glyphicon-minus");
+            if ($(el).find("span.state-icon").hasClass("glyphicon glyphicon-chevron-down")) {
+                $(el).find("span.state-icon").removeClass("glyphicon glyphicon-chevron-down").addClass("glyphicon glyphicon-chevron-up");
             } else {
-                $(el).find("span.state-icon").removeClass("glyphicon glyphicon-minus").addClass("glyphicon glyphicon-plus");
+                $(el).find("span.state-icon").removeClass("glyphicon glyphicon-chevron-up").addClass("glyphicon glyphicon-chevron-down");
             }
         },
 

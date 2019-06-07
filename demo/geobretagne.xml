@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>    
-    <application title="Démo GéoBretagne" logo="img/logo/g.png" help="demo/demo_geobretagne_help.html" showhelp="true" exportpng="false" style="css/themes/pink.css"/>
+    <application mapfishurl="http://geobretagne.fr/mapfishapp/" home="https://cms.geobretagne.fr/" studio="http://kartenn.region-bretagne.fr/mviewerstudio/?xml=" title="Démo GéoBretagne" logo="img/logo/g.png" help="demo/demo_geobretagne_help.html" showhelp="true" exportpng="false" style="css/themes/pink.css"/>
     <mapoptions maxzoom="20" projection="EPSG:3857" center="-198478,6137005" zoom="14" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
    	<baselayers style="default">
         <baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoBretagne" thumbgallery="img/basemap/ortho.jpg" 

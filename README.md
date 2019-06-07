@@ -94,6 +94,9 @@ Personnalisation de l'application (overriding)
 * **statsurl**: url to send stats activity eg (login, ip, application title, date).
 * **coordinates**: Affiche les coordonnées GPS lors de l'interrogation true/false || false.
 * **togglealllayersfromtheme**: Ajoute un bouton dans le panneau de gauche pour chaque thématique afin d'afficher/masquer toutes les couches de la thématique.Valeur : true/false || false.
+* **studio**: Lien vers le mviewerstudio pour modifier la carte en cours
+* **home**: Lien vers le portail de l'éditeur de la carte
+* **mapfishurl**: Lien permettant d'afficher les couches courantes visibles vers un mapfishapp cible
 
 ### Nœud mapoptions
 
@@ -437,3 +440,5 @@ mviewer/?wmc=demo/hydro.wmc
 couches.
 * **mode**: Mode d'affichage à utiliser (d - default, s - simplifié, u - ultrasimplifié). Le mode simplifié ne dispose pas du panneau des thématiques et le mode ultra simplifié ne dispose pas de la barre de navigation.
 * **title**: Titre à utiliser. Seulement exploité en mode défault et simplifié.
+* **topics**: Thèmes à filtrer.
+

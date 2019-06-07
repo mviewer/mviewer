@@ -68,8 +68,6 @@
               transform: rotate(540deg);
            }
         }
-        }
-
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
     <script type="text/javascript" src="lib/proj4js/2.3.6/proj4.js"></script>
@@ -215,8 +213,8 @@ $(document).ready(function () {
     <nav class="navbar navbar-default no-margin navbar-fixed-top" id="mv-navbar">
         <div class="navbar-header fixed-brand">
             <a type="button" class="navbar-brand menu-toggle" href="#"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
-            <a class="navbar-brand" href="#">
-                <img alt="Logo" src="img/logo/earth-globe.svg" class="mv-logo">
+            <a class="navbar-brand" href="#" target='_blank'>
+                 <img alt="Logo" src="img/logo/earth-globe.svg" class="mv-logo">
             </a>
             <a class="navbar-brand mv-title" href="#">mViewer</a>
             <a type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" href="#">
@@ -343,6 +341,10 @@ $(document).ready(function () {
                         title="Orienté au nord" tabindex="106" accesskey="6">
                     <span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
                 </button>
+                <button id="studiolink" type="button" class="btn btn-default btn-raised" onclick="mviewer.openStudio();"
+                        title="Modifier la carte" tabindex="106" accesskey="6">
+                    <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                </button>                
                  <a href="#" id="exportpng" title="Exporter carte au format image" download="carte.png"
                     class="btn btn-default btn-raised"  tabindex="113" accesskey="13" style="display:none;">
                      <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
@@ -398,7 +400,7 @@ $(document).ready(function () {
                         <h4 class="modal-title"><center>Partager cette carte</center></h4>
                     </div>
                     <div class="modal-body" >
-                        <h6>Mode d'affichage</h6>
+                        <h6 class="modal-share-title"><strong>Mode d'affichage</strong></h6>                       
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12" >
                                 <div class="form-group" id="mv-display-mode">
@@ -416,6 +418,15 @@ $(document).ready(function () {
                                 <img id="permaqr" src="img/blank.gif" title="QR code vers la carte" alt="QR code" />
                             </div>
                        </div>
+                       <div class="row">
+                            <div class="col-sm-10 form-inline">
+                                <button id="shareToMapfish" type="button" class="btn btn-md btn-default" onclick="mviewer.sendToGeorchestra();"><span class="fas fa-share-square"></span></button>Afficher dans Mapfishapp
+                                <form id="georchestraForm" target="_blank" method="post" action="#" style="display:none;">
+                                    <input type="hidden" id="georchestraFormData" name="data" value="" />
+                                    <input type="submit" data-role="button" data-mini="true" data-iconpos="right" value="geOrchestra" />
+                                </form>                                 
+                            </div>
+                       </div>                                                                     
                     </div>
                 </div>
            </div>
