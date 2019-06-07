@@ -265,13 +265,15 @@ span.text-big-legend {
 
 .layerdisplay-title {
     padding-left: 10px;
-    cursor: move;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
 }
 
 .mv-grip {
     color: #999;
     margin-left: -5px;
-    padding-right: 5px;
+    padding-right: 10px;
 }
 
 .layerdisplay-subtitle {
@@ -1340,6 +1342,7 @@ a:focus{
 a.icon-options{
   display:block;
   text-align:center;
+  text-align: -moz-center;
   outline: none;
 }
 
