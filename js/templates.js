@@ -71,9 +71,6 @@ mviewer.templates.layerControl = [
                 ' alt="Légende non disponible" onload="mviewer.legendSize(this)"',
                 ' onError="this.onerror=null;this.src=\'img/nolegend.png\';"/>',
         '</div>',
-        '<a href="#" aria-label="Options" onclick="mviewer.toggleLayerOptions(this);" title="Options" class="icon-options">',
-                '<span class="state-icon glyphicon glyphicon-chevron-down"></span>',
-        '</a>',
         '<div class="mv-layer-options" style="display: none;" data-layerid="{{layerid}}" >',
             '<div class="row">',
                 '<div class="col-md-12">',
@@ -157,7 +154,10 @@ mviewer.templates.layerControl = [
             '</div>',
         '{{/timeControl}}',
             '<div class="mv-custom-controls" data-layerid="{{layerid}}"></div>',
-        '</div>',
+            '</div>',
+            '<a href="#" aria-label="Options" onclick="mviewer.toggleLayerOptions(this);" title="Options" class="icon-options">',
+                '<span class="state-icon glyphicon glyphicon-chevron-down"></span>',
+            '</a>',
     '</li>'].join("");
 
 mviewer.templates.backgroundLayerControlGallery = [
