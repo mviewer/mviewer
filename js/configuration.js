@@ -204,7 +204,7 @@ var configuration = (function () {
         }
         if(!conf.application.studio){
             $('#studiolink').remove();
-        }        
+        }
         if(conf.application.home){
             $('.mv-logo').parent().attr('href', conf.application.home);
         }
@@ -557,6 +557,12 @@ var configuration = (function () {
                     oLayer.tiled = (layer.tiled === "true") ? true : false;
                     oLayer.dynamiclegend = (layer.dynamiclegend === "true") ? true : false;
                     oLayer.vectorlegend =  (layer.vectorlegend === "true") ? true : false;
+                    if (layer.geocodingfields) {
+                        oLayer.geocodingfields = layer.geocodingfields.split(",");
+                    }
+                    oLayer.geocoder = layer.geocoder || false;
+                    oLayer.xfield = layer.xfield;
+                    oLayer.yfield = layer.yfield;
                     oLayer.legendurl=(layer.legendurl)? layer.legendurl : mviewer.getLegendUrl(oLayer);
                     if (oLayer.legendurl === "false") {oLayer.legendurl = "";}
                     oLayer.useproxy = (layer.useproxy === "true") ? true : false;
@@ -707,6 +713,18 @@ var configuration = (function () {
                         });
                         mviewer.processLayer(oLayer, l);
                     }// end kml
+
+                    if (oLayer.type === 'csv') {
+                        l = new ol.layer.Vector({
+                            source: new ol.source.Vector()
+                        });
+                        if (oLayer.url) {
+                            csv.loadCSV(oLayer, l);
+                        } else {
+                            csv.initLoaderFile(oLayer);
+                        }
+                        mviewer.processLayer(oLayer, l);
+                    }// end csv
 
                     if (oLayer.type === 'customlayer') {
                         var hook_url = 'customLayers/' + oLayer.id + '.js';
