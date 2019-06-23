@@ -346,7 +346,7 @@ $(document).ready(function () {
                 <button id="studiolink" type="button" class="btn btn-default btn-raised" onclick="mviewer.openStudio();"
                         title="Modifier la carte" tabindex="106" accesskey="6">
                     <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
-                </button>                
+                </button>
                  <a href="#" id="exportpng" title="Exporter carte au format image" download="carte.png"
                     class="btn btn-default btn-raised"  tabindex="113" accesskey="13" style="display:none;">
                      <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
@@ -402,7 +402,7 @@ $(document).ready(function () {
                         <h4 class="modal-title"><center>Partager cette carte</center></h4>
                     </div>
                     <div class="modal-body" >
-                        <h6 class="modal-share-title"><strong>Mode d'affichage</strong></h6>                       
+                        <h6 class="modal-share-title"><strong>Mode d'affichage</strong></h6>
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12" >
                                 <div class="form-group" id="mv-display-mode">
@@ -426,9 +426,9 @@ $(document).ready(function () {
                                 <form id="georchestraForm" target="_blank" method="post" action="#" style="display:none;">
                                     <input type="hidden" id="georchestraFormData" name="data" value="" />
                                     <input type="submit" data-role="button" data-mini="true" data-iconpos="right" value="geOrchestra" />
-                                </form>                                 
+                                </form>
                             </div>
-                       </div>                                                                     
+                       </div>
                     </div>
                 </div>
            </div>
@@ -484,6 +484,21 @@ $(document).ready(function () {
                         <h4 class="modal-title">Options d'affichage</h4>
                     </div>
                     <div class="modal-body" ></div>
+                </div>
+            </div>
+        </div>
+        <!-- GEOCODING WIZARD -->
+        <div id="geocoding-modal" class="modal fade" tabindex="-1" role="dialog" >
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" role="document">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Options de géocodage</h4>
+                    </div>
+                    <div class="modal-body" ></div>
+                    <div class="modal-footer">
+                        <button type="button" data-layerid="" onclick="csv.geocodeit(this);" class="geocode btn btn-primary">Géocoder</button>
+                    </div>
                 </div>
             </div>
         </div>

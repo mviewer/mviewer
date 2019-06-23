@@ -21,7 +21,13 @@ var csv = (function () {
             var reader = new FileReader();
             reader.readAsText(file, "UTF-8");
             reader.onload = function (evt) {
-                _geocode(evt.target.result,oLayer, oLayer.layer);
+                $("#geocoding-modal").modal("show");
+                $("#geocoding-modal button.geocode").attr("data-layerid",idlayer);
+                $("#geocoding-modal").on("geocoding-" + idlayer + "-ready", function () {
+                    _geocode(evt.target.result,oLayer, oLayer.layer);
+                    $("#geocoding-modal").modal("hide");
+
+                });
             }
             reader.onerror = function (evt) {
                 alert("error reading file");
@@ -57,6 +63,7 @@ var csv = (function () {
                     contentType: false,
                     success: function (data) {
                         var _source = l.getSource();
+                        _source.clear();
                         var _features = [];
                         l.setStyle(_defaultStyle);
                         oLayer.legend = {items : [{styles: _defaultStyle, label: "Points", geometry: "Point"}]};
@@ -105,14 +112,20 @@ var csv = (function () {
         //If no url in config, add form as customcontrol to select local file to geocode
         oLayer.customcontrol = true;
         oLayer.geocodingfields = [];
-        mviewer.customControls[oLayer.layerid] = {form: _template(oLayer), init: function(){return false;}};
+        mviewer.customControls[oLayer.layerid] = {form: _template(oLayer), init: function(){return false;}, destroy: function(){return false;}};
+    };
+
+    var _geocodeit = function (btn) {
+        var e = "geocoding-"+$(btn).attr("data-layerid")+"-ready";
+        $("#geocoding-modal").trigger(e);
     };
 
 
     return {
         initLoaderFile: _initLoaderFile,
         loadLocalFile: _loadLocalFile,
-        loadCSV: _loadCSV
+        loadCSV: _loadCSV,
+        geocodeit: _geocodeit
     };
 
 })();
