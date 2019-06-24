@@ -489,13 +489,33 @@ $(document).ready(function () {
         </div>
         <!-- GEOCODING WIZARD -->
         <div id="geocoding-modal" class="modal fade" tabindex="-1" role="dialog" >
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-md">
                 <div class="modal-content" role="document">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">Options de géocodage</h4>
                     </div>
-                    <div class="modal-body" ></div>
+                    <div class="modal-body" >
+                        <input type="text" class="csv-name">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">Sélectionner les champs à utiliser pour le géocodage (adresse)</div>
+                          <div class="panel-body">
+                            <div class="geocoding csv-fields list-group"/>
+                          </div>
+                        </div>
+                         <div class="panel panel-default">
+                          <div class="panel-heading">Sélectionner le champ à utiliser pour le géocodage (insee)</div>
+                          <div class="panel-body">
+                            <div class="insee csv-fields list-group"/>
+                          </div>
+                        </div>
+                        <div class="panel panel-default">
+                          <div class="panel-heading">Sélectionner les champ à utiliser pour la recherche</div>
+                          <div class="panel-body">
+                            <div class="search csv-fields list-group"/>
+                          </div>
+                        </div>
+                    </div>
                     <div class="modal-footer">
                         <button type="button" data-layerid="" onclick="csv.geocodeit(this);" class="geocode btn btn-primary">Géocoder</button>
                     </div>

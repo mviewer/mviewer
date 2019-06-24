@@ -3,27 +3,55 @@ var csv = (function () {
     var _template = function (oLayer) {
 
         return [
-            '<div class="alert alert-info">',
-                '<input type="file" name="filebutton" onchange="csv.loadLocalFile(\''+oLayer.layerid+'\')" style="visibility:hidden;" id="loadcsv-'+oLayer.layerid+'"/>',
-                '<label>Choisissez un fichier</label>',
-                '<div class="input-append">',
-                    '<input type="text" id="subfile" class="input-xlarge">',
-                    '<a class="btn btn-primary btn-sm" onclick="$(\'#loadcsv-'+oLayer.layerid+'\').click();">Parcourir</a>',
+            '<div class="dropzone dz-clickable" id="drop_zone" onclick="$(\'#loadcsv-'+oLayer.layerid+'\').click();" ondrop="csv.dropHandler(event);" ondragover="csv.dragOverHandler(event);">',
+                    '<div class="dz-default dz-message"><span class="fas fa-cloud-upload-alt fa-3x"></span><p>Glisser un fichier CSV ici<br> ou clic pour sélectionner un fichier...</p></div>',
                 '</div>',
-            '</div>'
+                '<input type="file" name="filebutton" onchange="csv.loadLocalFile(\''+oLayer.layerid+'\')" style="visibility:hidden;" id="loadcsv-'+oLayer.layerid+'"/>'
         ].join("");
     };
 
-    var _loadLocalFile = function(idlayer) {
-        var file = document.getElementById("loadcsv-" + idlayer).files[0];
+    var _loadLocalFile = function(idlayer, file) {
+        if (!file) {
+            file = document.getElementById("loadcsv-" + idlayer).files[0];
+        }
         if (file) {
+            $("#geocoding-modal .csv-fields a").remove();
             var oLayer = mviewer.getLayers()[idlayer];
             var reader = new FileReader();
             reader.readAsText(file, "UTF-8");
             reader.onload = function (evt) {
                 $("#geocoding-modal").modal("show");
                 $("#geocoding-modal button.geocode").attr("data-layerid",idlayer);
+                $("#geocoding-modal .csv-name").val(file.name);
+                var tmp = Papa.parse(evt.target.result, {header: true});
+                var fields = [];
+                tmp.meta.fields.forEach(function(f) {
+                    fields.push('<a href="#" class="list-group-item">'+f+'</a>');
+                });
+
+                $("#geocoding-modal .csv-fields").append(fields.join(" "));
+                $("#geocoding-modal .csv-fields a").click(function() {
+                    $(this).toggleClass( "active" );
+                });
                 $("#geocoding-modal").on("geocoding-" + idlayer + "-ready", function () {
+                    //get select fields to use for geocoding
+                    var fields = [];
+                    var fusefields = [];
+                    $("#geocoding-modal .geocoding.csv-fields a.active").each(function(i,f) {
+                        fields.push(f.textContent);
+                    });
+                    oLayer.geocodingfields = fields;
+                    oLayer.geocodinginsee = $("#geocoding-modal .insee.csv-fields a.active").text();
+                    //Enable fuse search
+                    $("#geocoding-modal .search.csv-fields a.active").each(function(i,f) {
+                        fusefields.push(f.textContent);
+                    });
+                    if (fusefields.length > 0) {
+                        oLayer.fusesearchkeys = fusefields.join(",");
+                        oLayer.fusesearchresult = "{{"+fusefields[0]+"}}"
+                    }
+                    //update layer title in legend panel
+                    $(".mv-layer-details[data-layerid='csv2'] .layerdisplay-title>a").first().text($("#geocoding-modal .csv-name").val());
                     _geocode(evt.target.result,oLayer, oLayer.layer);
                     $("#geocoding-modal").modal("hide");
 
@@ -52,9 +80,13 @@ var csv = (function () {
         if (oLayer.geocoder === "ban") {
                 var formData = new FormData();
                 formData.append("data", new Blob([_csv], {"type": "text/csv"}));
-                oLayer.geocodingfields.forEach(function(value) {
-                    formData.append("columns", value);
-                });
+                if (!oLayer.geocodingcitycode) {
+                    oLayer.geocodingfields.forEach(function(value) {
+                        formData.append("columns", value);
+                    });
+                } else {
+                    formData.append("citycode", oLayer.geocodingcitycode);
+                }
                 $.ajax({
                     type: "POST",
                     processData: false,
@@ -112,6 +144,7 @@ var csv = (function () {
         //If no url in config, add form as customcontrol to select local file to geocode
         oLayer.customcontrol = true;
         oLayer.geocodingfields = [];
+        oLayer.geocodingcitycode = false;
         mviewer.customControls[oLayer.layerid] = {form: _template(oLayer), init: function(){return false;}, destroy: function(){return false;}};
     };
 
@@ -125,7 +158,48 @@ var csv = (function () {
         initLoaderFile: _initLoaderFile,
         loadLocalFile: _loadLocalFile,
         loadCSV: _loadCSV,
-        geocodeit: _geocodeit
+        geocodeit: _geocodeit,
+
+
+        dragOverHandler: function(ev) {
+            // Prevent default behavior (Prevent file from being opened)
+            ev.preventDefault();
+        },
+
+        dropHandler: function (ev) {
+            console.log('File(s) dropped');
+            // Prevent default behavior (Prevent file from being opened)
+            ev.preventDefault();
+            if (ev.dataTransfer.items) {
+                // Use DataTransferItemList interface to access the file(s)
+                for (var i = 0; i < ev.dataTransfer.items.length; i++) {
+                    // If dropped items aren't files, reject them
+                    if (ev.dataTransfer.items[i].kind === 'file') {
+                        var file = ev.dataTransfer.items[i].getAsFile();
+                        var layerid = ev.target.closest(".mv-custom-controls").attributes["data-layerid"].value;
+                        _loadLocalFile(layerid, ev.dataTransfer.files[i]);
+                    }
+                }
+            } else {
+                // Use DataTransfer interface to access the file(s)
+                for (var i = 0; i < ev.dataTransfer.files.length; i++) {
+                    console.log('... file[' + i + '].name = ' + ev.dataTransfer.files[i].name);
+                }
+            }
+            // Pass event to removeDragData for cleanup
+            this.removeDragData(ev)
+        },
+
+        removeDragData: function(ev) {
+            console.log('Removing drag data')
+            if (ev.dataTransfer.items) {
+                // Use DataTransferItemList interface to remove the drag data
+                ev.dataTransfer.items.clear();
+            } else {
+                // Use DataTransfer interface to remove the drag data
+                ev.dataTransfer.clearData();
+            }
+        }
     };
 
 })();

@@ -1771,3 +1771,21 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
   background-color: transparent;
   color: green;
 }
+
+.dropzone.dz-clickable {
+    cursor: pointer;
+}
+
+.dropzone {
+    box-sizing: border-box;
+    min-height: 9.75rem;
+    padding: .5rem;
+    border: .125rem dashed #999;
+    border-radius: .3rem;
+    background: 0 0;
+}
+
+.dropzone .dz-message {
+    display: block;
+    text-align: center;
+}

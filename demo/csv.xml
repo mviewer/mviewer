@@ -38,10 +38,13 @@
                 fusesearchresult="{{nom}}"
                 attribution="Région Bretagne">
             </layer>
-            <layer type="csv" id="csv2" name="demo csv 2"  visible="false"
+            <layer type="csv" id="csv2" name="Import CSV"  visible="false"
+                legendurl="img/blank.gif"
                 queryable="true"
                 vectorlegend="true"
                 geocoder="ban"
+                searchable="true"
+                searchengine="fuse"
                 xfield="longitude"
                 yfield="latitude"
                 expanded="true">
