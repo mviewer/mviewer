@@ -1,5 +1,72 @@
 var csv = (function () {
 
+    var _wizard_modal = [
+      '<div id="geocoding-modal" class="modal fade" tabindex="-1" role="dialog" >',
+        '<div class="modal-dialog modal-md">',
+        '<div class="modal-content" role="document">',
+        '<div class="modal-header">',
+           '<button type="button" class="close" data-dismiss="modal">&times;</button>',
+           '<h4 class="modal-title">Options de géocodage</h4>',
+        '</div>',
+        '<div class="modal-body" >',
+          '<div class="form-group">',
+            '<label for="email">Titre de la donnée:</label>',
+            '<h3><input type="text" class="csv-name form-control"><h3>',
+          '</div>',
+
+           '<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">',
+              '<div class="panel panel-default">',
+                 '<div class="panel-heading" role="tab" id="headingOne">',
+                    '<h4 class="panel-title">',
+                       '<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">',
+                       '<b>Sélectionner les champs</b> à utiliser pour le géocodage (adresse)',
+                       '</a>',
+                    '</h4>',
+                 '</div>',
+                 '<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">',
+                    '<div class="panel-body">',
+                       '<div class="geocoding csv-fields list-group"/>',
+                       '</div>',
+                    '</div>',
+                 '</div>',
+                 '<div class="panel panel-default">',
+                    '<div class="panel-heading" role="tab" id="headingTwo">',
+                       '<h4 class="panel-title">',
+                          '<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">',
+                          '<b>Ou</b> sélectionner le champ à utiliser pour le géocodage (insee)',
+                          '</a>',
+                       '</h4>',
+                    '</div>',
+                    '<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">',
+                       '<div class="panel-body">',
+                          '<div class="insee csv-fields list-group"/>',
+                          '</div>',
+                       '</div>',
+                    '</div>',
+                    '<div class="panel panel-default">',
+                       '<div class="panel-heading" role="tab" id="headingThree">',
+                          '<h4 class="panel-title">',
+                             '<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">',
+                             '<b>En option</b> sélectionner les champ à utiliser pour la recherche',
+                             '</a>',
+                          '</h4>',
+                       '</div>',
+                       '<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">',
+                          '<div class="panel-body">',
+                             '<div class="search csv-fields list-group"/>',
+                             '</div>',
+                          '</div>',
+                       '</div>',
+                    '</div>',
+                 '</div>',
+                 '<div class="modal-footer">',
+                    '<button type="button" data-layerid="" onclick="csv.geocodeit(this);" class="geocode btn btn-primary">Géocoder</button>',
+                 '</div>',
+              '</div>',
+           '</div>',
+        '</div>'
+    ]. join("");
+
     var _template = function (oLayer) {
 
         return [
@@ -16,6 +83,8 @@ var csv = (function () {
         }
         if (file) {
             $("#geocoding-modal .csv-fields a").remove();
+            //remove existing features
+            var _src = mviewer.getLayers()[idlayer].layer.getSource().clear();
             var oLayer = mviewer.getLayers()[idlayer];
             var reader = new FileReader();
             reader.readAsText(file, "UTF-8");
@@ -41,14 +110,18 @@ var csv = (function () {
                         fields.push(f.textContent);
                     });
                     oLayer.geocodingfields = fields;
-                    oLayer.geocodinginsee = $("#geocoding-modal .insee.csv-fields a.active").text();
+                    if ($("#geocoding-modal .insee.csv-fields a.active").length > 0) {
+                        oLayer.geocodingcitycode = $("#geocoding-modal .insee.csv-fields a.active").first().text();
+                    } else {
+                        oLayer.geocodingcitycode = false;
+                    }
                     //Enable fuse search
                     $("#geocoding-modal .search.csv-fields a.active").each(function(i,f) {
                         fusefields.push(f.textContent);
                     });
                     if (fusefields.length > 0) {
                         oLayer.fusesearchkeys = fusefields.join(",");
-                        oLayer.fusesearchresult = "{{"+fusefields[0]+"}}"
+                        oLayer.fusesearchresult = "{{"+fusefields[0]+"}}";
                     }
                     //update layer title in legend panel
                     $(".mv-layer-details[data-layerid='csv2'] .layerdisplay-title>a").first().text($("#geocoding-modal .csv-name").val());
@@ -95,7 +168,6 @@ var csv = (function () {
                     contentType: false,
                     success: function (data) {
                         var _source = l.getSource();
-                        _source.clear();
                         var _features = [];
                         l.setStyle(_defaultStyle);
                         oLayer.legend = {items : [{styles: _defaultStyle, label: "Points", geometry: "Point"}]};
@@ -112,6 +184,7 @@ var csv = (function () {
                             }
                         });
                         _source.addFeatures(_features);
+                        mviewer.getMap().getView().fit(_source.getExtent());
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         mviewer.alert("Problème avec le géocodage" +  thrownError, "alert-warning");
@@ -128,7 +201,6 @@ var csv = (function () {
             $.ajax({
                 url: oLayer.url,
                 success: function (data) {
-                    /* TODO , choose fields to use for geocoding and to use with fuse search */
                     _geocode(data, oLayer, l);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -159,13 +231,11 @@ var csv = (function () {
         loadLocalFile: _loadLocalFile,
         loadCSV: _loadCSV,
         geocodeit: _geocodeit,
-
-
+        getModal: function () { return _wizard_modal;},
         dragOverHandler: function(ev) {
             // Prevent default behavior (Prevent file from being opened)
             ev.preventDefault();
         },
-
         dropHandler: function (ev) {
             console.log('File(s) dropped');
             // Prevent default behavior (Prevent file from being opened)
@@ -189,7 +259,6 @@ var csv = (function () {
             // Pass event to removeDragData for cleanup
             this.removeDragData(ev)
         },
-
         removeDragData: function(ev) {
             console.log('Removing drag data')
             if (ev.dataTransfer.items) {
@@ -203,3 +272,7 @@ var csv = (function () {
     };
 
 })();
+
+$( document ).ready(function() {
+    $("#main").append(csv.getModal());
+});
