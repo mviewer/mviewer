@@ -21,7 +21,7 @@
 
     <themes>
         <theme name="csv"  collapsed="false" id="csv" icon="fas fa-users">
-            <layer type="csv" id="csv1" name="demo csv"  visible="true"
+            <layer type="csv" id="csv1" name="demo csv"  visible="false"
                 queryable="true"
                 vectorlegend="true"
                 geocoder="ban"
@@ -36,9 +36,9 @@
                 searchengine="fuse"
                 fusesearchkeys="nom,adresse"
                 fusesearchresult="{{nom}}"
-                attribution="Région Bretagne">
+                attribution="Dans cet exemple, le fichier csv, persistant et disponible en ligne, est géocodé à l'ouverture de l'application. La recherche est activée">
             </layer>
-            <layer type="csv" id="csv2" name="Import CSV"  visible="false"
+            <layer type="csv" id="csv2" name="Importer un fichier CSV"  visible="true"
                 legendurl="img/blank.gif"
                 queryable="true"
                 vectorlegend="true"
@@ -47,6 +47,7 @@
                 searchengine="fuse"
                 xfield="longitude"
                 yfield="latitude"
+                attribution="Dans cet exemple, l'utilisateur sélectionne un fichier csv depuis son poste. le fichier est ensuite géocodé après paramétrage du géocodage. Il n'y a pas de persistance du résultat. La recherche peut être activée en sélectionnant au moins un champ de recherche. exemple avec le &lt;a href='https://adresse.data.gouv.fr/static/exemples/search.csv' target='_blank'>fichier &lt;/a>"
                 expanded="true">
             </layer>
         </theme>
