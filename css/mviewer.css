@@ -1786,6 +1786,14 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
 }
 
 .dropzone .dz-message {
-    display: block;
+    display: none;
     text-align: center;
+}
+
+.dropzone  .start .dz-default.dz-message {
+    display: block;
+}
+
+.dropzone  .wait .dz-work.dz-message {
+    display: block;
 }

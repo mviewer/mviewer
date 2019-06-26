@@ -82,9 +82,12 @@ var csv = (function () {
 
         return [
             '<div class="dropzone dz-clickable" id="drop_zone" onclick="$(\'#loadcsv-'+oLayer.layerid+'\').click();" ondrop="csv.dropHandler(event);" ondragover="csv.dragOverHandler(event);">',
+                '<div id="csv-status" class="start">',
                     '<div class="dz-default dz-message"><span class="fas fa-cloud-upload-alt fa-3x"></span><p>Glisser un fichier CSV ici<br> ou clic pour sélectionner un fichier...</p></div>',
+                    '<div class="dz-work dz-message"><span class="fas fa-spin fa-cog fa-3x"></span><p>Traitement en cours</p></div>',
                 '</div>',
-                '<input type="file" name="filebutton" onchange="csv.loadLocalFile(\''+oLayer.layerid+'\')" style="visibility:hidden;" id="loadcsv-'+oLayer.layerid+'"/>'
+            '</div>',
+            '<input type="file" name="filebutton" onchange="csv.loadLocalFile(\''+oLayer.layerid+'\')" style="visibility:hidden;" id="loadcsv-'+oLayer.layerid+'"/>'
         ].join("");
     };
 
@@ -197,6 +200,7 @@ var csv = (function () {
                 } else {
                     formData.append("citycode", oLayer.geocodingcitycode);
                 }
+                $("#csv-status").attr("class", "wait");
                 $.ajax({
                     type: "POST",
                     processData: false,
@@ -229,9 +233,11 @@ var csv = (function () {
                         _source.addFeatures(_features);
                         // zoom to layer extent
                         mviewer.getMap().getView().fit(_source.getExtent());
+                        $("#csv-status").attr("class", "start");
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         mviewer.alert("Problème avec le géocodage" +  thrownError, "alert-warning");
+                        $("#csv-status").attr("class", "start");
                     }
                 });
 
