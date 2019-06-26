@@ -579,7 +579,9 @@ var search = (function () {
         var l = oLayer.layer;
         switch (oLayer.searchengine) {
             case "fuse":
-                _searchableFuseLayers.push(l);
+                if (_searchableFuseLayers.indexOf(l) === -1) {
+                    _searchableFuseLayers.push(l);
+                }
                 var options = {
                     shouldSort: true,
                     threshold: 0.3,
@@ -595,30 +597,30 @@ var search = (function () {
                 if (l.getSource().source) {/* clusters */
                     layerSource = l.getSource().getSource();
                 }
-                layerSource.on('change', function(event) {
+                var _listener = layerSource.on('change', function(event) {
                     var source = event.target;
-
-                    if (source.getState() === "ready" && !_fuseSearchData[oLayer.id] ) {
+                    if (source.getState() === "ready") {
                         var features = source.getFeatures();
-                        var geojsonFormat = new ol.format.GeoJSON();
-                        var mapProj = _map.getView().getProjection();
+                        if (features.length > 0) {
+                            var geojsonFormat = new ol.format.GeoJSON();
+                            var mapProj = _map.getView().getProjection();
 
-                        var j = [];
+                            var j = [];
 
-                        features.forEach(function(feature) {
+                            features.forEach(function(feature) {
+                                var geojsonFeature = geojsonFormat.writeFeatureObject(feature);
+                                var wgs84Geom = feature.getGeometry().clone().transform(mapProj, "EPSG:4326");
+                                var prop = geojsonFeature.properties;
+                                prop.geometry = geojsonFormat.writeGeometryObject(wgs84Geom);
+                                prop.fusesearchresult = oLayer.fusesearchresult;
+                                j.push(prop);
+                            });
 
-                            var geojsonFeature = geojsonFormat.writeFeatureObject(feature);
-                            var wgs84Geom = feature.getGeometry().clone().transform(mapProj, "EPSG:4326");
-
-                            var prop = geojsonFeature.properties;
-                            prop.geometry = geojsonFormat.writeGeometryObject(wgs84Geom);
-                            prop.fusesearchresult = oLayer.fusesearchresult;
-
-                            j.push(prop);
-                        });
-
-                        var list = $.map(j, function(el) { return el });
-                        _fuseSearchData[oLayer.id] = new Fuse(list, options);
+                            var list = $.map(j, function(el) { return el });
+                            _fuseSearchData[oLayer.id] = new Fuse(list, options);
+                            //remove listener when data is loaded
+                            ol.Observable.unByKey(_listener);
+                        }
                     }
                 });
                 break;
