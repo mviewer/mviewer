@@ -352,10 +352,7 @@ var search = (function () {
             var layername = searchableLayers[i].get('name');
             var layerid = searchableLayers[i].get('mviewerid');
 
-            var results = [];
-            if (_fuseSearchData[layerid]) {
-               results = _fuseSearchData[layerid].search(val);
-            }
+            var results = _fuseSearchData[layerid].search(val);
             var zoom = 15;
             var max_results = 5;
             var str = "";
@@ -582,9 +579,7 @@ var search = (function () {
         var l = oLayer.layer;
         switch (oLayer.searchengine) {
             case "fuse":
-                if (_searchableFuseLayers.indexOf(l) === -1) {
-                    _searchableFuseLayers.push(l);
-                }
+                _searchableFuseLayers.push(l);
                 var options = {
                     shouldSort: true,
                     threshold: 0.3,
@@ -600,44 +595,32 @@ var search = (function () {
                 if (l.getSource().source) {/* clusters */
                     layerSource = l.getSource().getSource();
                 }
-                var _listener = function(event) {
+                layerSource.on('change', function(event) {
                     var source = event.target;
-                    if (source.getState() === "ready" && (!_fuseSearchData[oLayer.id] || _fuseSearchData[oLayer.id].list.length === 0) ) {
+
+                    if (source.getState() === "ready" && !_fuseSearchData[oLayer.id] ) {
                         var features = source.getFeatures();
-                        if (features.length > 0) {
-                            var geojsonFormat = new ol.format.GeoJSON();
-                            var mapProj = _map.getView().getProjection();
+                        var geojsonFormat = new ol.format.GeoJSON();
+                        var mapProj = _map.getView().getProjection();
 
-                            var j = [];
+                        var j = [];
 
-                            features.forEach(function(feature) {
+                        features.forEach(function(feature) {
 
-                                var geojsonFeature = geojsonFormat.writeFeatureObject(feature);
-                                var wgs84Geom = feature.getGeometry().clone().transform(mapProj, "EPSG:4326");
+                            var geojsonFeature = geojsonFormat.writeFeatureObject(feature);
+                            var wgs84Geom = feature.getGeometry().clone().transform(mapProj, "EPSG:4326");
 
-                                var prop = geojsonFeature.properties;
-                                prop.geometry = geojsonFormat.writeGeometryObject(wgs84Geom);
-                                prop.fusesearchresult = oLayer.fusesearchresult;
+                            var prop = geojsonFeature.properties;
+                            prop.geometry = geojsonFormat.writeGeometryObject(wgs84Geom);
+                            prop.fusesearchresult = oLayer.fusesearchresult;
 
-                                j.push(prop);
-                            });
+                            j.push(prop);
+                        });
 
-                            var list = $.map(j, function(el) { return el });
-                            //hack csv
-                            options.keys = oLayer.fusesearchkeys.split(',');
-                            _fuseSearchData[oLayer.id] = new Fuse(list, options);
-                        } else {
-                            if (_fuseSearchData[oLayer.id]) {
-                                _fuseSearchData[oLayer.id].list = [];
-                            }
-                        }
-                    } else {
-                        if (_fuseSearchData[oLayer.id]) {
-                            _fuseSearchData[oLayer.id].list = [];
-                        }
+                        var list = $.map(j, function(el) { return el });
+                        _fuseSearchData[oLayer.id] = new Fuse(list, options);
                     }
-                };
-                layerSource.on('change', _listener);
+                });
                 break;
 
             case "elasticsearch":
@@ -764,7 +747,6 @@ var search = (function () {
         init: _init,
         configSearchableLayer: _configSearchableLayer,
         processSearchableLayer: _processSearchableLayer,
-        getFuseSearchData: function () { return _fuseSearchData; },
         toggleParameter: _toggleParameter,
         sendElasticsearchRequest: _sendElasticsearchRequest,
         options: _searchparams,
