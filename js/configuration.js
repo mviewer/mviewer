@@ -58,8 +58,12 @@ var configuration = (function () {
             _conf.baselayers.baselayer = [_conf.baselayers.baselayer];
         }
         _conf.baselayers = _conf.baselayers;
-        if ((_conf.themes.theme !== undefined) && !Array.isArray(_conf.themes.theme)) {
-            _conf.themes.theme = [_conf.themes.theme];
+        if (!Array.isArray(_conf.themes.theme)) {
+            if (_conf.themes.theme) {
+                _conf.themes.theme = [_conf.themes.theme];
+            } else {
+                _conf.themes.theme = [];
+            }
         }
         if (_conf.themes.theme !== undefined) {
             _conf.themes.theme.forEach(function (theme) {
