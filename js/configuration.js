@@ -216,6 +216,8 @@ var configuration = (function () {
         }
         if(conf.application.mapfishurl){
             $('#georchestraForm').attr('action', conf.application.mapfishurl);
+        } else {
+             $("#shareToMapfish").hide();
         }
 
         //map options
