@@ -114,6 +114,8 @@ $(document).ready(function () {
                 configFile = "/".concat(configFile)
             }
             configFile = "apps".concat(configFile);
+        }
+        if (configFile) {
             if (!configFile.endsWith(".xml")) {
                 configFile = configFile.concat(".xml");
             }
@@ -418,9 +420,9 @@ $(document).ready(function () {
                                 <img id="permaqr" src="img/blank.gif" title="QR code vers la carte" alt="QR code" />
                             </div>
                        </div>
-                       <div class="row">
+                       <div class="row" id="shareToMapfish">
                             <div class="col-sm-10 form-inline">
-                                <button id="shareToMapfish" type="button" class="btn btn-md btn-default" onclick="mviewer.sendToGeorchestra();"><span class="fas fa-share-square"></span></button>Afficher dans Mapfishapp
+                                <button id="shareToMapfishButton" type="button" class="btn btn-md btn-default" onclick="mviewer.sendToGeorchestra();"><span class="fas fa-share-square"></span>Afficher dans Mapfishapp</button>
                                 <form id="georchestraForm" target="_blank" method="post" action="#" style="display:none;">
                                     <input type="hidden" id="georchestraFormData" name="data" value="" />
                                     <input type="submit" data-role="button" data-mini="true" data-iconpos="right" value="geOrchestra" />

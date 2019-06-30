@@ -1762,12 +1762,13 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
     display:none;
 }
 
-#shareToMapfish {
+#shareToMapfishButton {
   border-radius: 0px;
   border: none;
   padding-left:0px;
 }
-#shareToMapfish:hover {
+
+#shareToMapfishButton:hover {
   background-color: transparent;
   color: green;
 }

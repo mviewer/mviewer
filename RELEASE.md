@@ -17,9 +17,9 @@ Version 3.0
  * Suppression de l'identité Région Bretagne dans mviewer
  * Ajout de nouvelles démos
  * Nouveau paramètre coordinates
- * Nouveau paramètre toggleAllLayersFromTheme pour masquer/afficher toustes lescouches d'une thématique
+ * Nouveau paramètre toggleAllLayersFromTheme pour masquer/afficher toutes les couches d'une thématique
  * nouveau paramètre dynamiclegend pour actualiser la légende en fonction du zoom
- * Mise à jour des reqûetes elasticsearch afin d'assurer la compatibilité avec la version courante
+ * Mise à jour des requêtes elasticsearch afin d'assurer la compatibilité avec la version courante
  * Ajout du paramètre FuseSearch pour les layers de type geojson & customlayers
  * Mise à jour d'openlayers vers la version 4.5
  * Support des templates Mustache pour les tooltips des entités

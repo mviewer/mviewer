@@ -328,16 +328,19 @@ mviewer = (function () {
         if (layer.sld) {
             sld = '&SLD=' + encodeURIComponent(layer.sld);
         }
+        var _layerUrl = layer.url.replace(/[?&]$/, '');
         if (layer.legendurl && !layer.styles) {
             legendUrl = layer.legendurl;
         } else if (layer.legendurl && layer.styles && (layer.styles.split(",").length === 1)) {
             legendUrl = layer.legendurl;
         } else if (layer.sld) {
-            legendUrl = layer.url + '?service=WMS&Version=1.3.0&request=GetLegendGraphic&SLD_VERSION=1.1.0'+
+            legendUrl = _layerUrl.indexOf('?') === -1 ? _layerUrl + '?' : _layerUrl + '&';
+            legendUrl = legendUrl + 'service=WMS&Version=1.3.0&request=GetLegendGraphic&SLD_VERSION=1.1.0'+
             '&format=image%2Fpng&width=30&height=20&layer=' + layer.layername + '&style=' + sld+
             '&legend_options=fontName:Open%20Sans;fontAntiAliasing:true;fontColor:0x777777;fontSize:10;dpi:96&TRANSPARENT=true';
         } else {
-            legendUrl = layer.url + '?service=WMS&Version=1.3.0&request=GetLegendGraphic&SLD_VERSION=1.1.0'+
+            legendUrl = _layerUrl.indexOf('?') === -1 ? _layerUrl + '?' : _layerUrl + '&';
+            legendUrl = legendUrl + 'service=WMS&Version=1.3.0&request=GetLegendGraphic&SLD_VERSION=1.1.0'+
             '&format=image%2Fpng&width=30&height=20&layer=' + layer.layername + '&style=' + layer.style + sld+
             '&legend_options=fontName:Open%20Sans;fontAntiAliasing:true;fontColor:0x777777;fontSize:10;dpi:96&TRANSPARENT=true';
         }
@@ -781,9 +784,11 @@ mviewer = (function () {
         $("#menu").html(htmlListGroup);
         initMenu();
         // Open theme item if set to collapsed=false
-        var expanded_theme = $.grep(configuration.getConfiguration().themes.theme, function(obj){return obj.collapsed === "false";});
-        if (expanded_theme.length > 0) {
-            $("#theme-layers-"+expanded_theme[0].id+">a").click();
+        if (configuration.getConfiguration().themes.theme !== undefined) {
+            var expanded_theme = $.grep(configuration.getConfiguration().themes.theme, function(obj){return obj.collapsed === "false";});
+            if (expanded_theme.length > 0) {
+                $("#theme-layers-"+expanded_theme[0].id+">a").click();
+            }
         }
         //Add remove and add layers button on them
         if (configuration.getConfiguration().application.togglealllayersfromtheme === "true") {
@@ -1877,6 +1882,10 @@ mviewer = (function () {
 
             if (layer.timefilter) {
                 view.timeControl = true;
+            }
+
+            if (layer.secure) {
+                view.secure = true;
             }
 
             var item = Mustache.render(mviewer.templates.layerControl, view);

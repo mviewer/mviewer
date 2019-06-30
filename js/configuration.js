@@ -45,8 +45,9 @@ var configuration = (function () {
      * Ajax proxy to use for crossdomain requests
      * It could be georchestra security-proxy
      */
-
     var _proxy = "";
+
+    var _hideProtectedLayers = true;
 
     var _parseXML = function (xml) {
         var _conf = $.xml2json(xml);
@@ -64,25 +65,27 @@ var configuration = (function () {
                 _conf.themes.theme = [];
             }
         }
-        _conf.themes.theme.forEach(function (theme) {
-            if (theme.group) {
-                if (!Array.isArray(theme.group)) {
-                    theme.group = [theme.group];
+        if (_conf.themes.theme !== undefined) {
+            _conf.themes.theme.forEach(function (theme) {
+                if (theme.group) {
+                    if (!Array.isArray(theme.group)) {
+                        theme.group = [theme.group];
+                    }
+                } else {
+                    theme.group = [];
                 }
-            } else {
-                theme.group = [];
-            }
-            theme.group.forEach(function (group) {
-                if (!Array.isArray(group.layer)) {
-                    group.layer = [group.layer];
+                theme.group.forEach(function (group) {
+                    if (!Array.isArray(group.layer)) {
+                        group.layer = [group.layer];
+                    }
+                });
+                if (theme.layer) {
+                    if (!Array.isArray(theme.layer)) {
+                        theme.layer = [theme.layer];
+                    }
                 }
             });
-            if (theme.layer) {
-                if (!Array.isArray(theme.layer)) {
-                    theme.layer = [theme.layer];
-                }
-            }
-        });
+        }
 
         return _conf;
     };
@@ -190,6 +193,9 @@ var configuration = (function () {
         if (conf.application.togglealllayersfromtheme === "true" ) {
             _toggleAllLayersFromTheme = true;
         }
+        if (conf.application.hideprotectedlayers === "false" ) {
+            _hideProtectedLayers = false;
+        }
         if (conf.application.exportpng === "true" ) {
             _crossorigin = "anonymous";
             $("#exportpng").show();
@@ -210,6 +216,8 @@ var configuration = (function () {
         }
         if(conf.application.mapfishurl){
             $('#georchestraForm').attr('action', conf.application.mapfishurl);
+        } else {
+             $("#shareToMapfish").hide();
         }
 
         //map options
@@ -330,10 +338,7 @@ var configuration = (function () {
                  mviewer.events().overLayersTotal = nbOverLayers;
                  mviewer.events().confLoaded = true;
             });
-
-
-
-        } else {
+        } else if (conf.themes.theme !== undefined) {
             var themes = conf.themes.theme;
             var nbOverLayers = 0;
             themes.forEach(function (theme) {
@@ -403,12 +408,15 @@ var configuration = (function () {
                    if (layer) { /* to escape group without layer */
                     layerRank+=1;
                     var layerId = layer.id;
+                    var layerUrl = layer.url.replace(/[?&]$/, '');
+                    var capabilitiesParams = "REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.3.0";
+                    var getCapUrl = layerUrl.indexOf('?') === -1 ? layerUrl + '?' + capabilitiesParams : layerUrl + '&' + capabilitiesParams;
                     var secureLayer = (layer.secure === "true") ? true : false;
                     if (secureLayer) {
                         $.ajax({
                             dataType: "xml",
                             layer: layerId,
-                            url:  mviewer.ajaxURL(layer.url + "?REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.3.0"),
+                            url:  mviewer.ajaxURL(getCapUrl),
                             success: function (result) {
                                 //Find layer in capabilities
                                 var name = this.layer;
@@ -416,8 +424,10 @@ var configuration = (function () {
                                     return $(this).text() == name;
                                 });
                                 if (layer.length === 0) {
-                                    //remove this layer from map and panel
-                                    mviewer.deleteLayer(this.layer);
+                                    if (_hideProtectedLayers) {
+                                        //remove this layer from map and panel
+                                        mviewer.deleteLayer(this.layer);
+                                    }
                                 }
                             }
                         });
@@ -578,6 +588,7 @@ var configuration = (function () {
                             oLayer.scale.max = parseInt(layer.scalemax);
                         }
                     }
+                    oLayer.secure = (layer.secure === "true") ? true : false;
                     if (oLayer.customcontrol) {
                         var customcontrolpath = oLayer.customcontrolpath;
                         $.ajax({
