@@ -1637,11 +1637,6 @@ mviewer = (function () {
             if (API.wmc) {
                 linkParams.wmc = API.wmc;
             }
-
-            if (API.group && API.map) {
-                linkParams.orga = API.group;
-                linkParams.map = API.map;
-            }
             linkParams.mode = $('input[name=mv-display-mode]:checked').val();
 
             var url = window.location.href.split('?')[0].replace('#','') + '?' + $.param(linkParams);

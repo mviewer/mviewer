@@ -114,10 +114,6 @@ $(document).ready(function () {
                 configFile = "/".concat(configFile)
             }
             configFile = "apps".concat(configFile);
-        } else {
-            if (API.group && API.map) {
-                configFile = "apps/".concat(API.group).concat("/").concat(API.map);
-            }
         }
         if (configFile) {
             if (!configFile.endsWith(".xml")) {
