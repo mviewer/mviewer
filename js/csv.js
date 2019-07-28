@@ -324,5 +324,6 @@ var csv = (function () {
 })();
 
 $( document ).ready(function() {
-    $("#main").append(csv.getModal());
+    $("#main").append(csv.getModal())
+    $("#geocoding-modal .close").click(function(e) { $("#geocoding-modal").modal("hide")});
 });
