@@ -362,6 +362,8 @@ mviewer = (function () {
      */
 
     var _drawVectorLegend = function (layerid, items) {
+		//Remove classic getLegendUrl
+        $("#legend-"+layerid).remove();
         var canvas = document.getElementById("vector-legend-" + layerid);
         if (canvas) {
             var marginTop = 15;
@@ -1337,14 +1339,22 @@ mviewer = (function () {
 
     var _getLonLatZfromGeometry = function (geometry, proj, maxzoom) {
         var xyz = {};
+		var coordinates;
         //For Point or multiPoints with one point
-        if (geometry.getType() === "Point" || (geometry.getType() === "MultiPoint" && geometry.getPoints().length === 1)) {
-            var coordinates = geometry.getPoints()[0].flatCoordinates;
+        if ((geometry.getType() === "MultiPoint" && geometry.getPoints().length === 1)) {
+            coordinates = geometry.getPoints()[0].flatCoordinates;
             xyz = { lon: coordinates[0],
                     lat: coordinates[1],
                     zoom: maxzoom || 15
             };
-        } else {
+        } else if (geometry.getType() === "Point") {
+			coordinates = geometry.getFlatCoordinates();
+            xyz = { lon: coordinates[0],
+                    lat: coordinates[1],
+                    zoom: maxzoom || 15
+			};
+
+		} else {
             var extent = geometry.getExtent();
             var projExtent = ol.proj.transformExtent(extent, proj, _projection.getCode());
             var resolution = _map.getView().getResolutionForExtent(projExtent, _map.getSize());
@@ -1606,7 +1616,7 @@ mviewer = (function () {
             // get xml config file
             var configFile = API.config ? API.config : 'config.xml';
             // get domain url and clean
-            var splitStr = window.location.href.split('?')[0].replace('#','').split('/');            
+            var splitStr = window.location.href.split('?')[0].replace('#','').split('/');
             splitStr = splitStr.slice(0,splitStr.length-1).join('/');
             // create absolute config file url
             var url = splitStr + '/' + configFile;
@@ -1902,8 +1912,11 @@ mviewer = (function () {
             //Dynamic vector Legend
             if (layer.vectorlegend  && mviewer.customLayers[layer.layerid] && mviewer.customLayers[layer.layerid].legend) {
                 _drawVectorLegend( layer.layerid, mviewer.customLayers[layer.layerid].legend.items );
-                //Remove classic getLegendUrl
-                $("#legend-"+layer.layerid).remove();
+            }
+
+			//Dynamic vector Legend
+            if (layer.vectorlegend  && layer.legend && layer.legend.items) {
+                _drawVectorLegend( layer.layerid, layer.legend.items );
             }
 
             _setLayerScaleStatus(layer, _calculateScale(_map.getView().getResolution()));
