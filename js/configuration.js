@@ -675,7 +675,7 @@ var configuration = (function () {
                                         xhr.addEventListener('loadend', function (evt) {
                                             var data = this.response;
                                             if(this.status == '401'){
-                                                image.getImage().src = _blankSrc;
+                                                imageTile.getImage().src = _blankSrc;
                                                 //imageTile.setStatus(4);
                                             }else if(data && data !== undefined){
                                                 imageTile.getImage().src = URL.createObjectURL(data);
