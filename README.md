@@ -93,10 +93,11 @@ Personnalisation de l'application (overriding)
 * **stats**: Enables stats mode  true/false || false.
 * **statsurl**: url to send stats activity eg (login, ip, application title, date).
 * **coordinates**: Affiche les coordonnées GPS lors de l'interrogation true/false || false.
-* **togglealllayersfromtheme**: Ajoute un bouton dans le panneau de gauche pour chaque thématique afin d'afficher/masquer toutes les couches de la thématique.Valeur : true/false || false.
+* **togglealllayersfromtheme**: Ajoute un bouton dans le panneau de gauche pour chaque thématique afin d'afficher/masquer toutes les couches de la thématique. Valeur : true/false || false.
 * **studio**: Lien vers le mviewerstudio pour modifier la carte en cours
 * **home**: Lien vers le portail de l'éditeur de la carte
 * **mapfishurl**: Lien permettant d'afficher les couches courantes visibles vers un mapfishapp cible
+* **hideprotectedlayers**: Indique si les couches protégées doivent être masquées dans l'arbre des thématiques lorsque l'utilisateur n'y a pas accès. Valeur : true/false (true par défaut).
 
 ### Nœud mapoptions
 
@@ -335,7 +336,7 @@ Nœud enfant de theme ou group décrivant une couche.
 
 * **id**: Id de la couche.
 * **name**: Nom de la couche.
-* **type**: Type de la couche (wms|geojson|kml|customlayer) default=wms. Si customlayer est défini, il faut instancier 
+* **type**: Type de la couche (wms|geojson|kml|customlayer|csv) default=wms. Si customlayer est défini, il faut instancier 
 un Layer OpenLayers dans un fichier javascript ayant pour nom l'id de la couche.
 Ce fichier js doit être placé dans le répertoire customlayers.
 * **scalemin**: Echelle minimum de la couche.
@@ -408,12 +409,17 @@ La structure du js doit être la suivante : (../controls/epci.js). Valeur par d�
 * **legendurl**: url premettant de récupérer la légende. Si non défini, c'est un getFeatureLegend qui est effectué.
 * **dynamiclegend**: Booléen précisant si la légende est liée à l'échelle de la carte et si elle nécessite d'être 
 actualisée à chaque changement d'échelle de la carte.
-* **vectorlegend**: Booléen précisant si la légende pour les couches de type vecteur (customlayer) est dynamiquement créeé 
+* **vectorlegend**: Booléen précisant si la légende pour les couches de type vecteur (customlayer ou csv) est dynamiquement créée
 * **url**: URL de la couche.
 * **attribution**: Copyright de la couche.
 * **expanded** : Booléan précisant si le panneau de la couche est agrandi au démarrage. La valeur par défaut est false.
 * **metadata**: Lien vers la fiche de metadonnées complète.
 * **metadata-csw**: Requête CSW pour l'affiche dans la popup du détail de la couche.
+* **geocoder**: pour les couches de type csv, précise l'API de géocodage à utiliser (ban).
+* **geocodingfields**: pour les couches de type csv, précise les champs utilisables pour le géocodage.
+* **xfield*: pour les couches de type csv, précise le champ à utiliser pour la longitude.
+* **yfield*: pour les couches de type csv, précise le champ à utiliser pour la latitude.
+
 
 ####### Nœuds
 

@@ -328,16 +328,19 @@ mviewer = (function () {
         if (layer.sld) {
             sld = '&SLD=' + encodeURIComponent(layer.sld);
         }
+        var _layerUrl = layer.url.replace(/[?&]$/, '');
         if (layer.legendurl && !layer.styles) {
             legendUrl = layer.legendurl;
         } else if (layer.legendurl && layer.styles && (layer.styles.split(",").length === 1)) {
             legendUrl = layer.legendurl;
         } else if (layer.sld) {
-            legendUrl = layer.url + '?service=WMS&Version=1.3.0&request=GetLegendGraphic&SLD_VERSION=1.1.0'+
+            legendUrl = _layerUrl.indexOf('?') === -1 ? _layerUrl + '?' : _layerUrl + '&';
+            legendUrl = legendUrl + 'service=WMS&Version=1.3.0&request=GetLegendGraphic&SLD_VERSION=1.1.0'+
             '&format=image%2Fpng&width=30&height=20&layer=' + layer.layername + '&style=' + sld+
             '&legend_options=fontName:Open%20Sans;fontAntiAliasing:true;fontColor:0x777777;fontSize:10;dpi:96&TRANSPARENT=true';
         } else {
-            legendUrl = layer.url + '?service=WMS&Version=1.3.0&request=GetLegendGraphic&SLD_VERSION=1.1.0'+
+            legendUrl = _layerUrl.indexOf('?') === -1 ? _layerUrl + '?' : _layerUrl + '&';
+            legendUrl = legendUrl + 'service=WMS&Version=1.3.0&request=GetLegendGraphic&SLD_VERSION=1.1.0'+
             '&format=image%2Fpng&width=30&height=20&layer=' + layer.layername + '&style=' + layer.style + sld+
             '&legend_options=fontName:Open%20Sans;fontAntiAliasing:true;fontColor:0x777777;fontSize:10;dpi:96&TRANSPARENT=true';
         }
@@ -359,6 +362,8 @@ mviewer = (function () {
      */
 
     var _drawVectorLegend = function (layerid, items) {
+		//Remove classic getLegendUrl
+        $("#legend-"+layerid).remove();
         var canvas = document.getElementById("vector-legend-" + layerid);
         if (canvas) {
             var marginTop = 15;
@@ -781,9 +786,11 @@ mviewer = (function () {
         $("#menu").html(htmlListGroup);
         initMenu();
         // Open theme item if set to collapsed=false
-        var expanded_theme = $.grep(configuration.getConfiguration().themes.theme, function(obj){return obj.collapsed === "false";});
-        if (expanded_theme.length > 0) {
-            $("#theme-layers-"+expanded_theme[0].id+">a").click();
+        if (configuration.getConfiguration().themes.theme !== undefined) {
+            var expanded_theme = $.grep(configuration.getConfiguration().themes.theme, function(obj){return obj.collapsed === "false";});
+            if (expanded_theme.length > 0) {
+                $("#theme-layers-"+expanded_theme[0].id+">a").click();
+            }
         }
         //Add remove and add layers button on them
         if (configuration.getConfiguration().application.togglealllayersfromtheme === "true") {
@@ -1332,14 +1339,22 @@ mviewer = (function () {
 
     var _getLonLatZfromGeometry = function (geometry, proj, maxzoom) {
         var xyz = {};
+		var coordinates;
         //For Point or multiPoints with one point
-        if (geometry.getType() === "Point" || (geometry.getType() === "MultiPoint" && geometry.getPoints().length === 1)) {
-            var coordinates = geometry.getPoints()[0].flatCoordinates;
+        if ((geometry.getType() === "MultiPoint" && geometry.getPoints().length === 1)) {
+            coordinates = geometry.getPoints()[0].flatCoordinates;
             xyz = { lon: coordinates[0],
                     lat: coordinates[1],
                     zoom: maxzoom || 15
             };
-        } else {
+        } else if (geometry.getType() === "Point") {
+			coordinates = geometry.getFlatCoordinates();
+            xyz = { lon: coordinates[0],
+                    lat: coordinates[1],
+                    zoom: maxzoom || 15
+			};
+
+		} else {
             var extent = geometry.getExtent();
             var projExtent = ol.proj.transformExtent(extent, proj, _projection.getCode());
             var resolution = _map.getView().getResolutionForExtent(projExtent, _map.getSize());
@@ -1601,7 +1616,7 @@ mviewer = (function () {
             // get xml config file
             var configFile = API.config ? API.config : 'config.xml';
             // get domain url and clean
-            var splitStr = window.location.href.split('?')[0].replace('#','').split('/');            
+            var splitStr = window.location.href.split('?')[0].replace('#','').split('/');
             splitStr = splitStr.slice(0,splitStr.length-1).join('/');
             // create absolute config file url
             var url = splitStr + '/' + configFile;
@@ -1879,6 +1894,10 @@ mviewer = (function () {
                 view.timeControl = true;
             }
 
+            if (layer.secure) {
+                view.secure = true;
+            }
+
             var item = Mustache.render(mviewer.templates.layerControl, view);
             if (layer.customcontrol && mviewer.customControls[layer.layerid] && mviewer.customControls[layer.layerid].form) {
                 item = $(item).find('.mv-custom-controls').append(mviewer.customControls[layer.layerid].form).closest(".mv-layer-details");
@@ -1893,8 +1912,11 @@ mviewer = (function () {
             //Dynamic vector Legend
             if (layer.vectorlegend  && mviewer.customLayers[layer.layerid] && mviewer.customLayers[layer.layerid].legend) {
                 _drawVectorLegend( layer.layerid, mviewer.customLayers[layer.layerid].legend.items );
-                //Remove classic getLegendUrl
-                $("#legend-"+layer.layerid).remove();
+            }
+
+			//Dynamic vector Legend
+            if (layer.vectorlegend  && layer.legend && layer.legend.items) {
+                _drawVectorLegend( layer.layerid, layer.legend.items );
             }
 
             _setLayerScaleStatus(layer, _calculateScale(_map.getView().getResolution()));

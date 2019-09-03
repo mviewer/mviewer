@@ -329,70 +329,70 @@ var info = (function () {
                             template = Mustache.render(mviewer.templates.featureInfo[_panelsTemplate[panel]], view);
                         }
                         $("#"+panel+" .popup-content").append(template);
-                        //TODO reorder tabs like in theme panel
+                    //TODO reorder tabs like in theme panel
 
-                        var title = $("[href='#slide-"+panel+"-1']").closest("li").attr("title");
-                        $("#"+panel+" .mv-header h5").text(title);
+                    var title = $("[href='#slide-"+panel+"-1']").closest("li").attr("title");
+                    $("#"+panel+" .mv-header h5").text(title);
 
-                        if (configuration.getConfiguration().mobile) {
-                            $("#modal-panel").modal("show");
-                        } else {
-                            if (!$('#'+panel).hasClass("active")) {
-                                $('#'+panel).toggleClass("active");
-                            }
-                        }
-                        $("#"+panel+" .popup-content iframe[class!='chartjs-hidden-iframe']").each(function( index) {
-                            $(this).on('load',function () {
-                                    $(this).closest("li").find(".mv-iframe-indicator").hide();
-                            });
-                            $(this).closest("li").append(['<div class="mv-iframe-indicator" >',
-                                '<div class="loader">Loading...</div>',
-                                '</div>'].join(""));
-                        });
-                        $("#"+panel+" .popup-content img").click(function(){mviewer.popupPhoto($(this).attr("src"))});
-                        $("#"+panel+" .popup-content img").on("vmouseover",function(){$(this).css('cursor', 'pointer');})
-                            .attr("title","Cliquez pour agrandir cette image");
-                        $(".popup-content .nav-tabs li>a").tooltip('destroy').tooltip({
-                            animation: false,
-                            trigger: 'hover',
-                            container: 'body',
-                            placement: 'right',
-                            html: true,
-                            template: mviewer.templates.tooltip
-                       });
-                       $('.carousel.slide').on('slide.bs.carousel', function (e) {
-                          $(e.currentTarget).find(".counter-slide").text($(e.relatedTarget).attr("data-counter"));
-                       });
-                       mviewer.showLocation(_projection.getCode(), _clickCoordinates[0], _clickCoordinates[1]);
-
+                    if (configuration.getConfiguration().mobile) {
+                        $("#modal-panel").modal("show");
                     } else {
-                        $('#'+panel).removeClass("active");
-                    }
-                });
-                $('#loading-indicator').hide();
-                search.clearSearchField();
-                _mvReady = true;
-
-            };
-
-            var ajaxFunction = function () {
-                urls.forEach(function(request) {
-                    requests.push($.ajax({
-                        url: mviewer.ajaxURL(request.url),
-                        layer: request.layerinfos,
-                        success: function (response, textStatus, request) {
-                            featureInfoByLayer.push({response:response,layerinfos:this.layer,
-                                contenttype:request.getResponseHeader("Content-Type")});
+                        if (!$('#'+panel).hasClass("active")) {
+                            $('#'+panel).toggleClass("active");
                         }
-                    }));
-                });
-            };
+                    }
+                    $("#"+panel+" .popup-content iframe[class!='chartjs-hidden-iframe']").each(function( index) {
+                        $(this).on('load',function () {
+                                $(this).closest("li").find(".mv-iframe-indicator").hide();
+                        });
+                        $(this).closest("li").append(['<div class="mv-iframe-indicator" >',
+                            '<div class="loader">Loading...</div>',
+                            '</div>'].join(""));
+                    });
+                    $("#"+panel+" .popup-content img").click(function(){mviewer.popupPhoto($(this).attr("src"))});
+                    $("#"+panel+" .popup-content img").on("vmouseover",function(){$(this).css('cursor', 'pointer');})
+                        .attr("title","Cliquez pour agrandir cette image");
+                    $(".popup-content .nav-tabs li>a").tooltip('destroy').tooltip({
+                        animation: false,
+                        trigger: 'hover',
+                        container: 'body',
+                        placement: 'right',
+                        html: true,
+                        template: mviewer.templates.tooltip
+                   });
+                   $('.carousel.slide').on('slide.bs.carousel', function (e) {
+                      $(e.currentTarget).find(".counter-slide").text($(e.relatedTarget).attr("data-counter"));
+                   });
+                   mviewer.showLocation(_projection.getCode(), _clickCoordinates[0], _clickCoordinates[1]);
 
-            // using $.when.apply() we can execute a function when all the requests
-            // in the array have completed
-            $.when.apply(new ajaxFunction(), requests).done(function (result) {
-                callback(result)
+                } else {
+                    $('#'+panel).removeClass("active");
+                }
             });
+            $('#loading-indicator').hide();
+            search.clearSearchField();
+            _mvReady = true;
+
+        };
+
+        var ajaxFunction = function () {
+            urls.forEach(function(request) {
+                requests.push($.ajax({
+                    url: mviewer.ajaxURL(request.url),
+                    layer: request.layerinfos,
+                    success: function (response, textStatus, request) {
+                        featureInfoByLayer.push({response:response,layerinfos:this.layer,
+                            contenttype:request.getResponseHeader("Content-Type")});
+                    }
+                }));
+            });
+        };
+
+        // using $.when.apply() we can execute a function when all the requests
+        // in the array have completed
+        $.when.apply(new ajaxFunction(), requests).done(function (result) {
+            callback(result)
+        });
     };
 
     /**

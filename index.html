@@ -89,6 +89,8 @@
     <script type="text/javascript" type="text/javascript" src="js/measure.js"></script>
     <script type="text/javascript" type="text/javascript" src="js/info.js"></script>
     <script type="text/javascript" type="text/javascript" src="js/search.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.3/papaparse.min.js"></script>
+    <script type="text/javascript" type="text/javascript" src="js/csv.js"></script>
     <script type="text/javascript" type="text/javascript" src="js/mviewer.js"></script>
     <script type="text/javascript" src="js/templates.js"></script>
     <script type="text/javascript" src="js/featurestyles.js"></script>
@@ -114,6 +116,8 @@ $(document).ready(function () {
                 configFile = "/".concat(configFile)
             }
             configFile = "apps".concat(configFile);
+        }
+        if (configFile) {
             if (!configFile.endsWith(".xml")) {
                 configFile = configFile.concat(".xml");
             }
@@ -344,7 +348,7 @@ $(document).ready(function () {
                 <button id="studiolink" type="button" class="btn btn-default btn-raised" onclick="mviewer.openStudio();"
                         title="Modifier la carte" tabindex="106" accesskey="6">
                     <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
-                </button>                
+                </button>
                  <a href="#" id="exportpng" title="Exporter carte au format image" download="carte.png"
                     class="btn btn-default btn-raised"  tabindex="113" accesskey="13" style="display:none;">
                      <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
@@ -400,7 +404,7 @@ $(document).ready(function () {
                         <h4 class="modal-title"><center>Partager cette carte</center></h4>
                     </div>
                     <div class="modal-body" >
-                        <h6 class="modal-share-title"><strong>Mode d'affichage</strong></h6>                       
+                        <h6 class="modal-share-title"><strong>Mode d'affichage</strong></h6>
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12" >
                                 <div class="form-group" id="mv-display-mode">
@@ -418,15 +422,15 @@ $(document).ready(function () {
                                 <img id="permaqr" src="img/blank.gif" title="QR code vers la carte" alt="QR code" />
                             </div>
                        </div>
-                       <div class="row">
+                       <div class="row" id="shareToMapfish">
                             <div class="col-sm-10 form-inline">
-                                <button id="shareToMapfish" type="button" class="btn btn-md btn-default" onclick="mviewer.sendToGeorchestra();"><span class="fas fa-share-square"></span></button>Afficher dans Mapfishapp
+                                <button id="shareToMapfishButton" type="button" class="btn btn-md btn-default" onclick="mviewer.sendToGeorchestra();"><span class="fas fa-share-square"></span>Afficher dans Mapfishapp</button>
                                 <form id="georchestraForm" target="_blank" method="post" action="#" style="display:none;">
                                     <input type="hidden" id="georchestraFormData" name="data" value="" />
                                     <input type="submit" data-role="button" data-mini="true" data-iconpos="right" value="geOrchestra" />
-                                </form>                                 
+                                </form>
                             </div>
-                       </div>                                                                     
+                       </div>
                     </div>
                 </div>
            </div>
