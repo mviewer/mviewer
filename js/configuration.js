@@ -49,6 +49,8 @@ var configuration = (function () {
 
     var _hideProtectedLayers = true;
 
+    const _blankSrc = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
+
     var _parseXML = function (xml) {
         var _conf = $.xml2json(xml);
         // transtype baselayer, theme, group, layer
@@ -595,6 +597,14 @@ var configuration = (function () {
                         }
                     }
                     oLayer.secure = (layer.secure === "true") ? true : false;
+                    
+                    oLayer.authentification = (layer.authentification === "true") ? true : false;
+                    if (layer.authorization){
+                        sessionStorage.removeItem(oLayer.url);
+                        if(layer.authorization != '')
+                            sessionStorage.setItem(oLayer.url, layer.authorization);
+                    }                    
+
                     if (oLayer.customcontrol) {
                         var customcontrolpath = oLayer.customcontrolpath;
                         $.ajax({
@@ -653,7 +663,25 @@ var configuration = (function () {
                                         if (oLayer.useproxy) {
                                             src = _proxy + encodeURIComponent(src);
                                         }
-                                        imageTile.getImage().src = src;
+
+                                        var xhr = new XMLHttpRequest();
+                                        xhr.responseType = 'blob';
+                                        xhr.open('GET', src);
+                                        
+                                        var _ba_ident = sessionStorage.getItem(layer.url);
+                                        if (_ba_ident && _ba_ident != '')
+                                            xhr.setRequestHeader("Authorization","Basic " + window.btoa( _ba_ident));
+
+                                        xhr.addEventListener('loadend', function (evt) {
+                                            var data = this.response;
+                                            if(this.status == '401'){
+                                                image.getImage().src = _blankSrc;
+                                                //imageTile.setStatus(4);
+                                            }else if(data && data !== undefined){
+                                                imageTile.getImage().src = URL.createObjectURL(data);
+                                            }
+                                        });
+                                        xhr.send();
                                     },
                                     params: wms_params
                                 });
@@ -665,11 +693,29 @@ var configuration = (function () {
                                 source = new ol.source.ImageWMS({
                                     url: layer.url,
                                     crossOrigin: _crossorigin,
-                                    imageLoadFunction: function (imageTile, src) {
+                                    imageLoadFunction: function (image, src) {
                                         if (oLayer.useproxy) {
                                             src = _proxy + encodeURIComponent(src);
                                         }
-                                        imageTile.getImage().src = src;
+
+                                        var xhr = new XMLHttpRequest();
+                                        xhr.responseType = 'blob';
+                                        xhr.open('GET', src);
+                                        // S'il existe des idenfiants d'accès pour ce layer, on les injecte
+                                        var _ba_ident = sessionStorage.getItem(layer.url);
+                                        if (_ba_ident && _ba_ident != '')
+                                            xhr.setRequestHeader("Authorization","Basic " + window.btoa( _ba_ident));
+
+                                        xhr.addEventListener('loadend', function (evt) {
+                                            var data = this.response;
+                                            if(this.status == '401'){
+                                                image.getImage().src = _blankSrc;
+                                            }else if(data && data !== undefined){
+                                                image.getImage().src = URL.createObjectURL(data);
+                                            }
+                                        });
+                                        xhr.send();
+                                        
                                     }, params: wms_params
                                 });
                                 l = new ol.layer.Image({
@@ -790,6 +836,23 @@ var configuration = (function () {
         } else {
             $("#exportpng").hide();
         }
+        
+        // Infos de connexion pour les couches à accès restreint
+        $("#savelogin").click(function(){
+            var _service_url = $("#service-url").val(); 
+            var _layer_id = $("#layer-id").val(); 
+            sessionStorage.removeItem(_service_url);
+            if($("#user").val() != '' && $("#pass").val() != '') 
+                sessionStorage.setItem(_service_url, $("#user").val() + ':' + $("#pass").val());
+        
+            $("#loginpanel").modal("hide");
+            // Refresh du layer
+            _map.getLayers().forEach(function (lyr) {
+                if (_layer_id == lyr.get('mviewerid')) {
+                    lyr.getSource().refresh();
+                }            
+            });
+        });
 
          //mviewer.init();
          if (!API.wmc && nbOverLayers === 0) {

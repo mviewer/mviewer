@@ -1828,6 +1828,21 @@ mviewer = (function () {
             var myurl = this.setPermalink();
         }, // fin function tools toolbar
 
+        /**
+         * Public Method: setLoginInfo
+         *
+         */
+         
+        setLoginInfo: function (ctx) {
+            var _layer_id = ctx.id.split('#')[1];
+            var _service_url = mviewer.getLayers()[_layer_id].url;
+            $("#login-panel-service-url").html("<small><i>" + _service_url + "</i></small>");
+            $("#service-url").val(_service_url);
+            $("#layer-id").val(_layer_id);
+            if(sessionStorage.getItem(_service_url))
+                $("#user").val(sessionStorage.getItem(_service_url).split(':')[0]);
+        },
+
         addLayer: function (layer) {
             if (!layer) {
                 return;
@@ -1896,6 +1911,10 @@ mviewer = (function () {
 
             if (layer.secure) {
                 view.secure = true;
+            }
+            
+            if (layer.authentification) {
+                view.authentification = true;
             }
 
             var item = Mustache.render(mviewer.templates.layerControl, view);

@@ -395,6 +395,29 @@ $(document).ready(function () {
                 </div>
             </div>
         </div>
+        <!-- LAYER AUTHENTIFICATION PANEL -->
+        <div id="loginpanel" class="modal fade" tabindex="-1" role="dialog">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                 <button type="button" class="close" data-dismiss="modal">&times;</button>
+                 <h5 class="modal-title" id="login-panel-title">Configurer l'accès au service</h5>
+                 <span id="login-panel-service-url"><small><i>URL du service</i></small></span>
+              </div>
+              <div class="modal-body" >
+                <div class="loginmodal-container">
+                  <form>
+                    <input type="hidden" id="service-url">
+                    <input type="hidden" id="layer-id">
+                    <input type="text" id="user" placeholder="Login">
+                    <input type="password" id="pass" placeholder="Mot de passe">
+                    <input type="button" id="savelogin" class="btn btn-light" value="Valider">
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- SHARE PANEL -->
         <div id="sharepanel" class="modal fade" tabindex="-1" role="dialog" >
             <div class="modal-dialog modal-sm">
