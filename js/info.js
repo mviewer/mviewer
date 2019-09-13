@@ -377,9 +377,13 @@ var info = (function () {
 
         var ajaxFunction = function () {
             urls.forEach(function(request) {
+                var _ba_ident = sessionStorage.getItem(request.layerinfos.url);
                 requests.push($.ajax({
                     url: mviewer.ajaxURL(request.url),
                     layer: request.layerinfos,
+                    beforeSend: function(req){
+                        if(_ba_ident) req.setRequestHeader("Authorization", "Basic " + btoa(_ba_ident));
+                    },
                     success: function (response, textStatus, request) {
                         featureInfoByLayer.push({response:response,layerinfos:this.layer,
                             contenttype:request.getResponseHeader("Content-Type")});

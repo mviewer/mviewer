@@ -303,6 +303,8 @@ Nœud enfant de theme ou group décrivant une couche.
     fusesearchresult=""
     useproxy=""
     secure=""
+    authentification=""
+    authorization=""
     toplayer=""
     exclusive=""
 	infoformat="" featurecount=""
@@ -372,6 +374,10 @@ Exemple : "{{name}} ({{city}})". A n'utiliser que si les infobulles sont activé
 (cf. paramètre tooltip)). Paramètre optionnel.
 * **secure**: Précise si la couche est protégée ( méchanisme geoserver ) auquel cas un test est affectué pour savoir 
 si la couche est accessible. SI ce n'est pas le cas, la couche est retirée du panneau et de la carte.
+* **authentification**: Précise si l'accès à la couche nécessite une authentification (pour les couches WMS).
+Si c'est le cas, un bouton "cadenas" est ajouté dans la légende pour cette couche. Au clic sur ce bouton, un formulaire 
+est affiché permettant de saisir des identifiants d'accès qui seront envoyés à chaque appel au service.
+* **authorization**: Permet d'indiquer des identifiants par défaut si authentification est à "true"
 * **toplayer**: Précise si la couche demeure figée". Booléen. Défaut = true.
 * **exclusive**:  Si ce paramètre à la valeur true, l'affichage de la couche exclusive entrainera automatiquement le masquage de toute autre couche ayant également le paramètre exclusive. Booléen. Défaut = false.
 * **infoformat**: Format du GetFeatureInfo. 2 formats sont supportés : text/html, application/vnd.ogc.gml (pour 

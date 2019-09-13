@@ -51,12 +51,9 @@ mviewer.templates.theme = [
 
 mviewer.templates.layerControl = [
     '<li class="{{cls}}" data-layerid="{{layerid}}" data-title=" {{title}}">',
-        '<div class="row layerdisplay-title" >',
-            '<a href="#" aria-label="Options" onclick="mviewer.toggleLayerOptions(this);" title="Options" >',
-                '<span class="state-icon glyphicon glyphicon-plus"></span>{{title}} ',
-                '{{#secure}}<span class="lock-icon glyphicon glyphicon-lock">{{/secure}}</span>',
-            '</a>',
-            '<a href="#" class="close" aria-label="close" onclick="mviewer.removeLayer(this)" title="Supprimer" >×</a>',
+        '<div class="row layerdisplay-title" ><i class="mv-grip fas fa-grip-vertical" title="Déplacer"></i><a>{{title}}</a>',
+            '{{#authentification}}<button data-toggle="modal" data-target="#loginpanel" onclick="mviewer.setLoginInfo(this);" id="ar#{{layerid}}" title="Données accés restreint" tabindex="111" accesskey="11" class="btn btn-default btn-raised"><span class="lock-icon glyphicon glyphicon-lock" aria-hidden="true"></span></button>{{/authentification}}</span>',
+            '<a href="#" class="mv-layer-remove" aria-label="close" onclick="mviewer.removeLayer(this)" title="Supprimer" ><span class="glyphicon glyphicon-remove"></span></a>',
         '</div>',
         '<div class="layerdisplay-subtitle">',
         '{{#styleControl}}',
