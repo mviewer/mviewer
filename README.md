@@ -97,7 +97,6 @@ Personnalisation de l'application (overriding)
 * **studio**: Lien vers le mviewerstudio pour modifier la carte en cours
 * **home**: Lien vers le portail de l'éditeur de la carte
 * **mapfishurl**: Lien permettant d'afficher les couches courantes visibles vers un mapfishapp cible
-* **hideprotectedlayers**: Indique si les couches protégées doivent être masquées dans l'arbre des thématiques lorsque l'utilisateur n'y a pas accès. Valeur : true/false (true par défaut).
 
 ### Nœud mapoptions
 
@@ -372,12 +371,14 @@ fois. Valeur par défaut = false.
 Cette chaîne contient soit le nom d'un champ de la couche soit un template Mustache combinant plusieurs noms de champs. 
 Exemple : "{{name}} ({{city}})". A n'utiliser que si les infobulles sont activées sur cette couche 
 (cf. paramètre tooltip)). Paramètre optionnel.
-* **secure**: Précise si la couche est protégée ( méchanisme geoserver ) auquel cas un test est affectué pour savoir 
-si la couche est accessible. SI ce n'est pas le cas, la couche est retirée du panneau et de la carte.
-* **authentification**: Précise si l'accès à la couche nécessite une authentification (pour les couches WMS).
-Si c'est le cas, un bouton "cadenas" est ajouté dans la légende pour cette couche. Au clic sur ce bouton, un formulaire 
+* **secure**: Précise si la couche est protégée : public|global|layer
+- public (ou paramètre absent), l'accès à la couche est public
+- global, l'accès à la couche est contrainte par le CAS geoserver. Un test est affectué pour savoir 
+si la couche est accessible. Si ce n'est pas le cas, la couche est retirée du panneau et de la carte.
+- layer : l'accès à la couche nécessite une authentification sur le service (WMS). 
+Un bouton "cadenas" est ajouté dans la légende pour cette couche. Au clic sur ce bouton, un formulaire 
 est affiché permettant de saisir des identifiants d'accès qui seront envoyés à chaque appel au service.
-* **authorization**: Permet d'indiquer des identifiants par défaut si authentification est à "true"
+* **authorization**: Permet d'indiquer des identifiants par défaut si secure est à "layer"
 * **toplayer**: Précise si la couche demeure figée". Booléen. Défaut = true.
 * **exclusive**:  Si ce paramètre à la valeur true, l'affichage de la couche exclusive entrainera automatiquement le masquage de toute autre couche ayant également le paramètre exclusive. Booléen. Défaut = false.
 * **infoformat**: Format du GetFeatureInfo. 2 formats sont supportés : text/html, application/vnd.ogc.gml (pour 

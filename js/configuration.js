@@ -47,8 +47,6 @@ var configuration = (function () {
      */
     var _proxy = "";
 
-    var _hideProtectedLayers = true;
-
     const _blankSrc = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
 
     var _parseXML = function (xml) {
@@ -194,9 +192,6 @@ var configuration = (function () {
         }
         if (conf.application.togglealllayersfromtheme === "true" ) {
             _toggleAllLayersFromTheme = true;
-        }
-        if (conf.application.hideprotectedlayers === "false" ) {
-            _hideProtectedLayers = false;
         }
         if (conf.application.exportpng === "true" ) {
             _crossorigin = "anonymous";
@@ -413,7 +408,7 @@ var configuration = (function () {
                     var layerUrl = layer.url.replace(/[?&]$/, '');
                     var capabilitiesParams = "REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.3.0";
                     var getCapUrl = layerUrl.indexOf('?') === -1 ? layerUrl + '?' + capabilitiesParams : layerUrl + '&' + capabilitiesParams;
-                    var secureLayer = (layer.secure === "true") ? true : false;
+                    var secureLayer = (layer.secure === "true" || layer.secure == "global") ? true : false;
                     if (secureLayer) {
                         $.ajax({
                             dataType: "xml",
@@ -426,10 +421,8 @@ var configuration = (function () {
                                     return $(this).text() == name;
                                 });
                                 if (layer.length === 0) {
-                                    if (_hideProtectedLayers) {
-                                        //remove this layer from map and panel
-                                        mviewer.deleteLayer(this.layer);
-                                    }
+                                    //remove this layer from map and panel
+                                    mviewer.deleteLayer(this.layer);
                                 }
                             }
                         });
@@ -596,7 +589,7 @@ var configuration = (function () {
                             oLayer.scale.max = parseInt(layer.scalemax);
                         }
                     }
-                    oLayer.secure = (layer.secure === "true") ? true : false;
+                    oLayer.secure = layer.secure || "public";
                     
                     oLayer.authentification = (layer.authentification === "true") ? true : false;
                     if (layer.authorization){
