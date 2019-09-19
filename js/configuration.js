@@ -405,27 +405,29 @@ var configuration = (function () {
                    if (layer) { /* to escape group without layer */
                     layerRank+=1;
                     var layerId = layer.id;
-                    var layerUrl = layer.url.replace(/[?&]$/, '');
-                    var capabilitiesParams = "REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.3.0";
-                    var getCapUrl = layerUrl.indexOf('?') === -1 ? layerUrl + '?' + capabilitiesParams : layerUrl + '&' + capabilitiesParams;
-                    var secureLayer = (layer.secure === "true" || layer.secure == "global") ? true : false;
-                    if (secureLayer) {
-                        $.ajax({
-                            dataType: "xml",
-                            layer: layerId,
-                            url:  mviewer.ajaxURL(getCapUrl),
-                            success: function (result) {
-                                //Find layer in capabilities
-                                var name = this.layer;
-                                var layer = $(result).find('Layer>Name').filter(function() {
-                                    return $(this).text() == name;
-                                });
-                                if (layer.length === 0) {
-                                    //remove this layer from map and panel
-                                    mviewer.deleteLayer(this.layer);
+                    if (layer.url) {
+                        var layerUrl = layer.url.replace(/[?&]$/, '');
+                        var capabilitiesParams = "REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.3.0";
+                        var getCapUrl = layerUrl.indexOf('?') === -1 ? layerUrl + '?' + capabilitiesParams : layerUrl + '&' + capabilitiesParams;
+                        var secureLayer = (layer.secure === "true" || layer.secure == "global") ? true : false;
+                        if (secureLayer) {
+                            $.ajax({
+                                dataType: "xml",
+                                layer: layerId,
+                                url:  mviewer.ajaxURL(getCapUrl),
+                                success: function (result) {
+                                    //Find layer in capabilities
+                                    var name = this.layer;
+                                    var layer = $(result).find('Layer>Name').filter(function() {
+                                        return $(this).text() == name;
+                                    });
+                                    if (layer.length === 0) {
+                                        //remove this layer from map and panel
+                                        mviewer.deleteLayer(this.layer);
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
                     var mvid;
                     var oLayer = {};
