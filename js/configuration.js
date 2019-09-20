@@ -16,6 +16,8 @@ var configuration = (function () {
 
     var _captureCoordinates = false;
 
+    var _lang_startup = "fr";
+
     /**
      * Property: _crossorigin
      * The crossOrigin attribute for loaded images. Note that you must provide a crossOrigin value
@@ -165,6 +167,14 @@ var configuration = (function () {
         _configuration = conf;
         utils.testConfiguration(conf);
         //apply application customization
+        if (conf.application.lang) {
+            // default lang from config file
+            _lang_startup = conf.application.lang;
+        }
+        if (API.lang && API.lang.length > 0) {
+            // apply lang set in URL as param
+            _lang_startup = API.lang;
+        }        
         if (conf.application.title || API.title) {
             var title = API.title || conf.application.title;
             document.title = title;
@@ -880,7 +890,8 @@ var configuration = (function () {
         getProxy: function () { return _proxy; },
         getCrossorigin: function () { return _crossorigin; },
         getCaptureCoordinates: function () { return _captureCoordinates; },
-        getConfiguration: function () { return _configuration; }
+        getConfiguration: function () { return _configuration; },
+        getLang: function () { return _lang_startup }
     };
 
 })();

@@ -1374,6 +1374,46 @@ mviewer = (function () {
         return xyz;
     };
 
+    /**
+     * call file to translate
+     * TODO: init to translate dom
+     */
+    var _translate = function (propName, htmlType) {
+        // default i18njs structures
+        var i18nJSON = {
+            "values": {}
+        };
+        var JSONFile = {};
+        var lang = configuration.getLang();
+        // get translations
+        $.ajax({
+            url: configuration.getConfiguration().application.langfile,
+            dataType: "text",
+            success: function (data) {
+                JSONFile = JSON.parse(data);
+                // load i18n for a given language given by config or url
+                Object.keys(JSONFile[lang]).forEach((el) => {
+                    i18nJSON.values[el] = JSONFile[lang][el];
+                });
+                // init translator with translations
+                i18n.translator.add(i18nJSON);
+                // translate each html elements with propName as attribute
+                $("[" + propName + "]").each((i, el) => {
+                    console.log(el);
+                    // parse each html attribute to set translation
+                    htmlType.forEach((att) => {
+                        if ($(el).attr(att) && i18n($(el).attr(propName))) {
+                            $(el).attr(att, i18n($(el).attr(propName)));
+                        }
+                    });
+                })
+            },
+            error: function (data) {
+                console.log("Error: can't load JSON langs file!")
+            }
+        });
+    }
+
     /*
      * Public
      */
@@ -1684,6 +1724,7 @@ mviewer = (function () {
                 _initGeolocation();
                 _initTools();
                 _initShare();
+                _translate("tr", ["placeholder", "title", "accesskey", "alt"]);
         },
 
         customLayers: {},
