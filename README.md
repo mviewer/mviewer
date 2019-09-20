@@ -96,6 +96,9 @@ Personnalisation de l'application (overriding)
 * **studio**: Lien vers le mviewerstudio pour modifier la carte en cours
 * **home**: Lien vers le portail de l'éditeur de la carte
 * **mapfishurl**: Lien permettant d'afficher les couches courantes visibles vers un mapfishapp cible
+* **hideprotectedlayers**: Indique si les couches protégées doivent être masquées dans l'arbre des thématiques lorsque l'utilisateur n'y a pas accès. Valeur : true/false (true par défaut).
+* **lang**: Langue à utiliser pour l'interface. Passer "?lang=en" dans l'url pour forcer la langue et ignorer la config.
+* **langfile**: URL du fichier de traduction à utiliser.
 
 ### Nœud mapoptions
 
