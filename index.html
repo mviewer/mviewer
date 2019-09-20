@@ -94,6 +94,7 @@
     <script type="text/javascript" type="text/javascript" src="js/mviewer.js"></script>
     <script type="text/javascript" src="js/templates.js"></script>
     <script type="text/javascript" src="js/featurestyles.js"></script>
+    <script src="lib/i18njs/i18n.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 var API = {};
@@ -240,7 +241,7 @@ $(document).ready(function () {
                 <li>
                     <div class="navbar-form" role="search" id="searchtool">
                         <div class="form-group input-group">
-                            <input type="text" class="form-control" placeholder="Rechercher" title="Rechercher" id="searchfield">
+                            <input type="text" class="form-control" placeholder="Rechercher" tr="navbar.search.placeholder" id="searchfield">
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-default" aria-label="Help" data-toggle="modal" data-target="#parameterspanel">
                                     <span class="glyphicon glyphicon-option-vertical"></span>
@@ -275,7 +276,7 @@ $(document).ready(function () {
                     <div id="layers-container-box" class="">
                         <div id="legend" class="active">
                             <div id="layers-container-box-header" >
-                                <a onclick="mviewer.toggleLegend();" title="Afficher/masquer la légende" href="#"> <span class="glyphicon glyphicon-list"></span> </a>
+                                <a onclick="mviewer.toggleLegend();" title="Afficher/masquer la légende" tr="legend.title" href="#"> <span class="glyphicon glyphicon-list"></span> </a>
                                 <a id="btn-remove-layers" onclick="mviewer.removeAllLayers();" title="Supprimer toutes les couches" href="#"> <span class="glyphicon glyphicon-trash"></span> </a>
                             </div>
                             <ul id="layers-container" class="list-group"></ul>
