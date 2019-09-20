@@ -1,0 +1,10 @@
+{
+    "fr": {
+        "legend.title": "Afficher/masquer la légende",
+        "navbar.search.placeholder": "Rechercher"
+    },
+    "en": {
+        "legend.title": "Display/hide the legend",
+        "navbar.search.placeholder": "Search"        
+    }
+} 
