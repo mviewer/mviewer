@@ -1949,21 +1949,24 @@ mviewer = (function () {
             //Time Filter slider and slider-range
             if (layer.timefilter && (layer.timecontrol === 'slider' || layer.timecontrol === 'slider-range')) {
                 var ticks_labels;
+                //a version of time values that can be parse to integer because bootstrap slider works only with int values
+                var parsable_ticks_labels;
                 var ticks;
                 var slider_options;
-                var default_values;
+                var default_value;
                 var onSliderChange;
                 if (layer.timevalues) {
 
                     ticks_labels = layer.timevalues;
+                    parsable_ticks_labels = layer.timevalues.map(label => label.replace(/:|-|T|\.|Z/g, ""));
                     ticks = _createPseudoTicks(layer.timevalues);
                     if (layer.timecontrol === 'slider') {
-                        default_value = parseInt(ticks_labels[ticks_labels.length -1]);
+                        default_value = parseInt(parsable_ticks_labels[parsable_ticks_labels.length - 1]);
                         $(".mv-time-player-selection[data-layerid='"+layer.layerid+"']").text(default_value);
                     } else if (layer.timecontrol === 'slider-range') {
                         default_value = [0, layer.timevalues.length -1];
                         //Set wms filter to see all data and not only the last
-                        var range = [parseInt(layer.timevalues[0]), parseInt(layer.timevalues[layer.timevalues.length -1])];
+                        var range = [parseInt(parsable_ticks_labels[0]), parseInt(parsable_ticks_labels[parsable_ticks_labels.length - 1])];
                         wms_timefilter = range.join("/");
                         mviewer.setLayerTime( layer.layerid, wms_timefilter );
                     }
@@ -1979,12 +1982,12 @@ mviewer = (function () {
                             var value;
                             if (Array.isArray(val)) {
                                 if (val[0] === val[1]) {
-                                    value = parseInt(ticks_labels[val[0]]);
+                                    value = ticks_labels[val[0]]; //tooltip can show string values, not required to convert them to integers
                                 } else {
-                                    value = [parseInt(ticks_labels[val[0]]), parseInt(ticks_labels[val[1]])];
+                                    value = [ticks_labels[val[0]], ticks_labels[val[1]]];
                                 }
                             } else {
-                                value = parseInt(ticks_labels[val]);
+                                value = ticks_labels[val];
                             }
                             return value;
                         }
@@ -1993,10 +1996,10 @@ mviewer = (function () {
                     onSliderChange = function (data) {
                         var wms_timefilter;
                         if (Array.isArray(data.value.newValue)) {
-                                wms_timefilter = [parseInt(ticks_labels[data.value.newValue[0]]),
-                                parseInt(ticks_labels[data.value.newValue[1]])].join("/");
+                                wms_timefilter = [parseInt(parsable_ticks_labels[data.value.newValue[0]]),
+                                parseInt(parsable_ticks_labels[data.value.newValue[1]])].join("/");
                             } else {
-                                wms_timefilter = parseInt(ticks_labels[data.value.newValue]);
+                                wms_timefilter = parseInt(parsable_ticks_labels[data.value.newValue]);
                             }
                         mviewer.setLayerTime( layer.layerid, wms_timefilter );
                     };
@@ -2351,19 +2354,41 @@ mviewer = (function () {
 
         setLayerTime: function (layerid, filter_time) {
             //Fix me
-            var str = filter_time.toString();
-            var test = str.length;
-            switch (test) {
+            let formatTimeFilter = function (str) {
+                let test = str.length;
+                let time_filter = "";
+                switch (test) {
+                    case 6:
+                        time_filter = str.substr(0, 4) + '-' + str.substr(4, 2);
+                        break;
+                    case 8:
+                        time_filter = str.substr(0, 4) + '-' + str.substr(4, 2) + '-' + str.substr(6, 2);
+                        break;
+                    case 10:
+                        time_filter = str.substr(0, 4) + '-' + str.substr(4, 2) + '-' + str.substr(6, 2) +
+                            'T' + str.substr(8, 2) + 'Z';
+                        break;
+                    case 12:
+                        time_filter = str.substr(0, 4) + '-' + str.substr(4, 2) + '-' + str.substr(6, 2) +
+                            'T' + str.substr(8, 2) + ':' + str.substr(10, 2) + 'Z';
+                        break;
+                    case 14:
+                        time_filter = str.substr(0, 4) + '-' + str.substr(4, 2) + '-' + str.substr(6, 2) +
+                            'T' + str.substr(8, 2) + ':' + str.substr(10, 2) + ':' + str.substr(12, 2) + 'Z';
+                        break;
+                    case 17:
+                        time_filter = str.substr(0, 4) + '-' + str.substr(4, 2) + '-' + str.substr(6, 2) +
+                            'T' + str.substr(8, 2) + ':' + str.substr(10, 2) + ':' + str.substr(12, 2) + '.' + str.substr(14, 3) + 'Z';
+                        break;
+                    default:
+                        time_filter = str;
+                }
+                return time_filter;
+            };
 
-                case 6:
-                    filter_time = str.substr(0,4) + '-' + str.substr(4,2);
-                    break;
-                case 8:
-                    filter_time = str.substr(0,4) + '-' + str.substr(4,2) +  '-' + str.substr(6,2);
-                    break;
-                default:
-                    filter_time = filter_time;
-            }
+            var str = filter_time.toString();
+            filter_time = str.split("/").map(formatTimeFilter).join("/");
+            
             var _layerDefinition = _overLayers[layerid];
             var _source = _layerDefinition.layer.getSource();
             _source.getParams()['TIME'] = filter_time;
