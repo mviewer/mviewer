@@ -132,6 +132,9 @@ $(document).ready(function () {
         configFile = "config.xml";
     }
 
+    // Save the config file path in the API object
+    API.config = configFile;
+
     var theme = (API.theme) ? API.theme : null;
 
     $.ajax({
