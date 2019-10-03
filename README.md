@@ -27,7 +27,6 @@ Fichier config.xml
 ------------------
 Le fichier de config permet la personnalisation des thèmes/couches du visualiseur.
 
-
 ### Exemple 
 
 	<?xml version="1.0" encoding="UTF-8"?>
