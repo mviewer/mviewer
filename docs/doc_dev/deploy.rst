@@ -4,6 +4,10 @@
 
 .. _deploy:
 
+Prérequis
+===========
+Serveur Web (Apache)
+
 Déployer
 ===========
 
