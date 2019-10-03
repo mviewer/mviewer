@@ -6,6 +6,9 @@ var configuration = (function () {
      */
     /* INTERNAL */
     var _configuration = null;
+    
+    // Mviewer version a saisir manuellement
+    var VERSION = "3.1";
 
     var _showhelp_startup = false;
 
@@ -158,6 +161,9 @@ var configuration = (function () {
     };
 
     var _load = function (conf) {
+        
+        console.log("Mviewer version " + VERSION);
+        
         _configuration = conf;
         utils.testConfiguration(conf);
         //apply application customization
