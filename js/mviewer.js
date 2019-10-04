@@ -1910,13 +1910,11 @@ mviewer = (function () {
             }
 
             if (layer.secure) {
-                view.secure = true;
+                view.secure = (layer.secure === "true") ? "global" : layer.secure;
+                if(layer.secure == "layer")
+                    view.secure_layer = true;
             }
             
-            if (layer.authentification) {
-                view.authentification = true;
-            }
-
             var item = Mustache.render(mviewer.templates.layerControl, view);
             if (layer.customcontrol && mviewer.customControls[layer.layerid] && mviewer.customControls[layer.layerid].form) {
                 item = $(item).find('.mv-custom-controls').append(mviewer.customControls[layer.layerid].form).closest(".mv-layer-details");

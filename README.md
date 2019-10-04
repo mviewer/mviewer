@@ -18,30 +18,30 @@ Déploiement
 -----------
 
 Le déploiement se passe en trois étapes :
-	1. cloner le projet dans le dossier de votre choix
-	2. copier ce dossier dans le dossier /var/www/ ( ou autres dossiers de déploiement Apache)
-	Vous avez maintenant un visualiseur géographique fonctionnel avec les couches de la Région Bretagne
-	3. Si vous souhaitez publier vos propres couches/thèmes, modifiez le fichier config.xml
+    1. cloner le projet dans le dossier de votre choix
+    2. copier ce dossier dans le dossier /var/www/ ( ou autres dossiers de déploiement Apache)
+    Vous avez maintenant un visualiseur géographique fonctionnel avec les couches de la Région Bretagne
+    3. Si vous souhaitez publier vos propres couches/thèmes, modifiez le fichier config.xml
 
-Fichier config.xml		
+Fichier config.xml      
 ------------------
 Le fichier de config permet la personnalisation des thèmes/couches du visualiseur.
 
 ### Exemple 
 
-	<?xml version="1.0" encoding="UTF-8"?>
-	<config>
+    <?xml version="1.0" encoding="UTF-8"?>
+    <config>
     <application title="" logo="" help="" showhelp="" style="" exportpng="" measuretools="" legend="" stats="" statsurl="" coordinates=""/>
     <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
     <mapoptions maxzoom="18" projection="EPSG:3857" center="-403013.39038929436,6128402.399153711" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
    
-	<baselayers style="gallery"><!-- style="default"||gallery" -->            		
+    <baselayers style="gallery"><!-- style="default"||gallery" -->                  
         <baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoPortail" maxscale="1000" thumbgallery="img/basemap/ortho.jpg"
             url="../wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" format="image/jpeg" visible="false" fromcapacity="false"
             attribution="&lt;a href='http://www.geoportail.fr/' target='_blank'>&lt;img src='http://api.ign.fr/geoportail/api/js/latest/theme/geoportal/img/logo_gp.gif'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
         <baselayer  type="WMS" id="photo2" label="Photo aérienne 1950" title="GéoBretagne" thumbgallery="img/basemap/ortho-ancien.jpg" 
-			url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite-ancien" format="image/jpeg" visible="false" 
-			attribution="&lt;a href='http://applications.region-bretagne.fr/geosource/apps/search/?uuid=048622c5-b333-4c2b-94ec-40a41608dc06' target='_blank' >Partenaires GéoBretagne - IGN&lt;/a>"/>      
+            url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite-ancien" format="image/jpeg" visible="false" 
+            attribution="&lt;a href='http://applications.region-bretagne.fr/geosource/apps/search/?uuid=048622c5-b333-4c2b-94ec-40a41608dc06' target='_blank' >Partenaires GéoBretagne - IGN&lt;/a>"/>      
     </baselayers> 
 
     <proxy url="../proxy/?url="/>
@@ -52,20 +52,20 @@ Le fichier de config permet la personnalisation des thèmes/couches du visualise
 
     <themes> 
         <theme name="Inventaire du patrimoine"  collapsed="true" id="patrimoine">           
-			<layer id="inventaire_patrimoine" name="Patrimoine régional" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="rb"
-				queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
+            <layer id="inventaire_patrimoine" name="Patrimoine régional" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="rb"
+                queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
                 useproxy="false"
                 infoformat="text/html" featurecount="1"
-				style=""
+                style=""
                 filter=""
-				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
-				attribution="Service de l'inventaire : Région Bretagne" 
-				metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=a7f46b47-42fc-49b7-9b49-c7c11aee0932"
-				metadata-csw="http://applications.region-bretagne.fr/geosource/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=a7f46b47-42fc-49b7-9b49-c7c11aee0932"/>
-			
+                url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
+                attribution="Service de l'inventaire : Région Bretagne" 
+                metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=a7f46b47-42fc-49b7-9b49-c7c11aee0932"
+                metadata-csw="http://applications.region-bretagne.fr/geosource/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=a7f46b47-42fc-49b7-9b49-c7c11aee0932"/>
+            
         </theme>
     </themes>
-	</config>
+    </config>
 
 
 
@@ -75,7 +75,7 @@ Personnalisation de l'application (overriding)
 
 #### Prototype 
 
-	 <application title="" logo=""  help="" showhelp="" titlehelp="" iconhelp="" style="" exportpng="" measuretools="" stats="" statsurl="" coordinates=""/>
+     <application title="" logo=""  help="" showhelp="" titlehelp="" iconhelp="" style="" exportpng="" measuretools="" stats="" statsurl="" coordinates=""/>
 
 #### Attributs 
 
@@ -96,7 +96,6 @@ Personnalisation de l'application (overriding)
 * **studio**: Lien vers le mviewerstudio pour modifier la carte en cours
 * **home**: Lien vers le portail de l'éditeur de la carte
 * **mapfishurl**: Lien permettant d'afficher les couches courantes visibles vers un mapfishapp cible
-* **hideprotectedlayers**: Indique si les couches protégées doivent être masquées dans l'arbre des thématiques lorsque l'utilisateur n'y a pas accès. Valeur : true/false (true par défaut).
 
 ### Nœud mapoptions
 
@@ -104,7 +103,7 @@ Représente les configurations de base du visualiseur.
 
 #### Prototype 
 
-	 <mapoptions maxzoom="" projection="" center="" zoom="" projextent="" />
+     <mapoptions maxzoom="" projection="" center="" zoom="" projextent="" />
 
 #### Attributs 
 
@@ -134,9 +133,9 @@ Représente les fonds de plan.
 
 ##### Prototype 
 
-	
-	<baselayer type="" id="" label="" title="" maxscale="" thumbgallery="" url="" layers="" format="" visible="" fromcapacity="" 
-	attribution="" style="" matrixset="" maxzoom=""/>
+    
+    <baselayer type="" id="" label="" title="" maxscale="" thumbgallery="" url="" layers="" format="" visible="" fromcapacity="" 
+    attribution="" style="" matrixset="" maxzoom=""/>
 
 
 ##### Attributs 
@@ -170,7 +169,7 @@ Un proxy cgi peut être utilisé. Plus de détail ici : [proxy] (https://trac.os
 #### Prototype
 
  
-	<proxy url="" />
+    <proxy url="" />
  
 
 #### Attributs
@@ -185,7 +184,7 @@ Liens vers service d'autocomplétion et de géocodage.
 #### Prototype
 
 
-	<olscompletion url="" [type=""] attribution="" />
+    <olscompletion url="" [type=""] attribution="" />
     
 
 #### Attributs
@@ -206,7 +205,7 @@ recherche suivantes active : "features" et "static".
 
 #### Prototype
 
-	<elasticsearch url="" geometryfield="" linkid="" [querymode=""] [doctypes=""] [version=""]/>
+    <elasticsearch url="" geometryfield="" linkid="" [querymode=""] [doctypes=""] [version=""]/>
 
 #### Attributs
 
@@ -235,7 +234,7 @@ Options liées à la recherche d'adresse (olscompletion) et à la recherche d'en
 
 #### Prototype
 
-	<searchparameters [bbox=""] [localities=""] [features=""] [static=""]/>
+    <searchparameters [bbox=""] [localities=""] [features=""] [static=""]/>
 
 #### Attributs
 
@@ -255,22 +254,22 @@ Nœud regroupant les couches par thèmes et sous-thèmes.
 
 #### Prototype
 
-	<themes mini="">
+    <themes mini="">
     
-##### Attributs
+#### Attributs
 
 * **mini**: Booléen qui précise si le panneau de gauche est réduit à l'ouverture de l'application. Défaut = false.
 
-#### Nœud(s) enfant(s) theme
+### Nœud(s) enfant(s) theme
 
-Nœud enfant décrivant un thème 
+Nœud enfant décrivant un thème
 
-##### Prototype 
+#### Prototype
 
-	<theme name="" id="" collapsed="" icon="" url="">
+    <theme name="" id="" collapsed="" icon="" url="">
 
-##### Attributs
-	
+#### Attributs
+
 * **name**: Nom du thème
 * **id**: Identifiant du thème
 * **url**: URL de la thématique. Des thèmes externes (présents dans d'autres configuration peuvent être automatiquement chargés par référence au fichier xml utilisé (url=) et à l'id de la thématique (id=). Attention si la configuration externe est sur un autre domaine, il faut alors utiliser un proxy Ajax ou alors s'assurer que CORS est activé sur le serveur distant. Les thématiques externes peuvent utiliser des ressources particulières (templates, customLayer, sld...) si les URLs de ces ressources sont absolues et accessibles.
@@ -278,22 +277,22 @@ Nœud enfant décrivant un thème
 * **colapsed**:  La thématique est condensée dans le panneau de gauche true ou false - defaut = true. Une seule thématique peut avoir la valeur false.
 
 
-###### Nœud(s) enfant(s) group
+### Nœud(s) enfant(s) group
 
 Nœud enfant de theme décrivant un sous-groupe.
 
-####### Prototype
+#### Prototype
 
     <group id="" name="">
 
-###### Nœud(s) enfant(s) layer
+### Nœud(s) enfant(s) layer
 
 Nœud enfant de theme ou group décrivant une couche.
 
-####### Prototype
+#### Prototype
 
-	<layer id="" name="" scalemin="" scalemax="" visible="" tiled=""
-	queryable="" fields="" aliases=""
+    <layer id="" name="" scalemin="" scalemax="" visible="" tiled=""
+    queryable="" fields="" aliases=""
     type=""
     filter=""
     searchable=""
@@ -306,14 +305,14 @@ Nœud enfant de theme ou group décrivant une couche.
     authorization=""
     toplayer=""
     exclusive=""
-	infoformat="" featurecount=""
-	style=""
+    infoformat="" featurecount=""
+    style=""
     stylesalias=""
-    timefilter="" 
-    timeinterval="" 
+    timefilter=""
+    timeinterval=""
     timecontrol=""
-    timevalues=""    
-    timemin="" 
+    timevalues=""
+    timemin=""
     timemax=""
     attributefilter=""
     attributefield=""
@@ -323,21 +322,21 @@ Nœud enfant de theme ou group décrivant une couche.
     legendurl=""
     dynamiclegend=""
     vectorlegend=""
-	url=""
-	attribution=""
+    url=""
+    attribution=""
     tooltip=""
     tooltipenabled=""
     expanded=""
-	metadata=""    
-	metadata-csw="" />
+    metadata=""
+    metadata-csw="" />
     <template url=""/>
-	</theme> 
+    </theme>
 
-####### Attributs
+#### Attributs
 
 * **id**: Id de la couche.
 * **name**: Nom de la couche.
-* **type**: Type de la couche (wms|geojson|kml|customlayer|csv) default=wms. Si customlayer est défini, il faut instancier 
+* **type**: Type de la couche (wms|geojson|kml|customlayer|csv) default=wms. Si customlayer est défini, il faut instancier
 un Layer OpenLayers dans un fichier javascript ayant pour nom l'id de la couche.
 Ce fichier js doit être placé dans le répertoire customlayers.
 * **scalemin**: Echelle minimum de la couche.
@@ -345,42 +344,44 @@ Ce fichier js doit être placé dans le répertoire customlayers.
 * **visible**:  Booléen stipulant si la couche est actuellement visible.
 * **tiled**: Booléen stipluant si la couche est tuilée.
 * **queryable**: Booléen stipulant si la couche est intérrogeable via un GetFeatureInfo.
-* **filter**: Expression CQL permettant de filtrer la couche. 
-Exemple : insee=35000 ou INTERSECTS(the_geom, POINT (-74.817265 40.5296504)) 
+* **filter**: Expression CQL permettant de filtrer la couche.
+Exemple : insee=35000 ou INTERSECTS(the_geom, POINT (-74.817265 40.5296504))
 [tutorial] (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial).
 * **searchable**: Booléen précisant si la couche est interrogeable via la barre de recherche.
 * **searchengine**: elasticsearch|fuse. Défault=elasticsearch.
 * **searchid**: Nom du champ à utiliser côté WMS afin de faire le lien avec l'_id elasticsearch.
-* **fusesearchkeys**: Chaîne de caractères contenant le liste des champs de la couche à indexer pour la 
+* **fusesearchkeys**: Chaîne de caractères contenant le liste des champs de la couche à indexer pour la
 recherche. Les noms des champs doivent être séparés par des virgules. A n'utiliser que si searchengine = fuse.
-* **fusesearchresult**: Chaîne de caractères décrivant l'information à afficher dans les résultats de recherche. 
-Cette chaîne contient soit le nom d'un champ de la couche soit un template Mustache combinant plusieurs noms de champs. 
+* **fusesearchresult**: Chaîne de caractères décrivant l'information à afficher dans les résultats de recherche.
+Cette chaîne contient soit le nom d'un champ de la couche soit un template Mustache combinant plusieurs noms de champs.
 Exemple : "{{name}} ({{city}})". A n'utiliser que si searchengine = fuse.
 * **iconsearch**: Lien vers l'image utilisée pour illustrer le résultat d'une recherche ElasticSearch.
-* **useproxy**: Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de crossOrigin 
+* **useproxy**: Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de crossOrigin
 lorsque CORS n'est pas activé sur le serveur distant.
-* **fields**: Si les informations retournées par l'interrogation est au format GML, fields représente les attributs à 
+* **fields**: Si les informations retournées par l'interrogation est au format GML, fields représente les attributs à
 parser pour générer la vignette.
-* **aliases**: Si les informations retournées par l'interrogation est au format GML, aliases représente le renommage 
+* **aliases**: Si les informations retournées par l'interrogation est au format GML, aliases représente le renommage
 des champs parsés.
-* **tooltip**: Pour les couches de type vecteur uniquement. Booléen précisant si les entités de la couche sont 
-affichées sous forme d'infobulle au survol de la souris. Les infobulles ne fonctionnent qu'avec une seule couche à la 
+* **tooltip**: Pour les couches de type vecteur uniquement. Booléen précisant si les entités de la couche sont
+affichées sous forme d'infobulle au survol de la souris. Les infobulles ne fonctionnent qu'avec une seule couche à la
 fois. Valeur par défaut = false.
 * **tooltipenabled**: Précise la couche prioritaire pour l'affichage des infobulles.
-* **tooltipcontent**: Chaîne de caractères décrivant l'information à afficher dans les infobulles. 
-Cette chaîne contient soit le nom d'un champ de la couche soit un template Mustache combinant plusieurs noms de champs. 
-Exemple : "{{name}} ({{city}})". A n'utiliser que si les infobulles sont activées sur cette couche 
+* **tooltipcontent**: Chaîne de caractères décrivant l'information à afficher dans les infobulles.
+Cette chaîne contient soit le nom d'un champ de la couche soit un template Mustache combinant plusieurs noms de champs.
+Exemple : "{{name}} ({{city}})". A n'utiliser que si les infobulles sont activées sur cette couche
 (cf. paramètre tooltip)). Paramètre optionnel.
-* **secure**: Précise si la couche est protégée ( méchanisme geoserver ) auquel cas un test est affectué pour savoir 
-si la couche est accessible. SI ce n'est pas le cas, la couche est retirée du panneau et de la carte.
-* **authentification**: Précise si l'accès à la couche nécessite une authentification (pour les couches WMS).
-Si c'est le cas, un bouton "cadenas" est ajouté dans la légende pour cette couche. Au clic sur ce bouton, un formulaire 
+* **secure**: Précise si la couche est protégée : public|global|layer
+- public (ou paramètre absent), l'accès à la couche est public
+- global, l'accès à la couche est contrainte par le CAS geoserver. Un test est affectué pour savoir 
+si la couche est accessible. Si ce n'est pas le cas, la couche est retirée du panneau et de la carte.
+- layer : l'accès à la couche nécessite une authentification sur le service (WMS). 
+Un bouton "cadenas" est ajouté dans la légende pour cette couche. Au clic sur ce bouton, un formulaire 
 est affiché permettant de saisir des identifiants d'accès qui seront envoyés à chaque appel au service.
-* **authorization**: Permet d'indiquer des identifiants par défaut si authentification est à "true"
+* **authorization**: Permet d'indiquer des identifiants par défaut si secure est à "layer"
 * **toplayer**: Précise si la couche demeure figée". Booléen. Défaut = true.
 * **exclusive**:  Si ce paramètre à la valeur true, l'affichage de la couche exclusive entrainera automatiquement le masquage de toute autre couche ayant également le paramètre exclusive. Booléen. Défaut = false.
-* **infoformat**: Format du GetFeatureInfo. 2 formats sont supportés : text/html, application/vnd.ogc.gml (pour 
-GeoServer et MapServer), application/vnd.esri.wms_raw_xml ou application/vnd.esri.wms_featureinfo_xml (pour ArcGIS 
+* **infoformat**: Format du GetFeatureInfo. 2 formats sont supportés : text/html, application/vnd.ogc.gml (pour
+GeoServer et MapServer), application/vnd.esri.wms_raw_xml ou application/vnd.esri.wms_featureinfo_xml (pour ArcGIS
 Server).
 * **featurecount**: Nombre d'éléments retournés lors de l'interrogation.
 * **style**: Style(s) de la couche. Si plusieurs styles , utiliser la virgule comme séparateur.
@@ -389,30 +390,30 @@ Si la couche est de type geojson, il faut faire référence à un style défini 
 Si la couche est de type customlayer, le style n'est pas défini ici.
 * **sld**: Style(s) externes de la couche. Si plusieurs styles , utiliser la virgule comme séparateur. S'applique uniquement aux layers WMS. Il faut indiquer l'URL résolvable par le serveur WMS du ou des sld.
 * **stylesalias**: Titres à utiliser pour chaque style. Utiliser la virgule comme séparateur si plusieurs styles. Valable aussi pour les sld.
-* **timefilter**: Booléen précisant si la dimension temporelle est activée pour cette couche. Voir 
+* **timefilter**: Booléen précisant si la dimension temporelle est activée pour cette couche. Voir
 (http://docs.geoserver.org/latest/en/user/services/wms/time.html).
 * **timeinterval**: day|month|year
 * **timecontrol**: calendar|slider|slider-range
-* **timevalues**: Valeurs séparées par des virgules. A utiliser avec le controle slider pour des valeurs non 
+* **timevalues**: Valeurs séparées par des virgules. A utiliser avec le controle slider pour des valeurs non
 régulières ex (1950, 1976, 1980, 2004).
-* **timemin**: Date mini format : "yyyy-mm-dd" 
+* **timemin**: Date mini format : "yyyy-mm-dd"
 * **timemax**: Date mini format : "yyyy-mm-dd"
 * **attributefilter**: Booléen précisant si on active la sélection attributaire par menu déroulant.
 * **attributefield**: Nom du champ à utiliser avec le contrôle attributefilter.
 * **attributevalues**: Valeurs séparées par des virgules.
 * **attributeoperator**: Opérateur utilisé pour construire le filtre. (=|like). Defaut = "=". Attention dans le cas de like, le wildcard est harcodé : %
 * **attributelabel**:  Texte à afficher pour la liste déroulante associée.
-* **attributestylesync**: Booléen qui précise s'il convient d'appliquer un style (sld) spécifique lors du filtrage 
+* **attributestylesync**: Booléen qui précise s'il convient d'appliquer un style (sld) spécifique lors du filtrage
 attributaire. Dans ce cas la convention est la suivante pour le nommage des styles à utiliser : nom_style@attributevalue ou url_style_externe@attributevalue.sld
-* **attributefilterenabled**: Booléen précisant si le filtre est activé par défaut (avec la première valeur de la liste 
+* **attributefilterenabled**: Booléen précisant si le filtre est activé par défaut (avec la première valeur de la liste
 attributevalues).
 * **customcontrol**: Booléen précisant si la couche dispose d'un addon html à intégrer. La valeur par défaut est false.
-* **customcontrolpath**: Texte Précisant le répertoire hébergeant les fichiers nécessaires au contrôle. Dans ce 
+* **customcontrolpath**: Texte Précisant le répertoire hébergeant les fichiers nécessaires au contrôle. Dans ce
 répertoire, il faut déposer un fichier js et un fichier html ayant pour nom l'id de la couche.
 La structure du js doit être la suivante : (../controls/epci.js). Valeur par défaut = customcontrols.
 * **opacity**: Opacité de la couche (1 par défaut).
 * **legendurl**: url premettant de récupérer la légende. Si non défini, c'est un getFeatureLegend qui est effectué.
-* **dynamiclegend**: Booléen précisant si la légende est liée à l'échelle de la carte et si elle nécessite d'être 
+* **dynamiclegend**: Booléen précisant si la légende est liée à l'échelle de la carte et si elle nécessite d'être
 actualisée à chaque changement d'échelle de la carte.
 * **vectorlegend**: Booléen précisant si la légende pour les couches de type vecteur (customlayer ou csv) est dynamiquement créée
 * **url**: URL de la couche.
@@ -422,20 +423,22 @@ actualisée à chaque changement d'échelle de la carte.
 * **metadata-csw**: Requête CSW pour l'affiche dans la popup du détail de la couche.
 * **geocoder**: pour les couches de type csv, précise l'API de géocodage à utiliser (ban).
 * **geocodingfields**: pour les couches de type csv, précise les champs utilisables pour le géocodage.
-* **xfield*: pour les couches de type csv, précise le champ à utiliser pour la longitude.
-* **yfield*: pour les couches de type csv, précise le champ à utiliser pour la latitude.
+* **xfield**: pour les couches de type csv, précise le champ à utiliser pour la longitude.
+* **yfield**: pour les couches de type csv, précise le champ à utiliser pour la latitude.
 
 
-####### Nœuds
+#### Nœud enfant template
 
-* **<template>**: contient le template type Mustache (https://github.com/janl/mustache.js) à appliquer à la fiche 
-d'information. Pour fonctionner, il faut que le paramètre **infoformat** ait la valeur "application/vnd.ogc.gml" (pour 
-GeoServer et MapServer), voire "application/vnd.esri.wms_raw_xml" ou "application/vnd.esri.wms_featureinfo_xml" (pour 
-ArcGIS Server). Le template peut être un fichier statique ex templates/template1.mst ou directement saisi dans le nœud 
+Nœud enfant de layer décrivant un template Mustache.
+
+* **template**: contient le template type Mustache (https://github.com/janl/mustache.js) à appliquer à la fiche
+d'information. Pour fonctionner, il faut que le paramètre **infoformat** ait la valeur "application/vnd.ogc.gml" (pour
+GeoServer et MapServer), voire "application/vnd.esri.wms_raw_xml" ou "application/vnd.esri.wms_featureinfo_xml" (pour
+ArcGIS Server). Le template peut être un fichier statique ex templates/template1.mst ou directement saisi dans le nœud
 <template> avec les balises <![CDATA[ ]]>.
 
 
-Utilisation		
+Utilisation
 -----------
 
 ### Paramètres d'URL
@@ -443,13 +446,12 @@ Utilisation
 Il est possible d'instancier un mviewer avec des paramètres transmis par URL
 
 * **config**: Fichier de configuration à charger ex: mviewer/?config=demo/l93.xml
-* **theme**: Theme css à utiliser ex: ?theme=geobretagne pour charger le theme doit être dans 
+* **theme**: Theme css à utiliser ex: ?theme=geobretagne pour charger le theme doit être dans
 css/themes/geobretagne.css.
-* **wmc**: liste des contextes OGC WMC (séparés par des virgules) à charger afin d'alimenter le panel de gauche ex : 
+* **wmc**: liste des contextes OGC WMC (séparés par des virgules) à charger afin d'alimenter le panel de gauche ex :
 mviewer/?wmc=demo/hydro.wmc
-* **popup**: true ou false. Si true, Une popup s'affiche sur la carte afin d'afficher le résultat de l'interrogation de 
+* **popup**: true ou false. Si true, Une popup s'affiche sur la carte afin d'afficher le résultat de l'interrogation de
 couches.
 * **mode**: Mode d'affichage à utiliser (d - default, s - simplifié, u - ultrasimplifié). Le mode simplifié ne dispose pas du panneau des thématiques et le mode ultra simplifié ne dispose pas de la barre de navigation.
 * **title**: Titre à utiliser. Seulement exploité en mode défault et simplifié.
 * **topics**: Thèmes à filtrer.
-
