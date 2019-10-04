@@ -1375,11 +1375,11 @@ mviewer = (function () {
     };
 
     /**
-     * call file to translate
+     * Translate DOM elements
+     * @param propName String - tag to identify DOM elements to translate
+     * @param htmlType Array  - HTML types to identify, detect and translate
      */
     var _translate = function (propName, htmlType) {
-        console.log(propName);
-        console.log(htmlType);
         // default i18njs structures
         var i18nJSON = {
             "values": {}
