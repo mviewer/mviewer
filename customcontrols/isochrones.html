@@ -15,7 +15,7 @@
             margin-bottom:5px
          }
       </style>
-      <label>Temps de parcours</label>
+      <label tr="custom.isochrone.time">Temps de parcours</label>
       <div class="btn-group" role="group" aria-label="...">         
          <button type="button" class="selected isochrone-mode btn btn-default" data-mode="Voiture" onclick="mviewer.customControls.isochrones.switchMode(this);">
             <span class="fa fa-car" aria-hidden="true"></span>
@@ -28,24 +28,24 @@
          <div class="form-group">
             <i>&lt; </i>
             <input type="number" min="10" class="form-control isochrone-values" data-fill="rgba(46, 204, 113,.7)" data-stroke="rgba(46, 204, 113,1.0)" step="10" />
-            <i>secondes</i>
+            <i tr="custom.isochrone.seconds">secondes</i>
          </div>
          </br>
          <div class="form-group">
             <i>&lt; </i>
             <input type="number" min="10" class="form-control isochrone-values" data-fill="rgba(52, 152, 219,.7)" data-stroke="rgba(52, 152, 219,1.0)" step="10" />
-            <i>secondes</i>
+            <i tr="custom.isochrone.seconds">secondes</i>
          </div>
          <div class="form-group">
             <i>&lt; </i>
             <input type="number" min="10" class="form-control isochrone-values" data-fill="rgba(231, 76, 60,.7)" data-stroke="rgba(231, 76, 60,1.0)" step="10" />
-            <i>secondes</i>
+            <i tr="custom.isochrone.seconds">secondes</i>
          </div>
       </form>
-      <button class="btn btn-default" onclick="mviewer.customControls.isochrones.getXY();">Origine
+      <button class="btn btn-default" onclick="mviewer.customControls.isochrones.getXY();" tr="custom.isochrone.start">Origine
         <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
       </button>
-      <button class="btn btn-default" onclick="mviewer.customControls.isochrones.calcul();">Calculer
+      <button class="btn btn-default" onclick="mviewer.customControls.isochrones.calcul();" tr="custom.isochrone.calcul">Calculer
         <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
       </button>
    </div>
