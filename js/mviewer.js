@@ -1376,9 +1376,10 @@ mviewer = (function () {
 
     /**
      * call file to translate
-     * TODO: init to translate dom
      */
     var _translate = function (propName, htmlType) {
+        console.log(propName);
+        console.log(htmlType);
         // default i18njs structures
         var i18nJSON = {
             "values": {}
@@ -1397,15 +1398,19 @@ mviewer = (function () {
                 });
                 // init translator with translations
                 i18n.translator.add(i18nJSON);
-                // translate each html elements with propName as attribute
+                // translate each html elements with propName as attribute           
                 $("[" + propName + "]").each((i, el) => {
-                    console.log(el);
-                    // parse each html attribute to set translation
+                    let find = false;
+                    let tr = i18n($(el).attr(propName));
                     htmlType.forEach((att) => {
-                        if ($(el).attr(att) && i18n($(el).attr(propName))) {
-                            $(el).attr(att, i18n($(el).attr(propName)));
+                        if ($(el).attr(att) && tr) {
+                            $(el).attr(att, tr);
+                            find = true;
                         }
                     });
+                    if(!find) {
+                        $(el).text(tr);
+                    }
                 })
             },
             error: function (data) {
@@ -1724,7 +1729,7 @@ mviewer = (function () {
                 _initGeolocation();
                 _initTools();
                 _initShare();
-                _translate("tr", ["placeholder", "title", "accesskey", "alt"]);
+                _translate("tr", ["placeholder", "title", "accesskey", "alt", "value", "data-original-title"]);
         },
 
         customLayers: {},

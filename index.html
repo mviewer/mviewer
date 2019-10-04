@@ -257,7 +257,7 @@ $(document).ready(function () {
                 </li>
                 <!-- SEARCH RESULTS  -->
                 <div id="searchresults" class="list-group" >
-                    <div class="searchresults-title">Résultats
+                    <div class="searchresults-title" tr="search.result.title">Résultats
                     <button type="button" class="close">&times;</button>
                     </div>
                 </div>
@@ -277,7 +277,7 @@ $(document).ready(function () {
                         <div id="legend" class="active">
                             <div id="layers-container-box-header" >
                                 <a onclick="mviewer.toggleLegend();" title="Afficher/masquer la légende" tr="legend.title" href="#"> <span class="glyphicon glyphicon-list"></span> </a>
-                                <a id="btn-remove-layers" onclick="mviewer.removeAllLayers();" title="Supprimer toutes les couches" href="#"> <span class="glyphicon glyphicon-trash"></span> </a>
+                                <a id="btn-remove-layers" onclick="mviewer.removeAllLayers();" title="Supprimer toutes les couches" tr="legend.remove.all" href="#"> <span class="glyphicon glyphicon-trash"></span> </a>
                             </div>
                             <ul id="layers-container" class="list-group"></ul>
                         </div>
@@ -285,15 +285,15 @@ $(document).ready(function () {
                     <div id="feature-info" class=""></div>
                     <!-- BOTTOM PANEL -->
                     <div id="bottom-panel">
-                        <div id="bottom-panel-btn" ><i class="mv-close fas fa-chevron-down" title="Fermer ce panneau" onclick="$('#bottom-panel').toggleClass('active')" ></i></div>
-                        <div class="mv-header"><h5>Informations</h5>
+                        <div id="bottom-panel-btn" ><i class="mv-close fas fa-chevron-down" title="Fermer ce panneau" tr="bottom.panel.close" onclick="$('#bottom-panel').toggleClass('active')" ></i></div>
+                        <div class="mv-header"><h5 tr="bottom.panel.title">Informations</h5>
                         </div>
                         <div class="popup-content" ></div>
                     </div>
                     <!-- RIGHT PANEL -->
                          <div id="right-panel">
-                            <div class="mv-header"><h5>Informations</h5>
-                                <a href="#" class="close" data-dismiss="alert" aria-label="close" onclick="$('#right-panel').toggleClass('active')" title="Fermer">×</a>
+                            <div class="mv-header"><h5 tr="right.panel.title">Informations</h5>
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close" onclick="$('#right-panel').toggleClass('active')" title="Fermer" tr="right.panel.close">×</a>
                             </div>
                             <div class="popup-content" ></div>
                          </div>
@@ -319,15 +319,15 @@ $(document).ready(function () {
             </div>
             <!-- FIRST VERTICAL RIGHT TOOLBAR -->
             <div id="zoomtoolbar" class="btn-group-vertical btn-group-sm" role="group" aria-label="true">
-                <button href="#" onclick="mviewer.zoomIn();" title="Zoom avant (zoom fenêtre : shift + clic sur la carte)"
+                <button href="#" onclick="mviewer.zoomIn();" tr="tbar.right.zoom.in" title="Zoom avant (zoom fenêtre : shift + clic sur la carte)"
                     class="btn btn-default btn-raised" tabindex="104" accesskey="4" >
                      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </button>
                 <button href="#" id="toto" onclick="mviewer.zoomToInitialExtent();"
-                    title="Revenir à l'étendue géographique de départ" class="btn btn-default btn-raised" tabindex="105" accesskey="5">
+                    title="Revenir à l'étendue géographique de départ" tr="tbar.right.zoom.initial" class="btn btn-default btn-raised" tabindex="105" accesskey="5">
                      <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                 </button>
-                <button href="#" onclick="mviewer.zoomOut();" title="Zoom arrière"
+                <button href="#" onclick="mviewer.zoomOut();" title="Zoom arrière" tr="tbar.right.zoom.out"
                     class="btn btn-default btn-raised" tabindex="106" accesskey="6">
                      <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
                 </button>
@@ -335,32 +335,32 @@ $(document).ready(function () {
             <!-- SECOND VERTICAL RIGHT TOOLBAR -->
             <div id="toolstoolbar" class="btn-group-vertical btn-group-sm" role="group" aria-label="true">
                 <a class="btn btn-default btn-raised" type="button" href="?login" id="login" title="Se connecter" tabindex="110" accesskey="10"
-                    style="display:none;">
+                    tr="tbar.right.login" style="display:none;">
                     <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
                 </a>
                 <button data-toggle="modal" data-target="#sharepanel" onclick="mviewer.mapShare();" id="sharebtn" title="Partager cette carte"
-                     tabindex="111" accesskey="11" class="btn btn-default btn-raised">
+                     tr="tbar.right.share" tabindex="111" accesskey="11" class="btn btn-default btn-raised">
                      <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
                 </button>
                 <button id="geolocbtn" type="button" class="btn btn-default btn-raised" onclick="mviewer.geoloc();"
-                                        title="Se localiser" tabindex="103" accesskey="3">
+                                        title="Se localiser" tr="tbar.right.location" tabindex="103" accesskey="3">
                     <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
                 </button>
                 <button id="northbtn" type="button" class="btn btn-default btn-raised" onclick="mviewer.northRotate();"
-                        title="Orienté au nord" tabindex="106" accesskey="6">
+                        title="Orienté au nord" tr="tbar.right.rotation" tabindex="106" accesskey="6">
                     <span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
                 </button>
                 <button id="studiolink" type="button" class="btn btn-default btn-raised" onclick="mviewer.openStudio();"
-                        title="Modifier la carte" tabindex="106" accesskey="6">
+                        title="Modifier la carte" tr="tbar.right.studio" tabindex="106" accesskey="6">
                     <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
                 </button>
-                 <a href="#" id="exportpng" title="Exporter carte au format image" download="carte.png"
+                 <a href="#" id="exportpng" title="Exporter carte au format image" tr="tbar.right.png" download="carte.png"
                     class="btn btn-default btn-raised"  tabindex="113" accesskey="13" style="display:none;">
                      <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
                 </a>
             </div>
             <div id="backgroundlayerstoolbar-default" class="btn-group-vertical btn-group-sm" role="group" aria-label="true">
-            <button href="#" onclick="mviewer.nextBackgroundLayer();" id="backgroundlayersbtn" title="Changer de fond de carte" tabindex="103" accesskey="3"
+            <button href="#" onclick="mviewer.nextBackgroundLayer();" id="backgroundlayersbtn" title="Changer de fond de carte" tr="tbar.right.background" tabindex="103" accesskey="3"
                     class="btn-lg btn-default btn-raised" >
                      <!--<span class="glyphicon glyphicon-globe" aria-hidden="true"></span>-->
             </button>
@@ -374,24 +374,27 @@ $(document).ready(function () {
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h5 class="modal-title">Paramètres de recherche</h5>
+                        <button type="button" title="Fermer" tr="search.panel.close" class="close" data-dismiss="modal">&times;</button>
+                        <h5 class="modal-title" tr="search.panel.title">Paramètres de recherche</h5>
                     </div>
                     <div class="modal-body" >
                         <ul id="searchparameters">
-                            <li class="mv-param-item" id="param_search_bbox" onclick="search.toggleParameter(this)" >
-                                <a href="#" ><span class="state-icon far mv-unchecked"></span>
-                                Rechercher dans l'emprise de la carte
+                            <li class="mv-param-item" onclick="search.toggleParameter(this)" >
+                                <a href="#">
+                                    <span id="param_search_bbox" class="state-icon far mv-unchecked"></span>
+                                    <div style="display:inline;" tr="search.modal.extent.text">Rechercher dans l'emprise de la carte</div>
                                </a>
                             </li>
                             <li class="mv-param-item" id="param_search_localities" onclick="search.toggleParameter(this)" >
-                                <a href="#" ><span class="state-icon far mv-unchecked"></span>
-                                Rechercher des adresses
+                                <a href="#">
+                                    <span class="state-icon far mv-unchecked"></span>
+                                    <div style="display:inline;" tr="search.modal.address.text">Rechercher des adresses</div>
                                 </a>
                             </li>
                             <li class="mv-param-item" id="param_search_features" onclick="search.toggleParameter(this)" >
-                                <a href="#" ><span class="state-icon far mv-unchecked"></span>
-                                Rechercher des entités
+                                <a href="#">
+                                    <span class="state-icon far mv-unchecked"></span>
+                                    <div style="display:inline;" tr="search.modal.items.text">Rechercher des entités</div>
                                </a>
                            </li>
                         </ul>
@@ -406,17 +409,17 @@ $(document).ready(function () {
             <div class="modal-content">
               <div class="modal-header">
                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                 <h5 class="modal-title" id="login-panel-title">Configurer l'accès au service</h5>
-                 <span id="login-panel-service-url"><small><i>URL du service</i></small></span>
+                 <h5 class="modal-title" id="login-panel-title" tr="layer.authent.title">Configurer l'accès au service</h5>
+                 <span id="login-panel-service-url"><small><i tr="layer.authent.title">URL du service</i></small></span>
               </div>
               <div class="modal-body" >
                 <div class="loginmodal-container">
                   <form>
                     <input type="hidden" id="service-url">
                     <input type="hidden" id="layer-id">
-                    <input type="text" id="user" placeholder="Login">
-                    <input type="password" id="pass" placeholder="Mot de passe">
-                    <input type="button" id="savelogin" class="btn btn-light" value="Valider">
+                    <input type="text" id="user" placeholder="Login" tr="layer.authent.login">
+                    <input type="password" id="pass" placeholder="Mot de passe" tr="layer.authent.password">
+                    <input type="button" id="savelogin" class="btn btn-light" tr="layer.authent.valid" title="valider" value="Valider">
                   </form>
                 </div>
               </div>
@@ -429,30 +432,42 @@ $(document).ready(function () {
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title"><center>Partager cette carte</center></h4>
+                        <h4 class="modal-title"> <center tr="share.panel.title">Partager cette carte</center></h4>
                     </div>
                     <div class="modal-body" >
-                        <h6 class="modal-share-title"><strong>Mode d'affichage</strong></h6>
+                        <h6 class="modal-share-title" ><strong tr="share.modal.title">Mode d'affichage</strong></h6>
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12" >
                                 <div class="form-group" id="mv-display-mode">
-                                    <label class="radio-inline"><input type="radio" value="d" name="mv-display-mode" checked>Normal</label>
-                                    <label class="radio-inline"><input type="radio" name="mv-display-mode" value="s">Simplifié</label>
-                                    <label class="radio-inline"><input type="radio" name="mv-display-mode" value="u">Ultra simplifié</label>
-                                </div>
+                                    <label class="radio-inline">
+                                        <input type="radio" value="d" name="mv-display-mode" checked tr="share.radio.normal">
+                                        <div style="display:inline;" tr="share.radio.normal">Normal</div>
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="mv-display-mode" value="s">
+                                        <div style="display:inline;" tr="share.radio.simple">Simplifié</div>
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="mv-display-mode" value="u">
+                                        <div style="display:inline;" tr="share.radio.minimal">Ultra simplifié</div>
+                                    </label>
+                                </span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-xs-6" >
-                                <a type="button" class="btn btn-default" id="permalinklink" href="#" title="Lien permanent vers la carte"><img src="img/share/share_link.png" height="100px"></a>
+                                <a type="button" class="btn btn-default" id="permalinklink" href="#" title="Lien permanent vers la carte" tr="share.picture.permalink"><img src="img/share/share_link.png" height="100px"></a>
                             </div>
                             <div id='share' class="col-md-6 col-sm-6 col-xs-6">
-                                <img id="permaqr" src="img/blank.gif" title="QR code vers la carte" alt="QR code" />
+                                <img id="permaqr" src="img/blank.gif" title="QR code vers la carte" tr="share.picture.qrcode" alt="QR code" />
                             </div>
                        </div>
                        <div class="row" id="shareToMapfish">
                             <div class="col-sm-10 form-inline">
-                                <button id="shareToMapfishButton" type="button" class="btn btn-md btn-default" onclick="mviewer.sendToGeorchestra();"><span class="fas fa-share-square"></span>Afficher dans Mapfishapp</button>
+                                <button style="display:inline;" id="shareToMapfishButton" type="button" class="btn btn-md btn-default" onclick="mviewer.sendToGeorchestra();">
+                                    <span class="fas fa-share-square"></span>
+                                    <div tr="share.btn.mapfishapp">Afficher dans Mapfishapp</div>
+                                </button>
                                 <form id="georchestraForm" target="_blank" method="post" action="#" style="display:none;">
                                     <input type="hidden" id="georchestraFormData" name="data" value="" />
                                     <input type="submit" data-role="button" data-mini="true" data-iconpos="right" value="geOrchestra" />
@@ -487,7 +502,7 @@ $(document).ready(function () {
                 <div class="modal-content" role="document">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">DOCUMENTATION</h4>
+                        <h4 class="modal-title" id="doctitle" tr="help.modal.title">DOCUMENTATION</h4>
                     </div>
                     <div class="modal-body" ></div>
                 </div>
@@ -499,7 +514,7 @@ $(document).ready(function () {
                 <div class="modal-content" role="document">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Thématiques</h4>
+                        <h4 class="modal-title" tr="thematic.modal.title">Thématiques</h4>
                     </div>
                     <div class="modal-body" ></div>
                 </div>
@@ -511,7 +526,7 @@ $(document).ready(function () {
                 <div class="modal-content" role="document">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Options d'affichage</h4>
+                        <h4 class="modal-title" tr="legend.modal.title">Options d'affichage</h4>
                     </div>
                     <div class="modal-body" ></div>
                 </div>
@@ -523,7 +538,7 @@ $(document).ready(function () {
                 <div class="modal-content" role="document">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Informations</h4>
+                        <h4 class="modal-title" tr="featureinfo.modal.title">Informations</h4>
                     </div>
                     <div class="modal-body" >
                         <div class="popup-content"></div>
