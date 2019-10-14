@@ -993,7 +993,7 @@ mviewer = (function () {
 			l.setOpacity(baselayer.opacity);
 		}
                 
-				_backgroundLayers.push(l);
+		_backgroundLayers.push(l);
                 _map.addLayer(l);
                 break;
         }
