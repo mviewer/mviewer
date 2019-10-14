@@ -904,7 +904,9 @@ mviewer = (function () {
                 });
                 l.set('name', baselayer.label);
                 l.set('blid', baselayer.id);
-
+		if (baselayer.opacity !== 'undefined' ) {
+			l.setOpacity(baselayer.opacity);
+		}
                 _backgroundLayers.push(l);
                 _map.addLayer(l);
                 break;
@@ -932,6 +934,10 @@ mviewer = (function () {
                     l.setVisible(false);
                     l.set('name', baselayer.label);
                     l.set('blid', baselayer.id);
+		    if (baselayer.opacity !== 'undefined' ) {
+			    l.setOpacity(baselayer.opacity);
+		    }
+
                     _map.addLayer(l);
                     _backgroundLayers.push(l);
                 }
@@ -980,7 +986,11 @@ mviewer = (function () {
                 });
                 l.set('name', baselayer.label);
                 l.set('blid', baselayer.id);
-                _backgroundLayers.push(l);
+		if (baselayer.opacity !== 'undefined' ) {
+			l.setOpacity(baselayer.opacity);
+		}
+                
+		_backgroundLayers.push(l);
                 _map.addLayer(l);
                 break;
         }
