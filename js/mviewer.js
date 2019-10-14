@@ -933,9 +933,9 @@ mviewer = (function () {
                         })
                     });
                     l.setVisible(false);
-		    		if (baselayer.opacity !== 'undefined' ) {
-		    			l.setOpacity(baselayer.opacity);
-		    		}
+		    if (baselayer.opacity !== 'undefined' ) {
+		    	l.setOpacity(baselayer.opacity);
+		    }
 
                     l.set('name', baselayer.label);
                     l.set('blid', baselayer.id);
@@ -964,9 +964,9 @@ mviewer = (function () {
                             l.set('name', baselayer.label);
                             l.set('blid', baselayer.id);
                             _map.getLayers().insertAt(0,l);
-		    	    		if (baselayer.opacity !== 'undefined' ) {
-			        			l.setOpacity(baselayer.opacity);
-		    	    		}
+		    	    if (baselayer.opacity !== 'undefined' ) {
+			        l.setOpacity(baselayer.opacity);
+		    	    }
 
                             _backgroundLayers.push(l);
                             if( baselayer.visible === 'true' ) {
@@ -991,9 +991,9 @@ mviewer = (function () {
                 });
                 l.set('name', baselayer.label);
                 l.set('blid', baselayer.id);
-				if (baselayer.opacity !== 'undefined' ) {
-					l.setOpacity(baselayer.opacity);
-				}
+		if (baselayer.opacity !== 'undefined' ) {
+			l.setOpacity(baselayer.opacity);
+		}
 
                 _backgroundLayers.push(l);
                 _map.addLayer(l);
