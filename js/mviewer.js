@@ -904,9 +904,10 @@ mviewer = (function () {
                 });
                 l.set('name', baselayer.label);
                 l.set('blid', baselayer.id);
-		if (baselayer.opacity !== 'undefined' ) {
-			l.setOpacity(baselayer.opacity);
-		}
+                if ( baselayer.opacity !== 'undefined' ) {
+                    l.setOpacity(baselayer.opacity);
+                }
+
                 _backgroundLayers.push(l);
                 _map.addLayer(l);
                 break;
@@ -932,12 +933,13 @@ mviewer = (function () {
                         })
                     });
                     l.setVisible(false);
-                    l.set('name', baselayer.label);
-                    l.set('blid', baselayer.id);
+		    console.log(baselayer.opacity)
 		    if (baselayer.opacity !== 'undefined' ) {
-			l.setOpacity(baselayer.opacity);
+			    l.setOpacity(baselayer.opacity);
 		    }
 
+                    l.set('name', baselayer.label);
+                    l.set('blid', baselayer.id);
                     _map.addLayer(l);
                     _backgroundLayers.push(l);
                 }
@@ -953,7 +955,7 @@ mviewer = (function () {
                         success: function (xml) {
                             var getCapabilitiesResult = (new ol.format.WMTSCapabilities()).read(xml);
                             var WMTSOptions = ol.source.WMTS.optionsFromCapabilities( getCapabilitiesResult, {
-                            	layer: baselayer.layers,
+                                layer: baselayer.layers,
                                 matrixSet: baselayer.matrixset,
                                 format:baselayer.format,
                                 style: baselayer.style
@@ -962,9 +964,6 @@ mviewer = (function () {
                             l = new ol.layer.Tile({ source: new ol.source.WMTS(WMTSOptions) });
                             l.set('name', baselayer.label);
                             l.set('blid', baselayer.id);
-		    	    if (baselayer.opacity !== 'undefined' ) {
-			        l.setOpacity(baselayer.opacity);
-		    	    }
                             _map.getLayers().insertAt(0,l);
                             _backgroundLayers.push(l);
                             if( baselayer.visible === 'true' ) {
@@ -992,8 +991,8 @@ mviewer = (function () {
 		if (baselayer.opacity !== 'undefined' ) {
 			l.setOpacity(baselayer.opacity);
 		}
-                
-		_backgroundLayers.push(l);
+
+                _backgroundLayers.push(l);
                 _map.addLayer(l);
                 break;
         }
