@@ -1387,36 +1387,38 @@ mviewer = (function () {
         var JSONFile = {};
         var lang = configuration.getLang();
         // get translations
-        $.ajax({
-            url: configuration.getConfiguration().application.langfile,
-            dataType: "text",
-            success: function (data) {
-                JSONFile = JSON.parse(data);
-                // load i18n for a given language given by config or url
-                Object.keys(JSONFile[lang]).forEach((el) => {
-                    i18nJSON.values[el] = JSONFile[lang][el];
-                });
-                // init translator with translations
-                i18n.translator.add(i18nJSON);
-                // translate each html elements with propName as attribute           
-                $("[" + propName + "]").each((i, el) => {
-                    let find = false;
-                    let tr = i18n($(el).attr(propName));
-                    htmlType.forEach((att) => {
-                        if ($(el).attr(att) && tr) {
-                            $(el).attr(att, tr);
-                            find = true;
-                        }
+        if (configuration.getConfiguration().application.langfile) {
+            $.ajax({
+                url: configuration.getConfiguration().application.langfile,
+                dataType: "text",
+                success: function (data) {                    
+                    JSONFile = JSON.parse(data);
+                    // load i18n for a given language given by config or url
+                    Object.keys(JSONFile[lang]).forEach((el) => {
+                        i18nJSON.values[el] = JSONFile[lang][el];
                     });
-                    if(!find) {
-                        $(el).text(tr);
-                    }
-                })
-            },
-            error: function (data) {
-                console.log("Error: can't load JSON langs file!")
-            }
-        });
+                    // init translator with translations
+                    i18n.translator.add(i18nJSON);
+                    // translate each html elements with propName as attribute           
+                    $("[" + propName + "]").each((i, el) => {
+                        let find = false;
+                        let tr = i18n($(el).attr(propName));
+                        htmlType.forEach((att) => {
+                            if ($(el).attr(att) && tr) {
+                                $(el).attr(att, tr);
+                                find = true;
+                            }
+                        });
+                        if(!find) {
+                            $(el).text(tr);
+                        }
+                    })
+                },
+                error: function (data) {
+                    console.log("Error: can't load JSON langs file!")
+                }
+            });
+        }
     }
 
     /*
@@ -2222,6 +2224,8 @@ mviewer = (function () {
                 var newStatus = _getThemeStatus(layer.theme);
                 _setThemeStatus(layer.theme, newStatus);
             }
+            // update translation for new DOM elements added into interface
+            _translate("tr", ["placeholder", "title", "accesskey", "alt", "value", "data-original-title"]);
         },
         removeLayer: function (el) {
             var item;
