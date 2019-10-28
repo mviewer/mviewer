@@ -66,7 +66,8 @@
         "measure.button.surface": "Mesure surfacique",
         "legend.label.opacity": "Opacité",
         "legend.radio.tooltips": "Afficher les infobulles",
-        "style.control.analyses":"Analyses"
+        "style.control.analyses":"Analyses",
+        "loader.text": "Chargement de l'application..."
     },
     "en": {
         "legend.title": "Display/hide the legend",
@@ -109,7 +110,6 @@
         "thematic.modal.title": "Thematics",
         "legend.modal.title": "Display settings",
         "featureinfo.modal.title": "Informations",
-        
         "custom.isochrone.time": "Time travel",
         "custom.isochrone.seconds":  "Seconds",
         "custom.isochrone.start": "Origin",
@@ -133,7 +133,8 @@
         "measure.button.main": "Measurements",
         "measure.button.line": "Line measurements",
         "measure.button.surface": "Surface measurements",
-        "legend.label.opacity": "Opacity"
+        "legend.label.opacity": "Opacity",
+        "loader.text": "Application loading..."
 
     }
 } 
