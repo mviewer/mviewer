@@ -1415,7 +1415,7 @@ mviewer = (function () {
                     })
                 },
                 error: function (data) {
-                    console.log("Error: can't load JSON langs file!")
+                    console.log("Error: can't load JSON lang file!")
                 }
             });
         }
