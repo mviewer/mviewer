@@ -1374,52 +1374,54 @@ mviewer = (function () {
         return xyz;
     };
 
+    var _initTranslate = function() {
+        if (configuration.getLang()) {
+            // default i18njs structures
+            var i18nJSON = {
+                "values": {}
+            };
+            var lang = configuration.getLang();
+            var dicFile = configuration.getConfiguration().application.langfile || "mviewer.i18n.json";
+            $.ajax({
+                url: dicFile,
+                dataType: "json",
+                success: function (dic) {
+                    // load i18n for a given language given by config or url
+                    Object.keys(dic[lang]).forEach((el) => {
+                        i18nJSON.values[el] = dic[lang][el];
+                    });
+                    // init translator with translations
+                    i18n.translator.add(i18nJSON);
+                    _translate("tr", ["placeholder", "title", "accesskey", "alt", "value", "data-original-title"]);
+                },
+                error: function () {
+                    console.log("Error: can't load JSON lang file!")
+                }
+            });
+        }
+    };
+
     /**
      * Translate DOM elements
      * @param propName String - tag to identify DOM elements to translate
      * @param htmlType Array  - HTML types to identify, detect and translate
      */
     var _translate = function (propName, htmlType) {
-        // default i18njs structures
-        var i18nJSON = {
-            "values": {}
-        };
-        var JSONFile = {};
-        var lang = configuration.getLang();
-        // get translations
-        if (configuration.getConfiguration().application.langfile) {
-            $.ajax({
-                url: configuration.getConfiguration().application.langfile,
-                dataType: "text",
-                success: function (data) {                    
-                    JSONFile = JSON.parse(data);
-                    // load i18n for a given language given by config or url
-                    Object.keys(JSONFile[lang]).forEach((el) => {
-                        i18nJSON.values[el] = JSONFile[lang][el];
-                    });
-                    // init translator with translations
-                    i18n.translator.add(i18nJSON);
-                    // translate each html elements with propName as attribute           
-                    $("[" + propName + "]").each((i, el) => {
-                        let find = false;
-                        let tr = i18n($(el).attr(propName));
-                        htmlType.forEach((att) => {
-                            if ($(el).attr(att) && tr) {
-                                $(el).attr(att, tr);
-                                find = true;
-                            }
-                        });
-                        if(!find) {
-                            $(el).text(tr);
-                        }
-                    })
-                },
-                error: function (data) {
-                    console.log("Error: can't load JSON lang file!")
+        // translate each html elements with propName as attribute
+        $("[" + propName + "]").each((i, el) => {
+            let find = false;
+            let tr = i18n($(el).attr(propName));
+            htmlType.forEach((att) => {
+                if ($(el).attr(att) && tr) {
+                    $(el).attr(att, tr);
+                    find = true;
                 }
             });
-        }
-    }
+            if(!find) {
+                $(el).text(tr);
+            }
+        });
+    };
 
     /*
      * Public
@@ -1723,6 +1725,7 @@ mviewer = (function () {
 
         init: function () {
                 _setVariables();
+                _initTranslate();
                 _initDisplayMode();
                 _initDataList();
                 _initVectorOverlay();
@@ -1731,7 +1734,6 @@ mviewer = (function () {
                 _initGeolocation();
                 _initTools();
                 _initShare();
-                _translate("tr", ["placeholder", "title", "accesskey", "alt", "value", "data-original-title"]);
         },
 
         customLayers: {},
@@ -2224,8 +2226,6 @@ mviewer = (function () {
                 var newStatus = _getThemeStatus(layer.theme);
                 _setThemeStatus(layer.theme, newStatus);
             }
-            // update translation for new DOM elements added into interface
-            _translate("tr", ["placeholder", "title", "accesskey", "alt", "value", "data-original-title"]);
         },
         removeLayer: function (el) {
             var item;
