@@ -1392,7 +1392,11 @@ mviewer = (function () {
                     });
                     // init translator with translations
                     i18n.translator.add(i18nJSON);
-                    _translate("tr", ["placeholder", "title", "accesskey", "alt", "value", "data-original-title"]);
+                    _scopeTranslate("body");
+                    //Translate core mviewer templates
+                    Object.entries(mviewer.templates).forEach(function (tpl) {
+                        mviewer.templates[tpl[0]] = _scopeTranslate(tpl[1]);
+                    });
                 },
                 error: function () {
                     console.log("Error: can't load JSON lang file!")
@@ -1403,14 +1407,16 @@ mviewer = (function () {
 
     /**
      * Translate DOM elements
-     * @param propName String - tag to identify DOM elements to translate
-     * @param htmlType Array  - HTML types to identify, detect and translate
+     * @param scope String - tag to identify DOM elements to translate
      */
-    var _translate = function (propName, htmlType) {
-        // translate each html elements with propName as attribute
-        $("[" + propName + "]").each((i, el) => {
+
+    var _scopeTranslate = function (scope) {
+        // translate each html elements with tr as attribute
+        var htmlType = ["placeholder", "title", "accesskey", "alt", "value", "data-original-title"];
+        var _scope = $(scope);
+        _scope.find("[tr]").each((i, el) => {
             let find = false;
-            let tr = i18n($(el).attr(propName));
+            let tr = i18n($(el).attr("tr"));
             htmlType.forEach((att) => {
                 if ($(el).attr(att) && tr) {
                     $(el).attr(att, tr);
@@ -1421,6 +1427,8 @@ mviewer = (function () {
                 $(el).text(tr);
             }
         });
+        var ret = (scope === "body")?true:_scope[0].outerHTML;
+        return ret;
     };
 
     /*
