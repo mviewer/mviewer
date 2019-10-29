@@ -1747,6 +1747,11 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
     top: 10px;
 }
 
+.xs.mode-u #searchtool {
+    position: absolute;
+    right: 0px;
+}
+
 .xs.mode-u #toolstoolbar {
     top: 110px;
 }

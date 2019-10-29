@@ -234,7 +234,7 @@ Options liées à la recherche d'adresse (olscompletion) et à la recherche d'en
 
 #### Prototype
 
-    <searchparameters [bbox=""] [localities=""] [features=""] [static=""]/>
+    <searchparameters [bbox=""] [inputlabel=""] [localities=""] [features=""] [static=""]/>
 
 #### Attributs
 
@@ -242,6 +242,7 @@ Options liées à la recherche d'adresse (olscompletion) et à la recherche d'en
 Cette option ne fonctionne pas actuellement avec la recherche "fuse" (aucun filtre géographique n'est pour l'instant 
 appliquer à ce type de recherche) ni avec la recherche BAN (cette option donne un poids plus important aux localités à 
 proximité du centre de la carte mais n'applique pas réellement de filtre géographique).
+* **inputlabel**: Texte à utiliser pour le placeholder de la zone de saisie de la barre de recherche. default = "Rechercher".
 * **localities**: Optional - Utilisation du service d'adresse olscompletion : true ou false - defaut = true
 * **features**: Optional - Utilisation du service de recherche d'entités (recherches s'appuyant sur Elasticsearch ou 
 Fuse) : true ou false - defaut = true.

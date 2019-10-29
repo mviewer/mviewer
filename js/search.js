@@ -246,7 +246,7 @@ var search = (function () {
                 var parameters = {q: value, limit: 5};
                 if (_searchparams.bbox) {
                     var center = _map.getView().getCenter();
-                    var center = ol.proj.transform(center, _projection.getCode(), 'EPSG:4326')
+                    var center = ol.proj.transform(center, _projection.getCode(), 'EPSG:4326');
                     parameters.lon = center[0];
                     parameters.lat = center[1];
                 }
@@ -680,8 +680,10 @@ var search = (function () {
 
         if (_searchparams.features === false) {
             $('#searchparameters .searchfeatures').remove('.searchfeatures');
-        } else {
-            $("#searchfield").attr("placeholder", "Rechercher...").attr("title", "Rechercher...")
+        }
+        if (configuration.searchparameters && configuration.searchparameters.inputlabel) {
+            var label = configuration.searchparameters.inputlabel;
+            $("#searchfield").attr("placeholder", label).attr("title", label);
         }
         _initSearch();
     };

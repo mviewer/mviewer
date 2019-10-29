@@ -670,6 +670,10 @@ mviewer = (function () {
         var displayMode = "d"; /* d :default, s: simple, u: ultrasimple */
         if (API.mode && (API.mode === "s" || API.mode === "u")) {
             displayMode = API.mode;
+            if (API.mode === "u") {
+                //Show searchtool on main div
+                $("#searchtool").appendTo("#main");
+            }
         }
         if ($(window).width() < 992 || displayMode !== "d") {
             _mediaSize = "xs";
