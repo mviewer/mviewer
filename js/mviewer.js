@@ -1376,22 +1376,16 @@ mviewer = (function () {
 
     var _initTranslate = function() {
         if (configuration.getLang()) {
-            // default i18njs structures
-            var i18nJSON = {
-                "values": {}
-            };
             var lang = configuration.getLang();
             var dicFile = configuration.getConfiguration().application.langfile || "mviewer.i18n.json";
             $.ajax({
                 url: dicFile,
                 dataType: "json",
                 success: function (dic) {
-                    // load i18n for a given language given by config or url
-                    Object.keys(dic[lang]).forEach((el) => {
-                        i18nJSON.values[el] = dic[lang][el];
+                    //load i18n for all languages availables
+                    Object.entries(dic).forEach(function (l) {
+                        mviewer[l[0]] = i18n.create({"values": l[1]});
                     });
-                    // init translator with translations
-                    i18n.translator.add(i18nJSON);
                     _scopeTranslate("body");
                     //Translate core mviewer templates
                     Object.entries(mviewer.templates).forEach(function (tpl) {
@@ -1412,18 +1406,19 @@ mviewer = (function () {
 
     var _scopeTranslate = function (scope) {
         // translate each html elements with tr as attribute
+        var lang = configuration.getLang();
         var htmlType = ["placeholder", "title", "accesskey", "alt", "value", "data-original-title"];
         var _scope = $(scope);
         _scope.find("[tr]").each((i, el) => {
             let find = false;
-            let tr = i18n($(el).attr("tr"));
+            let tr = mviewer[lang]($(el).attr("tr"));
             htmlType.forEach((att) => {
                 if ($(el).attr(att) && tr) {
                     $(el).attr(att, tr);
                     find = true;
                 }
             });
-            if(!find) {
+            if(!find && $(el).text().indexOf("{{")=== -1) {
                 $(el).text(tr);
             }
         });
@@ -1967,7 +1962,7 @@ mviewer = (function () {
 
             if (layer.attributefilter && layer.attributevalues != "undefined" && layer.attributefield != "undefined") {
                 view.attributeControl = true;
-                view.attributeLabel = layer.attributelabel || 'Filtrer';
+                view.attributeLabel = layer.attributelabel;
                 var options = [];
                 if (layer.attributefilterenabled === false) {
                     options.push({"label": "Par défaut", "attribute": "all"});
