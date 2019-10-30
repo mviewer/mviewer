@@ -1397,15 +1397,15 @@ mviewer = (function () {
 
     /**
      * Translate DOM elements
-     * @param scope String - tag to identify DOM elements to translate
+     * @param element String - tag to identify DOM elements to translate
      */
 
-    var _elementTranslate = function (scope) {
+    var _elementTranslate = function (element) {
         // translate each html elements with i18n as attribute
         var lang = configuration.getLang();
         var htmlType = ["placeholder", "title", "accesskey", "alt", "value", "data-original-title"];
-        var _scope = $(scope);
-        _scope.find("[i18n]").each((i, el) => {
+        var _element = $(element);
+        _element.find("[i18n]").each((i, el) => {
             let find = false;
             let tr = mviewer[lang]($(el).attr("i18n"));
             htmlType.forEach((att) => {
@@ -1418,7 +1418,7 @@ mviewer = (function () {
                 $(el).text(tr);
             }
         });
-        var ret = (scope === "body")?true:_scope[0].outerHTML;
+        var ret = (element === "body")?true:_element[0].outerHTML;
         return ret;
     };
 
