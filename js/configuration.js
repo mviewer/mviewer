@@ -892,7 +892,7 @@ var configuration = (function () {
         getCaptureCoordinates: function () { return _captureCoordinates; },
         getConfiguration: function () { return _configuration; },
         getLang: function () { return _lang },
-        setLang: function (lang) { _lang = lang; }
+        setLang: function (lang) { _lang = lang; mviewer.lang.lang = lang;}
     };
 
 })();

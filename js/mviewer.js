@@ -1382,11 +1382,13 @@ mviewer = (function () {
                 url: dicFile,
                 dataType: "json",
                 success: function (dic) {
+                    mviewer.lang = {"lang": lang};
                     //load i18n for all languages availables
                     Object.entries(dic).forEach(function (l) {
-                        mviewer[l[0]] = i18n.create({"values": l[1]});
+                        mviewer.lang[l[0]] = i18n.create({"values": l[1]});
                     });
                     _elementTranslate("body");
+                    mviewer.lang.changeLanguage = _changeLanguage;
                 },
                 error: function () {
                     console.log("Error: can't load JSON lang file!")
@@ -1407,7 +1409,7 @@ mviewer = (function () {
         var _element = $(element);
         _element.find("[i18n]").each((i, el) => {
             let find = false;
-            let tr = mviewer[lang]($(el).attr("i18n"));
+            let tr = mviewer.lang[lang]($(el).attr("i18n"));
             htmlType.forEach((att) => {
                 if ($(el).attr(att) && tr) {
                     $(el).attr(att, tr);
@@ -1423,7 +1425,7 @@ mviewer = (function () {
     };
 
     var _changeLanguage = function(lang) {
-        if (typeof mviewer[lang] === "function") {
+        if (typeof mviewer.lang[lang] === "function") {
             configuration.setLang(lang);
             _elementTranslate("body");
         }
@@ -2642,8 +2644,6 @@ mviewer = (function () {
         drawVectorLegend: _drawVectorLegend,
 
         overLayersReady: _overLayersReady,
-
-        changeLanguage: _changeLanguage,
 
         renderHTMLFromTemplate : _renderHTMLFromTemplate,
 
