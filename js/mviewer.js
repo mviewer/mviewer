@@ -1374,23 +1374,6 @@ mviewer = (function () {
         return xyz;
     };
 
-    var _translateDOM = function (){
-        _scopeTranslate("body");
-    };
-
-    var _translateTemplates = function () {
-        //Translate core mviewer templates
-        Object.entries(mviewer.templates).forEach(function (tpl) {
-            if (tpl[0] === "featureInfo") {
-                Object.entries(mviewer.templates.featureInfo).forEach(function (fi) {
-                    mviewer.templates.featureInfo[fi[0]] = _scopeTranslate(fi[1]);
-                });
-            } else {
-                mviewer.templates[tpl[0]] = _scopeTranslate(tpl[1]);
-            }
-        });
-    };
-
     var _initTranslate = function() {
         if (configuration.getLang()) {
             var lang = configuration.getLang();
@@ -1403,8 +1386,7 @@ mviewer = (function () {
                     Object.entries(dic).forEach(function (l) {
                         mviewer[l[0]] = i18n.create({"values": l[1]});
                     });
-                    _translateDOM();
-                    _translateTemplates();
+                    _scopeTranslate("body");
                 },
                 error: function () {
                     console.log("Error: can't load JSON lang file!")
@@ -1443,13 +1425,17 @@ mviewer = (function () {
     var _changeLanguage = function(lang) {
         if (typeof mviewer[lang] === "function") {
             configuration.setLang(lang);
-            _translateDOM();
-            _translateTemplates();
+            _scopeTranslate("body");
         }
     };
 
     var _renderHTMLFromTemplate = function(tpl, data) {
-        return Mustache.render(tpl, data);
+        var result = Mustache.render(tpl, data);
+        var lang = configuration.getLang();
+        if ( lang && mviewer[lang]) {
+            result = _scopeTranslate(result);
+        }
+        return result;
     };
 
     /*
