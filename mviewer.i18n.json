@@ -71,6 +71,7 @@
         "legend.label.opacity": "Opacité",
         "legend.radio.tooltips": "Afficher les infobulles",
         "style.control.analyses":"Analyses",
+        "attribute.control.filter": "Filtrer",
         "loader.text": "Chargement de l'application..."
     },
     "en": {
@@ -143,6 +144,8 @@
         "measure.button.line": "Line measurements",
         "measure.button.surface": "Surface measurements",
         "legend.label.opacity": "Opacity",
+        "style.control.analyses":"Styles",
+        "attribute.control.filter": "Filter",
         "loader.text": "Application loading..."
 
     }
