@@ -781,7 +781,7 @@ mviewer = (function () {
                 view.layers = reverse_layers.reverse();
                 view.cls = classes.join(" ");
             }
-            htmlListGroup += Mustache.render(mviewer.templates.theme, view);
+            htmlListGroup += _renderHTMLFromTemplate(mviewer.templates.theme, view);
         });
         var panelMini = configuration.getConfiguration().themes.mini;
         if (panelMini && (panelMini === 'true')) {
@@ -1448,6 +1448,10 @@ mviewer = (function () {
         }
     };
 
+    var _renderHTMLFromTemplate = function(tpl, data) {
+        return Mustache.render(tpl, data);
+    };
+
     /*
      * Public
      */
@@ -2005,7 +2009,7 @@ mviewer = (function () {
                     view.secure_layer = true;
             }
 
-            var item = Mustache.render(mviewer.templates.layerControl, view);
+            var item = _renderHTMLFromTemplate(mviewer.templates.layerControl, view);
             if (layer.customcontrol && mviewer.customControls[layer.layerid] && mviewer.customControls[layer.layerid].form) {
                 item = $(item).find('.mv-custom-controls').append(mviewer.customControls[layer.layerid].form).closest(".mv-layer-details");
             }
@@ -2651,6 +2655,8 @@ mviewer = (function () {
         overLayersReady: _overLayersReady,
 
         changeLanguage: _changeLanguage,
+
+        renderHTMLFromTemplate : _renderHTMLFromTemplate,
 
         events: function () { return _events; }
 
