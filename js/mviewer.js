@@ -1401,13 +1401,13 @@ mviewer = (function () {
      */
 
     var _elementTranslate = function (scope) {
-        // translate each html elements with tr as attribute
+        // translate each html elements with i18n as attribute
         var lang = configuration.getLang();
         var htmlType = ["placeholder", "title", "accesskey", "alt", "value", "data-original-title"];
         var _scope = $(scope);
-        _scope.find("[tr]").each((i, el) => {
+        _scope.find("[i18n]").each((i, el) => {
             let find = false;
-            let tr = mviewer[lang]($(el).attr("tr"));
+            let tr = mviewer[lang]($(el).attr("i18n"));
             htmlType.forEach((att) => {
                 if ($(el).attr(att) && tr) {
                     $(el).attr(att, tr);
