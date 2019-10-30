@@ -1434,7 +1434,7 @@ mviewer = (function () {
     var _renderHTMLFromTemplate = function(tpl, data) {
         var result = Mustache.render(tpl, data);
         var lang = configuration.getLang();
-        if ( lang && mviewer[lang]) {
+        if ( lang && mviewer.lang && mviewer.lang[lang]) {
             result = _elementTranslate(result);
         }
         return result;
