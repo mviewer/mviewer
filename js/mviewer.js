@@ -1713,6 +1713,9 @@ mviewer = (function () {
             if (API.config) {
                 linkParams.config = API.config;
             }
+            if (API.lang) {
+                linkParams.lang = API.lang;
+            }
             if (API.wmc) {
                 linkParams.wmc = API.wmc;
             }
