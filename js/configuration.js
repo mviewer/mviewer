@@ -16,7 +16,7 @@ var configuration = (function () {
 
     var _captureCoordinates = false;
 
-    var _lang_startup = "fr";
+    var _lang = false;
 
     /**
      * Property: _crossorigin
@@ -169,11 +169,11 @@ var configuration = (function () {
         //apply application customization
         if (conf.application.lang) {
             // default lang from config file
-            _lang_startup = conf.application.lang;
+            _lang = conf.application.lang;
         }
         if (API.lang && API.lang.length > 0) {
             // apply lang set in URL as param
-            _lang_startup = API.lang;
+            _lang = API.lang;
         }        
         if (conf.application.title || API.title) {
             var title = API.title || conf.application.title;
@@ -891,7 +891,8 @@ var configuration = (function () {
         getCrossorigin: function () { return _crossorigin; },
         getCaptureCoordinates: function () { return _captureCoordinates; },
         getConfiguration: function () { return _configuration; },
-        getLang: function () { return _lang_startup }
+        getLang: function () { return _lang },
+        setLang: function (lang) { _lang = lang; }
     };
 
 })();

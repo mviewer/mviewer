@@ -1374,6 +1374,23 @@ mviewer = (function () {
         return xyz;
     };
 
+    var _translateDOM = function (){
+        _scopeTranslate("body");
+    };
+
+    var _translateTemplates = function () {
+        //Translate core mviewer templates
+        Object.entries(mviewer.templates).forEach(function (tpl) {
+            if (tpl[0] === "featureInfo") {
+                Object.entries(mviewer.templates.featureInfo).forEach(function (fi) {
+                    mviewer.templates.featureInfo[fi[0]] = _scopeTranslate(fi[1]);
+                });
+            } else {
+                mviewer.templates[tpl[0]] = _scopeTranslate(tpl[1]);
+            }
+        });
+    };
+
     var _initTranslate = function() {
         if (configuration.getLang()) {
             var lang = configuration.getLang();
@@ -1386,11 +1403,8 @@ mviewer = (function () {
                     Object.entries(dic).forEach(function (l) {
                         mviewer[l[0]] = i18n.create({"values": l[1]});
                     });
-                    _scopeTranslate("body");
-                    //Translate core mviewer templates
-                    Object.entries(mviewer.templates).forEach(function (tpl) {
-                        mviewer.templates[tpl[0]] = _scopeTranslate(tpl[1]);
-                    });
+                    _translateDOM();
+                    _translateTemplates();
                 },
                 error: function () {
                     console.log("Error: can't load JSON lang file!")
@@ -1424,6 +1438,14 @@ mviewer = (function () {
         });
         var ret = (scope === "body")?true:_scope[0].outerHTML;
         return ret;
+    };
+
+    var _changeLanguage = function(lang) {
+        if (typeof mviewer[lang] === "function") {
+            configuration.setLang(lang);
+            _translateDOM();
+            _translateTemplates();
+        }
     };
 
     /*
@@ -2627,6 +2649,8 @@ mviewer = (function () {
         drawVectorLegend: _drawVectorLegend,
 
         overLayersReady: _overLayersReady,
+
+        changeLanguage: _changeLanguage,
 
         events: function () { return _events; }
 
