@@ -1386,7 +1386,7 @@ mviewer = (function () {
                     Object.entries(dic).forEach(function (l) {
                         mviewer[l[0]] = i18n.create({"values": l[1]});
                     });
-                    _scopeTranslate("body");
+                    _elementTranslate("body");
                 },
                 error: function () {
                     console.log("Error: can't load JSON lang file!")
@@ -1400,7 +1400,7 @@ mviewer = (function () {
      * @param scope String - tag to identify DOM elements to translate
      */
 
-    var _scopeTranslate = function (scope) {
+    var _elementTranslate = function (scope) {
         // translate each html elements with tr as attribute
         var lang = configuration.getLang();
         var htmlType = ["placeholder", "title", "accesskey", "alt", "value", "data-original-title"];
@@ -1425,7 +1425,7 @@ mviewer = (function () {
     var _changeLanguage = function(lang) {
         if (typeof mviewer[lang] === "function") {
             configuration.setLang(lang);
-            _scopeTranslate("body");
+            _elementTranslate("body");
         }
     };
 
@@ -1433,7 +1433,7 @@ mviewer = (function () {
         var result = Mustache.render(tpl, data);
         var lang = configuration.getLang();
         if ( lang && mviewer[lang]) {
-            result = _scopeTranslate(result);
+            result = _elementTranslate(result);
         }
         return result;
     };
