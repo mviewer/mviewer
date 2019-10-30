@@ -1382,12 +1382,17 @@ mviewer = (function () {
                 url: dicFile,
                 dataType: "json",
                 success: function (dic) {
-                    mviewer.lang = {"lang": lang};
+                    mviewer.lang = {};
                     //load i18n for all languages availables
                     Object.entries(dic).forEach(function (l) {
                         mviewer.lang[l[0]] = i18n.create({"values": l[1]});
                     });
-                    _elementTranslate("body");
+                    if (mviewer.lang[lang]) {
+                        _elementTranslate("body");
+                        mviewer.lang.lang = lang;
+                    } else {
+                         console.log("langue non disponible " + lang);
+                    }
                     mviewer.lang.changeLanguage = _changeLanguage;
                 },
                 error: function () {
@@ -1425,9 +1430,11 @@ mviewer = (function () {
     };
 
     var _changeLanguage = function(lang) {
-        if (typeof mviewer.lang[lang] === "function") {
+        if (typeof mviewer.lang[lang] === "function" ) {
             configuration.setLang(lang);
             _elementTranslate("body");
+        } else {
+            console.log("langue non disponible " + lang);
         }
     };
 

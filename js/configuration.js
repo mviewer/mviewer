@@ -169,7 +169,7 @@ var configuration = (function () {
         //apply application customization
         if (conf.application.lang) {
             // default lang from config file
-            _lang = conf.application.lang;
+            _lang = conf.application.lang.split(",")[0];
         }
         if (API.lang && API.lang.length > 0) {
             // apply lang set in URL as param
