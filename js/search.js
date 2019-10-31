@@ -126,7 +126,7 @@ var search = (function () {
      * Enables properties the search
      */
 
-    var _searchparams = { localities : true, bbox: false, features: false, static: false};
+    var _searchparams = { localities : true, bbox: false, features: false, static: false, querymaponclick:false, closeafterclick:false};
 
      /**
      * Private Method: _clearSearchResults
@@ -147,6 +147,16 @@ var search = (function () {
     var _clearSearchField = function () {
         _clearSearchResults();
         $("#searchfield").val("");
+    };
+
+    var _showResults = function (results) {
+        $("#searchresults").append(results);
+        if (_searchparams.closeafterclick) {
+            $("#searchresults .list-group-item").click(function(){
+                $(".searchresults-title .close").trigger("click");
+            });
+        }
+        $("#searchresults").show();
     };
 
     /**
@@ -232,13 +242,13 @@ var search = (function () {
                                     break;
                                 }
                             str += '<a class="geoportail list-group-item" href="#" onclick="mviewer.zoomToLocation(' +
-                            res[i].x + ',' + res[i].y + ',' + zoom + ',\'' + res[i].fulltext.replace("'", "*") + '\');" '+
+                            res[i].x + ',' + res[i].y + ',' + zoom + ',' + _searchparams.querymaponclick +');" '+
                             'onmouseover="mviewer.flash('+'\'EPSG:4326\',' + res[i].x + ',' + res[i].y + ');"> ' +
                             res[i].fulltext + '</a>';
                         }
                         $(".geoportail").remove()
                         if (res.length > 0) {
-                             $("#searchresults").append(str).show();
+                             _showResults(str);
                         }
                     }
                 });
@@ -284,11 +294,10 @@ var search = (function () {
                             res[i].properties.context+' - ' + res[i].properties.type +
                             '" onclick="mviewer.zoomToLocation('+
                             res[i].geometry.coordinates[0] + ',' +
-                            res[i].geometry.coordinates[1] + ',' + zoom + ',\'' +
-                            res[i].properties.name.replace("'", "*") + '\');">' + res[i].properties.label + '</a>';
+                            res[i].geometry.coordinates[1] + ',' + zoom + ',' + _searchparams.querymaponclick +');">' + res[i].properties.label + '</a>';
                         }
                         $(".geoportail").remove();
-                        $("#searchresults").append(str).show();
+                        _showResults(str);
                     }
                 });
             }
@@ -380,13 +389,13 @@ var search = (function () {
                     var xyz = mviewer.getLonLatZfromGeometry(geom, 'EPSG:4326', zoom);
                     str += '<a class="fuse list-group-item" title="' + result_label + '" ' +
                         'href="#" onclick="mviewer.zoomToLocation('
-                        + xyz.lon + ',' + xyz.lat + ',' + xyz.zoom + ');mviewer.showLocation(\'EPSG:4326\','
+                        + xyz.lon + ',' + xyz.lat + ',' + xyz.zoom + ',' + _searchparams.querymaponclick +');mviewer.showLocation(\'EPSG:4326\','
                         + xyz.lon + ',' + xyz.lat +');" '
                         + 'onmouseover="mviewer.flash(\'EPSG:4326\',' + xyz.lon + ',' + xyz.lat + ');" >'
                         + result_label + '</a>';
                 });
             }
-            $("#searchresults").append(str).show();
+            _showResults(str);
         }
     };
 
@@ -531,7 +540,7 @@ var search = (function () {
                                 _sourceEls.addFeature(feature);
                                 action_over = 'mviewer.showFeature(\'feature.'+i+'\');';
                             } else {
-                                action_click = 'mviewer.zoomToLocation('  + point[0] + ',' + point[1]  + ',14);';
+                                action_click = 'mviewer.zoomToLocation('  + point[0] + ',' + point[1]  + ',14,' + _searchparams.querymaponclick +');';
                                 action_over = 'mviewer.flash('+'\'EPSG:4326\',' + point[0] + ',' + point[1] + ');';
                             }
                             if  (_overLayers[data.hits.hits[i]._type] ) {
@@ -551,7 +560,7 @@ var search = (function () {
                         }
                         $(".elasticsearch").remove();
                         if (nb > 0) {
-                            $("#searchresults").append(str).show();
+                            _showResults(str);
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
@@ -660,6 +669,8 @@ var search = (function () {
             _searchparams.localities = (configuration.searchparameters.localities === "true");
             _searchparams.features = (configuration.searchparameters.features === "true");
             _searchparams.static = (configuration.searchparameters.static === "true");
+            _searchparams.querymaponclick = (configuration.searchparameters.querymaponclick === "true");
+            _searchparams.closeafterclick = (configuration.searchparameters.closeafterclick === "true");
         }
         if (_searchparams.localities===false && _searchparams.features===false) {
             $("#searchtool").remove();
