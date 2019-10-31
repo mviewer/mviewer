@@ -1382,6 +1382,35 @@ mviewer = (function () {
                 url: dicFile,
                 dataType: "json",
                 success: function (dic) {
+                    var languages = configuration.getLanguages();
+                    if (languages.length > 1) {
+                        var langitems = [];
+                        languages.forEach(function(language) {
+                            var icon = language;
+                            if (language === "en") {
+                                icon = "gb";
+                            }
+                            langitems.push('<li style="margin-bottom:5px;"><a href="#" idlang="' + language + '"><span style="margin-right: 5px;" class="flag-icon flag-icon-squared flag-icon-' + icon + '"></span><span>' + language + '</span></a></li>');
+                        });
+
+                        var dropdown = ['<li class="dropdown">',
+                            '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Langue<span class="caret"></span></a>',
+                            '<ul class="dropdown-menu mv-translate">',
+                            langitems.join(""),
+                            '</ul>',
+                            '</li>'
+                        ].join("");
+
+                        if (configuration.getConfiguration().application.showhelp === "true") {
+                            $("#help .modal-header").append('<ul class="nav">' + dropdown + '</ul>');
+                        } else {
+                            $(".mv-nav").append(dropdown);
+                        }
+                        $(".mv-translate a").click(function() {
+                            _changeLanguage($(this).attr("idlang"));
+                        });
+                    }
+
                     mviewer.lang = {};
                     //load i18n for all languages availables
                     Object.entries(dic).forEach(function (l) {
