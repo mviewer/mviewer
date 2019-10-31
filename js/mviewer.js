@@ -1706,13 +1706,23 @@ mviewer = (function () {
          *
          */
 
-        zoomToLocation: function (x, y, zoom, lib) {
+        zoomToLocation: function (x, y, zoom, querymap) {
             if (_sourceOverlay) {
                 _sourceOverlay.clear();
             }
             var ptResult = ol.proj.transform([x, y], 'EPSG:4326', _projection.getCode());
             _map.getView().setCenter(ptResult);
             _map.getView().setZoom(zoom);
+            if (querymap) {
+                var i = function () {
+                    var e = {
+                        coordinate:ptResult,
+                        pixel: _map.getPixelFromCoordinate(_map.getView().getCenter())
+                    };
+                    info.queryMap(e);
+                };
+                setTimeout(i, 250);
+            }
         },
 
 
@@ -1836,7 +1846,7 @@ mviewer = (function () {
          * Public Method: setLoginInfo
          *
          */
-         
+
         setLoginInfo: function (ctx) {
             var _layer_id = ctx.id.split('#')[1];
             var _service_url = mviewer.getLayers()[_layer_id].url;
@@ -1918,7 +1928,7 @@ mviewer = (function () {
                 if(layer.secure == "layer")
                     view.secure_layer = true;
             }
-            
+
             var item = Mustache.render(mviewer.templates.layerControl, view);
             if (layer.customcontrol && mviewer.customControls[layer.layerid] && mviewer.customControls[layer.layerid].form) {
                 item = $(item).find('.mv-custom-controls').append(mviewer.customControls[layer.layerid].form).closest(".mv-layer-details");

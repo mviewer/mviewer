@@ -148,7 +148,7 @@ var info = (function () {
             var format = new ol.format.GeoJSON();
             _map.forEachFeatureAtPixel(pixel, function(feature, layer) {
                 var l = layer.get('mviewerid');
-                if (l != 'featureoverlay' && l != 'elasticsearch') {
+                if (l && l != 'featureoverlay' && l != 'elasticsearch' ) {
                     var queryable = _overLayers[l].queryable;
                     if (queryable) {
                         if (vectorLayers[l] && vectorLayers[l].features) {
@@ -844,6 +844,7 @@ var info = (function () {
         enabled : enabled,
         toggleTooltipLayer: toggleTooltipLayer,
         queryLayer: queryLayer,
+        queryMap: _queryMap,
         formatHTMLContent: createContentHtml,
         templateHTMLContent: applyTemplate,
         addQueryableLayer: _addQueryableLayer

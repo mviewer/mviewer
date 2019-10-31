@@ -234,7 +234,7 @@ Options liées à la recherche d'adresse (olscompletion) et à la recherche d'en
 
 #### Prototype
 
-    <searchparameters [bbox=""] [inputlabel=""] [localities=""] [features=""] [static=""]/>
+    <searchparameters [bbox=""] [inputlabel=""] [localities=""] [features=""] [static=""] [querymaponclick=""] [closeafterclick=""]/>
 
 #### Attributs
 
@@ -244,6 +244,8 @@ appliquer à ce type de recherche) ni avec la recherche BAN (cette option donne 
 proximité du centre de la carte mais n'applique pas réellement de filtre géographique).
 * **inputlabel**: Texte à utiliser pour le placeholder de la zone de saisie de la barre de recherche. default = "Rechercher".
 * **localities**: Optional - Utilisation du service d'adresse olscompletion : true ou false - defaut = true
+* **querymaponclick**: Optional - Interroge la carte après sélection d'un résultat : true ou false - defaut = false
+* **closeafterclick**: Optional - Ferme la liste des résultats de recherche après avoir sélectionné un item : true ou false - defaut = false
 * **features**: Optional - Utilisation du service de recherche d'entités (recherches s'appuyant sur Elasticsearch ou 
 Fuse) : true ou false - defaut = true.
 * **static**: Optional - En lien avec le paramètre **doctypes**. Active ou désactive la recherche associée à des 
