@@ -73,7 +73,8 @@
         "style.control.analyses":"Analyses",
         "attribute.control.filter": "Filtrer",
         "loader.text": "Chargement de l'application...",
-        "lang.modal.title": "Langues"
+        "lang.modal.title": "Langues",
+        "nav.down.lang": "Langues"
     },
     "en": {
         "legend.title": "Display/hide the legend",
@@ -148,6 +149,7 @@
         "style.control.analyses":"Styles",
         "attribute.control.filter": "Filter",
         "loader.text": "Application loading...",
-        "lang.modal.title": "Languages"
+        "lang.modal.title": "Languages",
+        "nav.down.lang": "Languages"
     }
 } 
