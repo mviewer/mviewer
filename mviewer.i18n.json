@@ -73,6 +73,7 @@
         "style.control.analyses":"Analyses",
         "attribute.control.filter": "Filtrer",
         "loader.text": "Chargement de l'application..."
+        "lang.modal.title": "Langues"
     },
     "en": {
         "legend.title": "Display/hide the legend",
@@ -111,7 +112,7 @@
         "share.picture.permalink": "Permalink to the map",
         "share.btn.mapfishapp":"Send to Mapfishapp",
         "share.picture.qrcode":"QR code to the map",
-        "help.modal.title": "DOCUMENTATIONAA",
+        "help.modal.title": "DOCUMENTATION",
         "help.modal.help": "Help",
         "help.modal.doc": "Link to the documentation",
         "help.modal.credits": "Credits",
@@ -146,7 +147,7 @@
         "legend.label.opacity": "Opacity",
         "style.control.analyses":"Styles",
         "attribute.control.filter": "Filter",
-        "loader.text": "Application loading..."
-
+        "loader.text": "Application loading...",
+        "lang.modal.title": "Languages"
     }
 } 

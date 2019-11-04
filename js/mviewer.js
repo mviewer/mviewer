@@ -1386,26 +1386,32 @@ mviewer = (function () {
                     var languages = configuration.getLanguages();
                     if (languages.length > 1) {
                         var langitems = [];
+                        var showHelp = configuration.getConfiguration().application.showhelp;
                         languages.forEach(function(language) {
+                            var langStr = "";
                             var icon = language;
+                            var p;
                             if (language === "en") {
                                 icon = "gb";
                             }
-                            langitems.push('<li style="margin-bottom:5px;"><a href="#" idlang="' + language + '"><span style="margin-right: 5px;" class="flag-icon flag-icon-squared flag-icon-' + icon + '"></span><span>' + language + '</span></a></li>');
+                            if (langitems.length === 0 && (showHelp || showHelp === "true")) {
+                                // set no padding for the first item element
+                                // help popup only
+                                p = 0;
+                            }
+                            langitems.push('<li style="padding-left:' + p + '" type="button" class="btn mv-translate""><a href="#" idlang="' + language + '"><span style="margin-right: 5px;" class="flag-icon flag-icon-squared flag-icon-' + icon + '"></span><span>' + language + '</span></a></li>');
                         });
 
-                        var dropdown = ['<li class="dropdown">',
-                            '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Langue<span class="caret"></span></a>',
-                            '<ul class="dropdown-menu mv-translate">',
-                            langitems.join(""),
-                            '</ul>',
-                            '</li>'
-                        ].join("");
-
-                        if (configuration.getConfiguration().application.showhelp === "true") {
-                            $("#help .modal-header").append('<ul class="nav">' + dropdown + '</ul>');
+                        // if help popup only
+                        if (showHelp || showHelp === "true") {
+                            $("#help .modal-body").append('<ul style="padding-left:0">' + langitems.join("") + '</ul>');
+                            // hide others way to display lang
+                            $("#lang-button").hide();
+                            $("#lang-selector").hide();
                         } else {
-                            $(".mv-nav").append(dropdown);
+                            // display selector or modal according to device
+                            $("#lang-body>ul").append(langitems.join(""));
+                            $("#lang-selector>ul").append(langitems.join(""));
                         }
                         $(".mv-translate a").click(function() {
                             _changeLanguage($(this).attr("idlang"));

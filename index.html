@@ -237,6 +237,20 @@ $(document).ready(function () {
                         <span class=""></span>
                     </div>
                 </li>
+                <!--LANG SELECTOR-->
+                <li id="lang-button" class="hidden-lg hidden-md">
+                    <a href="#" data-toggle="modal" data-target="#lang-popup" tr="nav.down.lang">Langues</a>
+                </li>
+                <li id="lang-selector" class="dropdown hidden-xs hidden-sm">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">
+                        <span tr="nav.down.lang">Langue</span>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu mv-translate">
+                    <!--insert languages-->
+                    </ul>
+                </li>
+                <!--//LANG SELECTOR-->
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
@@ -493,6 +507,21 @@ $(document).ready(function () {
                                 <img class="popphoto center-block" src="img/blank.gif" style="max-height:512px;" alt="image">
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- LANG POPUP -->
+        <div id="lang-popup" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" role="document">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" i18n="lang.modal.title">Langues</h4>
+                    </div>
+                    <div id="lang-body" class="modal-body">
+                        <ul>
+                        </ul>
                     </div>
                 </div>
             </div>
