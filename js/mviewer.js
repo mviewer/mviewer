@@ -311,7 +311,7 @@ mviewer = (function () {
         var item = $(['<div class="alert '+cls+' alert-dismissible" role="alert">',
             '<button type="button" class="close" data-dismiss="alert" aria-label="Close">',
             '<span aria-hidden="true">&times;</span></button>',
-            msg,
+            mviewer.tr (msg),
             '</div>'].join (""));
             $("#alerts-zone").append(item);
     };
@@ -1375,6 +1375,7 @@ mviewer = (function () {
     };
 
     var _initTranslate = function() {
+        mviewer.tr = function (s) { return s; };
         if (configuration.getLang()) {
             var lang = configuration.getLang();
             var dicFile = configuration.getConfiguration().application.langfile || "mviewer.i18n.json";
@@ -1417,6 +1418,7 @@ mviewer = (function () {
                         mviewer.lang[l[0]] = i18n.create({"values": l[1]});
                     });
                     if (mviewer.lang[lang]) {
+                        mviewer.tr = mviewer.lang[lang];
                         _elementTranslate("body");
                         mviewer.lang.lang = lang;
                     } else {
@@ -1461,6 +1463,7 @@ mviewer = (function () {
     var _changeLanguage = function(lang) {
         if (typeof mviewer.lang[lang] === "function" ) {
             configuration.setLang(lang);
+            mviewer.tr = mviewer.lang[lang];
             _elementTranslate("body");
         } else {
             console.log("langue non disponible " + lang);
