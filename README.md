@@ -419,7 +419,7 @@ La structure du js doit être la suivante : (../controls/epci.js). Valeur par d�
 * **dynamiclegend**: Booléen précisant si la légende est liée à l'échelle de la carte et si elle nécessite d'être
 actualisée à chaque changement d'échelle de la carte.
 * **vectorlegend**: Booléen précisant si la légende pour les couches de type vecteur (customlayer ou csv) est dynamiquement créée
-* **nohighlight**: Booléen précisant, pour les couches de type vecteur (customlayer, geojson ou csv), si la mise en surbrillance et l'affichage des tooltips sont désactivés
+* **nohighlight**: Booléen précisant, pour les couches de type vecteur (customlayer, geojson ou csv), si la mise en surbrillance est désactivée
 * **url**: URL de la couche.
 * **attribution**: Copyright de la couche.
 * **expanded** : Booléan précisant si le panneau de la couche est agrandi au démarrage. La valeur par défaut est false.

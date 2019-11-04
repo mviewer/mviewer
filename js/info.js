@@ -429,7 +429,7 @@ var info = (function () {
             }
             var ret = false;
             var layerid = layer.get('mviewerid');
-            if (_activeTooltipLayer === false || (_activeTooltipLayer && layerid !== _activeTooltipLayer || _o[layer.get('mviewerid')].nohighlight)) {
+            if (_activeTooltipLayer === false || (_activeTooltipLayer && layerid !== _activeTooltipLayer)) {
                 ret = false;
             } else {
                 if (feature instanceof ol.Feature) {
@@ -471,7 +471,7 @@ var info = (function () {
             $("#map").css("cursor", "pointer");
             var l = _overLayers[feature.get('mviewerid')];
             if (l && ((l.fields && l.fields.length > 0) || l.tooltipcontent)) {
-                if (newFeature) {
+                if (newFeature && !l.nohighlight) {
                     _sourceOverlay.clear();
                     _sourceOverlay.addFeature(feature);
                 }
