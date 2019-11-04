@@ -72,7 +72,7 @@
         "legend.radio.tooltips": "Afficher les infobulles",
         "style.control.analyses":"Analyses",
         "attribute.control.filter": "Filtrer",
-        "loader.text": "Chargement de l'application..."
+        "loader.text": "Chargement de l'application...",
         "lang.modal.title": "Langues"
     },
     "en": {
