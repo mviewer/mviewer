@@ -421,6 +421,7 @@ var info = (function () {
             });
         }
         var pixel = _map.getEventPixel(evt.originalEvent);
+        var _o = mviewer.getLayers();
 
         var feature = _map.forEachFeatureAtPixel(pixel, function (feature, layer) {
             if (!layer || layer.get('mviewerid') === 'featureoverlay') {
@@ -428,7 +429,7 @@ var info = (function () {
             }
             var ret = false;
             var layerid = layer.get('mviewerid');
-            if (_activeTooltipLayer === false || (_activeTooltipLayer && layerid !== _activeTooltipLayer)) {
+            if (_activeTooltipLayer === false || (_activeTooltipLayer && layerid !== _activeTooltipLayer || _o[layer.get('mviewerid')].nohighlight)) {
                 ret = false;
             } else {
                 if (feature instanceof ol.Feature) {

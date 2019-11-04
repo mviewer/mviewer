@@ -570,6 +570,7 @@ var configuration = (function () {
                     oLayer.tiled = (layer.tiled === "true") ? true : false;
                     oLayer.dynamiclegend = (layer.dynamiclegend === "true") ? true : false;
                     oLayer.vectorlegend =  (layer.vectorlegend === "true") ? true : false;
+                    oLayer.nohighlight =  (layer.nohighlight === "true") ? true : false;
                     if (layer.geocodingfields) {
                         oLayer.geocodingfields = layer.geocodingfields.split(",");
                     }

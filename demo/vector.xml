@@ -33,6 +33,7 @@
                 metadata-csw="https://geobretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25"
                 queryable="true"
                 fields="pnr_nom,pnr_ident"
+                nohighlight="true"
                 aliases="Nom,id"
                 visible="true"                
                 searchable="true"
