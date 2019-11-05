@@ -18,6 +18,7 @@ parameter |  documented | studio
 `stats` | &#9745; |
 `statsurl` | &#9745; |
 `coordinates` | &#9745; | &#9745;
+`geoloc` | |
 `togglealllayersfromtheme` | &#9745; | &#9745;
 `templaterightinfopanel` | &#9745; | &#9745;
 `templatebottominfopanel` | &#9745; | &#9745;
