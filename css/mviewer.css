@@ -114,17 +114,26 @@ a#searchparams {
         margin-left:2px;
         top: 3px;
     }
-	#searchresults {
+	.mode-s #searchresults,
+    .mode-d #searchresults    {
 		padding: 0px 14px;
         margin-top: -10px;
 	}
+    .mode-u #searchresults {
+        max-width:300px;
+		min-width: 255px;
+		position: fixed;
+		right:50px;
+		top: 50px;
+		z-index: 5;
+    }
     /*  Modal popup close*/
     .modal .close {
         font-size: 30px;
     }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 768px) {
     #searchtool {
         width:220px;
         margin-right:50px;
@@ -132,12 +141,15 @@ a#searchparams {
     }
 	#searchresults {
 		max-width:300px;
-		min-width: 246px;
+		min-width: 255px;
 		position: fixed;
-		right:65px;
+		right:50px;
 		top: 60px;
 		z-index: 5;
 	}
+    .mode-u #searchresults {
+		top: 50px;
+    }
 }
 
 #searchresults {
@@ -1748,8 +1760,11 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
 }
 
 .xs.mode-u #searchtool {
-    position: absolute;
-    right: 0px;
+    position: fixed;
+    top: 10px;
+    margin-right: 50px;
+    right: 0;
+    width: 250px;
 }
 
 .xs.mode-u #toolstoolbar {

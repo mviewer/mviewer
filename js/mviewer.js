@@ -673,6 +673,7 @@ mviewer = (function () {
             if (API.mode === "u") {
                 //Show searchtool on main div
                 $("#searchtool").appendTo("#main");
+                $("#searchtool").removeClass("navbar-form");
             }
         }
         if ($(window).width() < 992 || displayMode !== "d") {
