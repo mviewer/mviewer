@@ -1394,7 +1394,7 @@ mviewer = (function () {
                             if (language === "en") {
                                 icon = "gb";
                             }
-                            if (langitems.length === 0 && (showHelp || showHelp === "true")) {
+                            if (langitems.length === 0 && (showHelp && showHelp === "true")) {
                                 // set no padding for the first item element
                                 // help popup only
                                 p = 0;
@@ -1403,7 +1403,7 @@ mviewer = (function () {
                         });
 
                         // if help popup only
-                        if (showHelp || showHelp === "true") {
+                        if (showHelp && showHelp === "true") {
                             $("#help .modal-body").append('<ul style="padding-left:0">' + langitems.join("") + '</ul>');
                             // hide others way to display lang
                             $("#lang-button").hide();
