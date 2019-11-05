@@ -19,12 +19,10 @@ parameter |  documented | studio
 `statsurl` | &#9745; |
 `coordinates` | &#9745; | &#9745;
 `geoloc` | |
+`mouseposition` | |
 `togglealllayersfromtheme` | &#9745; | &#9745;
 `templaterightinfopanel` | &#9745; | &#9745;
 `templatebottominfopanel` | &#9745; | &#9745;
 `studio` | |
 `home` | |
 `mapfishurl` | |
-
-
-
