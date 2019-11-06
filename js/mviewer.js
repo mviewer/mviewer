@@ -1386,7 +1386,7 @@ mviewer = (function () {
                     var languages = configuration.getLanguages();
                     if (languages.length > 1) {
                         var langitems = [];
-                        var showHelp = configuration.getConfiguration().application.showhelp;
+                        var showHelp = (configuration.getConfiguration().application.showhelp === "true");
                         languages.forEach(function(language) {
                             var langStr = "";
                             var icon = language;
@@ -1394,7 +1394,7 @@ mviewer = (function () {
                             if (language === "en") {
                                 icon = "gb";
                             }
-                            if (langitems.length === 0 && (showHelp && showHelp === "true")) {
+                            if (langitems.length === 0 && showHelp) {
                                 // set no padding for the first item element
                                 // help popup only
                                 p = 0;
@@ -1403,13 +1403,12 @@ mviewer = (function () {
                         });
 
                         // if help popup only
-                        if (showHelp && showHelp === "true") {
+                        if (showHelp) {
                             $("#help .modal-body").append('<ul style="padding-left:0">' + langitems.join("") + '</ul>');
-                            // hide others way to display lang
-                            $("#lang-button").hide();
-                            $("#lang-selector").hide();
+
                         } else {
                             // display selector or modal according to device
+                            $("#lang-button, #lang-selector").addClass("enabled");
                             $("#lang-body>ul").append(langitems.join(""));
                             $("#lang-selector>ul").append(langitems.join(""));
                         }
