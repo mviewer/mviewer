@@ -21,8 +21,8 @@ parameter |  documented | studio | demo
 `geoloc` | |
 `mouseposition` | | | [application.xml](demo/application.xml)
 `togglealllayersfromtheme` | &#9745; | &#9745; | [application.xml](demo/application.xml)
-`templaterightinfopanel` | &#9745; | &#9745; | [application.xml](demo/application.xml)
-`templatebottominfopanel` | &#9745; | &#9745;
-`studio` | | [geobretagne.xml](demo/geobretagne.xml)
-`home` | | [geobretagne.xml](demo/geobretagne.xml)
-`mapfishurl` | | [geobretagne.xml](demo/geobretagne.xml)
+`templaterightinfopanel` | &#9745; | | [application.xml](demo/application.xml)
+`templatebottominfopanel` | &#9745; | |
+`studio` | | | [geobretagne.xml](demo/geobretagne.xml)
+`home` | | | [geobretagne.xml](demo/geobretagne.xml)
+`mapfishurl` | | | [geobretagne.xml](demo/geobretagne.xml)
