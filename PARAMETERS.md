@@ -4,25 +4,25 @@
 
 #### APPLICATION
 
-parameter |  documented | studio
---------|--------:|------------:
-`title` | &#9745; | &#9745;
-`logo` | &#9745; | &#9745;
-`help` | &#9745; | &#9745;
-`showhelp` | &#9745; | &#9745;
-`titlehelp` | &#9745; |
-`iconhelp` | &#9745; |
-`style` | &#9745; | &#9745;
-`exportpng` | &#9745; | &#9745;
-`measuretools` | &#9745; | &#9745;
+parameter |  documented | studio | demo
+--------|:-------:|:-----------:|:-----------:
+`title` | &#9745; | &#9745; | [application.xml](demo/application.xml)
+`logo` | &#9745; | &#9745; | [application.xml](demo/application.xml)
+`help` | &#9745; | &#9745; | [application.xml](demo/application.xml)
+`showhelp` | &#9745; | &#9745; | [application.xml](demo/application.xml)
+`titlehelp` | &#9745; | | [application.xml](demo/application.xml)
+`iconhelp` | &#9745; | | [application.xml](demo/application.xml)
+`style` | &#9745; | &#9745; | [application.xml](demo/application.xml)
+`exportpng` | &#9745; | &#9745; | [application.xml](demo/application.xml)
+`measuretools` | &#9745; | &#9745; | [application.xml](demo/application.xml)
 `stats` | &#9745; |
 `statsurl` | &#9745; |
-`coordinates` | &#9745; | &#9745;
+`coordinates` | &#9745; | &#9745; | [application.xml](demo/application.xml)
 `geoloc` | |
-`mouseposition` | |
-`togglealllayersfromtheme` | &#9745; | &#9745;
-`templaterightinfopanel` | &#9745; | &#9745;
+`mouseposition` | | | [application.xml](demo/application.xml)
+`togglealllayersfromtheme` | &#9745; | &#9745; | [application.xml](demo/application.xml)
+`templaterightinfopanel` | &#9745; | &#9745; | [application.xml](demo/application.xml)
 `templatebottominfopanel` | &#9745; | &#9745;
-`studio` | |
-`home` | |
-`mapfishurl` | |
+`studio` | | [geobretagne.xml](demo/geobretagne.xml)
+`home` | | [geobretagne.xml](demo/geobretagne.xml)
+`mapfishurl` | | [geobretagne.xml](demo/geobretagne.xml)

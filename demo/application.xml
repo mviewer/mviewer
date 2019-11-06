@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+<application
+    title="Paramétrage Application"
+    logo="https://kartenn.region-bretagne.fr/kartoviz/apps/region/global/img/logo/rb_blanc.svg"
+    help="demo/demo_application_help.html"
+    titlehelp="Paramètres utilisés"
+    iconhelp="cog"
+    style="css/themes/alizarin.css"
+    exportpng="true"
+    showhelp="true"
+    coordinates="true"
+    mouseposition="true"
+    measuretools="true"
+    templaterightinfopanel="accordion"
+    togglealllayersfromtheme="true">
+</application>
+<mapoptions maxzoom="20" projection="EPSG:3857" center="-307903.74898791354,6141345.088741366" zoom="7" />
+<searchparameters bbox="false" localities="false" features="false" static="false"/>
+<baselayers style="default"> 
+    <baselayer visible="true" id="positron" thumbgallery="img/basemap/positron.png" title="CartoDb" label="Positron" type="OSM" url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution="Map tiles by  &lt;a href=&quot;https://cartodb.com/attributions&quot;&gt;CartoDb&lt;/a&gt;, under  &lt;a href=&quot;https://creativecommons.org/licenses/by/3.0/&quot;&gt;CC BY 3.0 &lt;/a&gt;"  ></baselayer> 
+    <baselayer visible="false" id="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg" title="Esri world imagery" label="Esri world imagery" type="OSM" url="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"  ></baselayer> 
+</baselayers>
+<themes mini="false">
+    <theme id="theme-1" name="Education" collapsed="false" icon="fas fa-book">
+        <layer id="lycee"
+            name="Lycées en Bretagne" 
+            type="wms"
+            url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+            infoformat="text/html" 
+            metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25" 
+            metadata-csw="https://geobretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25" 
+            queryable="true" 
+            visible="true"            
+            attribution="Région Bretagne" />
+    </theme>
+</themes>
+</config>
