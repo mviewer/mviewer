@@ -3,6 +3,8 @@ MVIEWER
 
 Visualiseur géographique [Kartenn](http://kartenn.region-bretagne.fr/kartoviz/) basé sur OpenLayers 5.3.0 et Bootstrap 3.3.6
 
+[Versions] (https://github.com/geobretagne/mviewer/releases/)
+
 [Démos] (http://kartenn.region-bretagne.fr/kartoviz/demo/)
 
 [Documentation] (http://mviewerdoc.readthedocs.io/fr/latest/)
@@ -10,11 +12,11 @@ Visualiseur géographique [Kartenn](http://kartenn.region-bretagne.fr/kartoviz/)
 [Générateur d'applications] (https://github.com/geobretagne/mviewerstudio/)
 
 
-Feuille de route 
+Feuille de route
 -----------
 https://github.com/geobretagne/mviewer/wiki/Feuille-de-route
 
-Déploiement 
+Déploiement
 -----------
 
 Le déploiement se passe en trois étapes :
@@ -23,46 +25,46 @@ Le déploiement se passe en trois étapes :
     Vous avez maintenant un visualiseur géographique fonctionnel avec les couches de la Région Bretagne
     3. Si vous souhaitez publier vos propres couches/thèmes, modifiez le fichier config.xml
 
-Fichier config.xml      
+Fichier config.xml
 ------------------
 Le fichier de config permet la personnalisation des thèmes/couches du visualiseur.
 
-### Exemple 
+### Exemple
 
     <?xml version="1.0" encoding="UTF-8"?>
     <config>
     <application title="" logo="" help="" showhelp="" style="" exportpng="" measuretools="" legend="" stats="" statsurl="" coordinates=""/>
     <!--<mapoptions projection="EPSG:2154" extent="145518,6726671,372058,6868691"  />-->
     <mapoptions maxzoom="18" projection="EPSG:3857" center="-403013.39038929436,6128402.399153711" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
-   
-    <baselayers style="gallery"><!-- style="default"||gallery" -->                  
+
+    <baselayers style="gallery"><!-- style="default"||gallery" -->
         <baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoPortail" maxscale="1000" thumbgallery="img/basemap/ortho.jpg"
             url="../wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" format="image/jpeg" visible="false" fromcapacity="false"
             attribution="&lt;a href='http://www.geoportail.fr/' target='_blank'>&lt;img src='http://api.ign.fr/geoportail/api/js/latest/theme/geoportal/img/logo_gp.gif'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
-        <baselayer  type="WMS" id="photo2" label="Photo aérienne 1950" title="GéoBretagne" thumbgallery="img/basemap/ortho-ancien.jpg" 
-            url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite-ancien" format="image/jpeg" visible="false" 
-            attribution="&lt;a href='http://applications.region-bretagne.fr/geosource/apps/search/?uuid=048622c5-b333-4c2b-94ec-40a41608dc06' target='_blank' >Partenaires GéoBretagne - IGN&lt;/a>"/>      
-    </baselayers> 
+        <baselayer  type="WMS" id="photo2" label="Photo aérienne 1950" title="GéoBretagne" thumbgallery="img/basemap/ortho-ancien.jpg"
+            url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite-ancien" format="image/jpeg" visible="false"
+            attribution="&lt;a href='http://applications.region-bretagne.fr/geosource/apps/search/?uuid=048622c5-b333-4c2b-94ec-40a41608dc06' target='_blank' >Partenaires GéoBretagne - IGN&lt;/a>"/>
+    </baselayers>
 
     <proxy url="../proxy/?url="/>
 
-    <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban" attribution="API adresse.data.gouv.fr" />     
+    <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban" attribution="API adresse.data.gouv.fr" />
     <elasticsearch url="http://ows.region-bretagne.fr/kartenn/_search" geometryfield="geometry" linkid="search_id" querymode="fussy_like_this"/>
     <searchparameters bbox="true" localities="false" features="true" static="layer1"/>
 
-    <themes> 
-        <theme name="Inventaire du patrimoine"  collapsed="true" id="patrimoine">           
+    <themes>
+        <theme name="Inventaire du patrimoine"  collapsed="true" id="patrimoine">
             <layer id="inventaire_patrimoine" name="Patrimoine régional" scalemin="0" scalemax="50000000" visible="false" tiled="true" namespace="rb"
                 queryable="true" fields="denominati,titre,url" aliases="Nom,Description,Glad"
                 useproxy="false"
                 infoformat="text/html" featurecount="1"
                 style=""
                 filter=""
-                url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
-                attribution="Service de l'inventaire : Région Bretagne" 
+                url="http://ows.region-bretagne.fr/geoserver/rb/wms"
+                attribution="Service de l'inventaire : Région Bretagne"
                 metadata="http://applications.region-bretagne.fr/geosource/apps/search/?uuid=a7f46b47-42fc-49b7-9b49-c7c11aee0932"
                 metadata-csw="http://applications.region-bretagne.fr/geosource/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=a7f46b47-42fc-49b7-9b49-c7c11aee0932"/>
-            
+
         </theme>
     </themes>
     </config>
@@ -73,11 +75,11 @@ Le fichier de config permet la personnalisation des thèmes/couches du visualise
 
 Personnalisation de l'application (overriding)
 
-#### Prototype 
+#### Prototype
 
      <application title="" logo=""  help="" showhelp="" titlehelp="" iconhelp="" style="" exportpng="" measuretools="" stats="" statsurl="" coordinates=""/>
 
-#### Attributs 
+#### Attributs
 
 * **title**: Titre de l'application || Kartenn.
 * **logo**: Url du logo || img/logo/bandeau_region.png.
@@ -104,44 +106,44 @@ Personnalisation de l'application (overriding)
 
 Représente les configurations de base du visualiseur.
 
-#### Prototype 
+#### Prototype
 
      <mapoptions maxzoom="" projection="" center="" zoom="" projextent="" />
 
-#### Attributs 
+#### Attributs
 
 * **maxzoom**: Entier représentant le zoom maximum.
 * **projection**: Projection EPSG des couches présentes sur le visualiseur.
 * **zoom**: Zoom initial du visualiseur
 * **rotation**: Active la possibilité de rotation de la carte (par defaut false). Si activé ajout du bouton Nord.
-* **projextent**: Etendue de la projection 
+* **projextent**: Etendue de la projection
 
 ### Nœud baselayers
 
 Représente la galerie des fonds de plan
 
-#### Prototype 
+#### Prototype
 
         <baselayers style="">
 
-#### Attributs 
+#### Attributs
 
 * **style**: Soit gallery/default.
 
 
 
-#### Nœud(s) enfant(s) de  baselayer(s) 
+#### Nœud(s) enfant(s) de  baselayer(s)
 
 Représente les fonds de plan.
 
-##### Prototype 
+##### Prototype
 
-    
-    <baselayer type="" id="" label="" title="" maxscale="" thumbgallery="" url="" layers="" format="" visible="" fromcapacity="" 
+
+    <baselayer type="" id="" label="" title="" maxscale="" thumbgallery="" url="" layers="" format="" visible="" fromcapacity=""
     attribution="" style="" matrixset="" maxzoom=""/>
 
 
-##### Attributs 
+##### Attributs
 
 * **type**: Type de flux OGC (OSM/WMTS/WMS/fake)
 * **id**: Identifiant du fond de plan
@@ -152,7 +154,7 @@ Représente les fonds de plan.
 * **url**: Url du service ogc
 * **tiled**: Indique si le paramètre "TILED=true" doit être inséré dans les requêtes WMS (pour des couches disponibles en WMS-C). Valeur par défaut : true.
 * **layers**: Nom de la ressource ogc
-* **format**: Format image du fond de plan 
+* **format**: Format image du fond de plan
 * **visible**: Visibilité du fond de plan
 * **fromcapacity**: Attribut spécifique pour les fonds de plan WMTS. Permet la construction de layers à partir des capactiy.
 * **attribution**: Imagette de copyright.
@@ -162,7 +164,7 @@ Représente les fonds de plan.
 
 
 
-### Proxy 
+### Proxy
 
 Lien vers votre proxy permmettant l'interrogation CROSS DOMAIN des couches.
 Il n'y a pas besoin d'utiliser de proxy pour les données servies par GéoBretagne car CORS est activé (http://enable-cors.org/server.html)
@@ -171,13 +173,13 @@ Un proxy cgi peut être utilisé. Plus de détail ici : [proxy] (https://trac.os
 
 #### Prototype
 
- 
+
     <proxy url="" />
- 
+
 
 #### Attributs
 
-* **url**: Url vers votre proxy 
+* **url**: Url vers votre proxy
 
 
 ### olscompletion
@@ -188,7 +190,7 @@ Liens vers service d'autocomplétion et de géocodage.
 
 
     <olscompletion url="" [type=""] attribution="" />
-    
+
 
 #### Attributs
 
@@ -202,8 +204,8 @@ Liens vers un index Elasticsearch. Cette fonctionnalité permet d'interroger un 
 "Port de Brest". Le résultat retourné est une collection de documents disposant d'un champ commun avec les entités géographiques servies par l'instance
 WMS/WFS. Par convention les types Elasticsearch ont le même nom que les couches wms/wfs.
 
-La recherche basée sur Elasticsearch n'est active que pour les couches dont les attributs "searchable" et "searchengine" 
-valent respectivement "true" et "elasticsearch". Cette recherche n'est active qu'avec au moins l'une des 2 options de 
+La recherche basée sur Elasticsearch n'est active que pour les couches dont les attributs "searchable" et "searchengine"
+valent respectivement "true" et "elasticsearch". Cette recherche n'est active qu'avec au moins l'une des 2 options de
 recherche suivantes active : "features" et "static".
 
 #### Prototype
@@ -217,18 +219,18 @@ recherche suivantes active : "features" et "static".
 * **linkid**: Nom du champ  à utiliser côté serveur wms/wfs pour faire le lien avec la propriété _id des documents Elasticsearch.
 * **querymode**: Optional - Query mode used by Elasticsearch to find results : match ou term ou phrase - default = match.
 * **doctypes**: Optional - types des documents Elasticsearch à requêter systématiquement, indépendamment des couches affichées.
-* **version**: version de l'instance Elasticsearch. current||1.4 . Défault = "current". 
+* **version**: version de l'instance Elasticsearch. current||1.4 . Défault = "current".
 
 ### fuse
 
-Fuse est une bibliothèque javascript utilisée par mviewer pour indexer le contenu de couches de données vecteur légères 
-(cf. http://fusejs.io/). Elle donne une alternative plus simple et économique que la mise en œuvre d'index 
-Elasticsearch. Contrairement à ce dernier, le paramétrage de Fuse ne fait pas l'objet d'un nœud spécifique. Son 
-paramétrage est réalisé directement au niveau des nœuds des couches concernées à l'aide des attributs "searchable", 
+Fuse est une bibliothèque javascript utilisée par mviewer pour indexer le contenu de couches de données vecteur légères
+(cf. http://fusejs.io/). Elle donne une alternative plus simple et économique que la mise en œuvre d'index
+Elasticsearch. Contrairement à ce dernier, le paramétrage de Fuse ne fait pas l'objet d'un nœud spécifique. Son
+paramétrage est réalisé directement au niveau des nœuds des couches concernées à l'aide des attributs "searchable",
 "searchengine", "fusesearchkeys" et "fusesearchresult".
 
-La recherche basée sur Fuse n'est active que pour les couches dont les attributs "searchable" et "searchengine" 
-valent respectivement "true" et "fuse". Cette recherche n'est active que lorsque l'option de recherche suivante est 
+La recherche basée sur Fuse n'est active que pour les couches dont les attributs "searchable" et "searchengine"
+valent respectivement "true" et "fuse". Cette recherche n'est active que lorsque l'option de recherche suivante est
 active : "features".
 
 ### searchparameters
@@ -241,17 +243,17 @@ Options liées à la recherche d'adresse (olscompletion) et à la recherche d'en
 
 #### Attributs
 
-* **bbox**: Optional - Recherche d'adresse et/ou d'entités dans l'emprise de la carte : true ou false - defaut = false. 
-Cette option ne fonctionne pas actuellement avec la recherche "fuse" (aucun filtre géographique n'est pour l'instant 
-appliquer à ce type de recherche) ni avec la recherche BAN (cette option donne un poids plus important aux localités à 
+* **bbox**: Optional - Recherche d'adresse et/ou d'entités dans l'emprise de la carte : true ou false - defaut = false.
+Cette option ne fonctionne pas actuellement avec la recherche "fuse" (aucun filtre géographique n'est pour l'instant
+appliquer à ce type de recherche) ni avec la recherche BAN (cette option donne un poids plus important aux localités à
 proximité du centre de la carte mais n'applique pas réellement de filtre géographique).
 * **inputlabel**: Texte à utiliser pour le placeholder de la zone de saisie de la barre de recherche. default = "Rechercher".
 * **localities**: Optional - Utilisation du service d'adresse olscompletion : true ou false - defaut = true
 * **querymaponclick**: Optional - Interroge la carte après sélection d'un résultat : true ou false - defaut = false
 * **closeafterclick**: Optional - Ferme la liste des résultats de recherche après avoir sélectionné un item : true ou false - defaut = false
-* **features**: Optional - Utilisation du service de recherche d'entités (recherches s'appuyant sur Elasticsearch ou 
+* **features**: Optional - Utilisation du service de recherche d'entités (recherches s'appuyant sur Elasticsearch ou
 Fuse) : true ou false - defaut = true.
-* **static**: Optional - En lien avec le paramètre **doctypes**. Active ou désactive la recherche associée à des 
+* **static**: Optional - En lien avec le paramètre **doctypes**. Active ou désactive la recherche associée à des
 documents requêtés systématiquement, indépendamment des couches affichées : true ou false - defaut = false.
 
 ### Nœud themes et sous thèmes
@@ -261,7 +263,7 @@ Nœud regroupant les couches par thèmes et sous-thèmes.
 #### Prototype
 
     <themes mini="">
-    
+
 #### Attributs
 
 * **mini**: Booléen qui précise si le panneau de gauche est réduit à l'ouverture de l'application. Défaut = false.
@@ -378,10 +380,10 @@ Exemple : "{{name}} ({{city}})". A n'utiliser que si les infobulles sont activé
 (cf. paramètre tooltip)). Paramètre optionnel.
 * **secure**: Précise si la couche est protégée : public|global|layer
 - public (ou paramètre absent), l'accès à la couche est public
-- global, l'accès à la couche est contrainte par le CAS geoserver. Un test est affectué pour savoir 
+- global, l'accès à la couche est contrainte par le CAS geoserver. Un test est affectué pour savoir
 si la couche est accessible. Si ce n'est pas le cas, la couche est retirée du panneau et de la carte.
-- layer : l'accès à la couche nécessite une authentification sur le service (WMS). 
-Un bouton "cadenas" est ajouté dans la légende pour cette couche. Au clic sur ce bouton, un formulaire 
+- layer : l'accès à la couche nécessite une authentification sur le service (WMS).
+Un bouton "cadenas" est ajouté dans la légende pour cette couche. Au clic sur ce bouton, un formulaire
 est affiché permettant de saisir des identifiants d'accès qui seront envoyés à chaque appel au service.
 * **authorization**: Permet d'indiquer des identifiants par défaut si secure est à "layer"
 * **toplayer**: Précise si la couche demeure figée". Booléen. Défaut = true.
