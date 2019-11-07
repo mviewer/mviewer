@@ -1818,3 +1818,10 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
 .dropzone  .wait .dz-work.dz-message {
     display: block;
 }
+
+#lang-button, #lang-selector {
+    display:none;
+}
+#lang-button.enabled, #lang-selector.enabled {
+    display:inline-block;
+}

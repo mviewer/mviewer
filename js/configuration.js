@@ -6,7 +6,7 @@ var configuration = (function () {
      */
     /* INTERNAL */
     var _configuration = null;
-    
+
     // Mviewer version a saisir manuellement
     var VERSION = "3.1-snapshot";
 
@@ -15,6 +15,10 @@ var configuration = (function () {
     var _defaultBaseLayer = "";
 
     var _captureCoordinates = false;
+
+    var _lang = false;
+
+    var _languages = [];
 
     /**
      * Property: _crossorigin
@@ -159,12 +163,24 @@ var configuration = (function () {
     };
 
     var _load = function (conf) {
-        
+
         console.log("Mviewer version " + VERSION);
-        
+
         _configuration = conf;
         utils.testConfiguration(conf);
         //apply application customization
+        if (conf.application.lang) {
+            // default lang from config file
+            var languages = conf.application.lang.split(",");
+            if (languages.length > 1) {
+                _languages = languages;
+            }
+            _lang = languages[0];
+        }
+        if (API.lang && API.lang.length > 0) {
+            // apply lang set in URL as param
+            _lang = API.lang;
+        }
         if (conf.application.title || API.title) {
             var title = API.title || conf.application.title;
             document.title = title;
@@ -599,13 +615,13 @@ var configuration = (function () {
                         }
                     }
                     oLayer.secure = layer.secure || "public";
-                    
+
                     oLayer.authentification = (layer.authentification === "true") ? true : false;
                     if (layer.authorization){
                         sessionStorage.removeItem(oLayer.url);
                         if(layer.authorization != '')
                             sessionStorage.setItem(oLayer.url, layer.authorization);
-                    }                    
+                    }
 
                     if (oLayer.customcontrol) {
                         var customcontrolpath = oLayer.customcontrolpath;
@@ -669,7 +685,7 @@ var configuration = (function () {
                                         var xhr = new XMLHttpRequest();
                                         xhr.responseType = 'blob';
                                         xhr.open('GET', src);
-                                        
+
                                         var _ba_ident = sessionStorage.getItem(layer.url);
                                         if (_ba_ident && _ba_ident != '')
                                             xhr.setRequestHeader("Authorization","Basic " + window.btoa( _ba_ident));
@@ -717,7 +733,7 @@ var configuration = (function () {
                                             }
                                         });
                                         xhr.send();
-                                        
+
                                     }, params: wms_params
                                 });
                                 l = new ol.layer.Image({
@@ -838,21 +854,21 @@ var configuration = (function () {
         } else {
             $("#exportpng").hide();
         }
-        
+
         // Infos de connexion pour les couches à accès restreint
         $("#savelogin").click(function(){
-            var _service_url = $("#service-url").val(); 
-            var _layer_id = $("#layer-id").val(); 
+            var _service_url = $("#service-url").val();
+            var _layer_id = $("#layer-id").val();
             sessionStorage.removeItem(_service_url);
-            if($("#user").val() != '' && $("#pass").val() != '') 
+            if($("#user").val() != '' && $("#pass").val() != '')
                 sessionStorage.setItem(_service_url, $("#user").val() + ':' + $("#pass").val());
-        
+
             $("#loginpanel").modal("hide");
             // Refresh du layer
             _map.getLayers().forEach(function (lyr) {
                 if (_layer_id == lyr.get('mviewerid')) {
                     lyr.getSource().refresh();
-                }            
+                }
             });
         });
 
@@ -880,7 +896,10 @@ var configuration = (function () {
         getProxy: function () { return _proxy; },
         getCrossorigin: function () { return _crossorigin; },
         getCaptureCoordinates: function () { return _captureCoordinates; },
-        getConfiguration: function () { return _configuration; }
+        getConfiguration: function () { return _configuration; },
+        getLang: function () { return _lang },
+        getLanguages: function () { return _languages; },
+        setLang: function (lang) { _lang = lang; mviewer.lang.lang = lang;}
     };
 
 })();

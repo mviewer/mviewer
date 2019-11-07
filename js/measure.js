@@ -366,18 +366,18 @@ var measure = (function () {
         //Add html elements to the DOM
         var button = [
             '<button class="mv-modetools btn btn-default btn-raised" href="#"',
-                ' onclick="mviewer.tools.measure.toggle();" id="measurebtn" title="Mesurer"',
+                ' onclick="mviewer.tools.measure.toggle();" id="measurebtn" title="Mesurer" i18n="measure.button.main"',
                 ' tabindex="108" accesskey="8">',
                         '<span class="glyphicon glyphicon-resize-horizontal" aria-hidden="true"></span>',
                 '</button>'].join("");
         var buttonoptions = [
             '<div id="drawtoolsoptions" style="display:none;" class="btn-group btn-group-sm"',
                 ' role="group" aria-label="true">',
-                '<button  id="measurelinebtn" title="Mesure linéaire"',
+                '<button  id="measurelinebtn" title="Mesure linéaire" i18n="measure.button.line"',
                     ' onclick="mviewer.setTool(\'measure\', \'LineString\');" class="btn btn-default button-tools" >',
                     '<span class="glyphicon glyphicon-resize-small" aria-hidden="true"></span>',
                 '</button>',
-                '<button  id="measureareabtn" title="Mesure surfacique" onclick="mviewer.setTool(\'measure\', \'Polygon\');"',
+                '<button  id="measureareabtn" title="Mesure surfacique" i18n="measure.button.surface" onclick="mviewer.setTool(\'measure\', \'Polygon\');"',
                     ' class="btn btn-default button-tools">',
                     '<span class="glyphicon glyphicon-adjust" aria-hidden="true"></span>',
                 '</button>',

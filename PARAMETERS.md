@@ -26,3 +26,5 @@ parameter |  documented | studio | demo
 `studio` | | | [geobretagne.xml](demo/geobretagne.xml)
 `home` | | | [geobretagne.xml](demo/geobretagne.xml)
 `mapfishurl` | | | [geobretagne.xml](demo/geobretagne.xml)
+`lang` | | | [lang.xml](demo/lang.xml)
+`langfile` | | | [lang.xml](demo/lang.xml)
