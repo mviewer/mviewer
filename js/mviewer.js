@@ -1374,67 +1374,84 @@ mviewer = (function () {
         return xyz;
     };
 
+    var _configureTranslate = function (dic) {
+        var lang = configuration.getLang();
+        var languages = configuration.getLanguages();
+        if (languages.length > 1) {
+            var langitems = [];
+            var showHelp = (configuration.getConfiguration().application.showhelp === "true");
+            languages.forEach(function(language) {
+                var langStr = "";
+                var icon = language;
+                var p;
+                if (language === "en") {
+                    icon = "gb";
+                }
+                if (langitems.length === 0 && showHelp) {
+                    // set no padding for the first item element
+                    // help popup only
+                    p = 0;
+                }
+                langitems.push('<li style="padding-left:' + p + '" type="button" class="btn mv-translate""><a href="#" idlang="' + language + '"><span style="margin-right: 5px;" class="flag-icon flag-icon-squared flag-icon-' + icon + '"></span><span>' + language + '</span></a></li>');
+            });
+
+            // if help popup only
+            if (showHelp) {
+                $("#help .modal-body").append('<ul style="padding-left:0">' + langitems.join("") + '</ul>');
+
+            } else {
+                // display selector or modal according to device
+                $("#lang-button, #lang-selector").addClass("enabled");
+                $("#lang-body>ul").append(langitems.join(""));
+                $("#lang-selector>ul").append(langitems.join(""));
+            }
+            $(".mv-translate a").click(function() {
+                _changeLanguage($(this).attr("idlang"));
+            });
+        }
+
+        mviewer.lang = {};
+        //load i18n for all languages availables
+        Object.entries(dic).forEach(function (l) {
+            mviewer.lang[l[0]] = i18n.create({"values": l[1]});
+        });
+        if (mviewer.lang[lang]) {
+            mviewer.tr = mviewer.lang[lang];
+            _elementTranslate("body");
+            mviewer.lang.lang = lang;
+        } else {
+             console.log("langue non disponible " + lang);
+        }
+        mviewer.lang.changeLanguage = _changeLanguage;
+    };
+
     var _initTranslate = function() {
         mviewer.tr = function (s) { return s; };
         if (configuration.getLang()) {
-            var lang = configuration.getLang();
-            var dicFile = configuration.getConfiguration().application.langfile || "mviewer.i18n.json";
-            $.ajax({
-                url: dicFile,
-                dataType: "json",
-                success: function (dic) {
-                    var languages = configuration.getLanguages();
-                    if (languages.length > 1) {
-                        var langitems = [];
-                        var showHelp = (configuration.getConfiguration().application.showhelp === "true");
-                        languages.forEach(function(language) {
-                            var langStr = "";
-                            var icon = language;
-                            var p;
-                            if (language === "en") {
-                                icon = "gb";
-                            }
-                            if (langitems.length === 0 && showHelp) {
-                                // set no padding for the first item element
-                                // help popup only
-                                p = 0;
-                            }
-                            langitems.push('<li style="padding-left:' + p + '" type="button" class="btn mv-translate""><a href="#" idlang="' + language + '"><span style="margin-right: 5px;" class="flag-icon flag-icon-squared flag-icon-' + icon + '"></span><span>' + language + '</span></a></li>');
-                        });
-
-                        // if help popup only
-                        if (showHelp) {
-                            $("#help .modal-body").append('<ul style="padding-left:0">' + langitems.join("") + '</ul>');
-
-                        } else {
-                            // display selector or modal according to device
-                            $("#lang-button, #lang-selector").addClass("enabled");
-                            $("#lang-body>ul").append(langitems.join(""));
-                            $("#lang-selector>ul").append(langitems.join(""));
-                        }
-                        $(".mv-translate a").click(function() {
-                            _changeLanguage($(this).attr("idlang"));
-                        });
+            var extraFile = configuration.getConfiguration().application.langfile;
+            var defaultFile = "mviewer.i18n.json";
+            if (!extraFile) {
+                $.ajax({
+                    url: defaultFile,
+                    dataType: "json",
+                    success: _configureTranslate,
+                    error: function () {
+                        console.log("Error: can't load JSON lang file!")
                     }
-
-                    mviewer.lang = {};
-                    //load i18n for all languages availables
-                    Object.entries(dic).forEach(function (l) {
-                        mviewer.lang[l[0]] = i18n.create({"values": l[1]});
-                    });
-                    if (mviewer.lang[lang]) {
-                        mviewer.tr = mviewer.lang[lang];
-                        _elementTranslate("body");
-                        mviewer.lang.lang = lang;
-                    } else {
-                         console.log("langue non disponible " + lang);
+                });
+            } else {
+                $.when( $.getJSON( defaultFile ), $.getJSON( extraFile ) ).then(
+                    function( a, b ) {
+                        var globalDic = a[0];
+                        var extraDic = b[0];
+                        $.extend(true, globalDic, extraDic);
+                        _configureTranslate(globalDic);
+                    },
+                    function () {
+                        console.log("Error: can't load all JSON lang files!");
                     }
-                    mviewer.lang.changeLanguage = _changeLanguage;
-                },
-                error: function () {
-                    console.log("Error: can't load JSON lang file!")
-                }
-            });
+                );
+            }
         }
     };
 

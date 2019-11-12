@@ -100,7 +100,7 @@ Personnalisation de l'application (overriding)
 * **mapfishurl**: Lien permettant d'afficher les couches courantes visibles vers un mapfishapp cible
 * **hideprotectedlayers**: Indique si les couches protégées doivent être masquées dans l'arbre des thématiques lorsque l'utilisateur n'y a pas accès. Valeur : true/false (true par défaut).
 * **lang**: Langue à utiliser pour l'interface. Passer "?lang=en" dans l'url pour forcer la langue et ignorer la config. Par défaut, lang n'est pas activé. Le fichier [mviewer.i18n.json](mviewer.i18n.json) contient les expressions à traduire dans différentes langues. Pour traduire le texte d'un élément html, il faut que cet élément dispose d'un attribut i18n=`texte.a.traduire`.
-* **langfile**: URL du fichier de traduction à utiliser. Par défaut, mviewer.i18n.json est utilisé.
+* **langfile**: URL du fichier de traduction supplémentaire à utiliser en complément de mviewer.i18n.json.
 
 ### Nœud mapoptions
 
