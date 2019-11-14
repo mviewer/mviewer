@@ -8,7 +8,7 @@ Bien commencer avec mviewer
 ===========================
 
 Récupérer les sources (fork)
----------------------
+----------------------------
 
 Pour bien débuter, nous vous recommandons de réaliser un fork vers votre espace GitHub.
 
@@ -43,33 +43,36 @@ Nous recommandons de créer une branche à partir de la branche master à jour p
 
 
 Créer une branche
------------------
+
+------------------
 Vous pouvez créer une branche sur GitHub directement ou avec Git.
 
 Pour créer une branche su GitHub.
-*. Cliquer sur le bouton de la liste Branch:(nom de branche)
-*. Choisissez la branche de départ (master) dans la liste des branches disponibles
-*. Cliquer à nouveau sur le bouton de la liste Branch:(nom de branche)
-*. Dans le champ de recherche, saisir le nom de votre nouvelle branche*
-*. Cliquer ensuite sur "Create Branch: (nom de votre branche)"
+- Cliquer sur le bouton de la liste Branch:(nom de branche)
+- Choisissez la branche de départ (master) dans la liste des branches disponibles
+- Cliquer à nouveau sur le bouton de la liste Branch:(nom de branche)
+- Dans le champ de recherche, saisir le nom de votre nouvelle branche*
+- Cliquer ensuite sur "Create Branch: (nom de votre branche)"
 
 Vous avez maintenant une nouvelle branche.
 
-Pour récupérer cette nouvelle brache dans votre dépôt Git : 
+Pour récupérer cette nouvelle brache dans votre dépôt Git, suivez la pricédure qui suit:
 
-*. Positionnez-vous dans votre dossier mviewer (le dossier crée par la commande 'git clone'):
-.. code-block:: pull
+- Positionnez-vous dans votre dossier mviewer (le dossier crée par la commande 'git clone').
+
+.. code-block::pull
         :linenos:
         
         git pull
 
-Pour changer de branche :
-.. code-block:: checkout
+Pour changer de branche:
+
+.. code-block::checkout
         :linenos:
-        
+
         git checkout NOM_DE_MA_BRANCHE
 
-**Attention : Choisissez un nom permettant d'itentifier rapidement cette branche pour vous et votre équipe.*
+*Attention : Choisissez un nom permettant d'itentifier rapidement cette branche pour vous et votre équipe.*
 
 Vous travaillereai maintenant sur cette branche. 
 Chaque nouvelle mise à jour de la branche master de votre fork devra être reportée sur cette branche aussi souvent que possible.
@@ -78,7 +81,7 @@ Chaque nouvelle mise à jour de la branche master de votre fork devra être repo
 
 
 Définir un upstream
------------------------
+-------------------
 
 Pour mettre à jour la branche master depuis le code de GéoBretagne, vous devrez indiquer quelle est la "source" distante (upstream). 
 Votre "origin" sera votre branche de travail sur votre repository mviewer.
@@ -89,24 +92,17 @@ Vous devrez installer Git sur votre environnement de travail (ordinateur ou serv
 
 - Télécharger `Git <https://git-scm.com/book/fr/v1/D%C3%A9marrage-rapide-Installation-de-Git>`_.
 
-- Réaliser un clone (copie) du code mviewer sur votre ordinateur:
-.. code-block:: clone
-       :linenos:
+- Réaliser un clone (copie) du code mviewer sur votre ordinateur::
 
-	git clone https://github.com/MON_ORG/mviewer.git
+        git clone https://github.com/MON_ORG/mviewer.git
 
 *Pour récupérer l'URL du clone, aller sur le repository mviewer GitHub et cliquez sur "clone or download". Copier/coller ensuite l'URL dans la commande.*
 
-- Définir un upstream:
-
-.. code-block:: upstream
-        :linenos:
+- Définir un upstream::
         
         git remote add upstream https://github.com/geobretagne/mviewer
 
-- Observer que vous avez bien un upstream:
-.. code-block:: remote
-        :linenos:
+- Observer que vous avez bien un upstream::
     
         git remote -v
         > origin    https://github.com/YOUR_USERNAME/YOUR_FORK.git (fetch)
@@ -124,36 +120,26 @@ Vous devrez mettre à jour votre branche master au sein de votre fork.
 
 Avec Git Bash  ou votre terminal de commande, positionnez-vous dans votre dossier mviewer.
 
-C'est ce dossier qui a été récupéré à l'aide du clone réalisé précédemment:
-.. code-block:: cd
-        :linenos:
+C'est ce dossier qui a été récupéré à l'aide du clone réalisé précédemment::
         
         cd /chemin/vers/clone/mon/mviewer
 
 - Vérifiez que vous avez bien un upstream qui pointe vers https://github.com/geobretagne/mviewer.git (voir étape précédente).
 
-- Positionnez vous sur la branche master:
-.. code-block:: checkout
-        :linenos:
+- Positionnez vous sur la branche master::
         
         git checkout origin/master
 
-- Synchronisez:
-.. code-block:: fetch
-        :linenos:
+- Synchronisez::
         
         git fetch upstream
 
-- Remplacer votre branche master (origin) par celle de géoBretagne (upstream):
-.. code-block:: reset
-        :linenos:
+- Remplacer votre branche master (origin) par celle de géoBretagne (upstream)::
         
         git fetch upstream
         git reset --hard upstream/master
 
-- Poussez ensuite ce code récupéré depuis géoBretagne (upstream) vers votre branche master (origin):
-.. code-block:: push
-        :linenos:
+- Poussez ensuite ce code récupéré depuis géoBretagne (upstream) vers votre branche master (origin)::
         
         git push origin master --force
 
@@ -174,7 +160,8 @@ Nous vous recommandons d'intégrer cette structure afin de simplifier vos manipu
 
 - Pour chaque dossier de carte, vous devrez créer les dossiers : templates, customcontrols, customlayers, data, sld, css, img.
 
-Pour un fichier de config "aide-droit-carte.xml", nous aurons donc cette structure::     
+Pour un fichier de config "aide-droit-carte.xml", nous aurons donc cette structure::
+
     /apps
     ├── aide-droit-carte.xml
     └── aide-droit-carte
@@ -196,7 +183,8 @@ Organisation des autres fichiers
 - Créer un dossier js, css, img, lib
 - Créer un dossier basemaps, logo, legend, credit dans /img (/apps/common/img/)
 
-On obtiendra donc cette structure:: 
+On obtiendra donc cette structure::
+
     /apps    
     ├── common
         └── js/
@@ -220,20 +208,22 @@ Vous prendrez en compte la localisation de ces fichiers dans le fichier de confi
 
 
 URL de carte
----------------
+------------
 
 Il vous faudra prendre en compte le dossier "apps" dans vos urls de carte ainsi:: 
 
-http://kartenn.region-bretagne.fr/kartoviz/?config=apps/aide-droit-carte.xml
+        http://kartenn.region-bretagne.fr/kartoviz/?config=apps/aide-droit-carte.xml
 
 
 
 Addons
----------------
+------
 
 Si vous souhaitez enrichir vos cartes de fonctionnalités (isochrones, recherches, filtres temporels, ...) vous pouve duppliquer cet addon dans tous les dossiers de carte.
 
 Vous pouvez aussi créer un dossier "addons" dans le répertoire common et y ajouter la structure nécessaires (customlayers, customcontrols) pour être réexploitable par toutes les cartes :
+
+Voici exemple d'organisation de fichier avec un addon "Isochrone"::
 
     /apps    
     ├── common
