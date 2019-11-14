@@ -80,7 +80,7 @@ Réalisez ensuite la procédure suivante.
 Vous disposerez donc des nouveaux commits et de vos propres commits non partagés.
 
 
-** Comment faire ?**
+**Comment faire ?**
 
 - Faites une copie de votre branche (optionnel mais conseillé) en créant une nouvelle branche à partir de votre branche de travail
 - Si votre branche s'appelle par exemple "dev", lancez la commande de rebase de la branche master (fork à jour) vers votre branche à mettre à jour (dev) : ::
@@ -145,7 +145,7 @@ Vous disposerez donc des nouveaux commits et de vos propres commits non partagé
 
 - Lorsque le rebase est terminé vous n’aurez pas de message spécifique qui vous l’indiquera. Vous pourrez cependant voir que les derniers commits ont bien été appliqués.
 
-** Vérifier le résultat du rebase**
+**Vérifier le résultat du rebase**
 
 Nous devons absolument vérifier que le rebase a pris encompte les commits du mviewer natif et vos commits de travail.
 
@@ -167,6 +167,11 @@ Nous allons maintenant vérifier que ces commits sont biens dans notre historiqu
 - En cas de doute sur la gestion de certains conflits, vérifiez les fichiers visuellement et réalisez des tests dans vos applications
 
 - Si tout vous semble bon, nous avons bien récupéré les modifications et votre arbre de commit est à jour (ainsi que votre code)
+
+**Transmettre du local vers la branche**
+
+Actuellement, le rebase à apporter des modifications sur votre ordinateur. Mais le code en ligne (GitHub) n'a pas changé.
+Vous devez pousser les modifications vers la branche distante.
 
 - Lancez la commande suivante pour transmettre le travail du rebase à la branche distante (en ligne et visible sur GitHub) (**)::
 
