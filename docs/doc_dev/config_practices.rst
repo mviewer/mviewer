@@ -125,6 +125,7 @@ Chaque nouvelle mise à jour de la branche master de votre fork devra être repo
 Pour mettre à jour la branche master de votre fork, nous devons définir en premier une "source distante" (upstream).
 
 (*) *Attention : Choisissez un nom permettant d'itentifier rapidement cette branche pour vous et votre équipe.*
+
 .. _setupstream:
 
 Définir un upstream
@@ -359,3 +360,14 @@ Il n'y a pas d'obligation et vous êtes libre d'en choisir un.
 - Visual Studio Code
 - Atome
 - autre
+
+
+Informations git & GitHub
+-------------------------
+
+Vous trouverez plus d'information sur la page ":ref:`git`".
+
+
+Vous trouverez notamment de la documentation  dans la partie ":ref:`docgit`".
+
+

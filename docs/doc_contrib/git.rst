@@ -34,13 +34,6 @@ Présentation Git
 Git est un outil libre de gestion de version décentralisé pour tout type de projet. Il permet de réaliser des développements sur votre propre dépôt (dépôt = répertoire). 
 Git facilite ensuite la mise en commun du code entre les différents dépôt.
 
-Documentations utiles
---------------------------
- 
-    .. [#] `OpenClassrooms <https://openclassrooms.com/fr/courses/2342361-gerez-votre-code-avec-git-et-github>`_
-    .. [#] `Débuter avec Git <https://carlchenet.com/category/debuter-avec-git/>`_
-    .. [#] `Mémo Git <http://rogerdudler.github.io/git-guide/files/git_cheat_sheet.pdf>`_
-
 
 Fork et Pull
 ------------------------------
@@ -199,8 +192,22 @@ Pour réaliser une pull request, dirigez-vous sur votre fork GitHub :
 - Ajouter un titre simple mais distinctif et parlant
 - Ajouter un explicatif, avec de préférence le lien vers l'issue concernée
 - Cliquez sur "Create pull request"
-- Vous pourrez accéder à la pull request et discuter via le `volet "pull request"<https://github.com/geobretagne/mviewer.doc/pulls>`_ du repository geobretagne/mviewer
+- Vous pourrez accéder à la pull request et discuter via le `volet dédié <https://github.com/geobretagne/mviewer.doc/pulls>`_ du repository geobretagne/mviewer
 
 Votre pull request sera revue et vous aurai un retour pour réaliser des modifications ou bien vous noitifier que votre demande est acceptée.
 
 N'hésitez-pas à laisser un message dans la pull request pour relancer la communauté si personne ne réagit à votre pull request.
+
+.. _docgit:
+
+Documentation utile
+--------------------------
+ 
+    .. [#] `OpenClassrooms <https://openclassrooms.com/fr/courses/2342361-gerez-votre-code-avec-git-et-github>`_
+    .. [#] `Débuter avec Git <https://carlchenet.com/category/debuter-avec-git/>`_
+    .. [#] `Mémo Git <http://rogerdudler.github.io/git-guide/files/git_cheat_sheet.pdf>`_
+
+Pour mieux contribuer :
+
+    .. [#] `Première contribution <https://github.com/firstcontributions/first-contributions/blob/master/translations/README.fr.md>`_
+    .. [#] `Comment contribuer <https://opensource.guide/how-to-contribute/>`_
