@@ -7,6 +7,27 @@
 Bien commencer avec mviewer
 ===========================
 
+
+Préparer votre environnement de travail
+----------------------------------------
+
+Si vous débutez, nous vous conseillons de créer un dossier unique nommé "git". 
+Nous installerons ensuite Git et le terminal Git Bash pour passer les commandes à Git.
+
+- Sur Windows::
+
+        C:\Users\jean\Documents\git
+
+- Sur Ubuntu/Debian (autre)::
+
+        /home/user/jean/git
+
+- Le code mviewer sera par la suite placé dans un répertoire "mviewer"::
+
+        Exemple: C:\Users\jean\Documents\git\mviewer
+
+- Télécharger ensuite `Git <https://git-scm.com/book/fr/v1/D%C3%A9marrage-rapide-Installation-de-Git>`_ et installez le tout. Le terminal Git Bash sera installé en même temps.
+
 Récupérer les sources (fork)
 ----------------------------
 
@@ -20,15 +41,26 @@ Pour bien débuter, nous vous recommandons de réaliser un fork vers votre espac
 
 **Procédure**
 
-Sur la page https://github.com/geobretagne/mviewer cliquer sur "Fork" en haut à droite.
+Sur la page `GitHub du mviewer <https://github.com/geobretagne/mviewer>`_ cliquer sur "Fork" en haut à droite.
 
 Choisissez ensuite le compte vers lequel réaliser votre fork.
 
-Vous détenez maintenant un fork disponible à l'adresse (où MON_ORG est le nom de votre compte ou organisation): https://github.com/MON_ORG/mviewer
+Vous détenez maintenant un fork disponible à l'adresse : https://github.com/MON_ORG/mviewer
+*MON_ORG étant à remplacer par le nom de votre compte GitHub.*
 
-Vous pourrez créer des nouvelles branches et modifer le code sans impacter le code natif et le repository inital (`geobretagne/mviewer <https://github.com/geobretagne/mviewer>`_).
+Vous pourrez créer des nouvelles branches et modifer le code sans impacter le code natif du repository inital (`geobretagne/mviewer <https://github.com/geobretagne/mviewer>`_).
 
-Vous obtiendrez également les mêmes branche à l'identique, dont la brance **master**.
+Vous obtiendrez également les mêmes branches à l'identique, dont la branche **master**.
+
+Vous devrez installer Git sur votre environnement de travail (ordinateur ou serveur). Il vous permettra de réaliser les commandes qui suivent.
+
+- Ouvrez Git Bash
+
+- Réaliser un clone (copie) du code mviewer sur votre ordinateur::
+
+        git clone https://github.com/MON_ORG/mviewer.git
+
+*Pour récupérer l'URL du clone, aller sur le repository mviewer GitHub et cliquez sur "clone or download". Copier/coller ensuite l'URL dans la commande.*
 
 Travailler avec un fork
 ------------------------
@@ -43,60 +75,52 @@ Nous recommandons de créer une branche à partir de la branche master à jour p
 
 
 Créer une branche
-
 ------------------
+
 Vous pouvez créer une branche sur GitHub directement ou avec Git.
 
 Pour créer une branche su GitHub.
+
 - Cliquer sur le bouton de la liste Branch:(nom de branche)
 - Choisissez la branche de départ (master) dans la liste des branches disponibles
 - Cliquer à nouveau sur le bouton de la liste Branch:(nom de branche)
-- Dans le champ de recherche, saisir le nom de votre nouvelle branche*
+- Dans le champ de recherche, saisir le nom de votre nouvelle branche (*).
 - Cliquer ensuite sur "Create Branch: (nom de votre branche)"
 
 Vous avez maintenant une nouvelle branche.
 
-Pour récupérer cette nouvelle brache dans votre dépôt Git, suivez la pricédure qui suit:
+Pour récupérer cette nouvelle branche dans votre dépôt Git, suivez la pricédure qui suit:
 
-- Positionnez-vous dans votre dossier mviewer (le dossier crée par la commande 'git clone').
+- Positionnez-vous dans votre dossier ../git/mviewer/:
 
-.. code-block::pull
-        :linenos:
+- Synchroniser votre dossier git::
+        
+        git fetch
+
+- Positionnez-vous dans votre dossier mviewer (le dossier crée par la commande 'git clone')::
         
         git pull
 
-Pour changer de branche:
-
-.. code-block::checkout
-        :linenos:
+- Si vous souhaitez changer de branche, saisissez cette commande::
 
         git checkout NOM_DE_MA_BRANCHE
 
-*Attention : Choisissez un nom permettant d'itentifier rapidement cette branche pour vous et votre équipe.*
 
-Vous travaillereai maintenant sur cette branche. 
+Vous travaillerai maintenant sur la nouvelle branche de votre choix. 
 Chaque nouvelle mise à jour de la branche master de votre fork devra être reportée sur cette branche aussi souvent que possible.
 
+Pour mettre à jour la branche master de votre fork, nous devons définir en premier une "source distante" (upstream).
 
+(*) *Attention : Choisissez un nom permettant d'itentifier rapidement cette branche pour vous et votre équipe.*
 
 
 Définir un upstream
 -------------------
 
-Pour mettre à jour la branche master depuis le code de GéoBretagne, vous devrez indiquer quelle est la "source" distante (upstream). 
-Votre "origin" sera votre branche de travail sur votre repository mviewer.
+Pour mettre à jour la branche master depuis le code de GéoBretagne, vous devrez indiquer quelle est la "source distante" (upstream). 
+Votre "origin" sera votre votre repository mviewer (fork).
 
 Voici la manipulation.
-
-Vous devrez installer Git sur votre environnement de travail (ordinateur ou serveur). Il vous permettra de réaliser les commandes qui suivent.
-
-- Télécharger `Git <https://git-scm.com/book/fr/v1/D%C3%A9marrage-rapide-Installation-de-Git>`_.
-
-- Réaliser un clone (copie) du code mviewer sur votre ordinateur::
-
-        git clone https://github.com/MON_ORG/mviewer.git
-
-*Pour récupérer l'URL du clone, aller sur le repository mviewer GitHub et cliquez sur "clone or download". Copier/coller ensuite l'URL dans la commande.*
 
 - Définir un upstream::
         
@@ -111,32 +135,29 @@ Vous devrez installer Git sur votre environnement de travail (ordinateur ou serv
         > upstream  https://github.com/geobretagne/mviewer.git (push)
 
 
-Maintons maintenant à jour votre branche master.
+Bravo ! Maintons maintenant à jour votre branche master.
 
 Mettre à jour votre fork - master
 ----------------------------------
 
 Vous devrez mettre à jour votre branche master au sein de votre fork.
 
-Avec Git Bash  ou votre terminal de commande, positionnez-vous dans votre dossier mviewer.
+- Avec Git Bash ou votre terminal, positionnez-vous dans votre dossier mviewer (dossier récupéré via le clone)::
 
-C'est ce dossier qui a été récupéré à l'aide du clone réalisé précédemment::
-        
-        cd /chemin/vers/clone/mon/mviewer
+        cd C:\Users\jean\Documents\git\mviewer
 
-- Vérifiez que vous avez bien un upstream qui pointe vers https://github.com/geobretagne/mviewer.git (voir étape précédente).
+- Vérifiez que vous avez bien un upstream qui pointe vers https://github.com/geobretagne/mviewer.git (voir l'étape précédente).
 
 - Positionnez vous sur la branche master::
         
         git checkout origin/master
 
-- Synchronisez::
+- Synchronisez vous avec la source distante::
         
         git fetch upstream
 
 - Remplacer votre branche master (origin) par celle de géoBretagne (upstream)::
         
-        git fetch upstream
         git reset --hard upstream/master
 
 - Poussez ensuite ce code récupéré depuis géoBretagne (upstream) vers votre branche master (origin)::
@@ -150,21 +171,26 @@ Organisation des fichiers de carte
 
 Ne **JAMAIS** modifier les fichiers du coeur.
 
-Nous vous recommandons d'intégrer cette structure afin de simplifier vos manipulations de fichiers :
+Les fichiers du coeur sont tous les fichiers que vous obtenez nativement avec un clone de départ.
+
+Nous vous recommandons d'intégrer cette structure afin de simplifier vos manipulations de fichier :
 
 - Créer un répertoire "apps" à la racine du mviewer.
 
-- Positionner tous les fichiers de configuration XML à la racine du répertoire apps (ex : /apps/ma_carte_urbaine.xml)
+- Positionner tous les fichiers de configuration XML à la racine du répertoire apps::
+        
+        Exemple : C:\Users\jean\Documents\git\mviewer\apps\ma_carte.xml
 
-- Créer un dossier par fichier de configuration que nous appellerons "dossiers de carte"
+- Créer un dossier par fichier de configuration que nous appellerons "dossiers de carte"::
+        Exemple : C:\Users\jean\Documents\git\mviewer\apps\ma_carte\
 
 - Pour chaque dossier de carte, vous devrez créer les dossiers : templates, customcontrols, customlayers, data, sld, css, img.
 
-Pour un fichier de config "aide-droit-carte.xml", nous aurons donc cette structure::
+Pour notre fichier de config "ma_carte.xml", nous aurons donc cette structure::
 
     /apps
-    ├── aide-droit-carte.xml
-    └── aide-droit-carte
+    ├── ma_carte.xml
+    └── ma_carte
         ├── customcontrols
         ├── customlayers
         ├── data
@@ -195,8 +221,8 @@ On obtiendra donc cette structure::
             ├── logo/
             ├── credit/
             └── basemap/
-    ├── aide-droit-carte.xml
-    └── aide-droit-carte
+    ├── ma_carte.xml
+    └── ma_carte
         ├── customcontrols
         ├── customlayers
         ├── data
@@ -242,3 +268,75 @@ Voici exemple d'organisation de fichier avec un addon "Isochrone"::
 
 Le dossier "apps" étant votre dossier de travail, vous pouvez l'organiser selon vos besoins.
 
+
+Bonnes pratiques de développements
+----------------------------------
+
+**Commits**
+
+Lorsque vous réalisez des commits, séparer les commits de style des commits de code.
+
+Un commit de style comprend :
+- Suppression / ajout d'un espace
+- Suppression / ajout d'un saut de ligne 
+- ..
+- Tout ce qui n'est pas du code
+
+Un commit de code comprendra à l'inverse:
+- Une modification sur une syntaxe
+- Une modification sur une fonction
+- Une modification sur un nom de variable
+- ...
+- Tout ce qui n'est pas du style 
+
+
+**Formatage**
+
+Lors de vos développements, inspectez le formatage du code initial : 
+- Le nombre d'espace pour indenter
+- La présence d'espace avant et après les parenthèses
+- La présence d'espace avant ou après les opérateurs logiques (==, <, >, ||, &&)
+- Le nombre de saut de lignes avant ou après une fonction, un bloc de clode, etc...
+- ...
+
+Méfiez-vous de votre éditeur de code. Pensez à désactiver les plugins ou à configurer les règles de formatage.
+
+**Respectez** ensuite ce formatage.
+
+**Commentaires**
+
+Un code commenté est un code compréhensible par tous.
+Nous recommandons très fortement d'utiliser les commentaires. Mieux vaut trop de commentaires que pas assez.
+
+- Commentaires JavaScript::
+
+        // ceci est un commentaire une sune ligne
+        /* Ceci est 
+        un commentaire sur plusieurs lignes*/
+
+- Commentaire CSS::
+
+        /*Je suis un commentaire CSS*/
+
+- Commentaire HTML:
+
+        <!--Je suis un commentaire HTML-->
+
+Pour les fonctions ou méthodes JavaScript, nous recommandons de rajouter en commentaire:
+- Ce que fait cette fonction ou méthode
+- Les paramètres en entrée
+- Le résultat attendu et ce qui est retourné en sortie
+
+**Les indésirables**
+
+Nous déconseillons les affichages d'informations qui ne sont utiles qu'aux développeurs (console.log, alert, ...).
+
+**Editeur de code**
+
+Il n'y a pas d'obligation et vous êtes libre d'en choisir un.
+
+- Notepadd++
+- Sublime
+- Visual Studio Code
+- Atome
+- ...
