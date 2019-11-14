@@ -1,8 +1,7 @@
 .. Authors : 
 .. mviewer team
 
-.. _pratiques:
-
+.. _practices:
 
 Bien commencer avec mviewer
 ===========================
@@ -28,6 +27,10 @@ Nous installerons ensuite Git et le terminal Git Bash pour passer les commandes 
 
 - Télécharger ensuite `Git <https://git-scm.com/book/fr/v1/D%C3%A9marrage-rapide-Installation-de-Git>`_ et installez le tout. Le terminal Git Bash sera installé en même temps.
 
+*Git Bash vous permettra de réaliser les commandes qui suivent.*
+
+.. _fork:
+
 Récupérer les sources (fork)
 ----------------------------
 
@@ -48,19 +51,19 @@ Choisissez ensuite le compte vers lequel réaliser votre fork.
 Vous détenez maintenant un fork disponible à l'adresse : https://github.com/MON_ORG/mviewer
 *MON_ORG étant à remplacer par le nom de votre compte GitHub.*
 
+Votre contient nativement les mêmes branches à l'identique, dont la branche **master**.
+
 Vous pourrez créer des nouvelles branches et modifer le code sans impacter le code natif du repository inital (`geobretagne/mviewer <https://github.com/geobretagne/mviewer>`_).
-
-Vous obtiendrez également les mêmes branches à l'identique, dont la branche **master**.
-
-Vous devrez installer Git sur votre environnement de travail (ordinateur ou serveur). Il vous permettra de réaliser les commandes qui suivent.
 
 - Ouvrez Git Bash
 
-- Réaliser un clone (copie) du code mviewer sur votre ordinateur::
+- Aller sur le repository mviewer GitHub et cliquez sur "clone or download". Copier ensuite l'URL dans la commande suivante.
+
+- Réaliser un clone (copie) du code mviewer sur votre ordinateur en collant l'URL précédente::
 
         git clone https://github.com/MON_ORG/mviewer.git
 
-*Pour récupérer l'URL du clone, aller sur le repository mviewer GitHub et cliquez sur "clone or download". Copier/coller ensuite l'URL dans la commande.*
+
 
 Travailler avec un fork
 ------------------------
@@ -106,13 +109,23 @@ Pour récupérer cette nouvelle branche dans votre dépôt Git, suivez la pricé
         git checkout NOM_DE_MA_BRANCHE
 
 
+.. _pull:
+
+Récupérer les nouveautés de la branche
+--------------------------------------
+
+Pour mettre à jour votre dépôt (dossier) local mviewer (/git/mviewer) réalisez la commande::
+
+        git pull
+
+
 Vous travaillerai maintenant sur la nouvelle branche de votre choix. 
 Chaque nouvelle mise à jour de la branche master de votre fork devra être reportée sur cette branche aussi souvent que possible.
 
 Pour mettre à jour la branche master de votre fork, nous devons définir en premier une "source distante" (upstream).
 
 (*) *Attention : Choisissez un nom permettant d'itentifier rapidement cette branche pour vous et votre équipe.*
-
+.. _setupstream:
 
 Définir un upstream
 -------------------
@@ -137,10 +150,14 @@ Voici la manipulation.
 
 Bravo ! Maintons maintenant à jour votre branche master.
 
+.. _updatefork:
+
 Mettre à jour votre fork - master
 ----------------------------------
 
-Vous devrez mettre à jour votre branche master au sein de votre fork.
+*Attention : assurez-vous d'avoir réalisez l'étape précédente avant celle-ci.*
+
+Vous devrez un jour mettre à jour votre branche master au sein de votre fork. Faites ainsi : 
 
 - Avec Git Bash ou votre terminal, positionnez-vous dans votre dossier mviewer (dossier récupéré via le clone)::
 
@@ -277,27 +294,28 @@ Bonnes pratiques de développements
 Lorsque vous réalisez des commits, séparer les commits de style des commits de code.
 
 Un commit de style comprend :
+
 - Suppression / ajout d'un espace
-- Suppression / ajout d'un saut de ligne 
-- ..
+- Suppression / ajout d'un saut de ligne
 - Tout ce qui n'est pas du code
 
-Un commit de code comprendra à l'inverse:
+Un commit de code comprendra à l'inverse :
+
 - Une modification sur une syntaxe
 - Une modification sur une fonction
 - Une modification sur un nom de variable
-- ...
 - Tout ce qui n'est pas du style 
 
 
 **Formatage**
 
-Lors de vos développements, inspectez le formatage du code initial : 
+Lors de vos développements, inspectez le formatage du code initial :
+
 - Le nombre d'espace pour indenter
 - La présence d'espace avant et après les parenthèses
 - La présence d'espace avant ou après les opérateurs logiques (==, <, >, ||, &&)
 - Le nombre de saut de lignes avant ou après une fonction, un bloc de clode, etc...
-- ...
+- autres
 
 Méfiez-vous de votre éditeur de code. Pensez à désactiver les plugins ou à configurer les règles de formatage.
 
@@ -318,11 +336,12 @@ Nous recommandons très fortement d'utiliser les commentaires. Mieux vaut trop d
 
         /*Je suis un commentaire CSS*/
 
-- Commentaire HTML:
+- Commentaire HTML::
 
         <!--Je suis un commentaire HTML-->
 
 Pour les fonctions ou méthodes JavaScript, nous recommandons de rajouter en commentaire:
+
 - Ce que fait cette fonction ou méthode
 - Les paramètres en entrée
 - Le résultat attendu et ce qui est retourné en sortie
@@ -339,4 +358,4 @@ Il n'y a pas d'obligation et vous êtes libre d'en choisir un.
 - Sublime
 - Visual Studio Code
 - Atome
-- ...
+- autre

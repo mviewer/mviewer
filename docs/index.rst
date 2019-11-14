@@ -70,17 +70,17 @@ Cette partie est dédiée aux personnes qui ont vocation à déployer et configu
    doc_dev/config_tpl
    doc_dev/config_debug
 
-Documentation bonnes pratiques
+Documentation contribution
 -------------------------------------------------
 
-Cette partie est dédiée aux personnes qui ont vocation à modifier et contribuer le code mviewer.
+Cette partie est dédiée aux personnes qui ont vocation à modifier et contribuer au code mviewer.
 
 .. toctree::
    :hidden:
    :maxdepth: 1
    :caption: Documentation bonnes pratiques
 
-   doc_contrib/file_system
+   doc_contrib/contrib
    doc_contrib/doc
    doc_contrib/issue
    doc_contrib/git

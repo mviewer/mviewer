@@ -3,15 +3,11 @@
 
 .. _filesystem:
 
-Organisation des fichiers
+Contribuer
 =========================
 
-Cette partie permet de comprendre et d'organiser vos fichiers et vos cartes afin de ne pas empêcher la mise à jour et la maintenance du mviewer.
+Cette partie permet de donner des clés pour contribuer aux mviewer.
 
-Règle générale
---------------
-
-Vous ne devez **JAMAIS** toucher aux fichiers mviewer à moins de vouloir proposer sur Github une modification de ces fichiers (contribution).
 
 Présentation générale
 ---------------------
@@ -56,16 +52,3 @@ Les raisons sont multiples et doivent être justifiées par une issue sur GitHub
 #. Réaliser une pull request via GitHub
 
 La pull request permettra d'importer votre modification dans le code natif. Vous diposerez alors de votre modification de manière native sans vous en préoccupez ultérieurement.
-
-Ajouter des fichiers
----------------------
-
-**Où mettre mes fichiers ? **
-
-Vous devrez commencer par créer un répertoire "apps" à la racine du mviewer.
-
-Vous n'aurez que deux répertoire à mofidier:
-
-- répertoire /css
-- répertoire /apps
-
