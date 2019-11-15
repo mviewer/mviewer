@@ -73,4 +73,4 @@ Pour citer une personne, utilisez @identifiant_Github. Elle sera averti par mail
 Qui peux créer une issue ?
 --------------------------
 
-Tout le monde peut créer une issue.
+Tout le monde peut créer une issue à condition de disposer d'un compte Github (gratuit).

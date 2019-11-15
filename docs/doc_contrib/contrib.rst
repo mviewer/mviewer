@@ -48,17 +48,19 @@ Les autres fichiers
 Pour vos modifications et l'organisation de vos fichiers, nous recommandons de suivre la page ":ref:`orgfiles`".
 
 
+.. _ask:
+
 Proposer une modification
 ---------------------------
 
 Pour proposer une correction d'anomalie ou une évolution, vous devez suivre ces étapes :
 
-1- Créer une issue sur Github en suivant la page :ref:`issue`
-2- Faire un fork du code (si ce n'est pas encore fait) en suivant la page :ref:`fork`
-3- Créer une branche portant le numéro de l'issue (ex: issue-2287) 
-4- Apporter vos modifications sur cette branche
-5- Partager cette branche via l'issue pour que les autres puisse tester et obtenir des conseils ou des avis
-6- Réaliser une pull request via GitHub en suivant la page :ref:`pr`
+- Créer une issue sur Github en suivant la page :ref:`issue`
+- Faire un fork du code (si ce n'est pas encore fait) en suivant la page :ref:`fork`
+- Créer une branche portant le numéro de l'issue (ex: issue-2287) 
+- Apporter vos modifications sur cette branche
+- Partager cette branche via l'issue pour que les autres puisse tester et obtenir des conseils ou des avis
+- Réaliser une pull request via GitHub en suivant la page :ref:`pr`
 
 La pull request permettra d'importer votre modification dans le code natif. Vous diposerez alors de votre modification de manière native sans vous en préoccupez ultérieurement.
 

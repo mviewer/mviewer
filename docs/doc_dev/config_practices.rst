@@ -219,10 +219,6 @@ Ne **JAMAIS** modifier les fichiers du coeur.
 
 Les fichiers du coeur sont tous les fichiers que vous obtenez nativement avec un clone de départ.
 
-.. image:: ../_images/contrib/orgfiles.png
-              :alt: files structure recommandations
-              :align: center    
-
 Nous vous recommandons d'intégrer la structure décrite dans cette section afin de simplifier vos manipulations de fichier :
 
 - Créer un répertoire "apps" à la racine du mviewer.
