@@ -27,7 +27,20 @@ Nous installerons ensuite Git et le terminal Git Bash pour passer les commandes 
 
 - Télécharger ensuite `Git <https://git-scm.com/book/fr/v1/D%C3%A9marrage-rapide-Installation-de-Git>`_ et installez le tout. Le terminal Git Bash sera installé en même temps.
 
-*Git Bash vous permettra de réaliser les commandes qui suivent.*
+*Git Bash vous permettra de réaliser les commandes qui suivront.*
+
+Travailler avec un fork
+------------------------
+
+**Règle générale** : Ne jamais modifier la branche MASTER.
+
+La branche master est une branche "mirroir" de la branche master du code initial (`geobretagne/mviewer <https://github.com/geobretagne/mviewer>`_).
+
+C'est votre point de départ pour tout nouveau travail et tout nouveau travail doit repartir d'une base à jour et propre.
+
+Nous recommandons de créer une branche à partir de la branche master à jour pour chaque nouveau travail. 
+
+La section qui suit vous donnera la procédure pour obtenir votre fork.
 
 .. _fork:
 
@@ -45,6 +58,10 @@ Pour bien débuter, nous vous recommandons de réaliser un fork vers votre espac
 **Procédure**
 
 Sur la page `GitHub du mviewer <https://github.com/geobretagne/mviewer>`_ cliquer sur "Fork" en haut à droite.
+
+.. image:: ../_images/contrib/fork1.png
+              :alt: git fork repository
+              :align: center   
 
 Choisissez ensuite le compte vers lequel réaliser votre fork.
 
@@ -64,17 +81,21 @@ Vous pourrez créer des nouvelles branches et modifer le code sans impacter le c
         git clone https://github.com/MON_ORG/mviewer.git
 
 
+.. image:: ../_images/contrib/cloneurl.PNG
+              :alt: git clone url
+              :align: center    
 
-Travailler avec un fork
-------------------------
 
-**Règle générale** : Ne jamais modifier la branche MASTER.
+Gestion des droits
+------------------
 
-La branche master est une branche "mirroir" de la branche master du code initial (`geobretagne/mviewer <https://github.com/geobretagne/mviewer>`_).
+Vous pouvez gérer les droits de votre repository pour les utilisateurs, développeurs et autres personnes disposants d'un compte GitHub.
 
-C'est votre point de départ pour tout nouveau travail et tout nouveau travail doit repartir d'une base à jour et propre.
+Pour cela, cliquer en haut dans "Settings" et accédez à gauche à l'onglet "Collaborators & team". 
 
-Nous recommandons de créer une branche à partir de la branche master à jour pour chaque nouveau travail. 
+.. image:: ../_images/contrib/droits1.PNG
+              :alt: git clone url
+              :align: center    
 
 
 Créer une branche
@@ -88,6 +109,11 @@ Pour créer une branche su GitHub.
 - Choisissez la branche de départ (master) dans la liste des branches disponibles
 - Cliquer à nouveau sur le bouton de la liste Branch:(nom de branche)
 - Dans le champ de recherche, saisir le nom de votre nouvelle branche (*).
+
+.. image:: ../_images/contrib/newbranch.PNG
+              :alt: git new branch
+              :align: center   
+
 - Cliquer ensuite sur "Create Branch: (nom de votre branche)"
 
 Vous avez maintenant une nouvelle branche.
@@ -181,6 +207,8 @@ Vous devrez un jour mettre à jour votre branche master au sein de votre fork. F
 - Poussez ensuite ce code récupéré depuis géoBretagne (upstream) vers votre branche master (origin)::
         
         git push origin master --force
+        
+.. _orgfiles:
 
 Organisation des fichiers de carte
 ----------------------------------
@@ -191,7 +219,11 @@ Ne **JAMAIS** modifier les fichiers du coeur.
 
 Les fichiers du coeur sont tous les fichiers que vous obtenez nativement avec un clone de départ.
 
-Nous vous recommandons d'intégrer cette structure afin de simplifier vos manipulations de fichier :
+.. image:: ../_images/contrib/orgfiles.png
+              :alt: files structure recommandations
+              :align: center    
+
+Nous vous recommandons d'intégrer la structure décrite dans cette section afin de simplifier vos manipulations de fichier :
 
 - Créer un répertoire "apps" à la racine du mviewer.
 
@@ -200,6 +232,7 @@ Nous vous recommandons d'intégrer cette structure afin de simplifier vos manipu
         Exemple : C:\Users\jean\Documents\git\mviewer\apps\ma_carte.xml
 
 - Créer un dossier par fichier de configuration que nous appellerons "dossiers de carte"::
+        
         Exemple : C:\Users\jean\Documents\git\mviewer\apps\ma_carte\
 
 - Pour chaque dossier de carte, vous devrez créer les dossiers : templates, customcontrols, customlayers, data, sld, css, img.
@@ -286,6 +319,11 @@ Voici exemple d'organisation de fichier avec un addon "Isochrone"::
 
 Le dossier "apps" étant votre dossier de travail, vous pouvez l'organiser selon vos besoins.
 
+Participer à la communauté
+--------------------------
+
+Pour apporter une correction d'anomalie ou une évolution, nous cous recommandons d'aller à la la page ":ref:`contrib`".
+
 
 Bonnes pratiques de développements
 ----------------------------------
@@ -307,6 +345,9 @@ Un commit de code comprendra à l'inverse :
 - Une modification sur un nom de variable
 - Tout ce qui n'est pas du style 
 
+**Encodage**
+
+L'encodage a utiliser est l'UTF-8.
 
 **Formatage**
 
@@ -371,3 +412,8 @@ Vous trouverez plus d'information sur la page ":ref:`git`".
 Vous trouverez notamment de la documentation  dans la partie ":ref:`docgit`".
 
 
+Documentation
+-------------
+
+#. `Configurer un remote pour un fork <https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/configuring-a-remote-for-a-fork>`_
+#. `Maintien un fork avec l'upstream <https://stackoverflow.com/questions/9646167/clean-up-a-fork-and-restart-it-from-the-upstream>`_
