@@ -1,7 +1,7 @@
 .. Authors :
 .. mviewer team
 
-.. _filesystem:
+.. _contrib:
 
 Contribuer
 =========================
@@ -42,13 +42,32 @@ Les raisons sont multiples et doivent être justifiées par une issue sur GitHub
 - Vous créez une évolution sur le coeur (une nouvelle fonctionnalité)
 - Vous créez une amélioration du code existant
 
-**Comment le modifier ?**
+Les autres fichiers
+-------------------
 
-#. Créer une issue sur Github en suivant la page :ref:`issue`
-#. Faire un fork du code (si ce n'est pas encore fait)
-#. Créer une branche portant le numéro de l'issue (ex: issue-2287)
-#. Apporter vos modifications sur cette branche
-#. Partager cette branche via l'issue pour que les autres puisse tester et donner un avis
-#. Réaliser une pull request via GitHub
+Pour vos modifications et l'organisation de vos fichiers, nous recommandons de suivre la page ":ref:`orgfiles`".
+
+
+Proposer une modification
+---------------------------
+
+Pour proposer une correction d'anomalie ou une évolution, vous devez suivre ces étapes :
+
+1- Créer une issue sur Github en suivant la page :ref:`issue`
+2- Faire un fork du code (si ce n'est pas encore fait) en suivant la page :ref:`fork`
+3- Créer une branche portant le numéro de l'issue (ex: issue-2287) 
+4- Apporter vos modifications sur cette branche
+5- Partager cette branche via l'issue pour que les autres puisse tester et obtenir des conseils ou des avis
+6- Réaliser une pull request via GitHub en suivant la page :ref:`pr`
 
 La pull request permettra d'importer votre modification dans le code natif. Vous diposerez alors de votre modification de manière native sans vous en préoccupez ultérieurement.
+
+
+
+Documentation
+--------------
+
+Pour mieux contribuer :
+
+#. `Première contribution <https://github.com/firstcontributions/first-contributions/blob/master/translations/README.fr.md>`_
+#. `Comment contribuer <https://opensource.guide/how-to-contribute/>`_

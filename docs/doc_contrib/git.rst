@@ -76,9 +76,13 @@ Vous disposerez donc des nouveaux commits et de vos propres commits non partagé
 **Comment faire ?**
 
 - Faites une copie de votre branche (optionnel mais conseillé) en créant une nouvelle branche à partir de votre branche de travail
-- Si votre branche s'appelle par exemple "dev", lancez la commande de rebase de la branche master (fork à jour) vers votre branche à mettre à jour (dev) : ::
+- Si votre branche s'appelle par exemple "RM-work", lancez la commande de rebase de la branche master (fork à jour) vers votre branche à mettre à jour (RM-work) : ::
     
-    git rebase origin/master dev
+    git rebase origin/master RM-work
+
+.. image:: ../_images/contrib/rebase.png
+              :alt: git rebase command
+              :align: center   
 
 - Vous verrez la liste des commits déroulée les messages des commits un à un
 
@@ -88,11 +92,19 @@ Vous disposerez donc des nouveaux commits et de vos propres commits non partagé
 
     git rebase --abort
 
+.. image:: ../_images/contrib/abortrebase.PNG
+              :alt: git abort
+              :align: center    
+
 - Si vous souhaitez ignorer le conflit (déconseillé!)::
 
     git rebase --skip
 
-- Nous conseillons de résoudre le conflit. Git vous indique un nom de fichier en conflit. C'est qu'il n'a pas réussi tout seul à intégrer les modifications sans perdre votre code actuel.
+- Nous conseillons de résoudre le conflit. Git vous indique un nom de fichier en conflit (ici index.html). C'est qu'il n'a pas réussi tout seul à intégrer les modifications sans perdre votre code actuel.
+
+.. image:: ../_images/contrib/filetoresolverebase.png
+              :alt: git abort
+              :align: center
 
 - Ouvrez ce fichier avec un éditeur classique. Vous observerai que git a inséré des caractères spéciaux pour nous permettre d'identifier les lignes en conflit::
 
@@ -126,17 +138,33 @@ Vous disposerez donc des nouveaux commits et de vos propres commits non partagé
 
     git add /chemin/vers/le/fichier.js
 
+.. image:: ../_images/contrib/gitadd.png
+              :alt: git add result
+              :align: center    
+
 - On contrôle que le fichier est marqué comme "modified" avec la commande::
 
     git status
 
-- Indiquez à git de poursuivre le rebase::
+.. image:: ../_images/contrib/gitaddok.png
+              :alt: git add result
+              :align: center    
+
+- Indiquez à git de poursuivre le rebase comme décrit dans le message::
 
     git rebase --continue
+
+.. image:: ../_images/contrib/resolverebase1.png
+              :alt: rebase continue
+              :align: center    
 
 - Vous verrez d'autres commits listés et vous aurez probablement d'autres conflits. Répétez les opération précédentes pour bien tous les gérer.
 
 - Lorsque le rebase est terminé vous n’aurez pas de message spécifique qui vous l’indiquera. Vous pourrez cependant voir que les derniers commits ont bien été appliqués.
+
+.. image:: ../_images/contrib/endrebase.PNG
+              :alt: end of rebase
+              :align: center
 
 **Vérifier le résultat du rebase**
 
@@ -145,13 +173,21 @@ Nous devons absolument vérifier que le rebase a pris encompte les commits du mv
 - Aller sur la page GitHub `geobretagne/mviewer <https://github.com/geobretagne/mviewer>`_
 - Ouvrez `la page des commits <https://github.com/geobretagne/mviewer/commits/master>`_
 - Vérifier dans la liste déroulante que vous êtes bien sur la branche master
+
+.. image:: ../_images/contrib/newbranch.PNG
+              :alt: new github branch
+              :align: center
+
 - Observer les derniers commits, la date et le titre
-
-Nous allons maintenant vérifier que ces commits sont biens dans notre historique de commits après le rebase.
-
+- Nous allons maintenant vérifier que ces commits sont biens dans notre historique de commits après le rebase.
 - Affichez l'historique des commits dans le terminal Git::
 
     git logs
+
+
+.. image:: ../_images/contrib/gitlog.png
+            :alt: git logs
+            :align: center
 
 - Chercher dans la liste les commits vu sur `la page des commits <https://github.com/geobretagne/mviewer/commits/master>`_
 
@@ -170,7 +206,11 @@ Vous devez pousser les modifications vers la branche distante.
 
     git push -f
 
-*Attention : -f indique un push forcé afin de réécrire en force sur la branche distante. Il vaut mieux maîtriser ce que l'on pousse et contrôler votre code en local avant.**
+.. image:: ../_images/contrib/forcepush.png
+            :alt: git logs
+            :align: center
+
+*Attention : -f indique un push forcé afin de réécrire en force sur la branche distante. Il vaut mieux maîtriser ce que l'on pousse et contrôler votre code en local avant.*
 
 - Ouvrez `la page des commits de votre branche de travail (ex: dev) <https://github.com/org/mviewer/commits/dev>`_ et vérifier le succès de l'opération
 
@@ -178,6 +218,7 @@ Vous devez pousser les modifications vers la branche distante.
 
 (*) Avec --abort Il faudra tout reprendre tout le rebase depuis le début si vous arrêter et décidez de recommencer.
 
+.. _pr:
 
 Pull Request
 ------------------------------
@@ -188,26 +229,59 @@ Vous devez créer une pull request pour apporter une contribution de votre branc
 Pour réaliser une pull request, dirigez-vous sur votre fork GitHub : 
 
 - Sélectionnez votre branche qui contient vos modifications à apporter en contribution
+
+.. image:: ../_images/contrib/newbranch.PNG
+              :alt: new github branch
+              :align: center
+
 - Cliquez sur "New pull request"
+
+.. image:: ../_images/contrib/askpr1.PNG
+              :alt: new pull request
+              :align: center
+
 - Ajouter un titre simple mais distinctif et parlant
 - Ajouter un explicatif, avec de préférence le lien vers l'issue concernée
 - Cliquez sur "Create pull request"
+
+.. image:: ../_images/contrib/askpr2.PNG
+              :alt: details pull request
+              :align: center
+
+
 - Vous pourrez accéder à la pull request et discuter via le `volet dédié <https://github.com/geobretagne/mviewer.doc/pulls>`_ du repository geobretagne/mviewer
 
 Votre pull request sera revue et vous aurai un retour pour réaliser des modifications ou bien vous noitifier que votre demande est acceptée.
 
 N'hésitez-pas à laisser un message dans la pull request pour relancer la communauté si personne ne réagit à votre pull request.
 
+Cherry-pick
+-----------
+
+Si vous ne souhaitez reprendre qu'un seul commit d'une autre branche ou d'un autre repository, vous pouvez utilisez le cherry-pick.
+C'est un report manuel avec Git d'un commit d'une branche vers une autre branche, peu importe le repository.
+
+Pour peu de commits, cettes solution peut paraître plus simple que d'utiliser la technique de rebase.
+
+Exemple avec un numéro de commit 235c47f à récupérer sur une branche nommée "dev"::
+
+    cd /home/user/jean/git/mviewer
+    git checkout dev
+    git cherry-pick 235c47f
+
+Parcourez la documentation plus pas pour plus de détails.
+
+Contribution
+-------------
+
+Pour contribuer, nous cous recommandons de suivre la documentation ":ref:`contrib`".
+
 .. _docgit:
 
-Documentation utile
---------------------------
+Documentation
+-------------
  
-    .. [#] `OpenClassrooms <https://openclassrooms.com/fr/courses/2342361-gerez-votre-code-avec-git-et-github>`_
-    .. [#] `Débuter avec Git <https://carlchenet.com/category/debuter-avec-git/>`_
-    .. [#] `Mémo Git <http://rogerdudler.github.io/git-guide/files/git_cheat_sheet.pdf>`_
-
-Pour mieux contribuer :
-
-    .. [#] `Première contribution <https://github.com/firstcontributions/first-contributions/blob/master/translations/README.fr.md>`_
-    .. [#] `Comment contribuer <https://opensource.guide/how-to-contribute/>`_
+#. `OpenClassrooms <https://openclassrooms.com/fr/courses/2342361-gerez-votre-code-avec-git-et-github>`_
+#. `Débuter avec Git <https://carlchenet.com/category/debuter-avec-git/>`_
+#. `Mémo Git <http://rogerdudler.github.io/git-guide/files/git_cheat_sheet.pdf>`_
+#. `Cherry-pick <https://git-scm.com/docs/git-cherry-pick>`_
