@@ -11,7 +11,7 @@ Quelques règles pour proposer à la communauté vos modifications, vos nouvelle
 Règle générale
 --------------
 
-Toute modification du coeur mviewer ***doit être proposée*** à l'aide d'une nouvelle issue sur le Github mviewer.
+Toute modification du coeur mviewer **doit être proposée** à l'aide d'une nouvelle issue sur le Github `geobretagne/mviewer <https://github.com/geobretagne/mviewer>`_..
 
 Pourquoi créer une issue ?
 --------------------------
@@ -35,7 +35,7 @@ Il y a également d'autres bonnes raison de créer une issue pour contribuer :
 - Avertir d'autres contributeurs que vous travaillez sur un sujet et mutualiser le travail
 - Eviter que plusieurs contributeurs travaille en parallèle sur la même chose
 - Permettre d'obtenir des informations pour réaliser ce que vous souhaitez
-- Obtenir un avis sur une idée de contribution et la manière de la réaliser
+- Obtenir un avis ou de l'aide sur une idée de contribution et la manière de la réaliser
 
 Où créer une issue ?
 --------------------
@@ -73,4 +73,4 @@ Pour citer une personne, utilisez @identifiant_Github. Elle sera averti par mail
 Qui peux créer une issue ?
 --------------------------
 
-Tout le monde peut créer une issue à condition de disposer d'un compte Github (gratuit).
+Tout le monde peut créer une issue à condition de disposer d'un compte GitHub (gratuit).

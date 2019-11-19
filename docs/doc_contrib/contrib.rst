@@ -25,7 +25,7 @@ Le coeur mviewer
 
 **Qu'est-ce que c'est ?**
 
-C'est l'ensemble des fichiers et dossiers présents en l'état natif présent sur la page `Github mviewer <https://github.com/geobretagne/mviewer>`_.
+C'est l'ensemble des fichiers et dossiers présents en l'état natif présent sur la page `GitHub mviewer <https://github.com/geobretagne/mviewer>`_.
 
 **Que puis-je modifier ?**
 

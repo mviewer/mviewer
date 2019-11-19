@@ -3,6 +3,7 @@
 
 .. _contribdoc:
 
+
 Contribuer à la documentation - Readthedoc
 ==========================================
 
@@ -13,7 +14,7 @@ Respectez le processus de contribution décrit dans la section ":ref:`ask`".
 
 **Sources**
 
-Les sources de la documentation sont disponibles sur Github `geobretagne/mviewer <https://github.com/geobretagne/mviewer.doc>`_.
+Les sources de la documentation sont disponibles sur GitHub `geobretagne/mviewer.doc <https://github.com/geobretagne/mviewer.doc>`_.
 
 
 **Créez une issue sur GitHub**
@@ -30,6 +31,8 @@ Pour réaliser un fork, dirigez-vous vers l'exemple dans la section ":ref:`fork`
               :alt: git fork repository
               :align: center  
 
+
+
 Déployer la documentation en local
 ----------------------------------
 
@@ -37,11 +40,11 @@ Déployer la documentation en local
 
 - Vous devez disposez d'un serveur web type Apache2
 
-*Si vous ne connaissez pas Apache, vous pouvez installer facilement* `XAMPP <https://www.apachefriends.org/fr/download.html>`_ *en suivant l'explicatif plus bas.*
+*Si vous ne connaissez pas Apache, vous pouvez installer facilement* `XAMPP <https://www.apachefriends.org/fr/download.html>`_ *en suivant l'explicatif* ":ref:`installxamp`" *plus bas.*
 
 - Vous devez disposer des droits sur votre ordinateur pour installer python et disposer de pip.
-- Avoir réalisé un fork du repository geobretagne/mviewer.doc `<https://github.com/geobretagne/mviewer.doc>`_
-- Avoir réalisé un clone de votre fork::
+- Avoir réalisé un fork du repository `geobretagne/mviewer.doc <https://github.com/geobretagne/mviewer.doc>`_
+- Avoir réalisé un clone de votre fork vers un répertoire local de votre ordinateur::
 
     cd /home/user/pierre/git/
     git clone https://github.com/mon_compte_github/mviewer.doc.git
@@ -52,12 +55,12 @@ Déployer la documentation en local
               :alt: get github clone url
               :align: center 
 
-- Avoir installé python sphinx via cette `documentation <https://www.sphinx-doc.org/en/master/usage/installation.html>`_  ::
+- Avoir installé python sphinx en suivant la `page sphinx <https://www.sphinx-doc.org/en/master/usage/installation.html>`_  ::
 
     // debian
     apt-get install python3-sphinx
 
-- Disposer de pip (debian)
+- Disposer de pip (debian)::
 
     // debian
     sudo apt install python-pip
@@ -82,7 +85,7 @@ Déployer la documentation en local
 
     cd /home/user/pierre/mviewer.doc/docs
 
-- Pour rajouter des parties et sous-parties, il vous faudra modifier le fichier index.rst::
+- Pour rajouter des parties et sous-parties dans le menu de gauche, il vous faudra modifier le fichier index.rst::
 
     /home/user/pierre/mviewer.doc/docs/index.rst
 
@@ -96,14 +99,14 @@ Déployer la documentation en local
     .. toctree::
     :hidden:
     :maxdepth: 1
-    :caption: Documentation bonnes pratiques
+    :caption: Ici le Titre
 
     doc_test/introduction
     doc_test/sous_partie1
     doc_test/sous_partie2
 
 
-- Comme décrit dans la syntaxe précédente, vous devez rajouter un dossier "doc_test"::
+- Comme décrit dans la syntaxe précédente, vous devez rajouter un dossier "doc_test" (où "doc_test" est le nom que vous avez choisis)::
 
     /home/user/pierre/mviewer.doc/docs/doc_test
 
@@ -115,9 +118,9 @@ Déployer la documentation en local
 
 - Inspirez-vous de l'existant pour comprendre l'organisation des fichiers avec index.rst
 
-- Vous devrez écrire selon une syntaxe particulière. Recherchez dans les fichiers et dans ce documents pour vous aider.
+- Vous devrez écrire selon une syntaxe particulière. Recherchez dans les fichiers et dans les exemples de cette page pour vous aider.
 
-Ajouterr des blocs de code
+Ajouter des blocs de code
 --------------------------
 
 Utilisez la syntaxe suivante (respectez les sauts de ligne)::
@@ -147,7 +150,7 @@ Rajouter des images
 
     /home/user/pierre/mviewer.doc/docs/_images/doc_test/
 
-- Ajoutez vos images dans ce dossier et renseignez le chemin de l'image souhaitez dans le code tel que ::
+- Ajoutez vos images dans ce dossier et renseignez le chemin de l'image à afficher dans le code tel que::
 
     Voici une image :
     
@@ -173,9 +176,9 @@ Utilisez la syntaxe suivante (respectez les sauts de ligne)::
 Référencer une page
 ---------------------
 
-- Pour créer un point de référence .._reference: que l'ont peut citer comme lien depuis n'importe quel page (lien interne)
+- Pour créer un point de référence .._reference: que l'ont peut citer comme lien depuis n'importe quelLE page (lien interne)
 
-- Utiliser les titres pour afficher le titre::
+- Utilisez les titres pour afficher le texte à afficher comme référence::
 
     .. _reference:
 
@@ -208,7 +211,7 @@ Construire et déployer la documentation
 
     /var/www/mviewer-doc/
 
-- Si vous avez utilisé XAMPP (voir plus bas), le dossier cible où sera construite la documentation sera (sous windows) ::
+- Si vous avez utilisé XAMPP (voir "xampp"::), le dossier cible où sera construite la documentation sera (sous windows) ::
 
     C:\xampp\mviewer-doc\
 
@@ -233,6 +236,7 @@ Construire et déployer la documentation
 
 Retrouvez la procédure décrite dans la partie ":ref:`pr`".
 
+.. _installxamp:
 
 Installer XAMPP (windows)
 -------------------------
@@ -248,7 +252,9 @@ Installer XAMPP (windows)
 
 C'est dans le dossier "mviewer-doc" que sera déployée la documentation après la phase de build (voir plus haut).
 
-- Accédez au dossier /localhost/mviewer-doc
+- Accédez au dossier avec votre navigateur via l'URL::
+
+    localhost/mviewer-doc
 
 
 Documentation

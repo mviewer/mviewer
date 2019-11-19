@@ -78,7 +78,7 @@ Cette partie est dédiée aux personnes qui ont vocation à modifier et contribu
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: Documentation bonnes pratiques
+   :caption: Documentation contributeurs
 
    doc_contrib/contrib
    doc_contrib/doc

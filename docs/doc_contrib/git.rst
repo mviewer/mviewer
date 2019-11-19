@@ -11,12 +11,12 @@ Entrenez votre mviewer et facilitez vos contributions en travaillant avec les ou
 Présentation générale
 ----------------------
 
-Github est incontournable pour contribuer et découvrir la communauté mviewer. 
+GitHub est incontournable pour contribuer et découvrir la communauté mviewer. 
 C'est là où vous proposerez vos idées, obtiendrez des informations et les dernières versions mviewer.
 
 Grâce à Git vous pourrez réaliser vos contributions ou obtenir le code source dans votre environnement de travail.
 
-Git propose une multitude d'action pour s'interfacer avec Github. Ces actions vous seront plus qu'utiles pour contribuer et maintenir votre mviewer à jour.
+Git propose une multitude d'action pour s'interfacer avec GitHub. Ces actions vous seront plus qu'utiles pour contribuer et maintenir votre mviewer à jour.
 Nous expliquerons ici l'utilité et les manipulations utiles telles qu'un fork, rebase, commit, pull.
 
 
@@ -34,6 +34,8 @@ Présentation Git
 Git est un outil libre de gestion de version décentralisé pour tout type de projet. Il permet de réaliser des développements sur votre propre dépôt (dépôt = répertoire). 
 Git facilite ensuite la mise en commun du code entre les différents dépôt.
 
+Git historise toutes les modifications afin d'identifier les nouveauté et permettre de revenir dans n'importe quel version précédente.
+
 
 Fork et Pull
 ------------------------------
@@ -50,13 +52,15 @@ Rebase
 Lorsque vous faites des modifications via des commits sur votre branche de travail d'autres contributeurs modifient le code mviewer avec de nouveaux commits.
 
 Le code du mviewer dans le GitHub géoBretagne n'a pas connaissance de vos modifications. 
-Tans que vous n'avez pas mis à jour votre branche, votre code ne contient pas les modifications faites sur le GitHub mviewer géoBretagne (upstream).
+Tant que vous n'avez pas mis à jour votre branche, votre code ne contient pas les modifications faites sur le GitHub mviewer géoBretagne (upstream).
 
 Les deux codes ont donc des nouveautés. Ont peut dire que les branches ont divergées.
 
-Vous devez alors intégrer les nouveautés du mviewer dans votre branche mviewer.
+Vous devez alors intégrer les nouveautés du mviewer dans votre branche de travail contenant vos modifications du mviewer. Pour rappel, cette branche ne doit pas jamais être la branche master.
 
-Pour cela, nous allons reprendre tous les nouveaux commits du mviewer natif (géoBretagne) en mettant à jour votre fork, puis en les plaçant dans l'arbre de commits de votre branche de travail via un **rebase**.
+Pour cela, nous allons en premier reprendre tous les nouveaux commits du mviewer natif (géoBretagne) en mettant à jour votre fork (branche master). Ensuite, nous mettrons à jour votre branche de travail depuis votre branche master de votre fork.
+
+Dans la pratique, nous plaçeront les nouveaux commits de la branche master du fork dans l'arbre de commits de votre branche de travail via un **rebase**.
 
 **Mise à jour du fork**
 
@@ -67,10 +71,10 @@ Réalisez ensuite la procédure suivante.
 
 **Que fait un Rebase ?**
 
-- Git va reprendre le commit commun le plus proche de votre branche
-- Git replacera ensuite vos commit et les commits du mviewer natif (geobretagne/mviewer) dans l'ordre chronologique
+- Git va reprendre le dernier commit commun entre votre branche de travail à mettre à jour et la branche qui contient les nouveautés (master)
+- Git replacera ensuite vos commits et les noveaux commits dans l'ordre chronologique
 
-Vous disposerez donc des nouveaux commits et de vos propres commits non partagés.
+Vous disposerez donc des nouveaux commits et de vos propres commits.
 
 
 **Comment faire ?**
@@ -84,7 +88,7 @@ Vous disposerez donc des nouveaux commits et de vos propres commits non partagé
               :alt: git rebase command
               :align: center   
 
-- Vous verrez la liste des commits déroulée les messages des commits un à un
+- Vous verrez la liste des commits dérouler les messages des commits un à un
 
 - Vous aurez probablement un conflit. Le processus sera donc stoppé mais pas abandonné
 
@@ -100,15 +104,15 @@ Vous disposerez donc des nouveaux commits et de vos propres commits non partagé
 
     git rebase --skip
 
-- Nous conseillons de résoudre le conflit. Git vous indique un nom de fichier en conflit (ici index.html). C'est qu'il n'a pas réussi tout seul à intégrer les modifications sans perdre votre code actuel.
+- Nous conseillons de résoudre le conflit. Git vous indique un nom de fichier en conflit (ici indiqué index.html). C'est qu'il n'a pas réussi tout seul à intégrer les modifications sans perdre votre code actuel comme indiqué:
 
 .. image:: ../_images/contrib/filetoresolverebase.png
               :alt: git abort
               :align: center
 
-- Ouvrez ce fichier avec un éditeur classique. Vous observerai que git a inséré des caractères spéciaux pour nous permettre d'identifier les lignes en conflit::
+- Ouvrez ce fichier avec un éditeur classique. Vous observerai que Git a inséré des caractères spéciaux pour nous permettre d'identifier les lignes en conflit::
 
-    // voici ma couleur
+    // je suis une pomme
     var type = "Pomme"
     <<< HEAD
     // nouveau code
@@ -136,7 +140,7 @@ Vous disposerez donc des nouveaux commits et de vos propres commits non partagé
 
 - Indiquez à Git que vous avez géré le conflit::
 
-    git add /chemin/vers/le/fichier.js
+    git add /chemin/vers/le/fichier/index.html
 
 .. image:: ../_images/contrib/gitadd.png
               :alt: git add result
@@ -191,7 +195,7 @@ Nous devons absolument vérifier que le rebase a pris encompte les commits du mv
 
 - Chercher dans la liste les commits vu sur `la page des commits <https://github.com/geobretagne/mviewer/commits/master>`_
 
-- Vous devez les trouvez dans la liste des commits avec vos commits de travail
+- Vous devez les trouver dans la liste des commits avec vos commits de travail
 
 - En cas de doute sur la gestion de certains conflits, vérifiez les fichiers visuellement et réalisez des tests dans vos applications
 
@@ -210,13 +214,15 @@ Vous devez pousser les modifications vers la branche distante.
             :alt: git logs
             :align: center
 
-*Attention : -f indique un push forcé afin de réécrire en force sur la branche distante. Il vaut mieux maîtriser ce que l'on pousse et contrôler votre code en local avant.*
 
 - Ouvrez `la page des commits de votre branche de travail (ex: dev) <https://github.com/org/mviewer/commits/dev>`_ et vérifier le succès de l'opération
 
 - Supprimer ensuite la branche de sauvegarde si tout vous semble bon
 
 (*) Avec --abort Il faudra tout reprendre tout le rebase depuis le début si vous arrêter et décidez de recommencer.
+
+(**) *Avec -f, cela indique un push forcé afin de réécrire en force  l'historique des commits sur la branche distante. Il vaut mieux maîtriser ce que l'on pousse et contrôler votre code en local avant.*
+
 
 .. _pr:
 
@@ -249,11 +255,11 @@ Pour réaliser une pull request, dirigez-vous sur votre fork GitHub :
               :align: center
 
 
-- Vous pourrez accéder à la pull request et discuter via le `volet dédié <https://github.com/geobretagne/mviewer.doc/pulls>`_ du repository geobretagne/mviewer
+- Vous pourrez accéder à la pull request et discuter via le `volet dédié <https://github.com/geobretagne/mviewer.doc/pulls>`_ du repository `geobretagne/mviewer <https://github.com/geobretagne/mviewer>`_.
 
-Votre pull request sera revue et vous aurai un retour pour réaliser des modifications ou bien vous noitifier que votre demande est acceptée.
+Votre pull request sera revue et vous très certainement aurez un retour pour réaliser des modifications ou bien vous notifier que votre demande est acceptée.
 
-N'hésitez-pas à laisser un message dans la pull request pour relancer la communauté si personne ne réagit à votre pull request.
+N'hésitez-pas à laisser un message dans la pull request pour relancer la communauté si vous n'avez pas de réponse dans un délais raisonnable.
 
 Cherry-pick
 -----------
