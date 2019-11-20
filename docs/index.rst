@@ -68,6 +68,7 @@ Cette partie est dédiée aux personnes qui ont vocation à déployer et configu
    doc_dev/config_css
    doc_dev/config_tpl
    doc_dev/config_debug
+   doc_dev/config_translate
 
 
 Auteurs et licence
