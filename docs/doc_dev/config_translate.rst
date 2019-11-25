@@ -15,18 +15,17 @@ Fonctionnement technique
 ------------------------
 
 **Librairies**
-Le mviewer utilise la libraire `i18n.js <https://i18njs.com/>`_ pour traduire l'interface vers le langage de votre choix avec JQuery.
+Le mviewer utilise la libraire `i18n.js <https://i18njs.com/>`_ pour traduire l'interface vers le langage de votre choix.
 
-**Que fait le code ?**
+**Principe**
 
-Via un petit morceau de code (une méthode *mviewer.tr("texte.a.traduire")*), une boîte à outils appelée JQuery va parcourir 
-le contenu de la page mviewer (DOM) et va traduire tous les éléments comportants l'attribut "i18n" dans la langue choisie::
+La traduction s'appuie sur un dictionnaire de traduction (fichier mviewer.i18n.json).
+Tous les éléments html disposant d'un attribut i18n seront traduits si une correspondance est trouvée dans le dictionnaire::
 
-    <spandiv i18n="une.cle.a.traduire"> une valeur par défaut </span>
+    <span i18n="une.cle.a.traduire"> une valeur par défaut </span>
 
-Cette même méthode aura au préalable chargée un fichier au format JSON contenant toutes les traductions. 
 
-Ce fichier est structuré pour utiliser plusieurs langues de traduction::
+Le fichier mviewer.i18n.json est structuré pour utiliser plusieurs langues de traduction::
 
     {
         "fr": {
@@ -39,7 +38,8 @@ Ce fichier est structuré pour utiliser plusieurs langues de traduction::
         }
     }
 
-Pour trouver la valeur traduire, le système recherchera donc la clé contenue dans l'attribut "i18n" de notre élément de la page dans la langue sélectionnée::
+
+Pour trouver la valeur à traduire, le système recherchera donc la clé contenue dans l'attribut "i18n" de notre élément de la page dans la langue sélectionnée::
 
     <span i18n="search.adresse"> une valeur par défaut </span>
 
@@ -48,29 +48,30 @@ Pour trouver la valeur traduire, le système recherchera donc la clé contenue d
 
 La valeur traduite sera ensuite appliquée sur l'élément de la page à la place de la valeur par défaut.
 
-Le text affiché pour notre élément de la page (<span>) sera alors::
+Le texte affiché pour notre élément de la page (<span>) sera alors::
 
     "une valeur en français"
 
-Quels sont les paramètres utilisés ?
+Quels sont les paramètres de configuration utilisés ?
 ------------------------------------
 
 Il vous faudra ajouter dans votre fichier de configuration les propriétés suivantes comme décrit dans  la `page mviewer <https://github.com/geobretagne/mviewer>`_: 
 
 - lang
 
-*Langue à utiliser pour l'interface. Passer "?lang=en" dans l'url pour forcer la langue et ignorer la config. Par défaut, lang n'est pas activé. La première langue de la liste saisie sera utilisée par défaut.*
+*Langue à utiliser pour l'interface. Si plusieurs langues sont spécifiées, un menu additionnel sera créé afin de permettre à l'utilisateur de choisir sa langue a première langue de la liste saisie sera alors utilisée par défaut. Par défaut, lang n'est pas activé.
 
 - langfile
 
 *URL du fichier de traduction supplémentaire à utiliser en complément de mviewer.i18n.json. 
 Ce fichier peut être un fichier distant (URL classique type https://)  ou bien un fichier localisé n'importe où dans votre serveur web.*
 
+
 Voici un exemple::
 
     <?xml version="1.0" encoding="UTF-8"?>
     <config>
-    <application title="Une belle carte" langfile="./mviewer.i18n.js" lang="en,fr"></>
+    <application title="Une belle carte" langfile="./custommviewer.i18n.js" lang="en,fr"></>
 
 Vous pouvez donc changer de langue via l'URL directement. Essayez en premier avec cette url:
 
@@ -90,7 +91,7 @@ Interface de changement de langue
 
 Selon votre paramètre *lang* le mviewer vous permettra de sélectionner parmis les valeurs de traduction disponibles.
 
-Avec "lang=fr" ou aucun paramètre "lang" vous n'ajouterai pas cette interface. Avec *lang=en,fr* vous pourrai modifier la langue dans l'interface du mviewer.
+Avec "lang=fr" ou aucun paramètre "lang" vous n'ajouterez pas cette interface. Avec *lang=en,fr* vous pourrez modifier la langue dans l'interface du mviewer.
 
 **Affichage du sélecteur**
 
@@ -154,8 +155,8 @@ rajoutez les nouvelles clés dans votre fichier de traduction::
 
     <span i18n="search.adresse"> une valeur par défaut </span>
 
-4 - Ajoutez les paramètres *lang='en, fr, bzh'* et *langfile='./chemin/fichier/traduction'*
+4 - Ajoutez les paramètres *lang='en,fr,bzh'* et *langfile='./chemin/fichier/traduction'*
 
-5 - Choissisez le mode d'affichage avec le paramètre *showhelp='true'*
+5 - Eventuellement, choissisez d'afficher le sélecteur de langue dans la popup d'aide avec le paramètre *showhelp='true'*
 
 6 - Testez
