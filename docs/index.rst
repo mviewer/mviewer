@@ -58,6 +58,7 @@ Cette partie est dédiée aux personnes qui ont vocation à déployer et configu
 
    doc_dev/deploy
    doc_dev/config_intro
+   doc_dev/config_practices
    doc_dev/config_app
    doc_dev/config_map
    doc_dev/config_baselayers
@@ -69,6 +70,20 @@ Cette partie est dédiée aux personnes qui ont vocation à déployer et configu
    doc_dev/config_tpl
    doc_dev/config_debug
 
+Documentation contribution
+-------------------------------------------------
+
+Cette partie est dédiée aux personnes qui ont vocation à modifier et contribuer au code mviewer.
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: Documentation contributeurs
+
+   doc_contrib/contrib
+   doc_contrib/doc
+   doc_contrib/issue
+   doc_contrib/git
 
 Auteurs et licence
 ==================
