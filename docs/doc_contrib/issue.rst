@@ -22,7 +22,7 @@ Si vous modifiez le coeur mviewer de votre instance et que vous souhaitez réali
 Ensuite, pour vous éviter de réaliser une demande de contribution qui ne sera pas acceptée lors de la revue :
 
 - Le code proposé ne respecte pas le formatage initial
-- Vous avez réalisez une contribution qui existe déjà
+- Vous avez réalisé une contribution qui existe déjà
 - Vous proposez un code avec un niveau de complexité trop élevé
 - Le fonctionnement ou le code doivent être optimisés
 - Une partie de ce que vous proposez fonctionne mais ne peut pas être intégré (dépendances externes non maintenues, mauvaise utilisation du langage, etc...)
