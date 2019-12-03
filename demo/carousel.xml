@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+<metadata>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<rdf:Description rdf:about="http://www.ilrt.bristol.ac.uk/people/cmdjb/">
+<dc:title>Démo carousel</dc:title>
+<dc:creator>anonymous</dc:creator>
+<dc:publisher>anonymous</dc:publisher>
+<dc:subject>Patrimoine</dc:subject>
+<dc:date>2019-12-03T10:25:25.611Z</dc:date>
+</rdf:Description>
+</rdf:RDF>
+</metadata>
+<application
+    title="Démo carousel"
+    logo=""
+    help=""
+    style="css/themes/default.css"
+    exportpng="false"
+    showhelp="false"
+    coordinates="false"
+    measuretools="false"
+    togglealllayersfromtheme="false"
+    hideprotectedlayers="false">
+</application>
+<mapoptions maxzoom="20" projection="EPSG:3857" center="-487362,6145843" zoom="12" />
+<searchparameters bbox="false" localities="false" features="false" static="false"/>
+<baselayers style="default"> 
+    <baselayer visible="true" id="positron" thumbgallery="img/basemap/positron.png" title="CartoDb" label="Positron" type="OSM" url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution="Map tiles by  &lt;a href=&quot;https://cartodb.com/attributions&quot;&gt;CartoDb&lt;/a&gt;, under  &lt;a href=&quot;https://creativecommons.org/licenses/by/3.0/&quot;&gt;CC BY 3.0 &lt;/a&gt;"  ></baselayer> 
+    <baselayer visible="false" id="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg" title="Esri world imagery" label="Esri world imagery" type="OSM" url="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"  ></baselayer> 
+</baselayers>
+<themes mini="false"> 
+    <theme id="theme-20191203110224" name="Patrimoine" collapsed="true" icon="fab fa-yelp"> 
+        <layer 
+            id="recensement_patrimoine"
+            name="Recensement du patrimoine culturel breton"
+            type="wms"
+            url="https://ows.region-bretagne.fr/geoserver/rb/wms"
+            visible="true"
+            infoformat="application/vnd.ogc.gml"
+            fields="titre,operation,date_principale,denomination,photo_1,photo_2"
+            aliases="titre,operation,date_principale,denomination,photo_1,photo_2"
+            metadata="https://applications.region-bretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/0cf6de5d-9746-44d8-b003-a2dae2e7e585"
+            metadata-csw="https://applications.region-bretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;ELEMENTSETNAME=full&amp;ID&amp;ID=0cf6de5d-9746-44d8-b003-a2dae2e7e585"
+            queryable="true"
+            filter="operation = 'Patrimoines des sports en Bretagne'"
+            infopanel="right-panel">
+            <template url="demo/carousel.mst"></template>
+        </layer> 
+    </theme> 
+</themes>
+</config>
