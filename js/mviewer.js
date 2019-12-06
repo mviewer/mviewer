@@ -996,6 +996,9 @@ mviewer = (function () {
                 });
                 l.set('name', baselayer.label);
                 l.set('blid', baselayer.id);
+                if (baselayer.opacity != 'undefined') {
+                    l.setOpacity(baselayer.opacity);
+                }
                 _backgroundLayers.push(l);
                 _map.addLayer(l);
                 break;
