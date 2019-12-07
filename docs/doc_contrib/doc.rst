@@ -7,7 +7,7 @@
 Contribuer à la documentation - Readthedoc
 ==========================================
 
-Participez à l'amélioration de la `documentation <https://mviewerdoc.readthedocs.io/>`_ en ligne du mviewer.
+Participez à l'amélioration de la `documentation <https://mviewerdoc.readthedocs.io/>`_ en ligne de mviewer.
 
 Respectez le processus de contribution décrit dans la section ":ref:`ask`".
 
@@ -44,7 +44,9 @@ Déployer la documentation en local
 
 - Vous devez disposer des droits sur votre ordinateur pour installer python et disposer de pip.
 - Avoir réalisé un fork du repository `geobretagne/mviewer.doc <https://github.com/geobretagne/mviewer.doc>`_
-- Avoir réalisé un clone de votre fork vers un répertoire local de votre ordinateur::
+- Avoir réalisé un clone de votre fork vers un répertoire local de votre ordinateur :
+
+::
 
     cd /home/user/pierre/git/
     git clone https://github.com/mon_compte_github/mviewer.doc.git
@@ -55,18 +57,24 @@ Déployer la documentation en local
               :alt: get github clone url
               :align: center 
 
-- Avoir installé python sphinx en suivant la `page sphinx <https://www.sphinx-doc.org/en/master/usage/installation.html>`_  ::
+- Avoir installé python sphinx en suivant la `page sphinx <https://www.sphinx-doc.org/en/master/usage/installation.html>`_ :
+
+::
 
     // debian
     apt-get install python3-sphinx
 
-- Disposer de pip (debian)::
+- Disposer de pip (debian) :
+
+::
 
     // debian
     sudo apt install python-pip
     pip --version
 
-- Installer le package stemmer (si manquant au build)::
+- Installer le package stemmer (si manquant au build) :
+
+::
 
     // Debian 
     sudo apt-get install python-stemmer
@@ -77,19 +85,27 @@ Déployer la documentation en local
 
 **Actions**
 
-- Positionnez-vous dans votre dossier mviewer.doc issue du clone::
+- Positionnez-vous dans votre dossier mviewer.doc issue du clone :
+
+::
 
     cd /home/user/pierre/mviewer.doc
 
-- Vous pouvez apporter des modifications dans le dossier "docs"::
+- Vous pouvez apporter des modifications dans le dossier "docs" :
+
+::
 
     cd /home/user/pierre/mviewer.doc/docs
 
-- Pour rajouter des parties et sous-parties dans le menu de gauche, il vous faudra modifier le fichier index.rst::
+- Pour rajouter des parties et sous-parties dans le menu de gauche, il vous faudra modifier le fichier index.rst :
+
+::
 
     /home/user/pierre/mviewer.doc/docs/index.rst
 
-- Rajouter par exemple une partie "Nouvelle partie" en respectant cette syntaxe::
+- Rajouter par exemple une partie "Nouvelle partie" en respectant cette syntaxe :
+
+::
 
     Nouvelle partie
     -------------------------------------------------
@@ -106,11 +122,15 @@ Déployer la documentation en local
     doc_test/sous_partie2
 
 
-- Comme décrit dans la syntaxe précédente, vous devez rajouter un dossier "doc_test" (où "doc_test" est le nom que vous avez choisis)::
+- Comme décrit dans la syntaxe précédente, vous devez rajouter un dossier "doc_test" (où "doc_test" est le nom que vous avez choisis)
+
+::
 
     /home/user/pierre/mviewer.doc/docs/doc_test
 
-- Dans ce dossier, rajoutez les fichiers comme décrits dans l'arborescence ::
+- Dans ce dossier, rajoutez les fichiers comme décrits dans l'arborescence :
+
+::
 
     ../mviewer.doc/docs/doc_test/introduction.rst
     ../mviewer.doc/docs/doc_test/sous_partie1.rst
@@ -123,7 +143,9 @@ Déployer la documentation en local
 Ajouter des blocs de code
 --------------------------
 
-Utilisez la syntaxe suivante (respectez les sauts de ligne)::
+Utilisez la syntaxe suivante (respectez les sauts de ligne) :
+
+::
 
     mon text::
 
@@ -134,7 +156,9 @@ Utilisez la syntaxe suivante (respectez les sauts de ligne)::
 Ajouter des puces
 -----------------
 
-Utilisez la syntaxe suivante (respectez les sauts de ligne)::
+Utilisez la syntaxe suivante (respectez les sauts de ligne) :
+
+::
 
     Voici une liste :
 
@@ -146,11 +170,15 @@ Utilisez la syntaxe suivante (respectez les sauts de ligne)::
 Rajouter des images
 -------------------
 
-- Ajoutez un dossier dans ../docs/_images tel que::
+- Ajoutez un dossier dans ../docs/_images tel que :
+
+::
 
     /home/user/pierre/mviewer.doc/docs/_images/doc_test/
 
-- Ajoutez vos images dans ce dossier et renseignez le chemin de l'image à afficher dans le code tel que::
+- Ajoutez vos images dans ce dossier et renseignez le chemin de l'image à afficher dans le code tel que :
+
+::
 
     Voici une image :
     
@@ -163,7 +191,9 @@ Rajouter des images
 Liste numérotée
 -----------------
 
-Utilisez la syntaxe suivante (respectez les sauts de ligne)::
+Utilisez la syntaxe suivante (respectez les sauts de ligne) :
+
+::
 
     Une liste avec des numéros:
 
@@ -178,14 +208,18 @@ Référencer une page
 
 - Pour créer un point de référence .._reference: que l'ont peut citer comme lien depuis n'importe quelLE page (lien interne)
 
-- Utilisez les titres pour afficher le texte à afficher comme référence::
+- Utilisez les titres pour afficher le texte à afficher comme référence :
+
+::
 
     .. _reference:
 
     Page de référence
     -----------------
 
-- Appelez la référence affichera "Voir la Page de référence"::
+- Appelez la référence affichera "Voir la Page de référence" :
+
+::
 
     Voir la ":ref:`reference`"
 
@@ -194,7 +228,9 @@ Référencer une page
 Lien, hyperlien
 ----------------
 
-Utilisez la syntaxe suivante (respectez les sauts de ligne)::
+Utilisez la syntaxe suivante (respectez les sauts de ligne) :
+
+::
 
     Ceci est un `lien cliquable <https://github.com/geobretagne/mviewer.doc>`_
 
@@ -203,23 +239,33 @@ Utilisez la syntaxe suivante (respectez les sauts de ligne)::
 Construire et déployer la documentation
 ---------------------------------------
 
-- Les sources de la documentation sont localisées dans votre dossier git/mviewer.doc/docs crée par le clone (voir plus haut)::
+- Les sources de la documentation sont localisées dans votre dossier git/mviewer.doc/docs crée par le clone (voir plus haut) :
+
+::
 
     /home/user/pierre/mviewer.doc/docs
 
-- Nous voulons que notre documentation soit construite (build) dans le dossier ::
+- Nous voulons que notre documentation soit construite (build) dans le dossier :
+
+::
 
     /var/www/mviewer-doc/
 
-- Si vous avez utilisé XAMPP (voir "xampp"::), le dossier cible où sera construite la documentation sera (sous windows) ::
+- Si vous avez utilisé XAMPP (voir "xampp"::), le dossier cible où sera construite la documentation sera (sous windows) :
+
+::
 
     C:\xampp\mviewer-doc\
 
-- Nous avons ensuite à passer la commande ::
+- Nous avons ensuite à passer la commande :
+
+::
 
     sphinx-build -b html home/user/pierre/mviewer.doc/docs /var/www/mviewer-doc/
  
-- La documentation est maintenant dans le dossier de notre choix::
+- La documentation est maintenant dans le dossier de notre choix :
+
+::
     
     /var/www/mviewer-doc/
 
@@ -252,7 +298,9 @@ Installer XAMPP (windows)
 
 C'est dans le dossier "mviewer-doc" que sera déployée la documentation après la phase de build (voir plus haut).
 
-- Accédez au dossier avec votre navigateur via l'URL::
+- Accédez au dossier avec votre navigateur via l'URL :
+
+::
 
     localhost/mviewer-doc
 
