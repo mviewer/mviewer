@@ -74,7 +74,7 @@ Cette partie est dédiée aux personnes qui ont vocation à déployer et configu
 Documentation contribution
 -------------------------------------------------
 
-Cette partie est dédiée aux personnes qui ont vocation à modifier et contribuer au code mviewer.
+Cette partie est dédiée aux personnes qui ont vocation à contribuer au code mviewer.
 
 .. toctree::
    :hidden:
