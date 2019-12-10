@@ -323,31 +323,32 @@ mviewer = (function () {
     };
 
     var _getlegendurl = function (layer, scale) {
-        var sld = "";
         var legendUrl = "";
-        if (layer.sld) {
-            sld = '&SLD=' + encodeURIComponent(layer.sld);
-        }
-        var _layerUrl = layer.url.replace(/[?&]$/, '');
-        if (layer.legendurl && !layer.styles) {
+        if (layer.legendurl && !layer.style) {
             legendUrl = layer.legendurl;
-        } else if (layer.legendurl && layer.styles && (layer.styles.split(",").length === 1)) {
+        } else if (layer.legendurl && layer.style && (layer.style.split(",").length === 1)) {
             legendUrl = layer.legendurl;
-        } else if (layer.sld) {
-            legendUrl = _layerUrl.indexOf('?') === -1 ? _layerUrl + '?' : _layerUrl + '&';
-            legendUrl = legendUrl + 'service=WMS&Version=1.3.0&request=GetLegendGraphic&SLD_VERSION=1.1.0'+
-            '&format=image%2Fpng&width=30&height=20&layer=' + layer.layername + '&style=' + sld+
-            '&legend_options=fontName:Open%20Sans;fontAntiAliasing:true;fontColor:0x777777;fontSize:10;dpi:96&TRANSPARENT=true';
         } else {
-            legendUrl = _layerUrl.indexOf('?') === -1 ? _layerUrl + '?' : _layerUrl + '&';
-            legendUrl = legendUrl + 'service=WMS&Version=1.3.0&request=GetLegendGraphic&SLD_VERSION=1.1.0'+
-            '&format=image%2Fpng&width=30&height=20&layer=' + layer.layername + '&style=' + layer.style + sld+
-            '&legend_options=fontName:Open%20Sans;fontAntiAliasing:true;fontColor:0x777777;fontSize:10;dpi:96&TRANSPARENT=true';
+            var getLegendParams = {
+                'LAYER': layer.layername,
+                'STYLE': layer.style,
+                'FORMAT': 'image/png',
+                'TRANSPARENT': true
+            };
+
+            if (layer.sld) {
+                getLegendParams['SLD'] = encodeURIComponent(layer.sld);
+            } else {
+                getLegendParams['STYLE'] = encodeURIComponent(layer.style);
+            }
+
+            legendUrl = getLegendGraphicUrl(layer.url, getLegendParams);
         }
         if (layer.dynamiclegend) {
             if (!scale) {
                 scale = _calculateScale(_map.getView().getResolution());
             }
+            // TODO: this line of code is not robust since OGC parameter names are not case sensitive
             legendUrl = legendUrl.split("&scale=")[0] += "&scale="+scale;
         }
         return legendUrl;
@@ -897,6 +898,10 @@ mviewer = (function () {
                 if (baselayer.tiled !== "false") {
                     params.TILED = true;
                 }
+
+                // Use owsoptions to overload default Getmap params
+                Object.assign(params, getParamsFromOwsOptionsString(baselayer.owsoptions));
+
                 l =  new ol.layer.Tile({
                     source: new ol.source.TileWMS({
                         url: baselayer.url,

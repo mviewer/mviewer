@@ -139,13 +139,15 @@ Représente les fonds de plan.
 ##### Prototype
 
 
-    <baselayer type="" id="" label="" title="" maxscale="" thumbgallery="" url="" layers="" format="" visible="" fromcapacity=""
+    <baselayer type="" owsoptions="" id="" label="" title="" maxscale="" thumbgallery="" url="" layers="" format="" visible="" fromcapacity=""
     attribution="" style="" matrixset="" maxzoom=""/>
 
 
 ##### Attributs
 
 * **type**: Type de flux OGC (OSM/WMTS/WMS/fake)
+* **owsoptions**: Pour une couche WMS, permet de forcer certains paramètres des requêtes GetMap. Exemple : 
+"VERSION:1.3.0"
 * **id**: Identifiant du fond de plan
 * **label**: Titre du fond de plan
 * **title**: Sous-titre du fond de plan
@@ -302,6 +304,7 @@ Nœud enfant de theme ou group décrivant une couche.
     <layer id="" name="" scalemin="" scalemax="" visible="" tiled=""
     queryable="" fields="" aliases=""
     type=""
+    owsoptions=""
     filter=""
     searchable=""
     searchid=""
@@ -347,6 +350,8 @@ Nœud enfant de theme ou group décrivant une couche.
 * **type**: Type de la couche (wms|geojson|kml|customlayer|csv) default=wms. Si customlayer est défini, il faut instancier
 un Layer OpenLayers dans un fichier javascript ayant pour nom l'id de la couche.
 Ce fichier js doit être placé dans le répertoire customlayers.
+* **owsoptions**: Pour une couche WMS, permet de forcer certains paramètres des requêtes GetMap. Exemple : 
+"VERSION:1.1.1,EXCEPTIONS:application/vnd.ogc.se_inimage"
 * **scalemin**: Echelle minimum de la couche.
 * **scalemax**: Echelle maximum de la couche.
 * **visible**:  Booléen stipulant si la couche est actuellement visible.

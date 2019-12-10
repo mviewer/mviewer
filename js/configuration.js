@@ -428,15 +428,13 @@ var configuration = (function () {
                     layerRank+=1;
                     var layerId = layer.id;
                     if (layer.url) {
-                        var layerUrl = layer.url.replace(/[?&]$/, '');
-                        var capabilitiesParams = "REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.3.0";
-                        var getCapUrl = layerUrl.indexOf('?') === -1 ? layerUrl + '?' + capabilitiesParams : layerUrl + '&' + capabilitiesParams;
+                        var getCapRequestUrl = getCapUrl(layer.url);
                         var secureLayer = (layer.secure === "true" || layer.secure == "global") ? true : false;
                         if (secureLayer) {
                             $.ajax({
                                 dataType: "xml",
                                 layer: layerId,
-                                url:  mviewer.ajaxURL(getCapUrl),
+                                url:  mviewer.ajaxURL(getCapRequestUrl),
                                 success: function (result) {
                                     //Find layer in capabilities
                                     var name = this.layer;
@@ -656,7 +654,7 @@ var configuration = (function () {
                     if (oLayer.type === 'wms') {
                         var wms_params = {
                             'LAYERS': layer.id,
-                            'STYLES':(themeLayers[oLayer.id].style)? themeLayers[oLayer.id].style : '',
+                            'STYLES': (themeLayers[oLayer.id].style)? themeLayers[oLayer.id].style : '',
                             'FORMAT': 'image/png',
                             'TRANSPARENT': true
                         };
@@ -671,6 +669,10 @@ var configuration = (function () {
                         if (oLayer.sld) {
                             wms_params['SLD'] = oLayer.sld;
                         }
+
+                        // Use owsoptions to overload default Getmap params
+                        Object.assign(wms_params, getParamsFromOwsOptionsString(layer.owsoptions));
+
                         switch (oLayer.tiled) {
                             case true:
                                 wms_params['TILED'] = true;
