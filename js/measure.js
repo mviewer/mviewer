@@ -179,7 +179,7 @@ var measure = (function () {
     var _measureFormatArea = function(polygon) {
         var area = Math.abs(_wgs84Sphere.getArea(polygon));
         var output;
-        if (area <= 0) {
+        if (area < 0.0001) {
             output = 0;
         } else if (area < 10000) {
             output = (Math.round(area * 100) / 100) + ' ' + 'm<sup>2</sup>';
