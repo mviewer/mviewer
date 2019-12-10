@@ -292,7 +292,13 @@ var measure = (function () {
                 var output;
                 if (geom instanceof ol.geom.Polygon) {
                     output = _measureFormatArea(/** @type {ol.geom.Polygon} */ (geom));
-                    tooltipCoord = geom.getInteriorPoint().getCoordinates();
+                    var coords = geom.getCoordinates()[0];
+                    var nbCoords = coords.length;
+                    if (nbCoords < 2) {
+                        tooltipCoord = coords[0];
+                    } else {
+                        tooltipCoord = coords[nbCoords-2];
+                    }
                 } else if (geom instanceof ol.geom.LineString) {
                     output = _measureFormatLength( /** @type {ol.geom.LineString} */ (geom));
                     tooltipCoord = geom.getLastCoordinate();
