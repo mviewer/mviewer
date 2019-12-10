@@ -880,12 +880,11 @@ mviewer = (function () {
     var _createBaseLayer = function (baselayer) {
         var crossorigin = configuration.getCrossorigin();
         var l;
-		function setBaseOpacity(layer, value){
-			if(layer && value) {
-				layer.setOpacity(value);
-			}
-		}
-
+        function setBaseOpacity(layer, value){
+            if(layer && value) {
+                layer.setOpacity(value);
+            }
+        }
         switch (baselayer.type) {
             case "fake":
                 l = new ol.layer.Base({});
@@ -915,7 +914,7 @@ mviewer = (function () {
                 });
                 l.set('name', baselayer.label);
                 l.set('blid', baselayer.id);
-				setBaseOpacity(l,baselayer.opacity);
+                setBaseOpacity(l,baselayer.opacity);
                 _backgroundLayers.push(l);
                 _map.addLayer(l);
                 break;
@@ -943,7 +942,7 @@ mviewer = (function () {
                     l.setVisible(false);
                     l.set('name', baselayer.label);
                     l.set('blid', baselayer.id);
-					setBaseOpacity(l,baselayer.opacity);
+                    setBaseOpacity(l,baselayer.opacity);
                     _map.addLayer(l);
                     _backgroundLayers.push(l);
                 }
@@ -968,7 +967,7 @@ mviewer = (function () {
                             l = new ol.layer.Tile({ source: new ol.source.WMTS(WMTSOptions) });
                             l.set('name', baselayer.label);
                             l.set('blid', baselayer.id);
-							setBaseOpacity(l,baselayer.opacity);
+                            setBaseOpacity(l,baselayer.opacity);
                             _map.getLayers().insertAt(0,l);
                             _backgroundLayers.push(l);
                             if( baselayer.visible === 'true' ) {
@@ -993,7 +992,7 @@ mviewer = (function () {
                 });
                 l.set('name', baselayer.label);
                 l.set('blid', baselayer.id);
-				setBaseOpacity(l,baselayer.opacity);
+                setBaseOpacity(l,baselayer.opacity);
                 _backgroundLayers.push(l);
                 _map.addLayer(l);
                 break;
