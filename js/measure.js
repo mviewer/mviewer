@@ -179,7 +179,7 @@ var measure = (function () {
     var _measureFormatArea = function(polygon) {
         var area = Math.abs(_wgs84Sphere.getArea(polygon));
         var output;
-        if (area <= 0) {
+        if (area < 0.0001) {
             output = 0;
         } else if (area < 10000) {
             output = (Math.round(area * 100) / 100) + ' ' + 'm<sup>2</sup>';
@@ -292,7 +292,13 @@ var measure = (function () {
                 var output;
                 if (geom instanceof ol.geom.Polygon) {
                     output = _measureFormatArea(/** @type {ol.geom.Polygon} */ (geom));
-                    tooltipCoord = geom.getInteriorPoint().getCoordinates();
+                    var coords = geom.getCoordinates()[0];
+                    var nbCoords = coords.length;
+                    if (nbCoords < 2) {
+                        tooltipCoord = coords[0];
+                    } else {
+                        tooltipCoord = coords[nbCoords-2];
+                    }
                 } else if (geom instanceof ol.geom.LineString) {
                     output = _measureFormatLength( /** @type {ol.geom.LineString} */ (geom));
                     tooltipCoord = geom.getLastCoordinate();
