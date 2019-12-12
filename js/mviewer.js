@@ -324,9 +324,9 @@ mviewer = (function () {
 
     var _getlegendurl = function (layer, scale) {
         var legendUrl = "";
-        if (layer.legendurl && !layer.style) {
+        if (layer.legendurl && !layer.styles) {
             legendUrl = layer.legendurl;
-        } else if (layer.legendurl && layer.style && (layer.style.split(",").length === 1)) {
+        } else if (layer.legendurl && layer.styles && (layer.styles.split(",").length === 1)) {
             legendUrl = layer.legendurl;
         } else {
             var getLegendParams = {
