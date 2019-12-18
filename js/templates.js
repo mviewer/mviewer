@@ -10,7 +10,7 @@ mviewer.templates.tooltip = [
 mviewer.templates.theme = [
     '<li class="{{cls}}" id="theme-layers-{{id}}" >',
         '<a href="#">',
-            '<span class="fa-stack fa-lg pull-left">',
+            '<span class="fa-stack fa-lg pull-left col-sm-3">',
                 '<i class="{{icon}} fa-stack-1x "></i>',
             '</span>{{name}}',
         '{{#toggleAllLayers}}',
