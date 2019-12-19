@@ -45,6 +45,8 @@ Présentation Git Flow
 Git Flow est un workflow (organisation) permettant d'établir une stratégie de base sur la création des branches.
 Git Flow permet de gérer le travail collaboratif pour gérer les issues (bugs), les features (nouvelles fonctionnalités) et les releases (versions).
 
+C'est le workflow qui a été adopté par les contributeurs Mviewer.
+
 **Principes de base**
 
 Pour simplifier, le fonctionnement est basé sur 2 branches : master et develop.
