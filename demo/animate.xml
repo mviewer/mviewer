@@ -1,0 +1,29 @@
+<config>
+    <application title="Démo animation" logo="" help="demo/demo_animate_help.html" showhelp="true" style="css/themes/nephritis.css" exportpng="false" measuretools="false" />
+    <mapoptions maxzoom="20" projection="EPSG:3857" center="-307903.74898791354,6141345.088741366" zoom="8" />
+    <searchparameters localities="false" features="true" bbox="false" animate="true" duration="1000" querymaponclick="true" closeafterclick="false"/>
+    <elasticsearch url="http://ows.region-bretagne.fr/kartenn/_search" geometryfield="geometry" querymode="match" linkid="search_id" version="1.4"/>
+    <baselayers style="default">
+        <baselayer  visible="true" type="OSM" id="positron" label="Positron" title="CartoDb" thumbgallery="img/basemap/positron.png" url="http://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20" attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" /> <baselayer  visible="false" type="WMTS" id="ortho1" label="Photo aérienne actuelle"   title="GéoBretagne" thumbgallery="img/basemap/ortho.jpg" url="http://tile.geobretagne.fr/gwc02/service/wmts"   layers="satellite" format="image/png" style="_null" matrixset="EPSG:3857" fromcapacity="false"   attribution="&lt;a href='http://applications.region-bretagne.fr/geonetwork/?uuid=3a0ac2e3-7af1-4dec-9f36-dae6b5a8c731' target='_blank' >partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver&lt;/a>" />
+    </baselayers>
+    <themes>
+        <theme id="theme-20171106150925" name="Education" collapsed="false" icon="fas fa-book">
+            <layer id="lycee"
+                name="Lycées en Bretagne"
+                type="customlayer"
+                vectorlegend="true"
+                url="customlayers/lycee.js"
+                metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25"
+                metadata-csw="https://geobretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25"
+                queryable="true"
+                fields="nom,adresse,photo"
+                aliases="Nom,Adresse,Photo"
+                visible="true"
+                searchable="true"
+                searchengine="fuse"
+                fusesearchkeys="nom,adresse"
+                fusesearchresult="{{nom}} ({{type_etabl}})"
+                attribution="Région Bretagne" />
+        </theme>
+    </themes>
+</config>
