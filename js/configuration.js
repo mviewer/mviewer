@@ -710,37 +710,46 @@ var configuration = (function () {
                                 });
                                 break;
                             case false:
-                                source = new ol.source.ImageWMS({
-                                    url: layer.url,
-                                    crossOrigin: _crossorigin,
-                                    imageLoadFunction: function (image, src) {
-                                        if (oLayer.useproxy) {
-                                            src = _proxy + encodeURIComponent(src);
-                                        }
 
-                                        var xhr = new XMLHttpRequest();
-                                        xhr.responseType = 'blob';
-                                        xhr.open('GET', src);
-                                        // S'il existe des idenfiants d'accès pour ce layer, on les injecte
-                                        var _ba_ident = sessionStorage.getItem(layer.url);
-                                        if (_ba_ident && _ba_ident != '')
-                                            xhr.setRequestHeader("Authorization","Basic " + window.btoa( _ba_ident));
+                                function customWmsImageLoader(image, src) {
+                                    if (oLayer.useproxy) {
+                                        src = _proxy + encodeURIComponent(src);
+                                    }
 
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.responseType = 'blob';
+                                    xhr.open('GET', src);
+
+                                    // S'il existe des idenfiants d'accès pour ce layer, on les injecte
+                                    var _ba_ident = sessionStorage.getItem(layer.url);
+                                    if (_ba_ident && _ba_ident != '') {
+                                        xhr.setRequestHeader("Authorization","Basic " + window.btoa( _ba_ident));
                                         xhr.addEventListener('loadend', function (evt) {
                                             var data = this.response;
-                                            if(this.status == '401'){
+                                            if (this.status == '401') {
                                                 image.getImage().src = _blankSrc;
-                                            }else if(data && data !== undefined){
+                                            } else if (data && data !== undefined) {
                                                 image.getImage().src = URL.createObjectURL(data);
                                             }
                                         });
-                                        xhr.send();
+                                    }
+                                    xhr.onload = function() {
+                                        image.getImage().src = src;
+                                    };
+                                    xhr.send();
+                                }
 
-                                    }, params: wms_params
+                                source = new ol.source.ImageWMS({
+                                    url: layer.url,
+                                    crossOrigin: _crossorigin,
+                                    tileLoadFunction: customWmsImageLoader,
+                                    params: wms_params
                                 });
+
                                 l = new ol.layer.Image({
                                     source:source
                                 });
+
                                 break;
                         }
                         source.set('layerid', oLayer.layerid);
