@@ -673,83 +673,62 @@ var configuration = (function () {
                         // Use owsoptions to overload default Getmap params
                         Object.assign(wms_params, getParamsFromOwsOptionsString(layer.owsoptions));
 
+                        function customWmsImageLoader(image, src) {
+                            if (oLayer.useproxy) {
+                                src = _proxy + encodeURIComponent(src);
+                            }
+
+                            // S'il existe des idenfiants d'accès pour ce layer, on les injecte
+                            var _ba_ident = sessionStorage.getItem(layer.url);
+                            if (_ba_ident && _ba_ident != '') {
+                                var xhr = new XMLHttpRequest();
+                                xhr.responseType = 'blob';
+                                xhr.open('GET', src);
+
+                                xhr.setRequestHeader("Authorization","Basic " + window.btoa( _ba_ident));
+                                xhr.addEventListener('loadend', function (evt) {
+                                    var data = this.response;
+                                    if (this.status == '401') {
+                                        image.getImage().src = _blankSrc;
+                                    } else if (data && data !== undefined) {
+                                        image.getImage().src = URL.createObjectURL(data);
+                                    }
+                                });
+                                xhr.onload = function() {
+                                    image.getImage().src = src;
+                                };
+                                xhr.send();
+                            } else {
+                                image.getImage().src = src;
+                            }
+                        }
+
                         switch (oLayer.tiled) {
                             case true:
                                 wms_params['TILED'] = true;
                                 source = new ol.source.TileWMS({
                                     url: layer.url,
                                     crossOrigin: _crossorigin,
-                                    tileLoadFunction: function (imageTile, src) {
-                                        if (oLayer.useproxy) {
-                                            src = _proxy + encodeURIComponent(src);
-                                        }
-
-                                        var xhr = new XMLHttpRequest();
-                                        xhr.responseType = 'blob';
-                                        xhr.open('GET', src);
-
-                                        var _ba_ident = sessionStorage.getItem(layer.url);
-                                        if (_ba_ident && _ba_ident != '')
-                                            xhr.setRequestHeader("Authorization","Basic " + window.btoa( _ba_ident));
-
-                                        xhr.addEventListener('loadend', function (evt) {
-                                            var data = this.response;
-                                            if(this.status == '401'){
-                                                imageTile.getImage().src = _blankSrc;
-                                                //imageTile.setStatus(4);
-                                            }else if(data && data !== undefined){
-                                                imageTile.getImage().src = URL.createObjectURL(data);
-                                            }
-                                        });
-                                        xhr.send();
-                                    },
+                                    tileLoadFunction: customWmsImageLoader,
                                     params: wms_params
                                 });
+
                                 l = new ol.layer.Tile({
                                     source: source
                                 });
                                 break;
+
                             case false:
-
-                                function customWmsImageLoader(image, src) {
-                                    if (oLayer.useproxy) {
-                                        src = _proxy + encodeURIComponent(src);
-                                    }
-
-                                    var xhr = new XMLHttpRequest();
-                                    xhr.responseType = 'blob';
-                                    xhr.open('GET', src);
-
-                                    // S'il existe des idenfiants d'accès pour ce layer, on les injecte
-                                    var _ba_ident = sessionStorage.getItem(layer.url);
-                                    if (_ba_ident && _ba_ident != '') {
-                                        xhr.setRequestHeader("Authorization","Basic " + window.btoa( _ba_ident));
-                                        xhr.addEventListener('loadend', function (evt) {
-                                            var data = this.response;
-                                            if (this.status == '401') {
-                                                image.getImage().src = _blankSrc;
-                                            } else if (data && data !== undefined) {
-                                                image.getImage().src = URL.createObjectURL(data);
-                                            }
-                                        });
-                                    }
-                                    xhr.onload = function() {
-                                        image.getImage().src = src;
-                                    };
-                                    xhr.send();
-                                }
-
                                 source = new ol.source.ImageWMS({
                                     url: layer.url,
                                     crossOrigin: _crossorigin,
-                                    tileLoadFunction: customWmsImageLoader,
+                                    imageLoadFunction: customWmsImageLoader,
                                     params: wms_params
                                 });
 
                                 l = new ol.layer.Image({
                                     source:source
                                 });
-
                                 break;
                         }
                         source.set('layerid', oLayer.layerid);
