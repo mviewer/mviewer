@@ -1761,7 +1761,7 @@ mviewer = (function () {
             // get xml config file
             var configFile = API.config ? API.config : 'config.xml';
             // get domain url and clean
-            var splitStr = window.location.href.split('?')[0].replace('#','').split('/');
+            var splitStr = window.location.href.split('?')[0].split('#')[0].split('/');
             splitStr = splitStr.slice(0,splitStr.length-1).join('/');
             // create absolute config file url
             var url = splitStr + '/' + configFile;
@@ -1797,7 +1797,7 @@ mviewer = (function () {
             }
             linkParams.mode = $('input[name=mv-display-mode]:checked').val();
 
-            var url = window.location.href.split('?')[0].replace('#','') + '?' + $.param(linkParams);
+            var url = window.location.href.split('#')[0].split('?')[0] + '?' + $.param(linkParams);
             $("#permalinklink").attr('href',url).attr("target", "_blank");
             $("#permaqr").attr("src","http://chart.apis.google.com/chart?cht=qr&chs=140x140&chl=" + encodeURIComponent(url));
             return url;
