@@ -241,7 +241,7 @@ Options liées à la recherche d'adresse (olscompletion) et à la recherche d'en
 
 #### Prototype
 
-    <searchparameters [bbox=""] [inputlabel=""] [localities=""] [features=""] [static=""] [querymaponclick=""] [closeafterclick=""]/>
+    <searchparameters [bbox=""] [inputlabel=""] [localities=""] [features=""] [static=""] [querymaponclick=""] [closeafterclick=""] [animate=""] [duration=""]/>
 
 #### Attributs
 
@@ -256,7 +256,9 @@ proximité du centre de la carte mais n'applique pas réellement de filtre géog
 * **features**: Optional - Utilisation du service de recherche d'entités (recherches s'appuyant sur Elasticsearch ou
 Fuse) : true ou false - defaut = true.
 * **static**: Optional - En lien avec le paramètre **doctypes**. Active ou désactive la recherche associée à des
-documents requêtés systématiquement, indépendamment des couches affichées : true ou false - defaut = false.
+documents requêtés systématiquement, indépendamment des couches affichées : true ou false - defaut = false
+* **animate**: Optional - Active ou désactive l'animation de la vue lorsqu'un résultat de recherche est sélectionné : true ou false - defaut = false
+* **duration**: Optional - En lien avec le paramètre **animate**. Durée en ms de l'animation : defaut = 1000.
 
 ### Nœud themes et sous thèmes
 
