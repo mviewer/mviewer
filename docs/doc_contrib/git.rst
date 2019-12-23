@@ -37,6 +37,41 @@ Git facilite ensuite la mise en commun du code entre les différents dépôt.
 Git historise toutes les modifications afin d'identifier les nouveauté et permettre de revenir dans n'importe quel version précédente.
 
 
+Présentation Git Flow
+-------------------------
+
+**Qu'est-ce que c'est ?**
+
+Git Flow est un workflow (organisation) permettant d'établir une stratégie de base sur la création des branches.
+Git Flow permet de gérer le travail collaboratif pour gérer les issues (bugs), les features (nouvelles fonctionnalités) et les releases (versions).
+
+C'est le workflow qui a été adopté par les contributeurs Mviewer.
+
+**Principes de base**
+
+Pour simplifier, le fonctionnement est basé sur 2 branches : master et develop.
+
+Si plusieurs personnes travaillent sur ces deux branches, l'historiques des réalisations (commits) peut vite devenir illisible et les modifications risquent de se court-circuiter (conflits).
+
+L'idée est donc de créer des sous-niveaux de branches : 
+
+ - Les branches **features-xxxx** permettent de travailler sur des nouvelles fonctionnalités. Elles sont crées directement à partir de la branche develop et une fois le travail fini, fusionnées vers la branche develop. 
+ - Les branches **release-xxxx** permettent de faire une mise à jour de la branche master à partir de la branche develop.
+ - Les branches **hotfix-xxxx** permettent de publier rapidement (hot) une correction (fix) depuis la branche master. Ces branches seront ensuite fusionnées vers la branche master et develop.
+
+.. image:: ../_images/contrib/git-flow.png
+              :alt: git-flow process
+              :align: center
+
+
+Voici quelques références externes pour vous aider à mieux comprendre Git-Flow:
+
+#. `Avoir une bonne stratégie avec Git-flow <https://blog.soat.fr/2016/12/avoir-une-bonne-strategie-avec-git-flow/>`_
+#. `Git-Flow est-il le workflow dont j'ai besoin ? <https://blog.xebia.fr/2018/03/28/gitflow-est-il-le-workflow-dont-jai-besoin/>`_
+#. `Tutoriel vidéo Grafikart <https://www.grafikart.fr/tutoriels/git-flow-742>`_
+#. `Git-Flow workflow tutorial by Atlassian <https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow>`_
+
+
 Fork et Pull
 ------------------------------
 

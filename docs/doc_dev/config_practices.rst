@@ -175,7 +175,7 @@ Voici la manipulation.
         > upstream  https://github.com/geobretagne/mviewer.git (push)
 
 
-Bravo ! Maintons maintenant à jour votre branche master.
+Bravo ! Mettons maintenant à jour votre branche master.
 
 .. _updatefork:
 
