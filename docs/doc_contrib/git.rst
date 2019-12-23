@@ -78,7 +78,7 @@ Fork et Pull
 Nous avons déjà montré l'utilité et l'utilisation d'un **fork** et d'un **pull** sur la page ":ref:`practices`".
 
  - Le fork est décrit à la section ":ref:`fork`"
- - Le pull  est utilisé à la section ":ref:`pull`"
+ - Le pull est utilisé à la section ":ref:`pull`"
 
 
 Rebase
@@ -86,16 +86,16 @@ Rebase
 
 Lorsque vous faites des modifications via des commits sur votre branche de travail d'autres contributeurs modifient le code mviewer avec de nouveaux commits.
 
-Le code du mviewer dans le GitHub géoBretagne n'a pas connaissance de vos modifications. 
-Tant que vous n'avez pas mis à jour votre branche, votre code ne contient pas les modifications faites sur le GitHub mviewer géoBretagne (upstream).
+Le code de mviewer dans le GitHub GéoBretagne n'a pas connaissance de vos modifications.
+Tant que vous n'avez pas mis à jour votre branche, votre code ne contient pas les modifications faites sur le GitHub mviewer GéoBretagne (upstream).
 
-Les deux codes ont donc des nouveautés. Ont peut dire que les branches ont divergées.
+Les deux codes ont donc des nouveautés. On peut dire que les branches ont divergé.
 
-Vous devez alors intégrer les nouveautés du mviewer dans votre branche de travail contenant vos modifications du mviewer. Pour rappel, cette branche ne doit pas jamais être la branche master.
+Vous devez alors intégrer les nouveautés de mviewer dans une branche de travail contenant vos modifications. Pour rappel, cette branche ne doit pas jamais être la branche master.
 
-Pour cela, nous allons en premier reprendre tous les nouveaux commits du mviewer natif (géoBretagne) en mettant à jour votre fork (branche master). Ensuite, nous mettrons à jour votre branche de travail depuis votre branche master de votre fork.
+Pour cela, nous allons en premier reprendre tous les nouveaux commits du mviewer natif (GéoBretagne) en mettant à jour votre fork (branche master). Ensuite, nous mettrons à jour votre branche de travail depuis la branche master de votre fork.
 
-Dans la pratique, nous plaçeront les nouveaux commits de la branche master du fork dans l'arbre de commits de votre branche de travail via un **rebase**.
+Dans la pratique, nous placerons les nouveaux commits de la branche master du fork dans l'arbre de commits de votre branche de travail via un **rebase**.
 
 **Mise à jour du fork**
 
@@ -107,7 +107,7 @@ Réalisez ensuite la procédure suivante.
 **Que fait un Rebase ?**
 
 - Git va reprendre le dernier commit commun entre votre branche de travail à mettre à jour et la branche qui contient les nouveautés (master)
-- Git replacera ensuite vos commits et les noveaux commits dans l'ordre chronologique
+- Git replacera ensuite vos commits et les nouveaux commits dans l'ordre chronologique
 
 Vous disposerez donc des nouveaux commits et de vos propres commits.
 
@@ -115,7 +115,9 @@ Vous disposerez donc des nouveaux commits et de vos propres commits.
 **Comment faire ?**
 
 - Faites une copie de votre branche (optionnel mais conseillé) en créant une nouvelle branche à partir de votre branche de travail
-- Si votre branche s'appelle par exemple "RM-work", lancez la commande de rebase de la branche master (fork à jour) vers votre branche à mettre à jour (RM-work) : ::
+- Si votre branche s'appelle par exemple "RM-work", lancez la commande de rebase de la branche master (fork à jour) vers votre branche à mettre à jour (RM-work) :
+
+::
     
     git rebase origin/master RM-work
 
@@ -127,7 +129,9 @@ Vous disposerez donc des nouveaux commits et de vos propres commits.
 
 - Vous aurez probablement un conflit. Le processus sera donc stoppé mais pas abandonné
 
-- Si vous souhaitez abandonner lancer la commande(*) ::
+- Si vous souhaitez abandonner lancer la commande(*) :
+
+::
 
     git rebase --abort
 
@@ -135,17 +139,23 @@ Vous disposerez donc des nouveaux commits et de vos propres commits.
               :alt: git abort
               :align: center    
 
-- Si vous souhaitez ignorer le conflit (déconseillé!)::
+- Si vous souhaitez ignorer le conflit (déconseillé !) :
+
+::
 
     git rebase --skip
 
-- Nous conseillons de résoudre le conflit. Git vous indique un nom de fichier en conflit (ici indiqué index.html). C'est qu'il n'a pas réussi tout seul à intégrer les modifications sans perdre votre code actuel comme indiqué:
+- Nous conseillons de résoudre le conflit. Git vous indique un nom de fichier en conflit (ici indiqué index.html). C'est qu'il n'a pas réussi tout seul à intégrer les modifications sans perdre votre code actuel comme indiqué :
+
+::
 
 .. image:: ../_images/contrib/filetoresolverebase.png
               :alt: git abort
               :align: center
 
-- Ouvrez ce fichier avec un éditeur classique. Vous observerai que Git a inséré des caractères spéciaux pour nous permettre d'identifier les lignes en conflit::
+- Ouvrez ce fichier avec un éditeur classique. Vous observerez que Git a inséré des caractères spéciaux pour nous permettre d'identifier les lignes en conflit :
+
+::
 
     // je suis une pomme
     var type = "Pomme"
@@ -163,7 +173,9 @@ Vous disposerez donc des nouveaux commits et de vos propres commits.
 
 - Pour cela, vous allez modifier à la main le fichier en supprimant les caractères <<< HEAD et ==== et >>>> ainsi que les lignes indésirables.
 
-- Nous avons maintenant ce contenu::
+- Nous avons maintenant ce contenu :
+
+::
 
     // voici ma couleur
     var type = "Pomme"
@@ -173,7 +185,9 @@ Vous disposerez donc des nouveaux commits et de vos propres commits.
 
 - Sauvegardez votre fichier
 
-- Indiquez à Git que vous avez géré le conflit::
+- Indiquez à Git que vous avez géré le conflit :
+
+::
 
     git add /chemin/vers/le/fichier/index.html
 
@@ -181,7 +195,9 @@ Vous disposerez donc des nouveaux commits et de vos propres commits.
               :alt: git add result
               :align: center    
 
-- On contrôle que le fichier est marqué comme "modified" avec la commande::
+- On contrôle que le fichier est marqué comme "modified" avec la commande :
+
+::
 
     git status
 
@@ -189,7 +205,9 @@ Vous disposerez donc des nouveaux commits et de vos propres commits.
               :alt: git add result
               :align: center    
 
-- Indiquez à git de poursuivre le rebase comme décrit dans le message::
+- Indiquez à git de poursuivre le rebase comme décrit dans le message :
+
+::
 
     git rebase --continue
 
@@ -207,19 +225,21 @@ Vous disposerez donc des nouveaux commits et de vos propres commits.
 
 **Vérifier le résultat du rebase**
 
-Nous devons absolument vérifier que le rebase a pris encompte les commits du mviewer natif et vos commits de travail.
+Nous devons absolument vérifier que le rebase a pris en compte les commits natifs issus de GéoBretagne et vos commits de travail.
 
 - Aller sur la page GitHub `geobretagne/mviewer <https://github.com/geobretagne/mviewer>`_
 - Ouvrez `la page des commits <https://github.com/geobretagne/mviewer/commits/master>`_
-- Vérifier dans la liste déroulante que vous êtes bien sur la branche master
+- Vérifiez dans la liste déroulante que vous êtes bien sur la branche master
 
 .. image:: ../_images/contrib/newbranch.PNG
               :alt: new github branch
               :align: center
 
-- Observer les derniers commits, la date et le titre
-- Nous allons maintenant vérifier que ces commits sont biens dans notre historique de commits après le rebase.
-- Affichez l'historique des commits dans le terminal Git::
+- Observez les derniers commits, la date et le titre
+- Nous allons maintenant vérifier que ces commits sont bien dans notre historique de commits après le rebase.
+- Affichez l'historique des commits dans le terminal Git :
+
+::
 
     git logs
 
@@ -228,20 +248,22 @@ Nous devons absolument vérifier que le rebase a pris encompte les commits du mv
             :alt: git logs
             :align: center
 
-- Chercher dans la liste les commits vu sur `la page des commits <https://github.com/geobretagne/mviewer/commits/master>`_
+- Affichez la liste les commits présente sur `la page des commits <https://github.com/geobretagne/mviewer/commits/master>`_
 
-- Vous devez les trouver dans la liste des commits avec vos commits de travail
+- Vous devez les retrouver dans la liste des commits de la branche dans laquelle vous venez de réaliser votre rebase
 
 - En cas de doute sur la gestion de certains conflits, vérifiez les fichiers visuellement et réalisez des tests dans vos applications
 
-- Si tout vous semble bon, nous avons bien récupéré les modifications et votre arbre de commit est à jour (ainsi que votre code)
+- Si tout vous semble correct, vous avez bien récupéré les modifications et votre arbre de commits est à jour (ainsi que votre code)
 
 **Transmettre du local vers la branche**
 
-Actuellement, le rebase à apporter des modifications sur votre ordinateur. Mais le code en ligne (GitHub) n'a pas changé.
+Actuellement, le rebase a apporté des modifications sur votre ordinateur. Mais le code en ligne (GitHub) n'a pas changé.
 Vous devez pousser les modifications vers la branche distante.
 
-- Lancez la commande suivante pour transmettre le travail du rebase à la branche distante (en ligne et visible sur GitHub) (**)::
+- Lancez la commande suivante pour transmettre le travail du rebase à la branche distante (en ligne et visible sur GitHub) (**) :
+
+::
 
     git push -f
 
@@ -250,13 +272,13 @@ Vous devez pousser les modifications vers la branche distante.
             :align: center
 
 
-- Ouvrez `la page des commits de votre branche de travail (ex: dev) <https://github.com/org/mviewer/commits/dev>`_ et vérifier le succès de l'opération
+- Ouvrez `la page des commits de votre branche de travail (ex pour la branche dev : <https://github.com/org/mviewer/commits/dev>`_) et vérifiez le succès de l'opération
 
 - Supprimer ensuite la branche de sauvegarde si tout vous semble bon
 
 (*) Avec --abort Il faudra tout reprendre tout le rebase depuis le début si vous arrêter et décidez de recommencer.
 
-(**) *Avec -f, cela indique un push forcé afin de réécrire en force  l'historique des commits sur la branche distante. Il vaut mieux maîtriser ce que l'on pousse et contrôler votre code en local avant.*
+(**) *Avec -f, cela indique un push forcé afin de réécrire en force l'historique des commits sur la branche distante. Il vaut mieux maîtriser ce que l'on pousse et contrôler votre code en local avant.*
 
 
 .. _pr:
@@ -292,9 +314,9 @@ Pour réaliser une pull request, dirigez-vous sur votre fork GitHub :
 
 - Vous pourrez accéder à la pull request et discuter via le `volet dédié <https://github.com/geobretagne/mviewer.doc/pulls>`_ du repository `geobretagne/mviewer <https://github.com/geobretagne/mviewer>`_.
 
-Votre pull request sera revue et vous très certainement aurez un retour pour réaliser des modifications ou bien vous notifier que votre demande est acceptée.
+Votre pull request sera revue et vous aurez très certainement un retour pour réaliser des ajustements ou bien vous notifier que votre demande est acceptée.
 
-N'hésitez-pas à laisser un message dans la pull request pour relancer la communauté si vous n'avez pas de réponse dans un délais raisonnable.
+N'hésitez-pas à laisser un message dans la pull request pour relancer la communauté si vous n'avez pas de réponse dans un délai raisonnable.
 
 Cherry-pick
 -----------
@@ -302,9 +324,11 @@ Cherry-pick
 Si vous ne souhaitez reprendre qu'un seul commit d'une autre branche ou d'un autre repository, vous pouvez utilisez le cherry-pick.
 C'est un report manuel avec Git d'un commit d'une branche vers une autre branche, peu importe le repository.
 
-Pour peu de commits, cettes solution peut paraître plus simple que d'utiliser la technique de rebase.
+Pour peu de commits, cette solution peut paraître plus simple que d'utiliser la technique de rebase.
 
-Exemple avec un numéro de commit 235c47f à récupérer sur une branche nommée "dev"::
+Exemple avec un numéro de commit 235c47f à récupérer sur une branche nommée "dev" :
+
+::
 
     cd /home/user/jean/git/mviewer
     git checkout dev
