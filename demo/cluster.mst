@@ -28,3 +28,11 @@
     </p>
 </li>
 {{/features}}
+
+<script>
+    console.log("test handlebarjs");
+    var template = Handlebars.compile("Handlebars <b>{{doesWhat}}</b>");
+    console.log(template);
+</script>
+
+

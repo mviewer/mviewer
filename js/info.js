@@ -676,7 +676,10 @@ var info = (function () {
             }
             obj.features.push(feature.properties);
         });
-        var rendered = Mustache.render(tpl, obj);
+        // handlebarjs
+        var htpl = Handlebars.compile(tpl);
+        rendered = htpl(obj);
+        
         return _customizeHTML(rendered, olfeatures.length);
     };
 
