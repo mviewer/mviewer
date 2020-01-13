@@ -679,7 +679,7 @@ var info = (function () {
               fields_kv = [];
               keys = Object.keys(this);
               for (i = 0 ; i < keys.length ; i++ ) {
-                if (keys[i] == "fields_kv") {
+                if (keys[i] == "fields_kv" || keys[i] == "serialized") {
                   continue;
                 }
                 field_kv = {
