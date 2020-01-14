@@ -55,10 +55,7 @@ Le partage de carte permet de générer un lien web fixant la situation actuelle
 * le niveau de zoom,
 * la liste des couches affichées avec leurs paramètres de transparence.
 
-Une fois que vous avez cliqué sur l'icone ( |Share_icon| ), une nouvelle fenêtre apparaît et vous propose de choisir parmi les deux options suivantes :
-
-* générer un lien hypertext *(icone de gauche)* : lorsque vous cliquez, un nouvel onglet de votre navigateur s'ouvre avec le lien permanent,
-* utiliser un QR Code *(icone de droite)*.
+Une fois que vous avez cliqué sur l'icone ( |Share_icon| ), une nouvelle fenêtre apparaît :
 
 .. image:: ../_images/user/other_tools/share.png
               :alt: Outils de partage de la carte
@@ -67,6 +64,48 @@ Une fois que vous avez cliqué sur l'icone ( |Share_icon| ), une nouvelle fenêt
 .. |Share_icon| image:: ../_images/user/other_tools/share_icon.png
               :alt: Outil de partage
 	      :width: 16 pt	      
+
+
+Choix du mode d'affichage du permalien
+***********************
+
+* Normal
+
+  .. image:: ../_images/user/other_tools/mode_normal.png
+              :alt: Outils de partage de la carte
+              :align: center
+
+
+
+* Simplifié
+
+  .. image:: ../_images/user/other_tools/mode_simplifie.png
+              :alt: Outils de partage de la carte
+              :align: center
+
+
+
+* Ultra Simplifié (idéal intégration page web)
+
+  .. image:: ../_images/user/other_tools/mode_ultra_simplifie.png
+              :alt: Outils de partage de la carte
+              :align: center
+
+
+
+Choix du type de lien
+***********************
+
+* générer un lien hypertext *(icone de gauche)* : lorsque vous cliquez, un nouvel onglet de votre navigateur s'ouvre avec le lien permanent,
+* utiliser un QR Code *(icone de droite)*.
+
+**Exemple de permalien** : http://localhost/mviewer/?x=-220750&y=6144926&z=8&l=epci&lb=positron&mode=u
+
+* x et y : coordonnées du centre de la carte
+* z : niveau de zoom
+* l : liste des couches
+* lb : couche de fond par défaut
+* mode : mode d'affichage (n,s ou u)
 
 Export de la carte
 ------------------------------------------

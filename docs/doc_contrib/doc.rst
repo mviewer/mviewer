@@ -206,7 +206,7 @@ Utilisez la syntaxe suivante (respectez les sauts de ligne) :
 Référencer une page
 ---------------------
 
-- Pour créer un point de référence .._reference: que l'ont peut citer comme lien depuis n'importe quelLE page (lien interne)
+- Pour créer un point de référence .._reference: que l'ont peut citer comme lien depuis n'importe quelle page (lien interne)
 
 - Utilisez les titres pour afficher le texte à afficher comme référence :
 
@@ -228,7 +228,7 @@ Référencer une page
 Lien, hyperlien
 ----------------
 
-Utilisez la syntaxe suivante (respectez les sauts de ligne) :
+Utilisez la syntaxe suivante (respectez les sauts de lignes) :
 
 ::
 
