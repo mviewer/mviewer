@@ -21,7 +21,7 @@ Il est nécessaire de créer un fichier javascript pour utiliser la recherche Fu
 Ce fichier devra :
 
 * porter le même nom que le nom de la couche
-* la source de donnée devra être dans la même projection que le mviewer (ici4326)
+* la donnée issue de la requête WFS devra être dans la même projection que le mviewer (ici 4326)
 * le style de la couche s'appuie sur openLayer (https://openlayers.org/workshop/fr/vector/style.html)
 
 
@@ -52,7 +52,7 @@ Voici un exemple de fichier javascript pour une donnée ponctuelle (fichier auto
         }]
     };
         
-    // Appel de la source de donnée et affichage du style sur la carte
+    // Appel de la source de donnée (attention à la projection) et affichage du style sur la carte
     mviewer.customLayers.auto_ecole.layer = new ol.layer.Vector({
             source: new ol.source.Vector({
                 url: "https://geobretagne.fr/geoserver/dreal_b/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GETFEATURE&TYPENAME=auto_ecole&outputFormat=application/json&srsName=EPSG:4326",
@@ -82,6 +82,6 @@ Au niveau du fichier de configuration mviewer, il est nécessaire de faire les a
 * ``url`` : url du fichier javascript
 * ``searchable`` : activer la recherche
 * ``searchengine`` : activer le mode de recherche fuse
-* ``fusesearchkeys`` : champ dans lequel on va effectuer la recherche
+* ``fusesearchkeys`` : champ dans lequel on va effectuer la recherche. Possible sur plusieurs champs (exemple : "NOM,TYPE")
 * ``fusesearchresult`` : expression d'affichage du résultat de la recherche
 
