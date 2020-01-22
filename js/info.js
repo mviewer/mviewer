@@ -661,9 +661,10 @@ var info = (function () {
      */
 
     var applyTemplate = function (olfeatures, olayer) {
-        var tpl = olayer.template;
+        var htpl = Handlebars.compile(olayer.template);
         var obj = {features: []};
         var activeAttributeValue = false;
+
         // if attributeControl is used for this layer, get the active attribute value and
         // set this value as property like 'value= true'. This allows use this value in Mustache template
         if (olayer.attributefilter && olayer.layer.getSource().getParams()['CQL_FILTER']) {
@@ -676,11 +677,8 @@ var info = (function () {
             }
             obj.features.push(feature.properties);
         });
-        // handlebarjs
-        var htpl = Handlebars.compile(tpl);
-        rendered = htpl(obj);
-        
-        return _customizeHTML(rendered, olfeatures.length);
+
+        return _customizeHTML(htpl(obj), olfeatures.length);
     };
 
     /**
