@@ -103,14 +103,14 @@ Résultat de l'exemple ci-dessus
 Itérer sur les champs disponibles
 ---------------------------------
 
-Outre la possibilité d'afficher la valeur de champs précis comme expliqué ci-dessus, il est aussi possible de boucler sur l'ensemble des champs disponibles avec ``{{#fields_kv}}...{{/fields_kv}}``.
+En plus d'afficher la valeur d'un champ comme expliqué précédemment, il est aussi possible de lire et parcourir l'ensemble des champs disponibles avec  ``{{#fields_kv}}...{{/fields_kv}}``.
 
 Pour chaque champ listé, on peut accéder :
 
 - au nom du champ via ``{{key}}``
 - à la valeur via ``{{value}}``
 
-Par exemple, l'extrait de code suivant
+Par exemple, ce code :
 
 .. code-block:: xml
        :linenos:
@@ -125,11 +125,16 @@ Par exemple, l'extrait de code suivant
          </li>
        {{/features}}
 
-affichera la liste des champs avec leur nom suivi de leur valeur (sans nécessiter qu'on connaisse *a priori* les noms des champs).
+affichera la liste des champs avec leur nom suivi de leur valeur sans avoir à connaître les noms des champs à l'avance.
 
-Dans le même ordre d'idée, un autre "champ virtuel", ``{{serialized}}``, permet de récupérer l'ensemble des champs sous forme sérialisée, prête à passer en paramètre dans une URL, par exemple, dans une iframe.
+Dans le même ordre d'idée, un autre "champ virtuel", ``{{serialized}}``, permet de récupérer l'ensemble des champs sous forme sérialisée, prête à être passée en paramètre dans une URL. Par exemple, dans une iframe:
 
-Vous pourrez ensuite le désérialiser de façon standard. Par exemple, en javascript :
+.. code-block:: xml
+       :linenos:
+
+       <iframe class="iframe_bottom"src="apps/myapp/presentation/en/pages/mylayer_charts.html?data={{serialized}}"></iframe>
+
+Vous pourrez ensuite le désérialiser de façon standard. Par exemple, en javascript dans le fichier mylayer_charts.html (cf. exemple ci-dessus) :
 ::
 
     <script>
@@ -138,6 +143,11 @@ Vous pourrez ensuite le désérialiser de façon standard. Par exemple, en javas
 
       if(data) {
         var obj = JSON.parse(data)
+        keys = Object.keys(obj);
+        for ( i=0 ; i<keys.length ; i++ ) {
+          key=keys[i];
+          console.log(key + ': '+obj[key]);
+        }
         ...
       }
     </script>
