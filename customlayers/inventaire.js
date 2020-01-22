@@ -284,7 +284,8 @@ mviewer.customLayers.inventaire = (function () {
             ].join(" ");
             var _extendHTML = function (wfsfeatures) {
                 wfsfeatures.forEach(function (wfsfeature, i) {
-                    var html = Mustache.render(extraTemplate, wfsfeature.properties);
+                    var htpl = Handlebars.compile(extraTemplate);
+                    var html = htpl(wfsfeature.properties);
                     $(document.getElementById(wfsfeature.properties.search_id)).append(html);
                 });
 

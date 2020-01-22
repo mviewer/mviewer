@@ -1506,7 +1506,8 @@ mviewer = (function () {
     };
 
     var _renderHTMLFromTemplate = function(tpl, data) {
-        var result = Mustache.render(tpl, data);
+        var htpl = Handlebars.compile(tpl);
+        var result = htpl(data);
         var lang = configuration.getLang();
         if ( lang && mviewer.lang && mviewer.lang[lang]) {
             result = _elementTranslate(result);

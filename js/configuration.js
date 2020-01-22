@@ -292,7 +292,9 @@ var configuration = (function () {
             }
             mviewer.createBaseLayer(bl);
             if (baselayerControlStyle === "gallery") {
-                $("#basemapslist").append(Mustache.render(mviewer.templates.backgroundLayerControlGallery, bl));
+                // a Handlebars template
+                var htpl = Handlebars.compile(mviewer.templates.backgroundLayerControlGallery);
+                $("#basemapslist").append(htpl(bl));
             }
         });
         if (baselayerControlStyle === "gallery") {
@@ -562,7 +564,7 @@ var configuration = (function () {
                         oLayer.summary = '<a href="'+oLayer.metadata+'" target="_blank">En savoir plus</a>';
                     }
                     oLayer.url = layer.url;
-                    //Mustache template
+                    // Handlebars template
                     if (layer.template && layer.template.url) {
                         $.get(mviewer.ajaxURL(layer.template.url, _proxy), function(template) {
                             oLayer.template = template;

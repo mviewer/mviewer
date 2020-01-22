@@ -321,13 +321,14 @@ var info = (function () {
 
                 $.each(views, function (panel, view) {
                     if (views[panel].layers.length > 0){
-                        views[panel].layers[0].firstlayer=true;
-                        var template = "";
+                        views[panel].layers[0].firstlayer = true;
+                        var htpl;
                         if (configuration.getConfiguration().mobile) {
-                            template = Mustache.render(mviewer.templates.featureInfo.accordion, view);
+                            htpl = Handlebars.compile(mviewer.templates.featureInfo.accordion);
                         } else {
-                            template = Mustache.render(mviewer.templates.featureInfo[_panelsTemplate[panel]], view);
+                            htpl = Handlebars.compile(mviewer.templates.featureInfo[_panelsTemplate[panel]]);
                         }
+                        var template = htpl(view);
                         $("#"+panel+" .popup-content").append(template);
                     //TODO reorder tabs like in theme panel
 
@@ -482,8 +483,9 @@ var info = (function () {
                         // one specific field
                         title = feature.getProperties()[tooltipcontent];
                     } else {
-                        // a Mustache template
-                        title = Mustache.render(tooltipcontent, feature.getProperties());
+                        // a Handlebars template
+                        var htpl = Handlebars.compile(tooltipcontent);
+                        title = htpl(feature.getProperties());
                     }
                 } else {
                     title = (feature.getProperties()["name"] || feature.getProperties()["label"] ||
@@ -608,7 +610,7 @@ var info = (function () {
      * @param features : {ol.Features}
      * @param olayer {mviewer.overLayer}
      *
-     * returns html content from ol.Features list whithout Mustache template.
+     * returns html content from ol.Features list whithout Handlebars template.
      */
 
     var createContentHtml = function (features, olayer) {
@@ -666,7 +668,7 @@ var info = (function () {
         var activeAttributeValue = false;
 
         // if attributeControl is used for this layer, get the active attribute value and
-        // set this value as property like 'value= true'. This allows use this value in Mustache template
+        // set this value as property like 'value= true'. This allows to use this value in Handlebars template
         if (olayer.attributefilter && olayer.layer.getSource().getParams()['CQL_FILTER']) {
             var activeFilter = olayer.layer.getSource().getParams()['CQL_FILTER'];
             activeAttributeValue = activeFilter.split(" " + olayer.attributeoperator + " ")[1].replace(/\'/g, "");

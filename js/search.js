@@ -372,19 +372,20 @@ var search = (function () {
                 str = '<a class="fuse list-group-item disabled">' + layername + '</a>';
                 results.forEach(function(element){
                     /*
-                     * 2 cases, one specific field or a Mustache template for combining fields in a string. Examples:
+                     * 2 cases, one specific field or a Handlebars template for combining fields in a string. Examples:
                      * - name of a field: name
-                     * - Mustache template : {{name}} ({{city}})
-                     * - other Mustache template : {{name}}{{#city}} ({{city}}){{/city}}
+                     * - Handlebars template : {{name}} ({{city}})
+                     * - other Handlebars template : {{name}}{{#city}} ({{city}}){{/city}}
                      */
                     var _fuseSearchResult = element.fusesearchresult;
                     if (_fuseSearchResult.indexOf('{{')  === -1 && _fuseSearchResult.indexOf('}}')  === -1) {
                         // one specific field
                         result_label = element[element.fusesearchresult];
                     } else {
-                        // a Mustache template
-                        result_label = Mustache.render(_fuseSearchResult, element);
-                    }
+                        // a Handlebars template
+                        var htpl = Handlebars.compile(_fuseSearchResult);
+                        result_label = htpl(element);
+                   }
                     var geom = new ol.format.GeoJSON().readGeometry(element.geometry);
                     var xyz = mviewer.getLonLatZfromGeometry(geom, 'EPSG:4326', zoom);
                     str += '<a class="fuse list-group-item" title="' + result_label + '" ' +

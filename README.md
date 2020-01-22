@@ -368,7 +368,8 @@ Exemple : insee=35000 ou INTERSECTS(the_geom, POINT (-74.817265 40.5296504))
 * **fusesearchkeys**: Chaîne de caractères contenant le liste des champs de la couche à indexer pour la
 recherche. Les noms des champs doivent être séparés par des virgules. A n'utiliser que si searchengine = fuse.
 * **fusesearchresult**: Chaîne de caractères décrivant l'information à afficher dans les résultats de recherche.
-Cette chaîne contient soit le nom d'un champ de la couche soit un template Mustache combinant plusieurs noms de champs.
+Cette chaîne contient soit le nom d'un champ de la couche soit un template Handlebars combinant plusieurs noms de 
+champs.
 Exemple : "{{name}} ({{city}})". A n'utiliser que si searchengine = fuse.
 * **iconsearch**: Lien vers l'image utilisée pour illustrer le résultat d'une recherche ElasticSearch.
 * **useproxy**: Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de crossOrigin
@@ -382,7 +383,8 @@ affichées sous forme d'infobulle au survol de la souris. Les infobulles ne fonc
 fois. Valeur par défaut = false.
 * **tooltipenabled**: Précise la couche prioritaire pour l'affichage des infobulles.
 * **tooltipcontent**: Chaîne de caractères décrivant l'information à afficher dans les infobulles.
-Cette chaîne contient soit le nom d'un champ de la couche soit un template Mustache combinant plusieurs noms de champs.
+Cette chaîne contient soit le nom d'un champ de la couche soit un template Handlebars combinant plusieurs noms de 
+champs.
 Exemple : "{{name}} ({{city}})". A n'utiliser que si les infobulles sont activées sur cette couche
 (cf. paramètre tooltip)). Paramètre optionnel.
 * **secure**: Précise si la couche est protégée : public|global|layer
@@ -445,9 +447,9 @@ actualisée à chaque changement d'échelle de la carte.
 
 #### Nœud enfant template
 
-Nœud enfant de layer décrivant un template Mustache.
+Nœud enfant de layer décrivant un template Handlebars.
 
-* **template**: contient le template type Mustache (https://github.com/janl/mustache.js) à appliquer à la fiche
+* **template**: contient le template type Handlebars (https://handlebarsjs.com/) à appliquer à la fiche
 d'information. Pour fonctionner, il faut que le paramètre **infoformat** ait la valeur "application/vnd.ogc.gml" (pour
 GeoServer et MapServer), voire "application/vnd.esri.wms_raw_xml" ou "application/vnd.esri.wms_featureinfo_xml" (pour
 ArcGIS Server). Le template peut être un fichier statique ex templates/template1.mst ou directement saisi dans le nœud
