@@ -25,6 +25,20 @@ Le déploiement se passe en trois étapes :
     Vous avez maintenant un visualiseur géographique fonctionnel avec les couches de la Région Bretagne
     3. Si vous souhaitez publier vos propres couches/thèmes, modifiez le fichier config.xml
 
+## Docker
+
+Si vous souhaitez faire tourner mviewer dans un conteneur docker, un `Dockerfile` est a votre disposition.
+
+```bash
+# batir l'image docker
+docker build -t mviewer .
+# faire tourner le conteneur, et le rendre accessible sur le port 8080. A l'arret du 
+# conteneur celui-ci est supprimé.
+docker --rm -p8080:80 mviewer
+```
+
+Une composition docker est disponible dans le repository git de mviewer studio, incluant mviewer et mviewer studio.
+
 Fichier config.xml
 ------------------
 Le fichier de config permet la personnalisation des thèmes/couches du visualiseur.
