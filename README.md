@@ -3,13 +3,12 @@ MVIEWER
 
 Visualiseur géographique [Kartenn](http://kartenn.region-bretagne.fr/kartoviz/) basé sur OpenLayers 5.3.0 et Bootstrap 3.3.6
 
-[Versions] (https://github.com/geobretagne/mviewer/releases/)
-
-[Démos] (http://kartenn.region-bretagne.fr/kartoviz/demo/)
-
-[Documentation] (http://mviewerdoc.readthedocs.io/fr/latest/)
-
-[Générateur d'applications] (https://github.com/geobretagne/mviewerstudio/)
+Liens utiles :
+* [Site officiel](https://mviewer.netlify.com/)
+* [Versions](https://github.com/geobretagne/mviewer/releases/)
+* [Démos](http://kartenn.region-bretagne.fr/kartoviz/demo/)
+* [Documentation](http://mviewerdoc.readthedocs.io/fr/latest/)
+* [Générateur d'applications](https://github.com/geobretagne/mviewerstudio/)
 
 
 Feuille de route
