@@ -311,7 +311,7 @@ mviewer = (function () {
         var item = $(['<div class="alert '+cls+' alert-dismissible" role="alert">',
             '<button type="button" class="close" data-dismiss="alert" aria-label="Close">',
             '<span aria-hidden="true">&times;</span></button>',
-            mviewer.tr (msg),
+            mviewer.tr(msg),
             '</div>'].join (""));
             $("#alerts-zone").append(item);
     };
