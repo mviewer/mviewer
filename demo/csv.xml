@@ -45,7 +45,7 @@
                 geocoder="ban"
                 xfield="longitude"
                 yfield="latitude"
-                attribution="Dans cet exemple, l'utilisateur sélectionne un fichier csv depuis son poste. le fichier est ensuite géocodé après paramétrage du géocodage. Il n'y a pas de persistance du résultat. La recherche peut être activée en sélectionnant au moins un champ de recherche. exemple avec ce &lt;a href='https://adresse.data.gouv.fr/static/exemples/search.csv' target='_blank'>fichier &lt;/a>"
+                attribution="Dans cet exemple, l'utilisateur sélectionne un fichier csv depuis son poste. le fichier est ensuite géocodé après paramétrage du géocodage. Il n'y a pas de persistance du résultat. La recherche peut être activée en sélectionnant au moins un champ de recherche. exemple avec ce &lt;a href='https://raw.githubusercontent.com/geobretagne/mviewer/master/demo/demo.csv' target='_blank'>fichier &lt;/a>"
                 expanded="true">
             </layer>
         </theme>
