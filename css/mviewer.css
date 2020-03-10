@@ -680,6 +680,7 @@ ul#layers-container {
 
 #right-panel .item.active {
    overflow-y: auto;
+   padding-bottom: 80px;
 }
 
 #right-panel .item.active img {
