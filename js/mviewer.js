@@ -1743,7 +1743,7 @@ mviewer = (function () {
                 if (actionMove.action === "up") {
                     newIndex = refIndex +1;
                 } else {
-                    newIndex = refIndex -1;
+                    newIndex = refIndex;
                 }
                 layers.splice(newIndex, 0, layers.splice(oldIndex, 1)[0]);
                 //put overlayFeatureLayer on the top of the map
