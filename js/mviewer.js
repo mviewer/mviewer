@@ -370,12 +370,14 @@ mviewer = (function () {
             var marginTop = 15;
             var marginLeft = 15;
             var itemHeight = 20;
-            var horizontalSpace = 10;
+            var textAlign = "Middle";
+            var textBaseline = "End";
             verticalPosition = 0;
             var geomWidth = 25;
             var geomHeight = 15;
             var verticalSpace = itemHeight - geomHeight;
             var ctx = canvas.getContext('2d');
+            var fontsize = 12;
             vectorContext = ol.render.toContext(ctx, {
                 size: [250, (items.length * itemHeight) + marginTop]
             });
@@ -387,7 +389,6 @@ mviewer = (function () {
                         geometry = new ol.geom.Point([marginLeft + (geomWidth/2),
                             verticalPosition - (geomHeight/2)]);
                         break;
-
                     case 'LineString':
                         geometry = new ol.geom.LineString([[marginLeft, -marginTop + verticalPosition],
                             [marginLeft + geomWidth, -marginTop + verticalPosition + geomHeight]]);
@@ -404,15 +405,19 @@ mviewer = (function () {
                 }
 
                 item.styles.forEach(function (style) {
-                    vectorContext.setStyle(style);
+                    let stl = style.clone();
+                    stl.setText(new ol.style.Text({
+                        textAlign: textAlign,
+                        textBaseline: textBaseline,
+                        font: fontsize+"px roboto_regular, Arial, Sans-serif",
+                        text: item.label,
+                        fill: new ol.style.Fill({color: "rgba(153, 153, 153, 1)"}),
+                        offsetX: geomWidth,
+                        offsetY: verticalSpace
+                    }));
+                    vectorContext.setStyle(stl);
                     vectorContext.drawGeometry(geometry);
                 });
-                ctx.fillStyle = 'rgba(153, 153, 153, 1)';
-                var fontsize = 12;
-                ctx.font = fontsize + 'px roboto_regular, Arial, Sans-serif';
-                ctx.textAlign = "left";
-                ctx.fillText(item.label ,marginLeft + geomWidth + horizontalSpace, verticalPosition - (geomHeight - fontsize));
-
             });
         }
     };
