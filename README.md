@@ -269,7 +269,9 @@ Nœud regroupant les couches par thèmes et sous-thèmes.
 
 #### Attributs
 
-* **mini**: Booléen qui précise si le panneau de gauche est réduit à l'ouverture de l'application. Défaut = false.
+* **mini**: Booléen qui précise si le panneau de gauche est réduit à l'ouverture de l'application. Les attributs "collapsed" des <theme> doivent être à false pour que cet attribut soit pris en compte. Défaut = false.
+
+* **legendmini**: Booleén qui précise si le panneau de la légende est réduit à l'ouverture de l'application. Défaut = true.
 
 ### Nœud(s) enfant(s) theme
 
