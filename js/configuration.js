@@ -47,6 +47,36 @@ var configuration = (function () {
 
     var _themes = null;
 
+    /**
+     * Property: _getlayerconfig
+     * Get config for one layer
+     * @param String id is layer id as set for the customLayer or customControl
+     * @return Object as layer configuration
+     */
+    var _getlayerconfig = function(id) {
+        var themes = configuration.getThemes();
+        var layerResult = null;
+        // parse each layers theme
+        var findLayersById = function (theme, idLayer) {
+            var findLayer = null;
+            Object.keys(theme.layers).forEach( layerName => {
+                var layer = theme.layers[layerName];
+                if (layer.id == idLayer) {
+                    findLayer = layer;
+                }
+            })
+            return findLayer;
+        }
+        // parse each themes
+        Object.keys(themes).forEach(e => {
+            if(!layerResult) {
+                layerResult = findLayersById(themes[e], id);
+            }
+        });
+        // return layer config or null
+        return layerResult;
+    };    
+
      /**
      * Property: _proxy
      * Ajax proxy to use for crossdomain requests
@@ -890,7 +920,8 @@ var configuration = (function () {
         getConfiguration: function () { return _configuration; },
         getLang: function () { return _lang },
         getLanguages: function () { return _languages; },
-        setLang: function (lang) { _lang = lang; mviewer.lang.lang = lang;}
+        setLang: function (lang) { _lang = lang; mviewer.lang.lang = lang;},
+        getConfigurationLayer: function(idLayer) {return _getlayerconfig(idLayer)}
     };
 
 })();
