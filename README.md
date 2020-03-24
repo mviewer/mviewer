@@ -28,15 +28,17 @@ Le déploiement se passe en trois étapes :
 
 Si vous souhaitez faire tourner mviewer dans un conteneur docker, un `Dockerfile` est a votre disposition.
 
+
 ```bash
 # batir l'image docker
 docker build -t mviewer/mviewer .
-# faire tourner le conteneur, et le rendre accessible sur le port 8080. A l'arret du 
+# faire tourner le conteneur, et le rendre accessible sur le port 8080. A l'arret du
 # conteneur celui-ci est supprimé.
-docker --rm -p8080:80 mviewer
+docker --rm -p8080:80 mviewer/mviewer
 ```
+Une fois le conteneur lancé, `mviewer` sera disponible sur `http://localhost:8080`.
 
-Une composition docker est disponible dans le repository git de mviewer studio, incluant mviewer et mviewer studio.
+Une composition docker est disponible dans le dépot git de [mviewerstudio](https://github.com/geobretagne/mviewerstudio), incluant mviewer et mviewer studio.
 
 Fichier config.xml
 ------------------
