@@ -680,10 +680,15 @@ ul#layers-container {
 
 #right-panel .item.active {
    overflow-y: auto;
+   padding-bottom: 40px;
 }
 
 #right-panel .item.active img {
     /*max-width: 280px!important;*/
+}
+
+#right-panel .active {
+  padding-bottom: 40px; 
 }
 
 #right-panel .carousel-inner {
