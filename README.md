@@ -34,7 +34,7 @@ Si vous souhaitez faire tourner mviewer dans un conteneur docker, un `Dockerfile
 docker build -t mviewer/mviewer .
 # faire tourner le conteneur, et le rendre accessible sur le port 8080. A l'arret du
 # conteneur celui-ci est supprimé.
-docker --rm -p8080:80 mviewer/mviewer
+docker run --rm -p8080:80 mviewer/mviewer
 ```
 Une fois le conteneur lancé, `mviewer` sera disponible sur `http://localhost:8080`.
 
