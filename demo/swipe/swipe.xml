@@ -16,16 +16,17 @@
     <baselayer visible="true" id="positron" thumbgallery="img/basemap/positron.png" title="CartoDb" label="Positron" type="OSM" url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution="Map tiles by  &lt;a href=&quot;https://cartodb.com/attributions&quot;&gt;CartoDb&lt;/a&gt;, under  &lt;a href=&quot;https://creativecommons.org/licenses/by/3.0/&quot;&gt;CC BY 3.0 &lt;/a&gt;"  ></baselayer>
     <baselayer visible="false" id="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg" title="Esri world imagery" label="Esri world imagery" type="OSM" url="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"  ></baselayer>
 </baselayers>
-<themes mini="true">
-    <theme name="Outill"  collapsed="true" id="demo" icon="fas fa-chart-area">
-        <layer id="swipe" name="SWIPE AERIAL" visible="true" queryable="false"
+<themes mini="false">
+    <theme name="Outils"  collapsed="false" id="demo" icon="fas fa-cog">
+        <layer id="swipe" name="[SWIPE] image satellite" visible="true" queryable="false"
             type="customlayer"
+            legendurl="demo/swipe/control/swipe.png"
             customcontrolpath="demo/swipe/control"
-            opacity="1" legendurl="img/blank.gif"
+            opacity="1"
             url="demo/swipe/layer/swipe.js"
             customcontrol="true"
             expanded="true"
-            attribution="Source: Mviewer Team"
+            attribution="&lt;a href=&quot;https://www.maptiler.com/copyright/&quot; target=&quot;_blank&quot;&gt;&amp;copy; MapTiler&lt;/a&gt;&lt;a href=&quot;https://www.openstreetmap.org/copyright&quot; target=&quot;_blank&quot;&gt;&amp;copy; OpenStreetMap contributors&lt;/a&gt;"
             metadata=""
             metadata-csw="">
         </layer>
