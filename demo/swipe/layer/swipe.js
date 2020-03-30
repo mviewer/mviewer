@@ -1,8 +1,5 @@
-{
-mviewer.customLayers.swipe = {};
-var key = "get_your_own_D6rA4zTHduk6KOKTXzGB";
-
-var aerial = new ol.layer.Tile({
+let key = "get_your_own_D6rA4zTHduk6KOKTXzGB";
+let aerial = new ol.layer.Tile({
   source: new ol.source.XYZ({
     url: 'https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=' + key,
     maxZoom: 20
@@ -23,7 +20,5 @@ aerial.on('postcompose', function(event) {
     ctx.restore();
 });
 
-mviewer.customLayers.swipe.layer = aerial;
-
-mviewer.customLayers.swipe.handle = false;
-}
+/* convert this lock code to mviewer customLayer */
+new CustomLayer("swipe", aerial);
