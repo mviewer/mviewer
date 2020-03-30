@@ -686,6 +686,10 @@ ul#layers-container {
     /*max-width: 280px!important;*/
 }
 
+#right-panel .active {
+  padding-bottom: 100px;
+}
+
 #right-panel .carousel-inner {
       padding-left: 0px;
       padding-right: 25px;
