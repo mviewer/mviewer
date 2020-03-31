@@ -1,0 +1,38 @@
+on:
+    - push
+
+jobs:
+  docker-build:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checking out the repository"
+        uses: actions/checkout@v2
+      - name: "Calculating the docker image tag"
+        if: github.repository == 'geobretagne/mviewer'
+        id: version
+        run: |
+         if [ ${{ github.ref }} == 'refs/heads/master' ]
+         then
+            DOCKER_TAG=latest
+         else
+            DOCKER_TAG=$( echo ${{ github.ref }} | cut -d'/' -f3)
+         fi
+         echo ::set-output name=VERSION::$DOCKER_TAG
+
+      - name: "build the container"
+        if: github.repository == 'geobretagne/mviewer'
+        run: |
+          docker build -t mviewer/mviewer:${{ steps.version.outputs.VERSION }} .
+
+      - name: "Log onto docker hub"
+        if: github.repository == 'geobretagne/mviewer'
+        uses: azure/docker-login@v1
+        with:
+          username: '${{ secrets.DOCKER_HUB_USERNAME }}'
+          password: '${{ secrets.DOCKER_HUB_PASSWORD }}'
+
+      - name: "push the container"
+        if: github.repository == 'geobretagne/mviewer'
+        run: |
+          docker push mviewer/mviewer:${{ steps.version.outputs.VERSION }}

@@ -790,10 +790,16 @@ mviewer = (function () {
             htmlListGroup += _renderHTMLFromTemplate(mviewer.templates.theme, view);
         });
         var panelMini = configuration.getConfiguration().themes.mini;
+        var legendMini = configuration.getConfiguration().themes.legendmini;
         if (panelMini && (panelMini === 'true')) {
+            // hide all panels
             mviewer.toggleMenu(false);
             mviewer.toggleLegend(false);
         }
+        if(legendMini && (legendMini === "true")) {
+            // hide legend panel
+            mviewer.toggleLegend(false);
+        }        
         $("#menu").html(htmlListGroup);
         initMenu();
         // Open theme item if set to collapsed=false
