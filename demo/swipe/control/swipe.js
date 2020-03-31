@@ -1,12 +1,6 @@
-mviewer.customControls.swipe = (function() {
-    /*
-        * Private
-        */
-       var _idlayer = 'swipe';
 
-
-       // Generated with https://www.cssportal.com/style-input-range/
-       var _css = `input[type=range] {
+// Generated with https://www.cssportal.com/style-input-range/
+const _css = `input[type=range] {
   height: 1px;
   -webkit-appearance: none;
   margin: 10px 0;
@@ -98,34 +92,31 @@ input[type=range]:focus::-ms-fill-upper {
 `;
 
 
+const init = function() {
+   // mandatory - code executed when panel is opened
+   var _map = mviewer.getMap();
 
-       return {
-           /*
-            * Public
-            */
+   var html = '<div><style>'+_css+'</style><input id="swipe" type="range" style="width: 100%;position: fixed;bottom: 60px;"></div>';
+   var _swipeElement = document.getElementById('swipe');
+   if (!_swipeElement) {
+       $("#map").append(html);
+       _swipeElement = document.getElementById('swipe');
+       _swipeElement.addEventListener('input', function() {
+            _map.render();
+       }, false);
+   }
 
-           init: function() {
-               // mandatory - code executed when panel is opened
-               var _map = mviewer.getMap();
+   $("#swipe-select").click(function() {
+       mviewer.setBaseLayer(this.value);
+   });
 
-               var html = '<div><style>'+_css+'</style><input id="swipe" type="range" style="width: 100%;position: fixed;bottom: 60px;"></div>';
-               var _swipeElement = document.getElementById('swipe');
-               if (!_swipeElement) {
-                   $("#map").append(html);
-                   _swipeElement = document.getElementById('swipe');
-                   _swipeElement.addEventListener('input', function() {
-                        _map.render();
-                   }, false);
-               }
+};
 
-
-           },
-
-           destroy: function() {
+const destroy =  function() {
                // mandatory - code executed when panel is closed
                $("#swipe").remove();
 
            }
-       };
 
-   }());
+new CustomControl("swipe", init, destroy);
+
