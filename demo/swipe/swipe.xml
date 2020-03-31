@@ -11,13 +11,17 @@
     measuretools="false"
     togglealllayersfromtheme="false">
 </application>
-<mapoptions maxzoom="18" projection="EPSG:3857" center="-227192,6206289" zoom="12" />
+<mapoptions maxzoom="18" projection="EPSG:3857" center="-230072,6204699" zoom="14" />
 <baselayers style="default">
-    <baselayer visible="true" id="positron" thumbgallery="img/basemap/positron.png" title="CartoDb" label="Positron" type="OSM" url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution="Map tiles by  &lt;a href=&quot;https://cartodb.com/attributions&quot;&gt;CartoDb&lt;/a&gt;, under  &lt;a href=&quot;https://creativecommons.org/licenses/by/3.0/&quot;&gt;CC BY 3.0 &lt;/a&gt;"  ></baselayer>
-    <baselayer visible="false" id="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg" title="Esri world imagery" label="Esri world imagery" type="OSM" url="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"  ></baselayer>
+    <baselayer  type="WMS" id="ortho_50" label="Photo aérienne 1950" title="GéoBretagne" thumbgallery="img/basemap/ortho-ancien.jpg"
+			url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite-ancien" format="image/jpeg" visible="true"
+			attribution="&lt;a href='http://applications.region-bretagne.fr/geosource/apps/search/?uuid=048622c5-b333-4c2b-94ec-40a41608dc06' target='_blank' >Partenaires GéoBretagne - IGN&lt;/a>"/>
+    <baselayer  visible="false" type="WMTS" id="ortho_ir" label="Photo aérienne infra rouge"   title="GéoBretagne" thumbgallery="img/basemap/ir.jpg"
+            url="http://geobretagne.fr/geoserver/gwc/service/wmts"   layers="photo:ir-composite" format="image/jpeg" style="_null" matrixset="EPSG:3857"
+            fromcapacity="false"   attribution="&lt;a href='https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=434b82a8-8d3c-4d9f-9eb3-0485f1a63eb6' target='_blank' >partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver&lt;/a>" />
 </baselayers>
-<themes mini="false">
-    <theme name="Outils"  collapsed="false" id="demo" icon="fas fa-cog">
+<themes mini="true" legendmini="true">
+    <theme name="Outils"  collapsed="true" id="demo" icon="fas fa-cog">
         <layer id="swipe" name="[SWIPE] image satellite" visible="true" queryable="false"
             type="customlayer"
             legendurl="demo/swipe/control/swipe.png"
