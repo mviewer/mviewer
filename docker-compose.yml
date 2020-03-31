@@ -1,0 +1,10 @@
+version: '3'
+services:
+  mviewer:
+    container_name: mviewer
+    build: .
+    ports:
+      - "8080:80"
+    image: mviewer/mviewer
+    volumes:
+      - '${APPSPATH}:/usr/share/nginx/html/apps'
