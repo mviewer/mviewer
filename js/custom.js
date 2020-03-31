@@ -15,3 +15,17 @@ class CustomLayer {
     }
   }
 }
+
+class CustomControl {
+  constructor(id, init = function () {}, destroy = function () {}) {
+    this.id = id;
+    this.init = init;
+    this.destroy = destroy;
+    /* Load customControl in mviewer.customControls */
+    if (mviewer.customControls && !mviewer.customControls[id]) {
+        mviewer.customControls[id] = this
+    } else {
+        console.log(`${this.id} customControl is not loaded because  ${this.id} is already in use !`);
+    }
+  }
+}
