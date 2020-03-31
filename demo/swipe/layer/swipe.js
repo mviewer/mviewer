@@ -1,5 +1,5 @@
-let key = "get_your_own_D6rA4zTHduk6KOKTXzGB";
-let aerial = new ol.layer.Tile({
+const key = "get_your_own_D6rA4zTHduk6KOKTXzGB";
+const aerial = new ol.layer.Tile({
   source: new ol.source.XYZ({
     url: 'https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=' + key,
     maxZoom: 20
