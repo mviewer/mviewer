@@ -1,4 +1,4 @@
-.. Authors : 
+.. Authors :
 .. mviewer team
 .. Gwendall PETIT (Lab-STICC - CNRS UMR 6285 / DECIDE Team)
 
@@ -86,6 +86,7 @@ Cette partie est dédiée aux personnes qui ont vocation à contribuer au code m
    doc_contrib/doc
    doc_contrib/issue
    doc_contrib/git
+   doc_contrib/release
 
 Auteurs et licence
 ==================
