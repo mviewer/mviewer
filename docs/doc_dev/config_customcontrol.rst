@@ -2,18 +2,15 @@
 .. mviewer team
 .. Sébastien FOUCHEUR
 
-.. _configcustoms:
+.. _configcustomcontrol:
 
-Configurer - Custom Layers et Custom Controls
-=============================================
+Configurer - Custom Control
+===========================
 
-Les **Custom Layers** et **Customs Controls** permettent de personnaliser la représentation et les interactions que l'on a avec les layers de façon plus avancée que ce que l'on peut faire avec le fichier de configuration XML.
-
-Custom Control
---------------
+Les **Customs Controls** permettent de personnaliser la représentation et les interactions que l'on a avec les layers de façon plus avancée que ce que l'on peut faire avec le fichier de configuration XML.
 
 Première Méthode
-~~~~~~~~~~~~~~~~
+----------------
 
 Tous les Custom Control ont une base commune dans le fichier ``custom.js`` ou est définie la class ``CustomControl`` :
 
@@ -81,8 +78,8 @@ Ce fichier définie une classe qui etend la classe ``CustomControl`` :
         }
     }
 
-La classe ``CustomControl`` étant abstraite cela signifie qu'elle nous oblige a redefinir les fonctions ``init()`` et ``destroy()`` qui sont obligatoires sinon elle nous renvoie une erreur. De plus la fonction
-``constructor(id)`` permet à l'objet d'être initialisé avec la valeur id lors de la création d'un objet MonControl.
+La classe ``CustomControl`` étant **abstraite** cela signifie qu'elle nous oblige a redefinir les fonctions ``init()`` et ``destroy()`` qui sont obligatoires sinon elle nous renvoie une erreur. De plus la fonction
+``constructor(id)`` permet à l'objet d'être initialisé avec la valeur **id** lors de la création d'un **objet MonControl**.
 Pour creer cet objet et le rendre disponible au reste de l'application il fau rajouter le code suivant :
 
 .. code-block:: javascript
@@ -91,21 +88,23 @@ Pour creer cet objet et le rendre disponible au reste de l'application il fau ra
     // Créer l'objet control avec l'id 'moncontrol' qui est le nom de la couche
     new MonControl("moncontrol");
 
+----
+
 Ajouter des fonctions
-^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~
+
+
 
 Ajouter des variables
-^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~
+
 
 Deuxième Méthode
-~~~~~~~~~~~~~~~~
+----------------
 
 Ajouter des fonctions
-^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~
 
 Ajouter des variables
-^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~
 
-
-Custom Layer
-----------------------------------------

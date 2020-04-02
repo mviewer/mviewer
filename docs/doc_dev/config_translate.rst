@@ -53,13 +53,13 @@ Le texte affiché pour notre élément de la page (<span>) sera alors::
     "une valeur en français"
 
 Quels sont les paramètres de configuration utilisés ?
-------------------------------------
+-----------------------------------------------------
 
 Il vous faudra ajouter dans votre fichier de configuration les propriétés suivantes comme décrit dans  la `page mviewer <https://github.com/geobretagne/mviewer>`_: 
 
 - lang
 
-*Langue à utiliser pour l'interface. Si plusieurs langues sont spécifiées, un menu additionnel sera créé afin de permettre à l'utilisateur de choisir sa langue a première langue de la liste saisie sera alors utilisée par défaut. Par défaut, lang n'est pas activé.
+*Langue à utiliser pour l'interface. Si plusieurs langues sont spécifiées, un menu additionnel sera créé afin de permettre à l'utilisateur de choisir sa langue a première langue de la liste saisie sera alors utilisée par défaut. Par défaut, lang n'est pas activé.*
 
 - langfile
 
