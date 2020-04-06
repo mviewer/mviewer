@@ -9,5 +9,3 @@ Configurer - Custom Layer
 
 Première Méthode
 ----------------
-
-Bienvenue sur la doc customLayer !
