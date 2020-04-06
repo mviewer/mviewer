@@ -9,7 +9,112 @@ Configurer - Custom Control
 
 Les **Customs Controls** permettent de personnaliser la représentation et les interactions que l'on a avec les layers de façon plus avancée que ce que l'on peut faire avec le fichier de configuration XML.
 
-Première méthode : Création d'une sous-classe
+Première méthode : Définition Simple
+------------------------------------
+
+Cette méthode permet de créer des customs controls plus simples qu'avec la deuxième méthode mais permet moins de personnalisation.
+
+Dans ce cas précis la classe ``CustomControl`` dans le fichier ``custom.js`` est définie comme suit :
+
+.. code-block:: javascript
+  :linenos:
+
+    class CustomControl {
+        constructor(id, init = function () {}, destroy = function () {}) {
+            this.id = id;
+            this.init = init;
+            this.destroy = destroy;
+            /* Load customControl in mviewer.customControls */
+            if (mviewer.customControls && !mviewer.customControls[id]) {
+                mviewer.customControls[id] = this
+            } else {
+                console.log(`${this.id} customControl is not loaded because  ${this.id} is already in use !`);
+            }
+        }
+    }
+
+La classe possède une méthode ``constructor()`` qui prend en paramètre les méthodes ``init()`` et ``destroy()`` que l'on peut définir dans le fichier Javascript (dans cet exemple ``moncontrol.js``)
+présent dans l'arborescence suivante::
+
+    /apps
+        ├── ma_carte1
+        │   ├── addons
+        │   │   ├── couche1
+        │   │   │   ├── control
+        │   │   │   │   ├── moncontrol.html
+        │   │   │   │   └── moncontrol.js
+        │   │   │   └── layer
+        │   │   └── couche2
+        │   │       ├── control
+        │   │       └── layer
+        │   ├── data
+        │   ├── css
+        │   ├── sld
+        │   ├── img
+        │   ├── templates
+        │   └── ma_carte1.xml
+        └── ma_carte2
+
+Pour cela il faut donc définir les deux fonctions en les déclarant avec le mot-clé **const** pour les rendre inaccessibles depuis le reste de l'application indépendamment du custom control dans lequel elles 
+sont définies, puis il faudra les donner en paramètre à la classe ``CustomControl`` vue plutôt.
+
+.. code-block:: javascript
+  :linenos:
+
+    const init = function() {
+    // Obligatoire - code exécuté quand le panel est ouvert
+    // Votre code ici
+    ...
+
+    };
+
+    const destroy =  function() {
+        // Obligatoire - code exécuté quand le panel se ferme
+        // Votre code ici
+        ...
+    }
+    // Initialiser l'objet avec les fonctions init() et destroy() et l'id de couche "monControl".
+    new CustomControl("monControl", init, destroy);
+
+Ajouter des fonctions et des variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Une **fonction/variable privée** ne sera pas accessible en dehors du code de la classe alors qu’une **fonction/variable publique** sera accessible depuis n’importe où ce qui peut entrainer des conflits avec d’autres fonctions/variables 
+de l’application si l’on ne fait pas attention.
+
+Pour les variables et fonctions de classe publique
+**************************************************
+
+Il faut définir un nouvelle attribut pour la classe ``CustomControl`` de la manière suivante :
+
+.. code-block:: javascript
+  :linenos:
+    
+    ...
+    // Initialiser l'objet avec les fonctions init() et destroy() et l'id de couche "monControl".
+    var monControl = new CustomControl("monControl", init, destroy);
+
+    // Une fois créer on peut ajouter des propriétés (une propriété peut être une fonction ou une variable)
+
+    // Ajouter une fonction
+    monControl.maNouvelleFonction = function(){
+        // Votre Code ici
+        ...
+    }
+
+    // Ajouter une variable
+    monControl.maNouvelleVariable = "je suis un exemple";
+
+
+Ces atributs seront alors publiques et accessibles depuis l'éxterieur.
+
+Pour les variables et fonctions de classe privée
+************************************************
+
+Cette méthode ne permet pas d'ajouter des nouvelles fonctions ou variables privées en modifiant uniquement votre dossier ``apps`` pour faire cela il faut modifier directement
+la classe ``CustomControl`` dans le fichier ``custom.js`` en ajoutant des paramètres dans le ``constructor()`` puis en suivant le mode d'emploi de la partie précédente.
+
+Deuxième méthode : Création d'une sous-classe
 ---------------------------------------------
 
 Cette méthode elle la plus complète des deux et permet de créer des customs controls plus poussés.
@@ -256,80 +361,6 @@ Si vous voulez quand pouvoir accéder et modifier la valeur de cette variable en
     }
     // Initialiser un objet avec la chaine de caractères "maVariablePrivee" dans la variable de classe privée #maVariablePrivee et l'id de couche "monControl".
     new MonControl("monControl","maVariablePrivee");
-
-Deuxième méthode : Définition Simple
-------------------------------------
-
-Cette méthode permet de créer des customs controls plus simples qu'avec la première méthode mais permet moins de personnalisation.
-
-Dans ce cas précis la classe ``CustomControl`` dans le fichier ``custom.js`` est définie comme suit :
-
-.. code-block:: javascript
-  :linenos:
-
-    class CustomControl {
-        constructor(id, init = function () {}, destroy = function () {}) {
-            this.id = id;
-            this.init = init;
-            this.destroy = destroy;
-            /* Load customControl in mviewer.customControls */
-            if (mviewer.customControls && !mviewer.customControls[id]) {
-                mviewer.customControls[id] = this
-            } else {
-                console.log(`${this.id} customControl is not loaded because  ${this.id} is already in use !`);
-            }
-        }
-    }
-
-La classe possède une méthode ``constructor()`` qui prend en paramètre les méthodes ``init()`` et ``destroy()`` que l'on peut définir dans le fichier Javascript (dans cet exemple ``moncontrol.js``)
-présent dans l'arborescence suivante::
-
-    /apps
-        ├── ma_carte1
-        │   ├── addons
-        │   │   ├── couche1
-        │   │   │   ├── control
-        │   │   │   │   ├── moncontrol.html
-        │   │   │   │   └── moncontrol.js
-        │   │   │   └── layer
-        │   │   └── couche2
-        │   │       ├── control
-        │   │       └── layer
-        │   ├── data
-        │   ├── css
-        │   ├── sld
-        │   ├── img
-        │   ├── templates
-        │   └── ma_carte1.xml
-        └── ma_carte2
-
-Pour cela il faut donc définir les deux fonctions en les déclarant avec le mot-clé **const** pour les rendre inaccessibles depuis le reste de l'application indépendamment du custom control dans lequel elles 
-sont définies, puis il faudra les donner en paramètre à la classe ``CustomControl`` vue plutôt.
-
-.. code-block:: javascript
-  :linenos:
-
-    const init = function() {
-    // Obligatoire - code exécuté quand le panel est ouvert
-    // Votre code ici
-    ...
-
-    };
-
-    const destroy =  function() {
-        // Obligatoire - code exécuté quand le panel se ferme
-        // Votre code ici
-        ...
-    }
-    // Initialiser l'objet avec les fonctions init() et destroy() et l'id de couche "monControl".
-    new CustomControl("monControl", init, destroy);
-
-Ajouter des fonctions et des variables
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Cette méthode ne permet pas d'ajouter des nouvelles fonctions ou variables en modifiant uniquement votre dossier ``apps`` pour faire cela il faut modifier directement
-la classe ``CustomControl`` dans le fichier ``custom.js`` en ajoutant des paramètres dans le ``constructor()`` puis en suivant le mode d'emploi de la partie précédente.
-
 
 
 
