@@ -220,6 +220,7 @@ Elément enfant de ``<theme>`` ou ``<group>``
                 url=""
                 attribution=""
                 tooltip=""
+                tooltipcontent=""
                 tooltipenabled=""
                 expanded=""
                 metadata=""    
@@ -275,6 +276,11 @@ Elément enfant de ``<theme>`` ou ``<group>``
 * ``type``: Type de la couche (wms|geojson|kml|customlayer) default=wms. Si customlayer est défini, il faut instancier un Layer OpenLayers dans un fichier javascript ayant pour nom l'id de la couche (voir ":ref:`configfuse`"). Ce fichier js doit être placé dans le répertoire customlayers/
 * ``tooltip``: Pour les couches de type vecteur uniquement. Booléen précisant si les entités de la couche sont affichées sous forme d'infobulle au survol de la souris. (Les infobulles ne fonctionnent qu'avec une seule couche à la fois). Valeur par défaut = false.
 * ``tooltipenabled``: Précise la couche prioritaire pour l'affichage des infobulles.
+* ``tooltipcontent``: Chaîne de caractères décrivant l'information à afficher dans les infobulles. Cette chaîne contient soit le nom d'un champ de la couche soit un template Mustache (code html) combinant plusieurs noms de champs.
+Exemple : ``tooltipcontent="{{name}} - ({{city}})"``.
+Il est possible d'utiliser du code HTML pour mettre en forme la tooltip. Exemple : **{{name}} </br> {{city}}**. En HTML, **</br>** permet d'effectuer un saut de ligne, ce qui nous permet ici d'avoir une tooltip sur 2 lignes. **Attention**, cette expression doit être convertie en une expression compatible XML, c'est à dire avec le code HTML échappé.
+Il existe des outils en ligne pour cela. Exemple (https://www.freeformatter.com/xml-escape.html)
+L'expression valide pour l'expression précédente est ``tooltipcontent="{name}} &lt;/br&gt; {{city}}"``
 
 **Paramètres pour gérer la dimension temporelle des couches WMS**
 
