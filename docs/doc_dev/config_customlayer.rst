@@ -8,13 +8,13 @@ Configurer - Custom Layer
 =========================
 Les **Customs Layers** permettent de personnaliser la représentation et les interactions que l'on a avec les layers de façon plus avancée que ce que l'on peut faire avec le fichier de configuration XML.
 
-Dans chacune des deux méthodes présentée dans la suite de cette page les customs layers ont pour base commune la classe ``CustomLayer`` present dans le fichier ``custom.js`` :
+Dans chacune des deux méthodes présentées dans la suite de cette page les customs layers ont pour base commune la classe ``CustomLayer`` présente dans le fichier ``custom.js`` :
 
 .. code-block:: javascript
   :linenos:
 
     class CustomLayer {
-        // Initialiser l'objet avec un ID, une Layer (Couche), une Legende et un Handle (gère le click sur la carte)
+        // Initialiser l'objet avec un ID, une Layer (Couche), une Légende et un Handle (gère le click sur la carte)
         constructor(id, layer, legend, handle = false) {
 
             // Initialiser l'ID
@@ -24,7 +24,7 @@ Dans chacune des deux méthodes présentée dans la suite de cette page les cust
             this.layer = layer;
 
             /* for vector Layer only */
-            /* Legende : utilisé seulement si le paramètre vectorlegend est égale à true dans le fichier de configuration XML*/
+            /* Legende : utilisée seulement si le paramètre vectorlegend est égale à true dans le fichier de configuration XML*/
             this.legend = legend;
 
             /* handle : Remplace le click de base sur les features*/
@@ -67,7 +67,7 @@ Cette solution permet de rapidement mettre en place un custom layer mais limite 
 .. code-block:: javascript
   :linenos:
 
-    // Definition de la couche réprésentant le custom layer
+    // Définition de la couche représentant le custom layer
     const aerial = new ol.layer.Tile({
         source: new ol.source.XYZ({
             url: 'https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=' + key,
@@ -82,7 +82,7 @@ Cette solution permet de rapidement mettre en place un custom layer mais limite 
     // Le custom layer aura pour id "monCustomLayer" et pour couche aerial définit dans l'exemple
     new CustomLayer("monCustomLayer", aerial);
 
-Tous les paramètres de la classe ``CustomLayer`` ne sont pas nécessaire seul **l'ID** et **la couche (layer)** sont indispensables.
+Tous les paramètres de la classe ``CustomLayer`` ne sont pas nécessaires seul **l'ID** et **la couche (layer)** sont indispensables.
 
 Ajouter des fonctions et des variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -93,16 +93,16 @@ de l'application si l'on ne fait pas attention.
 Pour les variables et fonctions de classe publique
 **************************************************
 
-Il faut définir un nouvelle attribut pour la classe ``CustomControl`` de la manière suivante :
+Il faut définir un nouvel attribut pour la classe ``CustomControl`` de la manière suivante :
 
 .. code-block:: javascript
   :linenos:
     
     ...
-    // Initialiser l'objet avec les fonctions init() et destroy() et l'id de couche "monControl".
+    // Initialiser l'objet avec les fonctions init() et destroy() et l'id de couche "monLayer".
     var monLayer = new CustomLayer("monLayer",aerial);
 
-    // Une fois créer on peut ajouter des propriétés (une propriété peut être une fonction ou une variable)
+    // Une fois créé on peut ajouter des propriétés (une propriété peut être une fonction ou une variable)
 
     // Ajouter une fonction
     monLayer.maNouvelleFonction = function(){
@@ -114,15 +114,13 @@ Il faut définir un nouvelle attribut pour la classe ``CustomControl`` de la man
     monLayer.maNouvelleVariable = "je suis un exemple";
 
 
-Ces atributs seront alors publiques et accessibles depuis l'éxterieur.
+Ces attributs seront alors publics et accessibles depuis l'extérieur.
 
 Pour les variables et fonctions de classe privée
 ************************************************
 
 Cette méthode ne permet pas d'ajouter des nouvelles fonctions ou variables privées en modifiant uniquement votre dossier ``apps`` pour faire cela il faut modifier directement
-la classe ``CustomControl`` dans le fichier ``custom.js`` en ajoutant des paramètres dans le ``constructor()`` puis en suivant le mode d'emploi de la partie précédente.
-
-
+la classe ``CustomLayer`` dans le fichier ``custom.js`` en ajoutant des paramètres dans le ``constructor()`` puis en suivant le mode d'emploi de la partie précédente.
 
 Deuxième Méthode : Création d'une sous-classe
 ---------------------------------------------
@@ -138,28 +136,28 @@ La création d'une sous-classe permet de mieux structurer le code et de facilite
             maxZoom: 20
         })
     });
-    // Classe qui etend la classe 'CustomLayer' et decris le custom Layer
+    // Classe qui étend la classe 'CustomLayer' et décrit le custom Layer
     class MonCustomLayer extends CustomLayer {
 
         // Initialiser le custom layer
         constructor(id, layer, legend, handle = false) {
 
-            // Initialier les attributs de la classe parent
+            // Initialiser les attributs de la classe parent
             super(id, layer, legend, handle);
 
         }
     }
-    // Create The Custom Layer
+    // Créer le Custom Layer
     new MonCustomLayer("monCustomLayer",aerial);
 
-La classe ``MonCustomLayer`` hérite de la classe ``CustomLayer`` et doit donc utilisé le ``constructor()`` parent pour créer un objet en spécifiant au minimum **l'ID** et **la layer**.
+La classe ``MonCustomLayer`` hérite de la classe ``CustomLayer`` et doit donc utiliser le ``constructor()`` parent pour créer un objet en spécifiant au minimum **l'ID** et **la layer**.
 
 Ajouter des fonctions et des variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Pour empêcher de potentiels bugs on peut ajouter à la classe ``MonCustomLayer`` (vue dans la partie précendente) des fonctions privées ou publiques.
+Pour empêcher de potentiels bugs on peut ajouter à la classe ``MonCustomLayer`` (vue dans la partie précédente) des fonctions privées ou publiques.
 
-Une fonction privée ne sera pas accessible en dehors du code de la classe alors qu'une fonction publique sera accessible depuis n'importe où ce qui peut entrainer des conflits avec d'autres fonctions 
+Une fonction privée ne sera pas accessible en dehors du code de la classe alors qu'une fonction publique sera accessible depuis n'importe où ce qui peut entraîner des conflits avec d'autres fonctions 
 de l'application si l'on ne fait pas attention.
 
 Pour les variables et fonctions de classe publique
@@ -174,10 +172,10 @@ Directement en ajoutant dans le code de la classe ``MonCustomLayer`` :
     class MonCustomLayer extends CustomLayer {
          constructor(id, layer, legend, handle = false, nouvelleVariable) {
 
-            // Initialier les attributs de la classe parent
+            // Initialiser les attributs de la classe parent
             super(id, layer, legend, handle);
 
-            // Ajout d'une variable publique qui prend en valeur le paramètre de constructor nouvelleVariable
+            // Ajout d'une variable publique qui prend en valeur le paramètre de constructor "nouvelleVariable"
             this.nouvelleVariable = nouvelleVariable;
 
         }
@@ -196,7 +194,7 @@ Concernant la variable elle est de la même façon accessible grâce à ``monobj
 Pour les variables et fonctions de classe privée
 ************************************************
 
-Une fonction privée est définit en dehors du code de la classe ``MonCustomLayer`` et déclarée comme une ``constante`` :
+Une fonction privée est définie en dehors du code de la classe ``MonCustomLayer`` et déclarée comme une ``constante`` :
 
 .. code-block:: javascript
   :linenos:
@@ -229,11 +227,12 @@ Pour ajouter une variable de classe privée il faut ajouter le **"#"** avant le 
     ...
     // Classe qui étend la classe et décrit le custom Layer
     class MonCustomLayer extends CustomLayer {
+
         // Déclaration de la variable Privée
         #maVariablePrivee;
         constructor(id, layer, legend, handle = false,maVariablePrivee = "valeurParDefaut") {
 
-            // Initialier les attributs de la classe parent
+            // Initialiser les attributs de la classe parent
             super(id, layer, legend, handle);
 
             // Initialiser #maVariablePrivee
@@ -260,7 +259,7 @@ Si vous voulez quand pouvoir accéder et modifier la valeur de cette variable en
 
         constructor(id, layer, legend, handle = false,maVariablePrivee = "valeurParDefaut") {
 
-            // Initialier les attributs de la classe parent
+            // Initialiser les attributs de la classe parent
             super(id, layer, legend, handle);
 
             // Initialiser #maVariablePrivee
@@ -279,13 +278,13 @@ Si vous voulez quand pouvoir accéder et modifier la valeur de cette variable en
             this.#maVariablePrivee = valeur;
         }
     }
-    // Initialiser un objet avec la chaine de caractères "maVariablePrivee" dans la variable de classe privée #maVariablePrivee et l'id de couche "monLayer".
+    // Initialiser un objet avec la chaîne de caractères "maVariablePrivee" dans la variable de classe privée #maVariablePrivee et l'id de couche "monLayer".
     new MonCustomLayer("monLayer",aerial);
 
-Les méthodes publiques existante de mviewer
--------------------------------------------
+Les méthodes publiques existantes de mviewer
+--------------------------------------------
 
-Pour acceder à ces fonctions publique il faut simplement utiliser l'objet ``mviewer`` et accéder à une fonction (``mviewer.nomDeLaFonction()``). 
+Pour accéder à ces fonctions publiques il faut simplement utiliser l'objet ``mviewer`` et accéder à une fonction (``mviewer.nomDeLaFonction()``). 
 
 Il existe déjà les fonctions suivantes :
 
