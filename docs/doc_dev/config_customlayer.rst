@@ -331,8 +331,7 @@ Il existe déjà les fonctions suivantes :
         :param float y: Coordonnée y
             
         :return: Affiche une punaise sur les coordonnées entrées.
-
-
+        
     .. function:: tr()
             
         :return: Traduit dans la langue courante de mviewer une valeur de type ``machaine.a.traduire`` .
