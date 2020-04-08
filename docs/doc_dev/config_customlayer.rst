@@ -281,3 +281,73 @@ Si vous voulez quand pouvoir accéder et modifier la valeur de cette variable en
     }
     // Initialiser un objet avec la chaine de caractères "maVariablePrivee" dans la variable de classe privée #maVariablePrivee et l'id de couche "monLayer".
     new MonCustomLayer("monLayer",aerial);
+
+Les méthodes publiques existante de mviewer
+-------------------------------------------
+
+Pour acceder à ces fonctions publique il faut simplement utiliser l'objet ``mviewer`` et accéder à une fonction (``mviewer.nomDeLaFonction()``). 
+
+Il existe déjà les fonctions suivantes :
+
+.. object:: mviewer
+
+    .. function:: getActiveBaseLayer()
+    
+        :return: L'id du baselayer  (couche de fond visible).
+
+    .. function:: setBaseLayer(id)
+    
+        :param string id: Id du layer
+            
+        :return: Affiche le baselayer correspondant à l'id.
+
+    .. function:: getLayer(layerid)
+    
+        :param string layerid: Id du layer
+            
+        :return:  La config du layerid.
+
+        .. attribute:: getLayer(layerid).layerid
+
+            :return:  Le layer (ol.Layer) du layerid.
+
+    .. function:: getMap()
+            
+        :return: La map (ol.Map).
+    
+    .. function:: toggleLayer(layerid)
+    
+        :param string layerid: Id du layer
+            
+        :return: Affiche/masque le layer correspondant au layerid.
+    
+    .. function:: removeAllLayers()
+            
+        :return:  Masque toutes les couches.
+
+    .. function:: showLocation(projection, x ,y)
+    
+        :param string projection: Projection de la carte
+        :param float x: Coordonnée y
+        :param float y: Coordonnée y
+            
+        :return: Affiche une punaise sur les coordonnées entrées.
+
+
+    .. function:: tr()
+            
+        :return: Traduit dans la langue courante de mviewer une valeur de type ``machaine.a.traduire`` .
+    
+    .. function:: zoomToLocation(x,y,zoom, querymap)
+    
+        :param float x: Coordonnée y
+        :param float y: Coordonnée y
+        :param int zoom: Zoom de la carte
+        :param string querymap: Projection de la carte
+            
+        :return: Zoom aux coordonnées indiquées et en option interroge la carte à ces coordonnées.
+    
+        
+
+
+
