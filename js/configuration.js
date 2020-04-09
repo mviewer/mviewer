@@ -97,6 +97,37 @@ var configuration = (function () {
         return _conf;
     };
 
+    var _extend = function (conf) {
+        //load extensions
+        var extensions = $(conf).find("extension");
+        var requests = [];
+        var ajaxFunction = function () {
+            extensions.toArray().forEach(function(extension) {
+                var src = $(extension).attr("src");
+                var type = $(extension).attr("type");
+                var proxy = false;
+                requests.push($.ajax({
+                    url: mviewer.ajaxURL(src, proxy),
+                    crossDomain : true,
+                    dataType: "script",
+                    error: function(xhr, status, error) {
+                        alert( "error extension" );
+                    }
+                }));
+            });
+        };
+
+        $.when.apply(new ajaxFunction(), requests).done(function (result) {
+            //Lorsque toutes les ressources externes sont récupérées,
+            // on déclanche le trigger applicationExtended
+            $(document).trigger("applicationExtended", { "xml": conf});
+        }).fail(function(err) {
+            // Si une erreur a été rencontrée, on déclanche le même trigger
+            $(document).trigger("applicationExtended", { "xml": conf});
+        });
+
+    };
+
     var _complete = function (conf) {
         /*
          * Des thèmes externes (présents dans d'autres configuration peuvent être automatiquement chargés
@@ -880,6 +911,7 @@ var configuration = (function () {
 
     return {
         parseXML: _parseXML,
+        extend: _extend,
         load: _load,
         complete: _complete,
         getThemes: function () { return _themes; },
