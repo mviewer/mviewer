@@ -7,31 +7,21 @@
 Configurer - Custom Control
 ===========================
 
-Les **Customs Controls** permettent de personnaliser la représentation et les interactions que l'on a avec les layers de façon plus avancée que ce que l'on peut faire avec le fichier de configuration XML.
+Les **Customs Controls** permettent de personnaliser la représentation et les interactions que l'on a avec les layers de façon plus avancée que ce que 
+l'on peut faire avec le fichier de configuration XML.
+
+Voici un exemple, le custom control s'affiche dans la légende en dessous des attributions :
+
+.. image:: ../_images/dev/config_customcontrol/custom_control_example.png
+            :alt: Profil en long
+            :align: center
 
 Première méthode : Définition Simple
 ------------------------------------
 
 Cette méthode permet de créer des customs controls plus simples qu'avec la deuxième méthode mais permet moins de personnalisation.
 
-Dans ce cas précis la classe ``CustomControl`` dans le fichier ``custom.js`` est définie comme suit :
-
-.. code-block:: javascript
-  :linenos:
-
-    class CustomControl {
-        constructor(id, init = function () {}, destroy = function () {}) {
-            this.id = id;
-            this.init = init;
-            this.destroy = destroy;
-            /* Load customControl in mviewer.customControls */
-            if (mviewer.customControls && !mviewer.customControls[id]) {
-                mviewer.customControls[id] = this
-            } else {
-                console.log(`${this.id} customControl is not loaded because  ${this.id} is already in use !`);
-            }
-        }
-    }
+Dans ce cas précis on utilise la classe de base ``CustomControl`` dans le fichier ``custom.js``.
 
 La classe possède une méthode ``constructor()`` qui prend en paramètre les méthodes ``init()`` et ``destroy()`` que l'on peut définir dans le fichier Javascript (dans cet exemple ``moncontrol.js``)
 présent dans l'arborescence suivante::
@@ -85,7 +75,7 @@ de l’application si l’on ne fait pas attention.
 Pour les variables et fonctions de classe publique
 **************************************************
 
-Il faut définir un nouvelle attribut pour la classe ``CustomControl`` de la manière suivante :
+Il faut définir un nouvel attribut pour la classe ``CustomControl`` de la manière suivante :
 
 .. code-block:: javascript
   :linenos:
@@ -106,42 +96,14 @@ Il faut définir un nouvelle attribut pour la classe ``CustomControl`` de la man
     monControl.maNouvelleVariable = "je suis un exemple";
 
 
-Ces atributs seront alors publiques et accessibles depuis l'éxterieur.
-
-Pour les variables et fonctions de classe privée
-************************************************
-
-Cette méthode ne permet pas d'ajouter des nouvelles fonctions ou variables privées en modifiant uniquement votre dossier ``apps`` pour faire cela il faut modifier directement
-la classe ``CustomControl`` dans le fichier ``custom.js`` en ajoutant des paramètres dans le ``constructor()`` puis en suivant le mode d'emploi de la partie précédente.
+Ces atributs seront alors publics et accessibles depuis l'éxterieur.
 
 Deuxième méthode : Création d'une sous-classe
 ---------------------------------------------
 
 Cette méthode elle la plus complète des deux et permet de créer des customs controls plus poussés.
 
-Tous les Custom Control ont une base commune dans le fichier ``custom.js`` où est définie la classe ``CustomControl`` :
-
-.. code-block:: javascript
-  :linenos:
-    
-    // Classe abstraite
-    class CustomControl {
-        constructor(id) {
-            this.id = id;
-            /* Load customControl in mviewer.customControls */
-            if (mviewer.customControls && !mviewer.customControls[id]) {
-                mviewer.customControls[id] = this
-            } else {
-                console.log(`${this.id} customControl is not loaded because  ${this.id} is already in use !`);
-            }
-        }
-        init(){
-            throw new Error('You must implement the \'init\' function');
-        }
-        destroy(){
-            throw new Error('You must implement the \'destroy\' function');
-        }
-    }
+Tous les Custom Control ont une base commune dans le fichier ``custom.js`` où est définie la classe ``CustomControl``.
 
 Pour utiliser cette classe il faut modifier le fichier Javascript (dans cet exemple ``moncontrol.js``) présent dans l'arborescence suivante::
 
@@ -204,7 +166,7 @@ Pour créer cet objet et le rendre disponible au reste de l'application il faut 
 Ajouter des fonctions
 ~~~~~~~~~~~~~~~~~~~~~
 
-Pour empêcher de potentiels bugs on peut ajouter à la classe ``MonControl`` (vue dans les parties précendentes) des fonctions privées ou publiques.
+Pour empêcher de potentiels téléscopage de variables ou de méthodes on peut ajouter à la classe ``MonControl`` (vue dans les parties précendentes) des fonctions privées ou publiques.
 
 Une fonction privée ne sera pas accessible en dehors du code de la classe alors qu'une fonction publique sera accessible depuis n'importe où ce qui peut entrainer des conflits avec d'autres fonctions 
 de l'application si l'on ne fait pas attention.
@@ -334,7 +296,7 @@ Pour ajouter une variable de classe privée il faut ajouter le **"#"** avant le 
     // Initialiser un objet avec la chaine de caractères "maVariablePrivee" dans la variable de classe privée #maVariablePrivee et l'id de couche "monControl".
     new MonControl("monControl","maVariablePrivee");
 
-Si vous voulez quand pouvoir accéder et modifier la valeur de cette variable en dehors de ce code mais de manière plus sécuriser il faut déclarer une fonction ``get()`` pour récupérer la valeur et une fonction
+Si vous voulez quand même pouvoir accéder et modifier la valeur de cette variable en dehors de ce code mais de manière plus sécuriser il faut déclarer une fonction ``get()`` pour récupérer la valeur et une fonction
 ``set(valeur)`` pour la modifier :
 
 ::
@@ -362,5 +324,10 @@ Si vous voulez quand pouvoir accéder et modifier la valeur de cette variable en
     // Initialiser un objet avec la chaine de caractères "maVariablePrivee" dans la variable de classe privée #maVariablePrivee et l'id de couche "monControl".
     new MonControl("monControl","maVariablePrivee");
 
+Interactions customLayer et mviewer
+-----------------------------------
 
+Depuis le customControl il est possible de communiquer et d'interagir avec la carte et d'une façon plus générale avec mviewer. 
+Vous pouvez ainsi mobiliser toutes les méthodes publiques dans votre développement. 
+Pour en savoir plus, consultez, dans la documentation développeur, la partie ":ref:`publicfonctions`".
 

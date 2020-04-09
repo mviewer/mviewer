@@ -6,38 +6,10 @@
 
 Configurer - Custom Layer
 =========================
+
 Les **Customs Layers** permettent de personnaliser la représentation et les interactions que l'on a avec les layers de façon plus avancée que ce que l'on peut faire avec le fichier de configuration XML.
 
-Dans chacune des deux méthodes présentées dans la suite de cette page les customs layers ont pour base commune la classe ``CustomLayer`` présente dans le fichier ``custom.js`` :
-
-.. code-block:: javascript
-  :linenos:
-
-    class CustomLayer {
-        // Initialiser l'objet avec un ID, une Layer (Couche), une Légende et un Handle (gère le click sur la carte)
-        constructor(id, layer, legend, handle = false) {
-
-            // Initialiser l'ID
-            this.id = id;
-
-            // Initialiser la couche
-            this.layer = layer;
-
-            /* for vector Layer only */
-            /* Legende : utilisée seulement si le paramètre vectorlegend est égale à true dans le fichier de configuration XML*/
-            this.legend = legend;
-
-            /* handle : Remplace le click de base sur les features*/
-            this.handle = handle;
-
-            /* Load customlayer in mviewer.customLayers */
-            if (mviewer.customLayers && !mviewer.customLayers[id]) {
-                mviewer.customLayers[id] = this
-            } else {
-                console.log(`${this.id} customLayer is not loaded because  ${this.id} is already in use !`);
-            }
-        }
-    }
+Dans chacune des deux méthodes présentées dans la suite de cette page les customs layers ont pour base commune la classe ``CustomLayer`` présente dans le fichier ``custom.js``.
 
 Les méthodes suivantes sont à utiliser dans le fichier  ``maLayer.js`` qui est dans l'arborescence suivante : ::
 
@@ -62,7 +34,7 @@ Les méthodes suivantes sont à utiliser dans le fichier  ``maLayer.js`` qui est
 Première Méthode : Définition Simple
 ------------------------------------
 
-Cette solution permet de rapidement mettre en place un custom layer mais limite l'ajout de fonctions et variables privées 
+Cette solution permet de rapidement mettre en place un custom layer mais ne permet pas de travailler avec des variables ou des méthodes privées.
 
 .. code-block:: javascript
   :linenos:
@@ -115,12 +87,6 @@ Il faut définir un nouvel attribut pour la classe ``CustomControl`` de la mani�
 
 
 Ces attributs seront alors publics et accessibles depuis l'extérieur.
-
-Pour les variables et fonctions de classe privée
-************************************************
-
-Cette méthode ne permet pas d'ajouter des nouvelles fonctions ou variables privées en modifiant uniquement votre dossier ``apps`` pour faire cela il faut modifier directement
-la classe ``CustomLayer`` dans le fichier ``custom.js`` en ajoutant des paramètres dans le ``constructor()`` puis en suivant le mode d'emploi de la partie précédente.
 
 Deuxième Méthode : Création d'une sous-classe
 ---------------------------------------------
@@ -281,7 +247,9 @@ Si vous voulez quand pouvoir accéder et modifier la valeur de cette variable en
     // Initialiser un objet avec la chaîne de caractères "maVariablePrivee" dans la variable de classe privée #maVariablePrivee et l'id de couche "monLayer".
     new MonCustomLayer("monLayer",aerial);
 
-Les fonctions publiques existantes de mviewer
----------------------------------------------
+Interactions customLayer et mviewer
+-----------------------------------
 
-Vous pouvez accéder à ces fonctions dans la doc développeur dans la partie ":ref:`publicfonctions`".
+Depuis le customLayer il est possible de communiquer et d'interagir avec la carte et d'une façon plus générale avec mviewer. 
+Vous pouvez ainsi mobiliser toutes les méthodes publiques dans votre développement. 
+Pour en savoir plus, consultez, dans la documentation développeur, la partie ":ref:`publicfonctions`".

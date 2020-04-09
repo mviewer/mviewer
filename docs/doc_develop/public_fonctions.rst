@@ -27,9 +27,9 @@ Il existe déjà les fonctions suivantes :
     
         :param string layerid: Id du layer
             
-        :return:  La config du layerid.
+        :return:  La configuration du layer.
 
-        .. attribute:: getLayer(layerid).layerid
+        .. attribute:: getLayer(layerid).layer
 
             :return:  Le layer (ol.Layer) du layerid.
 
@@ -57,13 +57,13 @@ Il existe déjà les fonctions suivantes :
         
     .. function:: tr()
             
-        :return: Traduit dans la langue courante de mviewer une valeur de type ``machaine.a.traduire`` .
+        :return: Traduit dans la langue courante de mviewer une valeur de type ``machaine.a.traduire`` (cf :ref:`translation`) . 
     
     .. function:: zoomToLocation(x,y,zoom, querymap)
     
         :param float x: Coordonnée y
         :param float y: Coordonnée y
         :param int zoom: Zoom de la carte
-        :param string querymap: Projection de la carte
+        :param boolean querymap: Interrogation de la carte
             
         :return: Zoom aux coordonnées indiquées et en option interroge la carte à ces coordonnées.
