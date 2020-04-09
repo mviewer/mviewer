@@ -71,6 +71,20 @@ Cette partie est dédiée aux personnes qui ont vocation à déployer et configu
    doc_dev/config_tpl
    doc_dev/config_debug
    doc_dev/config_translate
+   doc_dev/config_customlayer.rst
+   doc_dev/config_customcontrol.rst
+
+Documentation dévelopeur
+-------------------------------------------------
+
+Cette partie est dédiée aux personnes qui souhaite développer des fonctionnalités pour mviewer.
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: Documentation dévelopeur
+
+   doc_develop/public_fonctions.rst
 
 Documentation contribution
 -------------------------------------------------

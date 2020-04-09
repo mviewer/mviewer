@@ -5,7 +5,7 @@
 .. _search:
 
 Barre de recherche
-=====================
+==================
 
 La barre de recherche, située en haut à droite de l'interface, permet de rechercher tout type de lieux, comme par exemple des noms de communes, de département ou de région ainsi que, si c'est paramètré, des entités.
 
@@ -18,7 +18,7 @@ Au fur et à mesure que l'utilisateur écrit, le moteur de recherche affiche les
 En cliquant sur la **croix** *(à droite de la zone d'écriture)*, l'utilisateur efface le contenu de la zone de texte.
 
 Options
----------------------------
+-------
 
 En cliquant sur l'icone composée de 3 points, l'utilisateur à la possibilité d'affiner les options de recherche, avec les choix suivants :
 

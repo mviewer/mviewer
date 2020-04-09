@@ -4,16 +4,16 @@
 .. _configfuse:
 
 Configurer - Une recherche Fuse
-===========================================================
+===============================
 
 Présentation de Fuse
------------
+--------------------
 
 Fuse permet de rechercher une entité dans la barre de recherche sans installer de solution lourde. Il est adapté à un nombre limité d'entités.
 
 
 Création du fichier javascript
---------------------
+------------------------------
 
 Il est nécessaire de créer un fichier javascript pour utiliser la recherche Fuse. La donnée apparaît sur la carte au format vectoriel.
 
@@ -68,7 +68,7 @@ Voici un exemple de fichier javascript pour une donnée ponctuelle (fichier auto
 Vous trouverez d'autres exemples `ici <https://github.com/geobretagne/mviewer/commit/001b7d79f3772c1a99cbdf98f1030e12f913e2a0>`_ 
 		
 Configuration dans le XML
-------------------------------------
+-------------------------
 
 Au niveau du fichier de configuration mviewer, il est nécessaire de faire les adaptations suivantes au niveau de la couche :
 

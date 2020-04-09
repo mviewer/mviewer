@@ -5,7 +5,7 @@
 .. _othertools:
 
 Outils additionnels
-=====================
+===================
 
 Les outils additionnels se comptent au nombre de trois :
 
@@ -14,7 +14,7 @@ Les outils additionnels se comptent au nombre de trois :
 3. `Export de la carte`_
 
 Outils de mesure
-------------------------------------------
+----------------
 
 En cliquant sur l'icone ( |Mesure| ), deux nouveaux outils apparaissent et vous avez la possibilité de mesurer :
 
@@ -22,7 +22,7 @@ En cliquant sur l'icone ( |Mesure| ), deux nouveaux outils apparaissent et vous 
 * une surface ( |Mesure_area| ).
 
 Marche à suivre
-***********************
+***************
 
 Pour faire une mesure, il vous suffit de dessiner une ligne (ou une surface) à l'aide du clic-gauche de votre souris. Au fur et à mesure que vous avancez dans le dessin, la distance cumulée (ou bien la surface) est affichée.
 
@@ -47,7 +47,7 @@ Pour effacer une mesure (distance ou bien surface), il vous suffit de cliquer de
 	      :width: 16 pt	      
 
 Partage de carte
-------------------------------------------
+----------------
 
 Le partage de carte permet de générer un lien web fixant la situation actuelle de l'interface. Ainsi sont conservés :
 
@@ -67,7 +67,7 @@ Une fois que vous avez cliqué sur l'icone ( |Share_icon| ), une nouvelle fenêt
 
 
 Choix du mode d'affichage du permalien
-***********************
+**************************************
 
 * Normal
 
@@ -94,7 +94,7 @@ Choix du mode d'affichage du permalien
 
 
 Choix du type de lien
-***********************
+*********************
 
 * générer un lien hypertext *(icone de gauche)* : lorsque vous cliquez, un nouvel onglet de votre navigateur s'ouvre avec le lien permanent,
 * utiliser un QR Code *(icone de droite)*.
@@ -108,7 +108,7 @@ Choix du type de lien
 * mode : mode d'affichage (n,s ou u)
 
 Export de la carte
-------------------------------------------
+------------------
 
 En cliquant sur l'icone ( |Export_icon| ) la carte est automatiquement exportée au format .png.
 
