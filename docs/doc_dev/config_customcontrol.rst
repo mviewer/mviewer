@@ -96,12 +96,12 @@ Il faut définir un nouvel attribut pour la classe ``CustomControl`` de la mani�
     monControl.maNouvelleVariable = "je suis un exemple";
 
 
-Ces atributs seront alors publics et accessibles depuis l'éxterieur.
+Ces attributs seront alors publics et accessibles depuis l'éxterieur.
 
 Deuxième méthode : Création d'une sous-classe
 ---------------------------------------------
 
-Cette méthode elle la plus complète des deux et permet de créer des customs controls plus poussés.
+Cette méthode est la plus complète des deux et permet de créer des customs controls plus poussés.
 
 Tous les Custom Control ont une base commune dans le fichier ``custom.js`` où est définie la classe ``CustomControl``.
 
