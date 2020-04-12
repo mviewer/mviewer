@@ -581,6 +581,7 @@ var search = (function () {
         oLayer.searchengine = (params.searchengine) ? params.searchengine : 'elasticsearch';
         oLayer.fusesearchkeys = (params.fusesearchkeys) ? params.fusesearchkeys : '';
         oLayer.fusesearchresult = (params.fusesearchresult) ? params.fusesearchresult : '';
+        oLayer.fusesearchthresold = (params.fusesearchthresold) ? params.fusesearchthresold : '';
         return oLayer;
     };
 
@@ -593,13 +594,14 @@ var search = (function () {
                 }
                 var options = {
                     shouldSort: true,
-                    threshold: 0.3,
+                    threshold: parseFloat(oLayer.fusesearchthresold) || 0.3,
                     location: 0,
                     distance: 100,
                     maxPatternLength: 32,
                     minMatchCharLength: 2,
                     keys: oLayer.fusesearchkeys.split(',')
                 };
+                console.log(options.threshold);
 
 
                 var layerSource = l.getSource();
