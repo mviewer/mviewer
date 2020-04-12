@@ -228,7 +228,7 @@ Fuse est une bibliothèque javascript utilisée par mviewer pour indexer le cont
 (cf. http://fusejs.io/). Elle donne une alternative plus simple et économique que la mise en œuvre d'index
 Elasticsearch. Contrairement à ce dernier, le paramétrage de Fuse ne fait pas l'objet d'un nœud spécifique. Son
 paramétrage est réalisé directement au niveau des nœuds des couches concernées à l'aide des attributs "searchable",
-"searchengine", "fusesearchkeys" et "fusesearchresult".
+"searchengine", "fusesearchkeys", "fusesearchthreshold" et "fusesearchresult".
 
 La recherche basée sur Fuse n'est active que pour les couches dont les attributs "searchable" et "searchengine"
 valent respectivement "true" et "fuse". Cette recherche n'est active que lorsque l'option de recherche suivante est
