@@ -97,9 +97,9 @@ var configuration = (function () {
         return _conf;
     };
 
-    var _extend = function (conf) {
-        //load extensions
-        var extensions = $(conf).find("extension");
+    var _getExtensions = function (conf) {
+        //load javascript extensions and trigger applicationExtended when all is done
+        var extensions = $(conf).find("extension[type='javascript']");
         var requests = [];
         var ajaxFunction = function () {
             extensions.toArray().forEach(function(extension) {
@@ -124,6 +124,18 @@ var configuration = (function () {
         }).fail(function(err) {
             // Si une erreur a été rencontrée, on déclanche le même trigger
             $(document).trigger("applicationExtended", { "xml": conf});
+        });
+
+        //load components
+        //each component is rendered in Component constructor;
+        //When all is done, trigger componentLoaded event
+        var components = $(conf).find("extension[type='component']");
+        components.toArray().forEach(function(component) {
+            var id = $(component).attr("id");
+            var path = $(component).attr("path");
+            if (path && id) {
+                mviewer.customComponents[id] = new Component(id, path);
+            }
         });
 
     };
@@ -911,7 +923,7 @@ var configuration = (function () {
 
     return {
         parseXML: _parseXML,
-        extend: _extend,
+        getExtensions: _getExtensions,
         load: _load,
         complete: _complete,
         getThemes: function () { return _themes; },

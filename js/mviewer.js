@@ -612,6 +612,9 @@ mviewer = (function () {
             });
         }
         _map.addLayer(l);
+        if (oLayer.type === "customlayer" && mviewer.customLayers[oLayer.id]) {
+            mviewer.customLayers[oLayer.id].config = oLayer;
+        }
         _events.overLayersLoaded += 1;
     };
 
@@ -799,7 +802,7 @@ mviewer = (function () {
         if(legendMini && (legendMini === "true")) {
             // hide legend panel
             mviewer.toggleLegend(false);
-        }        
+        }
         $("#menu").html(htmlListGroup);
         initMenu();
         // Open theme item if set to collapsed=false
@@ -1844,6 +1847,8 @@ mviewer = (function () {
         customLayers: {},
 
         customControls: {},
+
+        customComponents: {},
 
         tools: { activeTool: false},
 
