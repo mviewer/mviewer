@@ -1309,10 +1309,9 @@ mviewer = (function () {
         var listenerKey;
 
         function animate(event) {
-            var vectorContext = event.vectorContext;
-            var frameState = event.frameState;
+            var vectorContext = ol.render.getVectorContext(event);
             var flashGeom = feature.getGeometry().clone();
-            var elapsed = frameState.time - start;
+            var elapsed = event.frameState.time - start;
             var elapsedRatio = elapsed / duration;
             // radius will be 5 at start and 30 at end.
             var radius = ol.easing.easeOut(elapsedRatio) * 25;
@@ -1339,7 +1338,7 @@ mviewer = (function () {
             // tell OL to continue postcompose animation
             _map.render();
         }
-        listenerKey = _map.on('postcompose', animate);
+        listenerKey = _getLayerByName("flash").on('postrender', animate);
     };
 
     var _calculateTicksPositions = function (values) {
