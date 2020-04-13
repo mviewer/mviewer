@@ -1697,8 +1697,8 @@ mviewer = (function () {
          */
 
         changeLayerOpacity: function (id, value) {
-            _overLayers[id].layer.setOpacity(value);
             _overLayers[id].opacity = parseFloat(value);
+            _overLayers[id].layer.setOpacity(_overLayers[id].opacity);
         },
 
         /**
