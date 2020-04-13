@@ -217,7 +217,7 @@ var info = (function () {
                     params = {'INFO_FORMAT': _overLayers[visibleLayers[i].get("mviewerid")].infoformat,
                         'FEATURE_COUNT': _overLayers[visibleLayers[i].get("mviewerid")].featurecount
                     };
-                    var url = visibleLayers[i].getSource().getGetFeatureInfoUrl(
+                    var url = visibleLayers[i].getSource().getFeatureInfoUrl(
                         evt.coordinate, _map.getView().getResolution(), _map.getView().getProjection(), params
                     );
                     if (layer && featureid) {
