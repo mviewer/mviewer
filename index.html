@@ -171,7 +171,13 @@ $(document).ready(function () {
             $( "#map" ).focus();
             });
 
-            configuration.complete(xml);
+            $( document ).on( "applicationExtended", function (e, eData) {
+                configuration.complete(eData.xml);
+            });
+
+            configuration.getExtensions(xml);
+
+
 
         }, // fin success config
         error: function (request, status, error) {
