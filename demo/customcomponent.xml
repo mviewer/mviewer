@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+<application
+    title="Exemple de customComponent"
+    logo=""
+    help=""
+    style="css/themes/default.css"
+    exportpng="false"
+    showhelp="false"
+    coordinates="false"
+    measuretools="false"
+    togglealllayersfromtheme="false">
+</application>
+<extensions>
+    <extension type="component" id="graph3d" path="demo/addons"/>
+</extensions>
+<mapoptions maxzoom="18" projection="EPSG:3857" center="-230072,6204699" zoom="14" />
+<baselayers style="default">
+    <baselayer  type="WMS" id="ortho_50" label="Photo aérienne 1950" title="GéoBretagne" thumbgallery="img/basemap/ortho-ancien.jpg"
+			url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite-ancien" format="image/jpeg" visible="true"
+			attribution="&lt;a href='http://applications.region-bretagne.fr/geosource/apps/search/?uuid=048622c5-b333-4c2b-94ec-40a41608dc06' target='_blank' >Partenaires GéoBretagne - IGN&lt;/a>"/>
+    <baselayer  visible="false" type="WMTS" id="ortho_ir" label="Photo aérienne infra rouge"   title="GéoBretagne" thumbgallery="img/basemap/ir.jpg"
+            url="http://geobretagne.fr/geoserver/gwc/service/wmts"   layers="photo:ir-composite" format="image/jpeg" style="_null" matrixset="EPSG:3857"
+            fromcapacity="false"   attribution="&lt;a href='https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=434b82a8-8d3c-4d9f-9eb3-0485f1a63eb6' target='_blank' >partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver&lt;/a>" />
+</baselayers>
+<themes mini="true">
+</themes>
+</config>
