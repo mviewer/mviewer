@@ -12,7 +12,7 @@ class Swipe extends CustomLayer {
     // Initialize CustomLayer superClass
     super(id, layer, legend, handle);
     // Define events on the Tile Layer
-    aerial.on('precompose', function (event) {
+    aerial.on('prerender', function (event) {
       var ctx = event.context;
       var width = ctx.canvas.width * (swipe.value / 100);
       ctx.save();
@@ -21,7 +21,7 @@ class Swipe extends CustomLayer {
       ctx.clip();
     });
     // Define events on the Tile Layer
-    aerial.on('postcompose', function (event) {
+    aerial.on('postrender', function (event) {
       var ctx = event.context;
       ctx.restore();
     });
