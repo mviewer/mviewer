@@ -97,6 +97,49 @@ var configuration = (function () {
         return _conf;
     };
 
+    var _getExtensions = function (conf) {
+        //load javascript extensions and trigger applicationExtended when all is done
+        var extensions = $(conf).find("extension[type='javascript']");
+        var requests = [];
+        var ajaxFunction = function () {
+            extensions.toArray().forEach(function(extension) {
+                var src = $(extension).attr("src");
+                var type = $(extension).attr("type");
+                var proxy = false;
+                requests.push($.ajax({
+                    url: mviewer.ajaxURL(src, proxy),
+                    crossDomain : true,
+                    dataType: "script",
+                    error: function(xhr, status, error) {
+                        alert( "error extension" );
+                    }
+                }));
+            });
+        };
+
+        $.when.apply(new ajaxFunction(), requests).done(function (result) {
+            //Lorsque toutes les ressources externes sont récupérées,
+            // on déclanche le trigger applicationExtended
+            $(document).trigger("applicationExtended", { "xml": conf});
+        }).fail(function(err) {
+            // Si une erreur a été rencontrée, on déclanche le même trigger
+            $(document).trigger("applicationExtended", { "xml": conf});
+        });
+
+        //load components
+        //each component is rendered in Component constructor;
+        //When all is done, trigger componentLoaded event
+        var components = $(conf).find("extension[type='component']");
+        components.toArray().forEach(function(component) {
+            var id = $(component).attr("id");
+            var path = $(component).attr("path");
+            if (path && id) {
+                mviewer.customComponents[id] = new Component(id, path);
+            }
+        });
+
+    };
+
     var _complete = function (conf) {
         /*
          * Des thèmes externes (présents dans d'autres configuration peuvent être automatiquement chargés
@@ -880,6 +923,7 @@ var configuration = (function () {
 
     return {
         parseXML: _parseXML,
+        getExtensions: _getExtensions,
         load: _load,
         complete: _complete,
         getThemes: function () { return _themes; },

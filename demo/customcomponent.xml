@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
 <application
-    title="Exemple de custom layer SWIPE"
+    title="Exemple de customComponent"
     logo=""
     help=""
     style="css/themes/default.css"
@@ -11,6 +11,9 @@
     measuretools="false"
     togglealllayersfromtheme="false">
 </application>
+<extensions>
+    <extension type="component" id="graph3d" path="demo/addons"/>
+</extensions>
 <mapoptions maxzoom="18" projection="EPSG:3857" center="-230072,6204699" zoom="14" />
 <baselayers style="default">
     <baselayer  type="WMS" id="ortho_50" label="Photo aérienne 1950" title="GéoBretagne" thumbgallery="img/basemap/ortho-ancien.jpg"
@@ -20,20 +23,6 @@
             url="http://geobretagne.fr/geoserver/gwc/service/wmts"   layers="photo:ir-composite" format="image/jpeg" style="_null" matrixset="EPSG:3857"
             fromcapacity="false"   attribution="&lt;a href='https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=434b82a8-8d3c-4d9f-9eb3-0485f1a63eb6' target='_blank' >partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver&lt;/a>" />
 </baselayers>
-<themes mini="true" legendmini="true">
-    <theme name="Outils"  collapsed="true" id="demo" icon="fas fa-cog">
-        <layer id="swipe" name="[SWIPE] image satellite" visible="true" queryable="false"
-            type="customlayer"
-            legendurl="demo/swipe/control/swipe.png"
-            customcontrolpath="demo/swipe/control"
-            opacity="1"
-            url="demo/swipe/layer/swipe.js"
-            customcontrol="true"
-            expanded="true"
-            attribution="&lt;a href=&quot;https://www.maptiler.com/copyright/&quot; target=&quot;_blank&quot;&gt;&amp;copy; MapTiler&lt;/a&gt;&lt;a href=&quot;https://www.openstreetmap.org/copyright&quot; target=&quot;_blank&quot;&gt;&amp;copy; OpenStreetMap contributors&lt;/a&gt;"
-            metadata=""
-            metadata-csw="">
-        </layer>
-    </theme>
+<themes mini="true">
 </themes>
 </config>
