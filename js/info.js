@@ -213,7 +213,7 @@ var info = (function () {
             var urls = [];
             var params;
             for (var i = 0; i < visibleLayers.length; i++) {
-                if (visibleLayers[i] instanceof ol.layer.Vector === false) {
+                if (visibleLayers[i] instanceof ol.layer.BaseVector === false) {
                     params = {'INFO_FORMAT': _overLayers[visibleLayers[i].get("mviewerid")].infoformat,
                         'FEATURE_COUNT': _overLayers[visibleLayers[i].get("mviewerid")].featurecount
                     };
