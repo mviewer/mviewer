@@ -450,7 +450,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
         <script type="text/javascript" src="lib/proj4js/2.3.6/proj4.js"></script>
         <script type="text/javascript" src="lib/jquery/base/1.10.2/jquery-1.10.2.min.js"></script>
+<<<<<<< HEAD
         <script type="text/javascript" src="lib/openlayers/6.3.1/ol.js"></script>
+=======
+        <script type="text/javascript" src="lib/openlayers/6.3.1/build/ol.js"></script>
+>>>>>>> 3be7bbc50f49a4a6a239853530169a844ed4138a
         <script type="text/javascript" src="lib/jquery/base/plugins/xml2json/jquery.xml2json.js"></script>
         <script type="text/javascript" src="lib/Sortable/1.4.2/Sortable.min.js"></script>
         <script type="text/javascript" src="lib/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -473,8 +477,12 @@
         <script type="text/javascript" src="js/mviewer.js"></script>
         <script type="text/javascript" src="js/templates.js"></script>
         <script type="text/javascript" src="js/featurestyles.js"></script>
+<<<<<<< HEAD
         <script type="text/javascript" src="js/custom.js" ></script>
         <script type="text/javascript" src="lib/i18njs/i18n.js" ></script>
+=======
+        <script type="text/javascript" src="lib/i18njs/i18n.js"></script>
+>>>>>>> 3be7bbc50f49a4a6a239853530169a844ed4138a
 
         <script type="text/javascript">
         var API = {};
@@ -547,15 +555,10 @@
                         }, 2000);
                     $( "#map" ).focus();
                     });
-
                     $( document ).on( "applicationExtended", function (e, eData) {
                         configuration.complete(eData.xml);
                     });
-
                     configuration.getExtensions(xml);
-
-
-
                 }, // fin success config
                 error: function (request, status, error) {
                     mviewer.alert("Fichier de configuration : " + configFile + " non trouvé ou incorrect !", "alert-danger");
