@@ -97,6 +97,49 @@ var configuration = (function () {
         return _conf;
     };
 
+    var _getExtensions = function (conf) {
+        //load javascript extensions and trigger applicationExtended when all is done
+        var extensions = $(conf).find("extension[type='javascript']");
+        var requests = [];
+        var ajaxFunction = function () {
+            extensions.toArray().forEach(function(extension) {
+                var src = $(extension).attr("src");
+                var type = $(extension).attr("type");
+                var proxy = false;
+                requests.push($.ajax({
+                    url: mviewer.ajaxURL(src, proxy),
+                    crossDomain : true,
+                    dataType: "script",
+                    error: function(xhr, status, error) {
+                        alert( "error extension" );
+                    }
+                }));
+            });
+        };
+
+        $.when.apply(new ajaxFunction(), requests).done(function (result) {
+            //Lorsque toutes les ressources externes sont récupérées,
+            // on déclanche le trigger applicationExtended
+            $(document).trigger("applicationExtended", { "xml": conf});
+        }).fail(function(err) {
+            // Si une erreur a été rencontrée, on déclanche le même trigger
+            $(document).trigger("applicationExtended", { "xml": conf});
+        });
+
+        //load components
+        //each component is rendered in Component constructor;
+        //When all is done, trigger componentLoaded event
+        var components = $(conf).find("extension[type='component']");
+        components.toArray().forEach(function(component) {
+            var id = $(component).attr("id");
+            var path = $(component).attr("path");
+            if (path && id) {
+                mviewer.customComponents[id] = new Component(id, path);
+            }
+        });
+
+    };
+
     var _complete = function (conf) {
         /*
          * Des thèmes externes (présents dans d'autres configuration peuvent être automatiquement chargés
@@ -428,15 +471,13 @@ var configuration = (function () {
                     layerRank+=1;
                     var layerId = layer.id;
                     if (layer.url) {
-                        var layerUrl = layer.url.replace(/[?&]$/, '');
-                        var capabilitiesParams = "REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.3.0";
-                        var getCapUrl = layerUrl.indexOf('?') === -1 ? layerUrl + '?' + capabilitiesParams : layerUrl + '&' + capabilitiesParams;
+                        var getCapRequestUrl = getCapUrl(layer.url);
                         var secureLayer = (layer.secure === "true" || layer.secure == "global") ? true : false;
                         if (secureLayer) {
                             $.ajax({
                                 dataType: "xml",
                                 layer: layerId,
-                                url:  mviewer.ajaxURL(getCapUrl),
+                                url:  mviewer.ajaxURL(getCapRequestUrl),
                                 success: function (result) {
                                     //Find layer in capabilities
                                     var name = this.layer;
@@ -656,7 +697,7 @@ var configuration = (function () {
                     if (oLayer.type === 'wms') {
                         var wms_params = {
                             'LAYERS': layer.id,
-                            'STYLES':(themeLayers[oLayer.id].style)? themeLayers[oLayer.id].style : '',
+                            'STYLES': (themeLayers[oLayer.id].style)? themeLayers[oLayer.id].style : '',
                             'FORMAT': 'image/png',
                             'TRANSPARENT': true
                         };
@@ -671,76 +712,69 @@ var configuration = (function () {
                         if (oLayer.sld) {
                             wms_params['SLD'] = oLayer.sld;
                         }
+
+                        // Use owsoptions to overload default Getmap params
+                        Object.assign(wms_params, getParamsFromOwsOptionsString(layer.owsoptions));
+
+                        function customWmsImageLoader(image, src) {
+                            if (oLayer.useproxy) {
+                                src = _proxy + encodeURIComponent(src);
+                            }
+
+                            // S'il existe des idenfiants d'accès pour ce layer, on les injecte
+                            var _ba_ident = sessionStorage.getItem(layer.url);
+                            if (_ba_ident && _ba_ident != '') {
+                                var xhr = new XMLHttpRequest();
+                                xhr.responseType = 'blob';
+                                xhr.open('GET', src);
+
+                                xhr.setRequestHeader("Authorization","Basic " + window.btoa( _ba_ident));
+                                xhr.addEventListener('loadend', function (evt) {
+                                    var data = this.response;
+                                    if (this.status == '401') {
+                                        image.getImage().src = _blankSrc;
+                                    } else if (data && data !== undefined) {
+                                        image.getImage().src = URL.createObjectURL(data);
+                                    }
+                                });
+                                xhr.onload = function() {
+                                    image.getImage().src = src;
+                                };
+                                xhr.send();
+                            } else {
+                                image.getImage().src = src;
+                            }
+                        }
+
                         switch (oLayer.tiled) {
                             case true:
                                 wms_params['TILED'] = true;
                                 source = new ol.source.TileWMS({
                                     url: layer.url,
                                     crossOrigin: _crossorigin,
-                                    tileLoadFunction: function (imageTile, src) {
-                                        if (oLayer.useproxy) {
-                                            src = _proxy + encodeURIComponent(src);
-                                        }
-
-                                        var xhr = new XMLHttpRequest();
-                                        xhr.responseType = 'blob';
-                                        xhr.open('GET', src);
-
-                                        var _ba_ident = sessionStorage.getItem(layer.url);
-                                        if (_ba_ident && _ba_ident != '')
-                                            xhr.setRequestHeader("Authorization","Basic " + window.btoa( _ba_ident));
-
-                                        xhr.addEventListener('loadend', function (evt) {
-                                            var data = this.response;
-                                            if(this.status == '401'){
-                                                imageTile.getImage().src = _blankSrc;
-                                                //imageTile.setStatus(4);
-                                            }else if(data && data !== undefined){
-                                                imageTile.getImage().src = URL.createObjectURL(data);
-                                            }
-                                        });
-                                        xhr.send();
-                                    },
+                                    tileLoadFunction: customWmsImageLoader,
                                     params: wms_params
                                 });
+
                                 l = new ol.layer.Tile({
                                     source: source
                                 });
                                 break;
+
                             case false:
                                 source = new ol.source.ImageWMS({
                                     url: layer.url,
                                     crossOrigin: _crossorigin,
-                                    imageLoadFunction: function (image, src) {
-                                        if (oLayer.useproxy) {
-                                            src = _proxy + encodeURIComponent(src);
-                                        }
-
-                                        var xhr = new XMLHttpRequest();
-                                        xhr.responseType = 'blob';
-                                        xhr.open('GET', src);
-                                        // S'il existe des idenfiants d'accès pour ce layer, on les injecte
-                                        var _ba_ident = sessionStorage.getItem(layer.url);
-                                        if (_ba_ident && _ba_ident != '')
-                                            xhr.setRequestHeader("Authorization","Basic " + window.btoa( _ba_ident));
-
-                                        xhr.addEventListener('loadend', function (evt) {
-                                            var data = this.response;
-                                            if(this.status == '401'){
-                                                image.getImage().src = _blankSrc;
-                                            }else if(data && data !== undefined){
-                                                image.getImage().src = URL.createObjectURL(data);
-                                            }
-                                        });
-                                        xhr.send();
-
-                                    }, params: wms_params
+                                    imageLoadFunction: customWmsImageLoader,
+                                    params: wms_params
                                 });
+
                                 l = new ol.layer.Image({
                                     source:source
                                 });
                                 break;
                         }
+
                         source.set('layerid', oLayer.layerid);
                         source.on('imageloadstart', function(event) {
                             $("#loading-" + event.target.get('layerid')).show();
@@ -889,6 +923,7 @@ var configuration = (function () {
 
     return {
         parseXML: _parseXML,
+        getExtensions: _getExtensions,
         load: _load,
         complete: _complete,
         getThemes: function () { return _themes; },

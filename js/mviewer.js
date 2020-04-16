@@ -311,7 +311,7 @@ mviewer = (function () {
         var item = $(['<div class="alert '+cls+' alert-dismissible" role="alert">',
             '<button type="button" class="close" data-dismiss="alert" aria-label="Close">',
             '<span aria-hidden="true">&times;</span></button>',
-            mviewer.tr (msg),
+            mviewer.tr(msg),
             '</div>'].join (""));
             $("#alerts-zone").append(item);
     };
@@ -323,31 +323,32 @@ mviewer = (function () {
     };
 
     var _getlegendurl = function (layer, scale) {
-        var sld = "";
         var legendUrl = "";
-        if (layer.sld) {
-            sld = '&SLD=' + encodeURIComponent(layer.sld);
-        }
-        var _layerUrl = layer.url.replace(/[?&]$/, '');
         if (layer.legendurl && !layer.styles) {
             legendUrl = layer.legendurl;
         } else if (layer.legendurl && layer.styles && (layer.styles.split(",").length === 1)) {
             legendUrl = layer.legendurl;
-        } else if (layer.sld) {
-            legendUrl = _layerUrl.indexOf('?') === -1 ? _layerUrl + '?' : _layerUrl + '&';
-            legendUrl = legendUrl + 'service=WMS&Version=1.3.0&request=GetLegendGraphic&SLD_VERSION=1.1.0'+
-            '&format=image%2Fpng&width=30&height=20&layer=' + layer.layername + '&style=' + sld+
-            '&legend_options=fontName:Open%20Sans;fontAntiAliasing:true;fontColor:0x777777;fontSize:10;dpi:96&TRANSPARENT=true';
         } else {
-            legendUrl = _layerUrl.indexOf('?') === -1 ? _layerUrl + '?' : _layerUrl + '&';
-            legendUrl = legendUrl + 'service=WMS&Version=1.3.0&request=GetLegendGraphic&SLD_VERSION=1.1.0'+
-            '&format=image%2Fpng&width=30&height=20&layer=' + layer.layername + '&style=' + layer.style + sld+
-            '&legend_options=fontName:Open%20Sans;fontAntiAliasing:true;fontColor:0x777777;fontSize:10;dpi:96&TRANSPARENT=true';
+            var getLegendParams = {
+                'LAYER': layer.layername,
+                'STYLE': layer.style,
+                'FORMAT': 'image/png',
+                'TRANSPARENT': true
+            };
+
+            if (layer.sld) {
+                getLegendParams['SLD'] = encodeURIComponent(layer.sld);
+            } else {
+                getLegendParams['STYLE'] = encodeURIComponent(layer.style);
+            }
+
+            legendUrl = getLegendGraphicUrl(layer.url, getLegendParams);
         }
         if (layer.dynamiclegend) {
             if (!scale) {
                 scale = _calculateScale(_map.getView().getResolution());
             }
+            // TODO: this line of code is not robust since OGC parameter names are not case sensitive
             legendUrl = legendUrl.split("&scale=")[0] += "&scale="+scale;
         }
         return legendUrl;
@@ -369,12 +370,14 @@ mviewer = (function () {
             var marginTop = 15;
             var marginLeft = 15;
             var itemHeight = 20;
-            var horizontalSpace = 10;
+            var textAlign = "Middle";
+            var textBaseline = "End";
             verticalPosition = 0;
             var geomWidth = 25;
             var geomHeight = 15;
             var verticalSpace = itemHeight - geomHeight;
             var ctx = canvas.getContext('2d');
+            var fontsize = 12;
             vectorContext = ol.render.toContext(ctx, {
                 size: [250, (items.length * itemHeight) + marginTop]
             });
@@ -386,7 +389,6 @@ mviewer = (function () {
                         geometry = new ol.geom.Point([marginLeft + (geomWidth/2),
                             verticalPosition - (geomHeight/2)]);
                         break;
-
                     case 'LineString':
                         geometry = new ol.geom.LineString([[marginLeft, -marginTop + verticalPosition],
                             [marginLeft + geomWidth, -marginTop + verticalPosition + geomHeight]]);
@@ -403,15 +405,19 @@ mviewer = (function () {
                 }
 
                 item.styles.forEach(function (style) {
-                    vectorContext.setStyle(style);
+                    let stl = style.clone();
+                    stl.setText(new ol.style.Text({
+                        textAlign: textAlign,
+                        textBaseline: textBaseline,
+                        font: fontsize+"px roboto_regular, Arial, Sans-serif",
+                        text: item.label,
+                        fill: new ol.style.Fill({color: "rgba(153, 153, 153, 1)"}),
+                        offsetX: geomWidth,
+                        offsetY: verticalSpace
+                    }));
+                    vectorContext.setStyle(stl);
                     vectorContext.drawGeometry(geometry);
                 });
-                ctx.fillStyle = 'rgba(153, 153, 153, 1)';
-                var fontsize = 12;
-                ctx.font = fontsize + 'px roboto_regular, Arial, Sans-serif';
-                ctx.textAlign = "left";
-                ctx.fillText(item.label ,marginLeft + geomWidth + horizontalSpace, verticalPosition - (geomHeight - fontsize));
-
             });
         }
     };
@@ -606,6 +612,9 @@ mviewer = (function () {
             });
         }
         _map.addLayer(l);
+        if (oLayer.type === "customlayer" && mviewer.customLayers[oLayer.id]) {
+            mviewer.customLayers[oLayer.id].config = oLayer;
+        }
         _events.overLayersLoaded += 1;
     };
 
@@ -784,8 +793,14 @@ mviewer = (function () {
             htmlListGroup += _renderHTMLFromTemplate(mviewer.templates.theme, view);
         });
         var panelMini = configuration.getConfiguration().themes.mini;
+        var legendMini = configuration.getConfiguration().themes.legendmini;
         if (panelMini && (panelMini === 'true')) {
+            // hide all panels
             mviewer.toggleMenu(false);
+            mviewer.toggleLegend(false);
+        }
+        if(legendMini && (legendMini === "true")) {
+            // hide legend panel
             mviewer.toggleLegend(false);
         }
         $("#menu").html(htmlListGroup);
@@ -880,6 +895,11 @@ mviewer = (function () {
     var _createBaseLayer = function (baselayer) {
         var crossorigin = configuration.getCrossorigin();
         var l;
+        function setBaseOpacity(layer, value){
+            if(layer && value) {
+                layer.setOpacity(value);
+            }
+        }
         switch (baselayer.type) {
             case "fake":
                 l = new ol.layer.Base({});
@@ -897,6 +917,10 @@ mviewer = (function () {
                 if (baselayer.tiled !== "false") {
                     params.TILED = true;
                 }
+
+                // Use owsoptions to overload default Getmap params
+                Object.assign(params, getParamsFromOwsOptionsString(baselayer.owsoptions));
+
                 l =  new ol.layer.Tile({
                     source: new ol.source.TileWMS({
                         url: baselayer.url,
@@ -909,7 +933,7 @@ mviewer = (function () {
                 });
                 l.set('name', baselayer.label);
                 l.set('blid', baselayer.id);
-
+                setBaseOpacity(l,baselayer.opacity);
                 _backgroundLayers.push(l);
                 _map.addLayer(l);
                 break;
@@ -937,6 +961,7 @@ mviewer = (function () {
                     l.setVisible(false);
                     l.set('name', baselayer.label);
                     l.set('blid', baselayer.id);
+                    setBaseOpacity(l,baselayer.opacity);
                     _map.addLayer(l);
                     _backgroundLayers.push(l);
                 }
@@ -961,6 +986,7 @@ mviewer = (function () {
                             l = new ol.layer.Tile({ source: new ol.source.WMTS(WMTSOptions) });
                             l.set('name', baselayer.label);
                             l.set('blid', baselayer.id);
+                            setBaseOpacity(l,baselayer.opacity);
                             _map.getLayers().insertAt(0,l);
                             _backgroundLayers.push(l);
                             if( baselayer.visible === 'true' ) {
@@ -985,6 +1011,7 @@ mviewer = (function () {
                 });
                 l.set('name', baselayer.label);
                 l.set('blid', baselayer.id);
+                setBaseOpacity(l,baselayer.opacity);
                 _backgroundLayers.push(l);
                 _map.addLayer(l);
                 break;
@@ -1282,10 +1309,9 @@ mviewer = (function () {
         var listenerKey;
 
         function animate(event) {
-            var vectorContext = event.vectorContext;
-            var frameState = event.frameState;
+            var vectorContext = ol.render.getVectorContext(event);
             var flashGeom = feature.getGeometry().clone();
-            var elapsed = frameState.time - start;
+            var elapsed = event.frameState.time - start;
             var elapsedRatio = elapsed / duration;
             // radius will be 5 at start and 30 at end.
             var radius = ol.easing.easeOut(elapsedRatio) * 25;
@@ -1312,7 +1338,7 @@ mviewer = (function () {
             // tell OL to continue postcompose animation
             _map.render();
         }
-        listenerKey = _map.on('postcompose', animate);
+        listenerKey = _getLayerByName("flash").on('postrender', animate);
     };
 
     var _calculateTicksPositions = function (values) {
@@ -1670,8 +1696,8 @@ mviewer = (function () {
          */
 
         changeLayerOpacity: function (id, value) {
-            _overLayers[id].layer.setOpacity(value);
             _overLayers[id].opacity = parseFloat(value);
+            _overLayers[id].layer.setOpacity(_overLayers[id].opacity);
         },
 
         /**
@@ -1730,7 +1756,7 @@ mviewer = (function () {
                 if (actionMove.action === "up") {
                     newIndex = refIndex +1;
                 } else {
-                    newIndex = refIndex -1;
+                    newIndex = refIndex;
                 }
                 layers.splice(newIndex, 0, layers.splice(oldIndex, 1)[0]);
                 //put overlayFeatureLayer on the top of the map
@@ -1748,7 +1774,7 @@ mviewer = (function () {
             // get xml config file
             var configFile = API.config ? API.config : 'config.xml';
             // get domain url and clean
-            var splitStr = window.location.href.split('?')[0].replace('#','').split('/');
+            var splitStr = window.location.href.split('?')[0].split('#')[0].split('/');
             splitStr = splitStr.slice(0,splitStr.length-1).join('/');
             // create absolute config file url
             var url = splitStr + '/' + configFile;
@@ -1784,7 +1810,7 @@ mviewer = (function () {
             }
             linkParams.mode = $('input[name=mv-display-mode]:checked').val();
 
-            var url = window.location.href.split('?')[0].replace('#','') + '?' + $.param(linkParams);
+            var url = window.location.href.split('#')[0].split('?')[0] + '?' + $.param(linkParams);
             $("#permalinklink").attr('href',url).attr("target", "_blank");
             $("#permaqr").attr("src","http://chart.apis.google.com/chart?cht=qr&chs=140x140&chl=" + encodeURIComponent(url));
             return url;
@@ -1821,6 +1847,8 @@ mviewer = (function () {
 
         customControls: {},
 
+        customComponents: {},
+
         tools: { activeTool: false},
 
          /**
@@ -1843,8 +1871,20 @@ mviewer = (function () {
                 _sourceOverlay.clear();
             }
             var ptResult = ol.proj.transform([x, y], 'EPSG:4326', _projection.getCode());
-            _map.getView().setCenter(ptResult);
-            _map.getView().setZoom(zoom);
+            if (configuration.getConfiguration().searchparameters) {
+                duration=parseInt(configuration.getConfiguration().searchparameters.duration)
+                if (! duration ){ duration = 1000 }
+                if (configuration.getConfiguration().searchparameters.animate==="true"){
+                    _map.getView().animate({center:ptResult,zoom:zoom,duration:duration})
+                } else {
+                    _map.getView().setCenter(ptResult);
+                    _map.getView().setZoom(zoom);
+                }
+            } else {
+                _map.getView().setCenter(ptResult);
+                _map.getView().setZoom(zoom);
+            }
+
             if (querymap) {
                 var i = function () {
                     var e = {

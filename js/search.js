@@ -371,6 +371,9 @@ var search = (function () {
 
                 str = '<a class="fuse list-group-item disabled">' + layername + '</a>';
                 results.forEach(function(element){
+                  // from version 4 data are stored in element.item
+                  element = element.item;
+                  
                     /*
                      * 2 cases, one specific field or a Mustache template for combining fields in a string. Examples:
                      * - name of a field: name
@@ -618,10 +621,15 @@ var search = (function () {
 
                             features.forEach(function(feature) {
                                 var geojsonFeature = geojsonFormat.writeFeatureObject(feature);
-                                var wgs84Geom = feature.getGeometry().clone().transform(mapProj, "EPSG:4326");
                                 var prop = geojsonFeature.properties;
-                                prop.geometry = geojsonFormat.writeGeometryObject(wgs84Geom);
-                                prop.fusesearchresult = oLayer.fusesearchresult;
+                                if (feature.getGeometry()) {
+                                    var wgs84Geom = feature.getGeometry().clone().transform(mapProj, "EPSG:4326");
+                                    prop.geometry = geojsonFormat.writeGeometryObject(wgs84Geom);
+                                    prop.fusesearchresult = oLayer.fusesearchresult;
+                                } else {
+                                    console.log("The following feature could not be indexed due to lack of geometry: ",
+                                        prop);
+                                }
                                 j.push(prop);
                             });
 

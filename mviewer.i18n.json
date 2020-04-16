@@ -74,7 +74,10 @@
         "attribute.control.filter": "Filtrer",
         "loader.text": "Chargement de l'application...",
         "lang.modal.title": "Langues",
-        "nav.down.lang": "Langues"
+        "nav.down.lang": "Langues",
+        "nav.responsive.topics": "Thématiques",
+        "nav.responsive.legend": "Légende",
+        "nav.responsive.about": "A propos"
     },
     "en": {
         "legend.title": "Display/hide the legend",
@@ -150,6 +153,9 @@
         "attribute.control.filter": "Filter",
         "loader.text": "Application loading...",
         "lang.modal.title": "Languages",
-        "nav.down.lang": "Languages"
+        "nav.down.lang": "Languages",
+        "nav.responsive.topics": "Topics",
+        "nav.responsive.legend": "Legend",
+        "nav.responsive.about": "About"
     }
 } 

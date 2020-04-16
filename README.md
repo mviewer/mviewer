@@ -3,13 +3,12 @@ MVIEWER
 
 Visualiseur géographique [Kartenn](http://kartenn.region-bretagne.fr/kartoviz/) basé sur OpenLayers 5.3.0 et Bootstrap 3.3.6
 
-[Versions] (https://github.com/geobretagne/mviewer/releases/)
-
-[Démos] (http://kartenn.region-bretagne.fr/kartoviz/demo/)
-
-[Documentation] (http://mviewerdoc.readthedocs.io/fr/latest/)
-
-[Générateur d'applications] (https://github.com/geobretagne/mviewerstudio/)
+Liens utiles :
+* [Site officiel](https://mviewer.netlify.com/)
+* [Versions](https://github.com/geobretagne/mviewer/releases/)
+* [Démos](http://kartenn.region-bretagne.fr/kartoviz/demo/)
+* [Documentation](http://mviewerdoc.readthedocs.io/fr/latest/)
+* [Générateur d'applications](https://github.com/geobretagne/mviewerstudio/)
 
 
 Feuille de route
@@ -23,11 +22,45 @@ Le déploiement se passe en trois étapes :
     1. cloner le projet dans le dossier de votre choix
     2. copier ce dossier dans le dossier /var/www/ ( ou autres dossiers de déploiement Apache)
     Vous avez maintenant un visualiseur géographique fonctionnel avec les couches de la Région Bretagne
-    3. Si vous souhaitez publier vos propres couches/thèmes, modifiez le fichier config.xml
+    3. Si vous souhaitez publier vos propres couches/thèmes, modifiez le fichier `apps/default.xml`
 
-Fichier config.xml
-------------------
-Le fichier de config permet la personnalisation des thèmes/couches du visualiseur.
+## Docker
+
+Si vous souhaitez faire tourner mviewer dans un conteneur docker, un `Dockerfile` est a votre disposition.
+
+
+```bash
+# construire l'image docker (étape facultative, les images étant publiées sur [docker-hub](https://hub.docker.com/r/mviewer/mviewer))
+
+docker build -t mviewer/mviewer .
+
+# faire tourner le conteneur, et le rendre accessible sur le port 8080. A l'arret du
+# conteneur celui-ci est supprimé (option `--rm`):
+
+docker run --rm -p8080:80 -v$(pwd)/apps:/usr/share/nginx/html/apps mviewer/mviewer
+```
+
+Une fois le conteneur lancé, `mviewer` sera disponible sur `http://localhost:8080`.
+
+Note: si vous disposez déjà d'un ensemble de fichiers de configuration pour
+mviewer dans un répertoire existant, vous pouvez le monter à la place de celui
+proposé par défaut par le dépot en utilisant l'option `-v` de docker comme suit:
+
+```
+docker run --rm -p8080:80 -v/chemin/vers/repertoire_de_configurations_xml:/usr/share/nginx/html/apps mviewer/mviewer
+```
+
+La seule contrainte étant que le chemin doit être indiqué à docker de manière absolue.
+
+Par ailleurs, une composition docker est disponible dans le dépot git de
+[mviewerstudio](https://github.com/geobretagne/mviewerstudio), incluant mviewer
+et mviewerstudio.
+
+Fichier apps/default.xml
+------------------------
+
+Le fichier de configuration permet la personnalisation des thèmes/couches du visualiseur ; une configuration par
+défaut est fournie dans `apps/default.xml`, vous pouvez toutefois le personnaliser.
 
 ### Exemple
 
@@ -139,13 +172,15 @@ Représente les fonds de plan.
 ##### Prototype
 
 
-    <baselayer type="" id="" label="" title="" maxscale="" thumbgallery="" url="" layers="" format="" visible="" fromcapacity=""
+    <baselayer type="" owsoptions="" id="" label="" title="" maxscale="" thumbgallery="" url="" layers="" format="" visible="" fromcapacity=""
     attribution="" style="" matrixset="" maxzoom=""/>
 
 
 ##### Attributs
 
 * **type**: Type de flux OGC (OSM/WMTS/WMS/fake)
+* **owsoptions**: Pour une couche WMS, permet de forcer certains paramètres des requêtes GetMap. Exemple : 
+"VERSION:1.3.0"
 * **id**: Identifiant du fond de plan
 * **label**: Titre du fond de plan
 * **title**: Sous-titre du fond de plan
@@ -239,7 +274,7 @@ Options liées à la recherche d'adresse (olscompletion) et à la recherche d'en
 
 #### Prototype
 
-    <searchparameters [bbox=""] [inputlabel=""] [localities=""] [features=""] [static=""] [querymaponclick=""] [closeafterclick=""]/>
+    <searchparameters [bbox=""] [inputlabel=""] [localities=""] [features=""] [static=""] [querymaponclick=""] [closeafterclick=""] [animate=""] [duration=""]/>
 
 #### Attributs
 
@@ -254,7 +289,9 @@ proximité du centre de la carte mais n'applique pas réellement de filtre géog
 * **features**: Optional - Utilisation du service de recherche d'entités (recherches s'appuyant sur Elasticsearch ou
 Fuse) : true ou false - defaut = true.
 * **static**: Optional - En lien avec le paramètre **doctypes**. Active ou désactive la recherche associée à des
-documents requêtés systématiquement, indépendamment des couches affichées : true ou false - defaut = false.
+documents requêtés systématiquement, indépendamment des couches affichées : true ou false - defaut = false
+* **animate**: Optional - Active ou désactive l'animation de la vue lorsqu'un résultat de recherche est sélectionné : true ou false - defaut = false
+* **duration**: Optional - En lien avec le paramètre **animate**. Durée en ms de l'animation : defaut = 1000.
 
 ### Nœud themes et sous thèmes
 
@@ -266,7 +303,9 @@ Nœud regroupant les couches par thèmes et sous-thèmes.
 
 #### Attributs
 
-* **mini**: Booléen qui précise si le panneau de gauche est réduit à l'ouverture de l'application. Défaut = false.
+* **mini**: Booléen qui précise si le panneau de gauche est réduit à l'ouverture de l'application. Les attributs "collapsed" des <theme> doivent être à false pour que cet attribut soit pris en compte. Défaut = false.
+
+* **legendmini**: Booleén qui précise si le panneau de la légende est réduit à l'ouverture de l'application. Défaut = true.
 
 ### Nœud(s) enfant(s) theme
 
@@ -302,6 +341,7 @@ Nœud enfant de theme ou group décrivant une couche.
     <layer id="" name="" scalemin="" scalemax="" visible="" tiled=""
     queryable="" fields="" aliases=""
     type=""
+    owsoptions=""
     filter=""
     searchable=""
     searchid=""
@@ -347,6 +387,8 @@ Nœud enfant de theme ou group décrivant une couche.
 * **type**: Type de la couche (wms|geojson|kml|customlayer|csv) default=wms. Si customlayer est défini, il faut instancier
 un Layer OpenLayers dans un fichier javascript ayant pour nom l'id de la couche.
 Ce fichier js doit être placé dans le répertoire customlayers.
+* **owsoptions**: Pour une couche WMS, permet de forcer certains paramètres des requêtes GetMap. Exemple : 
+"VERSION:1.1.1,EXCEPTIONS:application/vnd.ogc.se_inimage"
 * **scalemin**: Echelle minimum de la couche.
 * **scalemax**: Echelle maximum de la couche.
 * **visible**:  Booléen stipulant si la couche est actuellement visible.

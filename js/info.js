@@ -213,11 +213,11 @@ var info = (function () {
             var urls = [];
             var params;
             for (var i = 0; i < visibleLayers.length; i++) {
-                if (visibleLayers[i] instanceof ol.layer.Vector === false) {
+                if (visibleLayers[i] instanceof ol.layer.BaseVector === false) {
                     params = {'INFO_FORMAT': _overLayers[visibleLayers[i].get("mviewerid")].infoformat,
                         'FEATURE_COUNT': _overLayers[visibleLayers[i].get("mviewerid")].featurecount
                     };
-                    var url = visibleLayers[i].getSource().getGetFeatureInfoUrl(
+                    var url = visibleLayers[i].getSource().getFeatureInfoUrl(
                         evt.coordinate, _map.getView().getResolution(), _map.getView().getProjection(), params
                     );
                     if (layer && featureid) {
@@ -673,6 +673,27 @@ var info = (function () {
         olfeatures.forEach(function(feature){
             if (activeAttributeValue) {
                 feature.properties[activeAttributeValue] = true;
+            }
+            // add a key_value array with all the fields, allowing to iterate through all fields in a mustache templaye
+            feature.properties['fields_kv'] = function () {
+              fields_kv = [];
+              keys = Object.keys(this);
+              for (i = 0 ; i < keys.length ; i++ ) {
+                if (keys[i] == "fields_kv" || keys[i] == "serialized") {
+                  continue;
+                }
+                field_kv = {
+                  'key': keys[i],
+                  'value': this[keys[i]]
+                }
+                fields_kv.push(field_kv);
+              }
+              return fields_kv;
+            }
+            // add a serialized version of the object so it can easily be passed through HTML GET request
+            // you can deserialize it with `JSON.parse(data)` when data is the serialized data
+            feature.properties['serialized'] = function () {
+              return encodeURIComponent(JSON.stringify(feature.properties));
             }
             obj.features.push(feature.properties);
         });
