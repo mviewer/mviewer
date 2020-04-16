@@ -30,7 +30,7 @@
             url="demo/swipe/layer/swipe.js"
             customcontrol="true"
             expanded="true"
-            attribution="&lt;a href=&quot;https://www.maptiler.com/copyright/&quot; target=&quot;_blank&quot;&gt;&amp;copy; MapTiler&lt;/a&gt;&lt;a href=&quot;https://www.openstreetmap.org/copyright&quot; target=&quot;_blank&quot;&gt;&amp;copy; OpenStreetMap contributors&lt;/a&gt;"
+            attribution="&lt;a href=&quot;https://geobretagne.fr/&quot; target=&quot;_blank&quot;&gt;&amp;copy; GéoBretagne&lt;/a&gt;"
             metadata=""
             metadata-csw="">
         </layer>

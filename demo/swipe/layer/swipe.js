@@ -1,8 +1,8 @@
-const key = "get_your_own_D6rA4zTHduk6KOKTXzGB";
 const aerial = new ol.layer.Tile({
-  source: new ol.source.XYZ({
-    url: 'https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=' + key,
-    maxZoom: 20
+  source: new ol.source.TileWMS({
+    url: 'https://tile.geobretagne.fr/gwc02/service/wms',
+      params: {'LAYERS': 'satellite', 'TILED': true, 'SRS': 'EPSG:3857'},
+      serverType: 'geoserver'
   })
 });
 //Classe qui etend la classe abstraite et decris le custom Layer
