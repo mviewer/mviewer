@@ -1,0 +1,9 @@
+{
+    "js": [],
+    "css": "logo.css",
+    "html": "logo.html",
+    "target": "map",
+    "options": {
+        "title": "Openlayers"
+    }
+}
