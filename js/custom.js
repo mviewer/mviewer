@@ -17,8 +17,8 @@ class CustomLayer {
     }
   }
 }
-// Class abstraite
-class CustomControl {
+// Custom Control Avancé  : Class abstraite
+class AdvancedCustomControl {
   constructor(id) {
     this.id = id;
     /* Load customControl in mviewer.customControls */
@@ -35,8 +35,20 @@ class CustomControl {
     throw new Error('You must implement the \'destroy\' function');
   }
 }
-
-
+// Custom Control Simple
+class SimpleCustomControl {
+  constructor(id, init = function () {}, destroy = function () {}) {
+    this.id = id;
+    this.init = init;
+    this.destroy = destroy;
+    /* Load customControl in mviewer.customControls */
+    if (mviewer.customControls && !mviewer.customControls[id]) {
+        mviewer.customControls[id] = this
+    } else {
+        console.log(`${this.id} customControl is not loaded because  ${this.id} is already in use !`);
+    }
+  }
+}
 class Component {
   constructor(id, path) {
     this.id = id;

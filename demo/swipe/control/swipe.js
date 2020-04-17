@@ -94,7 +94,7 @@ const afficher = function(id){
   console.log(id);
 }
 //Classe qui etend la classe abstraite et decris le custom Control
-class Swipe extends CustomControl {
+class Swipe extends AdvancedCustomControl {
   // Declare private Variable
   #nom;
   // Initialize the Layer
@@ -123,7 +123,6 @@ class Swipe extends CustomControl {
   }
   // Mandatory - code executed when panel is closed
   destroy() {
-    
     $("#swipe").remove();
   }
   // Function to get #nom which is a private variable
