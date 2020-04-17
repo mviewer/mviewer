@@ -276,6 +276,9 @@ La valeur de ``maVariablePublique`` sera toujours **"valeurParDefaut"** tant que
 Pour une variable de classe privée
 **********************************
 
+
+.. Attention:: La syntaxe suivante ne fonctionne que sur Chrome pour les autres navigateurs remplacez le "**#**" par un "**_**"
+
 Pour ajouter une variable de classe privée il faut ajouter le **"#"** avant le nom de la variable et la déclarer avant la fonction ``constructor()`` :
 
 ::
