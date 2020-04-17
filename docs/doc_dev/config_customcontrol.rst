@@ -16,8 +16,8 @@ Voici un exemple, le custom control s'affiche dans la légende en dessous des at
             :alt: Profil en long
             :align: center
 
-Première méthode : Définition Simple
-------------------------------------
+Première méthode : Définition Simple (CustomControl)
+----------------------------------------------------------
 
 Cette méthode permet de créer des customs controls plus simples qu'avec la deuxième méthode mais permet moins de personnalisation.
 
@@ -98,12 +98,12 @@ Il faut définir un nouvel attribut pour la classe ``CustomControl`` de la mani�
 
 Ces attributs seront alors publics et accessibles depuis l'éxterieur.
 
-Deuxième méthode : Création d'une sous-classe
----------------------------------------------
+Deuxième méthode : Création d'une sous-classe (AdvancedCustomControl)
+---------------------------------------------------------------------
 
 Cette méthode est la plus complète des deux et permet de créer des customs controls plus poussés.
 
-Tous les Custom Control ont une base commune dans le fichier ``custom.js`` où est définie la classe ``CustomControl``.
+Tous les Custom Control ont une base commune dans le fichier ``custom.js`` où est définie la classe ``AdvancedCustomControl``.
 
 Pour utiliser cette classe il faut modifier le fichier Javascript (dans cet exemple ``moncontrol.js``) présent dans l'arborescence suivante::
 
@@ -126,13 +126,13 @@ Pour utiliser cette classe il faut modifier le fichier Javascript (dans cet exem
         │   └── ma_carte1.xml
         └── ma_carte2
 
-Ce fichier définit une classe qui étend (est un héritier de la classe) la classe ``CustomControl`` :
+Ce fichier définit une classe qui étend (est un héritier de la classe) la classe ``AdvancedCustomControl`` :
 
 .. code-block:: javascript
   :linenos:
     
-    //Classe qui étend la classe abstraite et décrit le custom Control
-    class MonControl extends CustomControl {
+    // Classe qui étend la classe abstraite et décrit le custom Control
+    class MonControl extends AdvancedCustomControl {
         constructor(id) {
             // Initialise l'id de l'objet avec le constructeur parent 
             super(id);
@@ -149,7 +149,7 @@ Ce fichier définit une classe qui étend (est un héritier de la classe) la cla
         }
     }
 
-La classe ``CustomControl`` étant **abstraite** cela signifie qu'elle nous oblige à redéfinir les fonctions ``init()`` et ``destroy()`` qui sont obligatoires sinon elle nous renvoie une erreur. 
+La classe ``AdvancedCustomControl`` étant **abstraite** cela signifie qu'elle nous oblige à redéfinir les fonctions ``init()`` et ``destroy()`` qui sont obligatoires sinon elle nous renvoie une erreur. 
 
 De plus la fonction ``constructor(id)`` permet à l'objet d'être initialisé avec la valeur **id (obligatoire)** lors de la création d'un **objet MonControl**.
 
@@ -180,7 +180,7 @@ Directement en ajoutant dans le code de la classe ``MonControl`` :
   :linenos:
 
     // Classe qui étend la classe abstraite et décrit le custom Control
-    class MonControl extends CustomControl {
+    class MonControl extends AdvancedCustomControl {
         ...
         maFonctionPublique(){
             // Votre code ici
@@ -206,7 +206,7 @@ En dehors du code de la classe ``MonControl`` et en la déclarant comme une ``co
         ...
     }
     // Classe qui étend la classe abstraite et décrit le custom Control
-    class MonControl extends CustomControl {
+    class MonControl extends AdvancedCustomControl {
         ...
         maFonctionPublique(){
             maFonctionPrivée();
@@ -236,7 +236,7 @@ Pour ajouter une variable de classe publique il faut juste ajouter une propriét
   :linenos:
 
     // Classe qui étend la classe abstraite et décrit le custom Control
-    class MonControl extends CustomControl {
+    class MonControl extends AdvancedCustomControl {
         constructor(id,maVariablePublique){
             // Initialise l'id de l'objet avec le constructeur parent 
             super(id);
@@ -257,7 +257,7 @@ Si on ne souhaite pas forcément donner une valeur à ``maVariablePublique`` on 
   :linenos:
 
     // Classe qui étend la classe abstraite et décrit le custom Control
-    class MonControl extends CustomControl {
+    class MonControl extends AdvancedCustomControl {
         // Fonction avec un paramètre ayant une valeur par défaut
         constructor(id,maVariablePublique = "valeurParDefaut"){
             // Initialise l'id de l'objet avec le constructeur parent 
@@ -276,12 +276,15 @@ La valeur de ``maVariablePublique`` sera toujours **"valeurParDefaut"** tant que
 Pour une variable de classe privée
 **********************************
 
+
+.. Attention:: La syntaxe suivante ne fonctionne que sur Chrome pour les autres navigateurs remplacez le "**#**" par un "**_**" et vous n'aurez plus besoin de déclarer la variable.
+
 Pour ajouter une variable de classe privée il faut ajouter le **"#"** avant le nom de la variable et la déclarer avant la fonction ``constructor()`` :
 
 ::
 
     // Classe qui étend la classe abstraite et décrit le custom Control
-    class MonControl extends CustomControl {
+    class MonControl extends AdvancedCustomControl {
         // Déclaration de la variable Privée
         #maVariablePrivee;
         constructor(id,maVariablePrivee = "valeurParDefaut"){
@@ -302,7 +305,7 @@ Si vous voulez quand même pouvoir accéder et modifier la valeur de cette varia
 ::
 
     // Classe qui étend la classe abstraite et décrit le custom Control
-    class MonControl extends CustomControl {
+    class MonControl extends AdvancedCustomControl {
         // Déclaration de la variable Privée
         #maVariablePrivee;
         constructor(id,maVariablePrivee = "valeurParDefaut"){
