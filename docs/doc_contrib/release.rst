@@ -4,7 +4,7 @@
 .. _contribdoc:
 
 Faire une release de Mviewer & MviewerStudio
-=========================
+============================================
 
 Les versions des projets Mviewer et MviewerStudio sont liées. Il faut donc faire une release des deux applications.
 
