@@ -1,0 +1,45 @@
+{
+    "departements": [
+        {
+            "value": "22",
+            "label": "Côtes d'Armor",
+            "communes": [
+                {
+                    "value": "22050",
+                    "label": "Dinan"
+                }
+            ]
+        },
+        {
+            "value": "29",
+            "label": "Finistère",
+            "communes": [
+                {
+                    "value": "29232",
+                    "label": "Quimper"
+                }
+            ]
+        },
+        {
+            "value": "35",
+            "label": "Ille et Vilaine",
+            "communes": [
+                {
+                    "value": "35360",
+                    "label": "Vitré"
+                }
+            ]
+        },
+        {
+            "value": "56",
+            "label": "Morbihan",
+            "communes": [
+                {
+                    "value": "56165",
+                    "label": "Ploërmel"
+                }
+            ]
+        }
+    ]
+
+}

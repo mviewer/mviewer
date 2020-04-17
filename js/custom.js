@@ -36,7 +36,7 @@ class AdvancedCustomControl {
   }
 }
 // Custom Control Simple
-class SimpleCustomControl {
+class CustomControl {
   constructor(id, init = function () {}, destroy = function () {}) {
     this.id = id;
     this.init = init;
