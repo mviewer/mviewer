@@ -16,12 +16,12 @@ Voici un exemple, le custom control s'affiche dans la légende en dessous des at
             :alt: Profil en long
             :align: center
 
-Première méthode : Définition Simple (SimpleCustomControl)
+Première méthode : Définition Simple (CustomControl)
 ----------------------------------------------------------
 
 Cette méthode permet de créer des customs controls plus simples qu'avec la deuxième méthode mais permet moins de personnalisation.
 
-Dans ce cas précis on utilise la classe de base ``SimpleCustomControl`` dans le fichier ``custom.js``.
+Dans ce cas précis on utilise la classe de base ``CustomControl`` dans le fichier ``custom.js``.
 
 La classe possède une méthode ``constructor()`` qui prend en paramètre les méthodes ``init()`` et ``destroy()`` que l'on peut définir dans le fichier Javascript (dans cet exemple ``moncontrol.js``)
 présent dans l'arborescence suivante::
@@ -46,7 +46,7 @@ présent dans l'arborescence suivante::
         └── ma_carte2
 
 Pour cela il faut donc définir les deux fonctions en les déclarant avec le mot-clé **const** pour les rendre inaccessibles depuis le reste de l'application indépendamment du custom control dans lequel elles 
-sont définies, puis il faudra les donner en paramètre à la classe ``SimpleCustomControl`` vue plutôt.
+sont définies, puis il faudra les donner en paramètre à la classe ``CustomControl`` vue plutôt.
 
 .. code-block:: javascript
   :linenos:
@@ -64,7 +64,7 @@ sont définies, puis il faudra les donner en paramètre à la classe ``SimpleCus
         ...
     }
     // Initialiser l'objet avec les fonctions init() et destroy() et l'id de couche "monControl".
-    new SimpleCustomControl("monControl", init, destroy);
+    new CustomControl("monControl", init, destroy);
 
 Ajouter des fonctions et des variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -75,14 +75,14 @@ de l’application si l’on ne fait pas attention.
 Pour les variables et fonctions de classe publique
 **************************************************
 
-Il faut définir un nouvel attribut pour la classe ``SimpleCustomControl`` de la manière suivante :
+Il faut définir un nouvel attribut pour la classe ``CustomControl`` de la manière suivante :
 
 .. code-block:: javascript
   :linenos:
     
     ...
     // Initialiser l'objet avec les fonctions init() et destroy() et l'id de couche "monControl".
-    var monControl = new SimpleCustomControl("monControl", init, destroy);
+    var monControl = new CustomControl("monControl", init, destroy);
 
     // Une fois créer on peut ajouter des propriétés (une propriété peut être une fonction ou une variable)
 
