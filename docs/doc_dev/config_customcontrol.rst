@@ -277,7 +277,7 @@ Pour une variable de classe privée
 **********************************
 
 
-.. Attention:: La syntaxe suivante ne fonctionne que sur Chrome pour les autres navigateurs remplacez le "**#**" par un "**_**"
+.. Attention:: La syntaxe suivante ne fonctionne que sur Chrome pour les autres navigateurs remplacez le "**#**" par un "**_**" et vous n'aurez plus besoin de déclarer la variable.
 
 Pour ajouter une variable de classe privée il faut ajouter le **"#"** avant le nom de la variable et la déclarer avant la fonction ``constructor()`` :
 
