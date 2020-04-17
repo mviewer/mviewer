@@ -79,7 +79,7 @@ mviewer.customControls.isochrones = (function() {
             }
             mviewer.customLayers.isochrones.layer.getSource().clear();
             var mode = $(".selected.isochrone-mode").attr("data-mode");
-            var url = "http://kartenn.region-bretagne.fr/isochrone?";
+            var url = "https://kartenn.region-bretagne.fr/isochrone?";
 
             $("#loading-isochrones").show();
             times.forEach(function (time) {

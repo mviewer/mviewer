@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="lib/bootstrap-slider/9.1.3/css/bootstrap-slider.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" />
     <link href="lib/font-awesome-5.6.3/css/all.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="lib/openlayers/5.3.0/ol.css" type="text/css" />
+    <link rel="stylesheet" href="lib/openlayers/6.3.1/css/ol.css" type="text/css" />
     <link rel="stylesheet" href="css/mviewer.css" type="text/css" />
     <style>
         @import url('https://fonts.googleapis.com/css?family=Roboto');
@@ -70,142 +70,6 @@
            }
         }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
-    <script type="text/javascript" src="lib/proj4js/2.3.6/proj4.js"></script>
-    <script type="text/javascript" src="lib/jquery/base/1.10.2/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="lib/openlayers/5.3.0/ol.js"></script>
-    <script type="text/javascript" src="lib/jquery/base/plugins/xml2json/jquery.xml2json.js"></script>
-    <script type="text/javascript" src="lib/Sortable/1.4.2/Sortable.min.js"></script>
-    <script type="text/javascript" src="lib/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="lib/bootstrap-datepicker-1.6.1/js/bootstrap-datepicker.min.js"></script>
-    <script type="text/javascript" src="lib/bootstrap-datepicker-1.6.1/locales/bootstrap-datepicker.fr.min.js"></script>
-    <script type="text/javascript" src="lib/bootstrap-slider/9.1.3/bootstrap-slider.min.js"></script>
-    <script type="text/javascript" src="lib/typeahead/typeahead.bundle.min.js"></script>
-    <script type="text/javascript" src="lib/bootstrap-typeahead/bootstrap3-typeahead.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
-    <script type="text/javascript" src="lib/fuse/fuse.min.js"></script>
-    <script type="text/javascript" src="js/extend.js"></script>
-    <script type="text/javascript" src="js/utils.js"></script>
-    <script type="text/javascript" src="js/ogcutils.js"></script>
-    <script type="text/javascript" src="js/configuration.js"></script>
-    <script type="text/javascript" type="text/javascript" src="js/measure.js"></script>
-    <script type="text/javascript" type="text/javascript" src="js/info.js"></script>
-    <script type="text/javascript" type="text/javascript" src="js/search.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.3/papaparse.min.js"></script>
-    <script type="text/javascript" type="text/javascript" src="js/csv.js"></script>
-    <script type="text/javascript" type="text/javascript" src="js/mviewer.js"></script>
-    <script type="text/javascript" src="js/templates.js"></script>
-    <script type="text/javascript" src="js/featurestyles.js"></script>
-    <script src="lib/i18njs/i18n.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-var API = {};
-$(document).ready(function () {
-    "use strict";
-    if (window.location.search) {
-        $.extend(API, $.parseJSON('{"' + decodeURIComponent(window.location.search.substring(1)
-            .replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}'));
-    }
-
-    // Search for a config param
-    var configFile = (API.config);
-
-    // If no config param, search for a fragment (#)
-    if (!API.config) {
-        var fragment = window.location.hash.split('#')[1];
-        if (fragment) {
-            configFile = fragment;
-            if (!configFile.startsWith("/")) {
-                configFile = "/".concat(configFile)
-            }
-            configFile = "apps".concat(configFile);
-        }
-        if (configFile) {
-            if (!configFile.endsWith(".xml")) {
-                configFile = configFile.concat(".xml");
-            }
-        }
-    }
-
-    // If no config param nor fragment then use the default config file
-    if (!configFile) {
-        configFile = "apps/default.xml";
-    }
-
-    // Save the config file path in the API object
-    API.config = configFile;
-
-    var theme = (API.theme) ? API.theme : null;
-
-    $.ajax({
-        url: configFile + '?_dc=' + (new Date()).getTime(),
-        dataType: "xml",
-        success: function (xml) {
-            $( document ).on( "layersLoaded", function (e) {
-                mviewer.overLayersReady();
-            });
-            //load conf
-            $( document ).on( "configurationCompleted", function (e, eData) {
-                //get JSON conf from xml;
-                var _conf = configuration.parseXML(eData.xml);
-                var style = "css/themes/default.css";
-                if (!theme && _conf.application.style && _conf.application.style.match("css")) {
-                    style = _conf.application.style;
-                } else if (theme) {
-                    style = "css/themes/" + theme + ".css";
-                }
-                $('head').prepend('<link rel="stylesheet" href="' + style + '" type="text/css" />');
-                var title = "";
-                if (_conf.application.title) {
-                    title = _conf.application.title;
-                    $("#loader-subtitle").text(title);
-                }
-                configuration.load(_conf);
-                setTimeout(function () {
-                    $("#loading-page").hide();
-                    $("#main").css("opacity", 1).hide();
-                    $("#main").fadeIn(1500);
-                    mviewer.getMap().updateSize();
-                }, 2000);
-            $( "#map" ).focus();
-            });
-
-            configuration.complete(xml);
-
-        }, // fin success config
-        error: function (request, status, error) {
-            mviewer.alert("Fichier de configuration : " + configFile + " non trouvé ou incorrect !", "alert-danger");
-        }
-    });
-
-    Sortable.create(document.getElementById('layers-container'), {
-        handle: '.layerdisplay-title',
-        draggable: '.draggable',
-        onUpdate: function (evt) {
-            var actionMove = {
-                layerName: $(evt.item).attr("data-layerid"),
-                layerRef: "",
-                action: ""};
-            var itemsList = $(evt.from).find(".list-group-item");
-            //New position in the list
-            var newPos = evt.newIndex;
-            if (newPos < itemsList.length -1) {
-                //Get the under layer name
-                actionMove.layerRef = $(itemsList[newPos +1]).attr("data-layerid");
-                actionMove.action = "up"
-            } else {
-                //Get the over layer name
-                actionMove.layerRef = $(itemsList[newPos -1]).attr("data-layerid");
-                actionMove.action = "down";
-            }
-            mviewer.orderLayer(actionMove);
-          }
-    });
-
-    $("#right-panel .close,#bottom-panel .mv-close").click(function () {mviewer.hideLocation()});
-
-});
-</script>
 </head>
 <body>
     <div id="loading-page">
@@ -583,6 +447,144 @@ $(document).ready(function () {
         <!--ALERTS AREA -->
         <div id="alerts-zone" ></div>
         </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
+        <script type="text/javascript" src="lib/proj4js/2.3.6/proj4.js"></script>
+        <script type="text/javascript" src="lib/jquery/base/1.10.2/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="lib/openlayers/6.3.1/build/ol.js"></script>
+        <script type="text/javascript" src="lib/jquery/base/plugins/xml2json/jquery.xml2json.js"></script>
+        <script type="text/javascript" src="lib/Sortable/1.4.2/Sortable.min.js"></script>
+        <script type="text/javascript" src="lib/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="lib/bootstrap-datepicker-1.6.1/js/bootstrap-datepicker.min.js"></script>
+        <script type="text/javascript" src="lib/bootstrap-datepicker-1.6.1/locales/bootstrap-datepicker.fr.min.js"></script>
+        <script type="text/javascript" src="lib/bootstrap-slider/9.1.3/bootstrap-slider.min.js"></script>
+        <script type="text/javascript" src="lib/typeahead/typeahead.bundle.min.js"></script>
+        <script type="text/javascript" src="lib/bootstrap-typeahead/bootstrap3-typeahead.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+        <script type="text/javascript" src="lib/fuse/fuse.min.js"></script>
+        <script type="text/javascript" src="js/extend.js"></script>
+        <script type="text/javascript" src="js/utils.js"></script>
+        <script type="text/javascript" src="js/ogcutils.js"></script>
+        <script type="text/javascript" src="js/configuration.js"></script>
+        <script type="text/javascript" src="js/measure.js"></script>
+        <script type="text/javascript" src="js/info.js"></script>
+        <script type="text/javascript" src="js/search.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.3/papaparse.min.js"></script>
+        <script type="text/javascript" src="js/csv.js"></script>
+        <script type="text/javascript" src="js/mviewer.js"></script>
+        <script type="text/javascript" src="js/templates.js"></script>
+        <script type="text/javascript" src="js/featurestyles.js"></script>
+        <script type="text/javascript" src="js/custom.js" ></script>
+        <script type="text/javascript" src="lib/i18njs/i18n.js" ></script>
+
+        <script type="text/javascript">
+        var API = {};
+        $(document).ready(function () {
+            "use strict";
+            if (window.location.search) {
+                $.extend(API, $.parseJSON('{"' + decodeURIComponent(window.location.search.substring(1)
+                    .replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}'));
+            }
+
+            // Search for a config param
+            var configFile = (API.config);
+
+            // If no config param, search for a fragment (#)
+            if (!API.config) {
+                var fragment = window.location.hash.split('#')[1];
+                if (fragment) {
+                    configFile = fragment;
+                    if (!configFile.startsWith("/")) {
+                        configFile = "/".concat(configFile)
+                    }
+                    configFile = "apps".concat(configFile);
+                }
+                if (configFile) {
+                    if (!configFile.endsWith(".xml")) {
+                        configFile = configFile.concat(".xml");
+                    }
+                }
+            }
+
+            // If no config param nor fragment then use the default config file
+            if (!configFile) {
+                configFile = "apps/default.xml";
+            }
+
+            // Save the config file path in the API object
+            API.config = configFile;
+
+            var theme = (API.theme) ? API.theme : null;
+
+            $.ajax({
+                url: configFile + '?_dc=' + (new Date()).getTime(),
+                dataType: "xml",
+                success: function (xml) {
+                    $( document ).on( "layersLoaded", function (e) {
+                        mviewer.overLayersReady();
+                    });
+                    //load conf
+                    $( document ).on( "configurationCompleted", function (e, eData) {
+                        //get JSON conf from xml;
+                        var _conf = configuration.parseXML(eData.xml);
+                        var style = "css/themes/default.css";
+                        if (!theme && _conf.application.style && _conf.application.style.match("css")) {
+                            style = _conf.application.style;
+                        } else if (theme) {
+                            style = "css/themes/" + theme + ".css";
+                        }
+                        $('head').prepend('<link rel="stylesheet" href="' + style + '" type="text/css" />');
+                        var title = "";
+                        if (_conf.application.title) {
+                            title = _conf.application.title;
+                            $("#loader-subtitle").text(title);
+                        }
+                        configuration.load(_conf);
+                        setTimeout(function () {
+                            $("#loading-page").hide();
+                            $("#main").css("opacity", 1).hide();
+                            $("#main").fadeIn(1500);
+                            mviewer.getMap().updateSize();
+                        }, 2000);
+                    $( "#map" ).focus();
+                    });
+                    $( document ).on( "applicationExtended", function (e, eData) {
+                        configuration.complete(eData.xml);
+                    });
+                    configuration.getExtensions(xml);
+                }, // fin success config
+                error: function (request, status, error) {
+                    mviewer.alert("Fichier de configuration : " + configFile + " non trouvé ou incorrect !", "alert-danger");
+                }
+            });
+
+            Sortable.create(document.getElementById('layers-container'), {
+                handle: '.layerdisplay-title',
+                draggable: '.draggable',
+                onUpdate: function (evt) {
+                    var actionMove = {
+                        layerName: $(evt.item).attr("data-layerid"),
+                        layerRef: "",
+                        action: ""};
+                    var itemsList = $(evt.from).find(".list-group-item");
+                    //New position in the list
+                    var newPos = evt.newIndex;
+                    if (newPos < itemsList.length -1) {
+                        //Get the under layer name
+                        actionMove.layerRef = $(itemsList[newPos +1]).attr("data-layerid");
+                        actionMove.action = "up"
+                    } else {
+                        //Get the over layer name
+                        actionMove.layerRef = $(itemsList[newPos -1]).attr("data-layerid");
+                        actionMove.action = "down";
+                    }
+                    mviewer.orderLayer(actionMove);
+                  }
+            });
+
+            $("#right-panel .close,#bottom-panel .mv-close").click(function () {mviewer.hideLocation()});
+
+        });
+        </script>
         <script type="text/javascript" src="lib/simple-slidebar/slidebar_menu.js"></script>
 </body>
 </html>

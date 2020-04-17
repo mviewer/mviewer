@@ -1,0 +1,9 @@
+#logo-ol6 {
+    bottom: 0px;
+    position: fixed;
+    left: 30%;
+}
+
+#logo-ol6 img {
+    max-height: 80px;
+}

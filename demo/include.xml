@@ -1,32 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<config>    
+<config>
     <application title="Démo Thématiques externes" logo="img/logo/g.png" exportpng="false" style="css/themes/pink.css"/>
-    <mapoptions maxzoom="20" projection="EPSG:3857" center="-198478,6137005" zoom="14" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
+    <mapoptions maxzoom="20" projection="EPSG:3857" center="-198478,6137005" zoom="9" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
    	<baselayers style="default">
-        <baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoBretagne" thumbgallery="img/basemap/ortho.jpg" 
-            url="http://tile.geobretagne.fr/gwc02/service/wmts" layers="satellite" format="image/png" visible="true" 
+        <baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoBretagne" thumbgallery="img/basemap/ortho.jpg"
+            url="http://tile.geobretagne.fr/gwc02/service/wmts" layers="satellite" format="image/png" visible="true"
             attribution="&lt;a href='http://applications.region-bretagne.fr/geonetwork/?uuid=3a0ac2e3-7af1-4dec-9f36-dae6b5a8c731' target='_blank' >partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver&lt;/a>" style="_null" matrixset="EPSG:3857" fromcapacity="false"/>
-        <baselayer  type="WMS" id="photo2" label="Photo aérienne 1950" title="GéoBretagne" thumbgallery="img/basemap/ortho-ancien.jpg" 
-			url="http://geobretagne.fr/geoserver/photo/wms" layers="satellite-ancien" format="image/jpeg" visible="false" 
+        <baselayer  type="WMS" id="photo2" label="Photo aérienne 1950" title="GéoBretagne" thumbgallery="img/basemap/ortho-ancien.jpg"
+			url="http://geobretagne.fr/geoserver/photo/wms" layers="satellite-ancien" format="image/jpeg" visible="false"
 			attribution="&lt;a href='http://applications.region-bretagne.fr/geonetwork/?uuid=048622c5-b333-4c2b-94ec-40a41608dc06' target='_blank' >Partenaires GéoBretagne - IGN&lt;/a>"/>
-        <baselayer  type="WMS" id="osm" label="OpenStreetMap" title="Plan OSM Géobretagne" thumbgallery="img/basemap/osm.png" 
-            url="http://osm.geobretagne.fr/gwc01/service/wms" layers="osm:google" format="image/png" visible="false" 
+        <baselayer  type="WMS" id="osm" label="OpenStreetMap" title="Plan OSM Géobretagne" thumbgallery="img/basemap/osm.png"
+            url="http://osm.geobretagne.fr/gwc01/service/wms" layers="osm:google" format="image/png" visible="false"
             attribution="GéoBretagne. Données : les contributeurs d'&lt;a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='http://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" />
     </baselayers>
-    <proxy url="../proxy/?url="/>
-    <searchparameters localities="false"/>   
+    <searchparameters localities="false"/>
     <themes mini="false">
-        <theme id="zae" url="https://geobretagne.fr/pub/dreal_b/apps/obsfoncier/config.xml" />        
-        <theme id="rando" url="http://kartenn.region-bretagne.fr/kartoviz/demo/geobretagne.xml" />			
-        <theme name="Supervision"  collapsed="true" id="hydrometrie" icon="fas fa-chart-line">  
-			<layer id="hydrometrie_stations_technique" name="Supervision du réseau hydro." visible="true" tiled="true"
-				queryable="true" fields="" aliases=""
-                infoformat="text/html" featurecount="1"                
-				style="" 
-				url="https://geobretagne.fr/geoserver/dreal_b/wms" 
-				attribution="GéoBretagne" 
-				metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=34d15ff0-ac1c-48d9-a9bd-a38d60fa0ecc"
-				metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=34d15ff0-ac1c-48d9-a9bd-a38d60fa0ecc" />			
-		</theme>                
+            <theme id="education" url="https://kartenn.region-bretagne.fr/territoires/config.xml" name="Education et formation" collapsed="true" icon="false"></theme>
     </themes>
 </config>

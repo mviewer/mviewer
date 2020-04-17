@@ -1,0 +1,12 @@
+{
+    "js": [
+        "vis-graph3d.min.js",
+        "main.js"
+    ],
+    "css": "style.css",
+    "html": "3d.html",
+    "target": "map",
+    "options": {
+        "title": "3D"
+    }
+}
