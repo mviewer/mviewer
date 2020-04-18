@@ -89,20 +89,14 @@ input[type=range]:focus::-ms-fill-upper {
   background: #3071A9;
 }
 `;
-// This is a private function not usuable outside of this piece of code
-const afficher = function(id){
-  console.log(id);
-}
-//Classe qui etend la classe abstraite et decris le custom Control
-class Swipe extends CustomControl {
-  // Declare private Variable
-  #nom;
-  // Initialize the Layer
-  constructor(id,nom) {
+
+//Classe qui etend la classe abstraite et decrit le custom Control
+class Swipe extends AdvancedCustomControl {
+  // Initialize the Custom Component
+  constructor(id) {
     // Initialize CustomControl superClass
     super(id);
-    // Initialize Private variable #nom
-    this.#nom = nom;
+
   }
   // Mandatory - code executed when panel is opened
   init() {
@@ -120,21 +114,14 @@ class Swipe extends CustomControl {
     $("#swipe-select").click(function () {
       mviewer.setBaseLayer(this.value);
     });
+
   }
   // Mandatory - code executed when panel is closed
   destroy() {
-    
     $("#swipe").remove();
-  }
-  // Function to get #nom which is a private variable
-  getNom(){
-    return this.#nom;
-  }
-  // Function to user the private function afficher()
-  display(){
-    afficher(this.id);
+
   }
 
 }
-// Create The Layer
-new Swipe("swipe","Test");
+// Create The Swipe CustomControl
+new Swipe("swipe");

@@ -8,7 +8,7 @@ var configuration = (function () {
     var _configuration = null;
 
     // Mviewer version a saisir manuellement
-    var VERSION = "3.3-snapshot";
+    var VERSION = "3.2.1";
 
     var _showhelp_startup = false;
 
