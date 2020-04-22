@@ -776,7 +776,8 @@ var search = (function () {
         showFeature: _showFeature,
         zoomToFeature: _zoomToFeature,
         clear: _clear,
-        clearSearchField: _clearSearchField
+        clearSearchField: _clearSearchField,
+        list: _fuseSearchData
     };
 
 })();
