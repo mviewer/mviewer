@@ -352,9 +352,7 @@ var search = (function () {
     var _sendFuseRequest = function (val) {
         $(".fuse").remove();
 
-        var searchableLayers =  $.grep( _searchableFuseLayers, function( l, i ) {
-            return l.getVisible();
-        });
+        var searchableLayers = _searchableFuseLayers.filter(e => e.getVisible() && _fuseSearchData[e.get('mviewerid')]);
 
         for (var i = 0; i < searchableLayers.length; i++) {
 
