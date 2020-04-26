@@ -36,7 +36,7 @@ L'ojectif est ici de créer une couche personnalisée de type ``heatmap`` à par
 
 
 
-L'exemple complet est disponible sur `github. <https://github.com/geobretagne/mviewer/tree/master/demo/heatmap>`_
+L'exemple complet est disponible sur `github. <https://github.com/geobretagne/mviewer/tree/develop/demo/heatmap>`_
 
 
 Ecrire le customLayer
