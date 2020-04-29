@@ -86,7 +86,14 @@ Cette partie est dédiée aux personnes qui souhaite développer des fonctionnal
    :maxdepth: 1
    :caption: Documentation dévelopeur
 
+   doc_develop/dev_intro.rst
+   doc_develop/custom.rst
+   doc_develop/customlayer.rst
+   doc_develop/customcontrol.rst
+   doc_develop/customcomponent.rst
    doc_develop/public_fonctions.rst
+   doc_develop/customlayer_dev.rst
+   doc_develop/customcontrol_dev.rst
 
 Documentation contribution
 -------------------------------------------------

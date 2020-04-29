@@ -44,7 +44,7 @@ Exemple d'arborescence : ::
 
 Exemple de fichier config.json :
 
-.. code-block:: javascript
+.. code-block:: JSON
   :linenos:
 
     {
@@ -64,7 +64,7 @@ Le composant sera alors créé dans une **div** mviewer existante ciblée par le
 
 extrait de configuration xml :
 
-.. code-block:: xml
+.. code-block:: XML
   :linenos:
 
     <config>
@@ -72,3 +72,9 @@ extrait de configuration xml :
             <extension type="component" id="3d" path="demo/components"/>
         </extensions>
     </config>
+
+
+.. Note::
+    Apprendre par l'exemple :
+
+    - :ref:`customcomponent`
