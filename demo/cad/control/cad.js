@@ -6,7 +6,7 @@ mviewer.customControls.cad = (function () {
         "VERSION": "2.0.0",
         "REQUEST": "GetFeature",
         "outputFormat": "application/json",
-        "srsName": "EPSG:4326"
+        "srsName": "EPSG:3857"
     }
     var querybuilder = function (options) {
         options = Object.assign(Object.assign({}, defaultParameters), options);
@@ -67,10 +67,7 @@ mviewer.customControls.cad = (function () {
         let src = cad_layer.layer.getSource();
         src.clear();
         src.addFeatures(
-            new ol.format.GeoJSON().readFeatures(data, {
-                dataProjection: 'EPSG:4326',
-                featureProjection: 'EPSG:3857'
-            })
+            new ol.format.GeoJSON().readFeatures(data)
         );
         mviewer.getMap().getView().fit(src.getExtent());
     };
