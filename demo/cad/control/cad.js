@@ -69,7 +69,9 @@ mviewer.customControls.cad = (function () {
         src.addFeatures(
             new ol.format.GeoJSON().readFeatures(data)
         );
-        mviewer.getMap().getView().fit(src.getExtent());
+        let res = mviewer.getMap().getView().getResolutionForExtent(src.getExtent());
+        let zoom = mviewer.getMap().getView().getZoomForResolution(res);
+        mviewer.getMap().getView().fit(src.getExtent(),{maxZoom:zoom-1});
     };
     var clearSource = function () {
         let cad_layer = mviewer.getLayer('cad');
@@ -78,7 +80,7 @@ mviewer.customControls.cad = (function () {
     }
     var highlightParcelle = function (id_parcelle) {
         if (previousParcelle) {
-            previousParcelle.setStyle(undefined);
+            previousParcelle.setStyle(mviewer.customLayers.cad.defaultStyle);
         }
         let layer = mviewer.getLayer('cad').layer;
         let src = layer.getSource();
@@ -90,7 +92,7 @@ mviewer.customControls.cad = (function () {
                 let res = mviewer.getMap().getView().getResolutionForExtent(feature.getGeometry().getExtent());
                 let zoom = mviewer.getMap().getView().getZoomForResolution(res);
                 mviewer.getMap().getView().fit(feature.getGeometry(), {
-                    maxZoom: zoom - 2
+                    maxZoom: zoom - 5
                 });
                 return true;
             }
@@ -203,7 +205,7 @@ mviewer.customControls.cad = (function () {
 
         destroy: function () {
             if (previousParcelle) {
-                previousParcelle.setStyle(undefined);
+                previousParcelle.setStyle(mviewer.customLayers.cad.defaultStyle);
             }
         },
         editSelectedParcelle: function (value) {
