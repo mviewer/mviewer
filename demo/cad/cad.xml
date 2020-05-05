@@ -39,6 +39,7 @@
         expanded="true"
         attribution="Source: GéoBretagne"
         metadata=""
+        nohighlight="false"
         metadata-csw="">
     </layer>
 </theme>

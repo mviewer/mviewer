@@ -17,41 +17,40 @@ mviewer.customControls.cad = (function() {
             else
                 url += "&"+key+"="+options[key]
         });
-        console.log(url);
         return encodeURI(url);
     }
     var setData = function (data) {
         if (!_data) {
             _data = data;
             console.log(data);
-            appendSelect('dep-select', data.departements, false);
+            appendSelect('dep-select', data.departements,"label","value");
             document.getElementById('dep-select').addEventListener("change", onDptChange);
             document.getElementById('com-select').addEventListener("change", onComChange);
-            document.getElementById('section-select').addEventListener("change", onParcChange);
+            document.getElementById('section-select').addEventListener("change", onSectionChange);
+            document.getElementById('parcelle-select').addEventListener("change", onParcelleChange);
         }
     };
-    var appendSelect = function (select, data, remove) {
+    var appendSelect = function (select, data, text, value) {
         let element  = document.getElementById(select);
-        if (remove) {
-            element.value = "";
-            let options = element.getElementsByTagName("option");
-
-            for (let i = 0;i < options.length; i++) {
-                element.remove(1);
-            }
-        }
-
+        emptySelect(select);
         data.forEach(function(item) {
             let option = document.createElement("option");
-            option.text = item.label;
-            option.value = item.value;
+            option.text = item.properties[text];
+            option.value = item.properties[value];
             element.add(option);
         })
+        
     };
-
+    var emptySelect = function(select){
+        let element  = document.getElementById(select);
+        let defaultoption = element.options[0];
+        element.innerHTML="";
+        element.prepend(defaultoption);
+        element.selectedIndex = "0";
+    }
     var setLayerSource = function (data) {
-        let layer = mviewer.getLayer('cad').layer;
-        let src = layer.getSource();
+        let cad_layer = mviewer.getLayer('cad');
+        let src = cad_layer.layer.getSource();
         src.clear();
         src.addFeatures(
             new ol.format.GeoJSON().readFeatures(data, {
@@ -62,26 +61,30 @@ mviewer.customControls.cad = (function() {
         mviewer.getMap().getView().fit(src.getExtent());
     };
 
+    var highlightParcelle = function(id_parcelle){
+        let layer = mviewer.getLayer('cad').layer;
+        let src = layer.getSource();
+        src.forEachFeature(function(feature){
+            console.log("ID : ",id_parcelle,"feature : ",feature);
+        });
+    }
     var onDptChange = function (e) {
         let selectedDpt = e.target.value;
         let options = {
             "TYPENAME": "CP.CadastralZoningLevel1",
             "PROPERTYNAME": "nom_commune,geo_commune",
-            "CQL_FILTER": "departement="+selectedDpt
+            "CQL_FILTER": "departement='"+selectedDpt+"'"
         }
+        document.getElementById('loading-cad').style.display = "block";
         fetch(querybuilder(options)).then(
             response => {
                 response.json().then(
                     data => {
-                        let element  = document.getElementById('com-select');
-                        data.features.forEach(function(item) {
-                            let option = document.createElement("option");
-                            option.text = item.properties.nom_commune;
-                            option.value = item.properties.geo_commune;
-                            element.add(option);
-                        })
+                        appendSelect("com-select",data.features,"nom_commune","geo_commune");
+                        emptySelect("section-select");
+                        emptySelect("parcelle-select");
                     }
-                )
+                ).then(() => document.getElementById('loading-cad').style.display = "none")
             }
         );
     };
@@ -90,33 +93,47 @@ mviewer.customControls.cad = (function() {
         let selectedCom = e.target.value;
         let options = {
             "TYPENAME": "CP.CadastralZoning",
-            "CQL_FILTER": "geo_commune="+selectedCom
+            "CQL_FILTER": "geo_commune='"+selectedCom+"'"
             
         }
+        document.getElementById('loading-cad').style.display = "block";
         fetch(querybuilder(options))
         .then(
             response => {
                 response.json().then(
                     data => {
-                        console.log("Com  : ",data);
-                        
-                        let element  = document.getElementById('section-select');
-                        data.features.forEach(function(item) {
-                            let option = document.createElement("option");
-                            option.text = item.properties.label;
-                            option.value = item.properties.geo_section;
-                            element.add(option);
-                        })
+                        appendSelect("section-select",data.features,"label","geo_section");
+                        emptySelect("parcelle-select");
                     }
-                )
+                ).then(() => document.getElementById('loading-cad').style.display = "none")
             }
         );
     };
-    var onParcChange = function (e) {
+    var onSectionChange = function (e) {
         let selectedSection = e.target.value;
         let options = {
             "TYPENAME": "CP.CadastralParcel",
-            "CQL_FILTER": "geo_section="+selectedSection
+            "CQL_FILTER": "geo_section='"+selectedSection+"'"
+            
+        }
+        document.getElementById('loading-cad').style.display = "block";
+        fetch(querybuilder(options))
+        .then(
+            response => {
+                response.json().then(
+                    data => {
+                        setLayerSource(data);
+                        appendSelect("parcelle-select",data.features,"label","geo_parcelle");
+                    }
+                ).then(() => document.getElementById('loading-cad').style.display = "none")
+            }
+        );
+    };
+    var onParcelleChange = function(e){
+        let selectedparcelle = e.target.value;
+        let options = {
+            "TYPENAME": "CP.CadastralParcel",
+            "CQL_FILTER": "geo_section='"+selectedSection+"'"
             
         }
         
@@ -125,22 +142,18 @@ mviewer.customControls.cad = (function() {
             response => {
                 response.json().then(
                     data => {
-                        console.log(data);
-                        
-                        //setLayerSource(data);
+                        highlightParcelle(selectedparcelle);
                     }
                 )
             }
         );
-    };
-
+    }
     return {
         /*
          * Public
          */
 
         init: function() {
-            console.log('init cad');
             if (!_data) {
                 fetch('demo/cad/data/data.json')
                 .then(function (response) {
