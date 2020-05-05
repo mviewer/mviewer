@@ -19,7 +19,7 @@ mviewer.customControls.cad = (function () {
         });
         return encodeURI(url);
     }
-    
+
     var setData = function (data) {
         if (!_data) {
             _data = data;
@@ -31,7 +31,7 @@ mviewer.customControls.cad = (function () {
             document.getElementById('parcelle-select').addEventListener("change", onParcelleChange);
         }
     };
-    var appendSelect = function (select, data, text, value) {
+    var appendSelect = function (select, data, text, value, numbers) {
         let element = document.getElementById(select);
         let tempOptions = [];
         emptySelect(select);
@@ -41,13 +41,19 @@ mviewer.customControls.cad = (function () {
             option.value = item.properties[value];
             tempOptions.push(option);
         })
-        tempOptions.sort(function(a,b) {
-            return a.innerHTML.localeCompare(b.innerHTML);
-        })
-        tempOptions.forEach(function(option){
+        if (!numbers) {
+            tempOptions.sort(function (a, b) {
+                return a.innerHTML.localeCompare(b.innerHTML);
+            })
+        } else {
+            tempOptions.sort(function (a, b) {
+                return parseInt(a.innerHTML) - parseInt(b.innerHTML);
+            })
+        }
+        tempOptions.forEach(function (option) {
             element.add(option);
         })
-        
+
 
     };
     var emptySelect = function (select) {
@@ -71,7 +77,7 @@ mviewer.customControls.cad = (function () {
     };
 
     var highlightParcelle = function (id_parcelle) {
-        if(previousParcelle){
+        if (previousParcelle) {
             previousParcelle.setStyle(undefined);
         }
         let layer = mviewer.getLayer('cad').layer;
@@ -80,9 +86,13 @@ mviewer.customControls.cad = (function () {
         src.forEachFeature(function (feature) {
             if (feature.get("geo_parcelle") === id_parcelle) {
                 feature.setStyle(mviewer.customLayers.cad.highlightStyle);
-                f=feature;
+                f = feature;
                 console.log(feature.getGeometry());
-                mviewer.getMap().getView().fit(feature.getGeometry());
+                let res = mviewer.getMap().getView().getResolutionForExtent(feature.getGeometry().getExtent());
+                let zoom = mviewer.getMap().getView().getZoomForResolution(res);
+                mviewer.getMap().getView().fit(feature.getGeometry(), {
+                    maxZoom: zoom - 2
+                });
                 return true;
             }
             return false;
@@ -101,7 +111,7 @@ mviewer.customControls.cad = (function () {
             response => {
                 response.json().then(
                     data => {
-                        appendSelect("com-select", data.features, "nom_commune", "geo_commune");
+                        appendSelect("com-select", data.features, "nom_commune", "geo_commune", false);
                         emptySelect("section-select");
                         emptySelect("parcelle-select");
                     }
@@ -123,7 +133,7 @@ mviewer.customControls.cad = (function () {
                 response => {
                     response.json().then(
                         data => {
-                            appendSelect("section-select", data.features, "label", "geo_section");
+                            appendSelect("section-select", data.features, "label", "geo_section", false);
                             emptySelect("parcelle-select");
                         }
                     ).then(() => document.getElementById('loading-cad').style.display = "none")
@@ -144,7 +154,7 @@ mviewer.customControls.cad = (function () {
                     response.json().then(
                         data => {
                             setLayerSource(data);
-                            appendSelect("parcelle-select", data.features, "label", "geo_parcelle");
+                            appendSelect("parcelle-select", data.features, "label", "geo_parcelle", true);
                         }
                     ).then(() => document.getElementById('loading-cad').style.display = "none")
                 }
