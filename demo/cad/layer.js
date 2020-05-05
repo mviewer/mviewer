@@ -28,6 +28,7 @@ mviewer.customLayers.cad = (function () {
             }
             return true;
         });
+        
     }
     return {
         layer: _layer,

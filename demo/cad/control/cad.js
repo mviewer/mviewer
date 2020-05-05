@@ -71,7 +71,11 @@ mviewer.customControls.cad = (function () {
         );
         mviewer.getMap().getView().fit(src.getExtent());
     };
-
+    var clearSource = function () {
+        let cad_layer = mviewer.getLayer('cad');
+        let src = cad_layer.layer.getSource();
+        src.clear();
+    }
     var highlightParcelle = function (id_parcelle) {
         if (previousParcelle) {
             previousParcelle.setStyle(undefined);
@@ -107,6 +111,7 @@ mviewer.customControls.cad = (function () {
                 response.json().then(
                     data => {
                         appendSelect("com-select", data.features, "nom_commune", "geo_commune", false);
+                        clearSource();
                         emptySelect("section-select");
                         emptySelect("parcelle-select");
                     }
@@ -129,9 +134,26 @@ mviewer.customControls.cad = (function () {
                     response.json().then(
                         data => {
                             appendSelect("section-select", data.features, "label", "geo_section", false);
+                            clearSource();
                             emptySelect("parcelle-select");
                         }
-                    ).then(() => document.getElementById('loading-cad').style.display = "none")
+                    ).then(
+                        () => {
+                            document.getElementById('loading-cad').style.display = "none"
+                            options.TYPENAME+="Level1";
+                            fetch(querybuilder(options))
+                                .then(
+                                    response => {
+                                        response.json().then(
+                                            data => {
+                                                let commune = new ol.format.GeoJSON().readFeature(data.features[0]);
+                                                mviewer.getMap().getView().fit(commune.getGeometry(),{duration:500});
+                                            }
+                                        )
+                                    }
+                                )
+                        }
+                    )
                 }
             );
     };
@@ -174,20 +196,20 @@ mviewer.customControls.cad = (function () {
                                 setData(data);
                             });
                     });
-            }else{
+            } else {
                 setData(_data);
             }
         },
 
         destroy: function () {
-            if(previousParcelle){
+            if (previousParcelle) {
                 previousParcelle.setStyle(undefined);
             }
         },
-        editSelectedParcelle: function(value){
-            if(value){
+        editSelectedParcelle: function (value) {
+            if (value) {
                 previousParcelle = value;
-                document.getElementById('parcelle-select').value=value.get("geo_parcelle");
+                document.getElementById('parcelle-select').value = value.get("geo_parcelle");
             }
             return previousParcelle;
         }
