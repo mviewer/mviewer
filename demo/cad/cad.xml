@@ -37,9 +37,10 @@
         customcontrol="true"
         customcontrolpath="demo/cad/control"
         expanded="true"
+        fields="geo_parcelle"
         attribution="Source: GéoBretagne"
-        metadata=""
         nohighlight="false"
+        metadata=""
         metadata-csw="">
     </layer>
 </theme>
