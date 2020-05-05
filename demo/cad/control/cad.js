@@ -81,6 +81,8 @@ mviewer.customControls.cad = (function () {
             if (feature.get("geo_parcelle") === id_parcelle) {
                 feature.setStyle(mviewer.customLayers.cad.highlightStyle);
                 f=feature;
+                console.log(feature.getGeometry());
+                mviewer.getMap().getView().fit(feature.getGeometry());
                 return true;
             }
             return false;
