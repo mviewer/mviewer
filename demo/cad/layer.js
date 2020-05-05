@@ -13,11 +13,25 @@ mviewer.customLayers.cad = (function () {
         }),
         zIndex:1
     });
-    var _handle = function(){
-        
+    var _handle = function(features){
+        let cad_control = mviewer.customControls.cad;
+        let src = _layer.getSource();
+        src.getFeatures().every(function(feature){
+            if(feature.get("geo_parcelle")===features[0].properties.geo_parcelle){
+                if(cad_control.editSelectedParcelle())
+                {
+                    cad_control.editSelectedParcelle().setStyle(undefined);
+                }
+                feature.setStyle(_highlightStyle);
+                cad_control.editSelectedParcelle(feature);
+                return false;
+            }
+            return true;
+        });
     }
     return {
         layer: _layer,
-        highlightStyle: _highlightStyle
+        highlightStyle: _highlightStyle,
+        handle:_handle
     };
 }());

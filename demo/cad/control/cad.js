@@ -23,7 +23,6 @@ mviewer.customControls.cad = (function () {
     var setData = function (data) {
         if (!_data) {
             _data = data;
-            console.log(data);
             appendSelect('dep-select', data.departements, "label", "value");
             document.getElementById('dep-select').addEventListener("change", onDptChange);
             document.getElementById('com-select').addEventListener("change", onComChange);
@@ -87,7 +86,6 @@ mviewer.customControls.cad = (function () {
             if (feature.get("geo_parcelle") === id_parcelle) {
                 feature.setStyle(mviewer.customLayers.cad.highlightStyle);
                 f = feature;
-                console.log(feature.getGeometry());
                 let res = mviewer.getMap().getView().getResolutionForExtent(feature.getGeometry().getExtent());
                 let zoom = mviewer.getMap().getView().getZoomForResolution(res);
                 mviewer.getMap().getView().fit(feature.getGeometry(), {
@@ -183,8 +181,18 @@ mviewer.customControls.cad = (function () {
         },
 
         destroy: function () {
-            console.log('destroy');
+            if(previousParcelle){
+                previousParcelle.setStyle(undefined);
+            }
+        },
+        editSelectedParcelle: function(value){
+            if(value){
+                previousParcelle = value;
+                document.getElementById('parcelle-select').value=value.get("geo_parcelle");
+            }
+            return previousParcelle;
         }
+
     };
 
 }());
