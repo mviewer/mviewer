@@ -38,6 +38,7 @@
         customcontrolpath="demo/cad/control"
         expanded="true"
         fields="geo_parcelle"
+        tooltipcontent="Parcelle n° {{label}}"
         attribution="Source: GéoBretagne"
         nohighlight="false"
         metadata=""
