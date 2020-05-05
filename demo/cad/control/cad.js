@@ -174,6 +174,8 @@ mviewer.customControls.cad = (function () {
                                 setData(data);
                             });
                     });
+            }else{
+                setData(_data);
             }
         },
 
