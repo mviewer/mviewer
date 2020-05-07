@@ -44,6 +44,14 @@
         metadata=""
         metadata-csw="">
     </layer>
+     <layer id="cad2" name="dgfip" visible="true" queryable="false"
+        type="customlayer" opacity="1" legendurl="img/blank.gif"
+        url="demo/cad/layer2.js"
+        attribution="Source: GéoBretagne"
+        nohighlight="false"
+        metadata=""
+        metadata-csw="">
+    </layer>
 </theme>
 </themes>
 </config>

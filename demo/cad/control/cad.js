@@ -21,15 +21,17 @@ mviewer.customControls.cad = (function () {
     }
 
     var setData = function (data) {
-        if (!_data) {
-            _data = data;
-            appendSelect('dep-select', data.departements, "label", "value");
-            document.getElementById('dep-select').addEventListener("change", onDptChange);
-            document.getElementById('com-select').addEventListener("change", onComChange);
-            document.getElementById('section-select').addEventListener("change", onSectionChange);
-            document.getElementById('parcelle-select').addEventListener("change", onParcelleChange);
-        }
+        _data = data;
     };
+
+    var updateIHM = function () {
+        appendSelect('dep-select', _data.departements, "label", "value");
+        document.getElementById('dep-select').addEventListener("change", onDptChange);
+        document.getElementById('com-select').addEventListener("change", onComChange);
+        document.getElementById('section-select').addEventListener("change", onSectionChange);
+        document.getElementById('parcelle-select').addEventListener("change", onParcelleChange);
+    };
+
     var appendSelect = function (select, data, text, value, numbers) {
         let element = document.getElementById(select);
         let tempOptions = [];
@@ -124,11 +126,13 @@ mviewer.customControls.cad = (function () {
 
     var onComChange = function (e) {
         let selectedCom = e.target.value;
+        let insee = selectedCom.substr(0,2) + selectedCom.substr(3);
         let options = {
             "TYPENAME": "CP.CadastralZoning",
             "CQL_FILTER": "geo_commune='" + selectedCom + "'"
 
         }
+        mviewer.customLayers.cad2.updateCommune(insee);
         document.getElementById('loading-cad').style.display = "block";
         fetch(querybuilder(options))
             .then(
@@ -191,15 +195,16 @@ mviewer.customControls.cad = (function () {
 
         init: function () {
             if (!_data) {
-                fetch('demo/cad/data/data.json')
+                fetch('demo/cad/data/departements.json')
                     .then(function (response) {
                         response.json()
                             .then(function (data) {
                                 setData(data);
+                                updateIHM();
                             });
                     });
             } else {
-                setData(_data);
+                updateIHM();
             }
         },
 
