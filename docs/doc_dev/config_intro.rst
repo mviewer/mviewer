@@ -40,6 +40,21 @@ Structure du fichier de configuration
         </config>
 
 
+Paramètres d'URL
+-----------------
+
+Il est possible d'instancier un mviewer avec des **paramètres** de configuration transmis par URL
+
+* ``config`` : Fichier de configuration à charger ex: ``mviewer/?config=apps/mon_appli.xml``.
+* ``#`` : Il s'agit d'un raccourci pour appeler une config présente dans le dossier apps. ex: ``mviewer/#mon_appli``.
+* ``theme`` : Theme css à utiliser ex: ?theme=geobretagne pour charger le theme doit être dans css/themes/geobretagne.css.
+* ``wmc`` : liste des contextes OGC WMC (séparés par des virgules) à charger afin d'alimenter le panel de gauche ex : ``mviewer/?wmc=demo/hydro.wmc``
+* ``popup`` : true ou false. Si true, Une popup s'affiche sur la carte afin d'afficher le résultat de l'interrogation de couches.
+* ``lang`` : Langue à utiliser pour l'interface. Passer exemple "?lang=en".
+* ``mode`` : Mode d'affichage à utiliser (d - default, s - simplifié, u - ultrasimplifié). Le mode simplifié ne dispose pas du panneau des thématiques et le mode ultra simplifié ne dispose pas de la barre de navigation.
+* ``title`` : Titre à utiliser. Seulement exploité en mode défault et simplifié.
+* ``topics`` : Thèmes à filtrer.
+
 Sections de configurations
 ----------------------------
 
