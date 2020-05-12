@@ -7,6 +7,10 @@
 Contribuer à la documentation - Readthedoc
 ==========================================
 
+.. warning::
+    La documentation est désormais dans le répertoire docs du dépôt principal **mviewer** et non plus dans le dépôt **mviewer.doc**.
+
+
 Participez à l'amélioration de la `documentation <https://mviewerdoc.readthedocs.io/>`_ en ligne de mviewer.
 
 Respectez le processus de contribution décrit dans la section ":ref:`ask`".
@@ -14,7 +18,7 @@ Respectez le processus de contribution décrit dans la section ":ref:`ask`".
 
 **Sources**
 
-Les sources de la documentation sont disponibles sur GitHub `geobretagne/mviewer.doc <https://github.com/geobretagne/mviewer.doc>`_.
+Les sources de la documentation sont disponibles sur GitHub `geobretagne/mviewer <https://github.com/geobretagne/mviewer.git>`_, dans le répertoire docs.
 
 
 **Créez une issue sur GitHub**
@@ -25,11 +29,11 @@ Voir la page ":ref:`issue`" pour proposer une modification.
 **Fork**
 
 Pour apporter des modifications sur la documentation, vous devrez réaliser un fork vers votre compte organisation de Github.
-Pour réaliser un fork, dirigez-vous vers l'exemple dans la section ":ref:`fork`". 
+Pour réaliser un fork, dirigez-vous vers l'exemple dans la section ":ref:`fork`".
 
 .. image:: ../_images/contrib/fork1.png
               :alt: git fork repository
-              :align: center  
+              :align: center
 
 
 
@@ -43,19 +47,19 @@ Déployer la documentation en local
 *Si vous ne connaissez pas Apache, vous pouvez installer facilement* `XAMPP <https://www.apachefriends.org/fr/download.html>`_ *en suivant l'explicatif* ":ref:`installxamp`" *plus bas.*
 
 - Vous devez disposer des droits sur votre ordinateur pour installer python et disposer de pip.
-- Avoir réalisé un fork du repository `geobretagne/mviewer.doc <https://github.com/geobretagne/mviewer.doc>`_
+- Avoir réalisé un fork du repository `geobretagne/mviewer <https://github.com/geobretagne/mviewer.git>`_
 - Avoir réalisé un clone de votre fork vers un répertoire local de votre ordinateur :
 
 ::
 
     cd /home/user/pierre/git/
-    git clone https://github.com/mon_compte_github/mviewer.doc.git
+    git clone https://github.com/mon_compte_github/mviewer.git
 
 *L'URL de votre fork est disponible en cliquant sur "Clone or download"*
 
 .. image:: ../_images/contrib/cloneurl.PNG
               :alt: get github clone url
-              :align: center 
+              :align: center
 
 - Avoir installé python sphinx en suivant la `page sphinx <https://www.sphinx-doc.org/en/master/usage/installation.html>`_ :
 
@@ -76,7 +80,7 @@ Déployer la documentation en local
 
 ::
 
-    // Debian 
+    // Debian
     sudo apt-get install python-stemmer
 
     // pip
@@ -85,23 +89,23 @@ Déployer la documentation en local
 
 **Actions**
 
-- Positionnez-vous dans votre dossier mviewer.doc issue du clone :
+- Positionnez-vous dans votre dossier mviewer issu du clone :
 
 ::
 
-    cd /home/user/pierre/mviewer.doc
+    cd /home/user/pierre/mviewer
 
 - Vous pouvez apporter des modifications dans le dossier "docs" :
 
 ::
 
-    cd /home/user/pierre/mviewer.doc/docs
+    cd /home/user/pierre/mviewer/docs
 
 - Pour rajouter des parties et sous-parties dans le menu de gauche, il vous faudra modifier le fichier index.rst :
 
 ::
 
-    /home/user/pierre/mviewer.doc/docs/index.rst
+    /home/user/pierre/mviewer/docs/index.rst
 
 - Rajouter par exemple une partie "Nouvelle partie" en respectant cette syntaxe :
 
@@ -126,15 +130,15 @@ Déployer la documentation en local
 
 ::
 
-    /home/user/pierre/mviewer.doc/docs/doc_test
+    /home/user/pierre/mviewer/docs/doc_test
 
 - Dans ce dossier, rajoutez les fichiers comme décrits dans l'arborescence :
 
 ::
 
-    ../mviewer.doc/docs/doc_test/introduction.rst
-    ../mviewer.doc/docs/doc_test/sous_partie1.rst
-    ../mviewer.doc/docs/doc_test/sous_partie2.rst
+    ../mviewer/docs/doc_test/introduction.rst
+    ../mviewer/docs/doc_test/sous_partie1.rst
+    ../mviewer/docs/doc_test/sous_partie2.rst
 
 - Inspirez-vous de l'existant pour comprendre l'organisation des fichiers avec index.rst
 
@@ -174,14 +178,14 @@ Rajouter des images
 
 ::
 
-    /home/user/pierre/mviewer.doc/docs/_images/doc_test/
+    /home/user/pierre/mviewer/docs/_images/doc_test/
 
 - Ajoutez vos images dans ce dossier et renseignez le chemin de l'image à afficher dans le code tel que :
 
 ::
 
     Voici une image :
-    
+
     .. image:: ../_images/doc_test/image1.png
                 :alt: description de l'image
                 :align: center
@@ -232,18 +236,18 @@ Utilisez la syntaxe suivante (respectez les sauts de lignes) :
 
 ::
 
-    Ceci est un `lien cliquable <https://github.com/geobretagne/mviewer.doc>`_
+    Ceci est un `lien cliquable <https://github.com/geobretagne/mviewer>`_
 
 
 
 Construire et déployer la documentation
 ---------------------------------------
 
-- Les sources de la documentation sont localisées dans votre dossier git/mviewer.doc/docs crée par le clone (voir plus haut) :
+- Les sources de la documentation sont localisées dans votre dossier git/mviewer/docs crée par le clone (voir plus haut) :
 
 ::
 
-    /home/user/pierre/mviewer.doc/docs
+    /home/user/pierre/mviewer/docs
 
 - Nous voulons que notre documentation soit construite (build) dans le dossier :
 
@@ -261,12 +265,12 @@ Construire et déployer la documentation
 
 ::
 
-    sphinx-build -b html home/user/pierre/mviewer.doc/docs /var/www/mviewer-doc/
- 
+    sphinx-build -b html home/user/pierre/mviewer/docs /var/www/mviewer-doc/
+
 - La documentation est maintenant dans le dossier de notre choix :
 
 ::
-    
+
     /var/www/mviewer-doc/
 
     ou pour XAMPP:
@@ -288,7 +292,7 @@ Installer XAMPP (windows)
 -------------------------
 
 - Téléchargez `XAMPP <https://www.apachefriends.org/fr/download.html>`_
-- Lancez XAMPP pour afficher l'interface d'administration (GUI) 
+- Lancez XAMPP pour afficher l'interface d'administration (GUI)
 - Sur la ligne du module "Apache", à droite cliquez sur "Start" au sein des actions
 - "Apache" doit passer en vert dans la colonne "Module"
 - Cliquez sur "Explorer" dans la colonne tout à droite
