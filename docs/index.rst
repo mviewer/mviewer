@@ -62,6 +62,7 @@ Cette partie est dédiée aux personnes qui ont vocation à déployer et configu
    doc_dev/config_app
    doc_dev/config_map
    doc_dev/config_baselayers
+   doc_dev/config_topics
    doc_dev/config_layers
    doc_dev/config_search
    doc_dev/config_els
