@@ -12,7 +12,7 @@ La configuration des thématiques qui seront visibles dans l'interface se fait d
 Principe général
 ----------------------------------------
 
-Ici, les :ref:`couches <configlayers>` sont organisées de la manière suivante :
+Ici, les `couches <configlayers>` sont organisées de la manière suivante :
 
 * une **couche** (layer) est intégrée à un groupe ou à un thème,
 * un **groupe** est intégré à un thème et peut contenir entre 1 et *n* couches,
@@ -134,7 +134,7 @@ Configuration de la liste des thèmes
 .. code-block:: xml
        :linenos:
 
-	<themes mini="" />
+	<themes mini="" legendmini="" />
 
 **Paramètres**
 
