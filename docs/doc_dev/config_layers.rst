@@ -78,45 +78,45 @@ Elément enfant de ``<theme>`` ou ``<group>``
 Paramètres pour une configuration minimaliste
 =================================================
 
-* ``name``: paramètre obligatoire de type texte qui précise le nom de la couche.
-* ``url``: paramètre obligatoire de type URL (URL du service web).
-* ``id``: paramètre obligatoire de type texte qui renseigne l'identifiant technique de la couche côté serveur WMS ou WFS.
+* ``name`` :guilabel:`studio` : paramètre obligatoire de type texte qui précise le nom de la couche.
+* ``url`` :guilabel:`studio` : paramètre obligatoire de type URL (URL du service web).
+* ``id`` :guilabel:`studio` : paramètre obligatoire de type texte qui renseigne l'identifiant technique de la couche côté serveur WMS ou WFS.
 
 
 Paramètres pour gérer l'affichage de la couche
 ===================================================
 
-* ``scalemin``: Echelle minimum de la couche
-* ``scalemax``: Echelle maximum de la couche
+* ``scalemin`` :guilabel:`studio` : Echelle minimum de la couche
+* ``scalemax`` :guilabel:`studio` : Echelle maximum de la couche
 * ``dynamiclegend`` : Booléen précisant si la légende est liée à l'échelle de la carte et si elle nécessite d'être actualisée à chaque changement d'échelle de la carte.
-* ``visible``:  Booléen stipulant est ce que la couche est actuellement visible
+* ``visible`` :guilabel:`studio` :  Booléen stipulant est ce que la couche est actuellement visible
 * ``exclusive``:  Booléen stipulant si la couche est exclusive. Si la valeur est "true", l'affichage de cette couche masquera automatiquement toutes les autres couches ayant ce paramètre activé.
-* ``style``: Style(s) de la couche. Si plusieurs styles , utiliser la virgule comme séparateur. Si la couche est de type wms, il faut faire référence à un style sld. Si la couche est de type geojson, il faut faire référence à un style définit dans lib/featurestyles.js. Si la couche est de type customlayer, le style n'est pas défini ici.
-* ``stylesalias``: Titres à utiliser pour chaques style. utiliser la virgule comme séparateur si plusieurs styles.
-* ``sld``: Lien vers un SLD stocké sur le web. Dans ce fichier SLD, la balise sld:Name contenue dans sld:NamedLayer doit être égale au nom de la couche. Si plusieurs styles , utiliser la virgule comme séparateur. S'applique uniquement aux layers WMS. Il faut indiquer l'URL résolvable par le serveur WMS du ou des sld.
-* ``tiled``: Booléen stipluant est ce que la couche est tuilée
-* ``opacity``: Opacité de la couche (1 par défaut)
-* ``legendurl``: url premettant de récupérer la légende. Si non défini, c'est un getFeatureLegend qui est effectué.
-* ``filter``: Expression CQL permettant de filtrer la couche ex: insee=35000 Ou INTERSECT(the_geom, POINT (-74.817265 40.5296504)) [tutorial] (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial)
+* ``style`` :guilabel:`studio` : Style(s) de la couche. Si plusieurs styles , utiliser la virgule comme séparateur. Si la couche est de type wms, il faut faire référence à un style sld. Si la couche est de type geojson, il faut faire référence à un style définit dans lib/featurestyles.js. Si la couche est de type customlayer, le style n'est pas défini ici.
+* ``stylesalias`` :guilabel:`studio` : Titres à utiliser pour chaques style. utiliser la virgule comme séparateur si plusieurs styles.
+* ``sld`` :guilabel:`studio` : Lien vers un SLD stocké sur le web. Dans ce fichier SLD, la balise sld:Name contenue dans sld:NamedLayer doit être égale au nom de la couche. Si plusieurs styles , utiliser la virgule comme séparateur. S'applique uniquement aux layers WMS. Il faut indiquer l'URL résolvable par le serveur WMS du ou des sld.
+* ``tiled`` :guilabel:`studio` : Booléen stipluant est ce que la couche est tuilée
+* ``opacity`` :guilabel:`studio` : Opacité de la couche (1 par défaut)
+* ``legendurl`` :guilabel:`studio` :: url premettant de récupérer la légende. Si non défini, c'est un getFeatureLegend qui est effectué.
+* ``filter`` :guilabel:`studio` : Expression CQL permettant de filtrer la couche ex: insee=35000 Ou INTERSECT(the_geom, POINT (-74.817265 40.5296504)) [tutorial] (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial)
 * ``toplayer``: Précise si la couche demeure figée". Booléen. Défaut = true.
-* ``expanded`` : Booléan précisant si le panneau de la couche est agrandi au démarrage. La valeur par défaut est false.
+* ``expanded`` :guilabel:`studio` : Booléan précisant si le panneau de la couche est agrandi au démarrage. La valeur par défaut est false.
 
 
 Paramètres pour gérer attributions et métadonnées
 =====================================================
 
-* ``attribution``: Copyright de la couche.
-* ``metadata``: Lien vers la fiche de metadonnées complète
-* ``metadata-csw``: Requête CSW pour l'affiche dans la popup du détail de la couche.
+* ``attribution`` :guilabel:`studio` : Copyright de la couche.
+* ``metadata`` :guilabel:`studio` : Lien vers la fiche de metadonnées complète
+* ``metadata-csw`` :guilabel:`studio` : Requête CSW pour l'affiche dans la popup du détail de la couche.
 
 Paramètres pour gérer l'interrogation et la mise en forme de la fiche d'interrogation de la couche
 ===================================================================================================
 
-* ``queryable``: Booléen stipulant est ce que la couche est intérrogeable via un GetFeatureInfo
-* ``infoformat``: Format du GetFeatureInfo. 2 formats sont supportés : text/html et application/vnd.ogc.gml
-* ``featurecount``: Nombre d'éléments retournés lors de l'intérrogation
-* ``fields``: Si les informations retournées par l'interrogation est au format GML, fields représente les attributs à parser pour générer la vignette
-* ``aliases``: Si les informations retournées par l'interrogation est au format GML, aliases représente le renommage des champs parsés.
+* ``queryable`` :guilabel:`studio` : Booléen stipulant est ce que la couche est intérrogeable via un GetFeatureInfo
+* ``infoformat`` :guilabel:`studio` : Format du GetFeatureInfo. 2 formats sont supportés : text/html et application/vnd.ogc.gml
+* ``featurecount`` :guilabel:`studio` : Nombre d'éléments retournés lors de l'intérrogation
+* ``fields`` :guilabel:`studio` :  Si les informations retournées par l'interrogation est au format GML, fields représente les attributs à parser pour générer la vignette
+* ``aliases`` :guilabel:`studio` : Si les informations retournées par l'interrogation est au format GML, aliases représente le renommage des champs parsés.
 
 Paramètres pour gérer la recherche
 ======================================
@@ -161,27 +161,27 @@ Paramètres pour gérer la dimension temporelle des couches WMS
 Paramètres pour gérer le filtre attributaire (liste déroulante) des couches WMS
 ===================================================================================
 
-* ``attributefilter``:  Booléen précisant si on active la sélection attributaire par menu déroulant
-* ``attributefield``: Nom du champ à utiliser avec le contrôle attributefilter.
-* ``attributevalues``: valeurs séparées par des virgules.
+* ``attributefilter`` :guilabel:`studio` :  Booléen précisant si on active la sélection attributaire par menu déroulant
+* ``attributefield`` :guilabel:`studio` : Nom du champ à utiliser avec le contrôle attributefilter.
+* ``attributevalues`` :guilabel:`studio` : valeurs séparées par des virgules.
 * ``attributelabel``:  Texte à afficher pour la liste déroulante associée.
 * ``attributestylesync``: Booléen qui précise s'il convient d'appliquer un style (sld) spécifique lors du filtre attributaire. Dans ce cas la convention est la suivante : nom_style@attributevalue ou url_style_externe@attributevalue.sld.
 * ``attributefilterenabled``: Booléen précisant si le filtre est activé par défaut (avec la première valeur de la liste attributevalues).
-* ``attributeoperator`` : Opérateur utilisé pour construire le filtre. (= ou like). Defaut = "=". Attention dans le cas de like, le wildcard est harcodé : %
+* ``attributeoperator`` : guilabel:`studio` : Opérateur utilisé pour construire le filtre. (= ou like). Defaut = "=". Attention dans le cas de like, le wildcard est harcodé : %
 
 Autres paramètres
 ====================
 
 * ``customcontrol`` : Booléen précisant si la couche dispose d'un addon html à intégrer. La valeur par défaut est false.
 * ``customcontrolpath`` : Texte Précisant le répertoire hébergeant les fichiers nécessaires au contrôle. Dans ce pépertoire, il faut déposer un fichier js et un fichier html ayant pour nom l'id de la couche. La structure du js doit être la suivante : (../controls/epci.js). Valeur par défaut = customcontrols.
-* ``secure`` : Texte précisant le niveau de protection de la couche Les valeurs possibles sont :
+* ``secure`` :guilabel:`studio` : Texte précisant le niveau de protection de la couche Les valeurs possibles sont :
 
 	* ``public`` : (ou paramètre absent), l'accès à la couche est public
 	* ``global`` : l'accès à la couche est contrainte par le CAS geoserver. Un test est affectué pour savoir si la couche est accessible. Si ce n'est pas le cas, la couche est retirée du panneau et de la carte.
 	* ``layer`` : l'accès à la couche nécessite une authentification sur le service (WMS). Un bouton "cadenas" est ajouté dans la légende pour cette couche. Au clic sur ce bouton, un formulaire est affiché permettant de saisir des identifiants d'accès qui seront envoyés à chaque appel au service.
 
 * ``authorization`` : Permet d'indiquer des identifiants par défaut si secure est à "layer"
-* ``useproxy`` : Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de de crossOrigin lorsque CORS n'est pas activé sur le serveur distant.
+* ``useproxy`` :guilabel:`studio` : Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de de crossOrigin lorsque CORS n'est pas activé sur le serveur distant.
 * ``geocoder`` : pour les couches de type csv, précise l'API de géocodage à utiliser (ban).
 * ``geocodingfields`` : pour les couches de type csv, précise les champs utilisables pour le géocodage.
 * ``xfield`` : pour les couches de type csv, précise le champ à utiliser pour la longitude.

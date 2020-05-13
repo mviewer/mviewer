@@ -23,7 +23,7 @@ Paramétrages de la liste des fonds de plan.
 
 **Paramètre**
 
-* ``style``: paramètre optionnel de type texte à  choisir parmi (default/gallery) et  définissant le style du contrôle permettant de changer de fond de carte. Valeur par défaut **default**.
+* ``style`` :guilabel:`studio` : paramètre optionnel de type texte à  choisir parmi (default/gallery) et  définissant le style du contrôle permettant de changer de fond de carte. Valeur par défaut **default**.
 
 Le mode **"default"** active le contrôle suivant :
 
@@ -84,7 +84,7 @@ Elément enfant de ``<baselayers>`` permettant le paramétrage de chaque fond de
 * ``url``: paramètre obligatoire de type url définissant l'URL du service web OSM, WMTS ou WMS.
 * ``layers``: paramètre optionnel de type texte définissant l'identifiant technique de la couche. (Obligatoire pour les couches de type WMS et WMTS)
 * ``format``: paramètre optionnel de type texte définissant le Format d'image retourné par le serveur. (Obligatoire pour les couches de type WMS et WMTS)
-* ``visible``: paramètre obligatoire de type booléen (true/false) précisant si la couche est visible au démarrage. Il s'agit d'un paramètre exclusif. Une seule couche de fond peut être affichée sur la carte. Attention un baseselayer et un seul doit disposer du paramètre visible="true".
+* ``visible`` :guilabel:`studio` : paramètre obligatoire de type booléen (true/false) précisant si la couche est visible au démarrage. Il s'agit d'un paramètre exclusif. Une seule couche de fond peut être affichée sur la carte. Attention un baseselayer et un seul doit disposer du paramètre visible="true".
 * ``fromcapacity``: paramètre optionnel de type booléen (true/false)spécifique aux fonds de plan WMTS. Permet la construction de la couche à  partir des capacités du service WMTS.
 * ``attribution``: paramètre obligatoire alimentant le contrôle attributions de la carte ( |CreditsIcon| ).
 * ``style`` : paramètre optionnel précisant le style à associer à la couche. Paramètre obligatoire pour les couches de type WMTS
