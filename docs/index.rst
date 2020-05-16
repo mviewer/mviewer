@@ -56,26 +56,26 @@ Cette partie est dédiée aux personnes qui ont vocation à déployer et configu
    :maxdepth: 1
    :caption: Documentation technique
 
-   doc_dev/deploy
-   doc_dev/config_intro
-   doc_dev/config_practices
-   doc_dev/config_app
-   doc_dev/config_map
-   doc_dev/config_baselayers
-   doc_dev/config_topics
-   doc_dev/config_layers
-   doc_dev/config_search
-   doc_dev/config_els
-   doc_dev/config_fuse
-   doc_dev/config_proxy
-   doc_dev/config_extensions
-   doc_dev/config_css
-   doc_dev/config_tpl
-   doc_dev/config_debug
-   doc_dev/config_translate
-   doc_dev/config_customlayer.rst
-   doc_dev/config_customcontrol.rst
-   doc_dev/config_customcomponent.rst
+   doc_tech/deploy
+   doc_tech/config_intro
+   doc_tech/config_practices
+   doc_tech/config_app
+   doc_tech/config_map
+   doc_tech/config_baselayers
+   doc_tech/config_topics
+   doc_tech/config_layers
+   doc_tech/config_search
+   doc_tech/config_els
+   doc_tech/config_fuse
+   doc_tech/config_proxy
+   doc_tech/config_extensions
+   doc_tech/config_css
+   doc_tech/config_tpl
+   doc_tech/config_debug
+   doc_tech/config_translate
+   doc_tech/config_customlayer.rst
+   doc_tech/config_customcontrol.rst
+   doc_tech/config_customcomponent.rst
 
 Documentation dévelopeur
 -------------------------------------------------
