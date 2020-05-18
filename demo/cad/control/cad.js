@@ -1,5 +1,6 @@
 mviewer.customControls.cad = (function () {
     var _data = false;
+    var _colorpicker;
     var defaultParameters = {
         "BASEURL": "https://geobretagne.fr/geoserver/cadastre/wfs",
         "SERVICE": "WFS",
@@ -10,6 +11,7 @@ mviewer.customControls.cad = (function () {
     }
     var querybuilder = function (options) {
         options = Object.assign(Object.assign({}, defaultParameters), options);
+
         let url = "";
         Object.keys(options).forEach(function (key) {
             if (key === "BASEURL")
@@ -30,6 +32,45 @@ mviewer.customControls.cad = (function () {
         document.getElementById('com-select').addEventListener("change", onComChange);
         document.getElementById('section-select').addEventListener("change", onSectionChange);
         document.getElementById('parcelle-select').addEventListener("change", onParcelleChange);
+
+
+        //Custom color picker
+        if (!document.getElementById("color-picker-btn")) {
+            let template = document.querySelector("#color-picker-template");
+            let clone = document.importNode(template.content, true);
+            document.querySelectorAll('.mv-layer-details[data-layerid="cad"] .layerdisplay-legend')[0].appendChild(clone);
+        }
+
+        let pk = new Piklor(".color-picker", [
+                "#1abc9c"
+              , "#2ecc71"
+              , "#3498db"
+              , "#9b59b6"
+              , "#16a085"
+              , "#2980b9"
+              , "#8e44ad"
+              , "#2c3e50"
+              , "#f1c40f"
+              , "#e67e22"
+              , "#e74c3c"
+              , "#ecf0f1"
+              , "#95a5a6"
+              , "#f39c12"
+              , "#d35400"
+              , "#c0392b"
+              , "#bdc3c7"
+              , "#7f8c8d"
+            ], {
+                open: ".picker-wrapper .btn"
+        });
+
+        pk.colorChosen(function (col) {
+            document.getElementById('color-picker-btn').style['border-color'] = col;
+            colorChange(col);
+            this.close();
+        });
+
+
     };
 
     var appendSelect = function (select, data, text, value, numbers) {
@@ -124,6 +165,19 @@ mviewer.customControls.cad = (function () {
         );
     };
 
+    var colorChange = function (color) {
+        let style = new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: 'rgba(255,255,255,0.4)'
+            }),
+            stroke: new ol.style.Stroke({
+                color: color,
+                width: 1.25
+            })
+        });
+        mviewer.customLayers.cad.layer.setStyle(style);
+    }
+
     var onComChange = function (e) {
         let selectedCom = e.target.value;
         let insee = selectedCom.substr(0,2) + selectedCom.substr(3);
@@ -184,10 +238,45 @@ mviewer.customControls.cad = (function () {
             );
     };
     var previousParcelle = false;
+
     var onParcelleChange = function (e) {
         let selectedparcelle = e.target.value;
         previousParcelle = highlightParcelle(selectedparcelle);
     }
+
+    var freeText2ID = function (str) {
+        let text = str.toUpperCase();
+        var nbchar = text.length;
+        var section = "";
+        var parcelle = "";
+        var i = 0;
+        for (i = 0; i < nbchar; i++) {
+            var charcode = text.substring(i, i + 1).charCodeAt(0);
+            if (charcode >= 65 && charcode <= 90) {
+                section += String.fromCharCode(charcode).toUpperCase();
+            }
+            if (charcode >= 48 && charcode <= 57) {
+                parcelle += String.fromCharCode(charcode);
+            }
+        }
+        // test validité
+        if (section.length >= 1 && parseFloat(parcelle) >= 1) {
+            parcelle = parseFloat(parcelle);
+            var tmp1 = String("000" + parcelle);
+            var formatparcelle = tmp1.substring(tmp1.length - 4, tmp1.length + 1);
+            var tmp2 = "0000" + section;
+            var formatsection = tmp2.substring(tmp2.length - 5, tmp2.length + 1);
+            var commune = document.getElementById('com-select').value;
+            var id = "FR" + commune + formatsection + formatparcelle;
+            return id;
+
+        } else {
+            alert("la saisie : " + text + " n'est pas valide");
+        }
+
+
+    };
+
     return {
         /*
          * Public
@@ -219,7 +308,8 @@ mviewer.customControls.cad = (function () {
                 document.getElementById('parcelle-select').value = value.get("geo_parcelle");
             }
             return previousParcelle;
-        }
+        },
+        test: freeText2ID
 
     };
 

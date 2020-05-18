@@ -12,7 +12,7 @@
 </rdf:RDF>
 </metadata>
 <application
-    title="Démo vector CAD"
+    title="Démo Cadastre"
     logo=""
     help=""
     style="css/themes/default.css"
@@ -22,6 +22,10 @@
     measuretools="false"
     togglealllayersfromtheme="false">
 </application>
+<extensions>
+    <!--<extension type="javascript" src="demo/cad/external/html5kellycolorpicker.min.js" />-->
+    <extension type="javascript" src="http://jillix.github.io/piklor.js/js/piklor.js" usededby="cad.js"/>
+</extensions>
 <mapoptions maxzoom="20" projection="EPSG:3857" center="-307903.74898791354,6141345.088741366" zoom="9" />
 
 <searchparameters bbox="false" localities="false" features="false" static="false"/>
@@ -31,7 +35,7 @@
 </baselayers>
 <themes mini="true" legendmini="true">
 <theme name="Outils"  collapsed="true" id="profile" icon="fas fa-chart-area">
-    <layer id="cad" name="cadastre" visible="true" queryable="true"
+    <layer id="cad" name="Sélection parcellaire" visible="true" queryable="true"
         type="customlayer" opacity="0.8" legendurl="img/blank.gif"
         url="demo/cad/layer.js"
         customcontrol="true"
@@ -39,16 +43,15 @@
         expanded="true"
         fields="geo_parcelle"
         tooltipcontent="Parcelle n° {{label}}"
-        attribution="Source: GéoBretagne"
+        attribution="Source: GéoBretagne. Sélectionnez la section cadastrale souhaitée en précisant le département, la commune et la section"
         nohighlight="false"
         metadata=""
         metadata-csw="">
     </layer>
-     <layer id="cad2" name="dgfip" visible="true" queryable="false"
-        type="customlayer" opacity="1" legendurl="img/blank.gif"
+     <layer id="cad2" name="Cadastre complet" visible="true" queryable="false"
+        type="customlayer" opacity="0.8" legendurl="img/blank.gif"
         url="demo/cad/layer2.js"
-        attribution="Source: GéoBretagne"
-        nohighlight="false"
+        attribution="Source: DGFIP. Cette couche affiche le cadastre de la commune sélectionnée dans le panneau &lt;strong&gt;Sélection parcellaire&lt;/strong&gt;"
         metadata=""
         metadata-csw="">
     </layer>
