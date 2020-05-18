@@ -582,6 +582,7 @@ var search = (function () {
         oLayer.searchengine = (params.searchengine) ? params.searchengine : 'elasticsearch';
         oLayer.fusesearchkeys = (params.fusesearchkeys) ? params.fusesearchkeys : '';
         oLayer.fusesearchresult = (params.fusesearchresult) ? params.fusesearchresult : '';
+        oLayer.fusesearchthresold = (params.fusesearchthresold) ? params.fusesearchthreshold : '';
         return oLayer;
     };
 
@@ -594,14 +595,13 @@ var search = (function () {
                 }
                 var options = {
                     shouldSort: true,
-                    threshold: 0.3,
+                    threshold: parseFloat(oLayer.fusesearchthreshold) || 0.3,
                     location: 0,
                     distance: 100,
                     maxPatternLength: 32,
                     minMatchCharLength: 2,
                     keys: oLayer.fusesearchkeys.split(',')
                 };
-
 
                 var layerSource = l.getSource();
                 if (l.getSource().source) {/* clusters */
