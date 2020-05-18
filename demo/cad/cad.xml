@@ -24,7 +24,7 @@
 </application>
 <extensions>
     <!--<extension type="javascript" src="demo/cad/external/html5kellycolorpicker.min.js" />-->
-    <extension type="javascript" src="http://jillix.github.io/piklor.js/js/piklor.js" usededby="cad.js"/>
+    <extension type="javascript" src="demo/cad/external/piklor.js" usededby="cad.js"/>
 </extensions>
 <mapoptions maxzoom="20" projection="EPSG:3857" center="-307903.74898791354,6141345.088741366" zoom="9" />
 
