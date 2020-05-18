@@ -213,11 +213,11 @@ var info = (function () {
             var urls = [];
             var params;
             for (var i = 0; i < visibleLayers.length; i++) {
-                if (visibleLayers[i] instanceof ol.layer.Vector === false) {
+                if (visibleLayers[i] instanceof ol.layer.BaseVector === false) {
                     params = {'INFO_FORMAT': _overLayers[visibleLayers[i].get("mviewerid")].infoformat,
                         'FEATURE_COUNT': _overLayers[visibleLayers[i].get("mviewerid")].featurecount
                     };
-                    var url = visibleLayers[i].getSource().getGetFeatureInfoUrl(
+                    var url = visibleLayers[i].getSource().getFeatureInfoUrl(
                         evt.coordinate, _map.getView().getResolution(), _map.getView().getProjection(), params
                     );
                     if (layer && featureid) {

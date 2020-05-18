@@ -1,12 +1,5 @@
-mviewer.customControls.swipe = (function() {
-    /*
-        * Private
-        */
-       var _idlayer = 'swipe';
-
-
-       // Generated with https://www.cssportal.com/style-input-range/
-       var _css = `input[type=range] {
+// Generated with https://www.cssportal.com/style-input-range/
+const _css = `input[type=range] {
   height: 1px;
   -webkit-appearance: none;
   margin: 10px 0;
@@ -97,35 +90,38 @@ input[type=range]:focus::-ms-fill-upper {
 }
 `;
 
+//Classe qui etend la classe abstraite et decrit le custom Control
+class Swipe extends AdvancedCustomControl {
+  // Initialize the Custom Component
+  constructor(id) {
+    // Initialize CustomControl superClass
+    super(id);
 
+  }
+  // Mandatory - code executed when panel is opened
+  init() {
+    var _map = mviewer.getMap();
+    var html = '<div><style>' + _css + '</style><input id="swipe" type="range" style="width: 100%;position: fixed;bottom: 60px;"></div>';
+    var _swipeElement = document.getElementById('swipe');
+    if (!_swipeElement) {
+      $("#map").append(html);
+      _swipeElement = document.getElementById('swipe');
+      _swipeElement.addEventListener('input', function () {
+        _map.render();
+      }, false);
+    }
 
-       return {
-           /*
-            * Public
-            */
+    $("#swipe-select").click(function () {
+      mviewer.setBaseLayer(this.value);
+    });
 
-           init: function() {
-               // mandatory - code executed when panel is opened
-               var _map = mviewer.getMap();
+  }
+  // Mandatory - code executed when panel is closed
+  destroy() {
+    $("#swipe").remove();
 
-               var html = '<div><style>'+_css+'</style><input id="swipe" type="range" style="width: 100%;position: fixed;bottom: 60px;"></div>';
-               var _swipeElement = document.getElementById('swipe');
-               if (!_swipeElement) {
-                   $("#map").append(html);
-                   _swipeElement = document.getElementById('swipe');
-                   _swipeElement.addEventListener('input', function() {
-                        _map.render();
-                   }, false);
-               }
+  }
 
-
-           },
-
-           destroy: function() {
-               // mandatory - code executed when panel is closed
-               $("#swipe").remove();
-
-           }
-       };
-
-   }());
+}
+// Create The Swipe CustomControl
+new Swipe("swipe");

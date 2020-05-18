@@ -1,10 +1,4 @@
-{
-mviewer.customLayers.lycee = {};
-var lycee = mviewer.customLayers.lycee;
-
-lycee.legend = { items: [] };
-
-var stylePublic = [new ol.style.Style({
+let stylePublic = [new ol.style.Style({
     image: new ol.style.Circle({
         fill: new ol.style.Fill({
             color: 'rgba(255, 118, 117,1.0)'
@@ -17,7 +11,7 @@ var stylePublic = [new ol.style.Style({
     })
 })];
 
-var stylePrive = [new ol.style.Style({
+let stylePrive = [new ol.style.Style({
     image: new ol.style.Circle({
         fill: new ol.style.Fill({
             color: 'rgba(99, 110, 114,1.0)'
@@ -30,10 +24,12 @@ var stylePrive = [new ol.style.Style({
     })
 })];
 
-lycee.legend.items.push({styles:stylePublic, label: "Public", geometry: "Point"});
-lycee.legend.items.push({styles:stylePrive, label: "Privé", geometry: "Point"});
+let legend = { items: [] };
 
-mviewer.customLayers.lycee.layer = new ol.layer.Vector({
+legend.items.push({styles:stylePublic, label: "Public", geometry: "Point"});
+legend.items.push({styles:stylePrive, label: "Privé", geometry: "Point"});
+
+let layer = new ol.layer.Vector({
         source: new ol.source.Vector({
             url: "https://ows.region-bretagne.fr/geoserver/rb/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GETFEATURE&TYPENAME=lycee&outputFormat=application/json&srsName=EPSG:4326",
             format: new ol.format.GeoJSON()
@@ -48,5 +44,5 @@ mviewer.customLayers.lycee.layer = new ol.layer.Vector({
             return stl;
         }
 });
-mviewer.customLayers.lycee.handle = false;
-} 
+
+new CustomLayer("lycee", layer, legend);

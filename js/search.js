@@ -352,9 +352,7 @@ var search = (function () {
     var _sendFuseRequest = function (val) {
         $(".fuse").remove();
 
-        var searchableLayers =  $.grep( _searchableFuseLayers, function( l, i ) {
-            return l.getVisible();
-        });
+        var searchableLayers = _searchableFuseLayers.filter(e => e.getVisible() && _fuseSearchData[e.get('mviewerid')]);
 
         for (var i = 0; i < searchableLayers.length; i++) {
 
@@ -371,6 +369,9 @@ var search = (function () {
 
                 str = '<a class="fuse list-group-item disabled">' + layername + '</a>';
                 results.forEach(function(element){
+                  // from version 4 data are stored in element.item
+                  element = element.item;
+                  
                     /*
                      * 2 cases, one specific field or a Mustache template for combining fields in a string. Examples:
                      * - name of a field: name

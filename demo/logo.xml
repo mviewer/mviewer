@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config mviewerstudioversion="3.1">
+<metadata>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<rdf:Description rdf:about="http://www.ilrt.bristol.ac.uk/people/cmdjb/">
+<dc:title>Démo logo</dc:title>
+<dc:creator>anonymous</dc:creator>
+<dc:publisher>anonymous</dc:publisher>
+
+<dc:date>2020-04-16T06:03:59.340Z</dc:date>
+</rdf:Description>
+</rdf:RDF>
+</metadata>
+<application title="Démo logo" logo="" help="" style="css/themes/default.css" exportpng="false" showhelp="false" coordinates="false" measuretools="false" togglealllayersfromtheme="false">
+</application>
+<mapoptions maxzoom="20" projection="EPSG:3857" center="-307903.74898791354,6141345.088741366" zoom="7"/>
+<searchparameters bbox="false" localities="false" features="false" static="false"/>
+<baselayers style="default">
+    <baselayer visible="false" id="positron" thumbgallery="img/basemap/positron.png" title="CartoDb" label="Positron" type="OSM" url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution="Map tiles by  &lt;a href=&quot;https://cartodb.com/attributions&quot;&gt;CartoDb&lt;/a&gt;, under  &lt;a href=&quot;https://creativecommons.org/licenses/by/3.0/&quot;&gt;CC BY 3.0 &lt;/a&gt;"/>
+    <baselayer visible="true" id="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg" title="Esri world imagery" label="Esri world imagery" type="OSM" url="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"/>
+</baselayers>
+<themes>
+</themes>
+<extensions>
+    <extension type="component" id="logo" path="demo/addons" />
+</extensions>
+</config>

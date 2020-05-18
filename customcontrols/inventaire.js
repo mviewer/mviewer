@@ -15,7 +15,8 @@ mviewer.customControls.inventaire = (function() {
     var _updateLayer = function() {
         var values = $("#inventaire_search_queries").tagsinput('items') || [];
         mviewer.customLayers.inventaire.setFilter(values);
-        mviewer.customLayers.inventaire.layer.getSource().getSource().clear(false);
+        mviewer.customLayers.inventaire.layer.getSource().getSource().refresh();
+        mviewer.customLayers.inventaire.layer.getSource().getSource().changed();
         _lastValues = values.join(",");
     };
 
