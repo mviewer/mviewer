@@ -71,8 +71,8 @@ Elément enfant de ``<theme>`` ou ``<group>``
                 tooltipenabled=""
                 expanded=""
                 metadata=""
-                metadata-csw="" />
-                <template url=""/>
+                metadata-csw="" >
+                <template url=""></template>
         </layer>
 
 Paramètres pour une configuration minimaliste
