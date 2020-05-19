@@ -793,14 +793,20 @@ mviewer = (function () {
             htmlListGroup += _renderHTMLFromTemplate(mviewer.templates.theme, view);
         });
         var panelMini = configuration.getConfiguration().themes.mini;
-        var legendMini = configuration.getConfiguration().themes.legendmini;
-        if (panelMini && (panelMini === 'true')) {
+        panelMini = panelMini && (panelMini === 'true') || false;
+        var legendmini = configuration.getConfiguration().themes.legendmini || null;
+        legendmini = legendmini != null ? legendmini && (legendmini === 'true') || false : legendmini;
+
+        if (panelMini) {
             // hide all panels
             mviewer.toggleMenu(false);
             mviewer.toggleLegend(false);
         }
-        if(legendMini && (legendMini === "true")) {
+        if(!legendmini && panelMini && legendmini != null) {
             // hide legend panel
+            mviewer.toggleLegend(false);
+        } else if(legendmini && !panelMini && legendmini != null) {
+            // display legend panel
             mviewer.toggleLegend(false);
         }
         $("#menu").html(htmlListGroup);
