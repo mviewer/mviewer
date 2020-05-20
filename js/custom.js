@@ -145,7 +145,14 @@ class Component {
           }
           _html.push(html);
           component.innerHTML = _html.join("");
-          target.appendChild(component);
+          if (typeof that.config.position == 'number' 
+                && target.hasChildNodes()
+                && target.childNodes[that.config.position]
+          ) {
+            target.insertBefore(component, target.childNodes[that.config.position]);
+          } else {
+            target.appendChild(component);
+          }
           resolve(target);
         } else {
           reject("error");
