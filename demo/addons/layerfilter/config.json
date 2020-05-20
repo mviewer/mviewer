@@ -1,0 +1,7 @@
+{
+  "js": ["layerfilter.js"],
+  "css": "layerfilter.css",
+  "html": "layerfilter.html",
+  "target": "menu",
+  "position": 0
+}

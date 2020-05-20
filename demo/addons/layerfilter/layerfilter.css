@@ -1,0 +1,7 @@
+#layerfilter-form {
+  padding: 10px;
+}
+
+.modal-body #layerfilter-form {
+  padding-top: 0px;
+}
