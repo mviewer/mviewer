@@ -1,5 +1,5 @@
 <config>
-    <application title="Démo Infobulle avec Mustache" logo="" help="demo/demo_mustache_tooltip_help.html" showhelp="true" style="css/themes/nephritis.css" exportpng="false" measuretools="false" />
+    <application title="Démo Infobulle avec Mustache" logo="" help="demo/mustache_tooltip/demo_mustache_tooltip_help.html" showhelp="true" style="css/themes/nephritis.css" exportpng="false" measuretools="false" />
     <mapoptions maxzoom="20" projection="EPSG:3857" center="-307903.74898791354,6141345.088741366" zoom="8" />
     <searchparameters localities="false" features="true" bbox="false"/>
     <elasticsearch url="http://ows.region-bretagne.fr/kartenn/_search" geometryfield="geometry" querymode="match" linkid="search_id" version="1.4"/>
@@ -11,7 +11,7 @@
             <layer id="lycee"
                 name="Lycées en Bretagne"
                 type="geojson"
-                legendurl="demo/lycee.png"
+                legendurl="demo/mustache_tooltip/img/lycee.png"
                 url="http://ows.region-bretagne.fr/geoserver/rb/wfs?SERVICE=WFS&amp;VERSION=1.0.0&amp;REQUEST=GETFEATURE&amp;TYPENAME=lycee&amp;outputFormat=application/json&amp;srsName=EPSG:4326"
                 metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25"
                 metadata-csw="https://geobretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25"

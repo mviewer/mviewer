@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>    
-    <application title="Filtres CQL" logo="" help="demo/demo_cql_help.html"  showhelp="false" exportpng="false" measuretools="true" style="css/themes/amethyst.css"/>
+    <application title="Filtres CQL" logo="" help="demo/cql/demo_cql_help.html"  showhelp="false" exportpng="false" measuretools="true" style="css/themes/amethyst.css"/>
     <mapoptions maxzoom="18" projection="EPSG:3857" center="-378363,6075979" zoom="10" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
     
 	<baselayers style="gallery">

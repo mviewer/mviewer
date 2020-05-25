@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>    
-    <application title="Démo Temporalité" logo="" help="demo/demo_time_help.html" showhelp="true" exportpng="false" style="css/themes/carrot.css"/>
+    <application title="Démo Temporalité" logo="" help="demo/time/demo_time_help.html" showhelp="true" exportpng="false" style="css/themes/carrot.css"/>
     <mapoptions maxzoom="20" projection="EPSG:3857" center="-200208,6132036" zoom="14" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
    	<baselayers style="default">
         <baselayer  type="OSM" id="positron" label="Positron" title="CartoDb" thumbgallery="img/basemap/positron.png" 

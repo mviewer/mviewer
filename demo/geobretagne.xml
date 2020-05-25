@@ -6,7 +6,7 @@
         studio="http://kartenn.region-bretagne.fr/mviewerstudio/?xml="
         title="Démo GéoBretagne"
         logo="img/logo/g.png"
-        help="demo/demo_geobretagne_help.html"
+        help="demo/geobretagne/demo_geobretagne_help.html"
         showhelp="true"
         exportpng="false"
         style="css/themes/pink.css"/>

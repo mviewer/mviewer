@@ -23,8 +23,9 @@
     <theme name="Outils"  collapsed="false" id="profile" icon="fas fa-chart-area">
         <layer id="profile" name="Profil en long (WPS)" visible="true" queryable="false"
             type="customlayer" opacity="0.8" legendurl="img/blank.gif"
-            url="customlayers/profile.js"
+            url="demo/profile/customlayers/profile.js"
             customcontrol="true"
+            customcontrolpath="demo/profile/customcontrols"
             expanded="true"           
             attribution="Source: GéoBretagne"
             metadata=""

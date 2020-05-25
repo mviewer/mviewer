@@ -3,7 +3,7 @@
 <application
     title="Paramétrage Application"
     logo="https://kartenn.region-bretagne.fr/kartoviz/apps/region/global/img/logo/rb_blanc.svg"
-    help="demo/demo_application_help.html"
+    help="demo/application/demo_application_help.html"
     titlehelp="Paramètres utilisés"
     iconhelp="cog"
     style="css/themes/alizarin.css"

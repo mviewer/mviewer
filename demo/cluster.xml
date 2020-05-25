@@ -15,7 +15,7 @@
                 expanded="true"
                 legendurl="img/blank.gif"
                 vectorlegend="true"
-                url="customlayers/cluster.js"
+                url="demo/cluster/customlayers/cluster.js"
                 attribution="MTES - Position, caractéristiques et contenu des études d'impact référencées par la plateforme &lt;a href='https://projets-environnement.gouv.fr/'&gt;https://projets-environnement.gouv.fr&lt;/a&gt; qui fournit des informations sur tous les projets susceptibles d’avoir un impact notable sur l’environnement et devant, de ce fait, établir un rapport d'évaluation des incidences du projet sur l'environnement."
                 metadata="https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/74ffc6ac-b97e-4a3b-ac4f-fa72d0e72fb3"
                 metadata-csw="https://geobretagne.fr/geonetwork/srv/fre/xml.metadata.get?uuid=74ffc6ac-b97e-4a3b-ac4f-fa72d0e72fb3"
@@ -27,7 +27,7 @@
                 fusesearchkeys="dc_title,dc_contributor"
                 fusesearchresult="{{date}} {{dc_title}} {{dc_contributor}} {{codepostal}}"
                 tooltipcontent="{{dc_title}} et {{mv_clustercount}} autre(s) dossier(s)">
-                <template url="demo/cluster.mst"/>
+                <template url="demo/cluster/cluster.mst"/>
                 </layer>
         </theme>
     </themes>

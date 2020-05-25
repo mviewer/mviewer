@@ -1,0 +1,76 @@
+{{#features}}
+	<li class="inventaire item" style="width:100%;">
+		<h3 class="title-feature">{{title}}</h3>
+        <p class="source" ><i>Source: <strong>{{source}}</strong></i></p>
+		<p class="text-feature">
+            {{#denomination}}
+                <span> Dénomination :</span> {{denomination}}<br/>
+            {{/denomination}}
+			{{#datation}}
+				<span> Datation :</span> {{datation}}<br/>
+			{{/datation}}
+			{{#murs}}
+				<span> Materiaux murs:</span> {{murs}}<br/>
+			{{/murs}}
+			{{#toit}}
+				<span> Matériaux toiture  :</span> {{toit}}<br/>
+			{{/toit}}
+			<div class="wfs_complements" id="{{search_id}}" style="padding-left:0px;"><div>
+
+        </p>
+	</li>
+{{/features}}
+
+<style>
+	.inventaire .title-feature {
+		color: #BA88A4;
+		font-family:"roboto_bold";
+		font-size:16px;
+		margin-bottom:1%;
+		line-height:1;
+	}
+	.inventaire .text-feature{
+		font-family:"roboto_regular";
+		color:#555;
+		font-size:13px;
+		margin-top:5px;
+	}
+	.inventaire .text-feature span{
+		font-family:"roboto_bold";
+	}
+    .inventaire .but_link{
+	    padding:5px 0 5px 0;
+	    font-size:14px;
+	    font-family:"roboto_bold";
+	   	background:#BA88A4;
+	    color:#fff;
+	    text-align: center;
+	    width:180px;
+	    border:1px solid #69003f;
+	    margin-left: auto;
+        margin-right: auto;
+	}
+	.inventaire .but_link:hover{
+	    background:#69003f;
+	    border:1px solid #69003f;
+	}
+	.inventaire .but_link p{
+	  margin: 0;
+	  text-align:center;
+	  color:#fff;
+	}
+	.inventaire .but_link a, .but_link a:hover, .but_link a:focus{
+	  color: #fff;
+	}
+    .inventaire:(img) {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .inventaire p, .inventaire h3 {
+        padding-left:15px;
+        padding-right:15px;
+    }
+
+
+</style>

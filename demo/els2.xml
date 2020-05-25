@@ -23,15 +23,16 @@
         <layer id="inventaire" name="Rechercher dans l'inventaire" visible="true" queryable="true"
             type="customlayer" opacity="0.8"
             url="customlayers/inventaire.js"
+            customcontrolpath="demo/els2/customcontrols"
             customcontrol="true"
             vectorlegend="false"
-            legendurl="demo/recensement_etudes.jpg"
+            legendurl="demo/els2/img/recensement_etudes.jpg"
             expanded="true"
             tooltip="true" tooltipenabled="true" tooltipcontent="{{title}} "
             attribution="Source: Région Bretagne"
             metadata=""
             metadata-csw="">
-            <template url="templates/inventaire.mst" />
+            <template url="demo/els2/templates/inventaire.mst" />
         </layer>
     </theme>
 </themes>

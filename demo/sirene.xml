@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>    
-    <application title="Démo SIRENE" logo="" help="demo/demo_sirene_help.html" showhelp="false" exportpng="false" style="css/themes/black.css"/>
+    <application title="Démo SIRENE" logo="" help="demo/sirene/demo_sirene_help.html" showhelp="false" exportpng="false" style="css/themes/black.css"/>
     <mapoptions maxzoom="20" projection="EPSG:3857" center="-200208,6132036" zoom="14" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
    	<baselayers style="default">
         <baselayer  type="OSM" id="positron" label="Positron" title="CartoDb" thumbgallery="img/basemap/positron.png" 
@@ -33,8 +33,8 @@
             <layer id="sirene" name="Carte de chaleur des débits de boisson" visible="false" 
 				queryable="false"         
                 type="customlayer"
-                url="customlayers/sirene.js"
-                legendurl="img/legend/heatmap.png" 				 
+                url="demo/sirene/customlayers/sirene.js"
+                legendurl="demo/sirene/img/legend/heatmap.png" 				 
 				attribution="GéoBretagne" 
 				metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=6bf9d921-b8eb-4e5f-bbb5-546f7c40dab3"
                 metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=6bf9d921-b8eb-4e5f-bbb5-546f7c40dab3" >
