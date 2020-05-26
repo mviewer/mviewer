@@ -43,6 +43,9 @@ Options liées à  la recherche d'adresse *(olscompletion)* et à  la recherch
        :linenos:
 
 	<searchparameters
+              imgurl=""
+              imgwidth=""
+              svgcolor=""
               bbox=""
               inputlabel=""
               localities=""
@@ -64,6 +67,9 @@ Options liées à  la recherche d'adresse *(olscompletion)* et à  la recherch
 * ``closeafterclick`` *(optionnel)* : Ferme la liste des résultats de recherche après avoir sélectionné un item : true ou false - defaut = false,
 * ``animate`` *(optionnel)* : Active ou désactive l'animation de la vue lorsqu'un résultat de recherche est sélectionné  : true ou false (defaut = false),
 * ``duration`` *(optionnel)* : Durée en ms de l'animation définie dans l'option 'animate' (defaut = 1000).
+* ``imgurl`` *(optionnel)* : Url de l'image PNG / JPEG à afficher à l'emplacement du résultat sélectionné en guise de pointeur.
+* ``imgwidth`` *(optionnel)* : Taille de l'image (voir paramètre imgurl) du pointeur représentant le résultat sélectionné.
+* ``svgcolor`` *(optionnel)* : Couleur du pointeur représentant la localisation du résultat sélectionné.
 
 .. figure:: ../_images/dev/config_search/option-animate.gif
             :alt: activation de l'option animate
