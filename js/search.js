@@ -140,6 +140,23 @@ var search = (function () {
     };
 
     /**
+     * Private Method: _initSearchMarker
+     */
+    var _initSearchMarker = function (searchparams) {
+        if (searchparams) {
+            if (searchparams.imgurl) {
+                $('.mv_marker_svg').remove();
+                $('.mv_marker_img').attr('style',`max-width:${searchparams.imgwidth || '50px'}`);
+                $('.mv_marker_img').attr('src', searchparams.imgurl || '');
+            } else {
+                $('.mv_marker_img').remove();
+                var defaultPath = $('#mv_marker').children('path');
+                defaultPath.css('fill', searchparams.svgcolor || defaultPath.css('fill'));
+            }
+        }
+    }
+
+    /**
      * Private Method: _clearSearchField
      *
      */
@@ -651,6 +668,7 @@ var search = (function () {
         _sourceOverlay = mviewer.getSourceOverlay();
         _projection = mviewer.getProjection();
         _overLayers = mviewer.getLayers();
+        var sparams = configuration.searchparameters || false;
         if (configuration.olscompletion) {
             _olsCompletionUrl = configuration.olscompletion.url;
             $("#adresse-attribution").text(configuration.olscompletion.attribution);
@@ -669,15 +687,16 @@ var search = (function () {
         if (!_olsCompletionUrl)  {
             _searchparams.localities = false;
         }
-        if (configuration.searchparameters && configuration.searchparameters.bbox &&
-            configuration.searchparameters.localities && configuration.searchparameters.features) {
-            _searchparams.bbox = (configuration.searchparameters.bbox === "true");
-            _searchparams.localities = (configuration.searchparameters.localities === "true");
-            _searchparams.features = (configuration.searchparameters.features === "true");
-            _searchparams.static = (configuration.searchparameters.static === "true");
-            _searchparams.querymaponclick = (configuration.searchparameters.querymaponclick === "true");
-            _searchparams.closeafterclick = (configuration.searchparameters.closeafterclick === "true");
+        if (sparams && sparams.bbox &&
+            sparams.localities && sparams.features) {
+            _searchparams.bbox = (sparams.bbox === "true");
+            _searchparams.localities = (sparams.localities === "true");
+            _searchparams.features = (sparams.features === "true");
+            _searchparams.static = (sparams.static === "true");
+            _searchparams.querymaponclick = (sparams.querymaponclick === "true");
+            _searchparams.closeafterclick = (sparams.closeafterclick === "true");
         }
+
         if (_searchparams.localities===false && _searchparams.features===false) {
             $("#searchtool").remove();
         }
@@ -698,7 +717,7 @@ var search = (function () {
         if (_searchparams.features === false) {
             $('#searchparameters .searchfeatures').remove('.searchfeatures');
         }
-        if (configuration.searchparameters && configuration.searchparameters.inputlabel) {
+        if (sparams.inputlabel) {
             var label = configuration.searchparameters.inputlabel;
             $("#searchfield").attr("placeholder", label).attr("title", label);
         }
@@ -774,7 +793,8 @@ var search = (function () {
         showFeature: _showFeature,
         zoomToFeature: _zoomToFeature,
         clear: _clear,
-        clearSearchField: _clearSearchField
+        clearSearchField: _clearSearchField,
+        initSearchMarker: _initSearchMarker
     };
 
 })();

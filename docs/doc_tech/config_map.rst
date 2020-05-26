@@ -50,7 +50,7 @@ Configurer - les options de la carte
 
    .. code-block:: html
 
-    #els_marker path {
+    #mv_marker path {
         fill: #337ab7;
     }
 
