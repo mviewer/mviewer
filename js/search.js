@@ -258,10 +258,6 @@ var search = (function () {
                                     zoom = 17;
                                     break;
                                 }
-                            /*str += '<a class="geoportail list-group-item" href="#" onclick="mviewer.zoomToLocation(' +
-                            res[i].x + ',' + res[i].y + ',' + zoom + ',' + _searchparams.querymaponclick +');" '+
-                            'onmouseover="mviewer.flash('+'\'EPSG:4326\',' + res[i].x + ',' + res[i].y + ');"> ' +
-                            res[i].fulltext + '</a>';*/
                             str += `<a class="geoportail list-group-item" href="#" onclick="
                                 mviewer.zoomToLocation(${res[i].x}, ${res[i].y}, ${zoom}, ${_searchparams.querymaponclick});
                                 mviewer.showLocation('EPSG:4326',${res[i].x}, ${res[i].y})>
