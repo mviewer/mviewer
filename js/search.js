@@ -258,10 +258,15 @@ var search = (function () {
                                     zoom = 17;
                                     break;
                                 }
-                            str += '<a class="geoportail list-group-item" href="#" onclick="mviewer.zoomToLocation(' +
+                            /*str += '<a class="geoportail list-group-item" href="#" onclick="mviewer.zoomToLocation(' +
                             res[i].x + ',' + res[i].y + ',' + zoom + ',' + _searchparams.querymaponclick +');" '+
                             'onmouseover="mviewer.flash('+'\'EPSG:4326\',' + res[i].x + ',' + res[i].y + ');"> ' +
-                            res[i].fulltext + '</a>';
+                            res[i].fulltext + '</a>';*/
+                            str += `<a class="geoportail list-group-item" href="#" onclick="
+                                mviewer.zoomToLocation(${res[i].x}, ${res[i].y}, ${zoom}, ${_searchparams.querymaponclick});
+                                mviewer.showLocation('EPSG:4326',${res[i].x}, ${res[i].y})>
+                                ${res[i].fulltext}
+                            </a>`;
                         }
                         $(".geoportail").remove()
                         if (res.length > 0) {
@@ -284,11 +289,13 @@ var search = (function () {
                     data: parameters,
                     dataType: "json",
                     success: function (data) {
-                        var zoo = 0;
+                        var zoom = 0;
                         var res = data.features;
                         var str = '<a class="geoportail list-group-item disabled">Localités</a>';
                         for (var i = 0, len = res.length; i < len && i < 5; i++) {
-                            switch(res[i].properties.type) {
+                            var props = res[i].properties;
+                            var geom = res[i].geometry;
+                            switch(props.type) {
                                 case 'city':
                                     zoom = 13;
                                     break;
@@ -307,11 +314,16 @@ var search = (function () {
                                 default:
                                     zoom = 14;
                             }
-                            str += '<a class="geoportail list-group-item" href="#" title="' +
-                            res[i].properties.context+' - ' + res[i].properties.type +
-                            '" onclick="mviewer.zoomToLocation('+
-                            res[i].geometry.coordinates[0] + ',' +
-                            res[i].geometry.coordinates[1] + ',' + zoom + ',' + _searchparams.querymaponclick +');">' + res[i].properties.label + '</a>';
+                            str += `<a class="geoportail list-group-item" href="#" title="${props.context} - ${props.type}"
+                                onclick="mviewer.zoomToLocation(
+                                    ${geom.coordinates[0]}, 
+                                    ${geom.coordinates[1]}, 
+                                    ${zoom}, 
+                                    ${_searchparams.querymaponclick}
+                                );
+                                mviewer.showLocation('EPSG:4326', ${geom.coordinates[0]}, ${geom.coordinates[1]});">
+                                ${props.label}
+                            </a>`;
                         }
                         $(".geoportail").remove();
                         _showResults(str);
