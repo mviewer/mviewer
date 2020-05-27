@@ -143,16 +143,14 @@ var search = (function () {
      * Private Method: _initSearchMarker
      */
     var _initSearchMarker = function (searchparams) {
-        if (searchparams) {
-            if (searchparams.imgurl) {
-                $('.mv_marker_svg').remove();
-                $('.mv_marker_img').attr('style',`max-width:${searchparams.imgwidth || '50px'}`);
-                $('.mv_marker_img').attr('src', searchparams.imgurl || '');
-            } else {
-                $('.mv_marker_img').remove();
-                var defaultPath = $('#mv_marker').children('path');
-                defaultPath.css('fill', searchparams.svgcolor || defaultPath.css('fill'));
-            }
+        if (searchparams && searchparams.imgurl) {
+            $('.mv_marker_svg').remove();
+            $('.mv_marker_img').attr('style',`max-width:${searchparams.imgwidth || '50px'}`);
+            $('.mv_marker_img').attr('src', searchparams.imgurl || '');
+        } else {
+            $('.mv_marker_img').remove();
+            var defaultPath = $('#mv_marker').children('path');
+            defaultPath.css('fill', searchparams && searchparams.svgcolor || defaultPath.css('fill'));
         }
     }
 
