@@ -1,0 +1,30 @@
+{{#features}}
+	<li class="item" style="width:238px;">
+		{{#enseigne}}
+			<h5 class="title-feature">{{enseigne}}</h5>
+		{{/enseigne}}
+		{{^enseigne}}
+			<h5 class="title-feature">{{l1_normalisee}}</h5>
+		{{/enseigne}}
+		
+		<p class="text-feature">
+			<span style="font-family:'roboto_bold'">{{l2_normalisee}}</span><br/>
+		</p>
+	</li>
+{{/features}}
+
+<style>
+	.title-feature {
+		color: #032E46;
+		font-family:"roboto_bold";
+		font-size:23px;
+		margin-bottom:1%;
+		line-height:1;
+	}
+	.text-feature{
+		font-family:"roboto_regular";
+		color:#555;
+		font-size:13px;
+		margin-top:10%;
+	}
+</style>
