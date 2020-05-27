@@ -1,5 +1,9 @@
 on:
-    - push
+  push:
+    branches:
+    - master
+  release:
+    types: [published]
 
 jobs:
   docker-build:
