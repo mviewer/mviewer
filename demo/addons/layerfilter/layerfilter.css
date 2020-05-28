@@ -5,3 +5,7 @@
 .modal-body #layerfilter-form {
   padding-top: 0px;
 }
+
+#wrapper.toggled-2 #layerfilter-form {
+  display: none;
+}
