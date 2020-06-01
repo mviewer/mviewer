@@ -1,6 +1,7 @@
 const layerfilter = (function() {
 
   let _input;
+  let _clearbutton;
   let _layerfilter = function (e) {
       const term = $("#layerfilter-field").val().toLowerCase().trim();
       $("#menu li").hide().filter(function() {
@@ -25,10 +26,17 @@ const layerfilter = (function() {
       }).show();
   };
 
+  let _clearfilter = function (e) {
+    $("#layerfilter-field").val("");
+    _layerfilter();
+  }
+
   return {
       init : function () {
           _input = document.getElementById("layerfilter-field");
           _input.addEventListener('keyup', _layerfilter);
+          _clearbutton = document.getElementById("layerfilter-clear");
+          _clearbutton.addEventListener('click', _clearfilter);
       }
   };
 

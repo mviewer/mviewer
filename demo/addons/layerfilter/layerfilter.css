@@ -9,3 +9,18 @@
 #wrapper.toggled-2 #layerfilter-form {
   display: none;
 }
+
+#layerfilter-form .btn-default {
+  background-color: #ffffff;
+  border-color:rgba(51, 51, 51, 0.2);
+  border-radius: 0px;
+  border-left: 0px;
+}
+
+#layerfilter-field {
+  border-right: 0px;
+}
+
+#layerfilter-clear .glyphicon-remove {
+  color: #999999;
+}
