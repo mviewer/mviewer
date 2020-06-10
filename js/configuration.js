@@ -828,6 +828,11 @@ var configuration = (function () {
                         l = new ol.layer.Vector({
                             source: new ol.source.Vector()
                         });
+                        if (layer.projections) {
+                            oLayer.projections = layer.projections;
+                        }
+                        //allow transformation to mapProjection before map is initialized
+                        oLayer.mapProjection = conf.mapoptions.projection;
                         if (oLayer.url) {
                             csv.loadCSV(oLayer, l);
                         } else {

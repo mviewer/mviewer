@@ -24,17 +24,74 @@ var csv = (function () {
             '<label for="email">Titre de la donnée:</label>',
             '<h3><input type="text" class="csv-name form-control"><h3>',
           '</div>',
-
            '<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">',
+            '<div class="panel panel-default">',
+                '<div class="panel-heading" role="tab" id="headingZero">',
+                    '<h4 class="panel-title">',
+                        '<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseZero" aria-expanded="true" aria-controls="collapseZero">',
+                        '<b>Sélectionner les champs</b> x, y à utiliser comme coordonnées',
+                        '</a>',
+                    '</h4>',
+                '</div>',
+                '<div id="collapseZero" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingZero">',
+                    '<div id="coord-field-list">',
+                        '<div class="panel-body">',
+                            '<div>',
+                                '<div class="geocoding csv-fields list-group"/>',
+                                '</div>',
+                                '<div>',
+                                    '<button id="choose-projection" type="button" data-layerid="" class="geocode btn btn-primary pull-right">Choisir une projection</button>',
+                                '</div>',
+                            '</div>',
+                        '</div>',
+                    '</div>',
+                    '<div id="coord-srs-dialog">',
+                        '<div class="panel-body">',
+                            '<table class="table">',
+                                '<thead>',
+                                '<tr>',
+                                    '<th scope="col"></th>',
+                                    '<th scope="col">X (longitude)</th>',
+                                    '<th scope="col">Y (latitude)</th>',
+                                    '<th scope="col">Projection (SRS)</th>',
+                                '</tr>',
+                                '</thead>',
+                                '<tbody>',
+                                '<tr>',
+                                    '<th scope="row">Sélectionner</th>',
+                                    '<td>',
+                                        '<select id="x-select" class="form-control"></select>',
+                                    '</td>',
+                                    '<td>',
+                                        '<select id="y-select" class="form-control"></select>',
+                                    '</td>',
+                                    '<td>',
+                                        '<select id="srs-select" class="form-control"></select>',
+                                    '</td>',
+                                '</tr>',
+                                '<tr>',
+                                    '<th scope="row">Extrait des données</th>',
+                                    '<td id="x-data"></td>',
+                                    '<td id="y-data"></td>',
+                                    '<td></td>',
+                                '</tr>',
+                                '</tbody>',
+                            '</table>',
+                            '<div>',
+                                '<button id="choose-fields" type="button" data-layerid="" class="geocode btn btn-primary pull-right">Retour</button>',
+                            '</div>',
+                        '</div>',
+                    '</div>',
+                '</div>',
               '<div class="panel panel-default">',
                  '<div class="panel-heading" role="tab" id="headingOne">',
                     '<h4 class="panel-title">',
-                       '<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">',
-                       '<b>Sélectionner les champs</b> à utiliser pour le géocodage (adresse)',
+                       '<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">',
+                       '<b>Ou</b> sélectionner les champs à utiliser pour le géocodage (adresse)',
                        '</a>',
                     '</h4>',
                  '</div>',
-                 '<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">',
+                 '<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">',
                     '<div class="panel-body">',
                        '<div class="geocoding csv-fields list-group"/>',
                        '</div>',
@@ -71,7 +128,7 @@ var csv = (function () {
                     '</div>',
                  '</div>',
                  '<div class="modal-footer">',
-                    '<button type="button" data-layerid="" onclick="csv.geocodeit(this);" class="geocode btn btn-primary">Géocoder</button>',
+                    '<button id="submit-button" type="button" data-layerid="" onclick="csv.geocodeit(this);" class="geocode btn btn-primary">Afficher</button>',
                  '</div>',
               '</div>',
            '</div>',
@@ -124,7 +181,11 @@ var csv = (function () {
                 $("#geocoding-modal .csv-fields a").click(function() {
                     $(this).toggleClass( "active" );
                 });
-                //Lauchn geocoding with custom parameters
+                //Hide and reset srs-dialog
+                _showSrsDialog(false);
+                //Init coordinate tab with data and events
+                _initCoordsTab(tmp, oLayer);
+                //Launch geocoding with custom parameters
                 $("#geocoding-modal").off().on("geocoding-" + idlayer + "-ready", function (e) {
                     e.preventDefault();
                     e.stopPropagation();
@@ -160,8 +221,20 @@ var csv = (function () {
                     var title = $("#geocoding-modal .csv-name").val();
                     $(".mv-layer-details[data-layerid='"+ idlayer +"'] .layerdisplay-title>a").first().text(title);
                     $(".mv-layer-details[data-layerid='"+ idlayer +"']").data("data-layerid", title);
-                    //geocode file
-                    _geocode(evt.target.result,oLayer, oLayer.layer);
+                    
+                    if ($("#collapseZero").hasClass("in") !== false) {
+                        if ($("#srs-select").val()) {
+                            oLayer.xfield = $("#x-select").val();
+                            oLayer.yfield = $("#y-select").val();
+                            _mapCSV(evt.target.result, oLayer, oLayer.layer, $("#srs-select").val());
+                        } else {
+                            alert("Veuillez choisir une projection s'il vous plaît")
+                            return true;
+                        }
+                    } else {
+                        // geocode file
+                        _geocode(evt.target.result,oLayer, oLayer.layer);
+                    }
                     //hide wizard
                     $("#geocoding-modal").modal("hide");
                     return false;
@@ -187,6 +260,73 @@ var csv = (function () {
         })
     })];
 
+    var _showSrsDialog = function(show) {
+        if (show) {
+            $("#coord-field-list").hide();
+            $("#coord-srs-dialog").show();            
+        } else {
+            $("#coord-field-list").show();
+            $("#coord-srs-dialog").hide();
+            _resetSrsDialog();
+        }
+    }
+
+    var _resetSrsDialog = function() {
+        $("#x-select option").remove();
+        $("#y-select option").remove();
+        $("#srs-select option").remove();
+    }
+
+    var _initCoordsTab = function (tmp, oLayer) {
+        $("#choose-projection").off().on("click", function (e) {
+            var xyFields = [];
+            $("#geocoding-modal .geocoding.csv-fields a.active").each(function(i,f) {
+                xyFields.push(f.textContent);
+            });
+            if (xyFields.length === 2) {
+                _showSrsDialog(true);
+
+                $("#x-select").append(`
+                    <option value="${xyFields[0]}">${xyFields[0]}</option>
+                    <option value="${xyFields[1]}">${xyFields[1]}</option>
+                `);
+                $("#y-select").append(`
+                    <option value="${xyFields[1]}">${xyFields[1]}</option>
+                    <option value="${xyFields[0]}">${xyFields[0]}</option>
+                `);
+
+                var srs = ["<option value='EPSG:4326'>EPSG:4326</option>"];
+                if (oLayer.projections && oLayer.projections.projection) {
+                    oLayer.projections.projection.forEach(function(p) {
+                        //register projections
+                        proj4.defs(p.proj4js);
+                        ol.proj.proj4.register(proj4);
+                        //display projections
+                        var epsg = p.proj4js.split(",")[0].replace(/['"]+/g,'');
+                        srs.push(`<option value="${epsg}">${epsg}</option>`);
+                    });
+                }
+                $("#srs-select").append(srs.join(" "));
+
+                $("#x-data").text(tmp.data[0][xyFields[0]])
+                $("#y-data").text(tmp.data[0][xyFields[1]])
+
+                $("#x-select").change(function(e) {
+                    $("#x-data").text(tmp.data[0][e.target.value])
+                })
+                $("#y-select").change(function(e) {
+                    $("#y-data").text(tmp.data[0][e.target.value])
+                })
+
+            } else {
+                alert("Veuillez choisir deux champs de coordonnées s'il vous plaît")
+            }
+        });
+        $("#choose-fields").on("click", function (e) {
+            _showSrsDialog(false);
+        });
+    }
+
     // POST local file and parameters to API geocode service
     var _geocode = function (_csv, oLayer, l) {
         if (oLayer.geocoder === "ban") {
@@ -207,33 +347,8 @@ var csv = (function () {
                     url: "https://api-adresse.data.gouv.fr/search/csv/",
                     data: formData,
                     contentType: false,
-                    success: function (data) {
-                        var _source = l.getSource();
-                        var _features = [];
-                        l.setStyle(_defaultStyle);
-                        //draw layer Legend
-                        oLayer.legend = {items : [{styles: _defaultStyle, label: "Points", geometry: "Point"}]};
-                        mviewer.drawVectorLegend(oLayer.layerid, oLayer.legend.items);
-                        //Parse geocoded results
-                        var results = Papa.parse(data, {header: true});
-                        results.data.forEach(function(a) {
-                            //create geometries from xfield and y field
-                            if (a[oLayer.xfield] && a[oLayer.yfield]) {
-                                var feature = new ol.Feature({
-                                    geometry: new ol.geom.Point(ol.proj.transform([parseFloat(a[oLayer.xfield]), parseFloat(a[oLayer.yfield])], 'EPSG:4326', 'EPSG:3857'))
-                                });
-                                feature.setProperties(a);
-                                _features.push(feature);
-                            } else {
-                                console.log("paramètres xfield et yfields manquants");
-                            }
-                        });
-                        // Add features to layer source
-                        // if fusesearch is enabled in config, 'change' event is fired and handled in the  _processSearchableLayer method (search.js)
-                        _source.addFeatures(_features);
-                        // zoom to layer extent
-                        mviewer.getMap().getView().fit(_source.getExtent());
-                        $("#csv-status").attr("class", "start");
+                    success: function(data) {
+                        _mapCSV(data, oLayer, l)
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         mviewer.alert("Problème avec le géocodage" +  thrownError, "alert-warning");
@@ -245,6 +360,39 @@ var csv = (function () {
                 console.log("Ce geocoder " + oLayer.geocoder+ " n'est pas pris en compte");
             }
     };
+
+    var _mapCSV = function (data, oLayer, l, srs) {
+        var _epsg = srs ? srs : 'EPSG:4326';
+        var _source = l.getSource();
+        var _features = [];
+        l.setStyle(_defaultStyle);
+        //draw layer Legend
+        oLayer.legend = {items : [{styles: _defaultStyle, label: "Points", geometry: "Point"}]};
+        mviewer.drawVectorLegend(oLayer.layerid, oLayer.legend.items);
+        //Parse geocoded results
+        var results = Papa.parse(data, {header: true});
+        results.data.forEach(function(a) {
+            //create geometries from xfield and y field
+            if (a[oLayer.xfield] && a[oLayer.yfield]) {
+                var feature = new ol.Feature({
+                    geometry: new ol.geom.Point(ol.proj.transform(
+                        [parseFloat(a[oLayer.xfield]), parseFloat(a[oLayer.yfield])], 
+                        ol.proj.get(_epsg), oLayer.mapProjection
+                    ))
+                });
+                feature.setProperties(a);
+                _features.push(feature);
+            } else {
+                console.log("paramètres xfield et yfields manquants");
+            }
+        });
+        // Add features to layer source
+        // if fusesearch is enabled in config, 'change' event is fired and handled in the  _processSearchableLayer method (search.js)
+        _source.addFeatures(_features);
+        // zoom to layer extent
+        mviewer.getMap().getView().fit(_source.getExtent());
+        $("#csv-status").attr("class", "start");
+    }
 
     var _loadCSV = function(oLayer, l) {
         // No wizard here. file is directly geocoded at startup. Used with persistant csv with layer config parameters (geocodingfields...)
