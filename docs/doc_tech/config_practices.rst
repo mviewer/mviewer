@@ -68,15 +68,15 @@ Choisissez ensuite le compte vers lequel réaliser votre fork.
 Vous détenez maintenant un fork disponible à l'adresse : https://github.com/MON_ORG/mviewer
 *MON_ORG étant à remplacer par le nom de votre compte GitHub.*
 
-Votre contient nativement les mêmes branches à l'identique, dont la branche **master**.
+Votre fork contient nativement les mêmes branches à l'identique, dont la branche **master**.
 
-Vous pourrez créer des nouvelles branches et modifer le code sans impacter le code natif du repository inital (`geobretagne/mviewer <https://github.com/geobretagne/mviewer>`_).
+Vous pourrez créer des nouvelles branches et modifier le code sans impacter le code natif du repository inital (`geobretagne/mviewer <https://github.com/geobretagne/mviewer>`_).
 
 - Ouvrez Git Bash
 
-- Aller sur le repository mviewer GitHub et cliquez sur "clone or download". Copier ensuite l'URL dans la commande suivante.
+- Allez sur le repository mviewer GitHub et cliquez sur "clone or download". Copier ensuite l'URL dans la commande suivante.
 
-- Réaliser un clone (copie) du code mviewer sur votre ordinateur en collant l'URL précédente::
+- Réalisez un clone (copie) du code mviewer sur votre ordinateur en collant l'URL précédente::
 
         git clone https://github.com/MON_ORG/mviewer.git
 
@@ -89,9 +89,9 @@ Vous pourrez créer des nouvelles branches et modifer le code sans impacter le c
 Gestion des droits
 ------------------
 
-Vous pouvez gérer les droits de votre repository pour les utilisateurs, développeurs et autres personnes disposants d'un compte GitHub.
+Vous pouvez gérer les droits de votre repository pour les utilisateurs, développeurs et autres personnes disposant d'un compte GitHub.
 
-Pour cela, cliquer en haut dans "Settings" et accédez à gauche à l'onglet "Collaborators & team". 
+Pour cela, cliquez en haut dans "Settings" et accédez à gauche à l'onglet "Collaborators & team". 
 
 .. image:: ../_images/contrib/droits1.PNG
               :alt: git clone url
@@ -105,28 +105,28 @@ Vous pouvez créer une branche sur GitHub directement ou avec Git.
 
 Pour créer une branche su GitHub.
 
-- Cliquer sur le bouton de la liste Branch:(nom de branche)
+- Cliquez sur le bouton de la liste Branch:(nom de branche)
 - Choisissez la branche de départ (master) dans la liste des branches disponibles
-- Cliquer à nouveau sur le bouton de la liste Branch:(nom de branche)
-- Dans le champ de recherche, saisir le nom de votre nouvelle branche (*).
+- Cliquez à nouveau sur le bouton de la liste Branch:(nom de branche)
+- Dans le champ de recherche, saisissez le nom de votre nouvelle branche (*).
 
 .. image:: ../_images/contrib/newbranch.PNG
               :alt: git new branch
               :align: center   
 
-- Cliquer ensuite sur "Create Branch: (nom de votre branche)"
+- Cliquez ensuite sur "Create Branch: (nom de votre branche)"
 
 Vous avez maintenant une nouvelle branche.
 
-Pour récupérer cette nouvelle branche dans votre dépôt Git, suivez la pricédure qui suit:
+Pour récupérer cette nouvelle branche dans votre dépôt Git, suivez la procédure qui suit:
 
 - Positionnez-vous dans votre dossier ../git/mviewer/:
 
-- Synchroniser votre dossier git::
+- Synchronisez votre dossier git::
         
         git fetch
 
-- Positionnez-vous dans votre dossier mviewer (le dossier crée par la commande 'git clone')::
+- Positionnez-vous dans votre dossier mviewer (le dossier créé par la commande 'git clone')::
         
         git pull
 
@@ -145,12 +145,12 @@ Pour mettre à jour votre dépôt (dossier) local mviewer (/git/mviewer) réalis
         git pull
 
 
-Vous travaillerai maintenant sur la nouvelle branche de votre choix. 
+Vous travaillerez maintenant sur la nouvelle branche de votre choix. 
 Chaque nouvelle mise à jour de la branche master de votre fork devra être reportée sur cette branche aussi souvent que possible.
 
 Pour mettre à jour la branche master de votre fork, nous devons définir en premier une "source distante" (upstream).
 
-(*) *Attention : Choisissez un nom permettant d'itentifier rapidement cette branche pour vous et votre équipe.*
+(*) *Attention : Choisissez un nom permettant d'identifier rapidement cette branche pour vous et votre équipe.*
 
 .. _setupstream:
 
@@ -182,7 +182,7 @@ Bravo ! Mettons maintenant à jour votre branche master.
 Mettre à jour votre fork - master
 ----------------------------------
 
-*Attention : assurez-vous d'avoir réalisez l'étape précédente avant celle-ci.*
+*Attention : assurez-vous d'avoir réalisé l'étape précédente avant celle-ci.*
 
 Vous devrez un jour mettre à jour votre branche master au sein de votre fork. Faites ainsi : 
 
@@ -200,7 +200,7 @@ Vous devrez un jour mettre à jour votre branche master au sein de votre fork. F
         
         git fetch upstream
 
-- Remplacer votre branche master (origin) par celle de géoBretagne (upstream)::
+- Remplacez votre branche master (origin) par celle de géoBretagne (upstream)::
         
         git reset --hard upstream/master
 
@@ -276,7 +276,7 @@ On obtiendra donc cette structure::
         └── templates
 
 
-Vous placerez tous les fichiers que vous avez créez ou modifier dans ces dossiers au sein de /apps/common.
+Vous placerez tous les fichiers que vous avez créés ou modifiés dans ces dossiers au sein de /apps/common.
 Vous prendrez en compte la localisation de ces fichiers dans le fichier de configuration XML en donnant les bons chemins d'accès.
 
 
@@ -292,9 +292,9 @@ Il vous faudra prendre en compte le dossier "apps" dans vos urls de carte ainsi:
 Addons
 ------
 
-Si vous souhaitez enrichir vos cartes de fonctionnalités (isochrones, recherches, filtres temporels, ...) vous pouve duppliquer cet addon dans tous les dossiers de carte.
+Si vous souhaitez enrichir vos cartes de fonctionnalités (isochrones, recherches, filtres temporels, ...) vous pouvez dupliquer cet addon dans tous les dossiers de carte.
 
-Vous pouvez aussi créer un dossier "addons" dans le répertoire common et y ajouter la structure nécessaires (customlayers, customcontrols) pour être réexploitable par toutes les cartes :
+Vous pouvez aussi créer un dossier "addons" dans le répertoire common et y ajouter la structure nécessaire (customlayers, customcontrols) pour être réexploitable par toutes les cartes :
 
 Voici exemple d'organisation de fichier avec un addon "Isochrone"::
 
@@ -318,7 +318,7 @@ Le dossier "apps" étant votre dossier de travail, vous pouvez l'organiser selon
 Participer à la communauté
 --------------------------
 
-Pour apporter une correction d'anomalie ou une évolution, nous cous recommandons d'aller à la la page ":ref:`contrib`".
+Pour apporter une correction d'anomalie ou une évolution, nous vous recommandons d'aller à la la page ":ref:`contrib`".
 
 
 Bonnes pratiques de développements
@@ -326,7 +326,7 @@ Bonnes pratiques de développements
 
 **Commits**
 
-Lorsque vous réalisez des commits, séparer les commits de style des commits de code.
+Lorsque vous réalisez des commits, séparez les commits de style des commits de code.
 
 Un commit de style comprend :
 
@@ -378,7 +378,7 @@ Nous recommandons très fortement d'utiliser les commentaires. Mieux vaut trop d
 
         <!--Je suis un commentaire HTML-->
 
-Pour les fonctions ou méthodes JavaScript, nous recommandons de rajouter en commentaire:
+Pour les fonctions ou méthodes JavaScript, nous recommandons d'ajouter en commentaire:
 
 - Ce que fait cette fonction ou méthode
 - Les paramètres en entrée
