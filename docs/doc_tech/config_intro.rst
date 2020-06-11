@@ -57,8 +57,8 @@ Il est possible d'instancier un mviewer avec des **paramètres** de configuratio
 
 Paramètres d'URL utilisés pour les permaliens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-* ``x`` : Coordonnées x du centre de la carte dans le système de projection utilisée par l'application.
-* ``y`` : Coordonnées y du centre de la carte dans le système de projection utilisée par l'application.
+* ``x`` : Coordonnées x du centre de la carte dans le système de projection utilisé par l'application.
+* ``y`` : Coordonnées y du centre de la carte dans le système de projection utilisé par l'application.
 * ``z`` : Zoom de la carte (1 à 20).
 * ``lb`` : Identifiant de la couche de fond affichée.
 
