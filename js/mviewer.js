@@ -259,9 +259,10 @@ mviewer = (function () {
         }
         utils.initWMTSMatrixsets(_projection);
         var overlays = [];
+        // init marker to create overlay on great marker
+        search.initSearchMarker(configuration.getConfiguration().searchparameters);
         //Create overlay (red pin) used by showLocation method
-        //TODO rename els_marker to mv-marker
-        _marker = new ol.Overlay({ positioning: 'bottom-center', element: $("#els_marker")[0], stopEvent: false})
+        _marker = new ol.Overlay({ positioning: 'bottom-center', element: $("#mv_marker")[0], stopEvent: false})
         overlays.push(_marker);
         _map = new ol.Map({
             target: 'map',
@@ -793,14 +794,20 @@ mviewer = (function () {
             htmlListGroup += _renderHTMLFromTemplate(mviewer.templates.theme, view);
         });
         var panelMini = configuration.getConfiguration().themes.mini;
-        var legendMini = configuration.getConfiguration().themes.legendmini;
-        if (panelMini && (panelMini === 'true')) {
+        panelMini = panelMini && (panelMini === 'true') || false;
+        var legendmini = configuration.getConfiguration().themes.legendmini || null;
+        legendmini = legendmini != null ? legendmini && (legendmini === 'true') || false : legendmini;
+
+        if (panelMini) {
             // hide all panels
             mviewer.toggleMenu(false);
             mviewer.toggleLegend(false);
         }
-        if(legendMini && (legendMini === "true")) {
+        if(!legendmini && panelMini && legendmini != null) {
             // hide legend panel
+            mviewer.toggleLegend(false);
+        } else if(legendmini && !panelMini && legendmini != null) {
+            // display legend panel
             mviewer.toggleLegend(false);
         }
         $("#menu").html(htmlListGroup);
@@ -1908,7 +1915,7 @@ mviewer = (function () {
             //marker
             var ptResult = ol.proj.transform([x, y], proj, _projection.getCode());
             _marker.setPosition(ptResult);
-            $("#els_marker").show();
+            $("#mv_marker").show();
             _map.render();
         },
 
@@ -1975,7 +1982,7 @@ mviewer = (function () {
          */
 
         hideLocation: function ( ) {
-            $("#els_marker").hide();
+            $("#mv_marker").hide();
         },
 
         /**
@@ -2639,7 +2646,7 @@ mviewer = (function () {
                 if (panel.hasClass("active")) {
                     panel.toggleClass("active");
                 }
-                $("#els_marker").hide();
+                $("#mv_marker").hide();
             } else {
                 if ( tab.hasClass("active") ) {
                     //Activation de l'item suivant

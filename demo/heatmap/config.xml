@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+<application
+    title="Exemple de custom layer HEATMAP"
+    logo=""
+    help=""
+    style="css/themes/default.css"
+    exportpng="false"
+    showhelp="false"
+    coordinates="false"
+    measuretools="false"
+    togglealllayersfromtheme="false">
+</application>
+<mapoptions maxzoom="18" projection="EPSG:3857" center="-230072,6204699" zoom="2" />
+<baselayers style="default">
+    <baselayer visible="true" id="positron" thumbgallery="img/basemap/positron.png" title="CartoDb" label="Positron" type="OSM" url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution="Map tiles by  &lt;a href=&quot;https://cartodb.com/attributions&quot;&gt;CartoDb&lt;/a&gt;, under  &lt;a href=&quot;https://creativecommons.org/licenses/by/3.0/&quot;&gt;CC BY 3.0 &lt;/a&gt;"  ></baselayer>
+    <baselayer visible="false" id="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg" title="Esri world imagery" label="Esri world imagery" type="OSM" url="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"  ></baselayer>
+</baselayers>
+<themes mini="true" legendmini="true">
+    <theme name="Outils"  collapsed="true" id="demo" icon="fas fa-cog">
+        <layer id="heatmap"
+            name="Earthquakes Heatmap"
+            visible="true"
+            url="demo/heatmap/customlayer.old.js"
+            queryable="true"
+            type="customlayer"            
+            customcontrol="true"
+            customcontrolpath="demo/heatmap/control"
+            legendurl="demo/heatmap/legend.png"
+            opacity="1"            
+            expanded="true"
+            attribution=""
+            metadata=""
+            metadata-csw="">
+        </layer>
+    </theme>
+</themes>
+</config>

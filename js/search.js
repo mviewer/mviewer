@@ -140,6 +140,21 @@ var search = (function () {
     };
 
     /**
+     * Private Method: _initSearchMarker
+     */
+    var _initSearchMarker = function (searchparams) {
+        if (searchparams && searchparams.imgurl) {
+            $('.mv_marker_svg').remove();
+            $('.mv_marker_img').attr('style',`max-width:${searchparams.imgwidth || '50px'}`);
+            $('.mv_marker_img').attr('src', searchparams.imgurl || '');
+        } else {
+            $('.mv_marker_img').remove();
+            var defaultPath = $('#mv_marker').children('path');
+            defaultPath.css('fill', searchparams && searchparams.svgcolor || defaultPath.css('fill'));
+        }
+    }
+
+    /**
      * Private Method: _clearSearchField
      *
      */
@@ -241,10 +256,11 @@ var search = (function () {
                                     zoom = 17;
                                     break;
                                 }
-                            str += '<a class="geoportail list-group-item" href="#" onclick="mviewer.zoomToLocation(' +
-                            res[i].x + ',' + res[i].y + ',' + zoom + ',' + _searchparams.querymaponclick +');" '+
-                            'onmouseover="mviewer.flash('+'\'EPSG:4326\',' + res[i].x + ',' + res[i].y + ');"> ' +
-                            res[i].fulltext + '</a>';
+                            str += `<a class="geoportail list-group-item" href="#" onclick="
+                                mviewer.zoomToLocation(${res[i].x}, ${res[i].y}, ${zoom}, ${_searchparams.querymaponclick});
+                                mviewer.showLocation('EPSG:4326',${res[i].x}, ${res[i].y})>
+                                ${res[i].fulltext}
+                            </a>`;
                         }
                         $(".geoportail").remove()
                         if (res.length > 0) {
@@ -267,11 +283,13 @@ var search = (function () {
                     data: parameters,
                     dataType: "json",
                     success: function (data) {
-                        var zoo = 0;
+                        var zoom = 0;
                         var res = data.features;
                         var str = '<a class="geoportail list-group-item disabled">Localités</a>';
                         for (var i = 0, len = res.length; i < len && i < 5; i++) {
-                            switch(res[i].properties.type) {
+                            var props = res[i].properties;
+                            var geom = res[i].geometry;
+                            switch(props.type) {
                                 case 'city':
                                     zoom = 13;
                                     break;
@@ -290,11 +308,16 @@ var search = (function () {
                                 default:
                                     zoom = 14;
                             }
-                            str += '<a class="geoportail list-group-item" href="#" title="' +
-                            res[i].properties.context+' - ' + res[i].properties.type +
-                            '" onclick="mviewer.zoomToLocation('+
-                            res[i].geometry.coordinates[0] + ',' +
-                            res[i].geometry.coordinates[1] + ',' + zoom + ',' + _searchparams.querymaponclick +');">' + res[i].properties.label + '</a>';
+                            str += `<a class="geoportail list-group-item" href="#" title="${props.context} - ${props.type}"
+                                onclick="mviewer.zoomToLocation(
+                                    ${geom.coordinates[0]}, 
+                                    ${geom.coordinates[1]}, 
+                                    ${zoom}, 
+                                    ${_searchparams.querymaponclick}
+                                );
+                                mviewer.showLocation('EPSG:4326', ${geom.coordinates[0]}, ${geom.coordinates[1]});">
+                                ${props.label}
+                            </a>`;
                         }
                         $(".geoportail").remove();
                         _showResults(str);
@@ -352,9 +375,7 @@ var search = (function () {
     var _sendFuseRequest = function (val) {
         $(".fuse").remove();
 
-        var searchableLayers =  $.grep( _searchableFuseLayers, function( l, i ) {
-            return l.getVisible();
-        });
+        var searchableLayers = _searchableFuseLayers.filter(e => e.getVisible() && _fuseSearchData[e.get('mviewerid')]);
 
         for (var i = 0; i < searchableLayers.length; i++) {
 
@@ -584,6 +605,7 @@ var search = (function () {
         oLayer.searchengine = (params.searchengine) ? params.searchengine : 'elasticsearch';
         oLayer.fusesearchkeys = (params.fusesearchkeys) ? params.fusesearchkeys : '';
         oLayer.fusesearchresult = (params.fusesearchresult) ? params.fusesearchresult : '';
+        oLayer.fusesearchthresold = (params.fusesearchthresold) ? params.fusesearchthreshold : '';
         return oLayer;
     };
 
@@ -596,14 +618,13 @@ var search = (function () {
                 }
                 var options = {
                     shouldSort: true,
-                    threshold: 0.3,
+                    threshold: parseFloat(oLayer.fusesearchthreshold) || 0.3,
                     location: 0,
                     distance: 100,
                     maxPatternLength: 32,
                     minMatchCharLength: 2,
                     keys: oLayer.fusesearchkeys.split(',')
                 };
-
 
                 var layerSource = l.getSource();
                 if (l.getSource().source) {/* clusters */
@@ -653,6 +674,7 @@ var search = (function () {
         _sourceOverlay = mviewer.getSourceOverlay();
         _projection = mviewer.getProjection();
         _overLayers = mviewer.getLayers();
+        var sparams = configuration.searchparameters || false;
         if (configuration.olscompletion) {
             _olsCompletionUrl = configuration.olscompletion.url;
             $("#adresse-attribution").text(configuration.olscompletion.attribution);
@@ -671,15 +693,16 @@ var search = (function () {
         if (!_olsCompletionUrl)  {
             _searchparams.localities = false;
         }
-        if (configuration.searchparameters && configuration.searchparameters.bbox &&
-            configuration.searchparameters.localities && configuration.searchparameters.features) {
-            _searchparams.bbox = (configuration.searchparameters.bbox === "true");
-            _searchparams.localities = (configuration.searchparameters.localities === "true");
-            _searchparams.features = (configuration.searchparameters.features === "true");
-            _searchparams.static = (configuration.searchparameters.static === "true");
-            _searchparams.querymaponclick = (configuration.searchparameters.querymaponclick === "true");
-            _searchparams.closeafterclick = (configuration.searchparameters.closeafterclick === "true");
+        if (sparams && sparams.bbox &&
+            sparams.localities && sparams.features) {
+            _searchparams.bbox = (sparams.bbox === "true");
+            _searchparams.localities = (sparams.localities === "true");
+            _searchparams.features = (sparams.features === "true");
+            _searchparams.static = (sparams.static === "true");
+            _searchparams.querymaponclick = (sparams.querymaponclick === "true");
+            _searchparams.closeafterclick = (sparams.closeafterclick === "true");
         }
+
         if (_searchparams.localities===false && _searchparams.features===false) {
             $("#searchtool").remove();
         }
@@ -700,7 +723,7 @@ var search = (function () {
         if (_searchparams.features === false) {
             $('#searchparameters .searchfeatures').remove('.searchfeatures');
         }
-        if (configuration.searchparameters && configuration.searchparameters.inputlabel) {
+        if (sparams.inputlabel) {
             var label = configuration.searchparameters.inputlabel;
             $("#searchfield").attr("placeholder", label).attr("title", label);
         }
@@ -776,7 +799,8 @@ var search = (function () {
         showFeature: _showFeature,
         zoomToFeature: _zoomToFeature,
         clear: _clear,
-        clearSearchField: _clearSearchField
+        clearSearchField: _clearSearchField,
+        initSearchMarker: _initSearchMarker
     };
 
 })();

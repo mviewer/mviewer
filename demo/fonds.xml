@@ -3,44 +3,44 @@
     <application title="Démo Fonds de plan" logo="" help="demo/demo_fonds_help.html" showhelp="true" exportpng="true" style="css/themes/green.css" geoloc="true"/>
     <mapoptions maxzoom="18" projection="EPSG:3857" rotation="true" center="-188398.16546588816,6126752.674427088" zoom="13" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
    	<baselayers style="gallery">
-        <baselayer  type="WMS" id="photo2" label="Photo aérienne 1950" title="GéoBretagne" thumbgallery="img/basemap/ortho-ancien.jpg" 
-			url="http://tile.geobretagne.fr/gwc02/service/wms" layers="satellite-ancien" format="image/jpeg" visible="false" 
-			attribution="&lt;a href='http://applications.region-bretagne.fr/geosource/apps/search/?uuid=048622c5-b333-4c2b-94ec-40a41608dc06' target='_blank' >Partenaires GéoBretagne - IGN&lt;/a>"/>      
+        <baselayer  type="WMS" id="photo2" label="Photo aérienne 1950" title="GéoBretagne" thumbgallery="img/basemap/ortho-ancien.jpg"
+			url="https://tile.geobretagne.fr/gwc02/service/wms" layers="satellite-ancien" format="image/jpeg" visible="false"
+			attribution="&lt;a href='https://applications.region-bretagne.fr/geosource/apps/search/?uuid=048622c5-b333-4c2b-94ec-40a41608dc06' target='_blank' >Partenaires GéoBretagne - IGN&lt;/a>"/>
         <baselayer  type="fake" id="fake" label="Carroyage" title="Carroyage" thumbgallery="img/basemap/grid.png" visible="false"  />
-        <baselayer  type="OSM" id="osm1" label="OpenStreetMap" title="OpenStreetMap" thumbgallery="img/basemap/osm.png" 
-			url="http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
-			attribution="Données : les contributeurs d'&lt;a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='http://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" visible="false"/>
-        <baselayer  visible="false" type="WMTS" id="ortho_ir" label="Photo aérienne infra rouge"   title="GéoBretagne" thumbgallery="img/basemap/ir.jpg" 
-            url="http://geobretagne.fr/geoserver/gwc/service/wmts"   layers="photo:ir-composite" format="image/jpeg" style="_null" matrixset="EPSG:3857" 
-            fromcapacity="false"   attribution="&lt;a href='https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=434b82a8-8d3c-4d9f-9eb3-0485f1a63eb6' target='_blank' >partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver&lt;/a>" /> 
-        <baselayer type="OSM" id="esriworldimagery" label="Esri world imagery" title="esriworldimagery" thumbgallery="img/basemap/ortho.jpg" 
-            url="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" visible="true" attribution="Esri world imagery"/>        
+        <baselayer  type="OSM" id="osm1" label="OpenStreetMap" title="OpenStreetMap" thumbgallery="img/basemap/osm.png"
+			url="https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+			attribution="Données : les contributeurs d'&lt;a href='https://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='https://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" visible="false"/>
+        <baselayer  visible="false" type="WMTS" id="ortho_ir" label="Photo aérienne infra rouge"   title="GéoBretagne" thumbgallery="img/basemap/ir.jpg"
+            url="https://geobretagne.fr/geoserver/gwc/service/wmts"   layers="photo:ir-composite" format="image/jpeg" style="_null" matrixset="EPSG:3857"
+            fromcapacity="false"   attribution="&lt;a href='https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=434b82a8-8d3c-4d9f-9eb3-0485f1a63eb6' target='_blank' >partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver&lt;/a>" />
+        <baselayer type="OSM" id="esriworldimagery" label="Esri world imagery" title="esriworldimagery" thumbgallery="img/basemap/ortho.jpg"
+            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" visible="true" attribution="Esri world imagery"/>
 
-        <baselayer  type="OSM" id="stamen2" label="Watercolor" title="Stamen Design" thumbgallery="img/basemap/watercolor.jpg" 
-			url="http://{a-c}.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg" maxzoom="20" 
-			visible="false" attribution="Map tiles by  &lt;a href='http://stamen.com/'>Stamen Design &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
-        <baselayer  type="OSM" id="stamen1" label="Toner-lite" title="Stamen Design" thumbgallery="img/basemap/toner-lite.png" 
-			url="http://{a-d}.tile.stamen.com/toner-lite/{z}/{x}/{y}.png" maxzoom="20" 
-			visible="false" attribution="Map tiles by  &lt;a href='http://stamen.com/'>Stamen Design &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
-        <baselayer  type="OSM" id="darkmatter" label="Dark Matter" title="CartoDb" thumbgallery="img/basemap/darkmatter.png" 
-			url="http://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png" maxzoom="20" 
-			visible="false" attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
-        <baselayer  type="OSM" id="positron" label="Positron" title="CartoDb" thumbgallery="img/basemap/positron.png" 
-			url="http://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20" 
-			visible="false" attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="OSM" id="stamen2" label="Watercolor" title="Stamen Design" thumbgallery="img/basemap/watercolor.jpg"
+			url="https://{a-c}.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg" maxzoom="20"
+			visible="false" attribution="Map tiles by  &lt;a href='https://stamen.com/'>Stamen Design &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="OSM" id="stamen1" label="Toner-lite" title="Stamen Design" thumbgallery="img/basemap/toner-lite.png"
+			url="https://{a-d}.tile.stamen.com/toner-lite/{z}/{x}/{y}.png" maxzoom="20"
+			visible="false" attribution="Map tiles by  &lt;a href='https://stamen.com/'>Stamen Design &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="OSM" id="darkmatter" label="Dark Matter" title="CartoDb" thumbgallery="img/basemap/darkmatter.png"
+			url="https://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png" maxzoom="20"
+			visible="false" attribution="Map tiles by  &lt;a href='https://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="OSM" id="positron" label="Positron" title="CartoDb" thumbgallery="img/basemap/positron.png"
+			url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20"
+			visible="false" attribution="Map tiles by  &lt;a href='https://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
     </baselayers>
     <proxy url=""/>
-    <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban" attribution="La recherche d'adresse est un service proposé par la BAN"/>   
+    <olscompletion url="https://api-adresse.data.gouv.fr/search/" type="ban" attribution="La recherche d'adresse est un service proposé par la BAN"/>
     <themes mini="true">
         <theme name="Formation"  id="formation" collapsed="true" icon="fas fa-graduation-cap">
             <layer id="lycee" name="Lycée" visible="true" tiled="false"
-				queryable="true" 
+				queryable="true"
                 infoformat="text/html" featurecount="1"
-				style="" 
-				url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
-				attribution="Région Bretagne" 
-				metadata="http://kartenn.region-bretagne.fr/geonetwork/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25"
-                metadata-csw="http://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25" />	   
+				style=""
+				url="https://ows.region-bretagne.fr/geoserver/rb/wms"
+				attribution="Région Bretagne"
+				metadata="https://kartenn.region-bretagne.fr/geonetwork/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25"
+                metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25" />
 		</theme>
     </themes>
 </config>

@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<config>    
+<config>
     <application title="Démo Filtres attributaires" logo="img/logo/g.png" help="" showhelp="false" exportpng="false" style="css/themes/pink.css"/>
     <mapoptions maxzoom="20" projection="EPSG:3857" center="-458775,6105725" zoom="11" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
-   	<baselayers style="default"> 
-        <baselayer visible="true" id="positron" thumbgallery="img/basemap/positron.png" title="CartoDb" label="Positron" type="OSM" url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution="Map tiles by  &lt;a href=&quot;https://cartodb.com/attributions&quot;&gt;CartoDb&lt;/a&gt;, under  &lt;a href=&quot;https://creativecommons.org/licenses/by/3.0/&quot;&gt;CC BY 3.0 &lt;/a&gt;"  ></baselayer> 
-        <baselayer visible="false" id="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg" title="Esri world imagery" label="Esri world imagery" type="OSM" url="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"  ></baselayer> 
+   	<baselayers style="default">
+        <baselayer visible="true" id="positron" thumbgallery="img/basemap/positron.png" title="CartoDb" label="Positron" type="OSM" url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution="Map tiles by  &lt;a href=&quot;https://cartodb.com/attributions&quot;&gt;CartoDb&lt;/a&gt;, under  &lt;a href=&quot;https://creativecommons.org/licenses/by/3.0/&quot;&gt;CC BY 3.0 &lt;/a&gt;"  ></baselayer>
+        <baselayer visible="false" id="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg" title="Esri world imagery" label="Esri world imagery" type="OSM" url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"  ></baselayer>
     </baselayers>
-    <proxy url=""/> 
-    <searchparameters localities="false"/>   
-    <themes mini="false"> 
+    <proxy url=""/>
+    <searchparameters localities="false"/>
+    <themes mini="false">
         <theme name="Filtres attributaires"   id="rando" icon="fas fa-blind" collapsed="false">
             <layer id="etude_patrimoine_simple" name="Patrimoine" visible="true" tiled="false" expanded="true"
                 queryable="true"
-                infoformat="application/vnd.ogc.gml" featurecount="50" legendurl="http://kartenn.region-bretagne.fr/img/legend/chateaux_19e.png"                
+                infoformat="application/vnd.ogc.gml" featurecount="50" legendurl="https://kartenn.region-bretagne.fr/img/legend/chateaux_19e.png"
                 attributefilter="true" attributefield="affixe_cadre_etude" attributevalues="Inventaire des manoirs de Quimper,châteaux du 19e siècle en Bretagne,patrimoine des sports"  attributelabel="Thématique (filtre like)" attributestylesync="false" attributefilterenabled="true" attributeoperator="like"
-                url="http://ows.region-bretagne.fr/geoserver/rb/wms" 
-                attribution="Service de l'inventaire : &lt;a href='http://patrimoine.bzh/' target='_blank'>patrimoine.bzh &lt;/a>" 
-                metadata="http://patrimoine.bzh/gertrude-diffusion/dossier/1ca99a3b-810d-40d4-9df4-c2fbd81fdaaf"
+                url="https://ows.region-bretagne.fr/geoserver/rb/wms"
+                attribution="Service de l'inventaire : &lt;a href='https://patrimoine.bzh/' target='_blank'>patrimoine.bzh &lt;/a>"
+                metadata="https://patrimoine.bzh/gertrude-diffusion/dossier/1ca99a3b-810d-40d4-9df4-c2fbd81fdaaf"
                 metadata-csw="" >
                 <template url="apps/region/patrimoine/templates/patrimoine.etude_patrimoine_architecture.mst"></template>
-			</layer>					
+			</layer>
 		</theme>
     </themes>
 </config>

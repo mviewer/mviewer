@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config mviewerstudioversion="3.1">
+<metadata>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<rdf:Description rdf:about="http://www.ilrt.bristol.ac.uk/people/cmdjb/">
+<dc:title>Démo vector CAD</dc:title>
+<dc:creator>anonymous</dc:creator>
+<dc:publisher>anonymous</dc:publisher>
+
+<dc:date>2020-04-17T06:39:19.600Z</dc:date>
+</rdf:Description>
+</rdf:RDF>
+</metadata>
+<application
+    title="Démo Cadastre"
+    logo=""
+    help=""
+    style="css/themes/default.css"
+    exportpng="false"
+    showhelp="false"
+    coordinates="false"
+    measuretools="false"
+    togglealllayersfromtheme="false">
+</application>
+<extensions>
+    <!--<extension type="javascript" src="demo/cad/external/html5kellycolorpicker.min.js" />-->
+    <extension type="javascript" src="demo/cad/external/piklor.js" usededby="cad.js"/>
+</extensions>
+<mapoptions maxzoom="20" projection="EPSG:3857" center="-307903.74898791354,6141345.088741366" zoom="9" />
+
+<searchparameters bbox="false" localities="false" features="false" static="false"/>
+<baselayers style="default">
+    <baselayer visible="true" id="positron" thumbgallery="img/basemap/positron.png" title="CartoDb" label="Positron" type="OSM" url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution="Map tiles by  &lt;a href=&quot;https://cartodb.com/attributions&quot;&gt;CartoDb&lt;/a&gt;, under  &lt;a href=&quot;https://creativecommons.org/licenses/by/3.0/&quot;&gt;CC BY 3.0 &lt;/a&gt;"  ></baselayer>
+    <baselayer visible="false" id="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg" title="Esri world imagery" label="Esri world imagery" type="OSM" url="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"  ></baselayer>
+</baselayers>
+<themes mini="true" legendmini="true">
+<theme name="Outils"  collapsed="true" id="profile" icon="fas fa-chart-area">
+    <layer id="cad" name="Sélection parcellaire" visible="true" queryable="true"
+        type="customlayer" opacity="0.8" legendurl="img/blank.gif"
+        url="demo/cad/layer.js"
+        customcontrol="true"
+        customcontrolpath="demo/cad/control"
+        expanded="true"
+        fields="geo_parcelle"
+        tooltip="true"
+        tooltipenabled="true"
+        tooltipcontent="Parcelle n° {{label}}"
+        attribution="Source: GéoBretagne. Sélectionnez la section cadastrale souhaitée en précisant le département, la commune et la section"
+        nohighlight="false"
+        metadata=""
+        metadata-csw="">
+    </layer>
+     <layer id="cad2" name="Cadastre complet" visible="true" queryable="false"
+        type="customlayer" opacity="0.8" legendurl="img/blank.gif"
+        url="demo/cad/layer2.js"
+        attribution="Source: DGFIP. Cette couche affiche le cadastre de la commune sélectionnée dans le panneau &lt;strong&gt;Sélection parcellaire&lt;/strong&gt;"
+        metadata=""
+        metadata-csw="">
+    </layer>
+</theme>
+</themes>
+</config>

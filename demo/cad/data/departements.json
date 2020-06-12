@@ -1,0 +1,28 @@
+{
+    "departements": [{
+            "properties": {
+                "value": "22",
+                "label": "Côtes d'Armor"
+            }
+        },
+        {
+            "properties": {
+                "value": "29",
+                "label": "Finistère"
+            }
+        },
+        {
+            "properties": {
+                "value": "35",
+                "label": "Ille et Vilaine"
+            }
+        },
+        {
+            "properties": {
+                "value": "56",
+                "label": "Morbihan"
+            }
+        }
+    ]
+
+}

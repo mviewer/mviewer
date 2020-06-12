@@ -9,8 +9,8 @@ var configuration = (function () {
 
     // Mviewer version a saisir manuellement
 
-    var VERSION = "3.2.1";
- 
+    var VERSION = "3.3";
+
     var _showhelp_startup = false;
 
     var _defaultBaseLayer = "";

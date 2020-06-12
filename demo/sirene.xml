@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<config>    
+<config>
     <application title="Démo SIRENE" logo="" help="demo/demo_sirene_help.html" showhelp="false" exportpng="false" style="css/themes/black.css"/>
     <mapoptions maxzoom="20" projection="EPSG:3857" center="-200208,6132036" zoom="14" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
    	<baselayers style="default">
-        <baselayer  type="OSM" id="positron" label="Positron" title="CartoDb" thumbgallery="img/basemap/positron.png" 
-			url="http://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20" 
-			visible="true" attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
-        <baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoBretagne" thumbgallery="img/basemap/ortho.jpg" 
-            url="http://tile.geobretagne.fr/gwc02/service/wmts" layers="satellite" format="image/png" visible="false" 
-            attribution="&lt;a href='http://applications.region-bretagne.fr/geonetwork/?uuid=3a0ac2e3-7af1-4dec-9f36-dae6b5a8c731' target='_blank' >partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver&lt;/a>" style="_null" matrixset="EPSG:3857" fromcapacity="false"/>
-        <baselayer  type="WMS" id="photo2" label="Photo aérienne 1950" title="GéoBretagne" thumbgallery="img/basemap/ortho-ancien.jpg" 
-			url="http://geobretagne.fr/geoserver/photo/wms" layers="satellite-ancien" format="image/jpeg" visible="false" 
-			attribution="&lt;a href='http://applications.region-bretagne.fr/geonetwork/?uuid=048622c5-b333-4c2b-94ec-40a41608dc06' target='_blank' >Partenaires GéoBretagne - IGN&lt;/a>"/>        
-    </baselayers> 
-    <proxy url=""/> 
-    <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban" attribution="La recherche d'adresse est un service proposé par l'API adresse.data.gouv.fr"/>
-    <themes mini="false"> 
-        <theme name="Base SIRENE"   id="sirene" icon="fas fa-barcode" collapsed="false">		
-            <layer id="sirene_bretagne" name="Base SIRENE"  visible="true" tiled="false"                    
+        <baselayer  type="OSM" id="positron" label="Positron" title="CartoDb" thumbgallery="img/basemap/positron.png"
+			url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20"
+			visible="true" attribution="Map tiles by  &lt;a href='https://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoBretagne" thumbgallery="img/basemap/ortho.jpg"
+            url="https://tile.geobretagne.fr/gwc02/service/wmts" layers="satellite" format="image/png" visible="false"
+            attribution="&lt;a href='https://applications.region-bretagne.fr/geonetwork/?uuid=3a0ac2e3-7af1-4dec-9f36-dae6b5a8c731' target='_blank' >partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver&lt;/a>" style="_null" matrixset="EPSG:3857" fromcapacity="false"/>
+        <baselayer  type="WMS" id="photo2" label="Photo aérienne 1950" title="GéoBretagne" thumbgallery="img/basemap/ortho-ancien.jpg"
+			url="https://geobretagne.fr/geoserver/photo/wms" layers="satellite-ancien" format="image/jpeg" visible="false"
+			attribution="&lt;a href='https://applications.region-bretagne.fr/geonetwork/?uuid=048622c5-b333-4c2b-94ec-40a41608dc06' target='_blank' >Partenaires GéoBretagne - IGN&lt;/a>"/>
+    </baselayers>
+    <proxy url=""/>
+    <olscompletion url="https://api-adresse.data.gouv.fr/search/" type="ban" attribution="La recherche d'adresse est un service proposé par l'API adresse.data.gouv.fr"/>
+    <themes mini="false">
+        <theme name="Base SIRENE"   id="sirene" icon="fas fa-barcode" collapsed="false">
+            <layer id="sirene_bretagne" name="Base SIRENE"  visible="true" tiled="false"
                     queryable="true" fields="" aliases=""
                     expanded="true"
-                    infoformat="application/vnd.ogc.gml" featurecount="10"                      
-                    style="sirene_tefet,sirene_porcheries,sirene_fastfood,sirene_debitsboisson" 
-                    stylesalias="Nombre de salariés,Porcheries,Restauration,Débits de boisson"                    
-                    opacity="1"                     
-                    url="http://ows.region-bretagne.fr/geoserver/rb/wms"
-                    attribution="Région Bretagne" 
+                    infoformat="application/vnd.ogc.gml" featurecount="10"
+                    style="sirene_tefet,sirene_porcheries,sirene_fastfood,sirene_debitsboisson"
+                    stylesalias="Nombre de salariés,Porcheries,Restauration,Débits de boisson"
+                    opacity="1"
+                    url="https://ows.region-bretagne.fr/geoserver/rb/wms"
+                    attribution="Région Bretagne"
                     metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=6bf9d921-b8eb-4e5f-bbb5-546f7c40dab3"
                     metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=6bf9d921-b8eb-4e5f-bbb5-546f7c40dab3" >
                     <template url="templates/demo.sirene.mst"></template>
             </layer>
-            <layer id="sirene" name="Carte de chaleur des débits de boisson" visible="false" 
-				queryable="false"         
+            <layer id="sirene" name="Carte de chaleur des débits de boisson" visible="false"
+				queryable="false"
                 type="customlayer"
                 url="customlayers/sirene.js"
-                legendurl="img/legend/heatmap.png" 				 
-				attribution="GéoBretagne" 
+                legendurl="img/legend/heatmap.png"
+				attribution="GéoBretagne"
 				metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=6bf9d921-b8eb-4e5f-bbb5-546f7c40dab3"
                 metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=6bf9d921-b8eb-4e5f-bbb5-546f7c40dab3" >
-           </layer>     
-       </theme>        
+           </layer>
+       </theme>
    </themes>
 </config>

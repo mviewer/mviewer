@@ -1565,7 +1565,7 @@ ul#basemapslist p {
 }
 
 /* Map-pins */
-#els_marker path {
+#mv_marker path {
   fill: #ee4b4b;
 }
 
