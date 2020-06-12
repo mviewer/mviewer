@@ -42,6 +42,8 @@
         customcontrolpath="demo/cad/control"
         expanded="true"
         fields="geo_parcelle"
+        tooltip="true"
+        tooltipenabled="true"
         tooltipcontent="Parcelle n° {{label}}"
         attribution="Source: GéoBretagne. Sélectionnez la section cadastrale souhaitée en précisant le département, la commune et la section"
         nohighlight="false"
