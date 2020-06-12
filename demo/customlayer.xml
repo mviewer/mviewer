@@ -14,21 +14,21 @@
 <mapoptions maxzoom="18" projection="EPSG:3857" center="-324758.482762259,6050184.623044413" zoom="15" />
 <olscompletion type="ban" url="https://api-adresse.data.gouv.fr/search/" attribution="" />
 <searchparameters bbox="false" localities="true" features="false" static="false"/>
-<baselayers style="default"> 
-    <baselayer visible="false" id="positron" thumbgallery="img/basemap/positron.png" title="CartoDb" label="Positron" type="OSM" url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution="Map tiles by  &lt;a href=&quot;https://cartodb.com/attributions&quot;&gt;CartoDb&lt;/a&gt;, under  &lt;a href=&quot;https://creativecommons.org/licenses/by/3.0/&quot;&gt;CC BY 3.0 &lt;/a&gt;"  ></baselayer> 
-    <baselayer visible="true" id="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg" title="Esri world imagery" label="Esri world imagery" type="OSM" url="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"  ></baselayer> 
+<baselayers style="default">
+    <baselayer visible="false" id="positron" thumbgallery="img/basemap/positron.png" title="CartoDb" label="Positron" type="OSM" url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution="Map tiles by  &lt;a href=&quot;https://cartodb.com/attributions&quot;&gt;CartoDb&lt;/a&gt;, under  &lt;a href=&quot;https://creativecommons.org/licenses/by/3.0/&quot;&gt;CC BY 3.0 &lt;/a&gt;"  ></baselayer>
+    <baselayer visible="true" id="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg" title="Esri world imagery" label="Esri world imagery" type="OSM" url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"  ></baselayer>
 </baselayers>
-<themes mini="false">    	
-    <theme name="Morbihan"  collapsed="false" id="ocs56" icon="far fa-file-alt"> 
+<themes mini="false">
+    <theme name="Morbihan"  collapsed="false" id="ocs56" icon="far fa-file-alt">
         <layer id="ocs56" name="Couverture" visible="true" queryable="true"
             type="customlayer" opacity="0.5" legendurl="img/blank.gif"
             url="customlayers/ocs56.js"
             customcontrol="true"
             expanded="true"
             tooltip="true" tooltipenabled="true" tooltipcontent="{{label}} "
-            attribution="Source: Mégalis" 
-            metadata="" 
-            metadata-csw="">            
+            attribution="Source: Mégalis"
+            metadata=""
+            metadata-csw="">
         </layer>
     </theme>
 </themes>
