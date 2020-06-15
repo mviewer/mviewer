@@ -93,7 +93,11 @@
         "csv.srs.select": "Sélectionner",
         "csv.srs.data": "Extrait des données",
         "csv.upload.dropzone": "Glisser un fichier CSV ici ou clic pour sélectionner un fichier...",
-        "csv.upload.processing": "Traitement en cours"
+        "csv.upload.processing": "Traitement en cours",
+        "csv.alert.coordinates": "Veuillez choisir deux champs de coordonnées s'il vous plaît",
+        "csv.alert.filereader": "Erreur de lecture de fichier",
+        "csv.alert.geocoding": "Problème avec le géocodage",
+        "csv.alert.fileloading": "Problème avec la récupération du fichier csv"
     },
     "en": {
         "legend.title": "Display/hide the legend",
@@ -188,6 +192,10 @@
         "csv.srs.select": "Select",
         "csv.srs.data": "Data extract",
         "csv.upload.dropzone": "Drop a CSV file here or clic to select a file...",
-        "csv.upload.processing": "Processing..."
+        "csv.upload.processing": "Processing...",
+        "csv.alert.coordinates": "Please choose two fields as coordinates",
+        "csv.alert.filereader": "Error reading file",
+        "csv.alert.geocoding": "Geocoding error",
+        "csv.alert.fileloading": "Error loading file"
     }
 } 

@@ -229,14 +229,9 @@ var csv = (function () {
                     $(".mv-layer-details[data-layerid='"+ idlayer +"']").data("data-layerid", title);
                     
                     if ($("#collapseZero").hasClass("in") !== false) {
-                        if ($("#srs-select").val()) {
-                            oLayer.xfield = $("#x-select").val();
-                            oLayer.yfield = $("#y-select").val();
-                            _mapCSV(evt.target.result, oLayer, oLayer.layer, $("#srs-select").val());
-                        } else {
-                            alert("Veuillez choisir une projection s'il vous plaît")
-                            return true;
-                        }
+                        oLayer.xfield = $("#x-select").val();
+                        oLayer.yfield = $("#y-select").val();
+                        _mapCSV(evt.target.result, oLayer, oLayer.layer, $("#srs-select").val());
                     } else {
                         // geocode file
                         _geocode(evt.target.result,oLayer, oLayer.layer);
@@ -248,7 +243,9 @@ var csv = (function () {
                 });
             }
             reader.onerror = function (evt) {
-                alert("error reading file");
+                alert(mviewer.lang
+                    ? mviewer.lang[mviewer.lang.lang]("csv.alert.filereader")
+                    : "Erreur de lecture de fichier");
             }
         }
     };
@@ -325,7 +322,9 @@ var csv = (function () {
                 })
 
             } else {
-                alert("Veuillez choisir deux champs de coordonnées s'il vous plaît")
+                alert(mviewer.lang
+                    ? mviewer.lang[mviewer.lang.lang]("csv.alert.coordinates")
+                    : "Veuillez choisir deux champs de coordonnées s'il vous plaît");
             }
         });
         $("#choose-fields").on("click", function (e) {
@@ -357,7 +356,10 @@ var csv = (function () {
                         _mapCSV(data, oLayer, l)
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
-                        mviewer.alert("Problème avec le géocodage" +  thrownError, "alert-warning");
+                        var alertText = mviewer.lang
+                            ? mviewer.lang[mviewer.lang.lang]("csv.alert.geocoding")
+                            : "Problème avec le géocodage"
+                        mviewer.alert(alertText +  thrownError, "alert-warning");
                         $("#csv-status").attr("class", "start");
                     }
                 });
@@ -409,7 +411,10 @@ var csv = (function () {
                     _geocode(data, oLayer, l);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    mviewer.alert("Problème avec la récupération du fichier csv" +  thrownError, "alert-warning");
+                    var alertText = mviewer.lang
+                        ? mviewer.lang[mviewer.lang.lang]("csv.alert.fileloading")
+                        : "Problème avec la récupération du fichier csv"
+                    mviewer.alert(alertText +  thrownError, "alert-warning");
                 }
             });
         }
