@@ -11,141 +11,147 @@
 
 var csv = (function () {
 
-    var _wizard_modal = [
-      '<div id="geocoding-modal" class="modal fade" tabindex="-1" role="dialog" >',
-        '<div class="modal-dialog modal-md">',
-        '<div class="modal-content" role="document">',
-        '<div class="modal-header">',
-           '<button type="button" class="close" data-dismiss="modal">&times;</button>',
-           '<h4 class="modal-title">Options de géocodage</h4>',
-        '</div>',
-        '<div class="modal-body" >',
-          '<div class="form-group">',
-            '<label for="email">Titre de la donnée:</label>',
-            '<h3><input type="text" class="csv-name form-control"><h3>',
-          '</div>',
-           '<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">',
-            '<div class="panel panel-default">',
-                '<div class="panel-heading" role="tab" id="headingZero">',
-                    '<h4 class="panel-title">',
-                        '<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseZero" aria-expanded="true" aria-controls="collapseZero">',
-                        '<b>Sélectionner les champs</b> x, y à utiliser comme coordonnées',
-                        '</a>',
-                    '</h4>',
-                '</div>',
-                '<div id="collapseZero" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingZero">',
-                    '<div id="coord-field-list">',
-                        '<div class="panel-body">',
-                            '<div>',
-                                '<div class="geocoding csv-fields list-group"/>',
-                                '</div>',
-                                '<div>',
-                                    '<button id="choose-projection" type="button" data-layerid="" class="geocode btn btn-primary pull-right">Choisir une projection</button>',
-                                '</div>',
-                            '</div>',
-                        '</div>',
-                    '</div>',
-                    '<div id="coord-srs-dialog">',
-                        '<div class="panel-body">',
-                            '<table class="table">',
-                                '<thead>',
-                                '<tr>',
-                                    '<th scope="col"></th>',
-                                    '<th scope="col">X (longitude)</th>',
-                                    '<th scope="col">Y (latitude)</th>',
-                                    '<th scope="col">Projection (SRS)</th>',
-                                '</tr>',
-                                '</thead>',
-                                '<tbody>',
-                                '<tr>',
-                                    '<th scope="row">Sélectionner</th>',
-                                    '<td>',
-                                        '<select id="x-select" class="form-control"></select>',
-                                    '</td>',
-                                    '<td>',
-                                        '<select id="y-select" class="form-control"></select>',
-                                    '</td>',
-                                    '<td>',
-                                        '<select id="srs-select" class="form-control"></select>',
-                                    '</td>',
-                                '</tr>',
-                                '<tr>',
-                                    '<th scope="row">Extrait des données</th>',
-                                    '<td id="x-data"></td>',
-                                    '<td id="y-data"></td>',
-                                    '<td></td>',
-                                '</tr>',
-                                '</tbody>',
-                            '</table>',
-                            '<div>',
-                                '<button id="choose-fields" type="button" data-layerid="" class="geocode btn btn-primary pull-right">Retour</button>',
-                            '</div>',
-                        '</div>',
-                    '</div>',
-                '</div>',
-              '<div class="panel panel-default">',
-                 '<div class="panel-heading" role="tab" id="headingOne">',
-                    '<h4 class="panel-title">',
-                       '<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">',
-                       '<b>Ou</b> sélectionner les champs à utiliser pour le géocodage (adresse)',
-                       '</a>',
-                    '</h4>',
-                 '</div>',
-                 '<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">',
-                    '<div class="panel-body">',
-                       '<div class="geocoding csv-fields list-group"/>',
-                       '</div>',
-                    '</div>',
-                 '</div>',
-                 '<div class="panel panel-default">',
-                    '<div class="panel-heading" role="tab" id="headingTwo">',
-                       '<h4 class="panel-title">',
-                          '<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">',
-                          '<b>Ou</b> sélectionner le champ à utiliser pour le géocodage (insee)',
-                          '</a>',
-                       '</h4>',
-                    '</div>',
-                    '<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">',
-                       '<div class="panel-body">',
-                          '<div class="insee csv-fields list-group"/>',
-                          '</div>',
-                       '</div>',
-                    '</div>',
-                    '<div class="panel panel-default">',
-                       '<div class="panel-heading" role="tab" id="headingThree">',
-                          '<h4 class="panel-title">',
-                             '<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">',
-                             '<b>En option</b> sélectionner les champ à utiliser pour la recherche',
-                             '</a>',
-                          '</h4>',
-                       '</div>',
-                       '<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">',
-                          '<div class="panel-body">',
-                             '<div class="search csv-fields list-group"/>',
-                             '</div>',
-                          '</div>',
-                       '</div>',
-                    '</div>',
-                 '</div>',
-                 '<div class="modal-footer">',
-                    '<button id="submit-button" type="button" data-layerid="" onclick="csv.geocodeit(this);" class="geocode btn btn-primary">Afficher</button>',
-                 '</div>',
-              '</div>',
-           '</div>',
-        '</div>'
-    ]. join("");
+    var _wizard_modal =
+      `<div id="geocoding-modal" class="modal fade" tabindex="-1" role="dialog" >
+        <div class="modal-dialog modal-md">
+        <div class="modal-content" role="document">
+        <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal">&times;</button>
+           <h4 class="modal-title" i18n="csv.modal.title">Options d'import</h4>
+        </div>
+        <div class="modal-body" >
+          <div class="form-group">
+            <label for="email" i18n="csv.data.title">Titre de la donnée:</label>
+            <h3><input type="text" class="csv-name form-control"><h3>
+          </div>
+           <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingZero">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseZero" 
+                            aria-expanded="true" aria-controls="collapseZero" i18n="csv.select.coordinates">
+                        <b>Sélectionner les champs</b> x, y à utiliser comme coordonnées
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseZero" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingZero">
+                    <div id="coord-field-list">
+                        <div class="panel-body">
+                            <div>
+                                <div class="geocoding csv-fields list-group"/>
+                                </div>
+                                <div>
+                                    <button id="choose-projection" type="button" data-layerid="" class="geocode btn btn-primary pull-right"
+                                        i18n="csv.button.projection">Choisir une projection</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="coord-srs-dialog">
+                        <div class="panel-body">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col" i18n="csv.srs.lon">X (longitude)</th>
+                                    <th scope="col" i18n="csv.srs.lat">Y (latitude)</th>
+                                    <th scope="col" i18n="csv.srs.projection">Projection (SRS)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row" i18n="csv.srs.select">Sélectionner</th>
+                                    <td>
+                                        <select id="x-select" class="form-control"></select>
+                                    </td>
+                                    <td>
+                                        <select id="y-select" class="form-control"></select>
+                                    </td>
+                                    <td>
+                                        <select id="srs-select" class="form-control"></select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" i18n="csv.srs.data">Extrait des données</th>
+                                    <td id="x-data"></td>
+                                    <td id="y-data"></td>
+                                    <td></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div>
+                                <button id="choose-fields" type="button" data-layerid="" class="geocode btn btn-primary pull-right" i18n="csv.button.back">Retour</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              <div class="panel panel-default">
+                 <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                       <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" 
+                            aria-expanded="false" aria-controls="collapseOne" i18n="csv.select.address">
+                       <b>Ou</b> sélectionner les champs à utiliser pour le géocodage (adresse)
+                       </a>
+                    </h4>
+                 </div>
+                 <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                       <div class="geocoding csv-fields list-group"/>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingTwo">
+                       <h4 class="panel-title">
+                          <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" 
+                                aria-expanded="false" aria-controls="collapseTwo" i18n="csv.select.insee">
+                          <b>Ou</b> sélectionner le champ à utiliser pour le géocodage (insee)
+                          </a>
+                       </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                       <div class="panel-body">
+                          <div class="insee csv-fields list-group"/>
+                          </div>
+                       </div>
+                    </div>
+                    <div class="panel panel-default">
+                       <div class="panel-heading" role="tab" id="headingThree">
+                          <h4 class="panel-title">
+                             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" 
+                                    aria-expanded="false" aria-controls="collapseThree" i18n="csv.select.search">
+                             <b>En option</b> sélectionner les champ à utiliser pour la recherche
+                             </a>
+                          </h4>
+                       </div>
+                       <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                          <div class="panel-body">
+                             <div class="search csv-fields list-group"/>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="modal-footer">
+                    <button id="submit-button" type="button" data-layerid="" onclick="csv.geocodeit(this);" class="geocode btn btn-primary" i18n="csv.button.submit">Importer</button>
+                 </div>
+              </div>
+           </div>
+        </div>`
 
     var _template = function (oLayer) {
 
-        return [
-            '<div class="dropzone dz-clickable" id="drop_zone" onclick="$(\'#loadcsv-'+oLayer.layerid+'\').click();" ondrop="csv.dropHandler(event);" ondragover="csv.dragOverHandler(event);">',
-                '<div id="csv-status" class="start">',
-                    '<div class="dz-default dz-message"><span class="fas fa-cloud-upload-alt fa-3x"></span><p>Glisser un fichier CSV ici<br> ou clic pour sélectionner un fichier...</p></div>',
-                    '<div class="dz-work dz-message"><span class="fas fa-spin fa-cog fa-3x"></span><p>Traitement en cours</p></div>',
-                '</div>',
-            '</div>',
-            '<input type="file" name="filebutton" onchange="csv.loadLocalFile(\''+oLayer.layerid+'\')" style="visibility:hidden;" id="loadcsv-'+oLayer.layerid+'"/>'
-        ].join("");
+        return `<div class="dropzone dz-clickable" id="drop_zone" onclick="$('#loadcsv-${oLayer.layerid}').click();" ondrop="csv.dropHandler(event);" ondragover="csv.dragOverHandler(event);">
+                    <div id="csv-status" class="start">
+                        <div class="dz-default dz-message"><span class="fas fa-cloud-upload-alt fa-3x"></span>
+                            <p i18n="csv.upload.dropzone">Glisser un fichier CSV ici ou clic pour sélectionner un fichier...</p>
+                        </div>
+                        <div class="dz-work dz-message"><span class="fas fa-spin fa-cog fa-3x"></span>
+                            <p i18n="csv.upload.processing">Traitement en cours</p>
+                        </div>
+                    </div>
+                </div>
+                <input type="file" name="filebutton" onchange="csv.loadLocalFile('${oLayer.layerid}')" style="visibility:hidden;" id="loadcsv-${oLayer.layerid}"/>`
     };
 
     // Load local file
