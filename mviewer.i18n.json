@@ -85,8 +85,6 @@
         "csv.select.insee": "Ou sélectionner le champ à utiliser pour le géocodage (insee)",
         "csv.select.search": "En option sélectionner les champ à utiliser pour la recherche",
         "csv.button.submit": "Importer",
-        "csv.button.projection": "Choisir une projection",
-        "csv.button.back": "Retour",
         "csv.srs.lon": "X (longitude)",
         "csv.srs.lat": "Y (latitude)",
         "csv.srs.projection": "Projection (SRS)",
@@ -94,7 +92,6 @@
         "csv.srs.data": "Extrait des données",
         "csv.upload.dropzone": "Glisser un fichier CSV ici ou clic pour sélectionner un fichier...",
         "csv.upload.processing": "Traitement en cours",
-        "csv.alert.coordinates": "Veuillez choisir deux champs de coordonnées s'il vous plaît",
         "csv.alert.filereader": "Erreur de lecture de fichier",
         "csv.alert.geocoding": "Problème avec le géocodage",
         "csv.alert.fileloading": "Problème avec la récupération du fichier csv"
@@ -184,8 +181,6 @@
         "csv.select.insee": "Or select fields to use for geocoding (by insee)",
         "csv.select.search": "Select fields to use in search (optional)",
         "csv.button.submit": "Import",
-        "csv.button.projection": "Choose a projection",
-        "csv.button.back": "Back",
         "csv.srs.lon": "Easting (longitude)",
         "csv.srs.lat": "Northing (latitude)",
         "csv.srs.projection": "Projection (SRS)",
@@ -193,7 +188,6 @@
         "csv.srs.data": "Data extract",
         "csv.upload.dropzone": "Drop a CSV file here or clic to select a file...",
         "csv.upload.processing": "Processing...",
-        "csv.alert.coordinates": "Please choose two fields as coordinates",
         "csv.alert.filereader": "Error reading file",
         "csv.alert.geocoding": "Geocoding error",
         "csv.alert.fileloading": "Error loading file"

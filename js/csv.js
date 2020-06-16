@@ -35,54 +35,40 @@ var csv = (function () {
                     </h4>
                 </div>
                 <div id="collapseZero" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingZero">
-                    <div id="coord-field-list">
-                        <div class="panel-body">
-                            <div>
-                                <div class="geocoding csv-fields list-group"/>
-                                </div>
-                                <div>
-                                    <button id="choose-projection" type="button" data-layerid="" class="geocode btn btn-primary pull-right"
-                                        i18n="csv.button.projection">Choisir une projection</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="coord-srs-dialog">
-                        <div class="panel-body">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th scope="col"></th>
-                                    <th scope="col" i18n="csv.srs.lon">X (longitude)</th>
-                                    <th scope="col" i18n="csv.srs.lat">Y (latitude)</th>
-                                    <th scope="col" i18n="csv.srs.projection">Projection (SRS)</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <th scope="row" i18n="csv.srs.select">Sélectionner</th>
-                                    <td>
-                                        <select id="x-select" class="form-control"></select>
-                                    </td>
-                                    <td>
-                                        <select id="y-select" class="form-control"></select>
-                                    </td>
-                                    <td>
-                                        <select id="srs-select" class="form-control"></select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" i18n="csv.srs.data">Extrait des données</th>
-                                    <td id="x-data"></td>
-                                    <td id="y-data"></td>
-                                    <td></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <div>
-                                <button id="choose-fields" type="button" data-layerid="" class="geocode btn btn-primary pull-right" i18n="csv.button.back">Retour</button>
-                            </div>
-                        </div>
+                    <div class="panel-body">
+                        <table id="table-csv" class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col" i18n="csv.srs.lon">X (longitude)</th>
+                                <th scope="col"></th>
+                                <th scope="col" i18n="csv.srs.lat">Y (latitude)</th>
+                                <th scope="col" i18n="csv.srs.projection">Projection (SRS)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row" i18n="csv.srs.select">Sélectionner</th>
+                                <td>
+                                    <select id="x-select" class="form-control"></select>
+                                </td>
+                                <td><button id="btn-xy" class="btn glyphicon glyphicon-refresh"></button></td>
+                                <td>
+                                    <select id="y-select" class="form-control"></select>
+                                </td>
+                                <td>
+                                    <select id="srs-select" class="form-control"></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" i18n="csv.srs.data">Extrait des données</th>
+                                <td id="x-data"></td>
+                                <td></td>
+                                <td id="y-data"></td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
               <div class="panel panel-default">
@@ -160,7 +146,7 @@ var csv = (function () {
             file = document.getElementById("loadcsv-" + idlayer).files[0];
         }
         if (file) {
-            $("#geocoding-modal .csv-fields a").remove();
+            _resetForms();
             //remove existing features. Source can be used many times with differnet files
             var _src = mviewer.getLayers()[idlayer].layer.getSource().clear();
             var oLayer = mviewer.getLayers()[idlayer];
@@ -187,8 +173,6 @@ var csv = (function () {
                 $("#geocoding-modal .csv-fields a").click(function() {
                     $(this).toggleClass( "active" );
                 });
-                //Hide and reset srs-dialog
-                _showSrsDialog(false);
                 //Init coordinate tab with data and events
                 _initCoordsTab(tmp, oLayer);
                 //Launch geocoding with custom parameters
@@ -263,73 +247,57 @@ var csv = (function () {
         })
     })];
 
-    var _showSrsDialog = function(show) {
-        if (show) {
-            $("#coord-field-list").hide();
-            $("#coord-srs-dialog").show();            
-        } else {
-            $("#coord-field-list").show();
-            $("#coord-srs-dialog").hide();
-            _resetSrsDialog();
-        }
-    }
-
-    var _resetSrsDialog = function() {
+    var _resetForms = function() {
+        $("#geocoding-modal .csv-fields a").remove();
         $("#x-select option").remove();
         $("#y-select option").remove();
         $("#srs-select option").remove();
     }
 
     var _initCoordsTab = function (tmp, oLayer) {
-        $("#choose-projection").off().on("click", function (e) {
-            var xyFields = [];
-            $("#geocoding-modal .geocoding.csv-fields a.active").each(function(i,f) {
-                xyFields.push(f.textContent);
+        // init xy select options
+        var options = [];
+        tmp.meta.fields.forEach(function(f) {
+            options.push(`<option value="${f}">${f}</option>`);
+        });
+        $("#x-select").append(options.join(" "));
+        $("#y-select").append(options.join(" "));
+        
+        // take last two fields as coords by default
+        $("#x-select").val(tmp.meta.fields[tmp.meta.fields.length-2]);
+        $("#y-select").val(tmp.meta.fields[tmp.meta.fields.length-1]);
+
+        // init and update xy data preview
+        $("#x-data").text(tmp.data[0][$("#x-select").val()]);
+        $("#y-data").text(tmp.data[0][$("#y-select").val()]);
+
+        $("#x-select").change(function(e) {
+            $("#x-data").text(tmp.data[0][e.target.value]);
+        })
+        $("#y-select").change(function(e) {
+            $("#y-data").text(tmp.data[0][e.target.value]);
+        })
+
+        // switch select option values and data preview via button
+        $("#btn-xy").off().on("click", function () {
+            var xToY = $("#x-select").val();
+            $("#x-select").val($("#y-select").val()).trigger("change");
+            $("#y-select").val(xToY).trigger("change");
+        });
+
+        // init srs select option
+        var srs = ["<option value='EPSG:4326'>EPSG:4326</option>"];
+        if (oLayer.projections && oLayer.projections.projection) {
+            oLayer.projections.projection.forEach(function(p) {
+                //register projections
+                proj4.defs(p.proj4js);
+                ol.proj.proj4.register(proj4);
+                //display projections
+                var epsg = p.proj4js.split(",")[0].replace(/['"]+/g,'');
+                srs.push(`<option value="${epsg}">${epsg}</option>`);
             });
-            if (xyFields.length === 2) {
-                _showSrsDialog(true);
-
-                $("#x-select").append(`
-                    <option value="${xyFields[0]}">${xyFields[0]}</option>
-                    <option value="${xyFields[1]}">${xyFields[1]}</option>
-                `);
-                $("#y-select").append(`
-                    <option value="${xyFields[1]}">${xyFields[1]}</option>
-                    <option value="${xyFields[0]}">${xyFields[0]}</option>
-                `);
-
-                var srs = ["<option value='EPSG:4326'>EPSG:4326</option>"];
-                if (oLayer.projections && oLayer.projections.projection) {
-                    oLayer.projections.projection.forEach(function(p) {
-                        //register projections
-                        proj4.defs(p.proj4js);
-                        ol.proj.proj4.register(proj4);
-                        //display projections
-                        var epsg = p.proj4js.split(",")[0].replace(/['"]+/g,'');
-                        srs.push(`<option value="${epsg}">${epsg}</option>`);
-                    });
-                }
-                $("#srs-select").append(srs.join(" "));
-
-                $("#x-data").text(tmp.data[0][xyFields[0]])
-                $("#y-data").text(tmp.data[0][xyFields[1]])
-
-                $("#x-select").change(function(e) {
-                    $("#x-data").text(tmp.data[0][e.target.value])
-                })
-                $("#y-select").change(function(e) {
-                    $("#y-data").text(tmp.data[0][e.target.value])
-                })
-
-            } else {
-                alert(mviewer.lang
-                    ? mviewer.lang[mviewer.lang.lang]("csv.alert.coordinates")
-                    : "Veuillez choisir deux champs de coordonnées s'il vous plaît");
-            }
-        });
-        $("#choose-fields").on("click", function (e) {
-            _showSrsDialog(false);
-        });
+        }
+        $("#srs-select").append(srs.join(" "));
     }
 
     // POST local file and parameters to API geocode service
