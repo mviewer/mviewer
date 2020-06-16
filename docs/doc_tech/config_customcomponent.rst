@@ -56,11 +56,14 @@ Exemple de fichier config.json :
       "html": "component.html",
       "target": "map",
       "options": {
-          "title": "3D"
+          "title": "3D",
+          "position": 0,
       }
     }
 
-Le composant sera alors créé dans une **div** mviewer existante ciblée par le paramètre **target**
+Le composant sera alors créé dans une **div** mviewer existante ciblée par le paramètre **target**.
+Par défaut le composant est ajouté comme dernier noeud enfant du **target** dans le DOM. 
+Le paramètre optionnel **position** permet de changer cette position et ajouter le composant comme enfant **n** du **target**.
 
 extrait de configuration xml :
 
