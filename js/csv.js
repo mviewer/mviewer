@@ -52,7 +52,7 @@ var csv = (function () {
                                 <td>
                                     <select id="x-select" class="form-control"></select>
                                 </td>
-                                <td><button id="btn-xy" class="btn glyphicon glyphicon-refresh"></button></td>
+                                <td><button id="btn-xy" class="btn btn-secondary glyphicon glyphicon-refresh"></button></td>
                                 <td>
                                     <select id="y-select" class="form-control"></select>
                                 </td>
@@ -61,7 +61,7 @@ var csv = (function () {
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row" i18n="csv.srs.data">Extrait des données</th>
+                                <th scope="row" i18n="csv.srs.data">Aperçu</th>
                                 <td id="x-data"></td>
                                 <td></td>
                                 <td id="y-data"></td>
