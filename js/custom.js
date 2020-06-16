@@ -145,11 +145,12 @@ class Component {
           }
           _html.push(html);
           component.innerHTML = _html.join("");
-          if (typeof that.config.position == 'number' 
+          if (that.config.options
+                && typeof that.config.options.position == 'number' 
                 && target.hasChildNodes()
-                && target.childNodes[that.config.position]
+                && target.childNodes[that.config.options.position]
           ) {
-            target.insertBefore(component, target.childNodes[that.config.position]);
+            target.insertBefore(component, target.childNodes[that.config.options.position]);
           } else {
             target.appendChild(component);
           }

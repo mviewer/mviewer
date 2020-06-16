@@ -3,5 +3,7 @@
   "css": "layerfilter.css",
   "html": "layerfilter.html",
   "target": "menu",
-  "position": 0
+  "options": {
+    "position": 0
+  }
 }
