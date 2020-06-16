@@ -4,6 +4,7 @@ const layerfilter = (function() {
   let _clearbutton;
   let _layerfilter = function (e) {
       const term = $("#layerfilter-field").val().toLowerCase().trim();
+      _clearbutton.style.display = term === "" ? "none" : "block";
       $("#menu li").hide().filter(function() {
         // display decision for currently filtered theme, group or layer 
         const occurs = $(this).children("a").text().toLowerCase().trim().indexOf(term) !== -1;
