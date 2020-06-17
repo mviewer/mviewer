@@ -1,7 +1,7 @@
 MVIEWER
 =============
 
-Visualiseur géographique [Kartenn](http://kartenn.region-bretagne.fr/kartoviz/) basé sur OpenLayers 6.3.1 et Bootstrap 3.3.6
+Visualiseur géographique [Kartenn](https://kartenn.region-bretagne.fr/demo/) basé sur OpenLayers 6.3.1 et Bootstrap 3.3.6
 
 Liens utiles :
 * [Site officiel](https://mviewer.netlify.com/)
