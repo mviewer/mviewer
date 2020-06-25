@@ -7,7 +7,7 @@
 Configurer - Principe
 =========================
 
-Le visualiseur cartographique mviewer consomme des données et des services servis par le web (flux OGC WMS/WFS/WMTS, services de géocodage...) La connexion et le paramétrage de ces services se fait dans un fichier de configuration pivot qui permet en outre de personnaliser l'application (titre, logo, feuille de style...).
+Le visualiseur cartographique mviewer consomme des données et des services servis par le web (flux OGC WMS/WFS/WMTS, services de géocodage...). La connexion et le paramétrage de ces services se fait dans un fichier de configuration pivot qui permet en outre de personnaliser l'application (titre, logo, feuille de style...).
 
 Si aucune configuration n'est indiquée dans l'URL, c'est la configuration par défaut qui s'applique ( **apps/default.xml**).
 
@@ -47,10 +47,10 @@ Il est possible d'instancier un mviewer avec des **paramètres** de configuratio
 
 * ``config`` : Fichier de configuration à charger ex: ``mviewer/?config=apps/mon_appli.xml``.
 * ``#`` : Il s'agit d'un raccourci pour appeler une config présente dans le dossier apps. ex: ``mviewer/#mon_appli``.
-* ``theme`` : Theme css à utiliser ex: ?theme=geobretagne pour charger le theme doit être dans css/themes/geobretagne.css.
+* ``theme`` : Thème css à utiliser ex: ``?theme=geobretagne`` pour charger le theme doit être dans css/themes/geobretagne.css.
 * ``wmc`` : liste des contextes OGC WMC (séparés par des virgules) à charger afin d'alimenter le panel de gauche ex : ``mviewer/?wmc=demo/hydro.wmc``
-* ``popup`` : true ou false. Si true, Une popup s'affiche sur la carte afin d'afficher le résultat de l'interrogation de couches.
-* ``lang`` : Langue à utiliser pour l'interface. Passer exemple "?lang=en".
+* ``popup`` : true ou false. Si true, une popup s'affiche sur la carte afin d'afficher le résultat de l'interrogation de couches.
+* ``lang`` : Langue à utiliser pour l'interface. Passer exemple ``?lang=en``.
 * ``mode`` : Mode d'affichage à utiliser (d - default, s - simplifié, u - ultrasimplifié). Le mode simplifié ne dispose pas du panneau des thématiques et le mode ultra simplifié ne dispose pas de la barre de navigation.
 * ``title`` : Titre à utiliser. Seulement exploité en mode défault et simplifié.
 * ``topics`` : Thèmes à filtrer.
