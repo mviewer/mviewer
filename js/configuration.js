@@ -886,8 +886,7 @@ var configuration = (function () {
                             var mapContext = mapCanvas.getContext('2d');
                             Array.prototype.forEach.call(document.querySelectorAll('.ol-layer canvas'), function(canvas) {
                               if (canvas.width > 0) {
-                                var opacity = canvas.parentNode.style.opacity;
-                                mapContext.globalAlpha = opacity === '' ? 1 : Number(opacity);
+                                mapContext.globalAlpha = 1;
                                 var transform = canvas.style.transform;
                                 // Get the transform parameters from the style's transform matrix
                                 var matrix = transform.match(/^matrix\(([^\(]*)\)$/)[1].split(',').map(Number);
