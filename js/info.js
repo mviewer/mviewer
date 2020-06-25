@@ -75,10 +75,18 @@ var info = (function () {
     /**
      * Property: _sourceOverlay
      * @type {ol.source.Vector}
-     * Used to hightlight vector features
+     * Used to hightlight hovered vector features
      */
 
     var _sourceOverlay;
+
+    /**
+     * Property: _sourceSelectOverlay
+     * @type {ol.source.Vector}
+     * Used to hightlight selected vector features
+     */
+
+    var _sourceSelectOverlay;
 
     /**
      * Private Method: _customizeHTML
@@ -120,7 +128,9 @@ var info = (function () {
      *
      */
 
-    var _queryMap = function (evt, options) {
+    var _queryMap = function (evt, options) { 
+        var queriedFeatures = [];
+        var showFallbackPin = false;
         var queryType = "map"; // default behaviour
         var views = {
             "right-panel":{ "panel": "right-panel", "layers": []},
@@ -148,14 +158,15 @@ var info = (function () {
             var format = new ol.format.GeoJSON();
             _map.forEachFeatureAtPixel(pixel, function(feature, layer) {
                 var l = layer.get('mviewerid');
-                if (l && l != 'featureoverlay' && l != 'elasticsearch' ) {
+                if (l && l != 'featureoverlay' && l != 'selectoverlay' && l != 'elasticsearch' ) {
                     var queryable = _overLayers[l].queryable;
                     if (queryable) {
+                        queriedFeatures.push(feature);
                         if (vectorLayers[l] && vectorLayers[l].features) {
-                            vectorLayers[l].features.push({properties: feature.getProperties()});
+                            vectorLayers[l].features.push(feature);
                         } else {
                             vectorLayers[l] = {features:[]};
-                            vectorLayers[l].features.push({properties: feature.getProperties()});
+                            vectorLayers[l].features.push(feature);
                         }
                      }
                 }
@@ -255,6 +266,8 @@ var info = (function () {
                                 && (layerResponse.search('<!--nodatadetect--><!--nodatadetect-->')<0)
                                 && (layerResponse.search('<!--nodatadetect-->\n<!--nodatadetect-->')<0)) {
                                 html = layerResponse;
+                                // no geometry in html
+                                showFallbackPin = true;
                             }
                             break;
                         case "application/vnd.ogc.gml":
@@ -291,8 +304,13 @@ var info = (function () {
                         }
                     } else {
                         if (xml) {
-                            var obj = _parseGML(xml);
-                            var features = obj.features;
+                            var getFeatureInfo = _parseWMSGetFeatureInfo(xml);
+                            // no geometry could be found in gml
+                            if (!getFeatureInfo.hasGeometry) {
+                                showFallbackPin = true;
+                            }
+                            queriedFeatures.push.apply(queriedFeatures, getFeatureInfo.features);
+                            var features = getFeatureInfo.features;
                             if (features.length > 0) {
                                 if (layerinfos.template) {
                                    html_result.push(applyTemplate(features.reverse(), layerinfos));
@@ -360,14 +378,20 @@ var info = (function () {
                         placement: 'right',
                         html: true,
                         template: mviewer.templates.tooltip
-                   });
-                   $('.carousel.slide').on('slide.bs.carousel', function (e) {
-                      $(e.currentTarget).find(".counter-slide").text($(e.relatedTarget).attr("data-counter"));
-                   });
-                   mviewer.showLocation(_projection.getCode(), _clickCoordinates[0], _clickCoordinates[1]);
-
+                    });
+                    $('.carousel.slide').on('slide.bs.carousel', function (e) {
+                        $(e.currentTarget).find(".counter-slide").text($(e.relatedTarget).attr("data-counter"));
+                    });
                 } else {
                     $('#'+panel).removeClass("active");
+                }
+                // highlight features
+                mviewer.highlightFeatures(queriedFeatures);
+                // show pin as fallback if no geometry for wms layer
+                if (showFallbackPin) {
+                    mviewer.showLocation(_projection.getCode(), _clickCoordinates[0], _clickCoordinates[1]);
+                } else {
+                    mviewer.hideLocation();
                 }
             });
             $('#loading-indicator').hide();
@@ -504,98 +528,33 @@ var info = (function () {
         }
     };
 
-     /**
-     * Private Method:  parseGML used to parse GML response
-     from servers like geoserver, mapserver, arcgisserver
+    /**
+     * Private Method: _parseWMSGetFeatureInfo used to parse GML response
+     from wms servers. Tries to use bbox as geometry if no geometry returned 
      * @ param xml {Geography Markup Language}
      */
-    var _parseGML = function (xml) {
-        var results = $.xml2json(xml);
-        var list = [];
-        var o = {features: []};
-        // GEOSERVER
-        if (results.featureMember) {
-            if ($.isArray(results.featureMember) === false) {
-                list.push(results.featureMember);
-            } else {
-                list = results.featureMember;
-            }
-            for (var j=0; j<list.length; j++) {
-                var obj=list[j];
-                for(var prop in obj) {
-                    if(obj.hasOwnProperty(prop))
-                        o.features.push({layername:prop, properties:obj[prop]});
-                }
-            }
-        } else if (results.FeatureInfoCollection) {
-            // ArcGIS Server
-            var feat_info_col_list = [];
-
-            if ($.isArray(results.FeatureInfoCollection) === false) {
-                feat_info_col_list.push(results.FeatureInfoCollection);
-            } else {
-                feat_info_col_list = results.FeatureInfoCollection;
-            }
-
-            for (var i=0; i<feat_info_col_list.length; i++) {
-                feat_info_col = feat_info_col_list[i];
-                var feat_info_list = [];
-                var layer_name = feat_info_col.layername;
-
-                if ($.isArray(feat_info_col.FeatureInfo) === false) {
-                    feat_info_list.push(feat_info_col.FeatureInfo);
-                } else {
-                    for (var j=0; j<feat_info_col.FeatureInfo.length ;j++) {
-                        feat_info_list.push(feat_info_col.FeatureInfo[j]);
-                    }
-                }
-
-                for (var k=0; k<feat_info_list.length; k++) {
-                    var field_obj=feat_info_list[k];
-                    var feat_obj = {};
-                    for (var field in field_obj.Field) {
-                        feat_obj[field_obj.Field[field].FieldName] = field_obj.Field[field].FieldValue;
-                    }
-                    o.features.push({layername:layer_name, properties:feat_obj});
-                }
-            }
-        } else if (results.member) {
-             if ($.isArray(results.member) === false) {
-                list.push(results.member);
-            } else {
-                list = results.member;
-            }
-            for (var j=0; j<list.length; j++) {
-                var obj=list[j];
-                for(var prop in obj) {
-                    if(obj.hasOwnProperty(prop))
-                        o.features.push({layername:prop, properties:obj[prop]});
-                }
-            }
-        } else {
-            // MAPSERVER Huge hack
-            for (var p in results) {
-                if (typeof(results[p]) === 'object') {
-                    //Search for response type : layername_layer & layername_feature
-                    var mslayer = p.substring(0,p.search('_layer')); //eg. STQ_layer
-                    if (results[mslayer + '_layer'] && results[mslayer + '_layer'][mslayer + '_feature']) {
-                        if ($.isArray(results[mslayer + '_layer'][mslayer + '_feature']) === false) {
-                            o.features.push({layername:mslayer, properties:results[mslayer + '_layer'][mslayer + '_feature']});
-                        } else {
-                            for (var k=0; k<results[mslayer + '_layer'][mslayer + '_feature'].length ;k++) {
-                                o.features.push({
-                                    layername:mslayer,
-                                    properties:results[mslayer + '_layer'][mslayer + '_feature'][k]
-                                });
-                            }
-                        }
+    var _parseWMSGetFeatureInfo = function (xml) {
+        var features = new ol.format.WMSGetFeatureInfo().readFeatures(xml);
+        var hasGeometry = true;
+        features.forEach(feature => {
+            // if getfeatureinfo does not return geometry try to set geometry with center of extent
+            if (feature.getGeometry() === undefined) {
+                var properties = feature.getProperties();
+                hasGeometry = false;
+                for (p in properties) {
+                    if (Array.isArray(properties[p]) && properties[p].length === 4) {
+                        var center = ol.extent.getCenter(properties[p]);
+                        feature.setGeometry(new ol.geom.Point(center));
+                        hasGeometry = true;
                     }
                 }
             }
-        }
-
-        return o;
-    };
+        })
+        return {
+            'features': features,
+            'hasGeometry': hasGeometry
+        };
+    }
 
     /**
      * Private Method: createContentHtml
@@ -612,13 +571,13 @@ var info = (function () {
         features.forEach(function (feature) {
             var nbimg = 0;
             counter+=1;
-            var attributes = feature.properties;
+            var attributes = feature.getProperties();
             var fields = (olayer.fields) ? olayer.fields : $.map(attributes, function (value, key) {
                 if (typeof value !== "object") {
                     return key;
                 }
             });
-            var featureTitle = feature.properties.title || feature.properties.name || feature.properties[fields[0]];
+            var featureTitle = feature.getProperties().title || feature.getProperties().name || feature.getProperties()[fields[0]];
             var li = '<li class="item" ><div class="gml-item" ><div class="gml-item-title">'
             if (typeof featureTitle != 'undefined') {
                 li += featureTitle;
@@ -667,10 +626,10 @@ var info = (function () {
         }
         olfeatures.forEach(function(feature){
             if (activeAttributeValue) {
-                feature.properties[activeAttributeValue] = true;
+                feature.setProperties({'activeAttributeValue': true});
             }
             // add a key_value array with all the fields, allowing to iterate through all fields in a mustache templaye
-            feature.properties['fields_kv'] = function () {
+            var fields_kv = function () {
               fields_kv = [];
               keys = Object.keys(this);
               for (i = 0 ; i < keys.length ; i++ ) {
@@ -685,12 +644,14 @@ var info = (function () {
               }
               return fields_kv;
             }
+            feature.setProperties({'fields_kv': fields_kv});
             // add a serialized version of the object so it can easily be passed through HTML GET request
             // you can deserialize it with `JSON.parse(data)` when data is the serialized data
-            feature.properties['serialized'] = function () {
-              return encodeURIComponent(JSON.stringify(feature.properties));
+            var serialized = function () {
+              return encodeURIComponent(JSON.stringify(feature.getProperties()));
             }
-            obj.features.push(feature.properties);
+            feature.setProperties({'serialized': serialized})
+            obj.features.push(feature.getProperties());
         });
         var rendered = Mustache.render(tpl, obj);
         return _customizeHTML(rendered, olfeatures.length);
@@ -754,6 +715,7 @@ var info = (function () {
             _panelsTemplate["bottom-panel"] = configuration.getConfiguration().application.templatebottominfopanel;
         }
         _sourceOverlay = mviewer.getSourceOverlay();
+        _sourceSelectOverlay = mviewer.getSourceSelectOverlay();
         $.each(_overLayers, function (i, layer) {
             if (layer.queryable) {
                 _addQueryableLayer(layer);

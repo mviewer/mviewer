@@ -219,7 +219,7 @@ mviewer = (function () {
     /**
      * Property: _sourceOverlay
      * @type {ol.source.Vector}
-     * Used to highlight vector features
+     * Used to highlight hovered vector features
      */
 
     var _sourceOverlay;
@@ -227,10 +227,26 @@ mviewer = (function () {
     /**
      * Property: _overlayFeatureLayer
      * @type {ol.layer.Vector}
-     * Used to highlight vector features
+     * Used to highlight hovered vector features
      */
 
     var _overlayFeatureLayer = false;
+
+    /**
+     * Property: _sourceSelectOverlay
+     * @type {ol.source.Vector}
+     * Used to highlight selected vector features
+     */
+
+    var _sourceSelectOverlay;
+
+    /**
+     * Property: _selectOverlayFeatureLayer
+     * @type {ol.layer.Vector}
+     * Used to highlight selected vector features
+     */
+
+    var _selectOverlayFeatureLayer = false;
 
     var _setVariables = function () {
         _proxy = configuration.getProxy();
@@ -461,6 +477,22 @@ mviewer = (function () {
         });
         _overlayFeatureLayer.set('mviewerid', 'featureoverlay');
         _map.addLayer(_overlayFeatureLayer);
+    };
+
+
+    /**
+     * Private Method: initSelectOverlay
+     * this layer is used to render ol.Feature in info tool
+     */
+
+    var _initSelectOverlay = function () {
+        _sourceSelectOverlay = new ol.source.Vector();
+        _selectOverlayFeatureLayer = new ol.layer.Vector({
+            source: _sourceSelectOverlay,
+            style: getSelectStyle
+        });
+        _overlayFeatureLayer.set('mviewerid', 'selectoverlay');
+        _map.addLayer(_selectOverlayFeatureLayer);
     };
 
     /**
@@ -1843,6 +1875,7 @@ mviewer = (function () {
                 _initDisplayMode();
                 _initDataList();
                 _initVectorOverlay();
+                _initSelectOverlay();
                 search.init(configuration.getConfiguration());
                 _initPanelsPopup();
                 _initGeolocation();
@@ -1920,6 +1953,17 @@ mviewer = (function () {
         },
 
         /**
+         * Public Method: highlightFeatures
+         *
+         */
+        highlightFeatures: function (features) {
+            _sourceSelectOverlay.clear();
+            if (features.length > 0) {
+                _sourceSelectOverlay.addFeatures(features);
+            }
+        },
+
+        /**
          * Public Method: print
          *
          */
@@ -1982,6 +2026,16 @@ mviewer = (function () {
          */
 
         hideLocation: function ( ) {
+            $("#mv_marker").hide();
+        },
+
+        /**
+         * Public Method: hideSelectOverlay
+         *
+         */
+        hideSelectOverlay: function ( ) {
+            _sourceSelectOverlay.clear();
+            // for case that fallback pin is present
             $("#mv_marker").hide();
         },
 
@@ -2640,12 +2694,21 @@ mviewer = (function () {
             var tabs = tab.parent().find("li");
             var info = $(tab.find("a").attr("href"));
 
+            _sourceSelectOverlay.getFeatures().forEach(feature => {
+                if (feature.getId().split(".")[0] === layerid) {
+                    _sourceSelectOverlay.removeFeature(feature);
+                }
+            })
+
             if ( tabs.length === 1 ) {
                 tab.remove();
                 info.remove();
                 if (panel.hasClass("active")) {
                     panel.toggleClass("active");
                 }
+                // only necessary for fallback pin (GetFeatureInfo without geometry).
+                // could be improved by checking if one of the displayed layers is concerned
+                // instead of calling it on last one
                 $("#mv_marker").hide();
             } else {
                 if ( tab.hasClass("active") ) {
@@ -2744,6 +2807,8 @@ mviewer = (function () {
         getProjection: function () { return _projection; },
 
         getSourceOverlay: function () { return _sourceOverlay; },
+
+        getSourceSelectOverlay: function () { return _sourceSelectOverlay; },
 
         setTopLayer: function (layer) { _topLayer = layer; },
 
