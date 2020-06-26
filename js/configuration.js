@@ -879,8 +879,23 @@ var configuration = (function () {
                 exportPNGElement.addEventListener('click', function(e) {
                     _map.once('postcompose', function(event) {
                         try {
-                            var canvas = event.context.canvas;
-                            exportPNGElement.href = canvas.toDataURL('image/png');
+                            var mapCanvas = document.createElement('canvas');
+                            var size = _map.getSize();
+                            mapCanvas.width = size[0];
+                            mapCanvas.height = size[1];
+                            var mapContext = mapCanvas.getContext('2d');
+                            Array.prototype.forEach.call(document.querySelectorAll('.ol-layer canvas'), function(canvas) {
+                              if (canvas.width > 0) {
+                                mapContext.globalAlpha = 1;
+                                var transform = canvas.style.transform;
+                                // Get the transform parameters from the style's transform matrix
+                                var matrix = transform.match(/^matrix\(([^\(]*)\)$/)[1].split(',').map(Number);
+                                // Apply the transform to the export map context
+                                CanvasRenderingContext2D.prototype.setTransform.apply(mapContext, matrix);
+                                mapContext.drawImage(canvas, 0, 0);
+                              }
+                            });
+                            exportPNGElement.href = mapCanvas.toDataURL('image/png');
                         }
                         catch(err) {
                             mviewer.alert(err, "alert-info");
