@@ -89,6 +89,28 @@ var info = (function () {
     var _sourceSelectOverlay;
 
     /**
+     * Property: _sourceSubSelectOverlay
+     * @type {ol.source.Vector}
+     * Used to hightlight sub selected vector feature
+     */
+
+    var _sourceSubSelectOverlay;
+
+    /**
+     * Property: _queriedFeatures
+     * Array of ol.Feature
+     * Used to store features retrieved on click
+     */
+    var _queriedFeatures;
+
+    /**
+     * Property: _firstlayerFeatures
+     * Array of ol.Feature
+     * Used to store features of firstlayer retrieved on click
+     */
+    var _firstlayerFeatures;
+
+    /**
      * Private Method: _customizeHTML
      * @param html {Array}
      * @param featurescount {Integer}
@@ -129,7 +151,8 @@ var info = (function () {
      */
 
     var _queryMap = function (evt, options) { 
-        var queriedFeatures = [];
+        _queriedFeatures = [];
+        _firstlayerFeatures = [];
         var showFallbackPin = false;
         var queryType = "map"; // default behaviour
         var views = {
@@ -158,10 +181,10 @@ var info = (function () {
             var format = new ol.format.GeoJSON();
             _map.forEachFeatureAtPixel(pixel, function(feature, layer) {
                 var l = layer.get('mviewerid');
-                if (l && l != 'featureoverlay' && l != 'selectoverlay' && l != 'elasticsearch' ) {
+                if (l && l != 'featureoverlay' && l != 'selectoverlay' && l != 'subselectoverlay' && l != 'elasticsearch' ) {
                     var queryable = _overLayers[l].queryable;
                     if (queryable) {
-                        queriedFeatures.push(feature);
+                        _queriedFeatures.push(feature);
                         if (vectorLayers[l] && vectorLayers[l].features) {
                             vectorLayers[l].features.push(feature);
                         } else {
@@ -214,131 +237,131 @@ var info = (function () {
         //Request wms layers
         var featureInfoByLayer = [];
         var visibleLayers = [];
-            if (layer) {
-                 visibleLayers.push(_overLayers[layer].layer);
-            } else {
-                visibleLayers =  $.grep( _queryableLayers, function( l, i ) {return l.getVisible();});
-            }
-            $(".popup-content").html('');
-            _clickCoordinates = evt.coordinate;
-            var urls = [];
-            var params;
-            for (var i = 0; i < visibleLayers.length; i++) {
-                if (visibleLayers[i] instanceof ol.layer.BaseVector === false) {
-                    params = {'INFO_FORMAT': _overLayers[visibleLayers[i].get("mviewerid")].infoformat,
-                        'FEATURE_COUNT': _overLayers[visibleLayers[i].get("mviewerid")].featurecount
-                    };
-                    var url = visibleLayers[i].getSource().getFeatureInfoUrl(
-                        evt.coordinate, _map.getView().getResolution(), _map.getView().getProjection(), params
-                    );
-                    if (layer && featureid) {
-                        url+= '&CQL_FILTER='+_overLayers[layer].searchid+'%3D%27'+featureid+'%27';
-                    }
-                    urls.push({url:url, layerinfos: _overLayers[visibleLayers[i].get('mviewerid')]});
+        if (layer) {
+            visibleLayers.push(_overLayers[layer].layer);
+        } else {
+            visibleLayers =  $.grep( _queryableLayers, function( l, i ) {return l.getVisible();});
+        }
+        $(".popup-content").html('');
+        _clickCoordinates = evt.coordinate;
+        var urls = [];
+        var params;
+        for (var i = 0; i < visibleLayers.length; i++) {
+            if (visibleLayers[i] instanceof ol.layer.BaseVector === false) {
+                params = {'INFO_FORMAT': _overLayers[visibleLayers[i].get("mviewerid")].infoformat,
+                    'FEATURE_COUNT': _overLayers[visibleLayers[i].get("mviewerid")].featurecount
+                };
+                var url = visibleLayers[i].getSource().getFeatureInfoUrl(
+                    evt.coordinate, _map.getView().getResolution(), _map.getView().getProjection(), params
+                );
+                if (layer && featureid) {
+                    url+= '&CQL_FILTER='+_overLayers[layer].searchid+'%3D%27'+featureid+'%27';
                 }
+                urls.push({url:url, layerinfos: _overLayers[visibleLayers[i].get('mviewerid')]});
             }
+        }
 
-            var requests = [];
-            var carrousel=false;
-            var callback = function (result) {
-                $.each(featureInfoByLayer, function (index, response) {
-                    var layerinfos = response.layerinfos;
-                    var panel = layerinfos.infospanel;
-                    if (configuration.getConfiguration().mobile) {
-                        panel = 'modal-panel';
-                    }
-                    var contentType = response.contenttype;
-                    var layerResponse = response.response;
-                    var name = layerinfos.name;
-                    var theme = layerinfos.theme;
-                    var layerid = layerinfos.layerid;
-                    var theme_icon = layerinfos.icon;
-                    var id = views[panel].layers.length + 1;
-                    var manyfeatures = false;
-                    var html_result = [];
+        var requests = [];
+        var carrousel=false;
+        var callback = function (result) {
+            $.each(featureInfoByLayer, function (index, response) {
+                var layerinfos = response.layerinfos;
+                var panel = layerinfos.infospanel;
+                if (configuration.getConfiguration().mobile) {
+                    panel = 'modal-panel';
+                }
+                var contentType = response.contenttype;
+                var layerResponse = response.response;
+                var name = layerinfos.name;
+                var theme = layerinfos.theme;
+                var layerid = layerinfos.layerid;
+                var theme_icon = layerinfos.icon;
+                var id = views[panel].layers.length + 1;
+                var manyfeatures = false;
+                var html_result = [];
 
-                    var xml = null;
-                    var html = null;
+                var xml = null;
+                var html = null;
 
-                    switch (contentType.split(";")[0]) {
-                        case "text/html":
-                            if ((typeof layerResponse === 'string')
-                                && (layerResponse.search('<!--nodatadetect--><!--nodatadetect-->')<0)
-                                && (layerResponse.search('<!--nodatadetect-->\n<!--nodatadetect-->')<0)) {
-                                html = layerResponse;
-                                // no geometry in html
-                                showFallbackPin = true;
-                            }
-                            break;
-                        case "application/vnd.ogc.gml":
-                            if ($.isXMLDoc(layerResponse)) {
-                                xml = layerResponse;
-                            } else {
-                                xml = $.parseXML(layerResponse);
-                            }
-                            break;
-                        case "application/vnd.esri.wms_raw_xml":
-                        case "application/vnd.esri.wms_featureinfo_xml":
-                            if ($.isXMLDoc(layerResponse)) {
-                                xml = layerResponse;
-                            } else {
-                                xml = $.parseXML(layerResponse);
-                            }
-                            break;
-                        default :
-                            mviewer.alert("Ce format de réponse : " + contentType +" n'est pas pris en charge", "alert-warning");
+                switch (contentType.split(";")[0]) {
+                    case "text/html":
+                        if ((typeof layerResponse === 'string')
+                            && (layerResponse.search('<!--nodatadetect--><!--nodatadetect-->')<0)
+                            && (layerResponse.search('<!--nodatadetect-->\n<!--nodatadetect-->')<0)) {
+                            html = layerResponse;
+                            // no geometry in html
+                            showFallbackPin = true;
+                        }
+                        break;
+                    case "application/vnd.ogc.gml":
+                        if ($.isXMLDoc(layerResponse)) {
+                            xml = layerResponse;
+                        } else {
+                            xml = $.parseXML(layerResponse);
+                        }
+                        break;
+                    case "application/vnd.esri.wms_raw_xml":
+                    case "application/vnd.esri.wms_featureinfo_xml":
+                        if ($.isXMLDoc(layerResponse)) {
+                            xml = layerResponse;
+                        } else {
+                            xml = $.parseXML(layerResponse);
+                        }
+                        break;
+                    default :
+                        mviewer.alert("Ce format de réponse : " + contentType +" n'est pas pris en charge", "alert-warning");
+                }
+                if (html) {
+                    //test si présence d'une classe .feature eg template geoserver.
+                    //Chaque élément trouvé est une feature avec ses propriétés
+                    // Be carefull .carrousel renamed to mv-features
+                    var features = $(layerResponse).find(".mv-features li").addClass("item");
+                    if(features.length == 0){
+                        html_result.push('<li class="item active">'+layerResponse+'</li>');
                     }
-                    if (html) {
-                        //test si présence d'une classe .feature eg template geoserver.
-                        //Chaque élément trouvé est une feature avec ses propriétés
-                        // Be carefull .carrousel renamed to mv-features
-                        var features = $(layerResponse).find(".mv-features li").addClass("item");
-                        if(features.length == 0){
-                            html_result.push('<li class="item active">'+layerResponse+'</li>');
-                        }
-                        else {
-                            $(features).each(function(i,feature) {
-                                html_result.push(feature);
-                            });
-                            html_result = _customizeHTML(html_result, features.length);
-                        }
-                    } else {
-                        if (xml) {
-                            var getFeatureInfo = _parseWMSGetFeatureInfo(xml);
-                            // no geometry could be found in gml
-                            if (!getFeatureInfo.hasGeometry) {
-                                showFallbackPin = true;
-                            }
-                            queriedFeatures.push.apply(queriedFeatures, getFeatureInfo.features);
-                            var features = getFeatureInfo.features;
-                            if (features.length > 0) {
-                                if (layerinfos.template) {
-                                   html_result.push(applyTemplate(features.reverse(), layerinfos));
-                                } else {
-                                    html_result.push(createContentHtml(features.reverse(), layerinfos));
-                                }
-                            }
-                        }
-                    }
-                    //If some results, apppend panels views
-                    if (html_result.length > 0) {
-                        //Set view with layer info & html formated features
-                        views[panel].layers.push({
-                            "panel": panel,
-                            "id": id,
-                            "firstlayer": false,
-                            "manyfeatures": (features.length > 1),
-                            "nbfeatures": features.length,
-                            "name": name,
-                            "layerid": layerid,
-                            "theme_icon": theme_icon,
-                            "html": html_result.join("")
+                    else {
+                        $(features).each(function(i,feature) {
+                            html_result.push(feature);
                         });
+                        html_result = _customizeHTML(html_result, features.length);
                     }
-                });
+                } else {
+                    if (xml) {
+                        var getFeatureInfo = _parseWMSGetFeatureInfo(xml, layerid);
+                        // no geometry could be found in gml
+                        if (!getFeatureInfo.hasGeometry) {
+                            showFallbackPin = true;
+                        }
+                        _queriedFeatures.push.apply(_queriedFeatures, getFeatureInfo.features);
+                        var features = getFeatureInfo.features;
+                        if (features.length > 0) {
+                            if (layerinfos.template) {
+                                html_result.push(applyTemplate(features, layerinfos));
+                            } else {
+                                html_result.push(createContentHtml(features, layerinfos));
+                            }
+                        }
+                    }
+                }
+                //If some results, apppend panels views
+                if (html_result.length > 0) {
+                    //Set view with layer info & html formated features
+                    views[panel].layers.push({
+                        "panel": panel,
+                        "id": id,
+                        "firstlayer": false,
+                        "manyfeatures": (features.length > 1),
+                        "nbfeatures": features.length,
+                        "name": name,
+                        "layerid": layerid,
+                        "theme_icon": theme_icon,
+                        "html": html_result.join("")
+                    });
+                }
+            });
 
-                $.each(views, function (panel, view) {
-                    if (views[panel].layers.length > 0){
+            $.each(views, function (panel, view) {
+                if (views[panel].layers.length > 0){
                         views[panel].layers[0].firstlayer=true;
                         var template = "";
                         if (configuration.getConfiguration().mobile) {
@@ -379,14 +402,34 @@ var info = (function () {
                         html: true,
                         template: mviewer.templates.tooltip
                     });
+                    // init sub selection
+                    _firstlayerFeatures = _queriedFeatures.filter(feature => {
+                        return feature.get("mviewerid") == views[panel].layers[0].layerid;
+                    })
+                    // change feature of sub selection
                     $('.carousel.slide').on('slide.bs.carousel', function (e) {
                         $(e.currentTarget).find(".counter-slide").text($(e.relatedTarget).attr("data-counter"));
-                    });
+                        var selectedFeature = _queriedFeatures.filter(feature => {
+                            return feature.ol_uid == e.relatedTarget.id;
+                        })
+                        mviewer.highlightSubFeature(selectedFeature[0]);
+                    });                    
+                    // change layer of sub selection
+                    if (configuration.getConfiguration().mobile) {
+                        $('.panel-heading').on('click', function (e) {
+                            changeSubFeatureLayer(e);
+                        });
+                    } else {
+                        $('.nav-tabs li').on('click', function (e) {
+                            changeSubFeatureLayer(e);
+                        });
+                    }
                 } else {
                     $('#'+panel).removeClass("active");
                 }
-                // highlight features
-                mviewer.highlightFeatures(queriedFeatures);
+                // highlight features and sub feature
+                mviewer.highlightFeatures(_queriedFeatures);
+                mviewer.highlightSubFeature(_firstlayerFeatures[0]);
                 // show pin as fallback if no geometry for wms layer
                 if (showFallbackPin) {
                     mviewer.showLocation(_projection.getCode(), _clickCoordinates[0], _clickCoordinates[1]);
@@ -399,6 +442,13 @@ var info = (function () {
             _mvReady = true;
 
         };
+
+        var changeSubFeatureLayer = function (e) {
+            _firstlayerFeatures = _queriedFeatures.filter(feature => {
+                return feature.get("mviewerid") == e.currentTarget.dataset.layerid; 
+            })
+            mviewer.highlightSubFeature(_firstlayerFeatures[0]);
+        }
 
         var ajaxFunction = function () {
             urls.forEach(function(request) {
@@ -451,7 +501,11 @@ var info = (function () {
         $("#map").css("cursor", "");
 
         var feature = _map.forEachFeatureAtPixel(pixel, function (feature, layer) {
-            if (!layer || layer.get('mviewerid') === 'featureoverlay') {
+            if (!layer 
+                || layer.get('mviewerid') === 'featureoverlay' 
+                || layer.get('mviewerid') === 'selectoverlay' 
+                || layer.get('mviewerid') === 'subselectoverlay'
+            ) {
                 return;
             }
             var ret = false;
@@ -533,10 +587,12 @@ var info = (function () {
      from wms servers. Tries to use bbox as geometry if no geometry returned 
      * @ param xml {Geography Markup Language}
      */
-    var _parseWMSGetFeatureInfo = function (xml) {
+    var _parseWMSGetFeatureInfo = function (xml, layerid) {
         var features = new ol.format.WMSGetFeatureInfo().readFeatures(xml);
         var hasGeometry = true;
         features.forEach(feature => {
+            // set layer mviewerid for features from WMS layers (already present for vector layers)
+            feature.set("mviewerid", layerid);
             // if getfeatureinfo does not return geometry try to set geometry with center of extent
             if (feature.getGeometry() === undefined) {
                 var properties = feature.getProperties();
@@ -578,7 +634,7 @@ var info = (function () {
                 }
             });
             var featureTitle = feature.getProperties().title || feature.getProperties().name || feature.getProperties()[fields[0]];
-            var li = '<li class="item" ><div class="gml-item" ><div class="gml-item-title">'
+            var li = '<li id="' + feature.ol_uid + '" class="item" ><div class="gml-item" ><div class="gml-item-title">'
             if (typeof featureTitle != 'undefined') {
                 li += featureTitle;
             }
@@ -651,7 +707,8 @@ var info = (function () {
               return encodeURIComponent(JSON.stringify(feature.getProperties()));
             }
             feature.setProperties({'serialized': serialized})
-            obj.features.push(feature.getProperties());
+            // attach ol_uid to identify feature in DOM (not all features have a feature id as property)
+            obj.features.push({...feature.getProperties(), feature_id: feature.ol_uid});
         });
         var rendered = Mustache.render(tpl, obj);
         return _customizeHTML(rendered, olfeatures.length);
@@ -716,6 +773,7 @@ var info = (function () {
         }
         _sourceOverlay = mviewer.getSourceOverlay();
         _sourceSelectOverlay = mviewer.getSourceSelectOverlay();
+        _sourceSubSelectOverlay = mviewer.getSourceSubSelectOverlay();
         $.each(_overLayers, function (i, layer) {
             if (layer.queryable) {
                 _addQueryableLayer(layer);

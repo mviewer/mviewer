@@ -248,6 +248,16 @@ mviewer = (function () {
 
     var _selectOverlayFeatureLayer = false;
 
+    var _sourceSubSelectOverlay;
+
+    /**
+     * Property: _subSelectOverlayFeatureLayer
+     * @type {ol.layer.Vector}
+     * Used to highlight sub selected vector features
+     */
+
+    var _subSelectOverlayFeatureLayer = false;
+
     var _setVariables = function () {
         _proxy = configuration.getProxy();
     };
@@ -489,10 +499,26 @@ mviewer = (function () {
         _sourceSelectOverlay = new ol.source.Vector();
         _selectOverlayFeatureLayer = new ol.layer.Vector({
             source: _sourceSelectOverlay,
-            style: getSelectStyle
+            style: getSelectStyle.bind(this, '82, 98, 217', 4)
         });
-        _overlayFeatureLayer.set('mviewerid', 'selectoverlay');
+        _selectOverlayFeatureLayer.set('mviewerid', 'selectoverlay');
         _map.addLayer(_selectOverlayFeatureLayer);
+    };
+
+
+    /**
+     * Private Method: initSubSelectOverlay
+     * this layer is used to render ol.Feature of sub selection in info tool
+     */
+
+    var _initSubSelectOverlay = function () {
+        _sourceSubSelectOverlay = new ol.source.Vector();
+        _subSelectOverlayFeatureLayer = new ol.layer.Vector({
+            source: _sourceSubSelectOverlay,
+            style: getSelectStyle.bind(this, '252, 186, 3', 2)
+        });
+        _subSelectOverlayFeatureLayer.set('mviewerid', 'subselectoverlay');
+        _map.addLayer(_subSelectOverlayFeatureLayer);
     };
 
     /**
@@ -1876,6 +1902,7 @@ mviewer = (function () {
                 _initDataList();
                 _initVectorOverlay();
                 _initSelectOverlay();
+                _initSubSelectOverlay();
                 search.init(configuration.getConfiguration());
                 _initPanelsPopup();
                 _initGeolocation();
@@ -1964,6 +1991,17 @@ mviewer = (function () {
         },
 
         /**
+         * Public Method: highlightSubFeature
+         *
+         */
+        highlightSubFeature: function (feature) {
+            _sourceSubSelectOverlay.clear();
+            if (feature) {
+                _sourceSubSelectOverlay.addFeature(feature);
+            }
+        },
+
+        /**
          * Public Method: print
          *
          */
@@ -2035,6 +2073,7 @@ mviewer = (function () {
          */
         hideSelectOverlay: function ( ) {
             _sourceSelectOverlay.clear();
+            _sourceSubSelectOverlay.clear();
             // for case that fallback pin is present
             $("#mv_marker").hide();
         },
@@ -2695,8 +2734,13 @@ mviewer = (function () {
             var info = $(tab.find("a").attr("href"));
 
             _sourceSelectOverlay.getFeatures().forEach(feature => {
-                if (feature.getId().split(".")[0] === layerid) {
+                if (feature.get("mviewerid") === layerid) {
                     _sourceSelectOverlay.removeFeature(feature);
+                    _sourceSubSelectOverlay.getFeatures().forEach(subFeature => {
+                        if (feature.ol_uid == subFeature.ol_uid) {
+                            _sourceSubSelectOverlay.removeFeature(subFeature)
+                        }
+                    })
                 }
             })
 
@@ -2809,6 +2853,8 @@ mviewer = (function () {
         getSourceOverlay: function () { return _sourceOverlay; },
 
         getSourceSelectOverlay: function () { return _sourceSelectOverlay; },
+
+        getSourceSubSelectOverlay: function () { return _sourceSubSelectOverlay; },
 
         setTopLayer: function (layer) { _topLayer = layer; },
 

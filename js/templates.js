@@ -253,7 +253,7 @@ mviewer.templates.featureInfo.accordion = [
                 '<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="list-style: none;">',
                 '{{#layers}}',
                   '<div class="panel">',
-                    '<div class="panel-heading mv-theme" role="tab" id="heading-{{panel}}-{{id}}">',
+                    '<div class="panel-heading mv-theme" role="tab" id="heading-{{panel}}-{{id}}" data-layerid="{{layerid}}">',
                       '<h4 class="panel-title">',
                         '<a role="button" data-toggle="collapse" data-parent="#accordion" href="#accordion-{{panel}}-{{id}}" aria-expanded="{{#firstlayer}}true{{/firstlayer}}{{^firstlayer}}false{{/firstlayer}}" aria-controls="accordion-{{panel}}-{{id}}">',
                         '{{name}}',

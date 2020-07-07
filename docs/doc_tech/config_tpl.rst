@@ -21,7 +21,7 @@ Exemple de template structuré
 
 
         {{#features}}
-            <li class="item">
+            <li id="{{feature_id}}" class="item">
                 Exemple de formatage
                 <h3 class="title-feature">{{nom}}</h3>
                 <img src="{{image}}" class="img-responsive" style="margin-top:5%;" /><br/>
@@ -71,7 +71,8 @@ Exemple de template structuré
 Les éléments en rouge sont obligatoires.
 
 Explications : ``{{#features}}{{/features}}`` est une boucle effectuée sur chaque entité présente dans la couche sélectionnée.
-``<li class="item"></li>`` est une entrée de liste html utilisée par le mviewer. S'il y a plusieurs entrées de liste car plusieurs entités sélectionnées, le mviewer présentera les réponses sous la forme d'un carousel.
+``<li id="{{feature_id}}" class="item"></li>`` est une entrée de liste html utilisée par le mviewer. S'il y a plusieurs entrées de liste car plusieurs entités sélectionnées, le mviewer présentera les réponses sous la forme d'un carousel.
+Pour synchroniser le carousel et la sous-sélection sur la carte lors d'un clic, la ``feature_id`` est requise comme ``id`` de la balise.  
 
 Ce qu'il faut savoir de Mustache
 --------------------------------
@@ -116,7 +117,7 @@ Par exemple, ce code :
        :linenos:
 
        {{#features}}
-         <li class="item" style="width:238px;">
+         <li id="{{feature_id}}" class="item" style="width:238px;">
              <ul>
                {{#fields_kv}}
                  <li>{{key}} : {{value}}</li>

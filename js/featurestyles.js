@@ -50,43 +50,44 @@ mviewer.featureStyles.circle1 = new ol.style.Style({
     })
 });
 
-var _selectFillColor = 'rgba(82, 98, 217, 0.5)';
-var _selectStrokeColor = 'rgba(82, 98, 217, 1)';
+var getSelectStyle = function(rgb, width, feature) {
 
-var _highlightSelect = {
-    'Point': new ol.style.Style({
-      image: new ol.style.Circle({
-        radius: 7,
+    var _selectFillColor = `rgba(${rgb}, 0.5)`;
+    var _selectStrokeColor = `rgba(${rgb}, 1)`;
+
+    var _highlightSelect = {
+        'Point': new ol.style.Style({
+        image: new ol.style.Circle({
+            radius: 7,
+            fill: new ol.style.Fill({
+            color: _selectFillColor
+            }),
+            stroke: new ol.style.Stroke({
+            color: _selectStrokeColor,
+            width: width
+            })
+        })
+        }),
+        'LineString': new ol.style.Style({
+        stroke: new ol.style.Stroke({
+            color: _selectStrokeColor,
+            width: width
+        })
+        }),
+        'Polygon': new ol.style.Style({
         fill: new ol.style.Fill({
-          color: _selectFillColor
+            color: _selectFillColor
         }),
         stroke: new ol.style.Stroke({
-          color: _selectStrokeColor,
-          width: 2
+            color: _selectStrokeColor,
+            width: width
         })
-      })
-    }),
-    'LineString': new ol.style.Style({
-      stroke: new ol.style.Stroke({
-        color: _selectStrokeColor,
-        width: 4
-      })
-    }),
-    'Polygon': new ol.style.Style({
-      fill: new ol.style.Fill({
-        color: _selectFillColor
-      }),
-      stroke: new ol.style.Stroke({
-        color: _selectStrokeColor,
-        width: 4
-      })
-    })
-};
-_highlightSelect['MultiPoint'] = _highlightSelect['Point'];
-_highlightSelect['MultiLineString'] = _highlightSelect['LineString'];
-_highlightSelect['MultiPolygon'] = _highlightSelect['Polygon'];
+        })
+    };
+    _highlightSelect['MultiPoint'] = _highlightSelect['Point'];
+    _highlightSelect['MultiLineString'] = _highlightSelect['LineString'];
+    _highlightSelect['MultiPolygon'] = _highlightSelect['Polygon'];
 
-var getSelectStyle = function(feature) {
     return _highlightSelect[feature.getGeometry().getType()];
 }
 
