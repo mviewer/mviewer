@@ -339,10 +339,16 @@ var info = (function () {
                         "name": name,
                         "layerid": layerid,
                         "theme_icon": theme_icon,
-                        "html": html_result.join("")
+                        "html": html_result.join(""),
+                        "pin": showFallbackPin
                     });
                 }
             });
+            var infoLayers = [];
+            for (var panel in views) {
+                infoLayers = infoLayers.concat(views[panel].layers);
+            }
+            mviewer.setInfoLayers(infoLayers);
 
             $.each(views, function (panel, view) {
                 if (views[panel].layers.length > 0){

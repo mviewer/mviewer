@@ -258,6 +258,13 @@ mviewer = (function () {
 
     var _subSelectOverlayFeatureLayer = false;
 
+    /**
+     * Property: _infoLayers
+     * Array of custom panel objects
+     * Used to keep track of layers displayed in info panels
+     */
+    var _infoLayers = [];
+
     var _setVariables = function () {
         _proxy = configuration.getProxy();
     };
@@ -2734,6 +2741,18 @@ mviewer = (function () {
                     })
                 }
             })
+            // remove layer from infoLayers
+            _infoLayers = _infoLayers.filter(infoLayer => {
+                return infoLayer.layerid !== layerid;
+            })
+            // get layers with pin
+            var pinLayers = _infoLayers.filter(infoLayer => {
+                return infoLayer.pin;
+            })
+            // remove pin on last layer with pin
+            if (pinLayers.length === 0) {
+                $("#mv_marker").hide();
+            }
 
             if ( tabs.length === 1 ) {
                 tab.remove();
@@ -2839,9 +2858,10 @@ mviewer = (function () {
         getProjection: function () { return _projection; },
 
         getSourceOverlay: function () { return _sourceOverlay; },
-        
 
         setTopLayer: function (layer) { _topLayer = layer; },
+
+        setInfoLayers: function (infoLayers) { _infoLayers = infoLayers; },
 
         createBaseLayer: _createBaseLayer,
 
