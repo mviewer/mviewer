@@ -1,3 +1,9 @@
 .selectedDates{
     background-color: grey;
+    border-radius: 180px !important;
+    color: white !important;
+    font-weight: 800 !important;
+}
+.selectedDates:hover{
+    color: black !important;
 }

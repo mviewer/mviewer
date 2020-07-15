@@ -69,12 +69,14 @@ class Sentinel extends CustomLayer {
 
     });
   }
-  requestOnImageChange(value) {
+  requestOnImageChange(values) {
     this.layer.getSource().clear();
-    this.layer.getSource().updateParams({
-      'LAYERS': value.image
-    });
+    var parameters = {};
+    for(const param in values){
+      parameters[param]=values[param];
+    }
+    this.layer.getSource().updateParams(parameters);
   }
 }
 // Create The Custom Layer
-new Sentinel("sentinel", WFSrequest);
+new Sentinel("sentinel", WMSrequest);

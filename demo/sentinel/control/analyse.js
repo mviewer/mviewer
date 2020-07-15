@@ -151,6 +151,7 @@ mviewer.customControls.s2tile = (function() {
         var _layerDefinition = mviewer.getLayers()[layerid];
 
         var _source = _layerDefinition.layer.getSource();
+        console.log(_source);
 
         _source.getParams()['TIME'] = filter_time;
 

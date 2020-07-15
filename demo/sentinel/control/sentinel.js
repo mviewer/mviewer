@@ -43,14 +43,18 @@ constructor(id) {
 }
 
 // Init Calendar
-_initDatePicker(options) {
-  console.log("passed");
+_initDatePicker(options, date = new Date()) {
   if (options) {
     var datepicker = $(".sentinelDatePicker");
     datepicker.datepicker("destroy");
+    /*
     datepicker.datepicker(options).on('changeDate',(e)=>{
       this.createWfsRequest(e.format());
     });
+    */
+    datepicker.datepicker(options);
+    datepicker.datepicker( "setDate", date );
+
     
   } else {
     console.log("No propreties provided !");
@@ -58,34 +62,37 @@ _initDatePicker(options) {
 }
 // Callback to sort the dates of the datepicker
 _processForEachDay(date) {
+  date = date.toISOString().split("T")[0];
+  
   var classe = "";
-
   if (_availableDates.indexOf(date) >= 0) {
 
     classe = 'selectedDates';
 
   }
-  return [true, classe];
+  
+  return {classes: classe,tooltip: "La date : "+date};
 }
 // Filter all the data
 _filterWfsData(couverture) {
 
   _availableDates = [];
 
-  // Remove feature which have more clouds than specified and store there dates
+  // Remove feature which have more clouds than specified and store their dates
   var selection = this._storedData.filter((feature) => {
-    if (_availableDates.indexOf(feature.properties.date) === -1) {
+    var inrange = feature.properties.cloudCoverPercentage <= parseInt(couverture);
+    if (_availableDates.indexOf(feature.properties.date) === -1 && !inrange ) {
       _availableDates.push(feature.properties.date);
     }
-    return feature.properties.cloudCoverPercentage <= parseInt(couverture);
+    return inrange;
   });
   return selection;
 }
 // data request
-createWfsRequest(date){
-  var cloudInput = $("#cloud-cover");
+createWfsRequest(date,image = "TRUE_COLOR",cloud = 0){
+  var newDate = date.toISOString();
   if(date)
-    WFSrequest.TIME=date;
+    WFSrequest.TIME=newDate;
   $.ajax({
     type: "GET",
     url: "https://services.sentinel-hub.com/ogc/wfs/f6219778-b67d-4107-84c6-56e00a2642e2",
@@ -94,44 +101,28 @@ createWfsRequest(date){
     dataType: "json",
     success: (data) => {
       this._storedData = data.features;
-      //this._updateLayer(cloudInput.val());
-      this._applyFilterToAllLayers(date, cloudInput.val());
+      this._filterWfsData(cloud);
+      this._setLayerExtraParameters(newDate, image,cloud);
+      
+      this._initDatePicker({
+        todayHighlight: true,
+        beforeShowDay: this._processForEachDay,
+        autoclose: true
+      },date);
     }
   });
 }
-_updateLayer (couverture) {
 
-  var source = mviewer.customLayers.sentinel.layer.getSource();
-
-  source.clear();
-
-  var selection = this._filterWfsData(couverture);
-
-  selection.forEach(function(item, id) {
-
-      var f = new ol.Feature({geometry: new ol.geom.MultiPolygon(item.geometry.coordinates)});
-
-      f.setProperties(item.properties);
-
-      source.addFeature(f);
-
-  });
-
-
-
-}
-_setLayerExtraParameters =  function (filter_time, cloud_cover) {
+_setLayerExtraParameters =  function (filter_time, image,cloud_cover) {
 
 //fonction appellÃ©e pour mettre Ã  jour les donnÃ©e affichÃ©es selon la couvNuageuse et la date
 
 var _source = mviewer.customLayers.sentinel.layer.getSource();
-
-_source.getParams()['TIME'] = filter_time;
-
-_source.getParams()['maxcc'] = cloud_cover;
-
-_source.changed();
-
+mviewer.customLayers.sentinel.requestOnImageChange({
+  "maxcc": cloud_cover,
+  "TIME": filter_time,
+  "LAYERS": image
+});
 if (_source.hasOwnProperty("tileClass")) {
 
     _source.updateParams({'ol3_salt': Math.random()});
@@ -139,26 +130,6 @@ if (_source.hasOwnProperty("tileClass")) {
 }
 
 };
-_applyFilterToAllLayers = function (time_filter, cc) {
-
-//applique les changements Ã  toutes les couches de la liste
-
-const allImages = sentinelLayers.map(sentinelObj => sentinelObj.value);
-
-//pour chaque layer de la liste des layers, on:
-
-allImages.forEach((layer) =>{
-
-    //appelle la fonction:
-
-    this._setLayerExtraParameters(layer,time_filter, cc);
-
-});
-
-
-
-}
-
 
 // Mandatory - code executed when panel is opened
 init() {
@@ -170,6 +141,7 @@ init() {
   // Get all inputs
   var imageSelect = $("#image-displayed");
   var cloudInput = $("#cloud-cover");
+  var dateInput = $("#shooting-date");
   var applyButton = $("#applyButton");
 
   // Populate the select input for WMS/WFS request
@@ -184,25 +156,22 @@ init() {
   cloudInput.val(0);
 
   // Click event to apply all the parameters entered in the inputs
-  applyButton.on("click", function () {
+  applyButton.on("click",  () => {
     let image = imageSelect.val();
     let cloud = cloudInput.val();
-    //let date = shooting-date.val();
+    let date = dateInput.datepicker('getDate');
 
-    // Call customLayer function to update the layer
-    mviewer.customLayers.sentinel.requestOnImageChange({
-      "image": image,
-      "cloud": cloud,
-      "date": "poney"
-    });
+    this.createWfsRequest(date,image,cloud);
+   
   });
   // Init DatePicker
   this._initDatePicker({
     todayHighlight: true,
-    beforeShowDay: this._processForEachDay
+    beforeShowDay: this._processForEachDay,
+    autoclose: true
   });
   // Get WFS data and Init datePicker21
-  this.createWfsRequest()
+  this.createWfsRequest(new Date());
 }
 // Mandatory - code executed when panel is closed
 destroy() {
