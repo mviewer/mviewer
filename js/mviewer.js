@@ -499,9 +499,9 @@ mviewer = (function () {
         _sourceSelectOverlay = new ol.source.Vector();
         _selectOverlayFeatureLayer = new ol.layer.Vector({
             source: _sourceSelectOverlay,
-            style: getSelectStyle.bind(this, '82, 98, 217', 4)
+            style: getSelectStyle.bind(this, '82, 98, 217', 4),
+            mviewerid: 'selectoverlay'
         });
-        _selectOverlayFeatureLayer.set('mviewerid', 'selectoverlay');
         _map.addLayer(_selectOverlayFeatureLayer);
     };
 
@@ -515,9 +515,9 @@ mviewer = (function () {
         _sourceSubSelectOverlay = new ol.source.Vector();
         _subSelectOverlayFeatureLayer = new ol.layer.Vector({
             source: _sourceSubSelectOverlay,
-            style: getSelectStyle.bind(this, '252, 186, 3', 2)
+            style: getSelectStyle.bind(this, '252, 186, 3', 2),
+            mviewerid: 'subselectoverlay'
         });
-        _subSelectOverlayFeatureLayer.set('mviewerid', 'subselectoverlay');
         _map.addLayer(_subSelectOverlayFeatureLayer);
     };
 
@@ -2064,17 +2064,8 @@ mviewer = (function () {
          */
 
         hideLocation: function ( ) {
-            $("#mv_marker").hide();
-        },
-
-        /**
-         * Public Method: hideSelectOverlay
-         *
-         */
-        hideSelectOverlay: function ( ) {
             _sourceSelectOverlay.clear();
             _sourceSubSelectOverlay.clear();
-            // for case that fallback pin is present
             $("#mv_marker").hide();
         },
 
@@ -2737,7 +2728,7 @@ mviewer = (function () {
                 if (feature.get("mviewerid") === layerid) {
                     _sourceSelectOverlay.removeFeature(feature);
                     _sourceSubSelectOverlay.getFeatures().forEach(subFeature => {
-                        if (feature.ol_uid == subFeature.ol_uid) {
+                        if (feature.ol_uid === subFeature.ol_uid) {
                             _sourceSubSelectOverlay.removeFeature(subFeature)
                         }
                     })
@@ -2750,9 +2741,6 @@ mviewer = (function () {
                 if (panel.hasClass("active")) {
                     panel.toggleClass("active");
                 }
-                // only necessary for fallback pin (GetFeatureInfo without geometry).
-                // could be improved by checking if one of the displayed layers is concerned
-                // instead of calling it on last one
                 $("#mv_marker").hide();
             } else {
                 if ( tab.hasClass("active") ) {
@@ -2851,10 +2839,7 @@ mviewer = (function () {
         getProjection: function () { return _projection; },
 
         getSourceOverlay: function () { return _sourceOverlay; },
-
-        getSourceSelectOverlay: function () { return _sourceSelectOverlay; },
-
-        getSourceSubSelectOverlay: function () { return _sourceSubSelectOverlay; },
+        
 
         setTopLayer: function (layer) { _topLayer = layer; },
 

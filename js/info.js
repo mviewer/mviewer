@@ -81,22 +81,6 @@ var info = (function () {
     var _sourceOverlay;
 
     /**
-     * Property: _sourceSelectOverlay
-     * @type {ol.source.Vector}
-     * Used to hightlight selected vector features
-     */
-
-    var _sourceSelectOverlay;
-
-    /**
-     * Property: _sourceSubSelectOverlay
-     * @type {ol.source.Vector}
-     * Used to hightlight sub selected vector feature
-     */
-
-    var _sourceSubSelectOverlay;
-
-    /**
      * Property: _queriedFeatures
      * Array of ol.Feature
      * Used to store features retrieved on click
@@ -434,7 +418,7 @@ var info = (function () {
                 if (showFallbackPin) {
                     mviewer.showLocation(_projection.getCode(), _clickCoordinates[0], _clickCoordinates[1]);
                 } else {
-                    mviewer.hideLocation();
+                    $("#mv_marker").hide();
                 }
             });
             $('#loading-indicator').hide();
@@ -772,8 +756,6 @@ var info = (function () {
             _panelsTemplate["bottom-panel"] = configuration.getConfiguration().application.templatebottominfopanel;
         }
         _sourceOverlay = mviewer.getSourceOverlay();
-        _sourceSelectOverlay = mviewer.getSourceSelectOverlay();
-        _sourceSubSelectOverlay = mviewer.getSourceSubSelectOverlay();
         $.each(_overLayers, function (i, layer) {
             if (layer.queryable) {
                 _addQueryableLayer(layer);
