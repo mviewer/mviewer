@@ -698,7 +698,7 @@ var info = (function () {
             }
             feature.setProperties({'serialized': serialized})
             // attach ol_uid to identify feature in DOM (not all features have a feature id as property)
-            obj.features.push({...feature.getProperties(), feature_id: feature.ol_uid});
+            obj.features.push({...feature.getProperties(), feature_ol_uid: feature.ol_uid});
         });
         var rendered = Mustache.render(tpl, obj);
         return _customizeHTML(rendered, olfeatures.length);

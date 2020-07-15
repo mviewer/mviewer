@@ -1,5 +1,5 @@
 {{#features}}
-	<li id="{{feature_id}}" class="item" style="padding-bottom:65px;">		
+	<li id="{{feature_ol_uid}}" class="item" style="padding-bottom:65px;">		
 		<div class="title-feature" style="padding-top:10px;">{{nom}}</div>
 		<h4><select onchange="drawCharts(this.value);">					
     			<option>2017</option>
