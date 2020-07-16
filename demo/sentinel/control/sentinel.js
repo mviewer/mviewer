@@ -63,6 +63,7 @@ class Sentinel extends AdvancedCustomControl {
     this._bandes = {};
 
   }
+  // Transform a date object into a string foolowing this format : YYYY-MM-DD
   _formatDate = function (date) {
 
     var d = date.getDate();
