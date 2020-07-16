@@ -69,6 +69,7 @@ class Sentinel extends CustomLayer {
 
     });
   }
+  // Update Layer when Changing filters like cloud coverage
   requestOnImageChange(values) {
     this.layer.getSource().clear();
     var parameters = {};
