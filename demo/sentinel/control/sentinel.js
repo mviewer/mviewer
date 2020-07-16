@@ -1,21 +1,38 @@
 // All images to be displayed
-const sentinelLayers = [{
-    "value": "AGRICULTURE",
-    "input": "Agriculture"
+const sentinelLayers = {
+  "AGRICULTURE": {
+    "input": "Agriculture",
+    "bandes": {
+      "bande1": "B11",
+      "bande2": "B08",
+      "bande3": "B02"
+    }
   },
-  {
-    "value": "TRUE_COLOR",
-    "input": "Vraies Couleurs"
+  "TRUE_COLOR": {
+    "input": "Vraies Couleurs",
+    "bandes": {
+      "bande1": "B04",
+      "bande2": "B03",
+      "bande3": "B02"
+    }
   },
-  {
-    "value": "GEOLOGY",
-    "input": "Geologie"
+  "GEOLOGY": {
+    "input": "Geologie",
+    "bandes": {
+      "bande1": "B12",
+      "bande2": "B11",
+      "bande3": "B02"
+    }
   },
-  {
-    "value": "SWIR",
-    "input": "Swir"
+  "SWIR": {
+    "input": "Swir",
+    "bandes": {
+      "bande1": "B12",
+      "bande2": "B08",
+      "bande3": "B04"
+    }
   }
-];
+};
 
 // WFS request properties
 const WFSrequest = {
@@ -40,6 +57,10 @@ class Sentinel extends AdvancedCustomControl {
     super(id);
     // Data initialised once at the start of the app
     this._storedData = {};
+    // Default Image
+    this._selectedImage = "TRUE_COLOR";
+    // Bandes associated with the image
+    this._bandes = {};
 
   }
   _formatDate = function (date) {
@@ -64,33 +85,31 @@ class Sentinel extends AdvancedCustomControl {
     if (options) {
       var datepicker = $(".sentinelDatePicker");
       datepicker.datepicker("destroy");
-      /*
-      datepicker.datepicker(options).on('changeDate',(e)=>{
-        this._createWfsRequest(e.format());
-      });
-      */
       datepicker.datepicker(options);
       datepicker.datepicker("setDate", date);
-
-
     } else {
       console.log("No propreties provided !");
     }
   }
   // Callback to sort the dates of the datepicker
   _processForEachDay(date, parent) {
+    // Send the context of the customControl with parent to use its functions
     date = parent._formatDate(date);
     var cloudCover = document.getElementById("cloud-cover").value;
     var classe = "";
+    // Look for the Index of the Dates that do not correspond to the cloud coverage (either below or above)
     var foundIndex = _availableDates.findIndex(elem => elem.date === date);
     if (foundIndex >= 0) {
+      // If found then set class for superior coverage
       if (_availableDates[foundIndex].cc > cloudCover) {
         classe = 'selectedDatesUpper';
-      } else if (_availableDates[foundIndex].cc < cloudCover) {
+      }
+      // If found then set class for inferior coverage 
+      else if (_availableDates[foundIndex].cc < cloudCover) {
         classe = 'selectedDatesLower';
       }
     }
-
+    // If the class is not specified do not set the tooltip over the date
     return {
       classes: classe,
       tooltip: classe !== "" ? "Couverture Nuageuse : " + _availableDates[foundIndex].cc + " %" : false
@@ -101,7 +120,7 @@ class Sentinel extends AdvancedCustomControl {
 
     _availableDates = [];
 
-    // Remove feature which have more clouds than specified and store their dates
+    // Remove feature which have more vloud coverage than specified and store their dates and cloud coverage
     var selection = this._storedData.filter((feature) => {
       var inrange = feature.properties.cloudCoverPercentage <= parseInt(couverture);
       if (_availableDates.findIndex(elem => elem.date === feature.properties.date) === -1) {
@@ -114,6 +133,41 @@ class Sentinel extends AdvancedCustomControl {
     });
     return selection;
   }
+  // Create the script to change gamma and gain in the WMS request
+  _generateCustomScript(){
+    let gain = document.getElementById("sentinel-layer-gain").value;
+    let gamma = document.getElementById("sentinel-layer-gamma").value;
+    return 'let viz = new HighlightCompressVisualizerSingle(0,0.4, gain = ' + gain + ',gamma=' + gamma + ');' +
+           'function evaluatePixel(samples) {' +
+              'let val = [samples[0].' + this._bandes.bande1 + ', samples[0].' + this._bandes.bande2 + ', samples[0].' + this._bandes.bande3 + '];' +
+              'return val.map(v=>viz.process(v));' +
+           '}' +
+           'function setup(ds) {' +
+              'setInputComponents([ds.' + this._bandes.bande1 + ', ds.' + this._bandes.bande2 + ', ds.' + this._bandes.bande3 + ']);' +
+              'setOutputComponentCount(3);' +
+           '}';
+    
+  }
+  // Update all parameters related to the active layer/image
+  _setLayerExtraParameters = function (filter_time, image, cloud_cover) {
+
+    // Update Layer with CustomLayer function
+    var _source = mviewer.customLayers.sentinel.layer.getSource();
+    this._bandes = sentinelLayers[image].bandes;
+    var customScriptEncoded = window.btoa(this._generateCustomScript());
+    mviewer.customLayers.sentinel.requestOnApplyClicked({
+      "maxcc": cloud_cover,
+      "TIME": filter_time,
+      "LAYERS": image,
+      "EVALSCRIPT":customScriptEncoded
+    });
+    if (_source.hasOwnProperty("tileClass")) {
+      _source.updateParams({
+        'ol3_salt': Math.random()
+      });
+    }
+
+  };
   // data request
   _createWfsRequest(date, image = "TRUE_COLOR", cloud = 0) {
     var newDate = this._formatDate(date);
@@ -137,33 +191,14 @@ class Sentinel extends AdvancedCustomControl {
       }
     });
   }
-
-  _setLayerExtraParameters = function (filter_time, image, cloud_cover) {
-
-    // Update Layer with CustomLayer function
-
-    var _source = mviewer.customLayers.sentinel.layer.getSource();
-    mviewer.customLayers.sentinel.requestOnImageChange({
-      "maxcc": cloud_cover,
-      "TIME": filter_time,
-      "LAYERS": image
-    });
-    if (_source.hasOwnProperty("tileClass")) {
-
-      _source.updateParams({
-        'ol3_salt': Math.random()
-      });
-
-    }
-
-  };
-
+  
+  
   // Mandatory - code executed when panel is opened
   init() {
 
     // Init Sliders
-    $("#sentinel-layer-lumos").slider({});
-    $("#sentinel-layer-contrast").slider({});
+    $("#sentinel-layer-gain").slider({});
+    $("#sentinel-layer-gamma").slider({});
 
     // Get all inputs
     var imageSelect = $("#image-displayed");
@@ -172,12 +207,15 @@ class Sentinel extends AdvancedCustomControl {
     var applyButton = $("#applyButton");
 
     // Populate the select input for WMS/WFS request
-    sentinelLayers.forEach(elem => {
-      imageSelect.append(new Option(elem.input, elem.value));
-    });
-
+    var allLayersEntries = Object.entries(sentinelLayers);
+    for (const [key, value] of allLayersEntries) {
+      imageSelect.append(new Option(value.input,key));
+    }
     // Set select default value
-    imageSelect.val("TRUE_COLOR");
+    imageSelect.val(this._selectedImage);
+
+    // Set the bandes of the default selectedImage
+    this._bandes = sentinelLayers[this._selectedImage].bandes;
 
     // Set cloudCoverage input default value
     cloudInput.val(0);

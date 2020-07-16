@@ -16,3 +16,7 @@
 .selectedDatesLower:hover{
     color: black !important;
 }
+.form-group-gain label,
+.form-group-gamma label{
+    display: block !important;
+}
