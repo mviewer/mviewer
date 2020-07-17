@@ -1,39 +1,3 @@
-const legend= { items: [
-
-  {
-
-      label: "SENTINEL 2",
-
-      geometry: "Polygon",
-
-      styles: [new ol.style.Style({
-
-        stroke: new ol.style.Stroke({
-
-          color: 'rgba(52, 152, 219, 0.1)',
-
-          width: 3
-
-        }),
-
-        fill: new ol.style.Fill({
-
-          color: 'rgba(52, 152, 219, 0.1)'
-
-        })
-
-      })]
-
-  }
-
-] };
-
-const WFSrequest = new ol.layer.Vector({
-
-      source: new ol.source.Vector(),
-      style: legend.styles
-
-});
 const WMSrequest = new ol.layer.Tile({
   source: new ol.source.TileWMS({
     url: 'https://services.sentinel-hub.com/ogc/wms/f6219778-b67d-4107-84c6-56e00a2642e2',

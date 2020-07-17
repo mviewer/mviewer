@@ -121,7 +121,7 @@ class Sentinel extends AdvancedCustomControl {
 
     _availableDates = [];
 
-    // Remove feature which have more vloud coverage than specified and store their dates and cloud coverage
+    // Remove feature which have more cloud coverage than specified and store their dates and cloud coverage
     var selection = this._storedData.filter((feature) => {
       var inrange = feature.properties.cloudCoverPercentage <= parseInt(couverture);
       if (_availableDates.findIndex(elem => elem.date === feature.properties.date) === -1) {
@@ -169,7 +169,7 @@ class Sentinel extends AdvancedCustomControl {
     }
 
   };
-  // data request
+  // Create the wfs request
   _createWfsRequest(date, image = "TRUE_COLOR", cloud = 0) {
     var newDate = this._formatDate(date);
     if (date)
@@ -236,7 +236,7 @@ class Sentinel extends AdvancedCustomControl {
       beforeShowDay: (date) => this._processForEachDay(date, this),
       autoclose: true
     });
-    // Get WFS data and Init datePicker21
+    // Get WFS data and Init datePicker
     this._createWfsRequest(new Date());
   }
   // Mandatory - code executed when panel is closed
