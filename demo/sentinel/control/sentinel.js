@@ -64,7 +64,7 @@ class Sentinel extends AdvancedCustomControl {
 
   }
   // Transform a date object into a string foolowing this format : YYYY-MM-DD
-  _formatDate = function (date) {
+  _formatDate (date) {
 
     var d = date.getDate();
 
@@ -150,7 +150,7 @@ class Sentinel extends AdvancedCustomControl {
     
   }
   // Update all parameters related to the active layer/image
-  _setLayerExtraParameters = function (filter_time, image, cloud_cover) {
+  _setLayerExtraParameters (filter_time, image, cloud_cover) {
 
     // Update Layer with CustomLayer function
     var _source = mviewer.customLayers.sentinel.layer.getSource();
