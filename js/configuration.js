@@ -580,7 +580,7 @@ var configuration = (function () {
                         layer.attributefilter === "true") ? true : false;
                     oLayer.attributefield = layer.attributefield;
                     oLayer.attributeoperator = layer.attributeoperator || "=";
-                    oLayer.attributelabel = layer.attributelabel || "Attributs";
+                    oLayer.attributelabel = layer.attributelabel;
                     if (layer.attributevalues && layer.attributevalues.search(",")) {
                         oLayer.attributevalues = layer.attributevalues.split(",");
                     }
