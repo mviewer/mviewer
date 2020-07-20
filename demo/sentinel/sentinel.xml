@@ -15,7 +15,7 @@
 <baselayers style="default">
     <baselayer visible="true" id="positron" thumbgallery="img/basemap/positron.png" title="CartoDb" label="Positron" type="OSM" url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution="Map tiles by  &lt;a href=&quot;https://cartodb.com/attributions&quot;&gt;CartoDb&lt;/a&gt;, under  &lt;a href=&quot;https://creativecommons.org/licenses/by/3.0/&quot;&gt;CC BY 3.0 &lt;/a&gt;"  ></baselayer>
 </baselayers>
-<themes mini="true" legendmini="true">
+<themes mini="true" legendmini="false">
     <theme name="Je saisis..."  collapsed="false" id="demo" icon="fas fa-cog">
         <layer id="sentinel" name="Mes critères de séléction d'image" visible="true" queryable="false"
             type="customlayer"

@@ -176,6 +176,9 @@ class Sentinel extends AdvancedCustomControl {
   // Create the wfs request
   _createWfsRequest(date, image = "TRUE_COLOR", cloud = 0, showDate = false) {
     var newDate = this._formatDate(date);
+    var bbox = mviewer.getMap().getView().calculateExtent().join(",");
+    console.log(bbox);
+    WFSrequest.BBOX = bbox;
     if (date)
       WFSrequest.TIME = newDate;
     $.ajax({
