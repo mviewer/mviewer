@@ -105,7 +105,7 @@ class Sentinel extends AdvancedCustomControl {
       if (_availableDates[foundIndex].cc > cloudCover) {
         classe = 'selectedDatesUpper';
       }
-      // If found then set class for inferior coverage 
+      // If found then set class for inferior coverage
       else if (_availableDates[foundIndex].cc < cloudCover) {
         classe = 'selectedDatesLower';
       }
@@ -147,19 +147,23 @@ class Sentinel extends AdvancedCustomControl {
               'setInputComponents([ds.' + this._bandes.bande1 + ', ds.' + this._bandes.bande2 + ', ds.' + this._bandes.bande3 + ']);' +
               'setOutputComponentCount(3);' +
            '}';
-    
+
   }
   // Update all parameters related to the active layer/image
-  _setLayerExtraParameters (filter_time, image, cloud_cover) {
+  _setLayerExtraParameters (filter_time, image, cloud_cover, showDate) {
 
     // Update Layer with CustomLayer function
+    var layers = image;
+    if (showDate) {
+      layers += ",DATE";
+    }
     var _source = mviewer.customLayers.sentinel.layer.getSource();
     this._bandes = sentinelLayers[image].bandes;
     var customScriptEncoded = window.btoa(this._generateCustomScript());
     mviewer.customLayers.sentinel.requestOnApplyClicked({
       "maxcc": cloud_cover,
       "TIME": filter_time,
-      "LAYERS": image,
+      "LAYERS": layers,
       "EVALSCRIPT":customScriptEncoded
     });
     if (_source.hasOwnProperty("tileClass")) {
@@ -170,7 +174,7 @@ class Sentinel extends AdvancedCustomControl {
 
   };
   // Create the wfs request
-  _createWfsRequest(date, image = "TRUE_COLOR", cloud = 0) {
+  _createWfsRequest(date, image = "TRUE_COLOR", cloud = 0, showDate = false) {
     var newDate = this._formatDate(date);
     if (date)
       WFSrequest.TIME = newDate;
@@ -183,7 +187,7 @@ class Sentinel extends AdvancedCustomControl {
       success: (data) => {
         this._storedData = data.features;
         this._filterWfsData(cloud);
-        this._setLayerExtraParameters(newDate, image, cloud);
+        this._setLayerExtraParameters(newDate, image, cloud, showDate);
         this._initDatePicker({
           todayHighlight: true,
           beforeShowDay: (date) => this._processForEachDay(date, this),
@@ -192,8 +196,8 @@ class Sentinel extends AdvancedCustomControl {
       }
     });
   }
-  
-  
+
+
   // Mandatory - code executed when panel is opened
   init() {
 
@@ -226,8 +230,9 @@ class Sentinel extends AdvancedCustomControl {
       let image = imageSelect.val();
       let cloud = cloudInput.val();
       let date = dateInput.datepicker('getDate');
+      let showDate = $("#sentinelShowDate").prop("checked");
 
-      this._createWfsRequest(date, image, cloud);
+      this._createWfsRequest(date, image, cloud, showDate);
 
     });
     // Init DatePicker
