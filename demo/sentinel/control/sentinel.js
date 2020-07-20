@@ -20,16 +20,24 @@ const sentinelLayers = {
     "input": "Geologie",
     "bandes": {
       "bande1": "B12",
-      "bande2": "B11",
+      "bande2": "B04",
       "bande3": "B02"
     }
   },
   "SWIR": {
     "input": "Swir",
     "bandes": {
-      "bande1": "B12",
-      "bande2": "B08",
-      "bande3": "B04"
+      "bande1": "B02",
+      "bande2": "B11",
+      "bande3": "B12"
+    }
+  },
+  "FALSE_COLOR": {
+    "input": "Fausses couleurs",
+    "bandes": {
+      "bande1": "B08",
+      "bande2": "B04",
+      "bande3": "B03"
     }
   }
 };
@@ -177,7 +185,6 @@ class Sentinel extends AdvancedCustomControl {
   _createWfsRequest(date, image = "TRUE_COLOR", cloud = 0, showDate = false) {
     var newDate = this._formatDate(date);
     var bbox = mviewer.getMap().getView().calculateExtent().join(",");
-    console.log(bbox);
     WFSrequest.BBOX = bbox;
     if (date)
       WFSrequest.TIME = newDate;

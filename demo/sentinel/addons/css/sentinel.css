@@ -20,3 +20,6 @@
 .form-group-gamma label{
     display: block !important;
 }
+img#legend-sentinel {
+    width: 200px;
+}

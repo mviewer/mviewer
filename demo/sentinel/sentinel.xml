@@ -18,6 +18,7 @@
 <themes mini="true" legendmini="false">
     <theme name="Je saisis..."  collapsed="false" id="demo" icon="fas fa-cog">
         <layer id="sentinel" name="Mes critères de séléction d'image" visible="true" queryable="false"
+            legendurl="https://www.sentinel-hub.com/img/logo.svg"
             type="customlayer"
             customcontrolpath="demo/sentinel/control"
             opacity="1"
