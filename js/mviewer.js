@@ -607,8 +607,13 @@ mviewer = (function () {
                         summary += '<a href="'+_overLayers[this.layer].metadata+'" target="_blank">En savoir plus</a>';
                     }
                     _overLayers[this.layer].summary = summary;
+
+                    var modifiedDate = $(result).find("dct\\:modified, modified").text() || $(result).find("dct\\:created, created").text();
+                    _overLayers[this.layer].modifiedDate = modifiedDate;
+
                     //update visible layers on the map
-                    $('#'+this.layer+'-layer-summary').attr("data-content", summary);
+                    $(`#${this.layer}-layer-summary`).attr("data-content", summary);
+                    $(`#${this.layer}-date`).text(modifiedDate);
                 }
             });
         }
@@ -2065,6 +2070,7 @@ mviewer = (function () {
                 crossorigin: layer.crossorigin,
                 legendurl: layer.legendurl,
                 attribution: layer.attribution,
+                modifiedDate: layer.modifiedDate,
                 metadata: layer.metadata,
                 tooltipControl: false,
                 styleControl: false,

@@ -120,6 +120,7 @@ mviewer.templates.layerControl = [
                                 '<span title="Afficher les informations" i18n="theme.layers.infos" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>',
                         '</a>',
                     '{{/metadata}}',
+                    '<span id="{{layerid}}-date" style="float:right;">{{modifiedDate}}</span>',
                     '</p>',
                 '</div>',
             '</div>',
