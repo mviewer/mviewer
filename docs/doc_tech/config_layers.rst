@@ -65,6 +65,7 @@ Configurer - Les couches
                 geocodingfields=""
                 xfield=""
                 yfield=""
+                importformat=""
                 url=""
                 attribution=""
                 tooltip=""
@@ -137,7 +138,8 @@ Paramètres pour gérer la recherche
 Paramètres pour les couches non WMS
 =======================================
 
-* ``type``: Type de la couche (wms|geojson|kml|customlayer|csv) default=wms. Si customlayer est défini, il faut instancier un Layer OpenLayers dans un fichier javascript ayant pour nom l'id de la couche (voir ":ref:`configfuse`"). Ce fichier js doit être placé dans le répertoire customlayers/
+* ``type``: Type de la couche (wms|geojson|kml|customlayer|import) default=wms. Si customlayer est défini, il faut instancier un Layer OpenLayers dans un fichier javascript ayant pour nom l'id de la couche (voir ":ref:`configfuse`"). Ce fichier js doit être placé dans le répertoire customlayers/
+Pour le type import l'extension `fileimport` doit être activée. 
 * ``tooltip``: Pour les couches de type vecteur uniquement. Booléen précisant si les entités de la couche sont affichées sous forme d'infobulle au survol de la souris. (Les infobulles ne fonctionnent qu'avec une seule couche à la fois). Valeur par défaut = false.
 * ``tooltipenabled``: Précise la couche prioritaire pour l'affichage des infobulles.
 * ``tooltipcontent``: Chaîne de caractères décrivant l'information à afficher dans les infobulles. Cette chaîne contient soit le nom d'un champ de la couche soit un template Mustache (code html) combinant plusieurs noms de champs. Exemple : ``tooltipcontent="{{name}} - ({{city}})"``.
@@ -150,8 +152,8 @@ Paramètres pour les couches non WMS
 	L'expression valide pour l'expression précédente est :
 	``tooltipcontent="{name}} &lt;/br&gt; {{city}}"``
 
-* ``vectorlegend`` : Booléen précisant si la légende pour les couches de type vecteur (customlayer ou csv) est dynamiquement créée
-* ``nohighlight`` : Booléen précisant, pour les couches de type vecteur (customlayer, geojson ou csv), si la mise en surbrillance du hover est désactivée
+* ``vectorlegend`` : Booléen précisant si la légende pour les couches de type vecteur (customlayer ou import) est dynamiquement créée
+* ``nohighlight`` : Booléen précisant, pour les couches de type vecteur (customlayer, geojson ou import), si la mise en surbrillance du hover est désactivée
 
 Paramètres pour gérer la dimension temporelle des couches WMS
 ================================================================
@@ -195,10 +197,11 @@ Autres paramètres
 
 * ``authorization`` : Permet d'indiquer des identifiants par défaut si secure est à "layer"
 * ``useproxy`` :guilabel:`studio` : Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de crossOrigin lorsque CORS n'est pas activé sur le serveur distant.
-* ``geocoder`` : pour les couches de type csv, précise l'API de géocodage à utiliser (ban).
-* ``geocodingfields`` : pour les couches de type csv, précise les champs utilisables pour le géocodage.
-* ``xfield`` : pour les couches de type csv, précise le champ à utiliser pour la longitude.
-* ``yfield`` : pour les couches de type csv, précise le champ à utiliser pour la latitude.
+* ``importformat`` : pour les couches de type import, précise le format du fichier
+* ``geocoder`` : pour les couches de type import (csv), précise l'API de géocodage à utiliser (ban).
+* ``geocodingfields`` : pour les couches de type import (csv), précise les champs utilisables pour le géocodage.
+* ``xfield`` : pour les couches de type import (csv), précise le champ à utiliser pour la longitude.
+* ``yfield`` : pour les couches de type import (csv), précise le champ à utiliser pour la latitude.
 * ``owsoptions`` : Pour une couche WMS, permet de forcer certains paramètres des requêtes GetMap. Exemple : "VERSION:1.1.1,EXCEPTIONS:application/vnd.ogc.se_inimage".
 
 **Syntaxe** ``<template>``
@@ -224,7 +227,7 @@ Cet élément optionnel, permet d'associer un template type Mustache (https://gi
 
 Elément enfant de ``<layer>``
 
-Pour les couches type csv, cet élément optionnel permet de définir les projections (SCR) que l’outil d'import doit pouvoir supporter.
+Pour les couches type import, cet élément optionnel permet de définir les projections (SCR) que l’outil d'import doit pouvoir supporter.
 La définition de chaque projection se fait dans un élément enfant ``<projection proj4js=""/>`` qui contient la chaîne de caractère proj4js comme attribut.
 Par défaut le SCR WGS84 (EPSG:4326) est supporté.
 
