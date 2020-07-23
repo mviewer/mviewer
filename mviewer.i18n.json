@@ -96,7 +96,9 @@
         "csv.upload.processing": "Traitement en cours",
         "csv.alert.filereader": "Erreur de lecture de fichier",
         "csv.alert.geocoding": "Problème avec le géocodage",
-        "csv.alert.fileloading": "Problème avec la récupération du fichier csv"
+        "csv.alert.fileloading": "Problème avec la récupération du fichier csv",
+        "fileimport.button.title": "Importer fichier local",
+        "fileimport.alert.config": "Pas de couche d'import configurée"
     },
     "en": {
         "legend.title": "Display/hide the legend",
@@ -194,6 +196,8 @@
         "csv.upload.processing": "Processing...",
         "csv.alert.filereader": "Error reading file",
         "csv.alert.geocoding": "Geocoding error",
-        "csv.alert.fileloading": "Error loading file"
+        "csv.alert.fileloading": "Error loading file",
+        "fileimport.button.title": "Import local file",
+        "fileimport.alert.config": "No import layer configured"
     }
 }

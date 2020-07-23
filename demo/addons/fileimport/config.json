@@ -1,0 +1,6 @@
+{
+  "js": ["fileimport.js"],
+  "css": "fileimport.css",
+  "html": "fileimport.html",
+  "target": "toolstoolbar"
+}
