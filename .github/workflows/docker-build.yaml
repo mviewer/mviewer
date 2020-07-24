@@ -13,15 +13,22 @@ jobs:
       - name: "Checking out the repository"
         uses: actions/checkout@v2
       - name: "Calculating the docker image tag"
-        if: github.repository == 'geobretagne/mviewer'
+        if: github.repository == 'geobretagne/mviewer' && github.ref == 'refs/heads/master'
         id: version
         run: |
-         if [ ${{ github.ref }} == 'refs/heads/master' ]
-         then
-            DOCKER_TAG=latest
-         else
-            DOCKER_TAG=$( echo ${{ github.ref }} | cut -d'/' -f3)
-         fi
+         echo ::set-output name=VERSION::stable
+
+      - name: "Calculating the docker image tag latest"
+        if: github.repository == 'geobretagne/mviewer' && github.ref == 'refs/heads/develop'
+        id: version
+        run: |
+         echo ::set-output name=VERSION::latest
+
+      - name: "Calculating the docker image tag latest"
+        if: github.repository == 'geobretagne/mviewer' && github.release.types == 'published'
+        id: version
+        run: |
+         DOCKER_TAG=$( echo ${{ github.ref }} | cut -d'/' -f3)
          echo ::set-output name=VERSION::$DOCKER_TAG
 
       - name: "build the container"
