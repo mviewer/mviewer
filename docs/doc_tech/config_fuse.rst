@@ -20,7 +20,7 @@ Il est nécessaire de créer un fichier javascript pour utiliser la recherche Fu
 
 Ce fichier devra :
 
-* porter le même nom que le nom de la couche
+* son nom et le nom de la variable déclarée au début être le même que le nom de la couche
 * la donnée issue de la requête WFS devra être dans la même projection que le mviewer (ici 4326)
 * le style de la couche s'appuie sur openLayer (https://openlayers.org/workshop/fr/vector/style.html)
 

@@ -11,7 +11,7 @@ Configurer - Les couches
 **Syntaxe** ``<layer>``
 ***************************
 
-Elément enfant de ``<theme>`` ou ``<group>``
+Élément enfant de ``<theme>`` ou ``<group>``
 
 .. code-block:: xml
        :linenos:
@@ -73,6 +73,9 @@ Elément enfant de ``<theme>`` ou ``<group>``
                 metadata=""
                 metadata-csw="" >
                 <template url=""></template>
+                <projections>
+                    <projection proj4js=""/>
+                </projections>
         </layer>
 
 Paramètres pour une configuration minimaliste
@@ -86,19 +89,19 @@ Paramètres pour une configuration minimaliste
 Paramètres pour gérer l'affichage de la couche
 ===================================================
 
-* ``scalemin`` :guilabel:`studio` : Echelle minimum de la couche
-* ``scalemax`` :guilabel:`studio` : Echelle maximum de la couche
+* ``scalemin`` :guilabel:`studio` : Échelle minimum de la couche
+* ``scalemax`` :guilabel:`studio` : Échelle maximum de la couche
 * ``dynamiclegend`` : Booléen précisant si la légende est liée à l'échelle de la carte et si elle nécessite d'être actualisée à chaque changement d'échelle de la carte.
 * ``visible`` :guilabel:`studio` :  Booléen stipulant est ce que la couche est actuellement visible
 * ``exclusive``:  Booléen stipulant si la couche est exclusive. Si la valeur est "true", l'affichage de cette couche masquera automatiquement toutes les autres couches ayant ce paramètre activé.
 * ``style`` :guilabel:`studio` : Style(s) de la couche. Si plusieurs styles , utiliser la virgule comme séparateur. Si la couche est de type wms, il faut faire référence à un style sld. Si la couche est de type geojson, il faut faire référence à un style définit dans lib/featurestyles.js. Si la couche est de type customlayer, le style n'est pas défini ici.
 * ``stylesalias`` :guilabel:`studio` : Titres à utiliser pour chaques style. utiliser la virgule comme séparateur si plusieurs styles.
 * ``sld`` :guilabel:`studio` : Lien vers un SLD stocké sur le web. Dans ce fichier SLD, la balise sld:Name contenue dans sld:NamedLayer doit être égale au nom de la couche. Si plusieurs styles , utiliser la virgule comme séparateur. S'applique uniquement aux layers WMS. Il faut indiquer l'URL résolvable par le serveur WMS du ou des sld.
-* ``tiled`` :guilabel:`studio` : Booléen stipluant est ce que la couche est tuilée
+* ``tiled`` :guilabel:`studio` : Booléen stipulant est ce que la couche est tuilée
 * ``opacity`` :guilabel:`studio` : Opacité de la couche (1 par défaut)
-* ``legendurl`` :guilabel:`studio` :: url premettant de récupérer la légende. Si non défini, c'est un getFeatureLegend qui est effectué.
+* ``legendurl`` :guilabel:`studio` : url premettant de récupérer la légende. Si non défini, c'est un getFeatureLegend qui est effectué.
 * ``filter`` :guilabel:`studio` : Expression CQL permettant de filtrer la couche ex: insee=35000 Ou INTERSECT(the_geom, POINT (-74.817265 40.5296504)) [tutorial] (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial)
-* ``toplayer``: Précise si la couche demeure figée". Booléen. Défaut = true.
+* ``toplayer``: Précise si la couche demeure figée. Booléen. Défaut = true.
 * ``expanded`` :guilabel:`studio` : Booléan précisant si le panneau de la couche est agrandi au démarrage. La valeur par défaut est false.
 
 
@@ -125,7 +128,7 @@ Paramètres pour gérer la recherche
 * ``searchengine``: elasticsearch|fuse. Défault=elasticsearch.
 * ``searchid``: Nom du champ à utiliser côté WMS afin de faire le lien avec l'_id elasticsearch
 * ``iconsearch``: Lien vers l'image utilisée pour illustrer le résultat d'une recherche ElasticSearch
-* ``fusesearchkeys``: Chaîne de caractères contenant le liste des champs de la couche à indexer pour la recherche. Les noms des champs doivent être séparés par des virgules. A n'utiliser que si searchengine = fuse.
+* ``fusesearchkeys``: Chaîne de caractères contenant la liste des champs de la couche à indexer pour la recherche. Les noms des champs doivent être séparés par des virgules. À n'utiliser que si searchengine = fuse.
 * ``fusesearchresult``: Chaîne de caractères décrivant l'information à afficher dans les résultats de recherche. Cette chaîne contient soit le nom d'un champ de la couche soit un template Mustache combinant plusieurs noms de champs. Exemple : "{{name}} ({{city}})". A n'utiliser que si searchengine = fuse
 
 
@@ -154,9 +157,9 @@ Paramètres pour gérer la dimension temporelle des couches WMS
 * ``timefilter``: Booléen précisant si la dimension temporelle est activée pour cette couche. Voir (http://docs.geoserver.org/latest/en/user/services/wms/time.html)
 * ``timeinterval``: day|month|year
 * ``timecontrol``: calendar|slider|slider-range
-* ``timevalues``: valeurs séparées par des virgules - A utiliser avec le controle slider pour des valeurs non régulières ex (1950, 1976, 1980, 2004).
+* ``timevalues``: valeurs séparées par des virgules - À utiliser avec le controle slider pour des valeurs non régulières ex (1950, 1976, 1980, 2004).
 * ``timemin``: Date mini format : "yyyy-mm-dd"
-* ``timemax``: Date mini format : "yyyy-mm-dd"
+* ``timemax``: Date maxi format : "yyyy-mm-dd"
 
 Paramètres pour gérer le filtre attributaire (liste déroulante) des couches WMS
 ===================================================================================
@@ -181,11 +184,11 @@ Autres paramètres
 * ``secure`` :guilabel:`studio` : Texte précisant le niveau de protection de la couche Les valeurs possibles sont :
 
 	* ``public`` : (ou paramètre absent), l'accès à la couche est public
-	* ``global`` : l'accès à la couche est contrainte par le CAS geoserver. Un test est affectué pour savoir si la couche est accessible. Si ce n'est pas le cas, la couche est retirée du panneau et de la carte.
+	* ``global`` : l'accès à la couche est contrainte par le CAS geoserver. Un test est effectué pour savoir si la couche est accessible. Si ce n'est pas le cas, la couche est retirée du panneau et de la carte.
 	* ``layer`` : l'accès à la couche nécessite une authentification sur le service (WMS). Un bouton "cadenas" est ajouté dans la légende pour cette couche. Au clic sur ce bouton, un formulaire est affiché permettant de saisir des identifiants d'accès qui seront envoyés à chaque appel au service.
 
 * ``authorization`` : Permet d'indiquer des identifiants par défaut si secure est à "layer"
-* ``useproxy`` :guilabel:`studio` : Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de de crossOrigin lorsque CORS n'est pas activé sur le serveur distant.
+* ``useproxy`` :guilabel:`studio` : Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de crossOrigin lorsque CORS n'est pas activé sur le serveur distant.
 * ``geocoder`` : pour les couches de type csv, précise l'API de géocodage à utiliser (ban).
 * ``geocodingfields`` : pour les couches de type csv, précise les champs utilisables pour le géocodage.
 * ``xfield`` : pour les couches de type csv, précise le champ à utiliser pour la longitude.
@@ -209,3 +212,21 @@ Cet élément optionnel, permet d'associer un template type Mustache (https://gi
 **Paramètres**
 
 * ``url``: paramètre optionnel de type url qui indique l'emplacement du template à utiliser.
+
+**Syntaxe** ``<projections>``
+******************************
+
+Elément enfant de ``<layer>``
+
+Pour les couches type csv, cet élément optionnel permet de définir les projections (SCR) que l’outil d'import doit pouvoir supporter.
+La définition de chaque projection se fait dans un élément enfant ``<projection proj4js=""/>`` qui contient la chaîne de caractère proj4js comme attribut.
+Par défaut le SCR WGS84 (EPSG:4326) est supporté.
+
+**Example**
+
+.. code-block:: xml
+
+        <projections>
+                <projection proj4js="'EPSG:3857','+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs'"/>
+                <projection proj4js="'EPSG:2154','+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'"/>
+        </projections>

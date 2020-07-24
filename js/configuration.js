@@ -9,7 +9,7 @@ var configuration = (function () {
 
     // Mviewer version a saisir manuellement
 
-    var VERSION = "3.3-snapshot";
+    var VERSION = "3.4-snapshot";
 
     var _showhelp_startup = false;
 
@@ -580,7 +580,7 @@ var configuration = (function () {
                         layer.attributefilter === "true") ? true : false;
                     oLayer.attributefield = layer.attributefield;
                     oLayer.attributeoperator = layer.attributeoperator || "=";
-                    oLayer.attributelabel = layer.attributelabel || "Attributs";
+                    oLayer.attributelabel = layer.attributelabel;
                     if (layer.attributevalues && layer.attributevalues.search(",")) {
                         oLayer.attributevalues = layer.attributevalues.split(",");
                     }
@@ -828,6 +828,11 @@ var configuration = (function () {
                         l = new ol.layer.Vector({
                             source: new ol.source.Vector()
                         });
+                        if (layer.projections) {
+                            oLayer.projections = layer.projections;
+                        }
+                        //allow transformation to mapProjection before map is initialized
+                        oLayer.mapProjection = conf.mapoptions.projection;
                         if (oLayer.url) {
                             csv.loadCSV(oLayer, l);
                         } else {
@@ -874,8 +879,23 @@ var configuration = (function () {
                 exportPNGElement.addEventListener('click', function(e) {
                     _map.once('postcompose', function(event) {
                         try {
-                            var canvas = event.context.canvas;
-                            exportPNGElement.href = canvas.toDataURL('image/png');
+                            var mapCanvas = document.createElement('canvas');
+                            var size = _map.getSize();
+                            mapCanvas.width = size[0];
+                            mapCanvas.height = size[1];
+                            var mapContext = mapCanvas.getContext('2d');
+                            Array.prototype.forEach.call(document.querySelectorAll('.ol-layer canvas'), function(canvas) {
+                              if (canvas.width > 0) {
+                                mapContext.globalAlpha = 1;
+                                var transform = canvas.style.transform;
+                                // Get the transform parameters from the style's transform matrix
+                                var matrix = transform.match(/^matrix\(([^\(]*)\)$/)[1].split(',').map(Number);
+                                // Apply the transform to the export map context
+                                CanvasRenderingContext2D.prototype.setTransform.apply(mapContext, matrix);
+                                mapContext.drawImage(canvas, 0, 0);
+                              }
+                            });
+                            exportPNGElement.href = mapCanvas.toDataURL('image/png');
                         }
                         catch(err) {
                             mviewer.alert(err, "alert-info");

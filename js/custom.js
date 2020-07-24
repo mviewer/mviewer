@@ -145,7 +145,15 @@ class Component {
           }
           _html.push(html);
           component.innerHTML = _html.join("");
-          target.appendChild(component);
+          if (that.config.options
+                && typeof that.config.options.position == 'number' 
+                && target.hasChildNodes()
+                && target.childNodes[that.config.options.position]
+          ) {
+            target.insertBefore(component, target.childNodes[that.config.options.position]);
+          } else {
+            target.appendChild(component);
+          }
           resolve(target);
         } else {
           reject("error");

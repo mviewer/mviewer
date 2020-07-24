@@ -1,0 +1,25 @@
+.selectedDatesUpper{
+    background-color: grey;
+    border-radius: 180px !important;
+    color: white !important;
+    font-weight: 800 !important;
+}
+.selectedDatesUpper:hover{
+    color: black !important;
+}
+.selectedDatesLower{
+    background-color: lightgrey;
+    border-radius: 180px !important;
+    color: black !important;
+    font-weight: 800 !important;
+}
+.selectedDatesLower:hover{
+    color: black !important;
+}
+.form-group-gain label,
+.form-group-gamma label{
+    display: block !important;
+}
+img#legend-sentinel {
+    width: 200px;
+}

@@ -422,6 +422,9 @@ var info = (function () {
         }
         var pixel = _map.getEventPixel(evt.originalEvent);
         var _o = mviewer.getLayers();
+        // default tooltip state or reset tooltip
+        _featureTooltip.tooltip('hide');
+        $("#map").css("cursor", "");
 
         var feature = _map.forEachFeatureAtPixel(pixel, function (feature, layer) {
             if (!layer || layer.get('mviewerid') === 'featureoverlay') {
@@ -467,45 +470,37 @@ var info = (function () {
             newFeature = true;
         }
 
-        if (feature && Object.keys(feature.getProperties()).length > 1) {
+        var l = feature && Object.keys(feature.getProperties()) ? _overLayers[feature.get('mviewerid')] : false;
+        if (l && l.tooltip && ((l.fields && l.fields.length) || l.tooltipcontent)) {
             $("#map").css("cursor", "pointer");
-            var l = _overLayers[feature.get('mviewerid')];
-            if (l && ((l.fields && l.fields.length > 0) || l.tooltipcontent)) {
-                if (newFeature && !l.nohighlight) {
-                    _sourceOverlay.clear();
-                    _sourceOverlay.addFeature(feature);
-                }
-                var title;
-                var tooltipcontent = l.tooltipcontent;
-                if ( tooltipcontent ) {
-                    if (tooltipcontent.indexOf('{{')  === -1 && tooltipcontent.indexOf('}}')  === -1) {
-                        // one specific field
-                        title = feature.getProperties()[tooltipcontent];
-                    } else {
-                        // a Mustache template
-                        title = Mustache.render(tooltipcontent, feature.getProperties());
-                    }
-                } else {
-                    title = (feature.getProperties()["name"] || feature.getProperties()["label"] ||
-                        feature.getProperties()["title"] || feature.getProperties()["nom"] ||
-                        feature.getProperties()[l.fields[0]]);
-                }
-
-                _featureTooltip.css({
-                    left: (pixel[0]) + 'px',
-                    top: (pixel[1] - 15) + 'px'
-                });
-                _featureTooltip.tooltip('hide')
-                    .attr('data-original-title', title)
-                    .tooltip('fixTitle')
-                    .tooltip('show');
-            } else {
-                _featureTooltip.tooltip('hide');
+            if (newFeature && !l.nohighlight) {
+                _sourceOverlay.clear();
+                _sourceOverlay.addFeature(feature);
             }
-        } else {
-            _featureTooltip.tooltip('hide');
-            $("#map").css("cursor", "");
-            _sourceOverlay.clear();
+            var title;
+            var tooltipcontent = l.tooltipcontent;
+            if ( tooltipcontent ) {
+                if (tooltipcontent.indexOf('{{') < 0 && tooltipcontent.indexOf('}}') < 0) {
+                    // one specific field
+                    title = feature.getProperties()[tooltipcontent];
+                } else {
+                    // a Mustache template
+                    title = Mustache.render(tooltipcontent, feature.getProperties());
+                }
+            } else {
+                title = (feature.getProperties()["name"] || feature.getProperties()["label"] ||
+                    feature.getProperties()["title"] || feature.getProperties()["nom"] ||
+                    feature.getProperties()[l.fields[0]]);
+            }
+
+            _featureTooltip.css({
+                left: (pixel[0]) + 'px',
+                top: (pixel[1] - 15) + 'px'
+            });
+            _featureTooltip.tooltip('hide')
+                .attr('data-original-title', title)
+                .tooltip('fixTitle')
+                .tooltip('show');
         }
     };
 

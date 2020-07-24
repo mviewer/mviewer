@@ -1565,7 +1565,7 @@ ul#basemapslist p {
 }
 
 /* Map-pins */
-#els_marker path {
+#mv_marker path {
   fill: #ee4b4b;
 }
 
@@ -1829,4 +1829,14 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
 }
 #lang-button.enabled, #lang-selector.enabled {
     display:inline-block;
+}
+
+#table-csv {
+  table-layout: fixed;
+}
+#table-csv th:nth-child(1){
+  width: 90px;
+}
+#table-csv th:nth-child(3){
+  width: 56px;
 }

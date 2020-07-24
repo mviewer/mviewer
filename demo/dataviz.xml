@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <application title="Résultat BAC par lycée" logo="" help="mviewer_help.html" measuretools="true" exportpng="true" style="css/themes/wet_asphalt.css" templaterightinfopanel="default"/>    
+    <application title="Résultat BAC par lycée" logo="" help="mviewer_help.html" measuretools="true" exportpng="true" style="css/themes/wet_asphalt.css" templaterightinfopanel="default"/>
     <mapoptions maxzoom="19" projection="EPSG:3857" center="-220750.13768758904,6144925.57790189" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
     <baselayers style="default"><!-- style="default"||gallery" -->
-        <baselayer  type="OSM" id="darkmatter" label="Dark Matter" title="CartoDb" thumbgallery="img/basemap/darkmatter.png" 
-            url="http://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png" maxzoom="20" 
-            visible="false" attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
-        <baselayer  type="OSM" id="positron" label="Positron" title="CartoDb" thumbgallery="img/basemap/positron.png" 
-            url="http://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20" 
-            visible="true" attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
-        <baselayer  type="OSM" id="osm1" label="OpenStreetMap" title="OpenStreetMap" thumbgallery="img/basemap/osm.png" 
-            url="http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
-            attribution="© MapQuest. Données : les contributeurs d'&lt;a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='http://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" visible="false"/>
-    </baselayers>     
+        <baselayer  type="OSM" id="darkmatter" label="Dark Matter" title="CartoDb" thumbgallery="img/basemap/darkmatter.png"
+            url="https://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png" maxzoom="20"
+            visible="false" attribution="Map tiles by  &lt;a href='https://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="OSM" id="positron" label="Positron" title="CartoDb" thumbgallery="img/basemap/positron.png"
+            url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20"
+            visible="true" attribution="Map tiles by  &lt;a href='https://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="OSM" id="osm1" label="OpenStreetMap" title="OpenStreetMap" thumbgallery="img/basemap/osm.png"
+            url="https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution="© MapQuest. Données : les contributeurs d'&lt;a href='https://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='https://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" visible="false"/>
+    </baselayers>
     <proxy url=""/>
-    <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban"/>
-    <searchparameters localities="false" features="true" bbox="false"/> 
+    <olscompletion url="https://api-adresse.data.gouv.fr/search/" type="ban"/>
+    <searchparameters localities="false" features="true" bbox="false"/>
 
-    <themes mini="true"> 
+    <themes mini="true">
     	<theme name="Lycée"  collapsed="true" id="habitant" icon="fas fa-users">
     		<layer id="lycee_resultat_bac" name="Résultats BAC"  visible="true"  queryable="true"
                     legendurl="demo/lycee.png"
@@ -33,8 +33,8 @@
 	                metadata="https://data.education.gouv.fr/explore/dataset/fr-en-indicateurs-de-resultat-des-lycees-denseignement-general-et-technologique/information/"
 	                metadata-csw="">
 		            <template url="demo/lycee_resultat_bac.mst"></template>
-		        </layer>                
-		</theme>         
+		        </layer>
+		</theme>
 
     </themes>
 </config>
