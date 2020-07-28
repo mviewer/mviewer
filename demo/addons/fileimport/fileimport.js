@@ -490,7 +490,7 @@ const fileimport = (function () {
             for (var layer in layers) {
                 if (layers[layer].type === "import") {
                     var oLayer = layers[layer];
-                    if (oLayer.url && oLayer.importformat === "csv") {
+                    if (oLayer.url) {
                         _loadCSV(oLayer, oLayer.layer);
                     } else {
                         _initLoaderFile(oLayer);

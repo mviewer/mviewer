@@ -32,7 +32,6 @@
                 yfield="latitude"
                 tooltipcontent="{{nom}}"
                 fields="nom,adresse,postcode"
-                importformat="csv"
                 url="demo/demo.csv"
                 tooltip="true"
                 searchable="true"

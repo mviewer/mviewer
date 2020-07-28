@@ -828,9 +828,6 @@ var configuration = (function () {
                         if (layer.projections) {
                             oLayer.projections = layer.projections;
                         }
-                        if (layer.importformat) {
-                            oLayer.importformat = layer.importformat;
-                        }
                         if (layer.geocodingfields) {
                             oLayer.geocodingfields = layer.geocodingfields.split(",");
                         }
