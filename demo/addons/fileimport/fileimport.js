@@ -26,11 +26,11 @@ const fileimport = (function () {
     <div class="modal-content" role="document">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal">&times;</button>
-      <h4 class="modal-title" i18n="csv.modal.title">Options d'import</h4>
+      <h4 class="modal-title" i18n="fileimport.modal.title">Options d'import</h4>
     </div>
     <div class="modal-body" >
       <div class="form-group">
-        <label for="email" i18n="csv.data.title">Titre de la donnée:</label>
+        <label for="email" i18n="fileimport.data.title">Titre de la donnée:</label>
         <h3><input type="text" class="csv-name form-control"><h3>
       </div>
       <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -38,7 +38,7 @@ const fileimport = (function () {
             <div class="panel-heading" role="tab" id="headingZero">
                 <h4 class="panel-title">
                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseZero" 
-                        aria-expanded="true" aria-controls="collapseZero" i18n="csv.select.coordinates">
+                        aria-expanded="true" aria-controls="collapseZero" i18n="fileimport.select.coordinates">
                     <b>Sélectionner les champs</b> x, y à utiliser comme coordonnées
                     </a>
                 </h4>
@@ -49,15 +49,15 @@ const fileimport = (function () {
                         <thead>
                         <tr>
                             <th scope="col"></th>
-                            <th scope="col" i18n="csv.srs.lon">X (longitude)</th>
+                            <th scope="col" i18n="fileimport.srs.lon">X (longitude)</th>
                             <th scope="col"></th>
-                            <th scope="col" i18n="csv.srs.lat">Y (latitude)</th>
-                            <th scope="col" i18n="csv.srs.projection">Projection (SRS)</th>
+                            <th scope="col" i18n="fileimport.srs.lat">Y (latitude)</th>
+                            <th scope="col" i18n="fileimport.srs.projection">Projection (SRS)</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <th scope="row" i18n="csv.srs.select">Sélectionner</th>
+                            <th scope="row" i18n="fileimport.srs.select">Sélectionner</th>
                             <td>
                                 <select id="x-select" class="form-control"></select>
                             </td>
@@ -70,7 +70,7 @@ const fileimport = (function () {
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row" i18n="csv.srs.data">Aperçu</th>
+                            <th scope="row" i18n="fileimport.srs.data">Aperçu</th>
                             <td id="x-data"></td>
                             <td></td>
                             <td id="y-data"></td>
@@ -84,7 +84,7 @@ const fileimport = (function () {
             <div class="panel-heading" role="tab" id="headingOne">
                 <h4 class="panel-title">
                   <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" 
-                        aria-expanded="false" aria-controls="collapseOne" i18n="csv.select.address">
+                        aria-expanded="false" aria-controls="collapseOne" i18n="fileimport.select.address">
                   <b>Ou</b> sélectionner les champs à utiliser pour le géocodage (adresse)
                   </a>
                 </h4>
@@ -99,7 +99,7 @@ const fileimport = (function () {
                 <div class="panel-heading" role="tab" id="headingTwo">
                   <h4 class="panel-title">
                       <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" 
-                            aria-expanded="false" aria-controls="collapseTwo" i18n="csv.select.insee">
+                            aria-expanded="false" aria-controls="collapseTwo" i18n="fileimport.select.insee">
                       <b>Ou</b> sélectionner le champ à utiliser pour le géocodage (insee)
                       </a>
                   </h4>
@@ -114,7 +114,7 @@ const fileimport = (function () {
                   <div class="panel-heading" role="tab" id="headingThree">
                       <h4 class="panel-title">
                         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" 
-                                aria-expanded="false" aria-controls="collapseThree" i18n="csv.select.search">
+                                aria-expanded="false" aria-controls="collapseThree" i18n="fileimport.select.search">
                         <b>En option</b> sélectionner les champ à utiliser pour la recherche
                         </a>
                       </h4>
@@ -128,7 +128,7 @@ const fileimport = (function () {
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="submit-button" type="button" data-layerid="" onclick="fileimport.geocodeit(this);" class="geocode btn btn-primary" i18n="csv.button.submit">Importer</button>
+                <button id="submit-button" type="button" data-layerid="" onclick="fileimport.geocodeit(this);" class="geocode btn btn-primary" i18n="fileimport.button.submit">Importer</button>
             </div>
           </div>
       </div>
@@ -246,7 +246,7 @@ const fileimport = (function () {
         }
         reader.onerror = function (evt) {
             alert(mviewer.lang
-                ? mviewer.lang[mviewer.lang.lang]("csv.alert.filereader")
+                ? mviewer.lang[mviewer.lang.lang]("fileimport.alert.filereader")
                 : "Erreur de lecture de fichier");
         }
     }
@@ -404,7 +404,7 @@ const fileimport = (function () {
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     var alertText = mviewer.lang
-                        ? mviewer.lang[mviewer.lang.lang]("csv.alert.geocoding")
+                        ? mviewer.lang[mviewer.lang.lang]("fileimport.alert.geocoding")
                         : "Problème avec le géocodage"
                     mviewer.alert(alertText + thrownError, "alert-warning");
                     $("#csv-status").attr("class", "start");
@@ -459,7 +459,7 @@ const fileimport = (function () {
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     var alertText = mviewer.lang
-                        ? mviewer.lang[mviewer.lang.lang]("csv.alert.fileloading")
+                        ? mviewer.lang[mviewer.lang.lang]("fileimport.alert.fileloading")
                         : "Problème avec la récupération du fichier csv"
                     mviewer.alert(alertText + thrownError, "alert-warning");
                 }
