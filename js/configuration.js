@@ -632,12 +632,6 @@ var configuration = (function () {
                     oLayer.vectorlegend =  (layer.vectorlegend === "true") ? true : false;
                     oLayer.nohighlight =  (layer.nohighlight === "true") ? true : false;
                     oLayer.infohighlight =  (layer.infohighlight === "false") ? false : true;
-                    if (layer.geocodingfields) {
-                        oLayer.geocodingfields = layer.geocodingfields.split(",");
-                    }
-                    oLayer.geocoder = layer.geocoder || false;
-                    oLayer.xfield = layer.xfield;
-                    oLayer.yfield = layer.yfield;
                     oLayer.legendurl=(layer.legendurl)? layer.legendurl : mviewer.getLegendUrl(oLayer);
                     if (oLayer.legendurl === "false") {oLayer.legendurl = "";}
                     oLayer.useproxy = (layer.useproxy === "true") ? true : false;
@@ -837,10 +831,16 @@ var configuration = (function () {
                         if (layer.importformat) {
                             oLayer.importformat = layer.importformat;
                         }
+                        if (layer.geocodingfields) {
+                            oLayer.geocodingfields = layer.geocodingfields.split(",");
+                        }
+                        oLayer.geocoder = layer.geocoder || false;
+                        oLayer.xfield = layer.xfield;
+                        oLayer.yfield = layer.yfield;
                         //allow transformation to mapProjection before map is initialized
                         oLayer.mapProjection = conf.mapoptions.projection;
                         mviewer.processLayer(oLayer, l);
-                    }// end csv
+                    }// end import
 
                     if (oLayer.type === 'customlayer') {
                         var hook_url = 'customLayers/' + oLayer.id + '.js';
