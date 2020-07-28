@@ -309,35 +309,38 @@ const fileimport = (function () {
             inflater: ['demo/addons/fileimport/lib/z-worker.js', 'demo/addons/fileimport/lib/inflate.js']
           };
         zip.createReader(new zip.BlobReader(file), function(zipReader) {
-            zipReader.getEntries(async function(entries) {
+            zipReader.getEntries(function(entries) {
                 if (entries.length) {
-                    var shpfile = entries.filter(entry => {
-                        return entry.filename.split(".")[1] === "shp";
-                    })[0];
-                    var dbffile = entries.filter(entry => {
-                        return entry.filename.split(".")[1] === "dbf";
-                    })[0];
-                    var prjfile = entries.filter(entry => {
-                        return entry.filename.split(".")[1] === "prj";
-                    })[0];
-                    shpfile.getData(new zip.BlobWriter("application/octet-stream"), async function(shpBlob) {
-                        const shpContents = await (new Response(shpBlob)).arrayBuffer();
-                        dbffile.getData(new zip.BlobWriter("application/x-dbase"), async function(dbfBlob) { 
-                            const dbfContents = await (new Response(dbfBlob)).arrayBuffer();
-                            prjfile.getData(new zip.BlobWriter("text/txt"), async function(prjBlob) { 
-                                const prjContents = await (new Response(prjBlob)).text();
-                                //register named projection for use in _loadShp
-                                var projId = `Proj-${Date.now()}`
-                                proj4.defs(projId, prjContents);
-                                ol.proj.proj4.register(proj4);
-                                _loadShp(shpContents, dbfContents, projId, oLayer, shpfile.filename)
-                            });                            
-                        });
-                    });
+                    var shpfile = entries.filter(entry => entry.filename.split(".")[1] === "shp")[0];
+                    var dbffile = entries.filter(entry => entry.filename.split(".")[1] === "dbf")[0];
+                    var prjfile = entries.filter(entry => entry.filename.split(".")[1] === "prj")[0];
+                    var shpPromise = getFileContents(shpfile, "application/octet-stream");
+                    var dbfPromise = getFileContents(dbffile, "application/x-dbase");
+                    var prjPromise = getFileContents(prjfile, "text/txt");
+                    Promise.all([shpPromise, dbfPromise, prjPromise])
+                        .then(async ([shpResponse, dbfResponse, prjResponse]) => {
+                            var shpContents = await shpResponse.arrayBuffer();
+                            var dbfContents = await dbfResponse.arrayBuffer();
+                            var prjContents = await prjResponse.text();
+                            // register named projection for use in _loadShp
+                            var projId = `Proj-${Date.now()}`;
+                            proj4.defs(projId, prjContents);
+                            ol.proj.proj4.register(proj4);
+                            _loadShp(shpContents, dbfContents, projId, oLayer, shpfile.filename);
+                    })
+
 
                 }
             });
         }, _onerror);
+    }
+
+    function getFileContents(file, mimetype) {
+        return new Promise(resolve => 
+            file.getData(new zip.BlobWriter(mimetype), fileBlob => 
+                resolve(new Response(fileBlob))
+            )
+        )
     }
 
     var _onerror = function(message) {
