@@ -1,15 +1,19 @@
 ## Import de fichier
 
-Cette extension permet d'importer des fichiers.
+Cette extension permet d'importer des fichiers local. Les formats supportés actuellement sont `csv` et `shp`. 
+Dans le cas du Shapefile, le fichier `.shp` doit se trouver compressé dans un fichier `.zip` qui inclut également 
+un fichier `.dbf` (pour les attributs) et `.prj` (pour permettre l'interprétation du SRS à l'extension). 
 
 #### 4 ressources dans cette extension
 
- - **fileimport.html** contient un bouton qui est affiché dans la `toolstolsbar` sur la carte par défaut
+ - **fileimport.html** contient un bouton qui est affiché dans la `toolstolsbar` sur la carte par défaut et peut-être placé dans un autre endroit de choix via la **config.json**
  - **fileimport.css** définit l'affichage du bouton
  - **fileimport.js** - contient la logique de l'import
- - **config.json** - indique les trois fichiers précédents à mviewer ainsi que la **div** où le composant doit s'afficher (**target**),
+ - **config.json** - indique les trois fichiers précédents à mviewer ainsi que la **div** où le composant du bouton doit s'afficher (**target**),
  par défaut `toolstoolbar`.
- 
+
+### Déclaration de l'extension dans config.xml
+
 Pour que ce composant s'affiche dans mviewer, il faut depuis un **config.xml** ajouter cette section :
 
 ````
@@ -20,10 +24,41 @@ Pour que ce composant s'affiche dans mviewer, il faut depuis un **config.xml** a
 
 Plus d'info sous : https://mviewerdoc.readthedocs.io/fr/latest/doc_tech/config_customcomponent.html
 
-L'extension a également besoin de la définiton d'une couche du `type="import"` dans la **config.xml**.
-Cette définition ne doit pas contenir l'attribut `url` pour provoquer l'ouverture d'un dialog modal.
+### Déclaration d'une couche 'import' dans config.xml
 
-Exemple :
+L'extension a également besoin de la déclaration d'une couche du `type="import"` dans la **config.xml**.
+Pour rendre l'import disponible dans l'IHM de mviewer il faut laisser l'attribut `url` dans la déclaration de la couche vide.
+Si l'attribut `url` est présent le fichier est directement importé (seulement possible pour le format CSV avec une adresse).
+
+Les attributs (et l'élément) suivant sont spécifiques à cette extension :
+
+````
+<layer
+    ...
+    geocoder=""
+    geocodingfields=""
+    xfield=""
+    yfield=""
+    ... >
+    <projections>
+        <projection proj4js=""/>
+    </projections>
+</layer>
+````
+
+Pour les couches csv (avec adresse, mais sans coordonnées) :
+* ``geocoder`` : précise l’API de géocodage à utiliser (ban).
+* ``geocodingfields`` : précise les champs utilisables pour le géocodage.
+* ``xfield`` : précise le champ du service de géocodage à utiliser pour la longitude.
+* ``yfield`` : précise le champ du service de géocodage à utiliser pour la latitude.
+
+Pour les couches csv (avec coordonnées) :
+* ``projections`` (élément) : précise les projections disponible pour une transformation des coordonnées.
+La définition de chaque projection se fait dans un élément enfant ``<projection proj4js=""/>`` qui contient la chaîne de caractère proj4js comme attribut.
+Par défaut le SCR WGS84 (EPSG:4326) est supporté. L'import d'un shapefile n'utilise pas cette définition, mais l'obtient directement du fichier `.prj`.
+
+Exemple qui rend disponible l'IHM de l'extension, permettant l'import `shp` et `csv` (avec des coordonnées en `EPSG:4326`,`EPSG:3857` ou `EPSG:2154` 
+ou avec adresse et sans coordonnées) :
 
 ````
 <layer type="import" id="import_file" name="Importer un fichier"  visible="true"
@@ -39,5 +74,6 @@ Exemple :
         <projection proj4js="'EPSG:2154','+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'"/>
     </projections>
 </layer>
+````
 
-La fonctionnalité de cette extension peut être utilisée par son composant ou directement via l'arbre des couches.
+L'IHM de l'import peut être accédé par le bouton du composant custom ou directement via l'arbre des couches.

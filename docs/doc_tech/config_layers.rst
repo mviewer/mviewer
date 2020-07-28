@@ -61,11 +61,6 @@ Configurer - Les couches
                 dynamiclegend=""
                 vectorlegend=""
                 nohighlight=""
-                geocoder=""
-                geocodingfields=""
-                xfield=""
-                yfield=""
-                importformat=""
                 url=""
                 attribution=""
                 tooltip=""
@@ -75,9 +70,6 @@ Configurer - Les couches
                 metadata=""
                 metadata-csw="" >
                 <template url=""></template>
-                <projections>
-                    <projection proj4js=""/>
-                </projections>
         </layer>
 
 Paramètres pour une configuration minimaliste
@@ -197,11 +189,6 @@ Autres paramètres
 
 * ``authorization`` : Permet d'indiquer des identifiants par défaut si secure est à "layer"
 * ``useproxy`` :guilabel:`studio` : Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de crossOrigin lorsque CORS n'est pas activé sur le serveur distant.
-* ``importformat`` : pour les couches de type import, précise le format du fichier
-* ``geocoder`` : pour les couches de type import (csv), précise l'API de géocodage à utiliser (ban).
-* ``geocodingfields`` : pour les couches de type import (csv), précise les champs utilisables pour le géocodage.
-* ``xfield`` : pour les couches de type import (csv), précise le champ à utiliser pour la longitude.
-* ``yfield`` : pour les couches de type import (csv), précise le champ à utiliser pour la latitude.
 * ``owsoptions`` : Pour une couche WMS, permet de forcer certains paramètres des requêtes GetMap. Exemple : "VERSION:1.1.1,EXCEPTIONS:application/vnd.ogc.se_inimage".
 
 **Syntaxe** ``<template>``
@@ -221,21 +208,3 @@ Cet élément optionnel, permet d'associer un template type Mustache (https://gi
 **Paramètres**
 
 * ``url``: paramètre optionnel de type url qui indique l'emplacement du template à utiliser.
-
-**Syntaxe** ``<projections>``
-******************************
-
-Elément enfant de ``<layer>``
-
-Pour les couches type import, cet élément optionnel permet de définir les projections (SCR) que l’outil d'import doit pouvoir supporter.
-La définition de chaque projection se fait dans un élément enfant ``<projection proj4js=""/>`` qui contient la chaîne de caractère proj4js comme attribut.
-Par défaut le SCR WGS84 (EPSG:4326) est supporté.
-
-**Example**
-
-.. code-block:: xml
-
-        <projections>
-                <projection proj4js="'EPSG:3857','+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs'"/>
-                <projection proj4js="'EPSG:2154','+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'"/>
-        </projections>
