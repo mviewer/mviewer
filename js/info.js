@@ -137,7 +137,7 @@ var info = (function () {
     var _queryMap = function (evt, options) { 
         _queriedFeatures = [];
         _firstlayerFeatures = [];
-        var showFallbackPin = false;
+        var showPin = false;
         var queryType = "map"; // default behaviour
         var views = {
             "right-panel":{ "panel": "right-panel", "layers": []},
@@ -168,7 +168,11 @@ var info = (function () {
                 if (l && l != 'featureoverlay' && l != 'selectoverlay' && l != 'subselectoverlay' && l != 'elasticsearch' ) {
                     var queryable = _overLayers[l].queryable;
                     if (queryable) {
-                        _queriedFeatures.push(feature);
+                        if (layer.get('infohighlight')) {
+                            _queriedFeatures.push(feature);
+                        } else {
+                            showPin = true;
+                        }
                         if (vectorLayers[l] && vectorLayers[l].features) {
                             vectorLayers[l].features.push(feature);
                         } else {
@@ -260,6 +264,7 @@ var info = (function () {
                 var theme = layerinfos.theme;
                 var layerid = layerinfos.layerid;
                 var theme_icon = layerinfos.icon;
+                var infohighlight = layerinfos.infohighlight;
                 var id = views[panel].layers.length + 1;
                 var manyfeatures = false;
                 var html_result = [];
@@ -274,7 +279,7 @@ var info = (function () {
                             && (layerResponse.search('<!--nodatadetect-->\n<!--nodatadetect-->')<0)) {
                             html = layerResponse;
                             // no geometry in html
-                            showFallbackPin = true;
+                            showPin = true;
                         }
                         break;
                     case "application/vnd.ogc.gml":
@@ -314,9 +319,13 @@ var info = (function () {
                         var getFeatureInfo = _parseWMSGetFeatureInfo(xml, layerid);
                         // no geometry could be found in gml
                         if (!getFeatureInfo.hasGeometry) {
-                            showFallbackPin = true;
+                            showPin = true;
                         }
-                        _queriedFeatures.push.apply(_queriedFeatures, getFeatureInfo.features);
+                        if (infohighlight) {
+                            _queriedFeatures.push.apply(_queriedFeatures, getFeatureInfo.features);
+                        } else {
+                            showPin = true;
+                        }
                         var features = getFeatureInfo.features;
                         if (features.length > 0) {
                             if (layerinfos.template) {
@@ -340,7 +349,7 @@ var info = (function () {
                         "layerid": layerid,
                         "theme_icon": theme_icon,
                         "html": html_result.join(""),
-                        "pin": showFallbackPin
+                        "pin": showPin
                     });
                 }
             });
@@ -421,7 +430,7 @@ var info = (function () {
                 mviewer.highlightFeatures(_queriedFeatures);
                 mviewer.highlightSubFeature(_firstlayerFeatures[0]);
                 // show pin as fallback if no geometry for wms layer
-                if (showFallbackPin) {
+                if (showPin) {
                     mviewer.showLocation(_projection.getCode(), _clickCoordinates[0], _clickCoordinates[1]);
                 } else {
                     $("#mv_marker").hide();

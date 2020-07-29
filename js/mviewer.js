@@ -642,6 +642,7 @@ mviewer = (function () {
         if (oLayer.scale && oLayer.scale.min) { l.setMinResolution(_convertScale2Resolution(oLayer.scale.min)); }
         l.set('name', oLayer.name);
         l.set('mviewerid', oLayer.id);
+        l.set('infohighlight', oLayer.infohighlight);
 
         if (oLayer.searchable) {
             search.processSearchableLayer(oLayer);

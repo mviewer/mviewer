@@ -39,6 +39,7 @@ Elément enfant de ``<theme>`` ou ``<group>``
                 toplayer=""
                 exclusive=""
                 infoformat=""
+                infohighlight=""
                 featurecount=""
                 style=""
                 stylesalias=""
@@ -117,7 +118,8 @@ Paramètres pour gérer l'interrogation et la mise en forme de la fiche d'interr
 
 * ``queryable`` :guilabel:`studio` : Booléen stipulant est ce que la couche est intérrogeable via un GetFeatureInfo
 * ``infoformat`` :guilabel:`studio` : Format du GetFeatureInfo. 2 formats sont supportés : text/html et application/vnd.ogc.gml
-* ``featurecount`` :guilabel:`studio` : Nombre d'éléments retournés lors de l'intérrogation
+* ``infohighlight`` : Booléen précisant si les features de la couche sont mises en surbrillance en interrogeant leurs informations, défaut = true. Si false un markeur est affiché. 
+* ``featurecount`` :guilabel:`studio` : Nombre d'éléments retournés lors de l'interrogation
 * ``fields`` :guilabel:`studio` :  Si les informations retournées par l'interrogation est au format GML, fields représente les attributs à parser pour générer la vignette
 * ``aliases`` :guilabel:`studio` : Si les informations retournées par l'interrogation est au format GML, aliases représente le renommage des champs parsés.
 
@@ -149,7 +151,7 @@ Paramètres pour les couches non WMS
 	``tooltipcontent="{name}} &lt;/br&gt; {{city}}"``
 
 * ``vectorlegend`` : Booléen précisant si la légende pour les couches de type vecteur (customlayer ou csv) est dynamiquement créée
-* ``nohighlight`` : Booléen précisant, pour les couches de type vecteur (customlayer, geojson ou csv), si la mise en surbrillance est désactivée
+* ``nohighlight`` : Booléen précisant, pour les couches de type vecteur (customlayer, geojson ou csv), si la mise en surbrillance du hover est désactivée
 
 Paramètres pour gérer la dimension temporelle des couches WMS
 ================================================================

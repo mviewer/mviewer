@@ -629,6 +629,7 @@ var configuration = (function () {
                     oLayer.dynamiclegend = (layer.dynamiclegend === "true") ? true : false;
                     oLayer.vectorlegend =  (layer.vectorlegend === "true") ? true : false;
                     oLayer.nohighlight =  (layer.nohighlight === "true") ? true : false;
+                    oLayer.infohighlight =  (layer.infohighlight === "false") ? false : true;
                     if (layer.geocodingfields) {
                         oLayer.geocodingfields = layer.geocodingfields.split(",");
                     }
