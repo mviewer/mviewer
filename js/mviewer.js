@@ -1992,7 +1992,9 @@ mviewer = (function () {
          */
         highlightFeatures: function (features) {
             _sourceSelectOverlay.clear();
-            if (features.length > 0) {
+            // note: features from vectortiles provoke error on addFeatures()
+            // workaround: exclude them by checking if feature has a getGeometryName() function
+            if (features.length > 0 && typeof features[0].getGeometryName === "function") {
                 _sourceSelectOverlay.addFeatures(features);
             }
         },

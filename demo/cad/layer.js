@@ -27,7 +27,7 @@ mviewer.customLayers.cad = (function () {
         let cad_control = mviewer.customControls.cad;
         let src = _layer.getSource();
         src.getFeatures().every(function(feature){
-            if(feature.get("geo_parcelle")===features[0].properties.geo_parcelle){
+            if(feature.get("geo_parcelle")===features[0].getProperties().geo_parcelle){
                 if(cad_control.editSelectedParcelle())
                 {
                     cad_control.editSelectedParcelle().setStyle(_defaultStyle);
