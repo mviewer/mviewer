@@ -664,6 +664,7 @@ var info = (function () {
         var tpl = olayer.template;
         var obj = {features: []};
         var activeAttributeValue = false;
+        var geojson = new ol.format.GeoJSON();
         // if attributeControl is used for this layer, get the active attribute value and
         // set this value as property like 'value= true'. This allows use this value in Mustache template
         if (olayer.attributefilter && olayer.layer.getSource().getParams()['CQL_FILTER']) {
@@ -679,7 +680,8 @@ var info = (function () {
               fields_kv = [];
               keys = Object.keys(this);
               for (i = 0 ; i < keys.length ; i++ ) {
-                if (keys[i] == "fields_kv" || keys[i] == "serialized") {
+                if (keys[i] == "fields_kv" || keys[i] == "serialized" 
+                    || keys[i] === "feature_ol_uid" || keys[i] === "mviewerid" || typeof this[keys[i]] === "object") {
                   continue;
                 }
                 field_kv = {
@@ -694,7 +696,7 @@ var info = (function () {
             // add a serialized version of the object so it can easily be passed through HTML GET request
             // you can deserialize it with `JSON.parse(data)` when data is the serialized data
             var serialized = function () {
-              return encodeURIComponent(JSON.stringify(feature.getProperties()));
+              return encodeURIComponent(geojson.writeFeature(feature));
             }
             feature.setProperties({'serialized': serialized})
             // attach ol_uid to identify feature in DOM (not all features have a feature id as property)
