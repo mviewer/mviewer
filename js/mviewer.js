@@ -611,6 +611,13 @@ mviewer = (function () {
                     var modifiedDate = $(result).find("dct\\:modified, modified").text() || $(result).find("dct\\:created, created").text();
                     _overLayers[this.layer].modifiedDate = modifiedDate;
 
+                    //use source from metadata as attribution if conf is set to "metadata"
+                    if (_overLayers[this.layer].attribution === "metadata") {
+                        var source = $(result).find("dc\\:source, source").text();
+                        _overLayers[this.layer].attribution = `Source : ${source}`;
+                        $(`#${this.layer}-attribution`).text(`Source : ${source}`);
+                    }
+
                     //update visible layers on the map
                     $(`#${this.layer}-layer-summary`).attr("data-content", summary);
                     $(`#${this.layer}-date`).text(modifiedDate);
