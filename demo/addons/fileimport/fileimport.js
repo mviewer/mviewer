@@ -139,7 +139,7 @@ const fileimport = (function () {
         return `<div class="dropzone dz-clickable" id="drop_zone" onclick="$('#loadcsv-${oLayer.layerid}').click();" ondrop="fileimport.dropHandler(event);" ondragover="fileimport.dragOverHandler(event);">
                   <div id="csv-status" class="start">
                       <div class="dz-default dz-message"><span class="fas fa-cloud-upload-alt fa-3x"></span>
-                          <p i18n="fileimport.upload.dropzone">Glisser un fichier CSV ici ou clic pour sélectionner un fichier...</p>
+                          <p i18n="fileimport.upload.dropzone">Glisser un fichier CSV ou SHP (en ZIP) ici ou clic pour sélectionner un fichier...</p>
                       </div>
                       <div class="dz-work dz-message"><span class="fas fa-spin fa-cog fa-3x"></span>
                           <p i18n="fileimport.upload.processing">Traitement en cours</p>
