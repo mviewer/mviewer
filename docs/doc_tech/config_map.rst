@@ -18,6 +18,7 @@ Configurer - les options de la carte
         center=""
         zoom=""
         projextent=""
+        maxextent=""
         rotation=""/>
 
 
@@ -28,6 +29,7 @@ Configurer - les options de la carte
 * ``center`` :guilabel:`studio` : paramètre optionnel de type numérique définissant les coordonnées géographiques du centre de la carte. Exemple **-220750.13,6144925.57**.
 * ``zoom`` :guilabel:`studio` : paramètre optionnel de type entier définissant le zoom initial de la carte. Valeur par défaut **8**.
 * ``projextent`` : paramètre obligatoire de type texte définissant les limites géographiques de la projection utilisée. Ce paramètre n'est pas obligatoire pour les projections EPSG:4326 et EPSG:3857.
+* ``maxextent`` : paramètre optionnel de type texte définissant les limites géographiques pour la vue cartographique
 
 **Exemple**
 
@@ -39,7 +41,8 @@ Configurer - les options de la carte
 		projection="EPSG:3857"
 		center="-161129,6140339"
 		zoom="9"
-		projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
+		projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244"
+              maxextent="-550346.603653, 5975541.123222, -45250.720745, 6262944.349574" />
 
 .. Tip::
    La carte dispose également d'un marker qui s'affiche au clic sur la carte. Il est possible de modifier ce marker via css.
