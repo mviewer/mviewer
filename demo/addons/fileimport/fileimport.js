@@ -158,7 +158,14 @@ const fileimport = (function () {
             //remove existing features. Source can be used many times with differnet files
             var _src = mviewer.getLayers()[idlayer].layer.getSource().clear();
             var oLayer = mviewer.getLayers()[idlayer];
-            if (file.type === "application/zip") {
+            var zipMimeTypes = [
+                "application/zip", 
+                "application/octet-stream", 
+                "application/x-zip-compressed",
+                "application/x-compressed", 
+                "multipart/x-zip"
+            ]
+            if (zipMimeTypes.includes(file.type)) {
                 _unzip(file, oLayer)
             } else {
                 _initCsvModal(idlayer, file, oLayer)
