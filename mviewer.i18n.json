@@ -98,7 +98,11 @@
         "fileimport.alert.geocoding": "Problème avec le géocodage",
         "fileimport.alert.fileloading": "Problème avec la récupération du fichier csv",
         "fileimport.button.title": "Importer fichier local",
-        "fileimport.alert.config": "Pas de couche d'import configurée"
+        "fileimport.alert.config": "Pas de couche d'import configurée",
+        "fileimport.shpmodal.title": "Sélection de la projection",
+        "fileimport.shpmodal.comment": "L'archive zip n'inclue pas de fichier .prj !",
+        "fileimport.shpmodal.subtitle": "SRS de la donnée :",
+        "fileimport.button.validate": "Valider"
     },
     "en": {
         "legend.title": "Display/hide the legend",
@@ -198,6 +202,10 @@
         "fileimport.alert.geocoding": "Geocoding error",
         "fileimport.alert.fileloading": "Error loading file",
         "fileimport.button.title": "Import local file",
-        "fileimport.alert.config": "No import layer configured"
+        "fileimport.alert.config": "No import layer configured",
+        "fileimport.shpmodal.title": "Select projection",
+        "fileimport.shpmodal.comment": "No .prj file found in zip !",
+        "fileimport.shpmodal.subtitle": "SRS of data :",
+        "fileimport.button.validate": "Submit"
     }
 }

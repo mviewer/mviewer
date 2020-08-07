@@ -3,6 +3,8 @@ const fileimport = (function () {
     var _button;
     var _buttonActive = false;
     var _importLayer;
+    var _srsHTML = ["<option value='EPSG:4326'>EPSG:4326</option>"];
+
     var _toggleImportLayer = function() {
         _buttonActive = !_buttonActive;
         if (_importLayer) {
@@ -134,6 +136,28 @@ const fileimport = (function () {
       </div>
     </div>`
 
+    var _projection_modal = 
+        `<div id="projection-modal" class="modal fade" tabindex="-1" role="dialog" >
+            <div class="modal-dialog modal-md">
+                <div class="modal-content" role="document">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" i18n="fileimport.shpmodal.title">Sélection de la projection</h4>
+                    </div>
+                    <div class="modal-body" >
+                        <div class="form-group">
+                            <p i18n="fileimport.shpmodal.comment">L'archive zip n'inclue pas de fichier .prj !</p>
+                            <label for="shp-srs-select" i18n="fileimport.shpmodal.subtitle">SRS de la donnée :</label>
+                            <select id="shp-srs-select" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-layerid="" class="geocode btn btn-primary" i18n="fileimport.button.validate">Valider</button>
+                    </div>
+                </div>
+            </div>
+        </div>`
+
     var _template = function (oLayer) {
 
         return `<div class="dropzone dz-clickable" id="drop_zone" onclick="$('#loadcsv-${oLayer.layerid}').click();" ondrop="fileimport.dropHandler(event);" ondragover="fileimport.dragOverHandler(event);">
@@ -158,6 +182,8 @@ const fileimport = (function () {
             //remove existing features. Source can be used many times with differnet files
             var _src = mviewer.getLayers()[idlayer].layer.getSource().clear();
             var oLayer = mviewer.getLayers()[idlayer];
+            //register SRS on first load
+            if (_srsHTML.length === 1) _registerSRS(oLayer);
             var zipMimeTypes = [
                 "application/zip", 
                 "application/octet-stream", 
@@ -172,6 +198,20 @@ const fileimport = (function () {
             }
         }
     };
+
+    //used for csv and shp (without .prj)
+    var _registerSRS = function (oLayer){
+        if (oLayer.projections && oLayer.projections.projection) {
+            oLayer.projections.projection.forEach(function (p) {
+                //register projections
+                proj4.defs(p.proj4js);
+                ol.proj.proj4.register(proj4);
+                //format projections for html select
+                var epsg = p.proj4js.split(",")[0].replace(/['"]+/g, '');
+                _srsHTML.push(`<option value="${epsg}">${epsg}</option>`);
+            });
+        }
+    }
 
     var _initCsvModal = function(idlayer, file, oLayer) {
         _resetForms();
@@ -297,18 +337,7 @@ const fileimport = (function () {
         });
 
         // init srs select option
-        var srs = ["<option value='EPSG:4326'>EPSG:4326</option>"];
-        if (oLayer.projections && oLayer.projections.projection) {
-            oLayer.projections.projection.forEach(function (p) {
-                //register projections
-                proj4.defs(p.proj4js);
-                ol.proj.proj4.register(proj4);
-                //display projections
-                var epsg = p.proj4js.split(",")[0].replace(/['"]+/g, '');
-                srs.push(`<option value="${epsg}">${epsg}</option>`);
-            });
-        }
-        $("#srs-select").append(srs.join(" "));
+        $("#srs-select").append(_srsHTML.join(" "));
     }
 
     var _unzip = function(file, oLayer) {
@@ -323,20 +352,32 @@ const fileimport = (function () {
                     var prjfile = entries.filter(entry => entry.filename.split(".")[1] === "prj")[0];
                     var shpPromise = getFileContents(shpfile, "application/octet-stream");
                     var dbfPromise = getFileContents(dbffile, "application/x-dbase");
-                    var prjPromise = getFileContents(prjfile, "text/txt");
-                    Promise.all([shpPromise, dbfPromise, prjPromise])
-                        .then(async ([shpResponse, dbfResponse, prjResponse]) => {
-                            var shpContents = await shpResponse.arrayBuffer();
-                            var dbfContents = await dbfResponse.arrayBuffer();
+                    if (prjfile) {
+                        //get projection from .prj file
+                        getFileContents(prjfile, "text/txt").then(async (prjResponse) => {
                             var prjContents = await prjResponse.text();
                             // register named projection for use in _loadShp
                             var projId = `Proj-${Date.now()}`;
                             proj4.defs(projId, prjContents);
                             ol.proj.proj4.register(proj4);
-                            _loadShp(shpContents, dbfContents, projId, oLayer, shpfile.filename);
-                    })
-
-
+                            _resolveShpDbf(shpPromise, dbfPromise, projId, oLayer, shpfile.filename);
+                        });
+                    } else {
+                        //let user select projection via modal, if no .prj file in zip
+                        $("#shp-srs-select option").remove();
+                        $("#shp-srs-select").append(_srsHTML.join(" "));
+                        $('#projection-modal').modal('show');
+                        new Promise(function(resolve, reject){
+                            //user projections registered from conf.xml
+                            $('#projection-modal .btn').click(() => resolve($("#shp-srs-select").val()));
+                            $('#projection-modal .close').click(() => reject());
+                        }).then(function(projId){
+                            _resolveShpDbf(shpPromise, dbfPromise, projId, oLayer, shpfile.filename);
+                            $('#projection-modal').modal('hide');
+                        }).catch(function(){
+                             console.log("cancelled shp import")
+                        });
+                    }
                 }
             });
         }, _onerror);
@@ -348,6 +389,15 @@ const fileimport = (function () {
                 resolve(new Response(fileBlob))
             )
         )
+    }
+
+    function _resolveShpDbf(shpPromise, dbfPromise, projId, oLayer, shpfilename) {
+        Promise.all([shpPromise, dbfPromise])
+        .then(async ([shpResponse, dbfResponse]) => {
+            var shpContents = await shpResponse.arrayBuffer();
+            var dbfContents = await dbfResponse.arrayBuffer();
+            _loadShp(shpContents, dbfContents, projId, oLayer, shpfilename);
+        })
     }
 
     var _onerror = function(message) {
@@ -511,7 +561,8 @@ const fileimport = (function () {
             }
 
             $(document).ready(function () {
-                $("#main").append(_wizard_modal)
+                $("#main").append(_wizard_modal);
+                $("#main").append(_projection_modal);
                 $("#geocoding-modal .close").click(function (e) { $("#geocoding-modal").modal("hide") });
             });
 
