@@ -220,7 +220,6 @@ const fileimport = (function () {
         reader.readAsText(file, "UTF-8");
         reader.onload = function (evt) {
             //Show wizard modal
-            console.log("getfile");
             $("#geocoding-modal").modal("show");
             $("#geocoding-modal button.geocode").attr("data-layerid", idlayer);
             //update layer title with file name
@@ -475,7 +474,10 @@ const fileimport = (function () {
             });
 
         } else {
-            console.log("Ce geocoder " + oLayer.geocoder + " n'est pas pris en compte");
+            var alertText = mviewer.lang
+            ? mviewer.lang[mviewer.lang.lang]("fileimport.alert.geocoder")
+            : "Ce geocoder " + oLayer.geocoder + " n'est pas pris en compte"
+            mviewer.alert(alertText, "alert-warning");
         }
     };
 
@@ -594,7 +596,6 @@ const fileimport = (function () {
             ev.preventDefault();
         },
         dropHandler: function (ev) {
-            console.log('File(s) dropped');
             // Prevent default behavior (Prevent file from being opened)
             ev.preventDefault();
             if (ev.dataTransfer.items) {
@@ -617,7 +618,6 @@ const fileimport = (function () {
             this.removeDragData(ev)
         },
         removeDragData: function (ev) {
-            console.log('Removing drag data')
             if (ev.dataTransfer.items) {
                 // Use DataTransferItemList interface to remove the drag data
                 ev.dataTransfer.items.clear();
