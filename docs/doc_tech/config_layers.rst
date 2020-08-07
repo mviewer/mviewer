@@ -108,9 +108,9 @@ Paramètres pour gérer l'affichage de la couche
 Paramètres pour gérer attributions et métadonnées
 =====================================================
 
-* ``attribution`` :guilabel:`studio` : Copyright de la couche. Le mot-clé "metadata" permet de récupérer cette information depuis les méta-données (champs "source").
+* ``attribution`` :guilabel:`studio` : Copyright de la couche. Le mot-clé "metadata" permet de récupérer cette information depuis des métadonnées compliantes au Dublin Core (champs "source").
 * ``metadata`` :guilabel:`studio` : Lien vers la fiche de metadonnées complète
-* ``metadata-csw`` :guilabel:`studio` : Requête CSW pour l'affiche dans la popup du détail de la couche.
+* ``metadata-csw`` :guilabel:`studio` : Requête CSW pour l'affiche dans la popup du détail de la couche. Mviewer récupère également la date de création ou dernière mise à jour si cela est en Dublin Core.
 
 Paramètres pour gérer l'interrogation et la mise en forme de la fiche d'interrogation de la couche
 ===================================================================================================
