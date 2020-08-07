@@ -384,11 +384,15 @@ const fileimport = (function () {
     }
 
     function getFileContents(file, mimetype) {
-        return new Promise(resolve => 
-            file.getData(new zip.BlobWriter(mimetype), fileBlob => 
-                resolve(new Response(fileBlob))
-            )
-        )
+        return new Promise((resolve, reject) => {
+            if (!file) {
+                reject(`no file ${mimetype} found`);
+            } else {
+                file.getData(new zip.BlobWriter(mimetype), fileBlob => 
+                    resolve(new Response(fileBlob))
+                )
+            }
+        })
     }
 
     function _resolveShpDbf(shpPromise, dbfPromise, projId, oLayer, shpfilename) {
@@ -397,6 +401,8 @@ const fileimport = (function () {
             var shpContents = await shpResponse.arrayBuffer();
             var dbfContents = await dbfResponse.arrayBuffer();
             _loadShp(shpContents, dbfContents, projId, oLayer, shpfilename);
+        }).catch(function(error){
+            console.log(error)
         })
     }
 
