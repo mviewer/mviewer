@@ -141,7 +141,7 @@ class Component {
             component.title = that.config.options.title;
           }
           // use url as string or urls as array from config
-          if (that.config.css && typeof that.config.css === 'String') {
+          if (that.config.css && typeof that.config.css === 'string') {
             _html.push('<link href="'+ that.path + that.config.css +'" rel="stylesheet">');
           } else if(that.config.css) {
             let cssSheets = that.config.css.map(s => `<link href="${that.path + s}" rel="stylesheet">`);
