@@ -251,7 +251,7 @@
     if  (typeof Chart === 'function') {
             drawCharts(2017);
     } else {
-            $.get('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js', function() {
+            $.get('../lib/chartjs-2.5.0/Chart.min.js', function() {
                 drawCharts(2017);
 
             });
