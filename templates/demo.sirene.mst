@@ -1,5 +1,5 @@
 {{#features}}
-	<li class="item" style="width:238px;">
+	<li id="{{feature_ol_uid}}" class="item" style="width:238px;">
 		{{#enseigne}}
 			<h5 class="title-feature">{{enseigne}}</h5>
 		{{/enseigne}}

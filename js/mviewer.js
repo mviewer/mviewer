@@ -219,7 +219,7 @@ mviewer = (function () {
     /**
      * Property: _sourceOverlay
      * @type {ol.source.Vector}
-     * Used to highlight vector features
+     * Used to highlight hovered vector features
      */
 
     var _sourceOverlay;
@@ -227,10 +227,43 @@ mviewer = (function () {
     /**
      * Property: _overlayFeatureLayer
      * @type {ol.layer.Vector}
-     * Used to highlight vector features
+     * Used to highlight hovered vector features
      */
 
     var _overlayFeatureLayer = false;
+
+    /**
+     * Property: _sourceSelectOverlay
+     * @type {ol.source.Vector}
+     * Used to highlight selected vector features
+     */
+
+    var _sourceSelectOverlay;
+
+    /**
+     * Property: _selectOverlayFeatureLayer
+     * @type {ol.layer.Vector}
+     * Used to highlight selected vector features
+     */
+
+    var _selectOverlayFeatureLayer = false;
+
+    var _sourceSubSelectOverlay;
+
+    /**
+     * Property: _subSelectOverlayFeatureLayer
+     * @type {ol.layer.Vector}
+     * Used to highlight sub selected vector features
+     */
+
+    var _subSelectOverlayFeatureLayer = false;
+
+    /**
+     * Property: _infoLayers
+     * Array of custom panel objects
+     * Used to keep track of layers displayed in info panels
+     */
+    var _infoLayers = [];
 
     var _setVariables = function () {
         _proxy = configuration.getProxy();
@@ -463,6 +496,38 @@ mviewer = (function () {
         _map.addLayer(_overlayFeatureLayer);
     };
 
+
+    /**
+     * Private Method: initSelectOverlay
+     * this layer is used to render ol.Feature in info tool
+     */
+
+    var _initSelectOverlay = function () {
+        _sourceSelectOverlay = new ol.source.Vector();
+        _selectOverlayFeatureLayer = new ol.layer.Vector({
+            source: _sourceSelectOverlay,
+            style: getSelectStyle.bind(this, '82, 98, 217', 4),
+            mviewerid: 'selectoverlay'
+        });
+        _map.addLayer(_selectOverlayFeatureLayer);
+    };
+
+
+    /**
+     * Private Method: initSubSelectOverlay
+     * this layer is used to render ol.Feature of sub selection in info tool
+     */
+
+    var _initSubSelectOverlay = function () {
+        _sourceSubSelectOverlay = new ol.source.Vector();
+        _subSelectOverlayFeatureLayer = new ol.layer.Vector({
+            source: _sourceSubSelectOverlay,
+            style: getSelectStyle.bind(this, '252, 186, 3', 2),
+            mviewerid: 'subselectoverlay'
+        });
+        _map.addLayer(_subSelectOverlayFeatureLayer);
+    };
+
     /**
      * Private Method: initTools
      * Tools can be set or unset. Only one tool can be enabled like a switch.
@@ -577,6 +642,7 @@ mviewer = (function () {
         if (oLayer.scale && oLayer.scale.min) { l.setMinResolution(_convertScale2Resolution(oLayer.scale.min)); }
         l.set('name', oLayer.name);
         l.set('mviewerid', oLayer.id);
+        l.set('infohighlight', oLayer.infohighlight);
 
         if (oLayer.searchable) {
             search.processSearchableLayer(oLayer);
@@ -1843,6 +1909,8 @@ mviewer = (function () {
                 _initDisplayMode();
                 _initDataList();
                 _initVectorOverlay();
+                _initSelectOverlay();
+                _initSubSelectOverlay();
                 search.init(configuration.getConfiguration());
                 _initPanelsPopup();
                 _initGeolocation();
@@ -1920,6 +1988,30 @@ mviewer = (function () {
         },
 
         /**
+         * Public Method: highlightFeatures
+         *
+         */
+        highlightFeatures: function (features) {
+            _sourceSelectOverlay.clear();
+            // note: features from vectortiles provoke error on addFeatures()
+            // workaround: exclude them by checking if feature has a getGeometryName() function
+            if (features.length > 0 && typeof features[0].getGeometryName === "function") {
+                _sourceSelectOverlay.addFeatures(features);
+            }
+        },
+
+        /**
+         * Public Method: highlightSubFeature
+         *
+         */
+        highlightSubFeature: function (feature) {
+            _sourceSubSelectOverlay.clear();
+            if (feature) {
+                _sourceSubSelectOverlay.addFeature(feature);
+            }
+        },
+
+        /**
          * Public Method: print
          *
          */
@@ -1982,6 +2074,8 @@ mviewer = (function () {
          */
 
         hideLocation: function ( ) {
+            _sourceSelectOverlay.clear();
+            _sourceSubSelectOverlay.clear();
             $("#mv_marker").hide();
         },
 
@@ -2640,6 +2734,29 @@ mviewer = (function () {
             var tabs = tab.parent().find("li");
             var info = $(tab.find("a").attr("href"));
 
+            _sourceSelectOverlay.getFeatures().forEach(feature => {
+                if (feature.get("mviewerid") === layerid) {
+                    _sourceSelectOverlay.removeFeature(feature);
+                    _sourceSubSelectOverlay.getFeatures().forEach(subFeature => {
+                        if (feature.ol_uid === subFeature.ol_uid) {
+                            _sourceSubSelectOverlay.removeFeature(subFeature)
+                        }
+                    })
+                }
+            })
+            // remove layer from infoLayers
+            _infoLayers = _infoLayers.filter(infoLayer => {
+                return infoLayer.layerid !== layerid;
+            })
+            // get layers with pin
+            var pinLayers = _infoLayers.filter(infoLayer => {
+                return infoLayer.pin;
+            })
+            // remove pin on last layer with pin
+            if (pinLayers.length === 0) {
+                $("#mv_marker").hide();
+            }
+
             if ( tabs.length === 1 ) {
                 tab.remove();
                 info.remove();
@@ -2746,6 +2863,8 @@ mviewer = (function () {
         getSourceOverlay: function () { return _sourceOverlay; },
 
         setTopLayer: function (layer) { _topLayer = layer; },
+
+        setInfoLayers: function (infoLayers) { _infoLayers = infoLayers; },
 
         createBaseLayer: _createBaseLayer,
 
