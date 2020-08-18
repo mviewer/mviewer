@@ -326,7 +326,10 @@ mviewer = (function () {
                 maxZoom: mapoptions.maxzoom || 19,
                 center: _center,
                 enableRotation: _rotation,
-                zoom: _zoom
+                zoom: _zoom,
+                extent: mapoptions.maxextent 
+                    ? mapoptions.maxextent.split(",").map(function(item) {return parseFloat(item);})
+                    : undefined
             })
         });
 
