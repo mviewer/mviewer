@@ -176,14 +176,22 @@ Paramètres pour gérer le filtre attributaire (liste déroulante) des couches W
 
 Autres paramètres
 ====================
+* ``customlayer`` : Texte précisant le nom du fichier JavaScript permettant la création d'une couche ou bien l'url complet du fichier JavaScript.
+
+        * ``URL renseignée``: le fichier JavaScript (.js) correspondant à l'URL est chargé
+        * ``Nom du fichier renseigné``: l'URL est fabriquée automatiquement à partir de l'ID de la couche. Le fichier devra être dans le répertoire customLayers/layerid.js (ou layerid correspond à l'id de la couche)
 
 * ``customcontrol`` : Booléen précisant si la couche dispose d'un addon html à intégrer. La valeur par défaut est false.
-* ``customcontrolpath`` : Texte précisant le répertoire hébergeant les fichiers nécessaires au contrôle. Dans ce répertoire, il faut déposer un fichier js et un fichier html ayant pour nom l'id de la couche. La structure du js doit être la suivante : (../controls/epci.js). Valeur par défaut = customcontrols.
+        
+        * ``Valeur renseignée``: le fichier JavaScript (.js) correspondant à l'url est chargé
+        * ``Valeur non renseignée``: l'url est fabriquée à partir de l'ID de la couche (ex: custom:ayers/layerid.js)
+
+* ``customcontrolpath`` : Texte Précisant le répertoire hébergeant les fichiers nécessaires au contrôle. Dans ce pépertoire, il faut déposer un fichier js et un fichier html ayant pour nom l'id de la couche. La structure du js doit être la suivante : (../controls/epci.js). Valeur par défaut = customcontrols.
 * ``secure`` :guilabel:`studio` : Texte précisant le niveau de protection de la couche Les valeurs possibles sont :
 
-	* ``public`` : (ou paramètre absent), l'accès à la couche est public
-	* ``global`` : l'accès à la couche est contrainte par le CAS geoserver. Un test est effectué pour savoir si la couche est accessible. Si ce n'est pas le cas, la couche est retirée du panneau et de la carte.
-	* ``layer`` : l'accès à la couche nécessite une authentification sur le service (WMS). Un bouton "cadenas" est ajouté dans la légende pour cette couche. Au clic sur ce bouton, un formulaire est affiché permettant de saisir des identifiants d'accès qui seront envoyés à chaque appel au service.
+* ``public`` : (ou paramètre absent), l'accès à la couche est public
+* ``global`` : l'accès à la couche est contrainte par le CAS geoserver. Un test est effectué pour savoir si la couche est accessible. Si ce n'est pas le cas, la couche est retirée du panneau et de la carte.
+* ``layer`` : l'accès à la couche nécessite une authentification sur le service (WMS). Un bouton "cadenas" est ajouté dans la légende pour cette couche. Au clic sur ce bouton, un formulaire est affiché permettant de saisir des identifiants d'accès qui seront envoyés à chaque appel au service.
 
 * ``authorization`` : Permet d'indiquer des identifiants par défaut si secure est à "layer"
 * ``useproxy`` :guilabel:`studio` : Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de crossOrigin lorsque CORS n'est pas activé sur le serveur distant.
