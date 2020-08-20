@@ -2,6 +2,7 @@ const fullscreen = (function() {
 
     var _btn;
     var _state = 0;
+    var _IFrame = false;
     var element = document.getElementById("main");
     var _fullscreen = function (e) {
         if (_state === 0) {
@@ -12,12 +13,14 @@ const fullscreen = (function() {
 
     };
 
-    var _toggleMouseWheeEoom = function (bol) {
-        mviewer.getMap().getInteractions().forEach((interaction) => {
-            if (interaction instanceof ol.interaction.MouseWheelZoom) {
-                interaction.setActive(bol);
-            }
-        });
+    var _toggleMouseWheelZoom = function (bol) {
+        if (_IFrame) {
+            mviewer.getMap().getInteractions().forEach((interaction) => {
+                if (interaction instanceof ol.interaction.MouseWheelZoom) {
+                    interaction.setActive(bol);
+                }
+            });
+        }
     };
 
     return {
@@ -33,22 +36,23 @@ const fullscreen = (function() {
                 _btn.querySelector("span").classList.remove("fa-expand-arrows-alt");
                 _btn.querySelector("span").classList.add("fa-expand");
                 _btn.title = "Quitter le mode plein-écran plein écran"
-                _toggleMouseWheeEoom(true);
+                _toggleMouseWheelZoom(true);
                 _state = 1;
               } else {
                 console.log('Leaving full-screen mode.');
                 _btn.querySelector("span").classList.remove("fa-expand");
                 _btn.querySelector("span").classList.add("fa-expand-arrows-alt");
                 _btn.title = "Afficher en plein-écran";
-                _toggleMouseWheeEoom(false);
+                _toggleMouseWheelZoom(false);
                 _state = 0;
               }
             });
             _btn.addEventListener('click', _fullscreen);
             // remove MouseWheelZoom if Iframe
             if ( window.location !== window.parent.location ) {
+                _IFrame = true;
                 console.log("MVIEWER IFRAME");
-               _toggleMouseWheeEoom(false);
+               _toggleMouseWheelZoom(false);
             }
         }
     };
