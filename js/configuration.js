@@ -300,11 +300,13 @@ var configuration = (function () {
                 url: _authentification.url, success: function (response) {
                     //test georchestra proxy
                     if(response.proxy == "true") {
-                        $("#login").show();
+                        $("#login-box").show();
+                        let title = mviewer.lang ? mviewer.tr('tbar.right.logout') : "Se déconnecter";
                         if (response.user !="") {
                             $("#login").attr("href",_authentification.logouturl);
-                            $("#login").attr("title","Se déconnecter");
-                            console.log("Bonjour " + response.user);
+                            $("#login").attr("title", title);
+                            $("#login span")[0].className = 'fas fa-lock';
+                            $("#login-box>span").text(response.user);
                         } else {
                             var url="";
                             if (location.search=="") {
