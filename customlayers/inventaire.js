@@ -1,5 +1,6 @@
 mviewer.customLayers.inventaire = (function () {
 
+    _ELSVERSION = 5.3;
     _filter = false;
     _ready = false;
     _mode = "AND"; /*AND | OR*/
@@ -119,6 +120,11 @@ mviewer.customLayers.inventaire = (function () {
         });
         var xhr = new XMLHttpRequest();
         xhr.open('POST', url);
+        if ( _ELSVERSION >= 6 ) {
+            xhr.setRequestHeader('Content-Type', 'application/json');
+        } else {
+            xhr.setRequestHeader('Content-Type', 'text/plain');
+        }
         var onError = function() {
             _vectorSource.removeLoadedExtent(extent);
         }

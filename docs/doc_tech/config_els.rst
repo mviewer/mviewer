@@ -1,4 +1,4 @@
-.. Authors : 
+.. Authors :
 .. mviewer team
 
 .. _configels:
@@ -44,7 +44,7 @@ Pour celà, depuis le serveur hôte hébergeant l'instance Elasticsearch, lancer
           }
         }'
 
-        
+
 Alimenter l'index avec des données
 ------------------------------------
 
@@ -68,7 +68,7 @@ Si tout s'est bien déroulé, la commande suivante doit renvoyer deux lycées :
 .. code-block:: bash
 
    $ curl -XGET 'localhost:9200/mviewer?q=zola&pretty'
-   
+
 
 Connecter mviewer à cet index Elasticsearch
 --------------------------------------------
@@ -81,7 +81,7 @@ En partant de la démo Elasticsearch : http://kartenn.region-bretagne.fr/kartovi
 
 .. code-block:: xml
        :linenos:
-	
+
 	   <elasticsearch url="http://monserveur/els/_search" geometryfield="geometry" linkid="search_id" querymode="match"/>
 
 **Attributs**
@@ -91,6 +91,6 @@ En partant de la démo Elasticsearch : http://kartenn.region-bretagne.fr/kartovi
 * ``linkid``: Nom du champ à  utiliser côté serveur wms/wfs pour faire le lien avec la propriété _id des documents elasticsearch
 * ``querymode`` *(optionnel)* : Query mode used by elasticsearch to find results : match ou term ou phrase - default = match. Le mode match convient pour la recherche libre et naturelle. Le mode phrase permet de faire des recherches sur une phrase et le mode terme permet de faire une recherche sur un terme exact. Il est à noter que l'utilisateur peut activer le mode terme en préfixant sa recherche de # et activer le mode phrase en encadrant sa recherche de "".
 * ``doctypes`` *(optionnel)* : types des documents elasticsearch à  requêter systématiquement, indépendamment des couches affichées
-* ``version`` *(optionnel)* : version de l'instance elasticsearch "current" ou "1.4" (defaut = current)       
+* ``version`` *(optionnel)* : version de l'instance elasticsearch (exemple = 5.3)
 
 Tester en Lançant  http://monserveur/mviewer/?config=demo/els.xml et saisir zola dans la barre de recherche.
