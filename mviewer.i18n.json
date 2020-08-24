@@ -12,6 +12,7 @@
         "tbar.right.zoom.out": "Zoom arrière",
         "tbar.right.zoom.initial": "Revenir à l'étendue géographique de départ",
         "tbar.right.login": "Se connecter",
+        "tbar.right.logout": "Se déconnecter",
         "tbar.right.share": "Partager cette carte",
         "tbar.right.location": "Se localiser",
         "tbar.right.rotation": "Orienté nord",
@@ -63,7 +64,7 @@
         "theme.layers.infos": "Afficher les informations",
         "theme.layers.options": "Options",
         "theme.layers.move": "Déplacer",
-        "theme.layers.restricted": "Données accés restreint",        
+        "theme.layers.restricted": "Données accés restreint",
         "custom.profile.apply": "Appliquer",
         "custom.profile.options": "Options",
         "measure.button.main": "Mesurer",
@@ -110,6 +111,7 @@
         "tbar.right.zoom.out": "Zoom out",
         "tbar.right.zoom.initial": "Zoom to initial extent",
         "tbar.right.login": "Login",
+        "tbar.right.logout": "Logout",
         "tbar.right.share": "Share the map",
         "tbar.right.location": "Locate me",
         "tbar.right.rotation": "North orientation",
@@ -194,4 +196,4 @@
         "csv.alert.geocoding": "Geocoding error",
         "csv.alert.fileloading": "Error loading file"
     }
-} 
+}

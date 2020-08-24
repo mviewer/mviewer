@@ -122,6 +122,15 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
+                    <div id="login-box" class="navbar-form" style="display:none;">
+                        <span></span>
+                        <a class="btn btn-default btn-raised" type="button" href="?login" id="login" title="Se connecter" tabindex="110" accesskey="10"
+                            i18n="tbar.right.login">
+                            <span class="fas fa-lock-open" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </li>
+                <li>
                     <div class="navbar-form" role="search" id="searchtool">
                         <div class="form-group input-group">
                             <input type="text" class="form-control" placeholder="Rechercher" i18n="navbar.search.placeholder" id="searchfield">
@@ -217,10 +226,6 @@
             </div>
             <!-- SECOND VERTICAL RIGHT TOOLBAR -->
             <div id="toolstoolbar" class="btn-group-vertical btn-group-sm" role="group" aria-label="true">
-                <a class="btn btn-default btn-raised" type="button" href="?login" id="login" title="Se connecter" tabindex="110" accesskey="10"
-                    i18n="tbar.right.login" style="display:none;">
-                    <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
-                </a>
                 <button data-toggle="modal" data-target="#sharepanel" onclick="mviewer.mapShare();" id="sharebtn" title="Partager cette carte"
                      i18n="tbar.right.share" tabindex="111" accesskey="11" class="btn btn-default btn-raised">
                      <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
