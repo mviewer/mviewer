@@ -458,7 +458,7 @@ const fileimport = (function () {
             $.ajax({
                 type: "POST",
                 processData: false,
-                url: "https://api-adresse.data.gouv.fr/search/csv/",
+                url: oLayer.geocoderurl ? oLayer.geocoderurl : "https://api-adresse.data.gouv.fr/search/csv/",
                 data: formData,
                 contentType: false,
                 success: function (data) {

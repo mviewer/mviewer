@@ -832,6 +832,7 @@ var configuration = (function () {
                             oLayer.geocodingfields = layer.geocodingfields.split(",");
                         }
                         oLayer.geocoder = layer.geocoder || false;
+                        oLayer.geocoderurl = layer.geocoderurl || false;
                         oLayer.xfield = layer.xfield;
                         oLayer.yfield = layer.yfield;
                         //allow transformation to mapProjection before map is initialized

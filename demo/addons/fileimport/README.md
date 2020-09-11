@@ -50,6 +50,7 @@ Les attributs (et l'élément) suivant sont spécifiques à cette extension :
 
 Pour les couches csv (avec adresse, mais sans coordonnées) :
 * ``geocoder`` : précise l’API de géocodage à utiliser (ban).
+* ``geocoderurl`` (optionnel) : permet de overrider l'url par défaut du geocoder 
 * ``geocodingfields`` : précise les champs utilisables pour le géocodage.
 * ``xfield`` : précise le champ du service de géocodage à utiliser pour la longitude.
 * ``yfield`` : précise le champ du service de géocodage à utiliser pour la latitude.
