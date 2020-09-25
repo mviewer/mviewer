@@ -5,23 +5,27 @@ const fileimport = (function () {
     var _importLayer;
     var _srsHTML = ["<option value='EPSG:4326'>EPSG:4326</option>"];
 
+    /**
+     * Private method _toggleImportLayer
+     */
     var _toggleImportLayer = function() {
         _buttonActive = !_buttonActive;
         if (_importLayer) {
             if (_buttonActive) {
                 mviewer.addLayer(_importLayer);
             } else {
-                var el = $(`#layers-container [data-layerid=${_importLayer.layerid}]`)
+                var el = $(`#layers-container [data-layerid=${_importLayer.layerid}]`);
                 mviewer.removeLayer(el);
             }
         } else {
-            var alertText = mviewer.lang
-            ? mviewer.lang[mviewer.lang.lang]("fileimport.alert.config")
-            : "Pas de couche d'import configurée"
+            var alertText = _getI18NAlertMessage("Pas de couche d'import configurée", "fileimport.alert.config");
             mviewer.alert(alertText, "alert-warning");
         }
     }
 
+    /**
+     * HTML content of modal for importing csv
+     */
     var _wizard_modal =
         `<div id="geocoding-modal" class="modal fade" tabindex="-1" role="dialog" >
     <div class="modal-dialog modal-md">
@@ -136,6 +140,11 @@ const fileimport = (function () {
       </div>
     </div>`
 
+    /**
+     * HTML content of modal for importing shp
+     * only displayed if no .proj file found and
+     * manual selection of SRS necessary
+     */
     var _projection_modal = 
         `<div id="projection-modal" class="modal fade" tabindex="-1" role="dialog" >
             <div class="modal-dialog modal-md">
@@ -158,6 +167,9 @@ const fileimport = (function () {
             </div>
         </div>`
 
+    /**
+     * HTML content of drag and drop zone
+     */
     var _template = function (oLayer) {
 
         return `<div class="dropzone dz-clickable" id="drop_zone" onclick="$('#loadcsv-${oLayer.layerid}').click();" ondrop="fileimport.dropHandler(event);" ondragover="fileimport.dragOverHandler(event);">
@@ -173,7 +185,12 @@ const fileimport = (function () {
               <input type="file" name="filebutton" onchange="fileimport.loadLocalFile('${oLayer.layerid}')" style="visibility:hidden;" id="loadcsv-${oLayer.layerid}"/>`
     };
 
-    // Load local file
+    /**
+     * Private method _loadLocalFile
+     * Clears features, registers SRS and checks mimetype to decide between csv and shp import
+     * @param {String} idlayer
+     * @param {File} file
+     */
     var _loadLocalFile = function (idlayer, file) {
         if (!file) {
             file = document.getElementById("loadcsv-" + idlayer).files[0];
@@ -199,7 +216,12 @@ const fileimport = (function () {
         }
     };
 
-    //used for csv and shp (without .prj)
+    /**
+     * Private method _registerSRS
+     * Registers SRS indicated in config.xml and creates HTML dropdown
+     * used for csv and shp (without .prj)
+     * @param {Object} oLayer
+     */
     var _registerSRS = function (oLayer){
         if (oLayer.projections && oLayer.projections.projection) {
             oLayer.projections.projection.forEach(function (p) {
@@ -213,6 +235,14 @@ const fileimport = (function () {
         }
     }
 
+    /**
+     * Private method _initCsvModal
+     * Displays and inits modal for csv import, clearing and initializing values and events.
+     * Parses csv to json. Calls _geocode() or _mapCSV() depending on presence of coords in data.
+     * @param {String} idlayer
+     * @param {File} file
+     * @param {Object} oLayer
+     */
     var _initCsvModal = function(idlayer, file, oLayer) {
         _resetForms();
         var reader = new FileReader();
@@ -295,6 +325,10 @@ const fileimport = (function () {
         }
     }
 
+    /**
+     * Private method _resetForms
+     * Utility method for _initCsvModal to clear values
+     */
     var _resetForms = function () {
         $("#geocoding-modal .csv-fields a").remove();
         $("#x-select option").remove();
@@ -302,6 +336,10 @@ const fileimport = (function () {
         $("#srs-select option").remove();
     }
 
+    /**
+     * Private method _initCoordsTab
+     * Utility method for _initCsvModal to init coords tab with values
+     */
     var _initCoordsTab = function (tmp, oLayer) {
         // init xy select options
         var options = [];
@@ -337,6 +375,14 @@ const fileimport = (function () {
         $("#srs-select").append(_srsHTML.join(" "));
     }
 
+    /**
+     * Private method _unzip
+     * Unzips .shp, .dbf and .prj
+     * Aborts, displaying error messages to user if .shp or .dbf missing.
+     * Displays modal to choose SRS if .proj is missing.
+     * @param {File} file
+     * @param {Object} oLayer
+     */
     var _unzip = function(file, oLayer) {
         zip.workerScripts = {
             inflater: ['demo/addons/fileimport/lib/z-worker.js', 'demo/addons/fileimport/lib/inflate.js']
@@ -385,10 +431,16 @@ const fileimport = (function () {
         }, _onerror);
     }
 
-    function getFileContents(file, mimetype) {
+    /**
+     * Private method _getFileContents
+     * Utility method for _unzip to get fileBlob
+     * @param {Entry} file
+     * @param {String} mimetype
+     */
+    function _getFileContents(file, mimetype) {
         return new Promise((resolve, reject) => {
             if (!file) {
-                reject(`no file ${mimetype} found`);
+                reject(new Error(_getI18NAlertMessage(`Pas de fichier dbf trouvé`, "fileimport.alert.dbf")));
             } else {
                 file.getData(new zip.BlobWriter(mimetype), fileBlob => 
                     resolve(new Response(fileBlob))
@@ -397,6 +449,15 @@ const fileimport = (function () {
         })
     }
 
+    /**
+     * Private method _resolveShpDbf
+     * Utility method for _unzip to resolve shp, dbf promise and call _loadShp once SRS is set
+     * @param {Promise} shpPromise
+     * @param {Promise} dbfPromise
+     * @param {String} projId
+     * @param {Object} oLayer
+     * @param {String} shpfilename
+     */
     function _resolveShpDbf(shpPromise, dbfPromise, projId, oLayer, shpfilename) {
         Promise.all([shpPromise, dbfPromise])
         .then(async ([shpResponse, dbfResponse]) => {
@@ -404,14 +465,23 @@ const fileimport = (function () {
             var dbfContents = await dbfResponse.arrayBuffer();
             _loadShp(shpContents, dbfContents, projId, oLayer, shpfilename);
         }).catch(function(error){
-            console.log(error)
+            mviewer.alert(error, "alert-warning");
         })
     }
 
     var _onerror = function(message) {
 		console.log(message);
     }
-    
+
+    /**
+     * Private method _loadShp
+     * Loads shp geoms and dbf attributs into map via shapefile js lib
+     * @param {ArrayBuffer} shpfile
+     * @param {ArrayBuffer} dbffile
+     * @param {String} projId
+     * @param {Object} oLayer
+     * @param {String} filename
+     */
     var _loadShp = function(shpfile, dbffile, projId, oLayer, filename) {
         var features = [];
         shapefile.open(shpfile, dbffile, {encoding: "UTF-8"})
@@ -444,7 +514,13 @@ const fileimport = (function () {
         .catch(error => console.error(error.stack));
     }
 
-    // POST local file and parameters to API geocode service
+    /**
+     * Private method _geocode
+     * POSTs local file and parameters to API geocode service
+     * @param {String} _csv
+     * @param {Object} oLayer
+     * @param {Object} l
+     */
     var _geocode = function (_csv, oLayer, l) {
         if (oLayer.geocoder === "ban") {
             // Create post form data
@@ -480,6 +556,14 @@ const fileimport = (function () {
         }
     };
 
+    /**
+     * Private method _mapCSV
+     * Maps geocoded csv data (returned from geocoding API or including coords)
+     * @param {String} data
+     * @param {Object} oLayer
+     * @param {Object} l
+     * @param {String} srs
+     */
     var _mapCSV = function (data, oLayer, l, srs) {
         var _epsg = srs ? srs : 'EPSG:4326';
         var _source = l.getSource();
@@ -513,6 +597,12 @@ const fileimport = (function () {
         mviewer.drawVectorLegend(oLayer.layerid, oLayer.legend.items);
     }
 
+    /**
+     * Private method _loadCSV
+     * Load csv indicated in config.xml with url param directly on startup (without file loader and wizard modal)
+     * @param {Object} oLayer
+     * @param {Object} l
+     */
     var _loadCSV = function (oLayer, l) {
         // No wizard here. file is directly geocoded at startup. Used with persistant csv with layer config parameters (geocodingfields...)
         if (oLayer.url && oLayer.geocoder) {
@@ -527,9 +617,13 @@ const fileimport = (function () {
                 }
             });
         }
-
     };
 
+    /**
+     * Private method _initLoaderFile
+     * Inits file loader if no url param in config.xml
+     * @param {Object} oLayer
+     */
     var _initLoaderFile = function (oLayer) {
         //If no url in config, add form as customcontrol to select local file to geocode
         oLayer.customcontrol = true;
@@ -547,11 +641,22 @@ const fileimport = (function () {
         $(`.mv-layer-options [data-layerid=${oLayer.layerid}]`).append(_template(oLayer));
     };
 
+    /**
+     * Private method _geocodeit
+     * Triggers event for modal submit
+     * @param {Element} btn
+     */
     var _geocodeit = function (btn) {
         var e = "geocoding-" + $(btn).attr("data-layerid") + "-ready";
         $("#geocoding-modal").trigger(e);
     };
 
+    /**
+     * Private method _getI18NAlertMessage
+     * Returns translation if mviewer.lang set, else original message
+     * @param {String} message
+     * @param {String} messageId (for mviewer.i18n.json)
+     */
     var _getI18NAlertMessage = function (message, messageId) {
         return mviewer.lang
             ? mviewer.lang[mviewer.lang.lang](messageId)

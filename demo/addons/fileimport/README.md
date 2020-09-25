@@ -3,7 +3,7 @@
 Cette extension permet d'importer des fichiers de façon temporaire (en local) des fichiers au format `csv` ou `shp`. 
 Les données importées ne sont pas sauvegardées et seront perdues à la fermeture du navigateur.
 Dans le cas du Shapefile, le fichier `.shp` doit se trouver compressé dans un fichier `.zip` qui inclut également 
-un fichier `.dbf` (pour les attributs) et `.prj` (pour permettre l'interprétation du SRS à l'extension).
+un fichier `.dbf` encodé en UTF-8 (pour les attributs) et `.prj` (pour permettre l'interprétation du SRS à l'extension).
 En cas d'absence du fichier `.prj` l'utilisateur est sollicité d'indiquer le SRS.
 
 #### 4 ressources dans cette extension
