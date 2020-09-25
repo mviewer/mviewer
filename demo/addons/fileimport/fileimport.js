@@ -179,8 +179,8 @@ const fileimport = (function () {
             file = document.getElementById("loadcsv-" + idlayer).files[0];
         }
         if (file) {
-            //remove existing features. Source can be used many times with differnet files
-            var _src = mviewer.getLayers()[idlayer].layer.getSource().clear();
+            //remove existing features
+            mviewer.getLayers()[idlayer].layer.getSource().clear();
             var oLayer = mviewer.getLayers()[idlayer];
             //register SRS on first load
             if (_srsHTML.length === 1) _registerSRS(oLayer);
@@ -291,9 +291,7 @@ const fileimport = (function () {
             });
         }
         reader.onerror = function (evt) {
-            alert(mviewer.lang
-                ? mviewer.lang[mviewer.lang.lang]("fileimport.alert.filereader")
-                : "Erreur de lecture de fichier");
+            alert(_getI18NAlertMessage("Erreur de lecture de fichier", "fileimport.alert.filereader"));
         }
     }
 
@@ -349,33 +347,38 @@ const fileimport = (function () {
                     var shpfile = entries.filter(entry => entry.filename.split(".")[1] === "shp")[0];
                     var dbffile = entries.filter(entry => entry.filename.split(".")[1] === "dbf")[0];
                     var prjfile = entries.filter(entry => entry.filename.split(".")[1] === "prj")[0];
-                    var shpPromise = getFileContents(shpfile, "application/octet-stream");
-                    var dbfPromise = getFileContents(dbffile, "application/x-dbase");
-                    if (prjfile) {
-                        //get projection from .prj file
-                        getFileContents(prjfile, "text/txt").then(async (prjResponse) => {
-                            var prjContents = await prjResponse.text();
-                            // register named projection for use in _loadShp
-                            var projId = `Proj-${Date.now()}`;
-                            proj4.defs(projId, prjContents);
-                            ol.proj.proj4.register(proj4);
-                            _resolveShpDbf(shpPromise, dbfPromise, projId, oLayer, shpfile.filename);
-                        });
+                    if (shpfile) {
+                        var shpPromise = _getFileContents(shpfile, "application/octet-stream");
+                        var dbfPromise = _getFileContents(dbffile, "application/x-dbase");
+                        if (prjfile) {
+                            //get projection from .prj file
+                            _getFileContents(prjfile, "text/txt").then(async (prjResponse) => {
+                                var prjContents = await prjResponse.text();
+                                // register named projection for use in _loadShp
+                                var projId = `Proj-${Date.now()}`;
+                                proj4.defs(projId, prjContents);
+                                ol.proj.proj4.register(proj4);
+                                _resolveShpDbf(shpPromise, dbfPromise, projId, oLayer, shpfile.filename);
+                            });
+                        } else {
+                            //let user select projection via modal, if no .prj file in zip
+                            $("#shp-srs-select option").remove();
+                            $("#shp-srs-select").append(_srsHTML.join(" "));
+                            $('#projection-modal').modal('show');
+                            new Promise(function(resolve, reject){
+                                //user projections registered from conf.xml
+                                $('#projection-modal .btn').click(() => resolve($("#shp-srs-select").val()));
+                                $('#projection-modal .close').click(() => reject());
+                            }).then(function(projId){
+                                _resolveShpDbf(shpPromise, dbfPromise, projId, oLayer, shpfile.filename);
+                                $('#projection-modal').modal('hide');
+                            }).catch(function(){
+                                 console.log("cancelled shp import")
+                            });
+                        }
                     } else {
-                        //let user select projection via modal, if no .prj file in zip
-                        $("#shp-srs-select option").remove();
-                        $("#shp-srs-select").append(_srsHTML.join(" "));
-                        $('#projection-modal').modal('show');
-                        new Promise(function(resolve, reject){
-                            //user projections registered from conf.xml
-                            $('#projection-modal .btn').click(() => resolve($("#shp-srs-select").val()));
-                            $('#projection-modal .close').click(() => reject());
-                        }).then(function(projId){
-                            _resolveShpDbf(shpPromise, dbfPromise, projId, oLayer, shpfile.filename);
-                            $('#projection-modal').modal('hide');
-                        }).catch(function(){
-                             console.log("cancelled shp import")
-                        });
+                        var alertText = _getI18NAlertMessage("Pas de fichier shp trouvé", "fileimport.alert.shp");
+                        mviewer.alert(alertText, "alert-warning");
                     }
                 }
             });
@@ -465,18 +468,14 @@ const fileimport = (function () {
                     _mapCSV(data, oLayer, l)
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    var alertText = mviewer.lang
-                        ? mviewer.lang[mviewer.lang.lang]("fileimport.alert.geocoding")
-                        : "Problème avec le géocodage"
+                    var alertText = _getI18NAlertMessage("Problème avec le géocodage", "fileimport.alert.geocoding");
                     mviewer.alert(alertText + thrownError, "alert-warning");
                     $("#csv-status").attr("class", "start");
                 }
             });
 
         } else {
-            var alertText = mviewer.lang
-            ? mviewer.lang[mviewer.lang.lang]("fileimport.alert.geocoder")
-            : "Ce geocoder " + oLayer.geocoder + " n'est pas pris en compte"
+            var alertText = _getI18NAlertMessage("Ce geocoder " + oLayer.geocoder + " n'est pas pris en compte", "fileimport.alert.geocoder");
             mviewer.alert(alertText, "alert-warning");
         }
     };
@@ -523,9 +522,7 @@ const fileimport = (function () {
                     _geocode(data, oLayer, l);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    var alertText = mviewer.lang
-                        ? mviewer.lang[mviewer.lang.lang]("fileimport.alert.fileloading")
-                        : "Problème avec la récupération du fichier csv"
+                    var alertText = _getI18NAlertMessage("Problème avec la récupération du fichier csv", "fileimport.alert.fileloading");
                     mviewer.alert(alertText + thrownError, "alert-warning");
                 }
             });
@@ -538,7 +535,14 @@ const fileimport = (function () {
         oLayer.customcontrol = true;
         oLayer.geocodingfields = [];
         oLayer.geocodingcitycode = false;
-        mviewer.customControls[oLayer.layerid] = { form: _template(oLayer), init: function () { return false; }, destroy: function () { return false; } };
+        mviewer.customControls[oLayer.layerid] = { 
+            form: _template(oLayer), 
+            init: function () { 
+                return false; 
+            }, 
+            destroy: function () { 
+                return false; 
+            } };
         // Append template manually on init (because customControls are initialized before extensions) 
         $(`.mv-layer-options [data-layerid=${oLayer.layerid}]`).append(_template(oLayer));
     };
@@ -548,6 +552,11 @@ const fileimport = (function () {
         $("#geocoding-modal").trigger(e);
     };
 
+    var _getI18NAlertMessage = function (message, messageId) {
+        return mviewer.lang
+            ? mviewer.lang[mviewer.lang.lang](messageId)
+            : message;
+    }
 
     return {
         init: function () {
