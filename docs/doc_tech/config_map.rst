@@ -29,7 +29,7 @@ Configurer - les options de la carte
 * ``center`` :guilabel:`studio` : paramètre optionnel de type numérique définissant les coordonnées géographiques du centre de la carte. Exemple **-220750.13,6144925.57**.
 * ``zoom`` :guilabel:`studio` : paramètre optionnel de type entier définissant le zoom initial de la carte. Valeur par défaut **8**.
 * ``projextent`` : paramètre obligatoire de type texte définissant les limites géographiques de la projection utilisée. Ce paramètre n'est pas obligatoire pour les projections EPSG:4326 et EPSG:3857.
-* ``maxextent`` : paramètre optionnel de type texte définissant les limites géographiques pour la vue cartographique
+* ``maxextent`` :guilabel:`studio` : paramètre optionnel de type texte définissant les limites géographiques pour la vue cartographique
 
 **Exemple**
 
