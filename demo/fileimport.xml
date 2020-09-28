@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <application title="Mviewer" mouseposition="false" logo="" help="mviewer_help.html" measuretools="true" exportpng="true" style="css/themes/wet_asphalt.css" togglealllayersfromtheme="true"/>
+    <mapoptions maxzoom="19" projection="EPSG:3857" center="-220750.13768758904,6144925.57790189" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
+  
+    <baselayers style="default">
+        <baselayer  type="fake" id="fake" label="Carroyage" title="Carroyage" thumbgallery="img/basemap/grid.png" visible="false"  />
+        <baselayer  type="OSM" id="darkmatter" label="Dark Matter" title="CartoDb" thumbgallery="img/basemap/darkmatter.png" 
+            url="http://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png" maxzoom="20" 
+            visible="false" attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="OSM" id="positron" label="Positron" title="CartoDb" thumbgallery="img/basemap/positron.png" 
+            url="http://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20" 
+            visible="true" attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="OSM" id="osm1" label="OpenStreetMap" title="OpenStreetMap" thumbgallery="img/basemap/osm.png" 
+            url="http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
+            attribution="© MapQuest. Données : les contributeurs d'&lt;a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='http://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" visible="false"/>
+    </baselayers>     
+    <proxy url=""/>
+    <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban"/>
+    <searchparameters bbox="false" localities="true" features="false" />   
+    <extensions>
+        <extension type="component" id="fileimport" path="demo/addons"/>
+    </extensions>
+    <themes> 
+        <theme name="Import" collapsed="false" id="import" icon="fas fa-users">
+            <layer type="import" id="csv1" name="demo csv"  visible="true"
+                queryable="true"
+                vectorlegend="true"
+                geocoder="ban"
+                geocodingfields="adresse,postcode"
+                xfield="longitude"
+                yfield="latitude"
+                tooltipcontent="{{nom}}"
+                fields="nom,adresse,postcode"
+                url="demo/demo.csv"
+                tooltip="true"
+                searchable="true"
+                searchengine="fuse"
+                fusesearchkeys="nom,adresse"
+                fusesearchresult="{{nom}}"
+                attribution="Dans cet exemple, le fichier csv, persistant et disponible en ligne, est géocodé à l'ouverture de l'application. La recherche est activée">
+            </layer>
+            <layer type="import" id="import_file" name="Importer un fichier"  visible="false"
+                legendurl="img/blank.gif"
+                queryable="true"
+                vectorlegend="true"
+                geocoder="ban"
+                xfield="longitude"
+                yfield="latitude"
+                attribution="Dans cet exemple, l'utilisateur sélectionne un fichier csv ou shp (en zip) depuis son poste. le fichier est ensuite géocodé après paramétrage du géocodage. Il n'y a pas de persistance du résultat. La recherche peut être activée en sélectionnant au moins un champ de recherche. exemple avec ce &lt;a href='https://raw.githubusercontent.com/geobretagne/mviewer/master/demo/demo.csv' target='_blank'>fichier &lt;/a>"
+                expanded="true">
+                <projections>
+                    <projection proj4js="'EPSG:3857','+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs'"/>
+                    <projection proj4js="'EPSG:2154','+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'"/>
+                </projections>
+            </layer>
+        </theme>
+
+    </themes>
+</config>
