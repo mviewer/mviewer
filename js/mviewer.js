@@ -1956,11 +1956,11 @@ mviewer = (function () {
          *
          */
 
-        zoomToLocation: function (x, y, zoom, querymap) {
+        zoomToLocation: function (x, y, zoom, querymap, srs) {
             if (_sourceOverlay) {
                 _sourceOverlay.clear();
             }
-            var ptResult = ol.proj.transform([x, y], 'EPSG:4326', _projection.getCode());
+            var ptResult = ol.proj.transform([x, y], srs || 'EPSG:4326', _projection.getCode());
             if (configuration.getConfiguration().searchparameters) {
                 duration=parseInt(configuration.getConfiguration().searchparameters.duration)
                 if (! duration ){ duration = 1000 }
