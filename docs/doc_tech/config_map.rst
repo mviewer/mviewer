@@ -46,7 +46,7 @@ Configurer - les options de la carte
 	<mapoptions
               scalebar="true"
               scaletext="true"
-              scaleunits="metric",
+              scaleunits="metric"
               scalesteps="3"
 		maxzoom="18"
 		projection="EPSG:3857"
