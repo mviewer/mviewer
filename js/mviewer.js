@@ -296,13 +296,18 @@ mviewer = (function () {
         search.initSearchMarker(configuration.getConfiguration().searchparameters);
         //Create overlay (red pin) used by showLocation method
         _marker = new ol.Overlay({ positioning: 'bottom-center', element: $("#mv_marker")[0], stopEvent: false})
-        overlays.push(_marker);
         _map = new ol.Map({
             target: 'map',
             controls: [
                 //new ol.control.FullScreen(),
                 new ol.control.Attribution({ collapsible: true }),
-                new ol.control.ScaleLine(),
+                new ol.control.ScaleLine({
+                    units: mapoptions.scaleunits || 'metric',
+                    bar: mapoptions.scalebar === 'true',
+                    steps: parseInt(mapoptions.scalesteps) || 2,
+                    text: mapoptions.scaletext == 'true',
+                    maxWidth: 100
+                }),
                 new ol.control.MousePosition({
                     projection: _projection.getCode(),
                     undefinedHTML: 'y , x',

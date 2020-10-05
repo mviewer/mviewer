@@ -19,7 +19,10 @@ Configurer - les options de la carte
         zoom=""
         projextent=""
         maxextent=""
-        rotation=""/>
+        rotation=""
+        scalebar=""
+        scaleunits=""
+        scalesteps=""/>
 
 
 **Paramètres**
@@ -30,6 +33,10 @@ Configurer - les options de la carte
 * ``zoom`` :guilabel:`studio` : paramètre optionnel de type entier définissant le zoom initial de la carte. Valeur par défaut **8**.
 * ``projextent`` : paramètre obligatoire de type texte définissant les limites géographiques de la projection utilisée. Ce paramètre n'est pas obligatoire pour les projections EPSG:4326 et EPSG:3857.
 * ``maxextent`` :guilabel:`studio` : paramètre optionnel de type texte définissant les limites géographiques pour la vue cartographique
+* ``scalebar`` : paramètre optionnel de type texte pour afficher l'échelle en barre et non en ligne ("false" par défaut).
+* ``scaleunits`` : paramètre optionnel de type texte pour préciser l'unité de mesure de l'échelle ("metric" par défaut)
+* ``scalesteps`` : paramètre optionnel de type texte pour préciser le nombre de pas de l'échelle ("2" par défaut).
+* ``scaletext`` : paramètre optionnel de type texte pour préciser si on souhaite afficher le texte au dessus d'une échelle en barre ("true" par défaut).
 
 **Exemple**
 
@@ -37,6 +44,10 @@ Configurer - les options de la carte
        :linenos:
 
 	<mapoptions
+              scalebar="true"
+              scaletext="true"
+              scaleunits="metric",
+              scalesteps="3"
 		maxzoom="18"
 		projection="EPSG:3857"
 		center="-161129,6140339"
