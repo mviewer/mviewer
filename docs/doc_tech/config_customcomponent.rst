@@ -9,12 +9,22 @@ Configurer - Custom Component
 Pour quoi faire ?
 -----------------
 
-On utilise les composants personnalisés pour modifier l'apparence de mviewer, ajouter des fonctionnalités sans modifier le coeur de mviewer.
-Il est ainsi possible de créer un composant très simple  pour :
+On utilise les composants personnalisés pour modifier l'apparence de mviewer, ajouter des fonctionnalités, rajouter des librairies sans modifier le coeur de Mviewer. De cette façon, le Mviewer est ainsi plus facile à maintenir.
+
+Il est ainsi possible de créer un composant très simple pour :
 
 - afficher un logo dans une zone particulière
 - ajouter un nouveau bouton dans la barre de navigation mviewer
 - Créer un sélecteur temporel qui répercutera la sélection à l'ensemble des couches...
+
+Les composants apportent donc plus de souplesse pour personnaliser vos Mviewer selon vos besoins.
+
+
+Qui peut réaliser un composant ?
+--------------------------------
+Tout le monde peut réaliser un composant à condition d'être un petit peu familier avec la configuration mviewer et d'avoir des notions en JavaScript.
+Une fois votre premier composant réaliser, il vous sera très facile d'en réaliser de nouveaux.
+
 
 Comment faire ?
 ---------------
