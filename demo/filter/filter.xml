@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
 <application
-    title="Exemple de boîte de filtrage sur les données avec un plugin"
+    title="Filtrage des données avec un plugin Mviewer"
     logo=""
     help=""
     style="css/themes/default.css"
@@ -29,7 +29,7 @@
             type="customlayer"
             opacity="1"     
             expanded="true"
-            attribution="https://data.bretagne.bzh/explore/dataset/structures-daccompagnement-au-developpement-economique-et-innovation/export/"
+            attribution="Source : &lt;a href='https://data.bretagne.bzh' target='_blank'>Open Data Région Bretagne &lt;/a>"
             metadata=""
             metadata-csw="">
         </layer>

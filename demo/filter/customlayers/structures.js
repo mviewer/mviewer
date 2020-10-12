@@ -20,22 +20,17 @@ let getRandomColor = function () {
   return color;
 }
 
-/**
- * 
- * @param {Array} feature to style
- * @return {Object} style as openLayers style
- */
-let layerStyle = function (feature) {
-  let jurType = feature.getProperties()[attributeToStyle];
+let getStyle = function (form) {
   let style = new ol.style.Style({
     image: new ol.style.Circle({
       radius: 7,
-      fill: new ol.style.Fill({ color: jurType && type[jurType] || '#848484' }),
+      fill: new ol.style.Fill({ color: form && type[form] || '#848484' }),
       stroke: new ol.style.Stroke({ color: 'white', width: 1 })
     })
   });
   return [style];
 }
+
 
 // ol vector source
 const vectorSource = new ol.source.Vector({
@@ -46,7 +41,9 @@ const vectorSource = new ol.source.Vector({
 // ol vector layer
 const layer = new ol.layer.Vector({
   source: vectorSource,
-  style: layerStyle
+  style: function (feature) {
+    return getStyle(feature.getProperties()[attributeToStyle]);
+  }
 });
 
 // event to realize something when layer is read
@@ -60,6 +57,19 @@ var getJurForm = vectorSource.once('change', function (e) {
     formJur = vectorSource.getFeatures().map(e => e.getProperties()[attributeToStyle]);
     formJur = [...new Set(formJur)]; // distinct values
     formJur.forEach(e => type[e] = getRandomColor()); // get colors by form jur
+
+    Object.keys(type).forEach(formType => {
+      console.log(formType);
+      console.log(type);
+      legend.items.push(
+        {
+          styles: getStyle(formType),
+          label: formType,
+          geometry: 'Point'
+        }
+      )
+    });
+    mviewer.drawVectorLegend(id, legend.items);
   }
 });
 
