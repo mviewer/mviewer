@@ -58,6 +58,7 @@ var getJurForm = vectorSource.once('change', function (e) {
     formJur = [...new Set(formJur)]; // distinct values
     formJur.forEach(e => type[e] = getRandomColor()); // get colors by form jur
 
+    // Load and display dynamic vector legend
     Object.keys(type).forEach(formType => {
       legend.items.push(
         {
@@ -67,7 +68,7 @@ var getJurForm = vectorSource.once('change', function (e) {
         }
       )
     });
-    mviewer.drawVectorLegend(id, legend.items);
+    mviewer.drawVectorLegend(id, legend.items); // standard mviewer method to draw legend
   }
 });
 
