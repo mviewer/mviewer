@@ -1,43 +1,67 @@
-mviewer.customLayers.structures = (function () {
-  var id = "structures";
-  mviewer.customLayers[id] = {};
-  var url = 'demo/filter/data/structures.json';
 
-  function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
+
+let legend = { items: [] };
+const id = "structures";
+const url = 'demo/filter/data/structures.json';
+let type = {};
+let formJur = [];
+let attributeToStyle = 'form_jur';
+
+/**
+ * Get random color
+ * @return {String} random code
+ */
+let getRandomColor = function () {
+  let letters = '0123456789ABCDEF';
+  let color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
   }
+  return color;
+}
 
-  var juType = ["Association", "Autre catégorie juridique", "Etablissement public", "SA - Société anonyme", "SA à directoire", "SAS - Société par actions simplifiée", "SASU - Société par actions simplifiée uniperson", "Société civile", "administration"];
-  var type = {};
-  juType.forEach(e => type[e] = getRandomColor());
-  
-  function layerStyle (f) {
-    var jurType = f.getProperties().form_jur;
-    //console.log(jurType);
-    var style =  new ol.style.Style({
-      image: new ol.style.Circle({
-        radius: 7,
-        fill: new ol.style.Fill({color: jurType && type[jurType] || '#848484'}),
-        stroke: new ol.style.Stroke({color: 'white', width: 1})
-      })
-    });
-    return [style];
-  }
-
-  var _layer = new ol.layer.Vector({
-    source: new ol.source.Vector({
-      format: new ol.format.GeoJSON(),
-      url: url
-    }),
-    style: layerStyle
+/**
+ * 
+ * @param {Array} feature to style
+ * @return {Object} style as openLayers style
+ */
+let layerStyle = function (feature) {
+  let jurType = feature.getProperties()[attributeToStyle];
+  let style = new ol.style.Style({
+    image: new ol.style.Circle({
+      radius: 7,
+      fill: new ol.style.Fill({ color: jurType && type[jurType] || '#848484' }),
+      stroke: new ol.style.Stroke({ color: 'white', width: 1 })
+    })
   });
+  return [style];
+}
 
-  return {
-    layer: _layer
+// ol vector source
+const vectorSource = new ol.source.Vector({
+  format: new ol.format.GeoJSON(),
+  url: url
+});
+
+// ol vector layer
+const layer = new ol.layer.Vector({
+  source: vectorSource,
+  style: layerStyle
+});
+
+// event to realize something when layer is read
+// this allow to fix some troubles when the customLayers needs to use not completley ready layer
+var getJurForm = vectorSource.once('change', function (e) {
+  // only for ready state
+  if (vectorSource.getState() == 'ready') {
+    // remove event
+    ol.Observable.unByKey(getJurForm);
+    // get all form jur from features
+    formJur = vectorSource.getFeatures().map(e => e.getProperties()[attributeToStyle]);
+    formJur = [...new Set(formJur)]; // distinct values
+    formJur.forEach(e => type[e] = getRandomColor()); // get colors by form jur
   }
-}());
+});
+
+// Create
+new CustomLayer(id, layer, legend);
