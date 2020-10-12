@@ -59,8 +59,6 @@ var getJurForm = vectorSource.once('change', function (e) {
     formJur.forEach(e => type[e] = getRandomColor()); // get colors by form jur
 
     Object.keys(type).forEach(formType => {
-      console.log(formType);
-      console.log(type);
       legend.items.push(
         {
           styles: getStyle(formType),
