@@ -1,0 +1,74 @@
+.advancedFilter {
+  background-color: #FFFFFF;
+  display: none;
+  text-align: left;
+  position: fixed;
+  top: 240px;
+  left: 60px;
+  padding: 5px 15px 2px;
+  max-width: 250px;
+}
+
+.advancedFilter h2 {
+  font-size: 12.5px;
+  color: #9DE0EF;
+  font-weight: bold;
+  font-family: 'roboto_regular', Arial, Sans-serif;
+  margin-top: 0px;
+  text-align: left;
+}
+
+.advancedFilter h2 .glyphicon-refresh {
+  position: absolute;
+  cursor: pointer;
+  right: 30px;
+  top: 4px;
+}
+
+.advancedFilter h2 .glyphicon-remove {
+  position: absolute;
+  cursor: pointer;
+  right: 10px;
+  top: 4px;
+}
+
+.advancedFilter label {
+  margin-right: 2px;
+  margin-left: 2px;
+  padding: .3em .6em .3em;
+}
+
+.advancedFilter legend {
+  font-size: 13px;
+  font-style: italic;
+  margin-bottom: 5px;
+}
+
+.advancedFilter .form-check-label {
+  display: inline-block;
+}
+
+.advancedFilter .form-check-label:hover {
+  background-color: #EFEFEF;
+}
+
+.advancedFilter .form-check-label-checked{
+  background-color: #BBBBBB;
+}
+
+.form-check {
+  margin-bottom: 5px;
+}
+
+/* needed to add x button on filter */
+.filter-legend {
+  position: relative;
+}
+
+.filter-legend .glyphicon-trash {
+  position: absolute;
+  cursor: pointer;
+  right: 30px;
+  top: 4px;
+  color: #9DE0EF;
+}

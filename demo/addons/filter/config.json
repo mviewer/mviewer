@@ -1,0 +1,40 @@
+{
+  "js": ["js/filter.js", "js/jquery.easyDrag.min.js"],
+  "css": "css/filter.css",
+  "html": "filter.html",
+  "target": "page-content-wrapper",
+  "options": {
+    "title": "filtrer",
+    "open": true,
+    "zoomOnFeatures": true,
+    "layers": [{
+      "layerId": "structures",
+      "filter": [{
+          "attribut": "dep",
+          "type": "button",
+          "label": "Départements"
+        },
+        {
+          "attribut": "ville",
+          "type": "textbox",
+          "label": "Ville",
+          "updateOnChange": true
+        },
+        {
+          "attribut": "form_jur",
+          "type": "button",
+          "label": "Forme juridique",
+          "updateOnChange": true,
+          "dataSeparator":","
+        },
+        {
+          "attribut": "marche",
+          "type": "combobox",
+          "label": "Marché",
+          "dataSeparator":";",
+          "updateOnChange": true
+        }
+      ]
+    }]
+  }
+}
