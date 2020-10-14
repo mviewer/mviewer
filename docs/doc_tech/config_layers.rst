@@ -93,7 +93,7 @@ Paramètres pour gérer l'affichage de la couche
 * ``sld`` :guilabel:`studio` : Lien vers un SLD stocké sur le web. Dans ce fichier SLD, la balise sld:Name contenue dans sld:NamedLayer doit être égale au nom de la couche. Si plusieurs styles , utiliser la virgule comme séparateur. S'applique uniquement aux layers WMS. Il faut indiquer l'URL résolvable par le serveur WMS du ou des sld.
 * ``tiled`` :guilabel:`studio` : Booléen stipulant est ce que la couche est tuilée
 * ``opacity`` :guilabel:`studio` : Opacité de la couche (1 par défaut)
-* ``legendurl`` :guilabel:`studio` : url premettant de récupérer la légende. Si non défini, c'est un getFeatureLegend qui est effectué.
+* ``legendurl`` :guilabel:`studio` : url permettant de récupérer la légende. Si non défini, c'est un GetLegendGraphic qui est effectué.
 * ``filter`` :guilabel:`studio` : Expression CQL permettant de filtrer la couche ex: insee=35000 Ou INTERSECT(the_geom, POINT (-74.817265 40.5296504)) [tutorial] (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial)
 * ``toplayer``: Précise si la couche demeure figée. Booléen. Défaut = true.
 * ``expanded`` :guilabel:`studio` : Booléan précisant si le panneau de la couche est agrandi au démarrage. La valeur par défaut est false.
