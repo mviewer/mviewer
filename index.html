@@ -526,7 +526,7 @@
                 success: function (xml) {
                     $( document ).on( "layersLoaded", function (e) {
                         mviewer.overLayersReady();
-                        mviewer.orderFirstLayer();
+                        mviewer.orderTopLayer();
                     });
                     //load conf
                     $( document ).on( "configurationCompleted", function (e, eData) {

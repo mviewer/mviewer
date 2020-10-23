@@ -1839,7 +1839,7 @@ mviewer = (function () {
 
         },
 
-        orderFirstLayer: function() {
+        orderTopLayer: function() {
             if(_topLayer) {
                 var layersId = _map.getLayers().getArray().filter(e => e.getProperties().mviewerid === _topLayer);
                 if(!layersId.length) return; // no top layer to display over
