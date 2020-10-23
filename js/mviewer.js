@@ -1839,6 +1839,23 @@ mviewer = (function () {
 
         },
 
+        orderFirstLayer: function() {
+            if(_topLayer) {
+                var layersId = _map.getLayers().getArray().filter(e => e.getProperties().mviewerid === _topLayer);
+                if(!layersId.length) return; // no top layer to display over
+
+                // count base layers
+                var countLayers = configuration.getConfiguration().baselayers.baselayer.length;
+                // count themes layers
+                var themes = configuration.getConfiguration().themes.theme;
+                themes.forEach(e => {
+                    countLayers += e.layer.length
+                });
+                // set first layer over others theme or background layers and before system layers
+                mviewer.reorderLayer(layersId[0], countLayers-1);
+            }
+        },
+
         orderLayer: function (actionMove) {
             if (actionMove.layerRef) {
                 var layers = _map.getLayers().getArray();
