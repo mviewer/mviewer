@@ -317,17 +317,12 @@ var info = (function () {
                 } else {
                     if (xml) {
                         var getFeatureInfo = _parseWMSGetFeatureInfo(xml, layerid);
-                        // no geometry could be found in gml
-                        if (!getFeatureInfo.hasGeometry) {
+                        if(!getFeatureInfo.hasGeometry || !getFeatureInfo.features.length || !infohighlight) {
                             showPin = true;
-                        }
-                        if (infohighlight) {
-                            _queriedFeatures.push.apply(_queriedFeatures, getFeatureInfo.features);
                         } else {
-                            showPin = true;
-                        }
-                        var features = getFeatureInfo.features;
-                        if (features.length > 0) {
+                            // no geometry could be found in gml
+                            _queriedFeatures.push.apply(_queriedFeatures, getFeatureInfo.features);
+                            var features = getFeatureInfo.features;
                             if (layerinfos.template) {
                                 html_result.push(applyTemplate(features, layerinfos));
                             } else {
