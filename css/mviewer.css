@@ -1854,3 +1854,21 @@ div#login-box {
 #login {
     border-radius: 0;
 }
+
+#error {
+  display:none;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+
+#error h1 {
+  padding-top: 100px;
+}
+
+#error p {
+  padding-top: 100px;
+  justify-content: center;
+  height: 50%;
+  font-size: 20px;
+}
