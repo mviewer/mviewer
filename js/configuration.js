@@ -517,6 +517,7 @@ var configuration = (function () {
                     oLayer.type = layer.type || "wms";
                     oLayer.theme = themeid;
                     oLayer.rank = layerRank;
+                    oLayer.index = layer.index ? parseFloat(layer.index): null;
                     oLayer.name = layer.name;
                     oLayer.title = layer.name;
                     oLayer.layerid = mvid;

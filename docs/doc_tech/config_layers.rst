@@ -70,7 +70,8 @@ Configurer - Les couches
                 showintoc=""
                 expanded=""
                 metadata=""
-                metadata-csw="" >
+                metadata-csw="" 
+                index="">
                 <template url=""></template>
         </layer>
 
@@ -85,6 +86,7 @@ Paramètres pour une configuration minimaliste
 Paramètres pour gérer l'affichage de la couche
 ===================================================
 
+* ``index``: Ordre d'affichage de la couche sur la carte et dans la légende au démarrage. Les couches avec ce paramètre seront visibles sous les toplayers. Les couches sans ce paramètre ni toplayer seront affichées dans l'ordre d'écriture dans le XML.
 * ``scalemin`` :guilabel:`studio` : Échelle minimum de la couche
 * ``scalemax`` :guilabel:`studio` : Échelle maximum de la couche
 * ``dynamiclegend`` : Booléen précisant si la légende est liée à l'échelle de la carte et si elle nécessite d'être actualisée à chaque changement d'échelle de la carte.
@@ -97,7 +99,7 @@ Paramètres pour gérer l'affichage de la couche
 * ``opacity`` :guilabel:`studio` : Opacité de la couche (1 par défaut)
 * ``legendurl`` :guilabel:`studio` : url permettant de récupérer la légende. Si non défini, c'est un GetLegendGraphic qui est effectué.
 * ``filter`` :guilabel:`studio` : Expression CQL permettant de filtrer la couche ex: insee=35000 Ou INTERSECT(the_geom, POINT (-74.817265 40.5296504)) [tutorial] (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial)
-* ``toplayer``: Précise si la couche demeure figée. Booléen. Défaut = true.
+* ``toplayer``: Précise si la couche demeure figée. Booléen. Défaut = true. Si plusieurs couches sont en toplayer, elles seront affichées dans l'ordre d'écriture du XML.
 * ``expanded`` :guilabel:`studio` : Booléan précisant si le panneau de la couche est agrandi au démarrage. La valeur par défaut est false.
 * ``showintoc`` :  Booléen stipulant si la couche est affichée dans la légende. La valeur par défaut est true.
 
