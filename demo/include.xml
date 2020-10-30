@@ -15,6 +15,6 @@
     </baselayers>
     <searchparameters localities="false"/>
     <themes mini="false">
-            <theme id="education" url="https://kartenn.region-bretagne.fr/territoires/config.xml" name="Education et formation" collapsed="true" icon="false"></theme>
+            <theme id="education" url="https://kartenn.region-bretagne.fr/territoires/apps/default.xml" name="Education et formation" collapsed="true" icon="false"></theme>
     </themes>
 </config>
