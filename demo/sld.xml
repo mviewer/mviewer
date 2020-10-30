@@ -38,7 +38,6 @@
 		                attribution="Les styles (analyses) sont synchronisés avec le filtre attributaire."
 		                metadata="https://kartenn.region-bretagne.fr/geonetwork/?uuid=26324529-e0b7-450c-9506-2dcdca608f5f"
 		                metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=26324529-e0b7-450c-9506-2dcdca608f5f">
-		                <template url="apps/region/territoire/templates/territoire.pop.cat_age.mst"></template>
 		    </layer>
         </theme>
     </themes>
