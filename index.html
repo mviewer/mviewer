@@ -559,9 +559,12 @@
                     configuration.getExtensions(xml);
                 }, // fin success config
                 error: function (request, status, error) {
-                    $("#error h1").text(`Erreur ${request.statusCode().status} : ${error}`);
                     if (request.statusCode().status === 404) {
+                        $("#error h1").text(`Erreur ${request.statusCode().status} : ${error}`);
                         $("#error").append(`<p>Fichier de configuration : <strong>${configFile} </strong>non trouvé.</p>`);
+                    } else if (status === 'parsererror') {
+                        $("#error h1").text('Erreur XML');
+                        $("#error").append(`<p>Erreur : fichier de configuration <strong>${configFile} </strong> mal formé.</p>`);
                     }
                     $("#error").show();
                     $("#loading-page").hide();
