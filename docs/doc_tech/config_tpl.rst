@@ -21,7 +21,7 @@ Exemple de template structuré
 
 
         {{#features}}
-            <li class="item">
+            <li id="{{feature_ol_uid}}" class="item">
                 Exemple de formatage
                 <h3 class="title-feature">{{nom}}</h3>
                 <img src="{{image}}" class="img-responsive" style="margin-top:5%;" /><br/>
@@ -71,7 +71,9 @@ Exemple de template structuré
 Les éléments en rouge sont obligatoires.
 
 Explications : ``{{#features}}{{/features}}`` est une boucle effectuée sur chaque entité présente dans la couche sélectionnée.
-``<li class="item"></li>`` est une entrée de liste html utilisée par le mviewer. S'il y a plusieurs entrées de liste car plusieurs entités sélectionnées, le mviewer présentera les réponses sous la forme d'un carousel.
+``<li id="{{feature_ol_uid}}" class="item"></li>`` est une entrée de liste html utilisée par le mviewer. S'il y a plusieurs entrées de liste car plusieurs entités sélectionnées, le mviewer présentera les réponses sous la forme d'un carousel.
+Pour synchroniser le carousel et la sous-sélection sur la carte lors d'un clic, l'injection de la ``feature_ol_uid`` est requise dans l' ``id`` de la balise. 
+Puisque une ``feature id`` n'est pas obligatoire comme attribut pour une feature l' ``ol_uid`` interne d'OpenLayers est utilisée à ce propos.
 
 Ce qu'il faut savoir de Mustache
 --------------------------------
@@ -116,7 +118,7 @@ Par exemple, ce code :
        :linenos:
 
        {{#features}}
-         <li class="item" style="width:238px;">
+         <li id="{{feature_ol_uid}}" class="item" style="width:238px;">
              <ul>
                {{#fields_kv}}
                  <li>{{key}} : {{value}}</li>

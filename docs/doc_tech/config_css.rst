@@ -18,7 +18,7 @@ Par défaut, une liste de .css est fournie dans le dossier **/css/themes/**
 Changer l'apparence
 --------------------------------
 
-Pour changer l'apparcence *(et donc le .css associé)* de mviewer, il vous suffit d'éditer le fichier **index.html** et de modifier l'adresse du fichier .css à la ligne suivante (n°49). 
+Pour changer l'apparence *(et donc le .css associé)* de mviewer, il vous suffit d'éditer le fichier **index.html** et de modifier l'adresse du fichier .css à la ligne suivante (n°49).
 
 .. code-block:: xml
 
@@ -33,4 +33,4 @@ Par défaut, le fichier associé est **css/themes/default.css**.
 Remarque
 ****************************
 
-A noter qu'un fichier `themes_css_kartenn.pdf <http://kartenn.region-bretagne.fr/kartoviz/css/themes/themes_css_kartenn.pdf>`_  permet de visualiser à l'avance le rendu de chacun des thèmes proposés.
+À noter qu'un fichier `themes_css_kartenn.pdf <http://kartenn.region-bretagne.fr/kartoviz/css/themes/themes_css_kartenn.pdf>`_  permet de visualiser à l'avance le rendu de chacun des thèmes proposés.

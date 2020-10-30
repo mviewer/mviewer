@@ -310,9 +310,9 @@ var search = (function () {
                             }
                             str += `<a class="geoportail list-group-item" href="#" title="${props.context} - ${props.type}"
                                 onclick="mviewer.zoomToLocation(
-                                    ${geom.coordinates[0]}, 
-                                    ${geom.coordinates[1]}, 
-                                    ${zoom}, 
+                                    ${geom.coordinates[0]},
+                                    ${geom.coordinates[1]},
+                                    ${zoom},
                                     ${_searchparams.querymaponclick}
                                 );
                                 mviewer.showLocation('EPSG:4326', ${geom.coordinates[0]}, ${geom.coordinates[1]});">
@@ -394,7 +394,7 @@ var search = (function () {
                 results.forEach(function(element){
                   // from version 4 data are stored in element.item
                   element = element.item;
-                  
+
                     /*
                      * 2 cases, one specific field or a Mustache template for combining fields in a string. Examples:
                      * - name of a field: name
@@ -534,6 +534,10 @@ var search = (function () {
                     queryFilter.query.bool.filter = geofilter;
                 }
             }
+            var contentType = "text/plain";
+            if (parseFloat(_elasticSearchVersion) >= 6) {
+                contentType = "application/json; charset=utf-8";
+            }
             if (sendQuery) {
                 // Fix IE9 "No transport error" with cors
                 jQuery.support.cors = true;
@@ -543,7 +547,7 @@ var search = (function () {
                     crossDomain: true,
                     data: JSON.stringify(queryFilter),
                     dataType: "json",
-                    //contentType: "application/json; charset=utf-8",
+                    contentType: contentType,
                     success: function (data) {
                         _sourceEls.clear();
                         var str = '<a class="elasticsearch list-group-item disabled" >Entités</a>';

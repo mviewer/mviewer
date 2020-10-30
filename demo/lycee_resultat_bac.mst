@@ -1,24 +1,24 @@
 {{#features}}
-	<li class="item" style="padding-bottom:65px;">		
+	<li id="{{feature_ol_uid}}" class="item" style="padding-bottom:65px;">
 		<div class="title-feature" style="padding-top:10px;">{{nom}}</div>
-		<h4><select onchange="drawCharts(this.value);">					
+		<h4><select onchange="drawCharts(this.value);">
     			<option>2017</option>
     			<option>2016</option>
     			<option>2015</option>
 				</select>
 			</h4>
 		<div class="panel panel-default">
-            <div class="panel-body panel-graph"> 
-            	<img src="http://kartenn.region-bretagne.fr/portail-idd/img/social_diplome.svg" style="width:30%;">  
+            <div class="panel-body panel-graph">
+            	<img src="http://kartenn.region-bretagne.fr/portail-idd/img/social_diplome.svg" style="width:30%;">
             	<p style="margin:-5px 0px -5px 0px!important;">
             		<span id="taux_acces_{{code_rne}}" class="number"></span><span class="number" style="font-size:30px;">%</span>
             	</p>
-            	<p class="title-number">Taux d'accès brut<br><span class="sub-number"><i>de la seconde au bac</i></span></p>                                   
+            	<p class="title-number">Taux d'accès brut<br><span class="sub-number"><i>de la seconde au bac</i></span></p>
             </div>
 		</div>
 		<div class="panel panel-default">
-            <div class="panel-body panel-graph"> 
-            	<img src="http://kartenn.region-bretagne.fr/portail-idd/img/icon-lyc.svg" style="width:30%;">  
+            <div class="panel-body panel-graph">
+            	<img src="http://kartenn.region-bretagne.fr/portail-idd/img/icon-lyc.svg" style="width:30%;">
             	<p style="margin:-5px 0px -5px 0px!important;">
                     <span id="effectifs_{{code_rne}}" class="number"></span><span class="number" style="font-size:30px;"> élèves</span>
             	</p>
@@ -26,7 +26,7 @@
             </div>
 		</div>
 		<div class="panel panel-default">
-            <div class="panel-body panel-graph"> 
+            <div class="panel-body panel-graph">
                 <canvas class="chart1" id="chart1_{{code_rne}}" ></canvas>
             </div>
         </div>
@@ -39,9 +39,9 @@
             <div class="panel-body panel-graph">
 			    <canvas class="chart3" id="chart3_{{code_rne}}" ></canvas>
             </div>
-		</div>			
+		</div>
 		<p>* Valeur ajoutée :  Différence entre taux attendus et taux obtenus</p>
-	</li>		
+	</li>
 {{/features}}
 
 <style>
@@ -50,9 +50,9 @@
 		font-family:"roboto_black";
 		font-size:23px;
 		margin-bottom:3%;
-		line-height:1;			
+		line-height:1;
 	}
-	.indicateur {			
+	.indicateur {
 		text-align: center;
 	}
 	.panel-graph {
@@ -62,7 +62,7 @@
 	.number {
 	    font-size: 40px;
 	    font-weight: 900;
-	}		
+	}
 </style>
 <script>
 	var lycee_charts = {};
@@ -251,7 +251,7 @@
     if  (typeof Chart === 'function') {
             drawCharts(2017);
     } else {
-            $.get('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js', function() {
+            $.get('lib/chartjs-2.5.0/Chart.min.js', function() {
                 drawCharts(2017);
 
             });

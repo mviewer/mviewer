@@ -33,8 +33,8 @@ mviewer.featureStyles.crossStyle = new ol.style.Style({
 });
 
 mviewer.featureStyles.highlight = new ol.style.Style({
-  fill: new ol.style.Fill({color: 'rgba(212, 53, 50,0)'}),
-  stroke: new ol.style.Stroke({color: 'rgba(217, 85, 82,1)', width: 4})
+    fill: new ol.style.Fill({color: 'rgba(212, 53, 50,0)'}),
+    stroke: new ol.style.Stroke({color: 'rgba(217, 85, 82,1)', width: 4})
 });
 
 mviewer.featureStyles.circle1 = new ol.style.Style({
@@ -49,6 +49,47 @@ mviewer.featureStyles.circle1 = new ol.style.Style({
         })
     })
 });
+
+var getSelectStyle = function(rgb, width, feature) {
+
+    var _selectFillColor = `rgba(${rgb}, 0.5)`;
+    var _selectStrokeColor = `rgba(${rgb}, 1)`;
+
+    var _highlightSelect = {
+        'Point': new ol.style.Style({
+        image: new ol.style.Circle({
+            radius: 7,
+            fill: new ol.style.Fill({
+            color: _selectFillColor
+            }),
+            stroke: new ol.style.Stroke({
+            color: _selectStrokeColor,
+            width: width
+            })
+        })
+        }),
+        'LineString': new ol.style.Style({
+        stroke: new ol.style.Stroke({
+            color: _selectStrokeColor,
+            width: width
+        })
+        }),
+        'Polygon': new ol.style.Style({
+        fill: new ol.style.Fill({
+            color: _selectFillColor
+        }),
+        stroke: new ol.style.Stroke({
+            color: _selectStrokeColor,
+            width: width
+        })
+        })
+    };
+    _highlightSelect['MultiPoint'] = _highlightSelect['Point'];
+    _highlightSelect['MultiLineString'] = _highlightSelect['LineString'];
+    _highlightSelect['MultiPolygon'] = _highlightSelect['Polygon'];
+
+    return _highlightSelect[feature.getGeometry().getType()];
+}
 
 var getText = function(feature, resolution) {
     var type = 'Normal';

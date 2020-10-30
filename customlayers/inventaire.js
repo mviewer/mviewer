@@ -1,5 +1,6 @@
 mviewer.customLayers.inventaire = (function () {
 
+    _ELSVERSION = 5.3;
     _filter = false;
     _ready = false;
     _mode = "AND"; /*AND | OR*/
@@ -119,6 +120,11 @@ mviewer.customLayers.inventaire = (function () {
         });
         var xhr = new XMLHttpRequest();
         xhr.open('POST', url);
+        if ( _ELSVERSION >= 6 ) {
+            xhr.setRequestHeader('Content-Type', 'application/json');
+        } else {
+            xhr.setRequestHeader('Content-Type', 'text/plain');
+        }
         var onError = function() {
             _vectorSource.removeLoadedExtent(extent);
         }
@@ -242,8 +248,8 @@ mviewer.customLayers.inventaire = (function () {
         style: _clusterStyle
     });
     var _handle = function(clusters, views) {
-        if (clusters.length > 0 && clusters[0].properties.features) {
-        var features = clusters[0].properties.features;
+        if (clusters.length > 0 && clusters[0].getProperties().features) {
+        var features = clusters[0].getProperties().features;
             var extraTemplate = [
                 '{{#lien_image}}',
                 '<img src="{{lien_image}}" class="img-responsive center-block" />',
@@ -290,13 +296,13 @@ mviewer.customLayers.inventaire = (function () {
 
             };
 
-            var _renderHTML = function (elements) {
+            var _renderHTML = function (features) {
                 var l = mviewer.getLayer("inventaire");
                 var html;
                 if (l.template) {
-                    html = info.templateHTMLContent(elements, l);
+                    html = info.templateHTMLContent(features, l);
                 } else {
-                    html = info.formatHTMLContent(elements, l);
+                    html = info.formatHTMLContent(features, l);
                 }
                 var view = views["right-panel"];
                 view.layers.push({
@@ -313,7 +319,6 @@ mviewer.customLayers.inventaire = (function () {
             // Get additional infos via wfs for each feature
             var search_ids = [];
             var featuretypes = [];
-            var elements = [];
 
             features.forEach(function(feature, i) {
                 if (feature.getProperties() && feature.getProperties().search_id && i < _maxrequestedfeatures) {
@@ -321,9 +326,6 @@ mviewer.customLayers.inventaire = (function () {
                     if (featuretypes.indexOf(feature.getProperties().type) === -1) {
                         featuretypes.push(feature.getProperties().type);
                     }
-                    elements.push({
-                        properties: feature.getProperties()
-                    });
                 }
             });
 
@@ -352,7 +354,7 @@ mviewer.customLayers.inventaire = (function () {
                     }
                 });
             }
-            _renderHTML(elements);
+            _renderHTML(features);
         }
     };
 

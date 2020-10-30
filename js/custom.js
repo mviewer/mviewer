@@ -140,12 +140,24 @@ class Component {
           if (that.config.options && that.config.options.title) {
             component.title = that.config.options.title;
           }
-          if (that.config.css) {
-            _html.push('<link href="'+ that.path + that.config.css +'" rel="stylesheet" >');
+          // use url as string or urls as array from config
+          if (that.config.css && typeof that.config.css === 'string') {
+            _html.push('<link href="'+ that.path + that.config.css +'" rel="stylesheet">');
+          } else if(that.config.css) {
+            let cssSheets = that.config.css.map(s => `<link href="${that.path + s}" rel="stylesheet">`);
+            _html = _html.concat(cssSheets);
           }
           _html.push(html);
           component.innerHTML = _html.join("");
-          target.appendChild(component);
+          if (that.config.options
+                && typeof that.config.options.position == 'number' 
+                && target.hasChildNodes()
+                && target.childNodes[that.config.options.position]
+          ) {
+            target.insertBefore(component, target.childNodes[that.config.options.position]);
+          } else {
+            target.appendChild(component);
+          }
           resolve(target);
         } else {
           reject("error");

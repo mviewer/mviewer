@@ -1,0 +1,27 @@
+#layerfilter-form {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  padding: 10px;
+}
+
+#layerfilter-field {
+  width: 100%;
+  padding-right: 30px;
+}
+
+#layerfilter-clear{
+  position: absolute;
+  right:0; 
+  top:0;
+  padding: 20px 20px;
+  color: #999999;
+  user-select: none;
+  cursor: pointer;
+  display: none;
+}
+
+/* slidebar */
+#wrapper.toggled-2 #layerfilter-form {
+  display: none;
+}

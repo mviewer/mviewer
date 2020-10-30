@@ -1,5 +1,5 @@
 {{#features}}
-	<li class="item" style="width:238px;">
+	<li id="{{feature_ol_uid}}" class="item" style="width:238px;">
 		<h5 class="title-feature">Parcelle {{nationalcadastralreference}}</h5>
 		<p class="text-feature">		
 			<span style="font-family:'roboto_bold'"> Surface :</span> {{areavalue}} m2<br/>

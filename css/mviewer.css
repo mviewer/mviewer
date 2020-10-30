@@ -478,7 +478,7 @@ p.navbar-text.mv-title{
 button.btn.btn-default.navbar-btn.mv-navbar-btn{
   border: 0px;
   border-radius: 0px;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 div#datalist {
@@ -1829,4 +1829,46 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
 }
 #lang-button.enabled, #lang-selector.enabled {
     display:inline-block;
+}
+
+#table-csv {
+  table-layout: fixed;
+}
+#table-csv th:nth-child(1){
+  width: 90px;
+}
+#table-csv th:nth-child(3){
+  width: 56px;
+}
+
+div#login-box {
+    color: white;
+}
+
+@media (max-width: 767px) {
+    #login-box {
+      text-align: center;
+    }
+}
+
+#login {
+    border-radius: 0;
+}
+
+#error {
+  display:none;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+
+#error h1 {
+  padding-top: 100px;
+}
+
+#error p {
+  padding-top: 100px;
+  justify-content: center;
+  height: 50%;
+  font-size: 20px;
 }

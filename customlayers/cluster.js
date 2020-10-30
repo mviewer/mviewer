@@ -82,20 +82,14 @@
 
     });
     cl.handle = function(clusters, views) {
-        if (clusters.length > 0 && clusters[0].properties.features) {
-            var features = clusters[0].properties.features;
-            var elements = [];
+        if (clusters.length > 0 && clusters[0].getProperties().features) {
+            var features = clusters[0].getProperties().features;
             var l = mviewer.getLayer("cluster");
-            features.forEach(function(feature, i) {
-                elements.push({
-                    properties: feature.getProperties()
-                });
-            });
             var html;
             if (l.template) {
-                html = info.templateHTMLContent(elements, l);
+                html = info.templateHTMLContent(features, l);
             } else {
-                html = info.formatHTMLContent(elements, l);
+                html = info.formatHTMLContent(features, l);
             }
             var panel = "";
             if (configuration.getConfiguration().mobile) {

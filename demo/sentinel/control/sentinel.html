@@ -1,0 +1,60 @@
+
+<!-- Import Styles -->
+<link rel="stylesheet" href="demo/sentinel/addons/css/sentinel.css">
+<!-- Define HTML -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group form-group-gain"><label for="sentinel-layer-gain"
+                i18n="legend.label.gain">Gain</label>
+            <input type="text" class="mv-slider" id="sentinel-layer-gain" name="sentinel" value="1"
+                data-provide="slider" data-slider-value="1" data-slider-max="5" data-slider-min="0"
+                data-slider-step=".1" onchange="" data-value="1" style="display: none;">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group form-group-gamma"><label for="sentinel-layer-gamma"
+                i18n="legend.label.gamma">Gamma</label>
+            <input type="text" class="mv-slider" id="sentinel-layer-gamma" name="sentinel" value="0.1"
+                data-provide="slider" data-slider-value="0.1" data-slider-max="1.5" data-slider-min="0.1"
+                data-slider-step=".1" onchange="" data-value="0.1" style="display: none;">
+        </div>
+    </div>
+</div>
+<div style="margin-bottom: 10px;">
+    <label for="cloud-cover">Couverture Nuageuse</label>
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fas fa-cloud-sun"></i></span>
+        <input type="number" class="form-control" min="0" step="1" max=100 id="cloud-cover">
+        <span class="input-group-addon">%</span>
+    </div>
+</div>
+<div style="margin-bottom: 10px;">
+    <label for="shooting-date">Date de prise de vue</label>
+    <div class="input-group">
+        <span class="input-group-addon"><i class="far fa-calendar-alt"></i></span>
+        <input type="text" class="form-control sentinelDatePicker" min="0" step="1" max=100 id="shooting-date">
+    </div>
+</div>
+<div class="form-check">
+    <input class="form-check-input" type="checkbox" value="" id="sentinelShowDate">
+    <label class="form-check-label" for="sentinelShowDate">
+      Afficher la date de prise de vue
+    </label>
+</div>
+<div style="margin-bottom: 10px;">
+    <label for="image-displayed">Couche</label>
+    <div class="input-group">
+        <span class="input-group-addon"><i class="far fa-image"></i></span>
+        <select type="number" class="form-control" min="0" step="1" max=100 id="image-displayed">
+        </select>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <a id="applyButton" class="btn btn-primary" style="width: 100%;color: white;">Appliquer</a>
+    </div>
+</div>
+<div id="calendar">
+</div>

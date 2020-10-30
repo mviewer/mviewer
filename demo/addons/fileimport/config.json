@@ -1,0 +1,13 @@
+{
+  "js": [
+    "lib/zip.js",
+    "lib/z-worker.js",
+    "lib/inflate.js",
+    "lib/shapefile.min.js",
+    "fileimport.js",
+    "featurestyles.js"
+  ],
+  "css": "fileimport.css",
+  "html": "fileimport.html",
+  "target": "toolstoolbar"
+}

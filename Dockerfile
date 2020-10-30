@@ -1,4 +1,4 @@
-FROM nginx:1.17
+FROM nginx:alpine
 
 VOLUME ["/usr/share/nginx/html/apps"]
 

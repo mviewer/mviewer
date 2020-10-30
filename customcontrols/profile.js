@@ -231,7 +231,7 @@ mviewer.customControls.profile = (function() {
             if (typeof Chart === 'function') {
                 _initChart();
             } else {
-                $.get('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js', function() {
+                $.get('lib/chartjs-2.5.0/Chart.min.js', function() {
                     _initChart();
 
                 });

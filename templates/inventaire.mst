@@ -1,5 +1,5 @@
 {{#features}}
-	<li class="inventaire item" style="width:100%;">
+	<li id="{{feature_ol_uid}}" class="inventaire item" style="width:100%;">
 		<h3 class="title-feature">{{title}}</h3>
         <p class="source" ><i>Source: <strong>{{source}}</strong></i></p>
 		<p class="text-feature">

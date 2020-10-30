@@ -1,5 +1,5 @@
 {{#features}}
-	<li class="item" style="width:238px;">
+	<li id="{{feature_ol_uid}}" class="item" style="width:238px;">
 		<h3 class="title-feature">{{nom}}</h3>
 		<p class="text-feature">
 			<h4 class="sub-title">Localisation</h4>		

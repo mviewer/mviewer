@@ -9,7 +9,7 @@ var configuration = (function () {
 
     // Mviewer version a saisir manuellement
 
-    var VERSION = "3.3";
+    var VERSION = "3.4";
 
     var _showhelp_startup = false;
 
@@ -300,11 +300,13 @@ var configuration = (function () {
                 url: _authentification.url, success: function (response) {
                     //test georchestra proxy
                     if(response.proxy == "true") {
-                        $("#login").show();
+                        $("#login-box").show();
+                        let title = mviewer.lang ? mviewer.tr('tbar.right.logout') : "Se déconnecter";
                         if (response.user !="") {
                             $("#login").attr("href",_authentification.logouturl);
-                            $("#login").attr("title","Se déconnecter");
-                            console.log("Bonjour " + response.user);
+                            $("#login").attr("title", title);
+                            $("#login span")[0].className = 'fas fa-lock';
+                            $("#login-box>span").text(response.user);
                         } else {
                             var url="";
                             if (location.search=="") {
@@ -580,7 +582,7 @@ var configuration = (function () {
                         layer.attributefilter === "true") ? true : false;
                     oLayer.attributefield = layer.attributefield;
                     oLayer.attributeoperator = layer.attributeoperator || "=";
-                    oLayer.attributelabel = layer.attributelabel || "Attributs";
+                    oLayer.attributelabel = layer.attributelabel;
                     if (layer.attributevalues && layer.attributevalues.search(",")) {
                         oLayer.attributevalues = layer.attributevalues.split(",");
                     }
@@ -629,12 +631,7 @@ var configuration = (function () {
                     oLayer.dynamiclegend = (layer.dynamiclegend === "true") ? true : false;
                     oLayer.vectorlegend =  (layer.vectorlegend === "true") ? true : false;
                     oLayer.nohighlight =  (layer.nohighlight === "true") ? true : false;
-                    if (layer.geocodingfields) {
-                        oLayer.geocodingfields = layer.geocodingfields.split(",");
-                    }
-                    oLayer.geocoder = layer.geocoder || false;
-                    oLayer.xfield = layer.xfield;
-                    oLayer.yfield = layer.yfield;
+                    oLayer.infohighlight =  (layer.infohighlight === "false") ? false : true;
                     oLayer.legendurl=(layer.legendurl)? layer.legendurl : mviewer.getLegendUrl(oLayer);
                     if (oLayer.legendurl === "false") {oLayer.legendurl = "";}
                     oLayer.useproxy = (layer.useproxy === "true") ? true : false;
@@ -824,17 +821,24 @@ var configuration = (function () {
                         mviewer.processLayer(oLayer, l);
                     }// end kml
 
-                    if (oLayer.type === 'csv') {
+                    if (oLayer.type === 'import') {
                         l = new ol.layer.Vector({
                             source: new ol.source.Vector()
                         });
-                        if (oLayer.url) {
-                            csv.loadCSV(oLayer, l);
-                        } else {
-                            csv.initLoaderFile(oLayer);
+                        if (layer.projections) {
+                            oLayer.projections = layer.projections;
                         }
+                        if (layer.geocodingfields) {
+                            oLayer.geocodingfields = layer.geocodingfields.split(",");
+                        }
+                        oLayer.geocoder = layer.geocoder || false;
+                        oLayer.geocoderurl = layer.geocoderurl || false;
+                        oLayer.xfield = layer.xfield;
+                        oLayer.yfield = layer.yfield;
+                        //allow transformation to mapProjection before map is initialized
+                        oLayer.mapProjection = conf.mapoptions.projection;
                         mviewer.processLayer(oLayer, l);
-                    }// end csv
+                    }// end import
 
                     if (oLayer.type === 'customlayer') {
                         var hook_url = 'customLayers/' + oLayer.id + '.js';
@@ -874,8 +878,23 @@ var configuration = (function () {
                 exportPNGElement.addEventListener('click', function(e) {
                     _map.once('postcompose', function(event) {
                         try {
-                            var canvas = event.context.canvas;
-                            exportPNGElement.href = canvas.toDataURL('image/png');
+                            var mapCanvas = document.createElement('canvas');
+                            var size = _map.getSize();
+                            mapCanvas.width = size[0];
+                            mapCanvas.height = size[1];
+                            var mapContext = mapCanvas.getContext('2d');
+                            Array.prototype.forEach.call(document.querySelectorAll('.ol-layer canvas'), function(canvas) {
+                              if (canvas.width > 0) {
+                                mapContext.globalAlpha = 1;
+                                var transform = canvas.style.transform;
+                                // Get the transform parameters from the style's transform matrix
+                                var matrix = transform.match(/^matrix\(([^\(]*)\)$/)[1].split(',').map(Number);
+                                // Apply the transform to the export map context
+                                CanvasRenderingContext2D.prototype.setTransform.apply(mapContext, matrix);
+                                mapContext.drawImage(canvas, 0, 0);
+                              }
+                            });
+                            exportPNGElement.href = mapCanvas.toDataURL('image/png');
                         }
                         catch(err) {
                             mviewer.alert(err, "alert-info");

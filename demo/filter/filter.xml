@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+<application
+    title="Filtrage des données avec un plugin Mviewer"
+    logo=""
+    help=""
+    style="css/themes/default.css"
+    exportpng="false"
+    showhelp="false"
+    coordinates="false"
+    measuretools="false"
+    togglealllayersfromtheme="false">
+</application>
+<mapoptions maxzoom="18" projection="EPSG:3857" center="-339635.95753680886, 6138515.503773717" zoom="9" />
+<baselayers style="default">
+    <baselayer visible="true" id="positron" thumbgallery="img/basemap/positron.png" title="CartoDb" label="Positron" type="OSM" url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution="Map tiles by  &lt;a href=&quot;https://cartodb.com/attributions&quot;&gt;CartoDb&lt;/a&gt;, under  &lt;a href=&quot;https://creativecommons.org/licenses/by/3.0/&quot;&gt;CC BY 3.0 &lt;/a&gt;"  ></baselayer>
+    <baselayer visible="false" id="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg" title="Esri world imagery" label="Esri world imagery" type="OSM" url="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"  ></baselayer>
+</baselayers>
+<extensions>
+        <extension type="component" id="filter" path="demo/addons"/>
+</extensions>
+<themes mini="true" legendmini="true">
+    <theme name="Structures"  collapsed="true" id="demo" icon="fas fa-laptop-house">
+        <layer id="structures"
+            name="Sites pour l'aide économique et l'innovation"
+            visible="true"
+            url="demo/filter/customlayers/structures.js"
+            queryable="true"
+            type="customlayer"
+            opacity="1"     
+            expanded="true"
+            attribution="Source : &lt;a href='https://data.bretagne.bzh' target='_blank'>Open Data Région Bretagne &lt;/a>"
+            metadata=""
+            metadata-csw="">
+        </layer>
+    </theme>
+</themes>
+</config>
