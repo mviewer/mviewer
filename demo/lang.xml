@@ -28,15 +28,5 @@
 				metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=075fbf9d-0511-4e99-8bca-fabc13a0cf40"
 				metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=075fbf9d-0511-4e99-8bca-fabc13a0cf40" />
 		</theme>
-        <theme name="Supervision"  collapsed="true" id="hydrometrie" icon="fas fa-chart-line">
-			<layer id="hydrometrie_stations_technique" name="Supervision du réseau hydro." visible="true" tiled="true"
-				queryable="true" fields="" aliases=""
-                infoformat="text/html" featurecount="1"
-				style=""
-				url="https://geobretagne.fr/geoserver/dreal_b/wms"
-				attribution="GéoBretagne"
-				metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=34d15ff0-ac1c-48d9-a9bd-a38d60fa0ecc"
-				metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=34d15ff0-ac1c-48d9-a9bd-a38d60fa0ecc" />
-		</theme>
     </themes>
 </config>
