@@ -673,11 +673,11 @@ var info = (function () {
         // set this value as property like 'value= true'. This allows use this value in Mustache template
         if (olayer.attributefilter && olayer.layer.getSource().getParams()['CQL_FILTER']) {
             var activeFilter = olayer.layer.getSource().getParams()['CQL_FILTER'];
-            activeFilter.split(olayer.attributeoperator).map(e=>e.replace(/[\' ]/g, ''))[1];
+            activeAttributeValue = activeFilter.split(olayer.attributeoperator).map(e=>e.replace(/[\' ]/g, ''))[1];
         }
         olfeatures.forEach(function(feature){
             if (activeAttributeValue) {
-                feature.setProperties({'activeAttributeValue': true});
+                feature.set(activeAttributeValue, true);
             }
             // add a key_value array with all the fields, allowing to iterate through all fields in a mustache templaye
             var fields_kv = function () {

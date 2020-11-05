@@ -744,8 +744,8 @@ mviewer = (function () {
             if (displayMode) {
                  $("#wrapper, #main").addClass("mode-" + displayMode);
                  $("#page-content-wrapper").append(['<a id="btn-mode-su-menu" class="btn btn-sm btn-default" ',
-                    'type="button" href="#" data-toggle="modal" data-target="#legend-modal">',
-                    '<span class="glyphicon glyphicon-menu-hamburger"></span></a>'].join(""));
+                    'type="button" href="#" data-toggle="modal" data-target="#legend-modal" title="Afficher la légende" i18n="data.toggle">',
+                    '<i class="fas fa-layer-group"></i></a>'].join(""));
                  if (displayMode === "u") {
                     $("#mv-navbar").remove();
                  }
@@ -912,16 +912,44 @@ mviewer = (function () {
         }
     };
 
+    // manage legend display
     var _setLayerScaleStatus = function (layer, scale) {
         if (layer.scale) {
-            var legendUrl = _getlegendurl(layer);
-            if (scale > layer.scale.min && scale <= layer.scale.max) {
-                $('#legend-'+layer.id).attr("src",legendUrl);
-                $('#legend-'+layer.id).closest("li").removeClass("glyphicon mv-invisible");
-            } else {
-                $('#legend-'+layer.id).attr("src","img/invisible.png");
-                $('#legend-'+layer.id).closest("li").addClass("glyphicon mv-invisible");
+            var isVector = layer.vectorlegend;
+            var isVisible = scale >= layer.scale.min && scale <= layer.scale.max;
+            if(isVector) {
+                return _setVectorLegendStatus(layer, isVisible);
             }
+            _setUrlLegendStatus(layer, isVisible);
+        }
+    };
+
+    // manage display for vector legend
+    var _setVectorLegendStatus = (layer, visible) => {
+        var panel = $('#vector-legend-'+layer.id);
+        var cl =  'hide'+layer.id;
+        if(visible) {
+            panel.removeClass('hidden');
+            panel.parents().find('.'+cl).remove()
+        } else {
+            panel.addClass('hidden');
+            if(!panel.parents().find('.'+cl).length){
+                var img = `<img class="${cl} img-responsive" src="img/invisible.png" style="max-width:30%">`;
+                $('#vector-legend-'+layer.id).parent().append(img);
+            }
+        }
+    }
+
+    // manage static legend display
+    var _setUrlLegendStatus = function (layer, visible) {
+        var legendUrl = _getlegendurl(layer);
+        var panel = $('#legend-'+layer.id);
+        if (visible) {
+            panel.attr("src",legendUrl);
+            panel.closest("li").removeClass("glyphicon mv-invisible");
+        } else {
+            panel.attr("src","img/invisible.png");
+            panel.closest("li").addClass("glyphicon mv-invisible");
         }
     };
 
