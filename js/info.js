@@ -566,7 +566,7 @@ var info = (function () {
             }
 
             _featureTooltip.css({
-                left: (pixel[0]) + 'px',
+                left: (parseInt($("#map").css('margin-left'))+ pixel[0]) + 'px',
                 top: (pixel[1] - 15) + 'px'
             });
             _featureTooltip.tooltip('hide')
