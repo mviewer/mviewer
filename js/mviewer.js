@@ -2458,8 +2458,13 @@ mviewer = (function () {
                 activeStyle = oLayer.layer.getSource().getParams()['STYLES'];
                 var refStyle= activeStyle;
                 //update legend image if nec.
-                var legendUrl = _getlegendurl(layer);
-                $("#legend-" + layer.layerid).attr("src", legendUrl);
+				var res = mviewer.getMap().getView().getResolution();
+				var ppi = 25.4/0.28;
+				var scale = res*ppi/0.0254;
+				if(layer.scale && scale >= layer.scale.min && scale <= layer.scale.max){
+					var legendUrl = _getlegendurl(layer);
+					$("#legend-" + layer.layerid).attr("src", legendUrl);
+				}
             }
             if (oLayer.styles ) {
                 var selectCtrl = $("#"+layer.layerid+"-styles-selector")[0];
