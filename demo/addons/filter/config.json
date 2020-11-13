@@ -45,6 +45,14 @@
               "updateOnChange": true
             }
           ]
+        },{
+          "layerId": "commune",
+          "filter": [{
+            "attribut": "nom_geo",
+            "type": "textbox",
+            "label": "Commune",
+            "updateOnChange": false
+          }]
         }]
       }
     }

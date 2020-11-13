@@ -23,6 +23,7 @@
 <themes mini="true" legendmini="true">
     <theme name="Structures"  collapsed="true" id="demo" icon="fas fa-laptop-house">
         <layer id="structures"
+            toplayer="true"
             name="Sites pour l'aide économique et l'innovation"
             visible="true"
             url="demo/filter/customlayers/structures.js"
@@ -34,6 +35,22 @@
             metadata=""
             metadata-csw="">
         </layer>
+    </theme>
+    <theme name="Limites" collapsed="true" id="limites">
+        <layer 
+            id="commune" 
+            name="Commune"
+            visible="true"
+            queryable="false" 
+            fields="nom_geo"
+            aliases="Nom" 
+            type="customlayer"
+            style=""
+            opacity="1"
+            legendurl="img/legend/commune.png" 
+            url="demo/filter/customlayers/communes.js" 
+            tooltip="true"
+            attribution="Source: GéoBretagne" />
     </theme>
 </themes>
 </config>
