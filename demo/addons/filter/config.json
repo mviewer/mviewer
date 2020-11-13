@@ -4,37 +4,49 @@
   "html": "filter.html",
   "target": "page-content-wrapper",
   "options": {
-    "title": "filtrer",
-    "open": true,
-    "zoomOnFeatures": true,
-    "layers": [{
-      "layerId": "structures",
-      "filter": [{
-          "attribut": "dep",
-          "type": "button",
-          "label": "Départements"
+    "mviewer":{
+      "filter":{
+        "tooltipPosition": "bottom-left",
+        "title": "Filtrer",
+        "open": true,
+        "zoomOnFeatures": true,
+        "legendTitle": "Sélectionner une donnée :",
+        "style": {
+          "border": "1px #2e5367 solid",
+          "background": "#2e5367",
+          "text": "white",
+          "colorButton": "#2e5367"
         },
-        {
-          "attribut": "ville",
-          "type": "textbox",
-          "label": "Ville",
-          "updateOnChange": true
-        },
-        {
-          "attribut": "form_jur",
-          "type": "button",
-          "label": "Forme juridique",
-          "updateOnChange": true,
-          "dataSeparator":","
-        },
-        {
-          "attribut": "marche",
-          "type": "combobox",
-          "label": "Marché",
-          "dataSeparator":";",
-          "updateOnChange": true
-        }
-      ]
-    }]
+        "layers": [{
+          "layerId": "structures",
+          "filter": [{
+              "attribut": "dep",
+              "type": "button",
+              "label": "Départements"
+            },
+            {
+              "attribut": "ville",
+              "type": "textbox",
+              "label": "Ville",
+              "updateOnChange": true
+            },
+            {
+              "attribut": "form_jur",
+              "type": "button",
+              "label": "Forme juridique",
+              "updateOnChange": true,
+              "dataSeparator":","
+            },
+            {
+              "attribut": "marche",
+              "type": "combobox",
+              "label": "Marché",
+              "dataSeparator":";",
+              "updateOnChange": true
+            }
+          ]
+        }]
+      }
+    }
   }
 }

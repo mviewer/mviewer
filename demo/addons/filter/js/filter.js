@@ -1,4 +1,9 @@
 var filter = (function() {
+  /**
+   * Property: _id
+   * @type {String}
+   */
+  var _id = "";
 
   /**
    * Property: _layersParams
@@ -23,7 +28,14 @@ var filter = (function() {
    *
    */
   var _initFilterTool = function() {
-
+    // get config for a specific mviewer
+    var mviewerId = configuration.getConfiguration().application.id;
+    var options = mviewer.customComponents.filter.config.options;
+    if(mviewerId && options.mviewer && options.mviewer[mviewerId]) {
+      mviewer.customComponents.filter.config.options = options.mviewer[mviewerId];
+      options = mviewer.customComponents.filter.config.options;
+    }
+    // get filters by layer
     var layerParams = mviewer.customComponents.filter.config.options.layers;
     var layerId = "";
     var nbLayers = 0;
@@ -49,16 +61,20 @@ var filter = (function() {
       });
 
       //Add filter button to toolstoolbar
-      var button = [
-        '<button id="filterbtn" class="btn btn-default btn-raised" ',
-        ' onclick="filter.toggle();"  title="Filtrer les données" i18n="tbar.right.filter"',
-        ' tabindex="115" accesskey="f">',
-        '<span class="glyphicon glyphicon-filter" aria-hidden="true"></span>',
-        '</button>'
-      ].join("");
+      var button = `
+      <button id="filterbtn" class="btn btn-default btn-raised"
+        onclick="filter.toggle();"  title="Filtrer les données" i18n="tbar.right.filter"
+        tabindex="115" accesskey="f">
+        <span class="glyphicon glyphicon-filter" aria-hidden="true">
+        </span>
+      </button>`;
       $("#toolstoolbar").prepend(button);
+      $('#filterbtn').css('color', options.style.colorButton || 'black');
     }
 
+    // custom from config
+    $('#filterTitle').text(options.title);
+    _setStyle();
   };
 
   /**
@@ -67,6 +83,7 @@ var filter = (function() {
    * Recour au setTimeout car aucun event ne se déclenche correctement à la fin du chargement des données
    */
   var _initFilterPanel = function() {
+    var options = mviewer.customComponents.filter.config.options;
     // Parse all layers to get params
     for (var [layerId, params] of _layersFiltersParams) {
 
@@ -90,7 +107,7 @@ var filter = (function() {
 
           // Update tooltip on button
           $('[data-toggle="filter-tooltip"]').tooltip({
-            placement: 'top'
+            placement: options.tooltipPosition || 'bottom-left'
           });
         } else {
           setTimeout(_initFilterPanel, 300); // try again in 300 milliseconds
@@ -128,9 +145,10 @@ var filter = (function() {
 
     var nbLayers = _layersFiltersParams.size;
 
-    var contentSelectLayer = ['<div class="form-group mb-2 mr-sm-2">',
-      '<legend>Choix de la couche</legend>',
-      '<select id="select-FilterLayer" class="form-control" onchange="filter.selectLayer(this)">'
+    var title = mviewer.customComponents.filter.config.options.legendTitle || 'Choix de la couche';
+    var contentSelectLayer = [`<div class="form-group mb-2 mr-sm-2">
+      <legend id="layerSelectText" class="textlabel">${title}</legend>
+      <select id="select-FilterLayer" class="form-control" onchange="filter.selectLayer(this)">`
     ];
 
     var indexLayerId = 0;
@@ -182,6 +200,7 @@ var filter = (function() {
       contentSelectLayer.push('</select></div>');
       $("#selectLayerFilter").append(contentSelectLayer.join(''));
     }
+    _setStyle();
   };
 
   /**
@@ -294,14 +313,15 @@ var filter = (function() {
     if (alreadyExist) {
       $('#' + id).empty();
     } else {
-      _checkBox = [
-        '<div class="form-check mb-2 mr-sm-2">',
-        '<div class="form-check filter-legend">',
-        '<legend > ' + filterParams.label + ' </legend>',
-        '<span id=' + clearId + ' class="filter-clear glyphicon glyphicon-trash" onclick="filter.clearFilter(this.id);"',
-        ' data-toggle="filter-tooltip" data-original-title="Réinitaliser ce filtre"></span>',
-        '</div>',
-        '<div id ="' + id + '" class="form-check">'
+      _checkBox = [`
+        <div class="form-check mb-2 mr-sm-2">
+        <div class="form-check filter-legend">
+        <legend class="textlabel"> ${filterParams.label} </legend>
+        <span id='${clearId}' class="filter-clear glyphicon glyphicon-trash textlabel" onclick="filter.clearFilter(this.id);"
+         data-toggle="filter-tooltip" data-original-title="Réinitaliser ce filtre"></span>
+        </div>
+        <div id="${id}" class="form-check">
+        `
       ];
     }
     filterParams.availableValues.forEach(function(value, index, array) {
@@ -346,8 +366,8 @@ var filter = (function() {
       _buttonForm = [
         '<div class="form-check mb-2 mr-sm-2">',
         '<div class="form-check filter-legend">',
-        '<legend > ' + filterParams.label + ' </legend>',
-        '<span id=' + clearId + ' class="filter-clear glyphicon glyphicon-trash" onclick="filter.clearFilter(this.id);"',
+        '<legend class="textlabel"> ' + filterParams.label + ' </legend>',
+        '<span id=' + clearId + ' class="filter-clear glyphicon glyphicon-trash textlabel" onclick="filter.clearFilter(this.id);"',
         ' data-toggle="filter-tooltip" data-original-title="Réinitaliser ce filtre"></span>',
         '</div>',
         '<div id ="' + id + '" class="form-check">'
@@ -406,8 +426,8 @@ var filter = (function() {
       var _text = [
         '<div class="form-check mb-2 mr-sm-2">',
         '<div class="form-check filter-legend">',
-        '<legend > ' + params.label + ' </legend>',
-        '<span id=' + clearId + ' class="filter-clear glyphicon glyphicon-trash"',
+        '<legend class="textlabel"> ' + params.label + ' </legend>',
+        '<span id=' + clearId + ' class="filter-clear glyphicon glyphicon-trash textlabel"',
         ' data-toggle="filter-tooltip" data-original-title="Réinitaliser ce filtre"></span>',
         '</div>',
       ];
@@ -433,7 +453,7 @@ var filter = (function() {
           $(">input[type=text]", ".bootstrap-tagsinput").val("");
         }, 1);
       });
-
+      
       $("#" + clearId).on('click', function(event) {
         $("#" + id).tagsinput('removeAll');
         var layerFiltersParams = _layersFiltersParams.get(layerId);
@@ -465,13 +485,13 @@ var filter = (function() {
     var clearId = "filterClear-" + layerId + "-" + params.attribut[0];
 
     if (!$('#' + id).length) {
-      var _datePicker = [
-        '<div class="form-group form-group-timer mb-2 mr-sm-2">',
-        '<div class="form-check filter-legend">',
-        '<legend > ' + params.label + ' </legend>',
-        '<span id=' + clearId + ' class="filter-clear glyphicon glyphicon-trash"',
-        ' data-toggle="filter-tooltip" data-original-title="Réinitaliser ce filtre"></span>',
-        '</div>',
+      var _datePicker = [`
+        <div class="form-group form-group-timer mb-2 mr-sm-2">
+        <div class="form-check filter-legend">
+        <legend class="textlabel">${params.label}</legend>
+        <span id=${clearId} class="filter-clear glyphicon glyphicon-trash textlabel"
+         data-toggle="filter-tooltip" data-original-title="Réinitaliser ce filtre"></span>
+        </div>`
       ];
       _datePicker.push('<input type="text" class="form-control" id="' + id + '" />');
       _datePicker.push('</div>');
@@ -529,8 +549,8 @@ var filter = (function() {
       comboBox = [
         '<div class="form-group mb-2 mr-sm-2">',
         '<div class="form-check filter-legend">',
-        '<legend > ' + params.label + ' </legend>',
-        '<span id=' + clearId + ' class="filter-clear glyphicon glyphicon-trash"',
+        '<legend class="textlabel"> ' + params.label + ' </legend>',
+        '<span id=' + clearId + ' class="filter-clear glyphicon glyphicon-trash textlabel"',
         ' data-toggle="filter-tooltip" data-original-title="Réinitaliser ce filtre"></span>',
         '</div>',
         '<select id="' + id + '" class="form-control" onchange="filter.onValueChange(this)">'
@@ -766,6 +786,7 @@ var filter = (function() {
       mviewer.getMap().getView().fit(bufferedExtent);
     }
     _manageFilterPanel(layerId);
+    _setStyle();
   };
 
   /**
@@ -856,6 +877,7 @@ var filter = (function() {
    * reset all feature for all layer
    **/
   var _clearAllFilter = function() {
+    $('.filter-clear').click();
     // Parse all layer to get params
     for (var [layerId, params] of _layersFiltersParams) {
 
@@ -872,6 +894,14 @@ var filter = (function() {
       }
     }
   };
+
+  var _setStyle = function() {
+    if(!mviewer.customComponents.filter.config.options.style) return;
+    var style = mviewer.customComponents.filter.config.options.style;
+    $('.textlabel').css('color', style.text || 'black');
+    $('#advancedFilter').css('background-color', style.background || 'white');
+    $('#advancedFilter').css('border', style.border || '0px transparent solid');
+  }
 
   return {
     init: _initFilterTool,

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
 <application
+    id="filter"
     title="Filtrage des données avec un plugin Mviewer"
     logo=""
     help=""
