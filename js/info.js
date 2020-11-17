@@ -435,7 +435,6 @@ var info = (function () {
             $('#loading-indicator').hide();
             search.clearSearchField();
             _mvReady = true;
-            
         };
 
         var changeSubFeatureLayer = function (e) {
