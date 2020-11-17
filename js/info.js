@@ -532,6 +532,12 @@ var info = (function () {
         });
         //hack to check if feature is yet overlayed
         var newFeature = false;
+        if(!feature) {
+            _featureTooltip.tooltip('hide');
+            $("#map").css("cursor", "");
+            _sourceOverlay.clear();
+            return;
+        }
         if (feature && _sourceOverlay.getFeatures().length > 0) {
             if (feature.getProperties() === _sourceOverlay.getFeatures()[0].getProperties()) {
                 newFeature = false;
