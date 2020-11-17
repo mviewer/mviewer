@@ -135,6 +135,7 @@ var info = (function () {
      */
 
     var _queryMap = function (evt, options) { 
+        var isClick = evt.type === 'singleclick';
         _queriedFeatures = [];
         _firstlayerFeatures = [];
         var showPin = false;
@@ -425,7 +426,7 @@ var info = (function () {
                 mviewer.highlightFeatures(_queriedFeatures);
                 mviewer.highlightSubFeature(_firstlayerFeatures[0]);
                 // show pin as fallback if no geometry for wms layer
-                if (showPin || (!_queriedFeatures.length && !_firstlayerFeatures.length)) {
+                if (showPin || (!_queriedFeatures.length && !_firstlayerFeatures.length && !isClick)) {
                     mviewer.showLocation(_projection.getCode(), _clickCoordinates[0], _clickCoordinates[1]);
                 } else {
                     $("#mv_marker").hide();
@@ -434,7 +435,7 @@ var info = (function () {
             $('#loading-indicator').hide();
             search.clearSearchField();
             _mvReady = true;
-
+            
         };
 
         var changeSubFeatureLayer = function (e) {
