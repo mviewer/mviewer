@@ -134,7 +134,7 @@ var info = (function () {
      *
      */
 
-    var _queryMap = function (evt, options) { 
+    var _queryMap = function (evt, options) {
         var isClick = evt.type === 'singleclick';
         _queriedFeatures = [];
         _firstlayerFeatures = [];
@@ -319,16 +319,17 @@ var info = (function () {
                     if (xml) {
                         var getFeatureInfo = _parseWMSGetFeatureInfo(xml, layerid);
                         if(!getFeatureInfo.hasGeometry || !getFeatureInfo.features.length || !infohighlight) {
+                            // no geometry could be found in gml
                             showPin = true;
                         } else {
-                            // no geometry could be found in gml
+                            //geometry is available
                             _queriedFeatures.push.apply(_queriedFeatures, getFeatureInfo.features);
-                            var features = getFeatureInfo.features;
-                            if (layerinfos.template) {
-                                html_result.push(applyTemplate(features, layerinfos));
-                            } else {
-                                html_result.push(createContentHtml(features, layerinfos));
-                            }
+                        }
+                        var features = getFeatureInfo.features;
+                        if (layerinfos.template) {
+                            html_result.push(applyTemplate(features, layerinfos));
+                        } else {
+                            html_result.push(createContentHtml(features, layerinfos));
                         }
                     }
                 }
@@ -408,7 +409,7 @@ var info = (function () {
                             return feature.ol_uid == e.relatedTarget.id;
                         })
                         mviewer.highlightSubFeature(selectedFeature[0]);
-                    });                    
+                    });
                     // change layer of sub selection
                     if (configuration.getConfiguration().mobile) {
                         $('.panel-heading').on('click', function (e) {
@@ -439,7 +440,7 @@ var info = (function () {
 
         var changeSubFeatureLayer = function (e) {
             _firstlayerFeatures = _queriedFeatures.filter(feature => {
-                return feature.get("mviewerid") == e.currentTarget.dataset.layerid; 
+                return feature.get("mviewerid") == e.currentTarget.dataset.layerid;
             })
             mviewer.highlightSubFeature(_firstlayerFeatures[0]);
         }
@@ -495,9 +496,9 @@ var info = (function () {
         $("#map").css("cursor", "");
 
         var feature = _map.forEachFeatureAtPixel(pixel, function (feature, layer) {
-            if (!layer 
-                || layer.get('mviewerid') === 'featureoverlay' 
-                || layer.get('mviewerid') === 'selectoverlay' 
+            if (!layer
+                || layer.get('mviewerid') === 'featureoverlay'
+                || layer.get('mviewerid') === 'selectoverlay'
                 || layer.get('mviewerid') === 'subselectoverlay'
             ) {
                 return;
@@ -584,7 +585,7 @@ var info = (function () {
 
     /**
      * Private Method: _parseWMSGetFeatureInfo used to parse GML response
-     from wms servers. Tries to use bbox as geometry if no geometry returned 
+     from wms servers. Tries to use bbox as geometry if no geometry returned
      * @ param xml {Geography Markup Language}
      */
     var _parseWMSGetFeatureInfo = function (xml, layerid) {
@@ -690,7 +691,7 @@ var info = (function () {
               fields_kv = [];
               keys = Object.keys(this);
               for (i = 0 ; i < keys.length ; i++ ) {
-                if (keys[i] == "fields_kv" || keys[i] == "serialized" 
+                if (keys[i] == "fields_kv" || keys[i] == "serialized"
                     || keys[i] === "feature_ol_uid" || keys[i] === "mviewerid" || typeof this[keys[i]] === "object") {
                   continue;
                 }
