@@ -252,6 +252,26 @@ var info = (function () {
 
         var requests = [];
         var carrousel=false;
+
+    /**
+     * This method test mime type from string content
+     * because of bad contentType on GetFeatureInfo response (QGIS SERVER)
+     * @param  {variant} content
+     * @param  {string} contentType (from GetFeatureInfo response header)
+     */
+    var _checkMimeType = function (content,contentType ) {
+        var mimeType = contentType.split(";")[0];
+        //Test string content to check if content is XML or HTML
+        if (typeof content === 'string') {
+            if (content.indexOf('<wfs:FeatureCollection') > 0 ) {
+                mimeType = "application/vnd.ogc.gml";
+            } else if (content.indexOf('<div') >= 0 ) {
+                mimeType = "text/html";
+            }
+        }
+        return mimeType;
+    }
+
         var callback = function (result) {
             $.each(featureInfoByLayer, function (index, response) {
                 var layerinfos = response.layerinfos;
@@ -261,6 +281,7 @@ var info = (function () {
                 }
                 var contentType = response.contenttype;
                 var layerResponse = response.response;
+                var mimeType = _checkMimeType(layerResponse, contentType);
                 var name = layerinfos.name;
                 var theme = layerinfos.theme;
                 var layerid = layerinfos.layerid;
@@ -273,7 +294,7 @@ var info = (function () {
                 var xml = null;
                 var html = null;
 
-                switch (contentType.split(";")[0]) {
+                switch (mimeType) {
                     case "text/html":
                         if ((typeof layerResponse === 'string')
                             && (layerResponse.search('<!--nodatadetect--><!--nodatadetect-->')<0)
