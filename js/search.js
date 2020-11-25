@@ -697,6 +697,7 @@ var search = (function () {
         if (!_olsCompletionUrl)  {
             _searchparams.localities = false;
         }
+
         if (sparams && sparams.bbox &&
             sparams.localities && sparams.features) {
             _searchparams.bbox = (sparams.bbox === "true");
@@ -731,6 +732,9 @@ var search = (function () {
             var label = configuration.searchparameters.inputlabel;
             $("#searchfield").attr("placeholder", label).attr("title", label);
         }
+        
+        _searchparams.banmarker = sparams.banmarker === "true" || false;
+
         _initSearch();
     };
 
