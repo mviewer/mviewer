@@ -2031,7 +2031,7 @@ mviewer = (function () {
         showLocation: function (proj,x, y, showMarker) {
             //marker
             var ptResult = ol.proj.transform([x, y], proj, _projection.getCode());
-            if(showMarker != false && showMarker != undefined) {
+            if(showMarker != false || showMarker === undefined) {
                 _marker.setPosition(ptResult);
                 $("#mv_marker").show();
             }
