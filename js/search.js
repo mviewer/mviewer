@@ -731,6 +731,7 @@ var search = (function () {
             var label = configuration.searchparameters.inputlabel;
             $("#searchfield").attr("placeholder", label).attr("title", label);
         }
+        _searchparams.banmarker = sparams.banmarker === "true" || false;
         _initSearch();
     };
 
