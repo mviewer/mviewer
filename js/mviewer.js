@@ -2030,6 +2030,7 @@ mviewer = (function () {
 
         showLocation: function (proj,x, y, showMarker) {
             //marker
+            $("#mv_marker").hide();
             var ptResult = ol.proj.transform([x, y], proj, _projection.getCode());
             if(showMarker != false || showMarker === undefined) {
                 _marker.setPosition(ptResult);
