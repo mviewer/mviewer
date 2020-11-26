@@ -319,16 +319,17 @@ var info = (function () {
                     if (xml) {
                         var getFeatureInfo = _parseWMSGetFeatureInfo(xml, layerid);
                         if(!getFeatureInfo.hasGeometry || !getFeatureInfo.features.length || !infohighlight) {
+                            // no geometry could be found in gml
                             showPin = true;
                         } else {
-                            // no geometry could be found in gml
+                            //Geometry is available
                             _queriedFeatures.push.apply(_queriedFeatures, getFeatureInfo.features);
-                            var features = getFeatureInfo.features;
-                            if (layerinfos.template) {
-                                html_result.push(applyTemplate(features, layerinfos));
-                            } else {
-                                html_result.push(createContentHtml(features, layerinfos));
-                            }
+                        }
+                        var features = getFeatureInfo.features;
+                        if (layerinfos.template) {
+                            html_result.push(applyTemplate(features, layerinfos));
+                        } else {
+                            html_result.push(createContentHtml(features, layerinfos));
                         }
                     }
                 }
