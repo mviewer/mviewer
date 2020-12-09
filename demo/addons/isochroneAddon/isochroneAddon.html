@@ -1,0 +1,75 @@
+﻿<div id="custom-popin" style="display:none;">
+      <div class="header">
+        <div id="header-content">
+          <i class="fas fa-lg fa-grip-vertical"></i><h3 id="addon_title"> </h3>
+        </div>
+      </div>
+      <div class="body">
+        <div>
+            <div id="depart">
+              <h4><i class="fas fa-thumbtack"></i> Point d'origine</h4>
+              <button type="button" id="choisir_depart" class=" btn btn-default"><i class="fas fa-crosshairs"></i> Choisir</button>
+            </div>
+
+            <div id="parametre-container">
+              <h4>Paramètres</h4>
+              <button id="time-button" type="button" class="btn btn-default selected parametre" data-parametre="temps">
+                <i class="fas fa-clock"></i><span> Temps</span>
+              </button>
+              <button id="distance-button" type="button" class="btn btn-default parametre" data-parametre="distance">
+                <i class="fas fa-ruler-horizontal"></i><span> Distance</span>
+              </button>
+
+
+              <div id="temps" style="display:block;">
+                <h5>Options de temps</h5>
+                <div style="display:inline-block;">
+                  <label for="heures_input">Heures</label>
+                  <input id="heures_input" class="isochrone-times form-control" type="number" min="0" max="9999999">
+                </div>
+                <div style="display:inline-block;">
+                  <label for="minutes_input">Minutes</label> 
+                  <input id="minutes_input" class="isochrone-times form-control" type="number" min="0" max="9999999">
+                </div>
+              </div>
+
+              <div id="distance" style="display:none;">
+                <h5>Options de distance</h5>
+                <div style="display:inline-block;">
+                  <label for="kilometres_input">Kilomètres</label>
+                  <input id="kilometres_input" class="isochrone-distance form-control" type="number"  min="0" max="9999999">
+                </div>
+                <div style="display:inline-block;">
+                  <label for="metres_input">Mètres</label>
+                  <input id="metres_input"  class="isochrone-distance form-control" type="number" min="0" max="9999999">
+                </div>
+              </div>
+            </div>
+            
+
+            <div id="deplacement">
+            <h4><i class="fas fa-bus-alt"></i> Mode de déplacment</h4>
+              <button id="car-button" type="button" class="selected isochrone-mode btn btn-defaul" data-mode="Voiture">
+                <i class="fa fa-car" aria-hidden="true"></i><span> Voiture</span>
+              </button>
+              <button id="walking-button" type="button" class="isochrone-mode btn btn-default" data-mode="Pieton">
+                <i class="fa fa-walking" aria-hidden="true"></i><span> Piéton</span>
+              </button>
+            </div>
+            <div id="color">
+              <h4><i class="fas fa-palette"></i> Couleur du résultat</h4>
+              <label for="iso_color">Choisir une couleur: </label>
+              <input id="iso_color" name="iso_color" type="color">
+            </div>
+            <div id="action_buttons">
+            <h4><i class="fas fa-cog"></i> Actions</h4>
+              <button type="button" id="calcul_result" class="btn btn-primary " ><i class="fas fa-calculator"></i> Calculer</button>
+              <button type="button" id="reset" class="btn btn-default" ><i class="fas fa-undo"></i> Réinitialiser</button>
+            </div>
+
+        </div>
+        <div id = "loading" class="loading d-flex align-items-center" style="display:none;">
+          <strong><i class="fas fa-spin fa-spinner"></i> Loading isochrone</strong>
+        </div>
+      </div>
+</div>
