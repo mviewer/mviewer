@@ -55,7 +55,7 @@ const isochroneAddon = (function() {
      * @param  {event} e
      */
 
-    var switchModeDeplacement= function (e) {
+    var switchModeDeplacement = function (e) {
       let element = e.currentTarget;
       $(".selected.isochrone-mode").removeClass("selected");
       $(element).addClass("selected");
@@ -66,7 +66,7 @@ const isochroneAddon = (function() {
      * @param  {event} f
      */
 
-    var switchModeParametre= function (f) {
+    var switchModeParametre = function (f) {
 
       let element = f.currentTarget;
       $(".selected.parametre").removeClass("selected");
@@ -76,71 +76,46 @@ const isochroneAddon = (function() {
         document.getElementById("temps").style.display = "block";
         document.getElementById("distance").style.display = "none";
         $('#distance :input').val('');
-      }else if(parametreData === "distance"){
+      } else if(parametreData === "distance") {
         document.getElementById("distance").style.display = "block";
         document.getElementById("temps").style.display = "none";
         $('#temps :input').val('');
       }
       
     }
-       
+
     /**
-     *gets forms inputs and sends infomation for isochrone to be calculate on click caculer button
-     */
+    * Converts input values to correspond to time in seconds or distances in meters
+    * @param  {input} "#heures_input" input value, "#minutes_input" input value, "#kilometers_input" input value, "#meters_input" input value
+    * @param  {multiplier} multiplier to convert to seconds or meters
+    */ 
+
+    
+    var convert = function(input, multiplier){
+        let result = 0;
+        if (input > 0 && multiplier > 0) {
+            result = input*multiplier;
+        };
+        return result;
+    }
+
 
     var calcul = function () {
-            var times = [];
-            var distances = [];
+            var times = 0;
+            var distances = 0;
+            
+            times += convert($("#minutes_input").val(), 60);
+            times += convert($("#heures_input").val(), 3600);
+            distances += convert($("#metres_input").val(), 1);
+            distances += convert($("#kilometres_input").val(), 1000);
 
-            /**
-             * Converts input values to correspond to time in seconds and distance in meters, adds all values to corresponding table
-             * @param  {input} "#heures_input", "#minutes_input", "#kilometres_input", "#metres_input"
-             * @param  {} .each(function(index
-             * @param  {number} input
-             */
-
-            $("#heures_input").each(function(index,input) {
-                if (input.value > 0) {
-                    times.push(input.value*3600);
-                };
-            });
-
-            $("#minutes_input").each(function(index,input) {
-                if (input.value > 0) {
-                    times.push(input.value*60);
-                };
-            });
-
-            $("#kilometres_input").each(function(index,input) {
-                if (input.value > 0) {
-                    distances.push(input.value*1000);
-                }
-            });
-
-            $("#metres_input").each(function(index,input) {
-                if (input.value > 0) {
-                    distances.push(input.value);
-                }
-            });
-
-            if (!_xy || (times.length === 0) && (distances.length === 0)) {
+            if (!_xy) {
                 mviewer.alert("Isochrones : Il faut définir l'origine et au moins un temps de parcours ou une distance", "alert-info")
                 return;
             }
-
-            /**
-             * adds all values from table together for one total time and total distance
-             * @param  {number} "totalTime", "totalDistance"
-             */
-
-            var totalTime = 0;
-            for(var t = 0; t<times.length; t++){
-              totalTime = totalTime + parseInt(times[t]);
-            }
-
-            var totalDistance = 0;
-            for(var t = 0; t<distances.length; t++){
-              totalDistance = totalDistance + parseInt(distances[t]);
+            if ( (times === 0) && (distances === 0)) {
+                mviewer.alert("Isochrones : Il faut définir temps parcours ou une distance", "alert-info")
+                return;
             }
 
             /**
@@ -158,11 +133,11 @@ const isochroneAddon = (function() {
                             "srs": "epsg:4326"   
                         };
 
-            if( totalTime != 0 && totalDistance== 0){
-              dataParameters["time"]=totalTime;
+            if( times > 0 && distances === 0){
+              dataParameters["time"]=times;
               dataParameters["method"]="time";
-            } else if( totalDistance != 0 && totalTime == 0){
-              dataParameters["distance"]=totalDistance;
+            } else if( distances > 0 && times === 0) {
+              dataParameters["distance"]=distances;
               dataParameters["method"]="distance";
             }else{
               mviewer.alert("Isochrones : Il faut définir soit un temps soit une distance, pas les deux", "alert-info")
@@ -183,11 +158,10 @@ const isochroneAddon = (function() {
                         data: dataParameters,
                         dataType: "json",
                         success: function (response) {
-                            console.log(response)
                             _showResult(response);
                         },
                         error: function (request, status, error) {
-                            console.log(error);
+                            mviewer.alert("Il y a un problème avec le calcul, contacter l'admin")
                         document.getElementById("loading").style.display = "none";
                         }
                     });
@@ -240,8 +214,6 @@ const isochroneAddon = (function() {
             $('#car-button').addClass('selected');
           };
     };
-
-
 
     return {
 

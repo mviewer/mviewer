@@ -56,3 +56,12 @@ border:2px solid #286090!important;
 padding-top:1.5rem;
 }
 
+.inline-block{
+  display:inline-block;
+}
+
+#alerts-zone .alert {
+    background-color: #2e5367;
+    color: white;
+    border:none;
+}
