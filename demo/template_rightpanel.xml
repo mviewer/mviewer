@@ -31,7 +31,7 @@
                 attribution="Source: Région Bretagne"
                 metadata="https://kartenn.region-bretagne.fr/geonetwork/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25"
                 metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25" >
-                <template url="templates/global.lycee.mst"></template>
+                <template url="https://kartenn.region-bretagne.fr/kartoviz/apps/region/global/templates/global.lycee.mst"></template> 
 		    </layer>
             <layer id="arret_ferroviaire" name="Arrêts ferroviaires régionaux"  visible="true" tiled="false"
                     searchable="true" queryable="true" fields="" aliases=""
@@ -43,7 +43,7 @@
                     attribution="Source: Région Bretagne"
                     metadata="https://kartenn.region-bretagne.fr/geonetwork/?uuid=4a9d13f7-17be-4a98-9f8f-907cf223072f"
 					metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=4a9d13f7-17be-4a98-9f8f-907cf223072f" >
-                    <template url="templates/global.arret_ferroviaire.mst"></template>
+                    <template url="https://kartenn.region-bretagne.fr/kartoviz/apps/region/global/templates/global.arret_ferroviaire.mst"></template>
             </layer>
         </theme>
     </themes>

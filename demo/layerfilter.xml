@@ -7,16 +7,16 @@
         <baselayer  type="fake" id="fake" label="Carroyage" title="Carroyage" thumbgallery="img/basemap/grid.png" visible="false"  />
         <baselayer  type="OSM" id="darkmatter" label="Dark Matter" title="CartoDb" thumbgallery="img/basemap/darkmatter.png" 
             url="http://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png" maxzoom="20" 
-            visible="false" attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+            visible="false" attribution="Map tiles by  &lt;a href='https://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
         <baselayer  type="OSM" id="positron" label="Positron" title="CartoDb" thumbgallery="img/basemap/positron.png" 
             url="http://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20" 
-            visible="true" attribution="Map tiles by  &lt;a href='http://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='http://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+            visible="true" attribution="Map tiles by  &lt;a href='https://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
         <baselayer  type="OSM" id="osm1" label="OpenStreetMap" title="OpenStreetMap" thumbgallery="img/basemap/osm.png" 
             url="http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
-            attribution="© MapQuest. Données : les contributeurs d'&lt;a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='http://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" visible="false"/>
+            attribution="© MapQuest. Données : les contributeurs d'&lt;a href='https://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='https://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" visible="false"/>
     </baselayers>     
     <proxy url=""/>
-    <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban"/>
+    <olscompletion url="https://api-adresse.data.gouv.fr/search/" type="ban"/>
     <searchparameters bbox="false" localities="true" features="false" />   
     <extensions>
         <extension type="component" id="layerfilter" path="demo/addons"/>
@@ -47,7 +47,7 @@
                     attribution="Source: Région Bretagne" 
                     metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=77f8fc52-ae57-41d1-8f08-7b121b013f51"
                     metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=77f8fc52-ae57-41d1-8f08-7b121b013f51" >
-		            <template url="templates/global.reserve_naturelle_reg.mst"></template>
+					<template url="https://kartenn.region-bretagne.fr/kartoviz/apps/region/global/templates/global.reserve_naturelle_reg.mst"></template>
 		    </layer>                               
         </theme>
         <theme name="Éducation"  collapsed="false" id="education" icon="fas fa-graduation-cap">
@@ -61,7 +61,7 @@
                 attribution="Source: Région Bretagne" 
                 metadata="https://kartenn.region-bretagne.fr/geonetwork/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25"
                 metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25" >	   
-                <template url="templates/global.lycee.mst"></template> 
+                <template url="https://kartenn.region-bretagne.fr/kartoviz/apps/region/global/templates/global.lycee.mst"></template> 
 		    </layer>                             
         </theme>
         <theme name="Transports"  collapsed="false" id="transport" icon="fas fa-bus">
@@ -75,7 +75,7 @@
                     attribution="Source: Région Bretagne" 
 					metadata="https://kartenn.region-bretagne.fr/geonetwork/?uuid=0da27e88-4da6-423e-ba4c-dbcad9128cd2"
 					metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=0da27e88-4da6-423e-ba4c-dbcad9128cd2">
-		            <template url="templates/transport.ligne_ferroviaire.mst"></template>
+		        <template url="https://kartenn.region-bretagne.fr/kartoviz/apps/region/transport/templates/transport.ligne_ferroviaire.mst"></template>
 		        </layer>
                 <layer id="arret_ferroviaire" name="Arrêts ferroviaires régionaux"  visible="false" tiled="false" 
                     searchable="true" queryable="true" fields="" aliases=""                    
@@ -87,7 +87,7 @@
                     attribution="Source: Région Bretagne" 
                     metadata="https://kartenn.region-bretagne.fr/geonetwork/?uuid=4a9d13f7-17be-4a98-9f8f-907cf223072f"
 					metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=4a9d13f7-17be-4a98-9f8f-907cf223072f" >
-                    <template url="templates/global.arret_ferroviaire.mst"></template>
+                    <template url="https://kartenn.region-bretagne.fr/kartoviz/apps/region/global/templates/global.arret_ferroviaire.mst"></template>
                 </layer>
             </group>
 		    <group name="Transport maritime" id="grp2" >	    
@@ -100,7 +100,7 @@
                     attribution="Source: DREAL Bretagne" 
                     metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=ffcb4e72-a01b-44f0-8da3-95a5b13c6e42"
                     metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=ffcb4e72-a01b-44f0-8da3-95a5b13c6e42" >
-		            <template url="templates/global.gare_maritime.mst"></template>
+		            <template url="https://kartenn.region-bretagne.fr/kartoviz/apps/region/global/templates/global.gare_maritime.mst"></template>
 		        </layer>
 		        <layer id="port" name="Ports"  visible="false" tiled="false"
                     searchable="false" queryable="true" fields="axe" aliases="axe"   
@@ -111,7 +111,7 @@
                     attribution="Source: Région Bretagne" 
                     metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=c55c4fba-6a37-48ea-8754-a1bf770a684b"
                     metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=c55c4fba-6a37-48ea-8754-a1bf770a684b" >
-		            <template url="templates/global.port.mst"></template>
+		            <template url="https://kartenn.region-bretagne.fr/kartoviz/apps/region/global/templates/global.port.mst"></template>
 		        </layer>	
             </group>
         </theme>                    
@@ -120,7 +120,7 @@
                 fields="nom_geo" aliases="Nom" 
                 type="customlayer" style="" opacity="1" legendurl="img/legend/commune.png" 
                 url="customlayers/commune.js" 
-                tooltip="true"
+                tooltip="true" tooltipenabled="true"
                 attribution="Source: GéoBretagne" 
                 metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=b08e6cb1-236c-49b7-88f9-42b500d274d5" 
                 metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=b08e6cb1-236c-49b7-88f9-42b500d274d5"/>	    
