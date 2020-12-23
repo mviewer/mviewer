@@ -9,7 +9,7 @@
 
 	<baselayers style="default">
         <baselayer type="fake" id="fake" label="Carroyage" title="Carroyage" thumbgallery="img/basemap/grid.png" visible="true"/>
-        <baselayer visible="false" id="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg" title="Esri world imagery" label="Esri world imagery" type="OSM" url="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"  ></baselayer>
+        <baselayer visible="false" id="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg" title="Esri world imagery" label="Esri world imagery" type="OSM" url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"  ></baselayer>
     </baselayers>
 
     <extensions>
@@ -22,7 +22,7 @@
                 <layer id="maptiler" name="maptiler" visible="false" queryable="true"
                     type="customlayer" opacity="0.9" legendurl="https://www.maptiler.com/img/logos/maptiler-logo.svg"
                     url="demo/tile/maptiler.js"
-                    expanded="true"
+                    expanded="true" exclusive="true"
                     attribution="&lt;a href=&quot;https://www.maptiler.com/copyright/&quot; target=&quot;_blank&quot;&gt;&amp;copy; Maptiler&lt;/a&gt; &lt;a href=&quot;https://www.openstreetmap.org/copyright&quot; target=&quot;_blank&quot;&gt;&amp;copy; OpenStreetMap contributors&lt;/a&gt;"
                     metadata=""
                     >
@@ -30,7 +30,7 @@
                 <layer id="geograndest" name="geograndest" visible="true" queryable="true"
                     type="customlayer" opacity="0.9" legendurl="https://pbs.twimg.com/profile_images/1103603966804410370/Z9jR66Lv_400x400.png"
                     url="demo/tile/geograndest.js"
-                    expanded="true"
+                    expanded="true" exclusive="true"
                     attribution="&lt;a href=&quot;https://osm.geograndest.fr/&quot; target=&quot;_blank&quot;&gt;&amp;copy; Geograndest&lt;/a&gt; &lt;a href=&quot;https://www.openstreetmap.org/copyright&quot; target=&quot;_blank&quot;&gt;&amp;copy; OpenStreetMap contributors&lt;/a&gt;"
                     metadata=""
                     >
@@ -38,7 +38,7 @@
                  <layer id="mapbox" name="mapbox" visible="false" queryable="true"
                     type="customlayer" opacity="0.9" legendurl="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Mapbox_logo_2017.svg/512px-Mapbox_logo_2017.svg.png"
                     url="demo/tile/mapbox.js"
-                    expanded="true"
+                    expanded="true" exclusive="true"
                     attribution="&lt;a href=&quot;https://www.mapbox.com/map-feedback/&quot;&gt;Mapbox&lt;/a&gt; © &lt;a href=&quot;https://www.openstreetmap.org/copyright&quot;&gt;OpenStreetMap contributors&lt;/a&gt;"
                     metadata=""
                     >
