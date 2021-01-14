@@ -56,7 +56,7 @@ Configurer - les options de la carte
               maxextent="-550346.603653, 5975541.123222, -45250.720745, 6262944.349574" />
 
 .. Tip::
-   La carte dispose également d'un marker qui s'affiche au clic sur la carte. Il est possible de modifier ce marker via css.
+   La carte dispose également d'un marker qui s'affiche au clic sur la carte. Il est possible de modifier ce marker via un paramétrage dans ":ref:`configsearch`".
 
    .. image:: ../_images/dev/config_map/marker.png
        :alt: marker
@@ -64,9 +64,7 @@ Configurer - les options de la carte
 
    .. code-block:: html
 
-    #mv_marker path {
-        fill: #337ab7;
-    }
+    <searchparameters imgurl='img/map_marker.png' imgwidth='50px' svgcolor='orange'
 
 
 
