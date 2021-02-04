@@ -1,8 +1,7 @@
 on:
-  push:
-    branches:
-    - master
-    - develop
+  release:
+    types: 
+      - published
 
 jobs:
   docker-build:
@@ -15,14 +14,8 @@ jobs:
         if: github.repository == 'geobretagne/mviewer'
         id: version
         run: |
-          if [[ $GITHUB_REF == 'refs/heads/master' ]]; then
-            echo ::set-output name=VERSION::stable
-          elif [[ $GITHUB_REF == 'refs/heads/develop' ]]; then
-            echo ::set-output name=VERSION::latest
-          else
-            echo "This action only works with master or develop branch"
-            exit 1
-          fi
+          DOCKER_TAG=$( echo ${{ github.ref }} | cut -d'/' -f3)
+          echo ::set-output name=VERSION::$DOCKER_TAG
 
       - name: "build the container"
         if: github.repository == 'geobretagne/mviewer'
