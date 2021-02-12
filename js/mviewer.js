@@ -333,7 +333,7 @@ mviewer = (function () {
                 center: _center,
                 enableRotation: _rotation,
                 zoom: _zoom,
-                extent: mapoptions.maxextent 
+                extent: mapoptions.maxextent
                     ? mapoptions.maxextent.split(",").map(function(item) {return parseFloat(item);})
                     : undefined
             })
@@ -864,7 +864,9 @@ mviewer = (function () {
                 $.each(_themes[theme.id].groups, function (id, group) {
                     var grp = {title: group.name, layers: [] };
                     $.each(group.layers, function (id, layer) {
-                        grp.layers.unshift(layer);
+                        if (layer.showintoc) {
+                            grp.layers.unshift(layer);
+                        }
                     });
                     groups.push(grp);
                 });
@@ -873,7 +875,10 @@ mviewer = (function () {
             //NO GROUPS
             } else {
                  $.each(_themes[theme.id].layers, function (id, layer) {
-                    reverse_layers.push(layer);
+                    if (layer.showintoc) {
+                        reverse_layers.push(layer);
+                    }
+
                 });
                 view.layers = reverse_layers.reverse();
                 view.cls = classes.join(" ");
@@ -2180,7 +2185,7 @@ mviewer = (function () {
         },
 
         addLayer: function (layer) {
-            if (!layer) {
+            if (!layer || !layer.showintoc) {
                 return;
             }
             if (layer.exclusive) {
