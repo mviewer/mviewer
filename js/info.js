@@ -797,7 +797,7 @@ var info = (function () {
         }
         _sourceOverlay = mviewer.getSourceOverlay();
         $.each(_overLayers, function (i, layer) {
-            if (layer.queryable) {
+            if (layer.queryable && layer.showintoc) {
                 _addQueryableLayer(layer);
             }
         });
