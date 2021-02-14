@@ -544,6 +544,11 @@
                             title = _conf.application.title;
                             $("#loader-subtitle").text(title);
                         }
+                        if (_conf.application.favicon) {
+                            let ico = _conf.application.favicon;
+                            let favicon = document.querySelector('link[rel="icon"]');
+                            favicon.attributes.href.value = ico;
+                        }
                         configuration.load(_conf);
                         setTimeout(function () {
                             $("#loading-page").hide();
