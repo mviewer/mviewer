@@ -347,10 +347,12 @@ var info = (function () {
                             _queriedFeatures.push.apply(_queriedFeatures, getFeatureInfo.features);
                         }
                         var features = getFeatureInfo.features;
-                        if (layerinfos.template) {
-                            html_result.push(applyTemplate(features, layerinfos));
-                        } else {
-                            html_result.push(createContentHtml(features, layerinfos));
+                        if (features.length > 0) {
+                            if (layerinfos.template) {
+                                html_result.push(applyTemplate(features, layerinfos));
+                            } else {
+                                html_result.push(createContentHtml(features, layerinfos));
+                            }
                         }
                     }
                 }
