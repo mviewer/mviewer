@@ -632,6 +632,7 @@ var configuration = (function () {
                     oLayer.vectorlegend =  (layer.vectorlegend === "true") ? true : false;
                     oLayer.nohighlight =  (layer.nohighlight === "true") ? true : false;
                     oLayer.infohighlight =  (layer.infohighlight === "false") ? false : true;
+                    oLayer.showintoc =  (layer.showintoc && layer.showintoc === "false") ? false : true;
                     oLayer.legendurl=(layer.legendurl)? layer.legendurl : mviewer.getLegendUrl(oLayer);
                     if (oLayer.legendurl === "false") {oLayer.legendurl = "";}
                     oLayer.useproxy = (layer.useproxy === "true") ? true : false;
