@@ -1,7 +1,9 @@
+name: "Building & push docker image for master and develop branch"
 on:
-  release:
-    types: 
-      - published
+  push:
+    branches:
+    - master
+    - develop
 
 jobs:
   docker-build:
@@ -14,8 +16,14 @@ jobs:
         if: github.repository == 'geobretagne/mviewer'
         id: version
         run: |
-          DOCKER_TAG=$( echo ${{ github.ref }} | cut -d'/' -f3)
-          echo ::set-output name=VERSION::$DOCKER_TAG
+          if [[ $GITHUB_REF == 'refs/heads/master' ]]; then
+            echo ::set-output name=VERSION::stable
+          elif [[ $GITHUB_REF == 'refs/heads/develop' ]]; then
+            echo ::set-output name=VERSION::latest
+          else
+            echo "This action only works with master or develop branch"
+            exit 1
+          fi
 
       - name: "build the container"
         if: github.repository == 'geobretagne/mviewer'
