@@ -1,9 +1,8 @@
+name: "Build & push docker image on release"
 on:
-  push:
-    branches:
-    - master
   release:
-    types: [published]
+    types:
+      - published
 
 jobs:
   docker-build:
@@ -16,14 +15,8 @@ jobs:
         if: github.repository == 'geobretagne/mviewer'
         id: version
         run: |
-          if [[ $GITHUB_REF == 'refs/heads/master' ]]; then
-            echo ::set-output name=VERSION::stable
-          elif [[ $GITHUB_REF == 'refs/heads/develop' ]]; then
-            echo ::set-output name=VERSION::latest
-          elif [[ ${{ github.release.types }} == "published" ]]; then
-            DOCKER_TAG=$( echo ${{ github.ref }} | cut -d'/' -f3)
-            echo ::set-output name=VERSION::$DOCKER_TAG
-          fi
+          DOCKER_TAG=$( echo ${{ github.ref }} | cut -d'/' -f3)
+          echo ::set-output name=VERSION::$DOCKER_TAG
 
       - name: "build the container"
         if: github.repository == 'geobretagne/mviewer'

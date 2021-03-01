@@ -1,0 +1,43 @@
+name: "Building & push docker image for master and develop branch"
+on:
+  push:
+    branches:
+    - master
+    - develop
+
+jobs:
+  docker-build:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checking out the repository"
+        uses: actions/checkout@v2
+      - name: "Calculating the docker image tag"
+        if: github.repository == 'geobretagne/mviewer'
+        id: version
+        run: |
+          if [[ $GITHUB_REF == 'refs/heads/master' ]]; then
+            echo ::set-output name=VERSION::stable
+          elif [[ $GITHUB_REF == 'refs/heads/develop' ]]; then
+            echo ::set-output name=VERSION::latest
+          else
+            echo "This action only works with master or develop branch"
+            exit 1
+          fi
+
+      - name: "build the container"
+        if: github.repository == 'geobretagne/mviewer'
+        run: |
+          docker build -t mviewer/mviewer:${{ steps.version.outputs.VERSION }} .
+
+      - name: "Log onto docker hub"
+        if: github.repository == 'geobretagne/mviewer'
+        uses: azure/docker-login@v1
+        with:
+          username: '${{ secrets.DOCKER_HUB_USERNAME }}'
+          password: '${{ secrets.DOCKER_HUB_PASSWORD }}'
+
+      - name: "push the container"
+        if: github.repository == 'geobretagne/mviewer'
+        run: |
+          docker push mviewer/mviewer:${{ steps.version.outputs.VERSION }}
