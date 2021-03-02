@@ -2033,11 +2033,14 @@ mviewer = (function () {
          *
          */
 
-        showLocation: function (proj,x, y) {
+        showLocation: function (proj,x, y, showMarker) {
             //marker
+            $("#mv_marker").hide();
             var ptResult = ol.proj.transform([x, y], proj, _projection.getCode());
-            _marker.setPosition(ptResult);
-            $("#mv_marker").show();
+            if(showMarker != false || showMarker === undefined) {
+                _marker.setPosition(ptResult);
+                $("#mv_marker").show();
+            }
             _map.render();
         },
 

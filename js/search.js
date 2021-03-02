@@ -258,7 +258,7 @@ var search = (function () {
                                 }
                             str += `<a class="geoportail list-group-item" href="#" onclick="
                                 mviewer.zoomToLocation(${res[i].x}, ${res[i].y}, ${zoom}, ${_searchparams.querymaponclick});
-                                mviewer.showLocation('EPSG:4326',${res[i].x}, ${res[i].y})>
+                                mviewer.showLocation('EPSG:4326',${res[i].x}, ${res[i].y}, ${_searchparams.banmarker})>
                                 ${res[i].fulltext}
                             </a>`;
                         }
@@ -315,7 +315,7 @@ var search = (function () {
                                     ${zoom},
                                     ${_searchparams.querymaponclick}
                                 );
-                                mviewer.showLocation('EPSG:4326', ${geom.coordinates[0]}, ${geom.coordinates[1]});">
+                                mviewer.showLocation('EPSG:4326', ${geom.coordinates[0]}, ${geom.coordinates[1]}, ${_searchparams.banmarker});">
                                 ${props.label}
                             </a>`;
                         }
@@ -414,8 +414,8 @@ var search = (function () {
                     str += '<a class="fuse list-group-item" title="' + result_label + '" ' +
                         'href="#" onclick="mviewer.zoomToLocation('
                         + xyz.lon + ',' + xyz.lat + ',' + xyz.zoom + ',' + _searchparams.querymaponclick +');mviewer.showLocation(\'EPSG:4326\','
-                        + xyz.lon + ',' + xyz.lat +');" '
-                        + 'onmouseover="mviewer.flash(\'EPSG:4326\',' + xyz.lon + ',' + xyz.lat + ');" >'
+                        + xyz.lon + ',' + xyz.lat +', false);" '
+                        + 'onmouseover="mviewer.flash(\'EPSG:4326\',' + xyz.lon + ',' + xyz.lat + ', false);" >'
                         + result_label + '</a>';
                 });
             }
@@ -731,6 +731,7 @@ var search = (function () {
             var label = configuration.searchparameters.inputlabel;
             $("#searchfield").attr("placeholder", label).attr("title", label);
         }
+        _searchparams.banmarker = sparams.banmarker ? sparams.banmarker === "true" || false : true;
         _initSearch();
     };
 

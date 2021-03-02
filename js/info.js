@@ -451,7 +451,7 @@ var info = (function () {
                 mviewer.highlightSubFeature(_firstlayerFeatures[0]);
                 // show pin as fallback if no geometry for wms layer
                 if (showPin || (!_queriedFeatures.length && !_firstlayerFeatures.length && !isClick)) {
-                    mviewer.showLocation(_projection.getCode(), _clickCoordinates[0], _clickCoordinates[1]);
+                    mviewer.showLocation(_projection.getCode(), _clickCoordinates[0], _clickCoordinates[1], !showPin ? search.options.banmarker : showPin);
                 } else {
                     $("#mv_marker").hide();
                 }

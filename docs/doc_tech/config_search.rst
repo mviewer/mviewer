@@ -43,6 +43,7 @@ Options liées à  la recherche d'adresse *(olscompletion)* et à  la recherch
        :linenos:
 
 	<searchparameters
+              banmarker=""
               imgurl=""
               imgwidth=""
               svgcolor=""
@@ -58,6 +59,7 @@ Options liées à  la recherche d'adresse *(olscompletion)* et à  la recherch
 
 **Attributs**
 
+* ``banmarker`` *(optionnel)* : Afficher ou non un icône sur le résultat de la recherche d'adresse : true ou false (defaut = true),
 * ``bbox`` *(optionnel)* : Recherche d'adresse et/ou d'entitées dans l'emprise de la carte : true ou false (defaut = false),
 * ``localities`` *(optionnel)* : Utilisation du service d'adresse olscompletion : true ou false (defaut = true),
 * ``features`` *(optionnel)* : Utilisation du service de recherche d'entitées elasticsearch ou fuse : true ou false (defaut = true),
