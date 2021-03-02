@@ -1,5 +1,6 @@
 {
     "fr": {
+        "infos.powered": "Propulsé par ",
         "legend.title": "Afficher/masquer la légende",
         "legend.remove.all": "Supprimer toutes les couches",
         "navbar.search.placeholder": "Rechercher",
@@ -110,6 +111,7 @@
         "fileimport.button.validate": "Valider"
     },
     "en": {
+        "infos.powered": "Powered by ",
         "legend.title": "Display/hide the legend",
         "legend.remove.all": "Remove all layers",
         "navbar.search.placeholder": "Search",
