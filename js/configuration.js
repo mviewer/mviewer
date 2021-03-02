@@ -210,6 +210,9 @@ var configuration = (function () {
 
         console.log("Mviewer version " + VERSION);
 
+        // set infos bar text
+        $('#mviewerinfosbar').text("powered by mviewer" + VERSION);
+
         _configuration = conf;
         utils.testConfiguration(conf);
         //apply application customization
