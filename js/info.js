@@ -698,7 +698,6 @@ var info = (function () {
         var tpl = olayer.template;
         var obj = {features: []};
         var activeAttributeValue = false;
-        var geojson = new ol.format.GeoJSON();
         // if attributeControl is used for this layer, get the active attribute value and
         // set this value as property like 'value= true'. This allows use this value in Mustache template
         if (olayer.attributefilter && olayer.layer.getSource().getParams()['CQL_FILTER']) {
@@ -709,28 +708,31 @@ var info = (function () {
             if (activeAttributeValue) {
                 feature.set(activeAttributeValue, true);
             }
-            // add a key_value array with all the fields, allowing to iterate through all fields in a mustache templaye
+            var geometryName = feature.getGeometryName();
+            var excludedPropNames = ['fields_kv', 'serialized', 'feature_ol_uid', 'mviewerid', geometryName]
+            var extractFeaturePropertiesFn = function (properties) {
+                return Object.keys(properties).reduce((filteredProps, propertyName) => {
+                    var value = properties[propertyName];
+                    if (!excludedPropNames.includes(propertyName) && typeof value !== 'object') {
+                        filteredProps[propertyName] = value;
+                    }
+                    return filteredProps;
+                }, {});
+            }
+
+            // add a key_value array with all the fields, allowing to iterate through all fields in a mustache template
             var fields_kv = function () {
-              fields_kv = [];
-              keys = Object.keys(this);
-              for (i = 0 ; i < keys.length ; i++ ) {
-                if (keys[i] == "fields_kv" || keys[i] == "serialized"
-                    || keys[i] === "feature_ol_uid" || keys[i] === "mviewerid" || typeof this[keys[i]] === "object") {
-                  continue;
-                }
-                field_kv = {
-                  'key': keys[i],
-                  'value': this[keys[i]]
-                }
-                fields_kv.push(field_kv);
-              }
-              return fields_kv;
+                var properties = extractFeaturePropertiesFn(this);
+                return Object.entries(properties).map(([key, value]) => {
+                    return {key, value};
+                })
             }
             feature.setProperties({'fields_kv': fields_kv});
             // add a serialized version of the object so it can easily be passed through HTML GET request
-            // you can deserialize it with `JSON.parse(data)` when data is the serialized data
+            // you can deserialize it with `JSON.parse(decodeURIComponent(feature.getProperties().serialized()))`
+            // when data is the serialized data
             var serialized = function () {
-              return encodeURIComponent(geojson.writeFeature(feature));
+                return encodeURIComponent(JSON.stringify(extractFeaturePropertiesFn(feature.getProperties())));
             }
             feature.setProperties({'serialized': serialized})
             // attach ol_uid to identify feature in DOM (not all features have a feature id as property)
