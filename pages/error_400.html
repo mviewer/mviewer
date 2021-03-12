@@ -1,0 +1,121 @@
+<html>
+<head>
+  <meta charset='UTF-8'>
+  <title>Error 400</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,900;1,400&display=swap" rel="stylesheet">
+
+  <style type="text/css">
+
+  html, body{
+    height: 100%;
+  }
+
+  body {
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding:0;
+    overflow: hidden;
+    display: table;
+    min-width: 100%;
+  }
+
+  .layout{
+    width: 400px;
+    margin: 0 auto;
+    margin: 0;
+    display: table-cell;
+    vertical-align: middle;
+    height: 100%;
+  }
+
+  /* Titre et textes */
+  .title{
+    font-size: 100px;
+    color: #263239;
+    font-weight: 700;
+    margin: 0 auto 20px;
+    line-height: 1;
+    font-family: 'Roboto', sans-serif;
+  }
+  .text{
+    font-size: 18px;
+    color: #777;
+    font-weight: normal;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .sub {
+    color: #455A64;
+    font-size: 25px;
+  }
+
+  /* Illustration */
+  .illustration{
+    background-image: url(../img/illu_error.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 40%;
+    background-position: center;
+  }
+
+
+  /* Icônes & Animation */
+  .iconSettingOne {
+      width: 3em;
+      top: 45%;
+      position: relative;
+  }
+
+  .iconSettingTwo {
+      width: 5em;
+      top: 40%;
+      position: relative;
+  }
+
+  .rotate {
+    animation: rotation 8s infinite linear;
+  }
+
+  .rotate2 {
+    animation: rotation 8s infinite linear;
+    animation-direction: reverse;
+  }
+
+  @keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
+
+
+  </style>
+</head>
+
+<body>
+  <div class="layout">
+    <div class="illustration">
+      <img src="../img/setting.svg" class="rotate iconSettingOne" />
+      <img src="../img/setting.svg" class="rotate2 iconSettingTwo" />
+    </div>
+		<div class="title">Oops !</div>
+    <div class="sub text">Il semble y avoir un problème avec le mviewer.</div>
+    <div id="message" class="text">Le fichier de configuration de l'application est incorrect.</div>
+  </div>
+  <script>
+    var message = "Le fichier de configuration de l'application";
+    var url_params = JSON.parse('{"' + decodeURIComponent(window.location.search.substring(1).replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}');
+    if (url_params.xml) {
+      message += ` - ${url_params.xml} - est incorrect.`;
+
+    } else {
+      message += ' est incorrect.';
+    }
+    document.getElementById("message").textContent = message;
+  </script>
+</body>
+</html>

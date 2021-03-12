@@ -570,10 +570,9 @@
                 error: function (request, status, error) {
                     if (request.statusCode().status === 404) {
                         $("#error h1").text(`Erreur ${request.statusCode().status} : ${error}`);
-                        $("#error").append(`<p>Fichier de configuration : <strong>${configFile} </strong>non trouvé.</p>`);
+                        document.location.href="pages/error_404.html?xml=" + configFile;
                     } else if (status === 'parsererror') {
-                        $("#error h1").text('Erreur XML');
-                        $("#error").append(`<p>Erreur : fichier de configuration <strong>${configFile} </strong> mal formé.</p>`);
+                        document.location.href="pages/error_400.html?xml=" + configFile;
                     }
                     $("#error").show();
                     $("#loading-page").hide();
