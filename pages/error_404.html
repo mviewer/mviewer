@@ -59,7 +59,7 @@
     height: 40%;
     background-position: center;
   }
-  
+
 
   /* Icônes & Animation */
   .iconSettingOne {
@@ -78,6 +78,11 @@
     animation: rotation 8s infinite linear;
   }
 
+  .rotate2 {
+    animation: rotation 8s infinite linear;
+    animation-direction: reverse;
+  }
+
   @keyframes rotation {
     from {
       transform: rotate(0deg);
@@ -87,7 +92,7 @@
     }
   }
 
-  
+
   </style>
 </head>
 
@@ -95,11 +100,22 @@
   <div class="layout">
     <div class="illustration">
       <img src="../img/setting.svg" class="rotate iconSettingOne" />
-      <img src="../img/setting.svg" class="rotate iconSettingTwo" />
+      <img src="../img/setting.svg" class="rotate2 iconSettingTwo" />
     </div>
 		<div class="title">Oops !</div>
     <div class="sub text">Il semble y avoir un problème avec le mviewer.</div>
-    <div class="text">L'application n'existe pas (fichier de configuration introuvable).</div>
+    <div id="message" class="text"></div>
   </div>
+  <script>
+    var message = "L'application n'existe pas (fichier de configuration introuvable";
+    var url_params = JSON.parse('{"' + decodeURIComponent(window.location.search.substring(1).replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}');
+    if (url_params.xml) {
+      message += ` : ${url_params.xml}).`;
+
+    } else {
+      message += ').';
+    }
+    document.getElementById("message").textContent = message;
+  </script>
 </body>
 </html>
