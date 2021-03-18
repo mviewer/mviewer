@@ -50,37 +50,34 @@ mviewer.featureStyles.circle1 = new ol.style.Style({
     })
 });
 
-var getSelectStyle = function(rgb, width, feature) {
-
-    var _selectFillColor = `rgba(${rgb}, 0.5)`;
-    var _selectStrokeColor = `rgba(${rgb}, 1)`;
+var getSelectStyle = function(options, feature) {
 
     var _highlightSelect = {
         'Point': new ol.style.Style({
         image: new ol.style.Circle({
-            radius: 7,
+            radius: parseFloat(options.point.radius),
             fill: new ol.style.Fill({
-            color: _selectFillColor
+            color: `rgba(${options.point.fillcolor}, ${options.point.opacity})`
             }),
             stroke: new ol.style.Stroke({
-            color: _selectStrokeColor,
-            width: width
+            color: `rgba(${options.point.strokecolor}, 1)`,
+            width: parseFloat(options.point.strokewidth)
             })
         })
         }),
         'LineString': new ol.style.Style({
         stroke: new ol.style.Stroke({
-            color: _selectStrokeColor,
-            width: width
+            color: `rgba(${options.line.strokecolor}, ${options.line.opacity})`,
+            width: parseFloat(options.line.strokewidth)
         })
         }),
         'Polygon': new ol.style.Style({
         fill: new ol.style.Fill({
-            color: _selectFillColor
+            color: `rgba(${options.polygon.fillcolor}, ${options.polygon.opacity})`
         }),
         stroke: new ol.style.Stroke({
-            color: _selectStrokeColor,
-            width: width
+            color: `rgba(${options.polygon.strokecolor}, 1)`,
+            width: parseFloat(options.polygon.strokewidth)
         })
         })
     };

@@ -111,7 +111,7 @@ Paramètres pour gérer l'interrogation et la mise en forme de la fiche d'interr
 
 * ``queryable`` :guilabel:`studio` : Booléen stipulant est ce que la couche est intérrogeable via un GetFeatureInfo
 * ``infoformat`` :guilabel:`studio` : Format du GetFeatureInfo. 2 formats sont supportés : text/html et application/vnd.ogc.gml
-* ``infohighlight`` : Booléen précisant si les features de la couche sont mises en surbrillance en interrogeant leurs informations, défaut = true. Si false un markeur est affiché. 
+* ``infohighlight`` : Booléen précisant si les features de la couche sont mises en surbrillance en interrogeant leurs informations, défaut = true. Si false un markeur est affiché. Les styles utilisés pour la mise en surbrillance peuvent être configurés (voir ":ref:`configstyles`").
 * ``featurecount`` :guilabel:`studio` : Nombre d'éléments retournés lors de l'interrogation
 * ``fields`` :guilabel:`studio` :  Si les informations retournées par l'interrogation est au format GML, fields représente les attributs à parser pour générer la vignette
 * ``aliases`` :guilabel:`studio` : Si les informations retournées par l'interrogation est au format GML, aliases représente le renommage des champs parsés.
@@ -131,7 +131,7 @@ Paramètres pour les couches non WMS
 =======================================
 
 * ``type``: Type de la couche (wms|geojson|kml|customlayer|import) default=wms. Si customlayer est défini, il faut instancier un Layer OpenLayers dans un fichier javascript ayant pour nom l'id de la couche (voir ":ref:`configfuse`"). Ce fichier js doit être placé dans le répertoire customlayers/
-Pour le type import l'extension `fileimport` doit être activée. 
+Pour le type import l'extension `fileimport` doit être activée.
 * ``tooltip``: Pour les couches de type vecteur uniquement. Booléen précisant si les entités de la couche sont affichées sous forme d'infobulle au survol de la souris. (Les infobulles ne fonctionnent qu'avec une seule couche à la fois). Valeur par défaut = false.
 * ``tooltipenabled``: Précise la couche prioritaire pour l'affichage des infobulles.
 * ``tooltipcontent``: Chaîne de caractères décrivant l'information à afficher dans les infobulles. Cette chaîne contient soit le nom d'un champ de la couche soit un template Mustache (code html) combinant plusieurs noms de champs. Exemple : ``tooltipcontent="{{name}} - ({{city}})"``.
@@ -176,7 +176,7 @@ Autres paramètres
         * ``Nom du fichier renseigné``: l'URL est fabriquée automatiquement à partir de l'ID de la couche. Le fichier devra être dans le répertoire customLayers/layerid.js (ou layerid correspond à l'id de la couche)
 
 * ``customcontrol`` : Booléen précisant si la couche dispose d'un addon html à intégrer. La valeur par défaut est false.
-        
+
         * ``Valeur renseignée``: le fichier JavaScript (.js) correspondant à l'url est chargé
         * ``Valeur non renseignée``: l'url est fabriquée à partir de l'ID de la couche (ex: custom:ayers/layerid.js)
 

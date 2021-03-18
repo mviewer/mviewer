@@ -76,6 +76,7 @@ Cette partie est dédiée aux personnes qui ont vocation à déployer et configu
    doc_tech/config_customlayer.rst
    doc_tech/config_customcontrol.rst
    doc_tech/config_customcomponent.rst
+   doc_tech/config_styles.rst
 
 Documentation dévelopeur
 -------------------------------------------------
