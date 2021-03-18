@@ -512,10 +512,37 @@ mviewer = (function () {
      */
 
     var _initSelectOverlay = function () {
+        var default_selection_style = {
+            point: {
+                radius: "7",
+                fillcolor: "82, 98, 217",
+                opacity: "0.5",
+                strokecolor: "82, 98, 217",
+                strokewidth: "4"
+            },
+            line: {
+                opacity: "1",
+                strokecolor: "82, 98, 217",
+                strokewidth: "4"
+            },
+            polygon: {
+                fillcolor: "82, 98, 217",
+                opacity: "0.5",
+                strokecolor: "82, 98, 217",
+                strokewidth: "4"
+            }
+        };
+        var selection_style = {};
+        if (configuration.getConfiguration().styles && configuration.getConfiguration().styles.selectionstyle) {
+            selection_style = Object.assign({}, default_selection_style, configuration.getConfiguration().styles.selectionstyle);
+        } else {
+            selection_style = default_selection_style;
+        }
+        console.log(selection_style);
         _sourceSelectOverlay = new ol.source.Vector();
         _selectOverlayFeatureLayer = new ol.layer.Vector({
             source: _sourceSelectOverlay,
-            style: getSelectStyle.bind(this, '82, 98, 217', 4),
+            style: getSelectStyle.bind(this, selection_style),
             mviewerid: 'selectoverlay'
         });
         _map.addLayer(_selectOverlayFeatureLayer);
@@ -528,10 +555,37 @@ mviewer = (function () {
      */
 
     var _initSubSelectOverlay = function () {
+        var default_subselection_style = {
+            point: {
+                radius: "7",
+                fillcolor: "252, 186, 3",
+                opacity: "0.5",
+                strokecolor: "82, 98, 217",
+                strokewidth: "2"
+            },
+            line: {
+                opacity: "1",
+                strokecolor: "252, 186, 3",
+                strokewidth: "2"
+            },
+            polygon: {
+                fillcolor: "252, 186, 3",
+                opacity: "0.5",
+                strokecolor: "252, 186, 3",
+                strokewidth: "2"
+            }
+        };
+        var subselection_style = {};
+        if (configuration.getConfiguration().styles && configuration.getConfiguration().styles.subselectionstyle) {
+            subselection_style = Object.assign({}, default_subselection_style, configuration.getConfiguration().styles.subselectionstyle);
+        } else {
+            subselection_style = default_subselection_style;
+        }
+        console.log(subselection_style);
         _sourceSubSelectOverlay = new ol.source.Vector();
         _subSelectOverlayFeatureLayer = new ol.layer.Vector({
             source: _sourceSubSelectOverlay,
-            style: getSelectStyle.bind(this, '252, 186, 3', 2),
+            style: getSelectStyle.bind(this, subselection_style),
             mviewerid: 'subselectoverlay'
         });
         _map.addLayer(_subSelectOverlayFeatureLayer);
