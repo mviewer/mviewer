@@ -538,7 +538,6 @@ mviewer = (function () {
         } else {
             selection_style = default_selection_style;
         }
-        console.log(selection_style);
         _sourceSelectOverlay = new ol.source.Vector();
         _selectOverlayFeatureLayer = new ol.layer.Vector({
             source: _sourceSelectOverlay,
@@ -581,7 +580,6 @@ mviewer = (function () {
         } else {
             subselection_style = default_subselection_style;
         }
-        console.log(subselection_style);
         _sourceSubSelectOverlay = new ol.source.Vector();
         _subSelectOverlayFeatureLayer = new ol.layer.Vector({
             source: _sourceSubSelectOverlay,
@@ -2196,7 +2194,6 @@ mviewer = (function () {
          */
 
         sendToGeorchestra: function () {
-            console.log("test");
             var params = {
                 "services": [],
                 "layers" : []
