@@ -253,25 +253,46 @@ var info = (function () {
         var requests = [];
         var carrousel=false;
 
-    /**
-     * This method test mime type from string content
-     * because of bad contentType on GetFeatureInfo response (QGIS SERVER)
-     * @param  {variant} content
-     * @param  {string} contentType (from GetFeatureInfo response header)
-     */
-    var _checkMimeType = function (content,contentType ) {
-        var mimeType = contentType.split(";")[0];
-        //Test string content to check if content is XML or HTML
-        if (typeof content === 'string') {
-            if (content.indexOf('<wfs:FeatureCollection') > 0 ) {
-                mimeType = "application/vnd.ogc.gml";
-            } else if (content.indexOf('<div') >= 0 ) {
-                mimeType = "text/html";
+        /**
+         * This method test mime type from string content
+         * because of bad contentType on GetFeatureInfo response (QGIS SERVER)
+         * @param  {variant} content
+         * @param  {string} contentType (from GetFeatureInfo response header)
+         */
+        var _checkMimeType = function (content,contentType ) {
+            var mimeType = contentType.split(";")[0];
+            //Test string content to check if content is XML or HTML
+            if (typeof content === 'string') {
+                if (content.indexOf('<wfs:FeatureCollection') > 0 ) {
+                    mimeType = "application/vnd.ogc.gml";
+                } else if (content.indexOf('<div') >= 0 ) {
+                    mimeType = "text/html";
+                }
             }
+            return mimeType;
         }
-        return mimeType;
-    }
 
+        /**
+         * Order views layers according to map zindex order
+         * @param {Array} viewsLayers - contain each views and layers by view
+         * @returns array
+         */
+        var orderViewsLayersByMap = function (viewsLayers) {
+            var mapLayers = mviewer.getMap().getLayers().getArray();
+            mapLayers = mapLayers.map(l => l.getProperties().mviewerid).filter(l => l);
+
+            var mapLayersOrder = [];
+            viewsLayers.forEach(lv => {
+                mapLayersOrder[mapLayers.indexOf(lv.layerid)] = lv;
+            })
+            return mapLayersOrder.filter(f => f).reverse();
+        }
+
+        /**
+         * Return infos according to map click event behavior.
+         * This callback is return when all request are resolved (like promiseAll behavior)
+         * @param {object} result 
+         */
         var callback = function (result) {
             $.each(featureInfoByLayer, function (index, response) {
                 var layerinfos = response.layerinfos;
@@ -381,16 +402,15 @@ var info = (function () {
 
             $.each(views, function (panel, view) {
                 if (views[panel].layers.length > 0){
-                        views[panel].layers[0].firstlayer=true;
-                        var template = "";
-                        if (configuration.getConfiguration().mobile) {
-                            template = Mustache.render(mviewer.templates.featureInfo.accordion, view);
-                        } else {
-                            template = Mustache.render(mviewer.templates.featureInfo[_panelsTemplate[panel]], view);
-                        }
-                        $("#"+panel+" .popup-content").append(template);
-                    //TODO reorder tabs like in theme panel
-
+                    views[panel].layers = orderViewsLayersByMap(views[panel].layers);
+                    views[panel].layers[0].firstlayer=true;
+                    var template = "";
+                    if (configuration.getConfiguration().mobile) {
+                        template = Mustache.render(mviewer.templates.featureInfo.accordion, view);
+                    } else {
+                        template = Mustache.render(mviewer.templates.featureInfo[_panelsTemplate[panel]], view);
+                    }
+                    $("#"+panel+" .popup-content").append(template);
                     var title = $("[href='#slide-"+panel+"-1']").closest("li").attr("title");
                     $("#"+panel+" .mv-header h5").text(title);
 
@@ -487,6 +507,7 @@ var info = (function () {
 
         // using $.when.apply() we can execute a function when all the requests
         // in the array have completed
+        // this is promiseAll equivalent
         $.when.apply(new ajaxFunction(), requests).done(function (result) {
             callback(result)
         });
