@@ -72,6 +72,9 @@
 
     cl.layer = new ol.layer.Vector({
         source: new ol.source.Cluster({
+            geometryFunction: function(feature) {
+                return new ol.geom.Point(ol.extent.getCenter(feature.getGeometry().getExtent()));
+            },
             distance: 50,
             source: new ol.source.Vector({
                 url: "https://geobretagne.fr/geoserver/dreal_b/wfs?service=WFS&version=1.0.0&request=GetFeature&typeNames=dreal_b:projets-environnement-diffusion&outputFormat=application/json&srsName=EPSG:4326&bbox=-6,47,0,49",
