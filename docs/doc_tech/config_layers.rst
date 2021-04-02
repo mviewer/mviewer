@@ -66,6 +66,7 @@ Configurer - Les couches
                 tooltip=""
                 tooltipcontent=""
                 tooltipenabled=""
+                showintoc=""
                 expanded=""
                 metadata=""
                 metadata-csw="" >
@@ -97,6 +98,7 @@ Paramètres pour gérer l'affichage de la couche
 * ``filter`` :guilabel:`studio` : Expression CQL permettant de filtrer la couche ex: insee=35000 Ou INTERSECT(the_geom, POINT (-74.817265 40.5296504)) [tutorial] (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial)
 * ``toplayer``: Précise si la couche demeure figée. Booléen. Défaut = true.
 * ``expanded`` :guilabel:`studio` : Booléan précisant si le panneau de la couche est agrandi au démarrage. La valeur par défaut est false.
+* ``showintoc`` :  Booléen stipulant si la couche est affichée dans la légende. La valeur par défaut est true.
 
 
 Paramètres pour gérer attributions et métadonnées
