@@ -64,7 +64,7 @@
         }
         var proj = projection.getCode();
         var e = ol.proj.transformExtent(extent, proj, 'EPSG:4326');
-        var url = "http://ows.region-bretagne.fr/kartenn/_search?";
+        var url = "https://ows.region-bretagne.fr/kartenn/_search?";
         var geofilter = JSON.stringify({
             "from": 0,
             "size": 5000,

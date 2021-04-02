@@ -8,7 +8,7 @@
     <meta name="description" content="Visualiseur géographique" />
 
     <link rel="icon" type="image/png" href="favicon.png" />
-    <link href="lib/flag-icon-3.4.3/flag-icon.css" rel="stylesheet">
+    <link href="lib/flag-icon-3.4.3/css/flag-icon.css" rel="stylesheet">
     <link href="lib/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link href="lib/simple-slidebar/simple_slidebar.css" rel="stylesheet">
     <link href="lib/bootstrap-datepicker-1.6.1/css/bootstrap-datepicker3.min.css" rel="stylesheet">
@@ -209,6 +209,10 @@
             <div id="backgroundlayerstoolbar-gallery">
                 <div class="" onclick="mviewer.bgtoogle();"></div>
                 <ul id="basemapslist" ></ul>
+            </div>
+            <!-- MVIEWER INFO AND VERSION  -->
+            <div id="mviewerinfosbar" class="hidden-xs">
+                <span id="powered" i18n="infos.powered">powered by </span> mviewer
             </div>
             <!-- FIRST VERTICAL RIGHT TOOLBAR -->
             <div id="zoomtoolbar" class="btn-group-vertical btn-group-sm" role="group" aria-label="true">
@@ -544,6 +548,11 @@
                             title = _conf.application.title;
                             $("#loader-subtitle").text(title);
                         }
+                        if (_conf.application.favicon) {
+                            let ico = _conf.application.favicon;
+                            let favicon = document.querySelector('link[rel="icon"]');
+                            favicon.attributes.href.value = ico;
+                        }
                         configuration.load(_conf);
                         setTimeout(function () {
                             $("#loading-page").hide();
@@ -561,10 +570,9 @@
                 error: function (request, status, error) {
                     if (request.statusCode().status === 404) {
                         $("#error h1").text(`Erreur ${request.statusCode().status} : ${error}`);
-                        $("#error").append(`<p>Fichier de configuration : <strong>${configFile} </strong>non trouvé.</p>`);
+                        document.location.href="pages/error_404.html?xml=" + configFile;
                     } else if (status === 'parsererror') {
-                        $("#error h1").text('Erreur XML');
-                        $("#error").append(`<p>Erreur : fichier de configuration <strong>${configFile} </strong> mal formé.</p>`);
+                        document.location.href="pages/error_400.html?xml=" + configFile;
                     }
                     $("#error").show();
                     $("#loading-page").hide();

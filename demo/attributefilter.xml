@@ -18,7 +18,7 @@
                 attribution="Service de l'inventaire : &lt;a href='https://patrimoine.bzh/' target='_blank'>patrimoine.bzh &lt;/a>"
                 metadata="https://patrimoine.bzh/gertrude-diffusion/dossier/1ca99a3b-810d-40d4-9df4-c2fbd81fdaaf"
                 metadata-csw="" >
-                <template url="apps/region/patrimoine/templates/patrimoine.etude_patrimoine_architecture.mst"></template>
+                <template url="https://kartenn.region-bretagne.fr/kartoviz/apps/region/patrimoine/templates/patrimoine.etude_patrimoine_architecture.mst"></template>
 			</layer>
 		</theme>
     </themes>

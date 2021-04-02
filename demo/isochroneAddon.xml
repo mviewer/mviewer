@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <application
+      title="isochroneAddon"
+      logo=""
+      help=""
+      style="css/themes/default.css"
+      exportpng="false"
+      showhelp="false"
+      coordinates="false"
+      measuretools="false"
+      togglealllayersfromtheme="false">
+  </application>
+  <extensions>
+      <extension type="component" id="isochroneAddon" path="demo/addons"/>
+  </extensions>
+  <mapoptions maxzoom="20" projection="EPSG:3857" center="-339635.95753680886, 6158414.503773717" zoom="9" />
+  <baselayers style="default">
+        <baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoBretagne" thumbgallery="img/basemap/ortho.jpg"
+            url="https://tile.geobretagne.fr/gwc02/service/wmts" layers="satellite" format="image/png" visible="true"
+            attribution="&lt;a href='https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/3a0ac2e3-7af1-4dec-9f36-dae6b5a8c731' target='_blank' >partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver&lt;/a>" style="_null" matrixset="EPSG:3857" fromcapacity="false"/>
+        <baselayer  type="WMS" id="photo2" label="Photo aérienne 1950" title="GéoBretagne" thumbgallery="img/basemap/ortho-ancien.jpg"
+			url="https://geobretagne.fr/geoserver/photo/wms" layers="satellite-ancien" format="image/jpeg" visible="false"
+			attribution="&lt;a href='https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/048622c5-b333-4c2b-94ec-40a41608dc06' target='_blank' >Partenaires GéoBretagne - IGN&lt;/a>"/>
+        <baselayer  type="WMS" id="osm" label="OpenStreetMap" title="Plan OSM Géobretagne" thumbgallery="img/basemap/osm.png"
+            url="https://osm.geobretagne.fr/gwc01/service/wms" layers="osm:google" format="image/png" visible="false"
+            attribution="GéoBretagne. Données : les contributeurs d'&lt;a href='https://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='https://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" />
+    </baselayers>
+  <themes mini="true">
+  </themes>
+</config>

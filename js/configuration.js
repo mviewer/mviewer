@@ -9,7 +9,7 @@ var configuration = (function () {
 
     // Mviewer version a saisir manuellement
 
-    var VERSION = "3.4.1";
+    var VERSION = "3.5";
 
     var _showhelp_startup = false;
 
@@ -209,6 +209,9 @@ var configuration = (function () {
     var _load = function (conf) {
 
         console.log("Mviewer version " + VERSION);
+
+        // set infos bar text
+        $('#mviewerinfosbar').append(VERSION);
 
         _configuration = conf;
         utils.testConfiguration(conf);
@@ -632,6 +635,7 @@ var configuration = (function () {
                     oLayer.vectorlegend =  (layer.vectorlegend === "true") ? true : false;
                     oLayer.nohighlight =  (layer.nohighlight === "true") ? true : false;
                     oLayer.infohighlight =  (layer.infohighlight === "false") ? false : true;
+                    oLayer.showintoc =  (layer.showintoc && layer.showintoc === "false") ? false : true;
                     oLayer.legendurl=(layer.legendurl)? layer.legendurl : mviewer.getLegendUrl(oLayer);
                     if (oLayer.legendurl === "false") {oLayer.legendurl = "";}
                     oLayer.useproxy = (layer.useproxy === "true") ? true : false;
