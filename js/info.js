@@ -401,9 +401,9 @@ var info = (function () {
             mviewer.setInfoLayers(infoLayers);
 
             $.each(views, function (panel, view) {
-                if (views[panel].layers.length > 0){
-                    views[panel].layers = orderViewsLayersByMap(views[panel].layers);
-                    views[panel].layers[0].firstlayer=true;
+                if (view.layers.length > 0){
+                    view.layers = orderViewsLayersByMap(views[panel].layers);
+                    view.layers[0].firstlayer=true;
                     var template = "";
                     if (configuration.getConfiguration().mobile) {
                         template = Mustache.render(mviewer.templates.featureInfo.accordion, view);
@@ -411,7 +411,7 @@ var info = (function () {
                         template = Mustache.render(mviewer.templates.featureInfo[_panelsTemplate[panel]], view);
                     }
                     $("#"+panel+" .popup-content").append(template);
-                    var title = $("[href='#slide-"+panel+"-1']").closest("li").attr("title");
+                    var title = $( `a[href*='slide-${panel}-']` ).closest("li").attr("title")
                     $("#"+panel+" .mv-header h5").text(title);
 
                     if (configuration.getConfiguration().mobile) {
@@ -443,7 +443,7 @@ var info = (function () {
                     });
                     // init sub selection
                     _firstlayerFeatures = _queriedFeatures.filter(feature => {
-                        return feature.get("mviewerid") == views[panel].layers[0].layerid;
+                        return feature.get("mviewerid") == view.layers[0].layerid;
                     })
                     // change feature of sub selection
                     $('.carousel.slide').on('slide.bs.carousel', function (e) {
