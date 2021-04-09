@@ -1206,7 +1206,7 @@ mviewer = (function () {
         var layers = [];
         $.each(_overLayers, function (i, item) {
             var layerparams = [];
-            if (item.layer.getVisible()) {
+            if (item.layer.getVisible() && item.showintoc) {
                 layerparams.push(item.layerid);
                 if (item.type === "wms") {
                     //get current style if many styles
@@ -1267,7 +1267,8 @@ mviewer = (function () {
             }
 
             var l = false;
-            if (mviewer.getLayers()[layerIdOrName] && mviewer.getLayers()[layerIdOrName].layer) {
+            if (mviewer.getLayers()[layerIdOrName] && mviewer.getLayers()[layerIdOrName].showintoc
+                && mviewer.getLayers()[layerIdOrName].layer) {
                 //layerIdOrName is layerid
                 l =  mviewer.getLayers()[layerIdOrName].layer;
                 richLayer.layerid = layerIdOrName;
@@ -1351,7 +1352,7 @@ mviewer = (function () {
 
         var hideLayer = function (layerControler) {
             layerControler.checked = false;
-            if (layerControler.layer) {
+            if (layerControler.layer && layerControler.showintoc) {
                 layerControler.layer.setVisible(false);
             }
             layerControler.visiblebydefault = false;
