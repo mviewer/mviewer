@@ -1990,6 +1990,14 @@ mviewer = (function () {
             }
             linkParams.mode = $('input[name=mv-display-mode]:checked').val();
 
+            //Get extra params from API. Params has to begin with c_
+            let reg = /^c_(.*)/;
+            for (const [key, value] of Object.entries(API)) {
+                if (key.match(reg)) {
+                    linkParams[key] = API[key]
+                }
+            }
+
             var url = window.location.href.split('#')[0].split('?')[0] + '?' + $.param(linkParams);
             $("#permalinklink").attr('href',url).attr("target", "_blank");
             $("#permaqr").attr("src","http://chart.apis.google.com/chart?cht=qr&chs=140x140&chl=" + encodeURIComponent(url));
