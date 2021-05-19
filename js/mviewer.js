@@ -1994,11 +1994,15 @@ mviewer = (function () {
             let reg = /^c_(.*)/;
             for (const [key, value] of Object.entries(API)) {
                 if (key.match(reg)) {
-                    linkParams[key] = API[key]
+                    linkParams[key] = encodeURIComponent(API[key]);
                 }
             }
 
-            var url = window.location.href.split('#')[0].split('?')[0] + '?' + $.param(linkParams);
+            function params(data) {
+                return Object.keys(data).map(key => `${key}=${data[key]}`).join('&');
+            }
+
+            var url = window.location.href.split('#')[0].split('?')[0] + '?' + params(linkParams);
             $("#permalinklink").attr('href',url).attr("target", "_blank");
             $("#permaqr").attr("src","http://chart.apis.google.com/chart?cht=qr&chs=140x140&chl=" + encodeURIComponent(url));
             return url;
