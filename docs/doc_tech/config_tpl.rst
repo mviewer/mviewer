@@ -72,7 +72,7 @@ Les éléments en rouge sont obligatoires.
 
 Explications : ``{{#features}}{{/features}}`` est une boucle effectuée sur chaque entité présente dans la couche sélectionnée.
 ``<li id="{{feature_ol_uid}}" class="item"></li>`` est une entrée de liste html utilisée par le mviewer. S'il y a plusieurs entrées de liste car plusieurs entités sélectionnées, le mviewer présentera les réponses sous la forme d'un carousel.
-Pour synchroniser le carousel et la sous-sélection sur la carte lors d'un clic, l'injection de la ``feature_ol_uid`` est requise dans l' ``id`` de la balise. 
+Pour synchroniser le carousel et la sous-sélection sur la carte lors d'un clic, l'injection de la ``feature_ol_uid`` est requise dans l' ``id`` de la balise.
 Puisque une ``feature id`` n'est pas obligatoire comme attribut pour une feature l' ``ol_uid`` interne d'OpenLayers est utilisée à ce propos.
 
 Ce qu'il faut savoir de Mustache
@@ -101,6 +101,58 @@ Résultat de l'exemple ci-dessus
               :width: 400
               :alt: Exemple de template
               :align: center
+
+
+Itérer sur un champ de type json
+--------------------------------
+
+Prérequis : disposer d'un champ - exemple ``monchampjson`` -dont le contenu est une liste de valeurs ou d'objets sous la forme ``["item1","item2"]`` ou de la forme ``[{"nom": "item1", "code": 1}, {"nom": "item2", "code": 2}]``
+configurer le layer dans le config.xml avec le paramètre ``jsonfields="monchampjson"``
+
+Exemple 1 pour *monchampjson* = ``["item1","item2"]``
+
+.. code-block:: xml
+       :linenos:
+
+        {{#monchampjson}}
+            Cette ligne s'affiche autant de fois qu'il y a d'éléments dans la liste.
+            <li>{{.}}</li>
+        {{/monchampjson}}
+
+Exemple 2 pour *monchampjson* = ``[{"nom": "item1", "code": 1}, {"nom": "item2", "code": 2}]``
+
+.. code-block:: xml
+       :linenos:
+
+        {{#monchampjson}}
+            Cette ligne s'affiche autant de fois qu'il y a d'éléments dans la liste.
+            <li>{{nom}} - {{code}}</li>
+        {{/monchampjson}}
+
+Exemple 3 pour afficher un tableau
+
+.. code-block:: xml
+       :linenos:
+
+        <table>
+            <thead>
+                <tr><th>NOM</th><th>CODE</th></tr>
+            </thead>
+            <tbody>
+                {{#communes}}
+                    <tr><td>{{nom}}</td><td>{{code_insee}}</td></tr>
+                {{/communes}}
+            </tbody>
+        </table>
+
+Résultat du template ci dessus
+-------------------------------
+
+.. image:: ../_images/dev/config_tpl/exemple_template_table.png
+              :width: 400
+              :alt: Exemple de template
+              :align: center
+
 
 Itérer sur les champs disponibles
 ---------------------------------

@@ -291,7 +291,7 @@ var info = (function () {
         /**
          * Return infos according to map click event behavior.
          * This callback is return when all request are resolved (like promiseAll behavior)
-         * @param {object} result 
+         * @param {object} result
          */
         var callback = function (result) {
             $.each(featureInfoByLayer, function (index, response) {
@@ -717,6 +717,15 @@ var info = (function () {
 
     var applyTemplate = function (olfeatures, olayer) {
         var tpl = olayer.template;
+        var _json = function (str) {
+            var result = null;
+            try {
+                result = JSON.parse(str);
+            } catch (e) {
+                result = str;
+            }
+            return result;
+        };
         var obj = {features: []};
         var activeAttributeValue = false;
         // if attributeControl is used for this layer, get the active attribute value and
@@ -726,11 +735,19 @@ var info = (function () {
             activeAttributeValue = activeFilter.split(olayer.attributeoperator).map(e=>e.replace(/[\' ]/g, ''))[1];
         }
         olfeatures.forEach(function(feature){
+            olayer.jsonfields.forEach(function (fld) {
+                if (feature.get(fld)) {
+                    var json = _json(feature.get(fld));
+                    // convert String value to JSON value
+                    // Great for use in Mustache template
+                    feature.set(fld,json);
+                }
+            });
             if (activeAttributeValue) {
                 feature.set(activeAttributeValue, true);
             }
             var geometryName = feature.getGeometryName();
-            var excludedPropNames = ['fields_kv', 'serialized', 'feature_ol_uid', 'mviewerid', geometryName]
+            var excludedPropNames = ['fields_kv', 'serialized', 'feature_ol_uid', 'mviewerid', geometryName];
             var extractFeaturePropertiesFn = function (properties) {
                 return Object.keys(properties).reduce((filteredProps, propertyName) => {
                     var value = properties[propertyName];
