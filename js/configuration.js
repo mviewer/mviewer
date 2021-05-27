@@ -648,6 +648,12 @@ var configuration = (function () {
                         }
                     }
 
+                    if (layer.jsonfields) {
+                        oLayer.jsonfields = layer.jsonfields.split(",");
+                    } else {
+                        oLayer.jsonfields = [];
+                    }
+
                     if (layer.scalemin || layer.scalemax) {
                         oLayer.scale = {};
                         if (layer.scalemin) {
