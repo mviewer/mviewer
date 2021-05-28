@@ -61,6 +61,7 @@ Paramètres d'URL utilisés pour les permaliens
 * ``y`` : Coordonnées y du centre de la carte dans le système de projection utilisé par l'application.
 * ``z`` : Zoom de la carte (1 à 20).
 * ``lb`` : Identifiant de la couche de fond affichée.
+* ``c_[monparam]`` : où mon param est l'identifiant du composant personnalisé ou de la couche personalisée. La valeur du paramètre peut ensuite être utilisée par le composant ou la couche concernée. exemple c_mycustomlayer=red,blue,green
 
 Sections de configurations
 ----------------------------

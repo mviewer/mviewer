@@ -158,7 +158,21 @@ Elément enfant de <themes>
 * ``id`` :guilabel:`studio` : paramètre obligatoire de type texte qui affecte un identifiant unique interne à la thématique.
 * ``url`` :guilabel:`studio` : URL de la thématique. Des thèmes externes (présents dans d'autres configurations peuvent être automatiquement chargés par référence au fichier xml utilisé (url=) et à l'id de la thématique (id=). Attention si la configuration externe est sur un autre domaine, il faut alors que mviewer utilise un proxy Ajax ou alors s'assurer que CORS est activé sur le serveur distant. Les thématiques externes peuvent utiliser des ressources particulières (templates, customLayer, sld...) si les URLs de ces ressources sont absolues et accessibles.
 * ``collapsed`` :guilabel:`studio` : paramètre optionnel de type booléen (true/false) qui précise si la thématique est fermée au démarrage de l'application. Pour que la thématique soit ouverte au démarrage, il faut choisir l'option **false**. Attention, il ne peut y avoir qu'une thématique ayant ce paramètre à false. Valeur par défaut **true**.
-* ``icon`` :guilabel:`studio` : paramètre optionnel de type texte qui précise l'icône à utiliser afin d'illustrer la thématique. Les valeurs possibles sont à choisir parmi cette liste : http://fontawesome.io/icons/
+* ``icon`` :guilabel:`studio` : paramètre optionnel de type texte qui précise l'icône à utiliser afin d'illustrer la thématique. Les valeurs possibles sont à choisir parmi cette liste : http://fontawesome.io/icons/. Une autre possibilité est d'uliser une classe css personnelle mobilisant une image. Il faut alors mettre la classe précédée d'un point comme valeur. exemple ".mycustomicon".
+Voici un exemple d'icone personnalisée :
+
+.. code-block:: css
+       :linenos:
+
+	.mycustomicon::before {
+        content: '';
+        display: inline-block;
+        height: 1em;
+        width: 1em;
+        background: url(../img/logo/worldwide.svg) no-repeat scroll;
+        background-size: 16px 16px;
+        margin-top: 9px;
+	}
 
 
 **Syntaxe** ``<group>``

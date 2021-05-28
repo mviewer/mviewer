@@ -9,7 +9,7 @@ var configuration = (function () {
 
     // Mviewer version a saisir manuellement
 
-    var VERSION = "3.5.1";
+    var VERSION = "3.5.2";
 
     var _showhelp_startup = false;
 
@@ -646,6 +646,12 @@ var configuration = (function () {
                         } else {
                             oLayer.aliases = layer.fields.split(",");
                         }
+                    }
+
+                    if (layer.jsonfields) {
+                        oLayer.jsonfields = layer.jsonfields.split(",");
+                    } else {
+                        oLayer.jsonfields = [];
                     }
 
                     if (layer.scalemin || layer.scalemax) {
