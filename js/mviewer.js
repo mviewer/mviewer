@@ -1243,7 +1243,7 @@ mviewer = (function () {
     var _setVisibleOverLayers = function (lst) {
         var errors = [];
         var errorLayers =[];
-        var layers = decodeURIComponent(lst).split(",");
+        var layers = lst.split(",");
         var layersWithOptions = {};
         layers.forEach(function (layer, i) {
             //search layer by id or by name in overLayers collection
