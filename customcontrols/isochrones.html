@@ -17,7 +17,7 @@
       </style>
       <label i18n="custom.isochrone.time">Temps de parcours</label>
       <div class="btn-group" role="group" aria-label="...">         
-         <button type="button" class="selected isochrone-mode btn btn-default" data-mode="Voiture" onclick="mviewer.customControls.isochrones.switchMode(this);">
+         <button tooltip="top,hover,true,body,mviewer.templates.tooltip" id="btn-isomv" title="Déplacement en voiture" type="button" class="selected isochrone-mode btn btn-default mv-tooltip" data-mode="Voiture" onclick="mviewer.customControls.isochrones.switchMode(this);">
             <span class="fa fa-car" aria-hidden="true"></span>
          </button>
          <button type="button" class="btn isochrone-mode btn-default" data-mode="Pieton" onclick="mviewer.customControls.isochrones.switchMode(this);">

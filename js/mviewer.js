@@ -589,6 +589,28 @@ mviewer = (function () {
         _map.addLayer(_subSelectOverlayFeatureLayer);
     };
 
+    var _initTooltip = function () {
+        //Activate tooltips on tools buttons
+        if (!configuration.getConfiguration().mobile) {
+            $("[title]").each((i,el) => {
+                [placement, trigger, html, container, template] = ['left', 'hover', true, 'body', mviewer.templates.tooltip];
+                if ($(el).attr('tooltip')) {
+                    // element with "tooltip" params used to custom tooltip element
+                    [placement, trigger, html, container, template] = $(el).attr('tooltip').split(",");//.map(e => `${e}`);
+                    template = template.split(".").forEach(e => t = t ? t[e] : window[e]);
+                }
+                // create tooltip
+                $(el).tooltip({
+                    placement: placement,
+                    trigger: trigger,
+                    html: html,
+                    container: container,
+                    template: template
+                });
+            });
+        }
+    };
+
     /**
      * Private Method: initTools
      * Tools can be set or unset. Only one tool can be enabled like a switch.
@@ -609,16 +631,6 @@ mviewer = (function () {
         }
         //Activate GetFeatureInfo tool
         mviewer.setTool('info');
-        //Activate tooltips on tools buttons
-        if (!configuration.getConfiguration().mobile) {
-            $("#backgroundlayersbtn, #zoomtoolbar button, #toolstoolbar button, #toolstoolbar a").tooltip({
-                placement: 'left',
-                trigger: 'hover',
-                html: true,
-                container: 'body',
-                template: mviewer.templates.tooltip
-            });
-        }
     };
 
     var _initShare = function () {
@@ -3000,6 +3012,8 @@ mviewer = (function () {
         overLayersReady: _overLayersReady,
 
         renderHTMLFromTemplate : _renderHTMLFromTemplate,
+
+        initToolTip: _initTooltip,
 
         events: function () { return _events; }
 

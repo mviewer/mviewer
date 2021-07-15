@@ -559,6 +559,7 @@
                             $("#main").css("opacity", 1).hide();
                             $("#main").fadeIn(1500);
                             mviewer.getMap().updateSize();
+                            mviewer.initToolTip();
                         }, 2000);
                     $( "#map" ).focus();
                     });
@@ -602,7 +603,6 @@
                     mviewer.orderLayer(actionMove);
                   }
             });
-
             $("#right-panel .close,#bottom-panel .mv-close").click(function () {mviewer.hideLocation()});
 
         });
