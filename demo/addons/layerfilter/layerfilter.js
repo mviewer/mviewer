@@ -4,6 +4,13 @@ const layerfilter = (function() {
   let _clearbutton;
   let _fuseMotor;
 
+  const defaultFuseOptions = {
+    threshold: 0.3,
+    distance: 100,
+    maxPatternLength: 32,
+    minMatchCharLength: 2
+  };
+
 /**
  * Create a fuse instance from menu list text
  * @param {string} term - input by user to filter layers
@@ -12,12 +19,12 @@ const layerfilter = (function() {
     if (!$("#menu li").children("a").length || _fuseMotor) return;
     const list = [];
     const menuLi = $("#menu li");
+
     menuLi.children("a").each((i,el) =>list.push(el.text));
+    // options by default or from addon config.json file
     _fuseMotor = new Fuse(list, {
-      threshold: 0.3,
-      distance: 100,
-      maxPatternLength: 32,
-      minMatchCharLength: 2
+      ...defaultFuseOptions,
+      ...mviewer.customComponents["layerfilter"].config.options.fuseOptions
     });
   }
 
