@@ -2,16 +2,39 @@ const layerfilter = (function() {
 
   let _input;
   let _clearbutton;
+  let _fuseMotor;
+
+  let createFuseMotor = (term) => {
+    if (!$("#menu li").children("a").length || _fuseMotor) return;
+    const list = [];
+    const menuLi = $("#menu li");
+    menuLi.children("a").each((i,el) =>list.push(el.text));
+    _fuseMotor = new Fuse(list, {
+      threshold: 0.3,
+      distance: 100,
+      maxPatternLength: 32,
+      minMatchCharLength: 2
+    });
+  }
+
+  /**
+   * TODO : empty term will display original TOC template
+   * Actually, removed string display totally closed layers group
+   */
   let _layerfilter = function (e) {
       const term = $("#layerfilter-field").val().toLowerCase().trim();
       _clearbutton.style.display = term === "" ? "none" : "block";
+      // init fuse only if if not exists
+      createFuseMotor();
+      // search term with fuse
+      const result = _fuseMotor.search($("#layerfilter-field").val().toLowerCase().trim());
       $("#menu li").hide().filter(function() {
         // display decision for currently filtered theme, group or layer 
-        const occurs = $(this).children("a").text().toLowerCase().trim().indexOf(term) !== -1;
+        let toOpen = result.map(e => e.item).includes($(this).children("a").text());
         if (term === ""){
           $(this).removeClass("opened");
           $(this).children("ul").hide();
-        } else if (occurs) {
+        } else if (toOpen) {
           // display and open themes and groups if filtered layer matches
           $(this).parents().show();
           $(this).parents("li").addClass("opened");
@@ -23,7 +46,7 @@ const layerfilter = (function() {
             $(this).children().children().children().children("li").show();
           }
         }
-        return occurs;
+        return !term ? true : toOpen;
       }).show();
   };
 
