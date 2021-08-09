@@ -4,6 +4,10 @@ const layerfilter = (function() {
   let _clearbutton;
   let _fuseMotor;
 
+/**
+ * Create a fuse instance from menu list text
+ * @param {string} term - input by user to filter layers
+ */
   let createFuseMotor = (term) => {
     if (!$("#menu li").children("a").length || _fuseMotor) return;
     const list = [];
@@ -18,8 +22,13 @@ const layerfilter = (function() {
   }
 
   /**
+   * Event callback to filter TOC layers from string
+   * 
    * TODO : empty term will display original TOC template
    * Actually, removed string display totally closed layers group
+   * 
+   * @param {object} e - event object
+   * @returns  {boolean}
    */
   let _layerfilter = function (e) {
       const term = $("#layerfilter-field").val().toLowerCase().trim();
