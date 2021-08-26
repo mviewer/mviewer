@@ -8,7 +8,7 @@ Selon la configuration, l'interface permet de choisir une couche qui peut être 
 
 ## Configuration dans le fichier de carte XML
 
-1. Utiliser un ID par Mviewer
+**1. Utiliser un ID par Mviewer**
 
 Nous vous conseillons d'utiliser un identifiant respectif à votre Mviewer :
 
@@ -19,7 +19,7 @@ Nous vous conseillons d'utiliser un identifiant respectif à votre Mviewer :
 
 Cet ID permettra de lier une configuration (fichier config.json) à un seul Mviewer. Ainsi, un seul dossier et un seul fichier config.json pourra être utilisé. Ce qui évite de duppliquer le dossier principal du plugin par Mviewer.
 
-2. Importer le plugin
+**2. Importer le plugin**
 
 Comme tous les plugins, vous devez ajouter dans le fichier de configuration de votre Mviewer une balise qui permet de dire à votre Mviewer qu'il faut charger le plugin :
 
@@ -33,7 +33,7 @@ Comme tous les plugins, vous devez ajouter dans le fichier de configuration de v
 
 La configuration du plugin est accessible dans le fichier `config.json` du répertoire `addon/filter`. Ce répertoire peut être localisé différemment selon votre organisation.
 
-1. Une configuration par Mviewer
+**1. Une configuration par Mviewer**
 
 Pour commencer, vous devez ajouter votre ID de Mviewer sous la propriété `"mviewer"` tel que avec un id qui est "filter" on obtiendra : 
 
@@ -48,7 +48,7 @@ Pour commencer, vous devez ajouter votre ID de Mviewer sous la propriété `"mvi
 }
 ```
 
-2. Ajouter une couche
+**2. Ajouter une couche**
 
 Dans ce fichier `config.json`, chaque couche aura des filtres attributaires potentiellements différents.
 
@@ -65,13 +65,13 @@ Ajoutez la couche au sein d'une propriété `layers` tel que pour une couche ave
 }
 ```
 
-3. Ajouter des filtres pour la couche
+**3. Ajouter des filtres pour la couche**
 
 Les filtres peuvent être de type combobox, date, checkbox, button, textbox.
 
 Voici un exemple de représentation pour des attributs (dans l'ordre, de type combobox, button, textbox, button, combobox) :
 
-![capture filterLayer](https://github.com/geobretagne/mviewer/demo/addons/filter/img/filterLayer.PNG)
+![capture filterLayer](https://github.com/geobretagne/mviewer/blob/develop/demo/addons/filter/img/filterLayer.PNG)
 
 Pour chaque attribut à filtrer, vous avez besoin de ces propriétés obligatoires : 
 
@@ -83,12 +83,17 @@ Pour chaque attribut à filtrer, vous avez besoin de ces propriétés obligatoir
 }
 ```
 * attribut
+
 Le nom de l'attribut à filtrer.
 
 * type
+
+
 Le type entre combobox, date, checkbox, button, textbox (dépendra aussi des données).
 
 * label
+
+
 Le texte à afficher au dessus du filtre.
 
 Ces propriétés supplémentaires ne sont pas obligatoires mais peuvent permettre de bien interpréter les données et d'interagir :
@@ -124,8 +129,8 @@ Vous aurez un exemple ici de configration :  [exemple pour l'image précédente]
 
 Vous pouvez retrouver un exemple complet dans les dossiers suivants : 
 
-* Fichier de configuration du plugin : demo/addons/filter/config.json
-* Fichier de configuration de la carte : demo/filter/filter.xml
+* Fichier de configuration du plugin : [demo/addons/filter/config.json](https://github.com/geobretagne/mviewer/blob/master/demo/addons/filter/config.json)
+* Fichier de configuration de la carte : [demo/filter/filter.xml](https://github.com/geobretagne/mviewer/blob/master/demo/filter/filter.xml)
 
 Dans cet exemple, le Mviewer a un identifiant repectif "filter" tel que dans le config.xml : 
 
