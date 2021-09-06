@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-**Description détaillée / Describe**
+**Description / Describe**
 
 Une courte et description de ce que vous voulez.
 Cela peut toucher une fonctionnalité qui existe (ex: améliorer un outil de mesure) ou l'ajout d'une nouvelle fonctionnalité qui n'existe pas dans le Mviewer.
