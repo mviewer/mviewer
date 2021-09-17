@@ -258,7 +258,7 @@ var search = (function () {
                                 }
                             str += `<a class="geoportail list-group-item" href="#" onclick="
                                 mviewer.zoomToLocation(${res[i].x}, ${res[i].y}, ${zoom}, ${_searchparams.querymaponclick});
-                                mviewer.showLocation('EPSG:4326',${res[i].x}, ${res[i].y}, ${_searchparams.banmarker})>
+                                mviewer.showLocation('EPSG:4326',${res[i].x}, ${res[i].y}, ${_searchparams.banmarker})">
                                 ${res[i].fulltext}
                             </a>`;
                         }
