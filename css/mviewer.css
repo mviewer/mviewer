@@ -723,6 +723,10 @@ ul#layers-container {
   margin-bottom: 0;
 }
 
+#right-panel .nav li.active {
+  padding: 0;
+}
+
 /*******************************
 -------------CSS Fiche info GML
 ********************************/
