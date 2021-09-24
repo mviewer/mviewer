@@ -14,7 +14,9 @@ Personnalisation de l'application
 .. code-block:: xml
        :linenos:
 
-	<application title=""
+	<application
+		titlehtml=""
+		title=""
 		logo=""
 		help=""
 		showhelp=""
@@ -41,6 +43,7 @@ Personnalisation de l'application
 
 **Paramètres**
 
+* ``titlehtml`` :guilabel:`studio` : optionnel de type texte, il permet d'utiliser du HTML uniquement pour le titre de l'application. Utiliser **title** avec ce paramètre pour le titre de l'onglet et la page de chargement.
 * ``title`` :guilabel:`studio` : paramètre optionnel de type texte qui définit le titre de l'application. Valeur par défaut **mviewer**.
 * ``logo`` :guilabel:`studio` : paramètre optionnel de type url qui définit l'emplacement du logo de l'application. Valeur par défaut **img/logo/earth-globe.svg**.
 * ``help`` :guilabel:`studio` : paramètre optionnel de type url qui définit l'emplacement du fichier html de l'aide.

@@ -546,7 +546,8 @@
                         var title = "";
                         if (_conf.application.title) {
                             title = _conf.application.title;
-                            $("#loader-subtitle").text(title);
+                            $("#loader-subtitle").empty();
+                            $("#loader-subtitle").append(title);
                         }
                         if (_conf.application.favicon) {
                             let ico = _conf.application.favicon;

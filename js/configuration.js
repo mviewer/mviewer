@@ -231,7 +231,9 @@ var configuration = (function () {
         if (conf.application.title || API.title) {
             var title = API.title || conf.application.title;
             document.title = title;
-            $(".mv-title").text(title);
+            title = conf.application.htmltitle || title;
+            $(".mv-title").text("");
+            $(".mv-title").append(title);
         }
         if (conf.application.stats === "true" && conf.application.statsurl) {
             $.get(conf.application.statsurl +"?app=" + document.title);
