@@ -103,7 +103,6 @@ Paramètres pour gérer l'affichage de la couche
 * ``expanded`` :guilabel:`studio` : Booléan précisant si le panneau de la couche est agrandi au démarrage. La valeur par défaut est false.
 * ``showintoc`` :  Booléen stipulant si la couche est affichée dans la légende. La valeur par défaut est true.
 
-
 Paramètres pour gérer attributions et métadonnées
 =====================================================
 
@@ -214,3 +213,66 @@ Cet élément optionnel, permet d'associer un template type Mustache (https://gi
 **Paramètres**
 
 * ``url``: paramètre optionnel de type url qui indique l'emplacement du template à utiliser.
+
+
+Paramétrage de géstion de l'ordre d'affichage des couches
+=========================================================
+
+.. code-block:: xml
+       :linenos:
+
+	   <layer   index="1" showintoc="true" toplayer="true"/>
+
+Par défaut, les couches sont affichées sur la carte par ordre d'appararition dans le fichier de configuration XML.
+L'utilisateur a la possibilité d'utiliser les paramètres suivants pour forcer l'affichage :
+
+* toplayer
+
+Ce paramètre va forcer l'affichage de la couche au dessus des autres couches.
+Si plusieurs toplayers sont renseignés dans le fichier de configuration, toutes les toplayers seront au dessus et selon l'ordre d'apparition dans la configuration XML.
+Si une couche a un toplayer et un index de renseigné, l'index est ignoré.
+
+* index
+
+L'objectif de ce paramètre est donc d'afficher la légende de façon identique à l'affichage sur la carte à l'initialisation de la carte.
+
+Ce paramètre va permettre de forcer l'affichage de la couche à une position pour un index souhaité.
+Ce paramètre `index` correspond sur la carte au paramètre [zIndex](https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html) d'une couche OpenLayers.
+Une couche avec le paramètre `index="2"` va donc afficher cette couche en seconde position (zIndex 2) et en seconde position dans la légende (sauf cas spécifique).
+
+Par défaut, les couches avec un index seront toujours au-dessus des couches sans index.
+Si deux couches ont le même index dans un même fichier de configuration XML, parmis ces deux couches, la couche en seconde position dans l'ordre d'apparition du fichier de configuration XML sera considérée sans index (voir explications suivantes).
+
+.. code-block:: xml
+       :linenos:
+
+	   <layer   index="1" />
+           <layer   index="2" />
+
+* showintoc
+
+Avec ce paramètre renseigné, les paramètres index et toplayer sont également pris en compte pour l'affichage sur la carte.
+
+.. code-block:: xml
+       :linenos:
+
+	   <layer   index="1" />
+           <layer   index="2" toplayer="true" showintoc="true"/>
+           <layer   index="3" />
+
+* couches sans index, sans toplayer, sans showintoc
+
+
+.. code-block:: xml
+       :linenos:
+
+	   <layer   index="1" />
+           <layer   index="2" />
+           <layer />
+           <layer />
+
+Pour le cas primaire où aucun paramètre n'est renseigné, c'est l'ordre d'apparition dans le fichier de configuration XML qui permet de définir l'ordre d'affichage des couches au démarrage.
+Dans le cas où une configuration XML comprend des couches avec le paramètre `index` et / ou `toplayer` et des couches sans aucun de ces paramètres, alors les couches sans paramètre respectent ce principe.
+
+On retrouvera donc en premier les toplayer, ensuite les couches avec index et enfin les couches sans index. 
+Pour rappel, les couches avec un index en doublon et placée en seconde position dans le XML sont considérée sans index et sont concernées par ce mécanisme d'affichage. Elles s'afficheront donc selon les autres couches sans paramètres dans l'ordre d'apparition dans XML.
