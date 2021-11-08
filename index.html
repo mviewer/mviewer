@@ -485,6 +485,7 @@
         <script type="text/javascript" src="js/custom.js" ></script>
         <script type="text/javascript" src="lib/i18njs/i18n.js" ></script>
         <script type="text/javascript" src="lib/moment/moment.js" ></script>
+        <script type="text/javascript" src="lib/lodash-4.17.21/lodash.min.js" ></script>
 
         <script type="text/javascript">
         var API = {};
@@ -531,6 +532,8 @@
                 success: function (xml) {
                     $( document ).on( "layersLoaded", function (e) {
                         mviewer.overLayersReady();
+                        mviewer.showLayersByAttrOrder(mviewer.getLayersAttribute('rank'));
+                        mviewer.orderLayerByIndex();
                     });
                     //load conf
                     $( document ).on( "configurationCompleted", function (e, eData) {
@@ -584,6 +587,7 @@
             Sortable.create(document.getElementById('layers-container'), {
                 handle: '.layerdisplay-title',
                 draggable: '.draggable',
+                filter: '.toplayer',
                 onUpdate: function (evt) {
                     var actionMove = {
                         layerName: $(evt.item).attr("data-layerid"),
