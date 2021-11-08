@@ -243,8 +243,10 @@ var info = (function () {
                 var url = visibleLayers[i].getSource().getFeatureInfoUrl(
                     evt.coordinate, _map.getView().getResolution(), _map.getView().getProjection(), params
                 );
+                let cql = new URLSearchParams(url).get("CQL_FILTER");
                 if (layer && featureid) {
-                    url+= '&CQL_FILTER='+_overLayers[layer].searchid+'%3D%27'+featureid+'%27';
+                    let attributeFilter = _overLayers[layer].searchid+'%3D%27'+featureid+'%27';
+                    url += `${cql ? cql + " AND " : "&CQL_FILTER="}${attributeFilter}`;
                 }
                 urls.push({url:url, layerinfos: _overLayers[visibleLayers[i].get('mviewerid')]});
             }
