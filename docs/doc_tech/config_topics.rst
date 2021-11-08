@@ -183,8 +183,10 @@ Elément enfant de ``<theme>``
 .. code-block:: xml
        :linenos:
 
-	<group name="" />
+	<group name="" id="" />
 
 **Paramètres**
 
 * ``name``: paramètre obligatoire de type texte qui précise le nom du groupe.
+* ``id``: paramètre obligatoire de type texte qui précise l'identifiant unique du groupe.
+

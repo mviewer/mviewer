@@ -8,7 +8,7 @@
     <meta name="description" content="Visualiseur géographique" />
 
     <link rel="icon" type="image/png" href="favicon.png" />
-    <link href="lib/flag-icon-3.4.3/css/flag-icon.css" rel="stylesheet">
+    <link href="lib/flag-icons-4.1.4/css/flag-icons.css" rel="stylesheet">
     <link href="lib/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link href="lib/simple-slidebar/simple_slidebar.css" rel="stylesheet">
     <link href="lib/bootstrap-datepicker-1.6.1/css/bootstrap-datepicker3.min.css" rel="stylesheet">
@@ -485,6 +485,7 @@
         <script type="text/javascript" src="js/custom.js" ></script>
         <script type="text/javascript" src="lib/i18njs/i18n.js" ></script>
         <script type="text/javascript" src="lib/moment/moment.js" ></script>
+        <script type="text/javascript" src="lib/lodash-4.17.21/lodash.min.js" ></script>
 
         <script type="text/javascript">
         var API = {};
@@ -531,6 +532,8 @@
                 success: function (xml) {
                     $( document ).on( "layersLoaded", function (e) {
                         mviewer.overLayersReady();
+                        mviewer.showLayersByAttrOrder(mviewer.getLayersAttribute('rank'));
+                        mviewer.orderLayerByIndex();
                     });
                     //load conf
                     $( document ).on( "configurationCompleted", function (e, eData) {
@@ -546,7 +549,8 @@
                         var title = "";
                         if (_conf.application.title) {
                             title = _conf.application.title;
-                            $("#loader-subtitle").text(title);
+                            $("#loader-subtitle").empty();
+                            $("#loader-subtitle").append(title);
                         }
                         if (_conf.application.favicon) {
                             let ico = _conf.application.favicon;
@@ -559,6 +563,7 @@
                             $("#main").css("opacity", 1).hide();
                             $("#main").fadeIn(1500);
                             mviewer.getMap().updateSize();
+                            mviewer.initToolTip();
                         }, 2000);
                     $( "#map" ).focus();
                     });
@@ -582,6 +587,7 @@
             Sortable.create(document.getElementById('layers-container'), {
                 handle: '.layerdisplay-title',
                 draggable: '.draggable',
+                filter: '.toplayer',
                 onUpdate: function (evt) {
                     var actionMove = {
                         layerName: $(evt.item).attr("data-layerid"),
@@ -602,7 +608,6 @@
                     mviewer.orderLayer(actionMove);
                   }
             });
-
             $("#right-panel .close,#bottom-panel .mv-close").click(function () {mviewer.hideLocation()});
 
         });

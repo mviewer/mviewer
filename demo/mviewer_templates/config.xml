@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <application title="Mviewer Templates" mouseposition="false" logo="demo/mviewer_templates/img/logo_mviewertemplates.svg" help="demo/mviewer_templates/mviewer_templates_aide.html" showhelp="true" 
+    iconhelp="home" measuretools="true" exportpng="true" style="demo/mviewer_templates/mviewer_templates_style.css" togglealllayersfromtheme="false"/>
+    <mapoptions maxzoom="19" projection="EPSG:3857" center="-220750.13768758904,6144925.57790189" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
+  
+    <baselayers style="default"><!-- style="default"||gallery" -->
+        <baselayer  type="OSM" id="positron" 
+            label="Positron" 
+            title="CartoDb" 
+            thumbgallery="img/basemap/positron.png" 
+            url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20" 
+            visible="true" attribution="Map tiles by  &lt;a href='https://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+    </baselayers>     
+    <proxy url=""/>
+    <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban"/>
+    <searchparameters bbox="false" localities="true" features="false" />   
+
+    <themes> 
+        <theme name="Templates - Fenêtre droite"  collapsed="false" id="templates" icon="fas fa-caret-right">
+            <group name="Texte" id="grp1">
+                <layer id="parc_naturel_regional" name="Template 1.1" type="wms" 
+                exclusive="true"
+                url="https://ows.region-bretagne.fr/geoserver/rb/wms" 
+                tiled="false" 
+                expanded="false"
+                queryable="true" 
+                infoformat="application/vnd.ogc.gml"   
+                legendurl="demo/mviewer_templates/img/legendurl_templates.png"
+                attribution="Région Bretagne" featurecount="1"
+                metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=9df1d4b7-221c-4424-af3f-50a898e3d333"
+                metadata-csw="https://geobretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=9df1d4b7-221c-4424-af3f-50a898e3d333">
+                <template url="demo/mviewer_templates/templates/template.texte_1.mst"></template>
+              </layer>
+              <layer id="parc_naturel_regional" name="Template 1.2" type="wms"
+                exclusive="true"
+                url="https://ows.region-bretagne.fr/geoserver/rb/wms" 
+                tiled="false" 
+                expanded = "false"
+                queryable="true" 
+                infoformat="application/vnd.ogc.gml"   
+                legendurl="demo/mviewer_templates/img/legendurl_templates.png" 
+                attribution="Région Bretagne" featurecount="1"
+                metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=9df1d4b7-221c-4424-af3f-50a898e3d333"
+                metadata-csw="https://geobretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=9df1d4b7-221c-4424-af3f-50a898e3d333">
+                <template url="demo/mviewer_templates/templates/template.texte_2.mst"></template>
+              </layer>
+              <layer id="parc_naturel_regional" name="Template 1.3" type="wms"
+                url="https://ows.region-bretagne.fr/geoserver/rb/wms" 
+                exclusive="true"
+                tiled="false" 
+                expanded = "false"
+                queryable="true" 
+                infoformat="application/vnd.ogc.gml"   
+                legendurl="demo/mviewer_templates/img/legendurl_templates.png"
+                attribution="Région Bretagne" featurecount="1"
+                metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=9df1d4b7-221c-4424-af3f-50a898e3d333"
+                metadata-csw="https://geobretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=9df1d4b7-221c-4424-af3f-50a898e3d333">
+                <template url="demo/mviewer_templates/templates/template.texte_3.mst"></template>
+              </layer>
+            </group>
+            <group name="Photographie et image" id="grp2">
+               <layer id="reserve_naturelle_regionale" name="Template 2.1" type="wms"
+                  url="https://ows.region-bretagne.fr/geoserver/rb/wms" 
+                  tiled="false" 
+                  expanded = "false"
+                  exclusive="true"
+                  queryable="true" 
+                  infoformat="application/vnd.ogc.gml"   
+                  legendurl="demo/mviewer_templates/img/legendurl_templates.png"
+                  attribution="Région Bretagne" featurecount="1"
+                  metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=77f8fc52-ae57-41d1-8f08-7b121b013f51"
+                  metadata-csw="https://geobretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=77f8fc52-ae57-41d1-8f08-7b121b013f51">
+                  <template url="demo/mviewer_templates/templates/template.photo_1.mst"></template>        
+                </layer>
+                 <layer id="reserve_naturelle_regionale" name="Template 2.2" type="wms"
+                  url="https://ows.region-bretagne.fr/geoserver/rb/wms" 
+                  tiled="false" 
+                  expanded = "false"
+                  exclusive="true"
+                  queryable="true" 
+                  infoformat="application/vnd.ogc.gml"   
+                  legendurl="demo/mviewer_templates/img/legendurl_templates.png"
+                  attribution="Région Bretagne" featurecount="1"
+                  metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=77f8fc52-ae57-41d1-8f08-7b121b013f51"
+                  metadata-csw="https://geobretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=77f8fc52-ae57-41d1-8f08-7b121b013f51">
+                  <template url="demo/mviewer_templates/templates/template.photo_2.mst"></template>        
+                </layer>
+                 <layer id="reserve_naturelle_regionale" name="Template 2.3" type="wms"
+                  url="https://ows.region-bretagne.fr/geoserver/rb/wms" 
+                  tiled="false" 
+                  expanded = "false"
+                  exclusive="true"
+                  queryable="true" 
+                  infoformat="application/vnd.ogc.gml"   
+                  legendurl="demo/mviewer_templates/img/legendurl_templates.png"
+                  attribution="Région Bretagne" featurecount="1"
+                  metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=77f8fc52-ae57-41d1-8f08-7b121b013f51"
+                  metadata-csw="https://geobretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=77f8fc52-ae57-41d1-8f08-7b121b013f51">
+                  <template url="demo/mviewer_templates/templates/template.photo_3.mst"></template>        
+                </layer>
+            </group>
+            <group name="Carte illustrative" id="grp3">
+                <layer id="reserve_naturelle_regionale" name="Template 3.1" type="wms"
+                url="https://ows.region-bretagne.fr/geoserver/rb/wms" 
+                tiled="false" 
+                expanded = "false"
+                exclusive="true"
+                queryable="true" 
+                infoformat="application/vnd.ogc.gml"   
+                legendurl="demo/mviewer_templates/img/legendurl_templates.png"
+                attribution="Région Bretagne" featurecount="1"
+                metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=77f8fc52-ae57-41d1-8f08-7b121b013f51"
+                metadata-csw="https://geobretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=77f8fc52-ae57-41d1-8f08-7b121b013f51">
+                <template url="demo/mviewer_templates/templates/template.mapmini_1.mst"></template>
+              </layer>
+              <layer id="reserve_naturelle_regionale" name="Template 3.2" type="wms"
+                url="https://ows.region-bretagne.fr/geoserver/rb/wms" 
+                tiled="false" 
+                expanded = "false"
+                exclusive="true"
+                queryable="true" 
+                infoformat="application/vnd.ogc.gml"   
+                legendurl="demo/mviewer_templates/img/legendurl_templates.png"  
+                attribution="Région Bretagne" featurecount="1"
+                metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=77f8fc52-ae57-41d1-8f08-7b121b013f51"
+                metadata-csw="https://geobretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=77f8fc52-ae57-41d1-8f08-7b121b013f51">
+                <template url="demo/mviewer_templates/templates/template.mapmini_2.mst"></template>
+              </layer>
+            </group>
+            <group name="Chiffres clés" id="grp4">
+                <layer id="reserve_naturelle_regionale" name="Template 4.1" type="wms"
+                  url="https://ows.region-bretagne.fr/geoserver/rb/wms" 
+                  tiled="false" 
+                  expanded = "false"
+                  exclusive="true"
+                  queryable="true" 
+                  infoformat="application/vnd.ogc.gml"   
+                  legendurl="demo/mviewer_templates/img/legendurl_templates.png"  
+                  attribution="Région Bretagne" featurecount="1"
+                  metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=77f8fc52-ae57-41d1-8f08-7b121b013f51"
+                  metadata-csw="https://geobretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=77f8fc52-ae57-41d1-8f08-7b121b013f51">
+                  <template url="demo/mviewer_templates/templates/template.chiffrescles_1.mst"></template>
+                </layer>
+                <layer id="reserve_naturelle_regionale" name="Template 4.2" type="wms"
+                  url="https://ows.region-bretagne.fr/geoserver/rb/wms" 
+                  tiled="false" 
+                  expanded = "false"
+                  exclusive="true"
+                  queryable="true" 
+                  infoformat="application/vnd.ogc.gml"   
+                  legendurl="demo/mviewer_templates/img/legendurl_templates.png"  
+                  attribution="Région Bretagne" featurecount="1"
+                  metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=77f8fc52-ae57-41d1-8f08-7b121b013f51"
+                  metadata-csw="https://geobretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=77f8fc52-ae57-41d1-8f08-7b121b013f51">
+                  <template url="demo/mviewer_templates/templates/template.chiffrescles_2.mst"></template>
+                </layer>
+                <layer id="reserve_naturelle_regionale" name="Template 4.3" type="wms"
+                  url="https://ows.region-bretagne.fr/geoserver/rb/wms" 
+                  tiled="false" 
+                  expanded = "false"
+                  exclusive="true"
+                  queryable="true" 
+                  infoformat="application/vnd.ogc.gml"   
+                  legendurl="demo/mviewer_templates/img/legendurl_templates.png"  
+                  attribution="Région Bretagne" featurecount="1"
+                  metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=77f8fc52-ae57-41d1-8f08-7b121b013f51"
+                  metadata-csw="https://geobretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=77f8fc52-ae57-41d1-8f08-7b121b013f51">
+                  <template url="demo/mviewer_templates/templates/template.chiffrescles_3.mst"></template>
+                </layer>
+            </group>   
+            <group name="Graphiques" id="grp5">
+                <layer id="rp_struct_pop_geom" name="Diagramme en bar - Template 5.1"  visible="false" tiled="false" exclusive="true"
+		                searchable="false" queryable="true"
+		                infoformat="application/vnd.ogc.gml" featurecount="1"
+                    legendurl="demo/mviewer_templates/img/legendurl_templates.png"
+                    filter="level='EPCI'"
+		                url="https://ows.region-bretagne.fr/geoserver/rb/wms"
+		                attribution="Sources: INSEE (RP) - OpenStreetMap | Traitements: Région Bretagne - Service connaissance, observation, planification et prospective" 
+		                metadata="https://kartenn.region-bretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/26324529-e0b7-450c-9506-2dcdca608f5f"
+		                metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=26324529-e0b7-450c-9506-2dcdca608f5f">
+		                <template url="demo/mviewer_templates/templates/template.graph_bar.mst"></template>
+		          </layer>
+                <layer id="rp_struct_pop_geom" name="Diagramme circulaire - Template 5.2"  visible="false" tiled="false" exclusive="true"
+		                searchable="false" queryable="true"
+		                infoformat="application/vnd.ogc.gml" featurecount="1"
+                    legendurl="demo/mviewer_templates/img/legendurl_templates.png"
+                    filter="level='EPCI'"
+		                url="https://ows.region-bretagne.fr/geoserver/rb/wms"
+		                attribution="Sources: INSEE (RP) - OpenStreetMap | Traitements: Région Bretagne - Service connaissance, observation, planification et prospective" 
+		                metadata="https://kartenn.region-bretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/26324529-e0b7-450c-9506-2dcdca608f5f"
+		                metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=26324529-e0b7-450c-9506-2dcdca608f5f">
+		                <template url="demo/mviewer_templates/templates/template.graph_pie.mst"></template>
+		          </layer>
+            </group>
+            <group name="Graphiques et chiffres clés" id="grp6">
+                <layer id="rp_struct_pop_geom" name="Chiffre + Diagramme - Template 6.1"  visible="false" tiled="false" exclusive="true"
+		                searchable="false" queryable="true"
+		                infoformat="application/vnd.ogc.gml" featurecount="1"
+                    legendurl="demo/mviewer_templates/img/legendurl_templates.png"
+                    filter="level='EPCI'"
+		                url="https://ows.region-bretagne.fr/geoserver/rb/wms"
+		                attribution="Sources: INSEE (RP) - OpenStreetMap | Traitements: Région Bretagne - Service connaissance, observation, planification et prospective" 
+		                metadata="https://kartenn.region-bretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/26324529-e0b7-450c-9506-2dcdca608f5f"
+		                metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=26324529-e0b7-450c-9506-2dcdca608f5f">
+		                <template url="demo/mviewer_templates/templates/template.graph_chiffrescles1.mst"></template>
+		            </layer>
+                <layer id="rp_struct_pop_geom" name="Chiffre + 2 Diagrammes - Template 6.2"  visible="false" tiled="false" exclusive="true"
+		                searchable="false" queryable="true"
+		                infoformat="application/vnd.ogc.gml" featurecount="1"
+                    legendurl="demo/mviewer_templates/img/legendurl_templates.png"
+                    filter="level='EPCI'"
+		                url="https://ows.region-bretagne.fr/geoserver/rb/wms"
+		                attribution="Sources: INSEE (RP) - OpenStreetMap | Traitements: Région Bretagne - Service connaissance, observation, planification et prospective" 
+		                metadata="https://kartenn.region-bretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/26324529-e0b7-450c-9506-2dcdca608f5f"
+		                metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=26324529-e0b7-450c-9506-2dcdca608f5f">
+		                <template url="demo/mviewer_templates/templates/template.graph_chiffrescles2.mst"></template>
+		          </layer>
+            </group> 
+		</theme>
+        <theme name="Templates - Fenêtre du bas"  collapsed="true" id="templatesbas" icon="fas fa-caret-right">
+              <layer id="rp_struct_pop_geom" name="Chiffre + Diagramme - Template 7.1"  visible="false" tiled="false" exclusive="true"
+		                searchable="false" queryable="true"
+                    infopanel="bottom-panel"
+		                infoformat="application/vnd.ogc.gml" featurecount="1"
+                    legendurl="demo/mviewer_templates/img/legendurl_templates.png"
+                    filter="level='EPCI'"
+		                url="https://ows.region-bretagne.fr/geoserver/rb/wms"
+		                attribution="Sources: INSEE (RP) - OpenStreetMap | Traitements: Région Bretagne - Service connaissance, observation, planification et prospective" 
+		                metadata="https://kartenn.region-bretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/26324529-e0b7-450c-9506-2dcdca608f5f"
+		                metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=26324529-e0b7-450c-9506-2dcdca608f5f">
+		                <template url="demo/mviewer_templates/templates/template.bottomGraphChiffres_1.mst"></template>
+		            </layer>
+                <layer id="rp_struct_pop_geom" name="2 Diagrammes - Template 7.2"  visible="false" tiled="false" exclusive="true"
+		                searchable="false" queryable="true"
+                    infopanel="bottom-panel"
+		                infoformat="application/vnd.ogc.gml" featurecount="1"
+                    legendurl="demo/mviewer_templates/img/legendurl_templates.png"
+                    filter="level='EPCI'"
+		                url="https://ows.region-bretagne.fr/geoserver/rb/wms"
+		                attribution="Sources: INSEE (RP) - OpenStreetMap | Traitements: Région Bretagne - Service connaissance, observation, planification et prospective" 
+		                metadata="https://kartenn.region-bretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/26324529-e0b7-450c-9506-2dcdca608f5f"
+		                metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=26324529-e0b7-450c-9506-2dcdca608f5f">
+		                <template url="demo/mviewer_templates/templates/template.bottomGraphs2.mst"></template>
+		            </layer>
+                <layer id="rp_struct_pop_geom" name="Chiffre + 2 Diagrammes - Template 7.3"  visible="false" tiled="false" exclusive="true"
+		                searchable="false" queryable="true"
+                    infopanel="bottom-panel"
+		                infoformat="application/vnd.ogc.gml" featurecount="1"
+                    legendurl="demo/mviewer_templates/img/legendurl_templates.png"
+                    filter="level='EPCI'"
+		                url="https://ows.region-bretagne.fr/geoserver/rb/wms"
+		                attribution="Sources: INSEE (RP) - OpenStreetMap | Traitements: Région Bretagne - Service connaissance, observation, planification et prospective" 
+		                metadata="https://kartenn.region-bretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/26324529-e0b7-450c-9506-2dcdca608f5f"
+		                metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=26324529-e0b7-450c-9506-2dcdca608f5f">
+		                <template url="demo/mviewer_templates/templates/template.bottomGraphChiffres_2.mst"></template>
+		            </layer>
+        </theme> 
+        <theme name="Templates vides - Structure"  collapsed="true" id="templatesblank" icon="fas fa-caret-right">   
+            <group name="Fenêtre du bas" id="bas">
+              <layer id="rp_struct_pop_geom" name="2 Colonnes - Template 8.1"  visible="false" tiled="false" exclusive="true"
+		                searchable="false" queryable="true"
+                    infopanel="bottom-panel"
+		                infoformat="application/vnd.ogc.gml" featurecount="1"
+                    legendurl="demo/mviewer_templates/img/legendurl_templates.png"
+                    filter="level='EPCI'"
+		                url="https://ows.region-bretagne.fr/geoserver/rb/wms"
+		                attribution="Sources: INSEE (RP) - OpenStreetMap | Traitements: Région Bretagne - Service connaissance, observation, planification et prospective" 
+		                metadata="https://kartenn.region-bretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/26324529-e0b7-450c-9506-2dcdca608f5f"
+		                metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=26324529-e0b7-450c-9506-2dcdca608f5f">
+		                <template url="demo/mviewer_templates/templates/template.bottomBlank81.mst"></template>
+		            </layer>
+                <layer id="rp_struct_pop_geom" name="3 Colonnes - Template 8.2"  visible="false" tiled="false" exclusive="true"
+		                searchable="false" queryable="true"
+                    infopanel="bottom-panel"
+		                infoformat="application/vnd.ogc.gml" featurecount="1"
+                    legendurl="demo/mviewer_templates/img/legendurl_templates.png"
+                    filter="level='EPCI'"
+		                url="https://ows.region-bretagne.fr/geoserver/rb/wms"
+		                attribution="Sources: INSEE (RP) - OpenStreetMap | Traitements: Région Bretagne - Service connaissance, observation, planification et prospective" 
+		                metadata="https://kartenn.region-bretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/26324529-e0b7-450c-9506-2dcdca608f5f"
+		                metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=26324529-e0b7-450c-9506-2dcdca608f5f">
+		                <template url="demo/mviewer_templates/templates/template.bottomBlank82.mst"></template>
+		            </layer>
+                <layer id="rp_struct_pop_geom" name="2 Colonnes - Template 8.3"  visible="false" tiled="false" exclusive="true"
+		                searchable="false" queryable="true"
+                    infopanel="bottom-panel"
+		                infoformat="application/vnd.ogc.gml" featurecount="1"
+                    legendurl="demo/mviewer_templates/img/legendurl_templates.png"
+                    filter="level='EPCI'"
+		                url="https://ows.region-bretagne.fr/geoserver/rb/wms"
+		                attribution="Sources: INSEE (RP) - OpenStreetMap | Traitements: Région Bretagne - Service connaissance, observation, planification et prospective" 
+		                metadata="https://kartenn.region-bretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/26324529-e0b7-450c-9506-2dcdca608f5f"
+		                metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=26324529-e0b7-450c-9506-2dcdca608f5f">
+		                <template url="demo/mviewer_templates/templates/template.bottomBlank83.mst"></template>
+		            </layer>
+                <layer id="rp_struct_pop_geom" name="1 Colonne - Template 8.4"  visible="false" tiled="false" exclusive="true"
+		                searchable="false" queryable="true"
+                    infopanel="bottom-panel"
+		                infoformat="application/vnd.ogc.gml" featurecount="1"
+                    legendurl="demo/mviewer_templates/img/legendurl_templates.png"
+                    filter="level='EPCI'"
+		                url="https://ows.region-bretagne.fr/geoserver/rb/wms"
+		                attribution="Sources: INSEE (RP) - OpenStreetMap | Traitements: Région Bretagne - Service connaissance, observation, planification et prospective" 
+		                metadata="https://kartenn.region-bretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/26324529-e0b7-450c-9506-2dcdca608f5f"
+		                metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=26324529-e0b7-450c-9506-2dcdca608f5f">
+		                <template url="demo/mviewer_templates/templates/template.bottomBlank84.mst"></template>
+		            </layer>
+            </group>   
+        </theme>   
+    </themes>
+</config>

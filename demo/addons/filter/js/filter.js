@@ -23,6 +23,28 @@ var filter = (function() {
    */
   var _currentSelectedLayer = "";
 
+
+  /**
+   * PrepareLayer before create panel
+   *
+   */
+   var _prepareReadyLayers = (layersParams) => {
+    var layerId = "";
+    var nbLayers = 0;
+    layersParams.forEach((layer,i) => {
+      layerId = layer.layerId;
+      var mvLayer = mviewer.getLayer(layerId) ? mviewer.getLayer(layerId).layer : null;
+      // Should never happens but we could check if layer.id not already exist in _layersParams
+      if(mvLayer && mvLayer.getVisible()) _visibleLayers.set(layerId, layer.filter);
+      _visibleFeatures.set(layerId, []);
+
+      nbLayers++;
+      if (!_currentSelectedLayer && (nbLayers == 1 && mvLayer && mvLayer.getVisible() || mvLayer && mvLayer.getVisible())) {
+        _currentSelectedLayer =  layerId;
+      }
+    });
+  }
+
   /**
    * Public Method: _initFilterTool exported as init
    *
@@ -36,27 +58,17 @@ var filter = (function() {
       options = mviewer.customComponents.filter.config.options;
     }
     // get filters by layer
-    var layerParams = mviewer.customComponents.filter.config.options.layers;
-    var layerId = "";
-    var nbLayers = 0;
+    var layersParams = mviewer.customComponents.filter.config.options.layers;
 
-    layerParams.forEach(layer => {
-      layerId = layer.layerId;
-      // Should never happens but we could check if layer.id not already exist in _layersParams
-      _layersFiltersParams.set(layerId, layer.filter);
-      _visibleFeatures.set(layerId, []);
-
-      nbLayers++;
-      if (nbLayers == 1) {
-        _currentSelectedLayer = layerId;
-      }
-
+    layersParams.forEach(layer => {
+      _layersFiltersParams.set(layer.layerId, layer.filter);
     });
 
     if (_layersFiltersParams.size > 0) {
 
-      // wait map ready
+      // wait map ready and prepare layers to avoid empty filter panel
       mviewer.getMap().once('rendercomplete', function(e) {
+        _prepareReadyLayers(layersParams);
         _initFilterPanel();
       });
 

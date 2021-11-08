@@ -53,7 +53,21 @@ Dans l'exemple suivant, on affiche deux sliders qui vont nous permettre de modif
         <input id="heatmap-blur" type="range" min="1" max="50" step="1" value="10"/>
     </form>
 
+*Tooltip*
 
+Si vous souhaitez utiliser une infobulle (tooltip), vous pouvez utiliser les paramètres `title` et `tooltip` :
+
+.. code-block:: HTML
+    :caption: customcontrol.html
+    :emphasize-lines: 7-8
+    
+    <button tooltip="top,hover,true,body,mviewer.templates.tooltip" title="Déplacement en voiture">
+
+.. csv-table:: Paramètres à utiliser :
+        :header: "Paramètre", "Description", "Exemple"
+
+        "tooltip","Permet de définir les options de la tooltip","<placement - string>, <trigger - string>, <html - boolean>, <container - string>, <template, string>"
+        "title","Texte affiché","title='Déplacement en voiture'"
 
 
 Ecrire le code - javascript

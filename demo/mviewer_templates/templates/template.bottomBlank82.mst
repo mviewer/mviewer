@@ -1,0 +1,108 @@
+<!-- *** TEMPLATE 8.2 / BLANK 3
+ COLONNES / BANDEAU BAS *** --> 
+
+{{#features}}
+	<li class="item">
+		<h3 class="title-feature ">{{nom}}</h3>
+		<div class="row">
+			<div class="grey col-md-4">
+				<p>Insérez votre élement dans ce block</p>
+			</div>
+			<div class="grey col-md-4">
+				<p>Insérez votre élement dans ce block</p>
+			</div>
+			<div class="grey col-md-4">
+				<p>Insérez votre élement dans ce block</p>
+			</div>
+		</div>
+		
+		<!-- Ressources -->
+		<div class="row" style="margin:0;">
+			<div id="btn-ressources">
+					<img id="title-btn" src="demo/mviewer_templates/img/download_v.svg">
+					<span class="button-text btn btn-d"><a href="demo/mviewer_templates/ressources/mst/templatebottomBlank82.mst" download="templatebottomBlank82.mst"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Template</a></span>			
+			</div>
+		</div>
+		<!-- /.Ressources -->
+
+		
+		
+	</li>
+{{/features}}
+
+<style>
+	/*** Définir la couleur de mon template - Insérer le code #HEX de votre couleur */
+	:root {
+		--mycolor: #1D1B35;
+		--myfont: 'Roboto', sans-serif;
+	}
+
+  	/***********************************************/
+	/*** Ne pas toucher aux propriétés suivantes ***/
+
+	 /* Import des fonts*/
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+	/* Texte */
+	.title-feature {
+		color: var(--mycolor);
+	    font-family:var(--myfont);
+		font-weight:700;
+	    text-transform: uppercase;
+	    font-size: 19px;
+	    line-height: 1.2;
+		margin: 0;
+	}
+
+	.subtitle-feature {
+		color: var(--mycolor);
+		font-family:var(--myfont);
+		font-size:18px;
+		margin-top:7%;
+		line-height:1;
+	}
+
+	/* Block */
+	.grey p {
+		color: #555;
+		background-color: #e5e5e5;
+		height: 215px;
+		padding: 15%;
+		text-align: center;
+		border-radius: 3px;
+		margin: 1rem;
+	}
+
+	/* Bouton de téléchargement */
+	
+	#btn-ressources{
+	}
+
+	#title-btn{
+		width: 20rem;
+	}
+
+	.button-text a{
+		color: white;
+	}
+
+	.button-text a:hover{
+		color: white;
+	}
+
+	.btn-d{
+		background-color: #4eacbd;
+	    font-family:var(--myfont);
+	    font-size: 12px;
+	    border-radius: 3px;
+		margin: 3px 1px;
+	}
+
+	.btn-d:hover{
+    	background-color: rgba(78, 172, 189, 0.60);
+	}	
+</style>
+
+<script language="javascript">
+
+</script>

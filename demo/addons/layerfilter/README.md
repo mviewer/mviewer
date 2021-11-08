@@ -9,6 +9,8 @@ Cette extension permet de filtrer les thèmes, groupes et couches présents dans
  - **layerfilter.js** - contient la fonction du filtre qui est appliquée sur les thèmes, groupes et couches ainsi qu'une fonction pour effacer le filtre
  - **config.json** - indique les trois fichiers précédents à mviewer ainsi que la **div** où le composant doit s'afficher (**target**). 
  Pour afficher le filtre comme premier élément enfant du **target** l'attribut optionnel **position = 0** est renseigné.
+ 
+ Le contenu du paramètre **fuseOptions** est un objet qui permet de personnaliser les options de la recherche ([voir ici les options Fuse disponibles](https://fusejs.io/api/options.html))
 
 ````
 {
@@ -17,7 +19,10 @@ Cette extension permet de filtrer les thèmes, groupes et couches présents dans
   "html": "layerfilter.html",
   "target": "menu",
   "options": {
-    "position": 0
+    "position": 0,
+    "fuseOptions": {
+      "threshold": 0.3
+    }
   }
 }
 ````
