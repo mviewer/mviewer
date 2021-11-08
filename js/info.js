@@ -243,10 +243,16 @@ var info = (function () {
                 var url = visibleLayers[i].getSource().getFeatureInfoUrl(
                     evt.coordinate, _map.getView().getResolution(), _map.getView().getProjection(), params
                 );
-                let cql = new URLSearchParams(url).get("CQL_FILTER");
+                urlParams = new URLSearchParams(url)
+                cql = new URLSearchParams(url).get("CQL_FILTER")
                 if (layer && featureid) {
-                    let attributeFilter = _overLayers[layer].searchid+'%3D%27'+featureid+'%27';
-                    url += `${cql ? cql + " AND " : "&CQL_FILTER="}${attributeFilter}`;
+                    // create new cql to insert feature id
+                    attributeFilter = _overLayers[layer].searchid+'%3D%27'+featureid+'%27';
+                    // create new cql filter
+                    urlParams.delete("CQL_FILTER");
+                    cql = `&CQL_FILTER=${cql}${cql ? " AND " : ""}${attributeFilter}`;
+                    // force to decode to string result and avoid unreadable params
+                    url = decodeURIComponent(urlParams.toString()) + cql;
                 }
                 urls.push({url:url, layerinfos: _overLayers[visibleLayers[i].get('mviewerid')]});
             }
