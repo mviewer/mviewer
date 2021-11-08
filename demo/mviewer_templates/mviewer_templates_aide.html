@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <title>Home - Mviewer Template</title>
+    <style>
+      *{box-sizing: border-box; -webkit-box-sizing: border-box; }
+
+      /* Import des fonts*/
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+      /*  Définition des variables */
+      :root {
+          --mycolor:#1d1c33;
+          --myfont: 'Roboto', sans-serif;
+      }
+
+      /* Supprimer le titre par défaut */
+      h4.modal-title {
+          display: none;
+      } 
+
+      /* Modification du style de base */
+      .modal-content {
+          border-radius: 2px !important;
+      }
+
+      #help .modal-header {
+          padding: 40px 40px 10px 40px !important;
+      }
+
+      button.close {
+          font-size: 30px !important;
+          color: var(--mycolor) !important;
+          opacity: 0.5 !important;
+      }
+
+      button.close:hover {
+          opacity: 1!important;
+      }
+
+      /* TEXTE HOME */  
+      #homeIntro{
+        text-align: center;
+      }
+
+      #homeIntro p{
+        padding: 20px;
+        font-size: 15px;
+        color: #555;
+      }
+
+
+      /*** SLIDER CAROUSSEL PURE CSS ***/
+      .CSSgal {
+        position: relative;
+        overflow: hidden;
+        height: 100%; /* Or set a fixed height */
+      }
+
+      /* SLIDER */
+
+      .CSSgal .slider {
+        height: 100%;
+        white-space: nowrap;
+        font-size: 0;
+        transition: 0.8s;
+      }
+
+      /* SLIDES */
+
+      .CSSgal .slider > * {
+        font-size: 1rem;
+        display: inline-block;
+        white-space: normal;
+        vertical-align: top;
+        height: 100%;
+        width: 100%;
+        background: none 50% no-repeat;
+        background-size: cover;
+      }
+
+      /* PREV/NEXT, CONTAINERS & ANCHORS */
+
+      .CSSgal .prevNext {
+        position: absolute;
+        z-index: 1;
+        top: 50%;
+        width: 100%;
+        height: 0;
+      }
+
+      .CSSgal .prevNext > div+div {
+        visibility: hidden; /* Hide all but first P/N container */
+      }
+
+      .CSSgal .prevNext a {
+        background: var(--mycolor);
+        position: absolute;
+        width:       40px;
+        height:      40px;
+        line-height: 40px; /* If you want to place numbers */
+        text-align: center;
+        opacity: 0.9;
+        -webkit-transition: 0.3s;
+                transition: 0.3s;
+        -webkit-transform: translateY(-50%);
+                transform: translateY(-50%);
+        left: 0;
+      }
+      .CSSgal .prevNext a:hover {
+        opacity: 1;
+      }
+      .CSSgal .prevNext a+a {
+        left: auto;
+        right: 0;
+      }
+
+      /* NAVIGATION */
+
+      .CSSgal .bullets {
+        position: absolute;
+        z-index: 2;
+        bottom: 0;
+        padding: 10px 0;
+        width: 100%;
+        text-align: center;
+      }
+      .CSSgal .bullets > a {
+        display: inline-block;
+        width:       10px;
+        height:      10px;
+        line-height: 10px;
+        text-decoration: none;
+        text-align: center;
+        background: rgba(255, 255, 255, 1);
+        -webkit-transition: 0.3s;
+                transition: 0.3s;
+      }
+      .CSSgal .bullets > a+a {
+        background: rgba(255, 255, 255, 0.5); /* Dim all but first */
+      }
+      .CSSgal .bullets > a:hover {
+        background: var(--mycolor) !important;
+      }
+
+      /* NAVIGATION BUTTONS */
+      /* ALL: */
+      .CSSgal >s:target ~ .bullets >* {      background: #77777787;}
+      /* ACTIVE */
+      #s1:target ~ .bullets >*:nth-child(1) {background: #777;}
+      #s2:target ~ .bullets >*:nth-child(2) {background: #777;}
+      #s3:target ~ .bullets >*:nth-child(3) {background: #777;}
+      #s4:target ~ .bullets >*:nth-child(4) {background: #777;}
+      #s5:target ~ .bullets >*:nth-child(5) {background: #777;}
+      /* More slides? Add here more rules */
+
+      /* PREV/NEXT CONTAINERS VISIBILITY */
+      /* ALL: */
+      .CSSgal >s:target ~ .prevNext >* {      visibility: hidden;}
+      /* ACTIVE: */
+      #s1:target ~ .prevNext >*:nth-child(1) {visibility: visible;}
+      #s2:target ~ .prevNext >*:nth-child(2) {visibility: visible;}
+      #s3:target ~ .prevNext >*:nth-child(3) {visibility: visible;}
+      #s4:target ~ .prevNext >*:nth-child(4) {visibility: visible;}
+      #s5:target ~ .prevNext >*:nth-child(5) {visibility: visible;}
+      /* More slides? Add here more rules */
+
+      /* SLIDER ANIMATION POSITIONS */
+
+      #s1:target ~ .slider {transform: translateX(   0%); -webkit-transform: translateX(   0%);}
+      #s2:target ~ .slider {transform: translateX(-100%); -webkit-transform: translateX(-100%);}
+      #s3:target ~ .slider {transform: translateX(-200%); -webkit-transform: translateX(-200%);}
+      #s4:target ~ .slider {transform: translateX(-300%); -webkit-transform: translateX(-300%);}
+      #s5:target ~ .slider {transform: translateX(-400%); -webkit-transform: translateX(-400%);}
+      /* More slides? Add here more rules */
+
+
+      .CSSgal{
+        color: #fff;  
+        text-align: center;
+      }
+      .CSSgal .slider h2 {
+        margin-top: 40vh;
+        font-weight: 200;
+        letter-spacing: -0.06em;
+        word-spacing: 0.2em;
+        font-size: 3em;
+      }
+      .CSSgal a {
+        border-radius: 50%;
+        margin: 0 1px;
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      /* Style contenu slide */
+      #homeIntro .slide {
+        padding: 0px 20px 0px 20px;
+      }
+
+      h3.title-slide {
+        color: var(--mycolor);
+        font-family: var(--myfont);
+        font-weight: 700;
+        text-align: left;
+      }
+
+      p.texte-slide {
+        color: #555;
+        text-align: left;
+        font-size: 13px;
+      }
+
+      .subtitle-img {
+        color: #555;
+        margin: 10px 0;
+      }
+
+      /* Button close */
+      .homeclose{
+        margin: 10px 0px;
+        text-align: center;
+      }
+
+      a.data-downl{
+        display:inline-block;
+        padding:0.5em 1em;
+        margin:0 0.3em 0.3em 0;
+        border-radius:0.3em;
+        box-sizing: border-box;
+        text-decoration:none;
+        font-family:var(--myfont);
+        font-weight:300;
+        color:#FFFFFF;
+        background-color:var(--mycolor);
+        text-align:center;
+        transition: all 0.2s;
+      }
+      a.data-downl:hover{
+        background-color:#2A273F;
+        color: #ffffffc7!important;
+      }
+
+      
+  </style> 
+</head>
+<body>
+    <div id="homeIntro">
+        <img src="https://geobretagne.fr/apps/tutoriel/templates/img/logo_home.svg" style="width: 30%;">
+        <p>Donnez du style à votre mviewer à l'aide du mviewer templates. Grâce à cet outil, vous pouvez visualiser et télécharger différents modèles de fenêtres d'informations compatibles avec le visualiseur cartographique mviewer. Ces modèles sont pré-configurés afin de faciliter leur utilisation, à vous de les adapter à vos données et vos besoins.</p>
+
+    </div>
+    <div class="CSSgal">
+
+      <!-- Don't wrap targets in parent -->
+      <s id="s1"></s> 
+      <s id="s2"></s>
+      <s id="s3"></s>
+      <s id="s4"></s>
+      <s id="s5"></s>
+
+      <div class="slider">
+        <div class="slide">
+          <div class="col-sm-4" style="margin-left: 40px;">
+            <img src="https://geobretagne.fr/apps/tutoriel/templates/img/home_illu01.gif" style="width: 90%;">           
+          </div>
+          <div class="col-sm-7">
+            <h3 class="title-slide">1. Choisissez votre thématique</h3>
+            <p class="texte-slide">Dans le menu à gauche, choisissez parmi les thématiques la position de votre template. Ainsi, lorsque vous sélectionnez une entité, votre template peut s'afficher selon deux positions:</p>
+            <img src="https://geobretagne.fr/apps/tutoriel/templates/img/home_position_template.png" style="width: 90%;margin: 20px 0 0 0;">  
+            <div class="row">
+              <div class="col-sm-6 subtitle-img">
+                <p>Panel à droite</p>
+              </div>
+              <div class="col-sm-6 subtitle-img">
+                <p>Panel en bas</p>
+              </div>              
+            </div>    
+          </div>
+        </div>
+
+        <div class="slide">
+          <div class="col-sm-4" style="margin-left: 40px;">
+            <img src="https://geobretagne.fr/apps/tutoriel/templates/img/home_illu02.gif" style="width: 90%;">           
+          </div>
+          <div class="col-sm-7">
+            <h3 class="title-slide">2. Sélectionnez votre modèle de template</h3>
+            <p class="texte-slide">Composé de divers éléments (texte, photographie, chiffres clés), un template permet d'enrichir votre information géographique. Pour valoriser vos données, différents modèles sont disponibles allant du très simple au plus complexe. Dans le menu, sélectionnez un modèle parmi les groupes proposés.</p>      
+          </div>
+        </div>
+
+        <div class="slide" style="text-align: center;">
+          <h3 class="title-slide" style="text-align: center; margin: 0px 0px 10px 0px;">3. Consultez et téléchargez votre template</h3>
+            <p class="texte-slide" style="text-align: center;">Pour afficher un template, il est nécessaire de selectionner une entité sur la carte. Une fenêtre d'information s'ouvre. Si ce modèle vous convient, cliquez sur les boutons en bas du template pour télécharger les ressources associées (fichier .mst, le tutoriel en .pdf et la fiche de conception .pdf)</p> 
+            <img src="https://geobretagne.fr/apps/tutoriel/templates/img/home_illu03.gif" style="width: 90%;margin-bottom: 20px;">     
+        </div>
+
+        <div class="slide" style="text-align: center;">
+          <h3 class="title-slide" style="text-align: center; margin: 0px 0px 10px 0px;">4. Concevez votre template</h3>
+            <p class="texte-slide" style="text-align: center;">Grâce à la fiche de conception, associée à chaque template, vous pouvez préalablement identifier les champs nécessaires dans votre donnée. Vous pouvez ensuite passer au développement du template en s'appuyant sur cette fiche.</p> 
+            <img src="https://geobretagne.fr/apps/tutoriel/templates/img/home_illu05.gif" style="width: 90%;margin-bottom: 20px;">     
+        </div>
+
+        <div class="slide">
+          <div class="col-sm-4" style="margin-left: 20px;">
+            <h3 class="title-slide">5. Personnalisez votre template</h3>
+            <p class="texte-slide">Vous avez choisi votre modèle, il est maintenant temps de l'adapter à vos données. N'ayez pas peur, avec un modèle pré-configuré, peu de modifications sont nécessaires. Ouvrez le fichier .mst dans un éditeur de texte (Notepad ++) et suivez pas à pas le tutoriel en identifiant le nom des champs dans votre couche géographique.</p>  
+          </div>
+          <div class="col-sm-7">
+            <img src="https://geobretagne.fr/apps/tutoriel/templates/img/home_illu04.gif" style="width: 110%;">           
+          </div>
+        </div>
+      </div>
+      
+      <div class="prevNext">
+        <div><a href="#s5"><</a><a href="#s2">></a></div>
+        <div><a href="#s1"><</a><a href="#s3">></a></div>
+        <div><a href="#s2"><</a><a href="#s4">></a></div>
+        <div><a href="#s3"><</a><a href="#s5">></a></div>
+        <div><a href="#s4"><</a><a href="#s1">></a></div>
+      </div>
+
+      <div class="bullets">
+        <a href="#s1"></a>
+        <a href="#s2"></a>
+        <a href="#s3"></a>
+        <a href="#s4"></a>
+        <a href="#s5"></a>
+      </div>
+    </div>
+    <!-- Button Close modal-->
+        <div class="homeclose">
+          <a href="" class="data-downl" data-dismiss="modal"><span class="fa fa-close" aria-hidden="true"></span> Fermer la fenêtre</a>
+        </div>
+      <!-- /.Button Close modal-->
+  </body>
+</html>
