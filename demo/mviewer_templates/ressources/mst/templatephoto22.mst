@@ -1,0 +1,64 @@
+<!-- TEMPLATE PHOTO 2 / BANDEAU DROITE--> 
+
+{{#features}}
+	<li class="item" style="width:238px;">
+		<h3 class="title-feature ">A1</h3>
+
+		<img src="B1 ou B2" class="img img-responsive"/>
+		<p class="img-credit"><i>C1 ou C2</i></p>
+
+		<div class="text-feature">D1 ou D2</div>
+
+		
+	</li>
+{{/features}}
+
+<style>
+	/*** Définir la couleur de mon template - Insérer le code #HEX de votre couleur */
+	:root {
+		--mycolor: #1D1B35;
+	}
+
+	/***********************************************/
+	/*** Ne pas toucher aux propriétés suivantes ***/
+
+	/* Texte */
+
+	.title-feature {
+		color: var(--mycolor);
+	    font-family: 'roboto_bold_c', Arial, Sans-serif;
+	    text-transform: uppercase;
+	    font-size: 19px;
+	    margin-bottom: 7%;
+	    line-height: 1.2;
+	}
+	.subtitle-feature {
+		color: var(--mycolor);
+		font-family:'roboto_regular', Arial, Sans-serif;
+		font-size:18px;
+		margin-top:7%;
+		line-height:1;
+	}
+
+	.text-feature{
+		font-family:'roboto_regular', Arial, Sans-serif;
+		color:#555;
+		font-size:12px;
+		margin-top:5%;
+	}
+
+	/* Image */
+	
+	.img{
+		margin-top:5%;
+	}
+
+	.img-credit{
+		font-family:'roboto_regular', Arial, Sans-serif;
+		color:#555;
+		font-size:10px;
+		margin: 2px 0px;
+	}
+
+	
+</style>
