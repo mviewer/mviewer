@@ -70,7 +70,8 @@ Configurer - Les couches
                 showintoc=""
                 expanded=""
                 metadata=""
-                metadata-csw="" 
+                metadata-csw=""
+		infopanel=""
                 index="">
                 <template url=""></template>
         </layer>
@@ -195,6 +196,7 @@ Autres paramètres
 * ``authorization`` : Permet d'indiquer des identifiants par défaut si secure est à "layer"
 * ``useproxy`` :guilabel:`studio` : Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de crossOrigin lorsque CORS n'est pas activé sur le serveur distant.
 * ``owsoptions`` : Pour une couche WMS, permet de forcer certains paramètres des requêtes GetMap. Exemple : "VERSION:1.1.1,EXCEPTIONS:application/vnd.ogc.se_inimage".
+* ``infopanel`` : Permet d'indiquer quel panel d'interrogation utiliser parmis `top-panel` ou `bottom-panel` ou `modal-panel`. Exemple: `infopanel="bottom-panel"`. 
 
 **Syntaxe** ``<template>``
 ******************************
