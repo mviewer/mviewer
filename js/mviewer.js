@@ -2719,6 +2719,8 @@ mviewer = (function () {
             }
             mviewer.orderTopLayer();
             mviewer.orderLegendByMap();
+            // create tooltip for this layer legend UI
+            _initTooltip();
         },
         removeLayer: function (el) {
             var item;
@@ -2748,6 +2750,8 @@ mviewer = (function () {
                 var newStatus = _getThemeStatus(layer.theme);
                 _setThemeStatus(layer.theme, newStatus);
             }
+            // clear tooltip
+            $(".mv-tooltip").remove();
         },
         removeAllLayers: function () {
             $("#layers-container .list-group-item").each( function (id, item) {
