@@ -7,7 +7,7 @@ Liens utiles :
 * [Site officiel](https://mviewer.netlify.com/)
 * [Versions](https://github.com/geobretagne/mviewer/releases/)
 * [Démos](http://kartenn.region-bretagne.fr/kartoviz/demo/)
-* [Documentation](http://mviewerdoc.readthedocs.io/fr/latest/)
+* [Documentation](http://mviewerdoc.readthedocs.io/fr/stable/)
 * [Générateur d'applications](https://github.com/geobretagne/mviewerstudio/)
 
 
