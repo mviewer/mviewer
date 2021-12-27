@@ -365,6 +365,33 @@ mviewer = (function () {
         delete _overLayers[layername];
     };
 
+    /**
+     * Get legend params object.
+     * @param {ol.layer} layer 
+     * @returns params object
+     */
+    var _getLegendParams = (layer) => {
+        var legendParams = {
+            'LAYER': layer.layername,
+            'STYLE': layer.style,
+            'FORMAT': 'image/png',
+            'TRANSPARENT': true
+        };
+
+        if (layer.sld) {
+            legendParams['SLD'] = encodeURIComponent(layer.sld);
+        } else {
+            legendParams['STYLE'] = encodeURIComponent(layer.style);
+        }
+        return legendParams;
+    }
+
+    /**
+     * 
+     * @param {object} layer - ol.layer object
+     * @param {*} scale - usefull with dynamicLegend is true
+     * @returns 
+     */
     var _getlegendurl = function (layer, scale) {
         var legendUrl = "";
         if (layer.legendurl && !layer.styles) {
@@ -372,20 +399,7 @@ mviewer = (function () {
         } else if (layer.legendurl && layer.styles && (layer.styles.split(",").length === 1)) {
             legendUrl = layer.legendurl;
         } else {
-            var getLegendParams = {
-                'LAYER': layer.layername,
-                'STYLE': layer.style,
-                'FORMAT': 'image/png',
-                'TRANSPARENT': true
-            };
-
-            if (layer.sld) {
-                getLegendParams['SLD'] = encodeURIComponent(layer.sld);
-            } else {
-                getLegendParams['STYLE'] = encodeURIComponent(layer.style);
-            }
-
-            legendUrl = getLegendGraphicUrl(layer.url, getLegendParams);
+            legendUrl = getLegendGraphicUrl(layer.url, _getLegendParams(layer));
         }
         if (layer.dynamiclegend) {
             if (!scale) {
@@ -1346,6 +1360,7 @@ mviewer = (function () {
             if (layerOptions.style && layerControler.type === "wms") {
                 layerControler.layer.getSource().getParams()['STYLES'] = layerOptions.style;
                 layerControler.style = layerOptions.style;
+                layerControler.legendurl = _getlegendurl(layerControler);
             }
             if (layerOptions.filter && layerControler.type === "wms") {
                 layerControler.layer.getSource().getParams()['CQL_FILTER'] = layerOptions.filter;
@@ -2672,13 +2687,13 @@ mviewer = (function () {
                 activeStyle = oLayer.layer.getSource().getParams()['STYLES'];
                 var refStyle= activeStyle;
                 //update legend image if nec.
-		var res = mviewer.getMap().getView().getResolution();
-		var ppi = 25.4/0.28;
-		var scale = res*ppi/0.0254;
-		if(layer.scale && scale >= layer.scale.min && scale <= layer.scale.max){
-			var legendUrl = _getlegendurl(layer);
-			$("#legend-" + layer.layerid).attr("src", legendUrl);
-		}
+                var res = mviewer.getMap().getView().getResolution();
+                var ppi = 25.4/0.28;
+                var scale = res*ppi/0.0254;
+                if(layer.scale && scale >= layer.scale.min && scale <= layer.scale.max){
+                    var legendUrl = _getlegendurl(layer);
+                    $("#legend-" + layer.layerid).attr("src", legendUrl);
+                }
             }
             if (oLayer.styles ) {
                 var selectCtrl = $("#"+layer.layerid+"-styles-selector")[0];
@@ -2719,6 +2734,8 @@ mviewer = (function () {
             }
             mviewer.orderTopLayer();
             mviewer.orderLegendByMap();
+            // display layer with permalink params
+            oLayer.layer.getSource().refresh()
             // create tooltip for this layer legend UI
             _initTooltip();
         },
