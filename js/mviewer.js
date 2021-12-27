@@ -1088,7 +1088,7 @@ mviewer = (function () {
         var l;
         function setBaseOpacity(layer, value){
             if(layer && value) {
-                layer.setOpacity(value);
+                layer.setOpacity(Number(value));
             }
         }
         switch (baselayer.type) {
