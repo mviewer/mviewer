@@ -13,7 +13,7 @@ Liens utiles :
 
 Feuille de route
 -----------
-https://github.com/geobretagne/mviewer/wiki/Feuille-de-route
+https://github.com/geobretagne/mviewer/projects/6
 
 Déploiement
 -----------
