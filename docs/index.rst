@@ -96,6 +96,7 @@ Cette partie est dédiée aux personnes qui souhaite développer des fonctionnal
    doc_dev/public_fonctions.rst
    doc_dev/customlayer_dev.rst
    doc_dev/customcontrol_dev.rst
+   doc_dev/customlayer_template.rst
 
 Documentation contribution
 -------------------------------------------------
