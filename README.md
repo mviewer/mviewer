@@ -19,10 +19,10 @@ Déploiement
 -----------
 
 Le déploiement se passe en trois étapes :
-    1. cloner le projet dans le dossier de votre choix
-    2. copier ce dossier dans le dossier /var/www/ ( ou autres dossiers de déploiement Apache)
-    Vous avez maintenant un visualiseur géographique fonctionnel avec les couches de la Région Bretagne
-    3. Si vous souhaitez publier vos propres couches/thèmes, modifiez le fichier `apps/default.xml`
+* Cloner le projet dans le dossier de votre choix
+* Copier ce dossier dans le dossier /var/www/ ( ou autres dossiers de déploiement Apache)
+  Vous avez maintenant un visualiseur géographique fonctionnel avec les couches de la Région Bretagne
+* Si vous souhaitez publier vos propres couches/thèmes, modifiez le fichier `apps/default.xml`
 
 ## Docker
 
