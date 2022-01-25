@@ -2461,6 +2461,7 @@ mviewer = (function () {
             if (layer.attributefilter && layer.attributevalues != "undefined" && layer.attributefield != "undefined") {
                 view.attributeControl = true;
                 view.attributeLabel = layer.attributelabel;
+                view.styleTitle = layer.styletitle;
                 var options = [];
                 if (layer.attributefilterenabled === false) {
                     options.push({"label": "Par défaut", "attribute": "all"});

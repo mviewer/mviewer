@@ -58,6 +58,7 @@
 				infoformat="application/vnd.ogc.gml" featurecount="5"
 				timefilter="true" timeinterval="year" timecontrol="slider" timemin="1999" timemax="2017" timevalues="1999,2007,2012,2017"
 				style="rphab_tx0014@commune, rphab_tx1529@commune, rphab_tx3044@commune, rphab_tx4559@commune, rphab_tx6074@commune, rphab_tx75p@commune"
+                styletitle="Catégories d'âge"
 				stylesalias="0 - 14 ans, 15 -29 ans, 30 - 44 ans, 45 - 59 ans, 60 -74 ans, 75 ans et plus "
 				url="https://ows.region-bretagne.fr/geoserver/rb/wms"
 				attribution="Sources: INSEE (RP) - OpenStreetMap | Traitements: Région Bretagne - Service connaissance, observation, planification et prospective" 

@@ -43,6 +43,7 @@ Configurer - Les couches
                 infohighlight=""
                 featurecount=""
                 style=""
+                styletitle=""
                 stylesalias=""
                 timefilter=""
                 timeinterval=""
@@ -94,6 +95,7 @@ Paramètres pour gérer l'affichage de la couche
 * ``visible`` :guilabel:`studio` :  Booléen stipulant est ce que la couche est actuellement visible
 * ``exclusive``:  Booléen stipulant si la couche est exclusive. Si la valeur est "true", l'affichage de cette couche masquera automatiquement toutes les autres couches ayant ce paramètre activé.
 * ``style`` :guilabel:`studio` : Style(s) de la couche. Si plusieurs styles , utiliser la virgule comme séparateur. Si la couche est de type wms, il faut faire référence à un style sld. Si la couche est de type geojson, il faut faire référence à un style définit dans lib/featurestyles.js. Si la couche est de type customlayer, le style n'est pas défini ici.
+* ``styletitle`` : Titres à utiliser pour la liste des styles associés.
 * ``stylesalias`` :guilabel:`studio` : Titres à utiliser pour chaques style. utiliser la virgule comme séparateur si plusieurs styles.
 * ``sld`` :guilabel:`studio` : Lien vers un SLD stocké sur le web. Dans ce fichier SLD, la balise sld:Name contenue dans sld:NamedLayer doit être égale au nom de la couche. Si plusieurs styles , utiliser la virgule comme séparateur. S'applique uniquement aux layers WMS. Il faut indiquer l'URL résolvable par le serveur WMS du ou des sld.
 * ``tiled`` :guilabel:`studio` : Booléen stipulant est ce que la couche est tuilée
