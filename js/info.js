@@ -452,14 +452,16 @@ var info = (function () {
                     // init sub selection
                     _firstlayerFeatures = _queriedFeatures.filter(feature => {
                         return feature.get("mviewerid") == view.layers[0].layerid;
-                    })
+                    });
                     // change feature of sub selection
                     $('.carousel.slide').on('slide.bs.carousel', function (e) {
                         $(e.currentTarget).find(".counter-slide").text($(e.relatedTarget).attr("data-counter"));
                         var selectedFeature = _queriedFeatures.filter(feature => {
                             return feature.ol_uid == e.relatedTarget.id;
                         })
-                        mviewer.highlightSubFeature(selectedFeature[0]);
+                        if (!_queriedFeatures[0].get("features")) {
+                            mviewer.highlightSubFeature(selectedFeature[0]);
+                        }
                     });
                     // change layer of sub selection
                     if (configuration.getConfiguration().mobile) {
@@ -475,8 +477,13 @@ var info = (function () {
                     $('#'+panel).removeClass("active");
                 }
                 // highlight features and sub feature
-                mviewer.highlightFeatures(_queriedFeatures);
-                mviewer.highlightSubFeature(_firstlayerFeatures[0]);
+                if(_queriedFeatures[0] && _queriedFeatures[0].get("features")) {
+                    // cluster
+                    mviewer.highlightSubFeature(_queriedFeatures[0]);
+                } else {
+                    mviewer.highlightFeatures(_queriedFeatures);
+                    mviewer.highlightSubFeature(_firstlayerFeatures[0]);
+                }
                 // show pin as fallback if no geometry for wms layer
                 if (showPin || (!_queriedFeatures.length && !_firstlayerFeatures.length && !isClick)) {
                     mviewer.showLocation(_projection.getCode(), _clickCoordinates[0], _clickCoordinates[1], !showPin ? search.options.banmarker : showPin);
