@@ -175,6 +175,7 @@ Paramètres pour gérer le filtre attributaire (liste déroulante) des couches W
 * ``attributestylesync``: Booléen qui précise s'il convient d'appliquer un style (sld) spécifique lors du filtre attributaire. Dans ce cas la convention est la suivante : nom_style@attributevalue ou url_style_externe@attributevalue.sld.
 * ``attributefilterenabled``: Booléen précisant si le filtre est activé par défaut (avec la première valeur de la liste attributevalues).
 * ``attributeoperator`` : guilabel:`studio` : Opérateur utilisé pour construire le filtre. (= ou like). Defaut = "=". Attention dans le cas de like, le wildcard est harcodé : %
+* ``wildcardpattern`` : Pattern à utiliser pour les filtre utilisant l'opérateur like. Defaut = "%value%, autres possibilités "%value" et "value%".
 
 Autres paramètres
 ====================
@@ -198,7 +199,7 @@ Autres paramètres
 * ``authorization`` : Permet d'indiquer des identifiants par défaut si secure est à "layer"
 * ``useproxy`` :guilabel:`studio` : Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de crossOrigin lorsque CORS n'est pas activé sur le serveur distant.
 * ``owsoptions`` : Pour une couche WMS, permet de forcer certains paramètres des requêtes GetMap. Exemple : "VERSION:1.1.1,EXCEPTIONS:application/vnd.ogc.se_inimage".
-* ``infopanel`` : Permet d'indiquer quel panel d'interrogation utiliser parmis `top-panel` ou `bottom-panel` ou `modal-panel`. Exemple: `infopanel="bottom-panel"`. 
+* ``infopanel`` : Permet d'indiquer quel panel d'interrogation utiliser parmis `top-panel` ou `bottom-panel` ou `modal-panel`. Exemple: `infopanel="bottom-panel"`.
 
 **Syntaxe** ``<template>``
 ******************************
@@ -278,5 +279,5 @@ Avec ce paramètre renseigné, les paramètres index et toplayer sont également
 Pour le cas primaire où aucun paramètre n'est renseigné, c'est l'ordre d'apparition dans le fichier de configuration XML qui permet de définir l'ordre d'affichage des couches au démarrage.
 Dans le cas où une configuration XML comprend des couches avec le paramètre `index` et / ou `toplayer` et des couches sans aucun de ces paramètres, alors les couches sans paramètre respectent ce principe.
 
-On retrouvera donc en premier les toplayer, ensuite les couches avec index et enfin les couches sans index. 
+On retrouvera donc en premier les toplayer, ensuite les couches avec index et enfin les couches sans index.
 Pour rappel, les couches avec un index en doublon et placée en seconde position dans le XML sont considérée sans index et sont concernées par ce mécanisme d'affichage. Elles s'afficheront donc selon les autres couches sans paramètres dans l'ordre d'apparition dans XML.

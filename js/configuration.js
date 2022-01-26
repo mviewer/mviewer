@@ -588,6 +588,7 @@ var configuration = (function () {
                         layer.attributefilter === "true") ? true : false;
                     oLayer.attributefield = layer.attributefield;
                     oLayer.attributeoperator = layer.attributeoperator || "=";
+                    oLayer.wildcardpattern = layer.wildcardpattern || "%value%";
                     oLayer.styletitle = layer.styletitle;
                     oLayer.attributelabel = layer.attributelabel;
                     if (layer.attributevalues && layer.attributevalues.search(",")) {
@@ -719,7 +720,7 @@ var configuration = (function () {
                         }
                         if (oLayer.attributefilter && oLayer.attributefilterenabled &&
                             oLayer.attributevalues.length > 1) {
-                            wms_params['CQL_FILTER'] = mviewer.makeCQL_Filter(oLayer.attributefield, oLayer.attributeoperator, oLayer.attributevalues[0]);
+                            wms_params['CQL_FILTER'] = mviewer.makeCQL_Filter(oLayer.attributefield, oLayer.attributeoperator, oLayer.attributevalues[0], oLayer.wildcardpattern);
                         }
                         if (oLayer.sld) {
                             wms_params['SLD'] = oLayer.sld;
