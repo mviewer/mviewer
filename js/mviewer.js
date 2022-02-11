@@ -637,14 +637,28 @@ mviewer = (function () {
         //GetFeatureInfo tool
         mviewer.tools.info = info;
         mviewer.tools.info.init();
+        const appconfig = configuration.getConfiguration().application;
+
         //Measure tool
-        if (configuration.getConfiguration().application.measuretools === "true") {
-            //Load measure moadule
+        if (appconfig.measuretools === "true") {
+            //Load measure module
             mviewer.tools.measure = measure;
             mviewer.tools.measure.init();
         }
+
         //Activate GetFeatureInfo tool
         mviewer.setTool('info');
+        
+        //Measure tools
+        const zoomBtnActivate = appconfig.zoomtools === "true" || !appconfig.zoomtools;
+        const zoomToExtentBtnActivate = appconfig.initialextenttool === "true" || !appconfig.initialextenttool;
+        if (zoomToExtentBtnActivate || zoomBtnActivate) {
+            //Load zoom toolbar module if one of button is activate
+            mviewer.tools.zoom = zoom;
+            zoom.init();
+        }
+        if (zoomToExtentBtnActivate) zoom.initExtentBtn();
+        if (zoomBtnActivate) zoom.initZoomBtn();
     };
 
     var _initShare = function () {
@@ -1797,26 +1811,6 @@ mviewer = (function () {
                 mviewer.tools.info.enable();
                 mviewer.tools.activeTool = 'info';
             }
-        },
-
-        /**
-         * Public Method: zoomOut
-         *
-         */
-
-        zoomOut: function () {
-           var v = _map.getView();
-           v.animate({zoom: v.getZoom() - 1});
-        },
-
-        /**
-         * Public Method: zoomIn
-         *
-         */
-
-        zoomIn: function () {
-            var v = _map.getView();
-            v.animate({zoom: v.getZoom() + 1});
         },
 
         /**
