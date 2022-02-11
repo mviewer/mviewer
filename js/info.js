@@ -250,7 +250,7 @@ var info = (function () {
                     attributeFilter = _overLayers[layer].searchid+'%3D%27'+featureid+'%27';
                     // create new cql filter
                     urlParams.delete("CQL_FILTER");
-                    cql = `&CQL_FILTER=${cql}${cql ? " AND " : ""}${attributeFilter}`;
+                    cql = `&CQL_FILTER=${cql || ""}${cql ? " AND " : ""}${attributeFilter}`;
                     // force to decode to string result and avoid unreadable params
                     url = decodeURIComponent(urlParams.toString()) + cql;
                 }
