@@ -25,6 +25,8 @@ Personnalisation de l'application
 		style=""
 		exportpng=""
 		measuretools=""
+		zoomtools=""
+		initialextenttool=""
 		stats=""
 		statsurl=""
 		coordinates=""
@@ -53,6 +55,8 @@ Personnalisation de l'application
 * ``style`` :guilabel:`studio` : paramètre optionnel de type url précisant la feuille de style à utiliser afin de modifier l'apparence de l'application (couleurs, polices...). Valeur par défaut **css/themes/default.css**. Voir : ":ref:`configcss`".
 * ``exportpng`` :guilabel:`studio` : paramètre optionnel de type booléen (true/false) activant l'export de la carte en png. Valeur par défaut **false**. Attention l'export ne fonctionne qu'avec des couches locales (même origine) ou avec des couches servies avec  `CORS <https://enable-cors.org/>`_ activé.
 * ``measuretools`` :guilabel:`studio` : paramètre optionnel de type booléen (true/false) activant les outils de mesure. Valeur par défaut **false**.
+* ``zoomtools`` : paramètre optionnel de type booléen (true/false) activant les outils de zoom +/-. Valeur par défaut **true**.
+* ``initialextenttool`` : paramètre optionnel de type booléen (true/false) activant le bouton de retour à l'étendue initiale. Valeur par défaut **true**.
 * ``stats``: paramètre optionnel de type booléen (true/false) activant l'envoi de stats d'utilisation l'application. Valeur par défaut **false**.
 * ``statsurl``: paramètre optionnel de type url précisant l'url du service reccueillant les données d'utilisation de l'application (ip, application title, date). Ce service n'est pas proposé dans mviewer.
 * ``coordinates`` :guilabel:`studio` : paramètre optionnel de type booléen (true/false) activant l'affichage des coordonnées GPS ( navbar) lors de l'interrogation. Valeur par défaut **false**.
