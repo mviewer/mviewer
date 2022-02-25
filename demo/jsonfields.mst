@@ -18,7 +18,7 @@
     <tbody>
         {{#communes}}
             <tr>
-                <td>{{nom}}</td>
+                <td>{{nom_commune}}</td>
                 <td>{{code_insee}}</td>
             </tr>
           {{/communes}}

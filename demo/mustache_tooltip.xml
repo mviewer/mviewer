@@ -23,10 +23,10 @@
                 searchable="true"
                 searchengine="fuse"
                 fusesearchkeys="nom,adresse"
-                fusesearchresult="$1 ($2)#nom|libelle"
+                fusesearchresult="$1 ($2)#nom|ville"
                 tooltip="true"
                 tooltipenabled="true"
-                tooltipcontent="{{nom}} ({{libelle}})"
+                tooltipcontent="{{nom}} ({{ville}})"
                 attribution="Région Bretagne" />
         </theme>
     </themes>

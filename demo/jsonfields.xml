@@ -10,7 +10,7 @@
 </baselayers>
 <themes mini="false"> 
     <theme id="theme-20210526160030" name="TPL" collapsed="true" icon="fas fa-caret-right"> 
-        <layer id="demo_epci_communes2" name="layer jsonfield" type="wms"
+        <layer id="epci_liste_communes" name="layer jsonfield" type="wms"
         url="https://ows.region-bretagne.fr/geoserver/rb/ows?"
         jsonfields="communes"
         visible="true" infoformat="application/vnd.ogc.gml" queryable="true" infopanel="right-panel">
