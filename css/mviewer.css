@@ -1778,8 +1778,9 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
 
 .xs.mode-u #btn-mode-su-menu {
     position: fixed;
-    top:30px;
+    top:10px;
     left:10px;
+    border-radius: 0px;
 }
 
 .xs.mode-u #zoomtoolbar {
@@ -1803,6 +1804,16 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
     top:75px;
     left:10px;
     border-radius: 0px;
+}
+
+.xs.mode-s #btn-mode-su-menu:hover, .xs.mode-u #btn-mode-su-menu:hover {
+    opacity: 0.9;
+}
+
+.xs.mode-s #btn-mode-su-menu:after, .xs.mode-u #btn-mode-su-menu:after {
+	content:'Afficher la légende';
+	position: relative;
+	margin-left: 10px;
 }
 
 .xs.mode-s .mv-layer-remove, .xs.mode-u .mv-layer-remove{
