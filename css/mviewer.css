@@ -1810,7 +1810,6 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
 }
 
 .xs.mode-s #btn-mode-su-menu:after, .xs.mode-u #btn-mode-su-menu:after {
-	content:'Afficher la légende';
 	position: relative;
 	margin-left: 10px;
 }

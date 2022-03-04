@@ -834,13 +834,24 @@ mviewer = (function () {
             $("#legend").appendTo("#legend-modal .modal-body");
             configuration.getConfiguration().mobile = true;
             if (displayMode) {
-                 $("#wrapper, #main").addClass("mode-" + displayMode);
-                 $("#page-content-wrapper").append(['<a id="btn-mode-su-menu" class="btn btn-sm btn-default" ',
-                    'type="button" href="#" data-toggle="modal" data-target="#legend-modal" title="Afficher la légende" i18n="data.toggle">',
-                    '<i class="fas fa-layer-group"></i></a>'].join(""));
-                 if (displayMode === "u") {
+                $("#wrapper, #main").addClass("mode-" + displayMode);
+				$("#page-content-wrapper").append(`
+                    <a 
+                        id="btn-mode-su-menu"
+                        class="btn btn-sm btn-default"
+                        type="button"
+                        href="#"
+                        data-toggle="modal"
+                        data-target="#legend-modal"
+                        title="Afficher la légende"
+                        i18n="data.toggle">
+                        <i class="fas fa-layer-group"></i>
+                        <span i18n="data.toggle"> Afficher la légende</span>
+                    </a>`
+                );                 
+                if (displayMode === "u") {
                     $("#mv-navbar").remove();
-                 }
+                }
             }
         } else {
             $("#wrapper, #main").removeClass("xs").addClass("xl");
