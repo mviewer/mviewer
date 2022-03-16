@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <application title="Release 3.7" logo="" showhelp="true" help="demo/demo_v3.7_help.html" measuretools="true" exportpng="true" style="css/themes/wet_asphalt.css" initialextenttool="false" zoomtools="false"/>
+    <mapoptions maxzoom="19" projection="EPSG:3857" center="-220750.13768758904,6144925.57790189" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
+
+    <baselayers style="gallery">
+        <baselayer  type="OSM" id="positron" label="Positron" title="CartoDb" thumbgallery="img/basemap/positron.png" opacity="0.5"
+            url="http://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20"
+            visible="false" attribution="Map tiles by  &lt;a href='https://cartodb.com/attributions' target='_blank'>CartoDb &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/' target='_blank'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoPortail" maxscale="1000" thumbgallery="img/basemap/ortho.jpg"
+            url="https://wxs.ign.fr/essentiels/geoportail/wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" format="image/jpeg" visible="true" fromcapacity="false" opacity="0.5"
+            attribution="&lt;a href='https://www.geoportail.gouv.fr/' target='_blank'>&lt;img src='https://www.geoportail.gouv.fr/assets/images/logo-geoportail.svg'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
+    </baselayers>
+    <proxy url=""/>
+	<olscompletion url="https://wxs.ign.fr/essentiels/ols/apis/completion" type="geoportail" attribution="IGN"/>
+	<searchparameters bbox="true" localities="true" features="false" static="false" querymaponclick="true" closeafterclick="true" inputlabel="Saisir votre adresse"/>
+    <themes>
+        <theme name="Lycée"  collapsed="true" id="lycee" icon="caret-right">
+            <layer
+				id="lycee"
+				name="Lycées en Bretagne"
+				type="wms"
+				url="https://ows.region-bretagne.fr/geoserver/rb/ows?"
+				visible="true"
+				infoformat="text/html"
+				metadata="https://kartenn.region-bretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/99e78163-ce9a-4eee-9ea0-36afc2a53d25"
+				metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/fre/xml.metadata.get?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25"
+				queryable="true"
+                expanded="true"
+				infopanel="right-panel"
+				attributefilter="true" attributefield="nom" attributevalues="LEPPR,LP,LAHP,Lycée" attributelabel="Filtre like avec pattern value% (Nom)" attributeoperator="like" wildcardpattern="value%">
+			</layer>
+        </theme>
+        <theme name="Population"  collapsed="true" id="population" icon="fas fa-users">
+			<layer id="rp_struct_pop_geom" name="Part de la population selon la catégorie d'âge (%)"  visible="true" tiled="false"
+				searchable="false" queryable="true" expanded="true"
+				attributefilter="true" attributefield="level" attributevalues="Commune,EPCI,Pays"  attributelabel="Échelle" attributestylesync="true" attributefilterenabled="true"
+				infopanel="bottom-panel"
+				infoformat="application/vnd.ogc.gml" featurecount="5"
+				style="rphab_tx0014@commune, rphab_tx1529@commune, rphab_tx3044@commune, rphab_tx4559@commune, rphab_tx6074@commune, rphab_tx75p@commune"
+                styletitle="Catégories d'âge"
+				stylesalias="0 - 14 ans, 15 -29 ans, 30 - 44 ans, 45 - 59 ans, 60 -74 ans, 75 ans et plus "
+				url="https://ows.region-bretagne.fr/geoserver/rb/wms"
+				attribution="Sources: INSEE (RP) - OpenStreetMap | Traitements: Région Bretagne - Service connaissance, observation, planification et prospective" 
+				metadata="https://kartenn.region-bretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/26324529-e0b7-450c-9506-2dcdca608f5f"
+				metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=26324529-e0b7-450c-9506-2dcdca608f5f">
+				<template url="https://kartenn.region-bretagne.fr/kartoviz/apps/region/territoire/templates/territoire.pop.cat_age.mst"></template>
+			</layer>
+        </theme>
+    </themes>
+    <styles>
+        <selectionstyle>
+            <point radius="12" fillcolor="26, 188, 156" opacity="0" strokecolor="26, 188, 156" strokewidth="2" />
+            <line opacity="0.5" strokecolor="26, 188, 156" strokewidth="4" />
+            <polygon fillcolor="26, 188, 156" opacity="0" strokecolor="26, 188, 156" strokewidth="4" />
+        </selectionstyle>
+        <subselectionstyle>
+            <point radius="10" fillcolor="175, 122, 197" opacity="1" strokecolor="175, 122, 197" strokewidth="4" />
+            <line opacity="0.5" strokecolor="175, 122, 197"  strokewidth="2" />
+            <polygon fillcolor="175, 122, 197" opacity="0" strokecolor="175, 122, 197" strokewidth="8" />
+        </subselectionstyle>
+    </styles>
+</config>

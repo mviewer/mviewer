@@ -43,6 +43,7 @@ Configurer - Les couches
                 infohighlight=""
                 featurecount=""
                 style=""
+                styletitle=""
                 stylesalias=""
                 timefilter=""
                 timeinterval=""
@@ -94,6 +95,7 @@ Paramètres pour gérer l'affichage de la couche
 * ``visible`` :guilabel:`studio` :  Booléen stipulant est ce que la couche est actuellement visible
 * ``exclusive``:  Booléen stipulant si la couche est exclusive. Si la valeur est "true", l'affichage de cette couche masquera automatiquement toutes les autres couches ayant ce paramètre activé.
 * ``style`` :guilabel:`studio` : Style(s) de la couche. Si plusieurs styles , utiliser la virgule comme séparateur. Si la couche est de type wms, il faut faire référence à un style sld. Si la couche est de type geojson, il faut faire référence à un style définit dans lib/featurestyles.js. Si la couche est de type customlayer, le style n'est pas défini ici.
+* ``styletitle`` : Titres à utiliser pour la liste des styles associés.
 * ``stylesalias`` :guilabel:`studio` : Titres à utiliser pour chaques style. utiliser la virgule comme séparateur si plusieurs styles.
 * ``sld`` :guilabel:`studio` : Lien vers un SLD stocké sur le web. Dans ce fichier SLD, la balise sld:Name contenue dans sld:NamedLayer doit être égale au nom de la couche. Si plusieurs styles , utiliser la virgule comme séparateur. S'applique uniquement aux layers WMS. Il faut indiquer l'URL résolvable par le serveur WMS du ou des sld.
 * ``tiled`` :guilabel:`studio` : Booléen stipulant est ce que la couche est tuilée
@@ -173,6 +175,7 @@ Paramètres pour gérer le filtre attributaire (liste déroulante) des couches W
 * ``attributestylesync``: Booléen qui précise s'il convient d'appliquer un style (sld) spécifique lors du filtre attributaire. Dans ce cas la convention est la suivante : nom_style@attributevalue ou url_style_externe@attributevalue.sld.
 * ``attributefilterenabled``: Booléen précisant si le filtre est activé par défaut (avec la première valeur de la liste attributevalues).
 * ``attributeoperator`` : guilabel:`studio` : Opérateur utilisé pour construire le filtre. (= ou like). Defaut = "=". Attention dans le cas de like, le wildcard est harcodé : %
+* ``wildcardpattern`` : Pattern à utiliser pour les filtre utilisant l'opérateur like. Defaut = "%value%, autres possibilités "%value" et "value%".
 
 Autres paramètres
 ====================
@@ -196,7 +199,7 @@ Autres paramètres
 * ``authorization`` : Permet d'indiquer des identifiants par défaut si secure est à "layer"
 * ``useproxy`` :guilabel:`studio` : Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de crossOrigin lorsque CORS n'est pas activé sur le serveur distant.
 * ``owsoptions`` : Pour une couche WMS, permet de forcer certains paramètres des requêtes GetMap. Exemple : "VERSION:1.1.1,EXCEPTIONS:application/vnd.ogc.se_inimage".
-* ``infopanel`` : Permet d'indiquer quel panel d'interrogation utiliser parmis `top-panel` ou `bottom-panel` ou `modal-panel`. Exemple: `infopanel="bottom-panel"`. 
+* ``infopanel`` : Permet d'indiquer quel panel d'interrogation utiliser parmis `top-panel` ou `bottom-panel` ou `modal-panel`. Exemple: `infopanel="bottom-panel"`.
 
 **Syntaxe** ``<template>``
 ******************************
@@ -276,5 +279,5 @@ Avec ce paramètre renseigné, les paramètres index et toplayer sont également
 Pour le cas primaire où aucun paramètre n'est renseigné, c'est l'ordre d'apparition dans le fichier de configuration XML qui permet de définir l'ordre d'affichage des couches au démarrage.
 Dans le cas où une configuration XML comprend des couches avec le paramètre `index` et / ou `toplayer` et des couches sans aucun de ces paramètres, alors les couches sans paramètre respectent ce principe.
 
-On retrouvera donc en premier les toplayer, ensuite les couches avec index et enfin les couches sans index. 
+On retrouvera donc en premier les toplayer, ensuite les couches avec index et enfin les couches sans index.
 Pour rappel, les couches avec un index en doublon et placée en seconde position dans le XML sont considérée sans index et sont concernées par ce mécanisme d'affichage. Elles s'afficheront donc selon les autres couches sans paramètres dans l'ordre d'apparition dans XML.

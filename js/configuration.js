@@ -9,7 +9,7 @@ var configuration = (function () {
 
     // Mviewer version a saisir manuellement
 
-    var VERSION = "3.6.1";
+    var VERSION = "3.7";
 
     var _showhelp_startup = false;
 
@@ -588,6 +588,8 @@ var configuration = (function () {
                         layer.attributefilter === "true") ? true : false;
                     oLayer.attributefield = layer.attributefield;
                     oLayer.attributeoperator = layer.attributeoperator || "=";
+                    oLayer.wildcardpattern = layer.wildcardpattern || "%value%";
+                    oLayer.styletitle = layer.styletitle;
                     oLayer.attributelabel = layer.attributelabel;
                     if (layer.attributevalues && layer.attributevalues.search(",")) {
                         oLayer.attributevalues = layer.attributevalues.split(",");
@@ -718,7 +720,7 @@ var configuration = (function () {
                         }
                         if (oLayer.attributefilter && oLayer.attributefilterenabled &&
                             oLayer.attributevalues.length > 1) {
-                            wms_params['CQL_FILTER'] = mviewer.makeCQL_Filter(oLayer.attributefield, oLayer.attributeoperator, oLayer.attributevalues[0]);
+                            wms_params['CQL_FILTER'] = mviewer.makeCQL_Filter(oLayer.attributefield, oLayer.attributeoperator, oLayer.attributevalues[0], oLayer.wildcardpattern);
                         }
                         if (oLayer.sld) {
                             wms_params['SLD'] = oLayer.sld;

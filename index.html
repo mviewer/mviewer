@@ -214,21 +214,6 @@
             <div id="mviewerinfosbar" class="hidden-xs">
                 <span id="powered" i18n="infos.powered">Propulsé par </span> <a class="mviewer-link" href="https://mviewer.netlify.app/fr/" target="_blank">mviewer</a>
             </div>
-            <!-- FIRST VERTICAL RIGHT TOOLBAR -->
-            <div id="zoomtoolbar" class="btn-group-vertical btn-group-sm" role="group" aria-label="true">
-                <button href="#" onclick="mviewer.zoomIn();" i18n="tbar.right.zoom.in" title="Zoom avant (zoom fenêtre : shift + clic sur la carte)"
-                    class="btn btn-default btn-raised" tabindex="104" accesskey="4" >
-                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                </button>
-                <button href="#" onclick="mviewer.zoomToInitialExtent();"
-                    title="Revenir à l'étendue géographique de départ" i18n="tbar.right.zoom.initial" class="btn btn-default btn-raised" tabindex="105" accesskey="5">
-                     <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                </button>
-                <button href="#" onclick="mviewer.zoomOut();" title="Zoom arrière" i18n="tbar.right.zoom.out"
-                    class="btn btn-default btn-raised" tabindex="106" accesskey="6">
-                     <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-                </button>
-            </div>
             <!-- SECOND VERTICAL RIGHT TOOLBAR -->
             <div id="toolstoolbar" class="btn-group-vertical btn-group-sm" role="group" aria-label="true">
                 <button data-toggle="modal" data-target="#sharepanel" onclick="mviewer.mapShare();" id="sharebtn" title="Partager cette carte"
@@ -475,6 +460,7 @@
         <script type="text/javascript" src="js/utils.js"></script>
         <script type="text/javascript" src="js/ogcutils.js"></script>
         <script type="text/javascript" src="js/configuration.js"></script>
+        <script type="text/javascript" src="js/zoom.js"></script>
         <script type="text/javascript" src="js/measure.js"></script>
         <script type="text/javascript" src="js/info.js"></script>
         <script type="text/javascript" src="js/search.js"></script>

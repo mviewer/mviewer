@@ -38,6 +38,23 @@ var utils = (function () {
         return test;
     };
 
+    _tests.wildcardpattern = function (layers) {
+        var test = 1;
+        const allowedwilcards = ["%", "%%"];
+        layers.forEach(function(layer) {
+            if (layer && layer.attributefilter && layer.attributeoperator === "like" && layer.wildcardpattern) {
+                var name = layer.name;
+                //Extract wildcards from pattern. Eg % or %%
+                var wildcards = layer.wildcardpattern.split("value").join("").trim();
+                if (!allowedwilcards.includes(wildcards)) {
+                    test = 0;
+                        console.log("pattern " + layer.wildcardpattern + "\nnon valide pour la couche " + name);
+                }
+            }
+        });
+        return test;
+    };
+
     _tests.icons = function (themes) {
         var test = 1;
         if (themes.theme !== undefined) {
@@ -118,6 +135,10 @@ var utils = (function () {
 
         // test validité sld
         score += _tests.sld(layers);
+        nbtests += 1;
+
+        // test validité pattern like operator
+        score += _tests.wildcardpattern(layers);
         nbtests += 1;
 
         // test icons fontawesome

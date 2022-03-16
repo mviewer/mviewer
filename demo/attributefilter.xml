@@ -13,12 +13,26 @@
             <layer id="etude_patrimoine_simple" name="Patrimoine" visible="true" tiled="false" expanded="true"
                 queryable="true"
                 infoformat="application/vnd.ogc.gml" featurecount="50" legendurl="https://kartenn.region-bretagne.fr/img/legend/chateaux_19e.png"
-                attributefilter="true" attributefield="affixe_cadre_etude" attributevalues="Inventaire des manoirs de Quimper,châteaux du 19e siècle en Bretagne,patrimoine des sports"  attributelabel="Thématique (filtre like)" attributestylesync="false" attributefilterenabled="true" attributeoperator="like"
+                attributefilter="true" attributefield="affixe_cadre_etude" attributevalues="Inventaire des manoirs de Quimper,châteaux du 19e siècle en Bretagne,patrimoine des sports"  attributelabel="Filtre like avec pattern %value% (Thématique)" attributestylesync="false" attributefilterenabled="true" attributeoperator="like"
                 url="https://ows.region-bretagne.fr/geoserver/rb/wms"
                 attribution="Service de l'inventaire : &lt;a href='https://patrimoine.bzh/' target='_blank'>patrimoine.bzh &lt;/a>"
                 metadata="https://patrimoine.bzh/gertrude-diffusion/dossier/1ca99a3b-810d-40d4-9df4-c2fbd81fdaaf"
                 metadata-csw="" >
                 <template url="https://kartenn.region-bretagne.fr/kartoviz/apps/region/patrimoine/templates/patrimoine.etude_patrimoine_architecture.mst"></template>
+			</layer>
+            <layer
+				id="lycee"
+				name="Lycées en Bretagne"
+				type="wms"
+				url="https://ows.region-bretagne.fr/geoserver/rb/ows?"
+				visible="true"
+				infoformat="text/html"
+				metadata="https://kartenn.region-bretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/99e78163-ce9a-4eee-9ea0-36afc2a53d25"
+				metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/fre/xml.metadata.get?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25"
+				queryable="true"
+                expanded="true"
+				infopanel="right-panel"
+				attributefilter="true" attributefield="nom" attributevalues="LEPPR,LP,LAHP,Lycée" attributelabel="Filtre like avec pattern value% (Nom)" attributeoperator="like" wildcardpattern="value%">
 			</layer>
 		</theme>
     </themes>

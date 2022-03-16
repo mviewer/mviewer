@@ -4,7 +4,11 @@ var filter = (function() {
    * @type {String}
    */
   var _id = "";
-
+  /**
+   * Property: _visibleLayers
+   *  @type {Map}
+   */
+  var _visibleLayers = new Map();
   /**
    * Property: _layersParams
    *  @type {Map}
