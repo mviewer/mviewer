@@ -31,10 +31,10 @@ Testez le fonctionnement de l'application avec la PR et validez cette pull reque
 Pour plus d'informations sur les branches, Mviewer suit ce type de modèle : 
 https://nvie.com/posts/a-successful-git-branching-model/
 
-Il vous faudra ensuite suivre `ces indications <https://help.github.com/en/github/administering-a-repository/managing-releases-in-a-repository>`_ pour créer 
+Une fois le merge effectué sur master, il vous faudra suivre `ces indications <https://help.github.com/en/github/administering-a-repository/managing-releases-in-a-repository>`_ pour créer 
 la nouvelle release `sur la page de release Mviewer <https://github.com/geobretagne/mviewer/releases>`_.
 
-Après la release,dans la branche developp, retournez modifier le numéro de version pour augmenter d'une version et ajouter -snapshot à la fin.
+Après la release,dans la branche develop, retournez modifier le numéro de version pour augmenter d'une version et ajouter -snapshot à la fin.
 
 Release MviewerStudio
 ---------------------
