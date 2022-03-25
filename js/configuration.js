@@ -9,7 +9,7 @@ var configuration = (function () {
 
     // Mviewer version a saisir manuellement
 
-    var VERSION = "3.7.1-snapshot";
+    var VERSION = "3.8-snapshot";
 
     var _showhelp_startup = false;
 
