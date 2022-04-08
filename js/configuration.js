@@ -98,9 +98,15 @@ var configuration = (function () {
         return _conf;
     };
 
+    const _createDispatchEvent = (name, content) => {
+        const evt = new CustomEvent(name, { detail: content });
+        document.dispatchEvent(evt);
+    }
+
     var _getExtensions = function (conf) {
         //load javascript extensions and trigger applicationExtended when all is done
-        const extensionArray = XML.xml2json(conf).config.extensions.extension;
+        const extensionArray = XML.xml2json(conf).config?.extensions?.extension;
+        if (!extensionArray || !extensionArray.length) return _createDispatchEvent("applicationExtended", conf);
         const jsExtensions = extensionArray.filter(extension => extension.type === 'javascript');
         const requests = jsExtensions.map(extension => {
             return axios.get(mviewer.ajaxURL(extension.src, false), {
@@ -112,10 +118,10 @@ var configuration = (function () {
         })
         Promise.all(requests).then(data => {
             //Trigger when external resources are loaded
-            $(document).trigger("applicationExtended", { "xml": conf });
+            _createDispatchEvent("applicationExtended", conf)
         }).catch((err) => {
             // Trigger is needed with error
-            $(document).trigger("applicationExtended", { "xml": conf });
+            _createDispatchEvent("applicationExtended", conf)
             console.log(err);
         });
 
@@ -140,60 +146,49 @@ var configuration = (function () {
          * Les thématiques externes peuvent utiliser des ressources particulières (templates, customLayer, sld...)
          * si les URLs de ces ressources sont absolues et accessibles.
         */
-
         //Recherche des thématiques externes
-        var extraConf = $(conf).find("theme").filter(function (idx, theme) {
-            if ($(theme).attr("id") && $(theme).attr("url") && $(theme).attr("url").indexOf("http") > -1 ) {
-                return theme;
+        const extraConf = [];
+        conf.querySelectorAll("theme").forEach(theme => {
+            [id, url] = theme.attributes;
+            if(id.value && url.value && url.value.includes("http")) extraConf.push(theme)
+        });
+
+        var requests = extraConf.map(theme => {
+            const attributes = theme.attributes;
+            const id = attributes.id.value;
+            const url = attributes.url.value;
+            var proxy = conf.querySelectorAll("proxy")[0] || false;
+            if (proxy) {
+                proxy = url;
             }
-        });
-
-        var requests = [];
-        var ajaxFunction = function () {
-            // Préparation des requêtes Ajax pour récupérer les thématiques externes
-            extraConf.toArray().forEach(function(theme) {
-                var url = $(theme).attr("url");
-                var id = $(theme).attr("id");
-                var proxy = false;
-                if ($(conf).find("proxy").attr("url")) {
-                    proxy = $(conf).find("proxy").attr("url");
+            return axios.get(
+                mviewer.ajaxURL(url, proxy),
+                {
+                    crossDomain: true,
+                    id: id
                 }
-                requests.push($.ajax({
-                    url: mviewer.ajaxURL(url, proxy),
-                    crossDomain : true,
-                    themeId: id,
-                    success: function (response, textStatus, request) {
-                        //Si thématique externe récupérée, on la charge dans la configuration courante
-                        var node = $(response).find("theme#" + this.themeId);
-                        if (node.length > 0) {
-                            $(conf).find("theme#" + this.themeId).replaceWith(node);
-                        } else {
-                            $(conf).find("theme#" + this.themeId).remove();
-                            console.log("La thématique " + this.themeId + " n'a pu être trouvée dans " + this.url );
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        //Si la thématique n'est pas récupérable, on supprime la thématique dans la configuration courante
-                        console.log(this.url + " n'est pas accessible. La thématique n'a pu être chargée");
-                        $(conf).find("theme#" + this.themeId).remove();
-                    }
-                }));
-            });
-        };
-
-        $.when.apply(new ajaxFunction(), requests).done(function (result) {
-            //Lorsque toutes les thématiques externes sont récupérées,
-            // on initialise le chargement de l'application avec le trigger configurationCompleted
-            $(document).trigger("configurationCompleted", { "xml": conf});
-        }).fail(function(err) {
-            // Si une erreur a été rencontrée, initialise également le chargement de l'application
-            // avec le trigger configurationCompleted
-            $(document).trigger("configurationCompleted", { "xml": conf});
+            ).catch(error => {
+                console.log(`${url} n'est pas accessible. La thématique n'a pu être chargée`);
+                conf.querySelectorAll(`theme#${id}`)[0].remove()
+            })
         });
 
-
-
-
+        Promise.all(requests).then((responses) => {
+            console.log(responses);
+            responses.forEach(response => {
+                const id = response.config.id;
+                const idSelector = `theme#${id}`;
+                const parser = new DOMParser();
+                const xmlRead = parser.parseFromString(response.data, "text/html");
+                const node = xmlRead.querySelector(idSelector)
+                if (node) {
+                    conf.querySelector(idSelector).replaceWith(node)
+                } else {
+                    conf.querySelector(idSelector).remove();
+                    console.log(`La thémathique ${id} n'a pu être trouvée dans ${url}`)
+                }
+            });
+        }).finally(() => _createDispatchEvent("configurationCompleted", conf));
     };
 
     var _load = function (conf) {

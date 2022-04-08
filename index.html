@@ -525,9 +525,9 @@
                         mviewer.orderLayerByIndex();
                     });
                     //load conf
-                    $( document ).on( "configurationCompleted", function (e, eData) {
+                    document.addEventListener("configurationCompleted", ({detail}) => {
                         //get JSON conf from xml;
-                        var _conf = configuration.parseXML(eData.xml);
+                        var _conf = configuration.parseXML(detail);
                         var style = "css/themes/default.css";
                         if (!theme && _conf.application.style && _conf.application.style.match("css")) {
                             style = _conf.application.style;
@@ -556,9 +556,7 @@
                         }, 2000);
                     $( "#map" ).focus();
                     });
-                    $( document ).on( "applicationExtended", function (e, eData) {
-                        configuration.complete(eData.xml);
-                    });
+                    document.addEventListener("applicationExtended", ({detail}) => configuration.complete(detail));
                     configuration.getExtensions(xml);
                 }, // fin success config
                 error: function (request, status, error) {
