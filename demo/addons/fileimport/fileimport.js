@@ -693,15 +693,17 @@ const fileimport = (function () {
                 _button.addEventListener('click', _toggleImportLayer);
             }
 
-            if (!configuration.getConfiguration().mobile) {
-                $("#fileimport-custom-component button").tooltip({
-                    placement: 'left',
-                    trigger: 'hover',
-                    html: true,
-                    container: 'body',
-                    template: mviewer.templates.tooltip
-                });
-            }
+            $(document).on("configurationCompleted", () => {
+                if (!configuration.getConfiguration().mobile) {
+                    $("#fileimport-custom-component button").tooltip({
+                        placement: 'left',
+                        trigger: 'hover',
+                        html: true,
+                        container: 'body',
+                        template: mviewer.templates.tooltip
+                    });
+                }
+            })
         },
         loadLocalFile: _loadLocalFile,
         geocodeit: _geocodeit,
