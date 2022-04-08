@@ -57,8 +57,8 @@ var configuration = (function () {
 
     const _blankSrc = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
 
-    var _parseXML = function (xml) {
-        var _conf = $.xml2json(xml);
+    const _parseXML = function (xml) {
+        const _conf = XML.xml2json(xml).config;
         // transtype baselayer, theme, group, layer
         //those types should be array
         //if type is object, push it into new Array
@@ -100,42 +100,32 @@ var configuration = (function () {
 
     var _getExtensions = function (conf) {
         //load javascript extensions and trigger applicationExtended when all is done
-        var extensions = $(conf).find("extension[type='javascript']");
-        var requests = [];
-        var ajaxFunction = function () {
-            extensions.toArray().forEach(function(extension) {
-                var src = $(extension).attr("src");
-                var type = $(extension).attr("type");
-                var proxy = false;
-                requests.push($.ajax({
-                    url: mviewer.ajaxURL(src, proxy),
-                    crossDomain : true,
-                    dataType: "script",
-                    error: function(xhr, status, error) {
-                        alert( "error extension" );
-                    }
-                }));
+        const extensionArray = XML.xml2json(conf).config.extensions.extension;
+        const jsExtensions = extensionArray.filter(extension => extension.type === 'javascript');
+        const requests = jsExtensions.map(extension => {
+            return axios.get(mviewer.ajaxURL(extension.src, false), {
+                crossDomain: true
+            }).catch((error) => {
+                alert(`Error with extensions !`);
+                console.log(`Error with extension - Can't load file : ${extension.src}`);
             });
-        };
-
-        $.when.apply(new ajaxFunction(), requests).done(function (result) {
-            //Lorsque toutes les ressources externes sont récupérées,
-            // on déclanche le trigger applicationExtended
-            $(document).trigger("applicationExtended", { "xml": conf});
-        }).fail(function(err) {
-            // Si une erreur a été rencontrée, on déclanche le même trigger
-            $(document).trigger("applicationExtended", { "xml": conf});
+        })
+        Promise.all(requests).then(data => {
+            //Trigger when external resources are loaded
+            $(document).trigger("applicationExtended", { "xml": conf });
+        }).catch((err) => {
+            // Trigger is needed with error
+            $(document).trigger("applicationExtended", { "xml": conf });
+            console.log(err);
         });
 
         //load components
         //each component is rendered in Component constructor;
         //When all is done, trigger componentLoaded event
-        var components = $(conf).find("extension[type='component']");
-        components.toArray().forEach(function(component) {
-            var id = $(component).attr("id");
-            var path = $(component).attr("path");
-            if (path && id) {
-                mviewer.customComponents[id] = new Component(id, path);
+        const componentsExtensions = extensionArray.filter(extension => extension.type === 'component');
+        componentsExtensions.forEach(function (component) {
+            if (component?.id && component?.path) {
+                mviewer.customComponents[component] = new Component(component.id, component.path);
             }
         });
 

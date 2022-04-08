@@ -178,13 +178,16 @@ var utils = (function () {
         return _WMTSTileResolutions[matrixset];
     };
 
+    _XML = function (config = {attributePrefix: ""}) {
+        return new X2JS(config);
+    };
+
     return {
         lonlat2osmtile: _lonlat2osmtile,
         testConfiguration: _testConfiguration,
         initWMTSMatrixsets: _initWMTSMatrixsets,
         getWMTSTileMatrix : _getWMTSTileMatrix,
-        getWMTSTileResolutions: _getWMTSTileResolutions
-
+        getWMTSTileResolutions: _getWMTSTileResolutions,
+        XML: _XML
     };
-
 })();
