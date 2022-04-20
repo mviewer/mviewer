@@ -550,7 +550,7 @@ var info = (function () {
 
         var pixel = mviewer.getMap().getEventPixel(evt.originalEvent);
         // default tooltip state or reset tooltip
-        $(popup).popover('hide');
+        $(popup).popover('destroy');
         $("#map").css("cursor", "");
         var feature = mviewer.getMap().forEachFeatureAtPixel(pixel, function (feature, layer) {
             if (!layer
@@ -591,7 +591,6 @@ var info = (function () {
         //hack to check if feature is yet overlayed
         var newFeature = false;
         if(!feature) {
-            $(popup).popover('hide');
             $("#map").css("cursor", "");
             _sourceOverlay.clear();
             return;
