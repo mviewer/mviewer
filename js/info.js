@@ -424,7 +424,7 @@ var info = (function () {
 
                     if (configuration.getConfiguration().mobile) {
                         $("#modal-panel").modal("show");
-                        $("#feature-info").tooltip("hide");
+                        _featureTooltip.getElement().popover('hide')
                     } else {
                         if (!$('#'+panel).hasClass("active")) {
                             $('#'+panel).toggleClass("active");
@@ -868,7 +868,7 @@ var info = (function () {
         ];
         $(noTooltipZone.join(", ")).on('mouseover', function() {
             if (_featureTooltip) {
-                $('#feature-info').tooltip('hide');
+                _featureTooltip.getElement().popover('hide')
             }
         });
     };
