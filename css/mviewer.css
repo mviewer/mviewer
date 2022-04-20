@@ -1653,11 +1653,21 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
 }
 
 #feature-info {
-     position: absolute;
-     height: 1px;
-     width: 1px;
-     z-index: 100;
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  z-index: 100;
  }
+ #feature-info .popover-content {
+  color: white !important;
+  padding: 10px !important;
+}
+ #feature-info .popover {
+  background-color: black !important;
+}
+#feature-info .arrow:after {
+  border-top-color: black !important;
+} 
 
 /*******************************
 ------------- HELP PANEL

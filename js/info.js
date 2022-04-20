@@ -539,22 +539,20 @@ var info = (function () {
             return;
         }
         if (!_featureTooltip) {
-            _featureTooltip = $('#feature-info');
-            _featureTooltip.tooltip({
-                animation: false,
-                trigger: 'manual',
-                container: 'body',
-                html: true,
-                template: mviewer.templates.tooltip
+            _featureTooltip = new ol.Overlay({
+                element: document.getElementById('feature-info'),
+                offset: [5, -10]
             });
+            mviewer.getMap().addOverlay(_featureTooltip);
         }
-        var pixel = _map.getEventPixel(evt.originalEvent);
-        var _o = mviewer.getLayers();
-        // default tooltip state or reset tooltip
-        _featureTooltip.tooltip('hide');
-        $("#map").css("cursor", "");
+        _featureTooltip.setPosition(evt.coordinate);
+        const popup = _featureTooltip.getElement();
 
-        var feature = _map.forEachFeatureAtPixel(pixel, function (feature, layer) {
+        var pixel = mviewer.getMap().getEventPixel(evt.originalEvent);
+        // default tooltip state or reset tooltip
+        $(popup).popover('hide');
+        $("#map").css("cursor", "");
+        var feature = mviewer.getMap().forEachFeatureAtPixel(pixel, function (feature, layer) {
             if (!layer
                 || layer.get('mviewerid') === 'featureoverlay'
                 || layer.get('mviewerid') === 'selectoverlay'
@@ -593,7 +591,7 @@ var info = (function () {
         //hack to check if feature is yet overlayed
         var newFeature = false;
         if(!feature) {
-            _featureTooltip.tooltip('hide');
+            $(popup).popover('hide');
             $("#map").css("cursor", "");
             _sourceOverlay.clear();
             return;
@@ -630,15 +628,14 @@ var info = (function () {
                     feature.getProperties()["title"] || feature.getProperties()["nom"] ||
                     feature.getProperties()[l.fields[0]]);
             }
-
-            _featureTooltip.css({
-                left: (pixel[0]) + 'px',
-                top: (pixel[1] - 15) + 'px'
+            $(popup).popover({
+                container: popup,
+                placement: 'top',
+                animation: false,
+                html: true,
+                content: `${title}`,
             });
-            _featureTooltip.tooltip('hide')
-                .attr('data-original-title', title)
-                .tooltip('fixTitle')
-                .tooltip('show');
+            $(popup).popover('show');
         }
     };
 
