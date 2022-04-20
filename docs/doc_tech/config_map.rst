@@ -7,7 +7,8 @@ Configurer - les options de la carte
 =====================================
 
 
-**Syntaxe**
+Syntaxe
+-----------------
 
 .. code-block:: xml
        :linenos:
@@ -25,7 +26,8 @@ Configurer - les options de la carte
         scalesteps=""/>
 
 
-**Paramètres**
+Paramètres
+-----------------
 
 * ``maxzoom`` : paramètre optionnel de type entier qui définit le seuil maximum de zoom de l'application. Valeur par défaut **19**. Plus d'info sur les seuils de zooms https://wiki.openstreetmap.org/wiki/Zoom_levels
 * ``projection`` : paramètre obligatoire de type texte définissant la projection (code EPSG) utilisée par la carte. Exemple **EPSG:3857**.
@@ -38,7 +40,8 @@ Configurer - les options de la carte
 * ``scalesteps`` : paramètre optionnel de type texte pour préciser le nombre de pas de l'échelle ("2" par défaut).
 * ``scaletext`` : paramètre optionnel de type texte pour préciser si on souhaite afficher le texte au dessus d'une échelle en barre ("true" par défaut).
 
-**Exemple**
+Exemple
+-----------------
 
 .. code-block:: xml
        :linenos:
@@ -48,11 +51,11 @@ Configurer - les options de la carte
               scaletext="true"
               scaleunits="metric"
               scalesteps="3"
-	      maxzoom="18"
-	      projection="EPSG:3857"
+              maxzoom="18"
+              projection="EPSG:3857"
               center="-161129,6140339"
-	      zoom="9"
-	      projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244"
+              zoom="9"
+              projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244"
               maxextent="-550346.603653, 5975541.123222, -45250.720745, 6262944.349574" />
 
 .. Tip::

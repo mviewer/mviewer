@@ -9,7 +9,8 @@ Configurer - Application
 
 Personnalisation de l'application
 
-**Syntaxe**
+Syntaxe
+-----------------
 
 .. code-block:: xml
        :linenos:
@@ -43,7 +44,8 @@ Personnalisation de l'application
 		favicon=""
         />
 
-**Paramètres principaux**
+Paramètres principaux
+-----------------
 
 * ``title`` :guilabel:`studio` : paramètre optionnel de type texte qui définit le titre de l'application. Valeur par défaut **mviewer**.
 * ``logo`` :guilabel:`studio` : paramètre optionnel de type url qui définit l'emplacement du logo de l'application. Valeur par défaut **img/logo/earth-globe.svg**.
@@ -55,7 +57,8 @@ Personnalisation de l'application
 * ``zoomtools`` : paramètre optionnel de type booléen (true/false) activant les outils de zoom +/-. Valeur par défaut **true**.
 * ``initialextenttool`` : paramètre optionnel de type booléen (true/false) activant le bouton de retour à l'étendue initiale. Valeur par défaut **true**.
 
-**Paramètres secondaires**
+Paramètres secondaires
+-----------------
 
 * ``titlehtml`` :guilabel:`studio` : optionnel de type texte, il permet d'utiliser du HTML uniquement pour le titre de l'application. Utiliser **title** avec ce paramètre pour le titre de l'onglet et la page de chargement.
 * ``titlehelp``: paramètre optionnel de type texte qui définit le titre de la popup d'aide. Valeur par défaut **Documentation**.
@@ -77,7 +80,8 @@ Personnalisation de l'application
 * ``favicon``: URL du fichier image à utiliser comme favicon de l'application.
 
 
-**Exemple**
+Exemple
+-----------------
 
 .. code-block:: xml
        :linenos:

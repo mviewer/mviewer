@@ -65,7 +65,7 @@ Paramètres d'URL utilisés pour les permaliens
 * ``z`` : Zoom de la carte (1 à 20).
 * ``lb`` : Identifiant de la couche de fond affichée.
 * ``c_[monparam]`` : où mon param est l'identifiant du composant personnalisé ou de la couche personalisée. La valeur du paramètre peut ensuite être utilisée par le composant ou la couche concernée. exemple c_mycustomlayer=red,blue,green
-* Plus d'informations sur les permaliens ":ref:`other_tools`" menu Partage de carte
+* Plus d'informations sur les permaliens ":ref:`othertools`" menu Partage de carte
 
 Sections de configurations
 ----------------------------
