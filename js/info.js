@@ -632,7 +632,8 @@ var info = (function () {
                 placement: 'top',
                 animation: false,
                 html: true,
-                content: `${title}`,
+                content: title,
+                template: mviewer.templates.tooltip
             });
             $(popup).popover('show');
         }

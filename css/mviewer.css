@@ -1495,6 +1495,7 @@ span.mv-time-player-selection {
 .popover-content{
 	font-size: 13px;
 	color: #555;
+  width: max-content;
 }
 
 .popover-content a{
@@ -1658,16 +1659,6 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
   width: 1px;
   z-index: 100;
  }
- #feature-info .popover-content {
-  color: white !important;
-  padding: 10px !important;
-}
- #feature-info .popover {
-  background-color: black !important;
-}
-#feature-info .arrow:after {
-  border-top-color: black !important;
-} 
 
 /*******************************
 ------------- HELP PANEL
