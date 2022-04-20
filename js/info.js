@@ -424,7 +424,9 @@ var info = (function () {
 
                     if (configuration.getConfiguration().mobile) {
                         $("#modal-panel").modal("show");
-                        _featureTooltip.getElement().popover('hide')
+                        if (_featureTooltip.getElement().children.length) {
+                            _featureTooltip.getElement().popover('hide')
+                        }
                     } else {
                         if (!$('#'+panel).hasClass("active")) {
                             $('#'+panel).toggleClass("active");
@@ -853,22 +855,6 @@ var info = (function () {
         $.each(_overLayers, function (i, layer) {
             if (layer.queryable && layer.showintoc) {
                 _addQueryableLayer(layer);
-            }
-        });
-        var noTooltipZone = [
-            "#layers-container-box",
-            "#sidebar-wrapper",
-            "#bottom-panel",
-            "#right-panel",
-            "#mv-navbar",
-            "#zoomtoolbar",
-            "#toolstoolbar",
-            "#backgroundlayerstoolbar-default",
-            "#backgroundlayerstoolbar-gallery"
-        ];
-        $(noTooltipZone.join(", ")).on('mouseover', function() {
-            if (_featureTooltip) {
-                _featureTooltip.getElement().popover('hide')
             }
         });
     };
