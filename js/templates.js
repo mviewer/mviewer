@@ -4,7 +4,7 @@ mviewer.templates = {};
 mviewer.templates.tooltip = [
     '<div class="tooltip mv-tooltip" role="tooltip">',
         '<div class="mv-tooltip tooltip-arrow"></div>',
-        '<div class="mv-tooltip tooltip-inner"></div>',
+        '<div class="mv-tooltip tooltip-inner popover-content"></div>',
     '</div>'].join("");
 
 mviewer.templates.theme = [

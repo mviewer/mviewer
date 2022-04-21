@@ -1495,6 +1495,7 @@ span.mv-time-player-selection {
 .popover-content{
 	font-size: 13px;
 	color: #555;
+  width: max-content;
 }
 
 .popover-content a{
@@ -1653,10 +1654,10 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
 }
 
 #feature-info {
-     position: absolute;
-     height: 1px;
-     width: 1px;
-     z-index: 100;
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  z-index: 100;
  }
 
 /*******************************
