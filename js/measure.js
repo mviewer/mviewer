@@ -144,7 +144,7 @@ var measure = (function () {
         }
         _helpMeasureTooltipMessage.innerHTML = helpMsg;
         _helpMeasureTooltip.setPosition(evt.coordinate);
-        $(_helpMeasureTooltipMessage).removeClass('hidden');
+        _helpMeasureTooltipMessage.classList.remove('hidden');
     };
 
     /**
@@ -234,10 +234,10 @@ var measure = (function () {
      */
 
     var _clearMeasureTool = function () {
-        $('#measurelinebtn').removeClass('active');
-        $("#measurebtn").removeClass("active");
-        $('#measureareabtn').removeClass('active');
-        $("#drawtoolsoptions").hide();
+        document.getElementById("measurelinebtn").classList.remove("active");
+        document.getElementById("measurebtn").classList.remove("active");
+        document.getElementById("measureareabtn").classList.remove("active");
+        document.getElementById("drawtoolsoptions").style.display = 'none';
     };
 
     /**
@@ -247,7 +247,10 @@ var measure = (function () {
 
     var _clearOldMeasures = function () {
         _sourceMesure.clear();
-        $(".tooltip-measure-static").remove();
+        if (document.querySelector(".tooltip-measure-static")) {
+            document.querySelector(".tooltip-measure-static").remove();
+        }
+
     };
 
     /* PUBLIC */
@@ -259,17 +262,17 @@ var measure = (function () {
      */
 
     var _addMeasureInteraction = function (type) {
-        $("#drawtoolsoptions").show();
-        $("#measurebtn").addClass("active");
+        document.getElementById('drawtoolsoptions').style.display = 'block';
+        document.getElementById('measurebtn').classList.add('active');
         if (type === 'LineString') {
-             $('#measurelinebtn').addClass("active");
+             document.getElementById('measurelinebtn').classList.add('active');
         } else if (type === 'Polygon') {
-            $('#measureareabtn').addClass("active");
+            document.getElementById('measureareabtn').classList.add('active');
         }
 
         _map.on('pointermove', _pointerMoveHandler);
-        $(_map.getViewport()).on('mouseout', function() {
-            $(_helpMeasureTooltipMessage).addClass('hidden');
+        _map.getViewport().addEventListener("mouseout", function(){
+            _helpMeasureTooltipMessage.classList.add('hidden');
         });
         _draw = new ol.interaction.Draw({
             source: _sourceMesure,
@@ -388,9 +391,8 @@ var measure = (function () {
                     '<span class="glyphicon glyphicon-adjust" aria-hidden="true"></span>',
                 '</button>',
             '</div>'].join("");
-        $("#toolstoolbar").prepend(button);
-        $(buttonoptions).insertAfter("#toolstoolbar");
-
+        utils.dom().prepend(button, '#toolstoolbar');
+        utils.dom().insertAfter(buttonoptions, '#toolstoolbar');
         _map.addLayer(vector);
     };
 

@@ -178,12 +178,56 @@ var utils = (function () {
         return _WMTSTileResolutions[matrixset];
     };
 
+    _dom = function () {
+        var _prepend = function (elementOrHtml, parentElementSelector) {
+            let element;
+            if (elementOrHtml instanceof Element) {
+                element = elementOrHtml;
+            } else {
+                var tmp = document.createElement('template');
+                tmp.innerHTML = elementOrHtml;
+                element = tmp.content.firstElementChild;
+            }
+            document.querySelectorAll(parentElementSelector).forEach(item => {
+                item.insertBefore(element.cloneNode(true), item.firstElementChild);
+            });
+            if (tmp) {
+                tmp.remove();
+            }
+
+        };
+
+        var _insertAfter = function (elementOrHtml, referenceElementSelector) {
+            let element;
+            if (elementOrHtml instanceof Element) {
+                element = elementOrHtml;
+            } else {
+                var tmp = document.createElement('template');
+                tmp.innerHTML = elementOrHtml;
+                element = tmp.content.firstElementChild;
+            }
+            document.querySelectorAll(referenceElementSelector).forEach(item => {
+                item.parentNode.insertBefore(element.cloneNode(true), item.nextSibling);
+            });
+
+
+
+        };
+
+        return {
+            prepend: _prepend,
+            insertAfter: _insertAfter
+        }
+
+    };
+
     return {
         lonlat2osmtile: _lonlat2osmtile,
         testConfiguration: _testConfiguration,
         initWMTSMatrixsets: _initWMTSMatrixsets,
         getWMTSTileMatrix : _getWMTSTileMatrix,
-        getWMTSTileResolutions: _getWMTSTileResolutions
+        getWMTSTileResolutions: _getWMTSTileResolutions,
+        dom: _dom
 
     };
 
