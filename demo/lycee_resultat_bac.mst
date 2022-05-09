@@ -251,7 +251,7 @@
     if  (typeof Chart === 'function') {
             drawCharts(2017);
     } else {
-            $.get('lib/chartjs-2.5.0/Chart.min.js', function() {
+            $.get('lib/chartjs-3.7.1/Chart.min.js', function() {
                 drawCharts(2017);
 
             });
