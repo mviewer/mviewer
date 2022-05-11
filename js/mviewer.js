@@ -339,6 +339,13 @@ mviewer = (function () {
             })
         });
 
+        const mapReadyEvent = new CustomEvent('map-ready', {
+            detail: {
+              map: _map
+            }
+        });
+        document.dispatchEvent(mapReadyEvent);
+
          _map.on('moveend', _mapChange);
         //Handle zoom change
         _map.getView().on('change:resolution', _mapZoomChange);
