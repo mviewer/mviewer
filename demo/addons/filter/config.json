@@ -20,7 +20,11 @@
         },
         "layers": [{
           "layerId": "occurence_public_filter",
-          "downloadFormats":["CSV","Shapefiles","Geojson"],
+          "downloadFormats":[ 
+            { "label": "CSV", "format": "CSV" },
+            { "label": "Shapefiles", "format": "SHAPE-ZIP" },
+            { "label": "Geojson", "format": "application/json" }
+          ],
           "filter": [{
               "attribut": "man_made",
               "type": "combobox",

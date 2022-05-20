@@ -1,17 +1,12 @@
 {
-
 /*instanciation*/
 mviewer.customLayers.occurence_public_filter = {};
 var occurence_public_filter = mviewer.customLayers.occurence_public_filter;
-
-
-
 
 /*création de la couche ol*/
 mviewer.customLayers.occurence_public_filter.layer = new ol.layer.Vector({
 	source: new ol.source.Vector({
 		url: function (extent) {
-			console.log(extent)
 			if(extent){
 				return (
 					'https://magosm.magellium.com/geoserver/wfs?service=WFS&' +
@@ -29,8 +24,8 @@ mviewer.customLayers.occurence_public_filter.layer = new ol.layer.Vector({
 				  );
 			}
 			
-		  },
-		  strategy: ol.loadingstrategy.bbox,
+		},
+		strategy: ol.loadingstrategy.bbox,
 		format: new ol.format.GeoJSON()
 	}),
 	style : [new ol.style.Style({
@@ -41,11 +36,7 @@ mviewer.customLayers.occurence_public_filter.layer = new ol.layer.Vector({
     })
 	})]
 
-
-
-
 });
 
 mviewer.customLayers.occurence_public_filter.handle = false;
-
 }

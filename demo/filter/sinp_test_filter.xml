@@ -48,16 +48,16 @@
 	</baselayers>
 	<themes mini="false">		
 		<theme name="SINP Hauts-de-France"  collapsed="true" id="sinp" icon="flag">
-				<layer id="occurence_public_filter"
-					toplayer="true"
-					name="Occurences (publiques) pour filtre"
-					visible="true"
-					url="demo/filter/occurence_public_filter.js"
-					queryable="true"
-					type="customlayer"
-					opacity="1"     
-					expanded="true">
-				</layer>	
+			<layer id="occurence_public_filter"
+				toplayer="true"
+				name="Occurences (publiques) pour filtre"
+				visible="true"
+				url="demo/filter/occurence_public_filter.js"
+				queryable="true"
+				type="customlayer"
+				opacity="1"     
+				expanded="true">
+			</layer>	
 		</theme>
 		<theme name="Données de contexte"  collapsed="true" id="environnement2" icon="map">
 			<layer

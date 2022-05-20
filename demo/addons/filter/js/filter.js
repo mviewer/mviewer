@@ -206,11 +206,10 @@ var filter = (function() {
           _manageDateFilter(destinationDivId, layerId, params[index]);
         }
       }
-      const layerConfig = mviewer.customComponents.filter.config.options.layers.find(x=>x.layerId==layerId);
-      if(layerConfig.downloadFormats && layerConfig.downloadFormats.length>0)
-        {
-          _addDownLoadPanel(destinationDivId,layerConfig);
-        }
+      const layerConfig = mviewer.customComponents.filter.config.options.layers.find(x => x.layerId == layerId);
+      if (layerConfig.downloadFormats && layerConfig.downloadFormats.length) {
+        _addDownLoadPanel(destinationDivId, layerConfig);
+      }
 
       if (layerId != _currentSelectedLayer) {
         $("#" + destinationDivId).hide();
@@ -225,63 +224,66 @@ var filter = (function() {
     
     _setStyle();
   };
+
+  /**
+   * Private Method: _addDownLoadPanel
+   *
+   * Add a download panel for WFS datasource
+   **/
   var _addDownLoadPanel = function(destinationDivId,layerConfig) {
     // Create div only if not exist
     if (!$("#download-" + destinationDivId).length){
       panel=$('<div id="download-' + destinationDivId+'" class="download-section"> <legend class="textlabel">Télécharger</legend></div>');
       
-      layerConfig.downloadFormats.forEach(x=>{
+      layerConfig.downloadFormats.forEach(format => {
         var button = $(`
         <span class="download-btn" 
-        data-toggle="filter-tooltip" data-original-title="Télécharger au format ${x}">
-          ${x}
+          data-toggle="filter-tooltip" 
+          data-original-title="Télécharger au format ${format.label}">
+          ${format.label}
         </span>`);
-        button.on('click', function(event) {
-          
-          var url = mviewer.getLayer(layerConfig.layerId).layer.getSource().getUrl().apply(null,[]);
-          if(x=='CSV')
-            url+="&outputFormat=CSV";
-          if(x=='Shapefiles')
-            url+="&outputFormat=SHAPE-ZIP";
-          if(x=='Geojson')
-            url+="&outputFormat=application/json";
-          url+=_getFilter(layerConfig.layerId);
-          console.log(url);
-          window.open(url,"target='_blank'")
-          
+        button.on('click', function(event) {  
+          _download(layerConfig,format);  
         });
         panel.append(button);
       });
       
       $("#" + destinationDivId).append(panel);
     }
-    
   };
 
+  var _download = function(layerConfig, format) {
+    var url = mviewer.getLayer(layerConfig.layerId).layer.getSource().getUrl().apply(null, []);
+    url += `&outputFormat=${format.format}`;
+    url += _getFilter(layerConfig.layerId);
+    window.open(url, "target='_blank'")
+  }
+
+  /**
+   * Private Method: _getFilter
+   *
+   * get layer filter as CQL string
+   **/
   var _getFilter = function(layerId) {
     let filterTxt;
     filter.layersFiltersParams.get(layerId).forEach(function(filter, index, array) {
-      console.log(filter)
-      // Only if there is a filter
-      if (filter.currentValues.length > 0) {
-        let newFilter=filter.attribut+"='"+filter.currentValues[0]+"'";
-        if(filterTxt && filterTxt.length>0)
-        {
-          filterTxt+=" AND "+newFilter;
+        // Only if there is a filter
+        if (filter.currentValues.length > 0) {
+            let newFilter = filter.attribut + "='" + filter.currentValues[0] + "'";
+            if (filterTxt && filterTxt.length > 0) {
+                filterTxt += " AND " + newFilter;
+            } else {
+                filterTxt = newFilter;
+            }
         }
-        else{
-          filterTxt=newFilter;
-        }
-      }
     });
-    if(filterTxt && filterTxt.length>0){
-      return "&CQL_FILTER="+filterTxt;
+    if (filterTxt && filterTxt.length > 0) {
+        return "&CQL_FILTER=" + filterTxt;
+    } else {
+        return "";
     }
-    else{
-      return "";
-    }
-    
   };
+
   /**
    * Select wanted layer in filter panel
    */
