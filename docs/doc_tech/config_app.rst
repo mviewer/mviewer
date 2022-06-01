@@ -62,7 +62,7 @@ Paramètres secondaires
 
 * ``titlehtml`` :guilabel:`studio` : optionnel de type texte, il permet d'utiliser du HTML uniquement pour le titre de l'application. Utiliser **title** avec ce paramètre pour le titre de l'onglet et la page de chargement.
 * ``titlehelp``: paramètre optionnel de type texte qui définit le titre de la popup d'aide. Valeur par défaut **Documentation**.
-* ``iconhelp``: paramètre optionnel de type texte qui précise l'icône à utiliser afin d'illustrer la thématique. Les valeurs possibles sont à choisir parmi cette liste : http://fontawesome.io/icons/
+* ``iconhelp``: paramètre optionnel de type texte qui précise l'icône à utiliser afin d'illustrer la thématique. Les valeurs possibles sont à choisir parmi cette liste sur le site Fontawesome : https://fontawesome.com/v5/search?m=free
 * ``stats``: paramètre optionnel de type booléen (true/false) activant l'envoi de stats d'utilisation l'application. Valeur par défaut **false**.
 * ``statsurl``: paramètre optionnel de type url précisant l'url du service reccueillant les données d'utilisation de l'application (ip, application title, date). Ce service n'est pas proposé dans mviewer.
 * ``coordinates`` :guilabel:`studio` : paramètre optionnel de type booléen (true/false) activant l'affichage des coordonnées GPS ( navbar) lors de l'interrogation. Valeur par défaut **false**.
