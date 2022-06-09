@@ -185,3 +185,26 @@ Elle nécessite plusieurs prérequis :
 	<extensions>
 			<extension type="component" id="filter" path="demo/addons"/>
 	</extensions>
+
+
+* Vous pouvez aussi rajouter des boutons pour permettre à l'utilisateur de télécharger les données filtrées en utilisant la propriété *downloadFormats*, ceci n'est possible que pour un layer WFS et créé un filtre CQL pour télécharger les données via une requête WFS.
+
+.. code-block:: javascript
+
+	"layers": [{
+          "layerId": "occurence_public_filter",
+          "downloadFormats":[ 
+            { "label": "CSV", "format": "CSV" },
+            { "label": "Shapefiles", "format": "SHAPE-ZIP" },
+            { "label": "Geojson", "format": "application/json" }
+          ],
+          "filter": [{
+              "attribut": "man_made",
+              "type": "combobox",
+              "label": "Man_made",
+	      "updateOnChange": true
+            },...
+
+
+
+	    
