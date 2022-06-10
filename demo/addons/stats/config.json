@@ -1,0 +1,31 @@
+{
+  "js": ["js/stats.js", "js/jquery.easyDrag.min.js"],
+  "css": "css/stats.css",
+  "html": "stats.html?v=2",
+  "target": "page-content-wrapper",
+  "options": {
+    "mviewer":{
+      "stats":{
+        "tooltipPosition": "bottom-left",
+        "title": "Stats",
+        "open": true,
+        "style": {
+          "border": "1px #2e5367 solid",
+          "background": "#2e5367",
+          "text": "white",
+          "colorButton": "#2e5367"
+        },
+        "stats": [
+        {
+          "type": "stat",
+          "layerId": "structures",
+          "field": "form_jur",
+          "template":"Population : {x} Habitants",
+          "operator": "SUM",
+          "__operator": "SUM,MAX,MEAN,COUNT"
+        }
+      ]
+      }
+    }
+  }
+}
