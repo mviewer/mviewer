@@ -208,8 +208,16 @@ var filter = (function() {
       }
       const layerConfig = mviewer.customComponents.filter.config.options.layers.find(x => x.layerId == layerId);
       if (layerConfig.downloadFormats && layerConfig.downloadFormats.length) {
-        _addDownLoadPanel(destinationDivId, layerConfig);
+        var url = mviewer.getLayer(layerConfig.layerId).layer.getSource().getUrl()
+        if (url.apply || url.indexOf('http')==0) {
+          _addDownLoadPanel(destinationDivId, layerConfig);
+        } else {
+          mviewer.alert("L'option downloadFormats ne fonctionne qu'avec des couches WFS", "alert-info")
+          console.error("L'option downloadFormats ne fonctionne qu'avec des couches WFS")
+        }
+        
       }
+      
 
       if (layerId != _currentSelectedLayer) {
         $("#" + destinationDivId).hide();
@@ -253,7 +261,13 @@ var filter = (function() {
   };
 
   var _download = function(layerConfig, format) {
-    var url = mviewer.getLayer(layerConfig.layerId).layer.getSource().getUrl().apply(null, []);
+    var url = mviewer.getLayer(layerConfig.layerId).layer.getSource().getUrl()
+    
+    if(url.apply){ // Si getUrl() renvoie une fonction
+      url = mviewer.getLayer(layerConfig.layerId).layer.getSource().getUrl().apply(null, []);
+    }
+    //remove output Format
+    url = url.replace(new RegExp(/&outputFormat(.*)(&|$)/),'');
     url += `&outputFormat=${format.format}`;
     url += _getFilter(layerConfig.layerId);
     window.open(url, "target='_blank'")
