@@ -1,85 +1,45 @@
+/*
+* Ex de css à modifier / customiser
+*/
 .statsPanel{
     background-color: #FFFFFF;
     display: none;
     text-align: left;
     position: fixed;
-    top: 240px;
-    left: 60px;
+    bottom: 40px;
+    left: 200px;
     padding: 5px 15px 2px;
-    max-width: 250px;
     z-index: 1000000 !important;
+    height: 200px;
 }
 
-.effect1{
-   
-    animation: openclose 5s ease-in-out;
+.stat_effect > span {
+  animation: openclose 3s ease;
 }
-.effect2{
-   
-    animation: openclose 5s ease-in-out;
-}
+
 
 @keyframes openclose {
-    0% {
-      top: 0.2rem;
-      width: 0;
-    }
-    5% {
-      width: 0;
-    }
-    15% {
-      width: 230px;
-    }
-    30% {
-      top: 0.2rem;
-      width: 230px;
-    }
-    33% {
-      top: 0.2rem;
-      width: 0;
-    }
-    35% {
-      top: 0.2rem;
-      width: 0;
-    }
-    38% {
-      top: -4.5rem;
-      
-    }
-    48% {
-      top: -4.5rem;
-      width: 190px;
-    }
-    62% {
-      top: -4.5rem;
-      width: 190px;
-    }
-    66% {
-      top: -4.5rem;
-      width: 0;
-      text-indent: 0;
-    }
-    71% {
-      top: -9rem;
-      width: 0;
-      text-indent: 5px;
-    }
-    86% {
-      top: -9rem;
-      width: 285px;
-    }
-    95% {
-      top: -9rem;
-      width: 285px;
-    }
-    98% {
-      top: -9rem;
-      width: 0;
-      text-indent: 5px;
-    }
-    100% {
-      top: 0;
-      width: 0;
-      text-indent: 0;
-    }
+  from {
+    opacity : 0;
   }
+  to {
+    opacity : 1;
+  }      
+  }
+
+.structcss{
+  color:#464a57;
+}
+
+.statElement {
+  min-width: 400px;
+  min-height: 80px;
+  float: left;
+  margin: 5px;
+  padding:20px;
+  text-align: center;
+  box-shadow: 0 6px 12px hsla(0,0%,50%,.1);
+  border-radius: 8px;
+  background: #fff;
+  color:#464a57;
+}

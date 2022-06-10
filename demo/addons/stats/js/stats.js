@@ -1,31 +1,10 @@
 var stats = (function() {
-  /**
-   * Property: _id
-   * @type {String}
-   */
-  var _id = "";
-  /**
-   * Property: _visibleLayers
-   *  @type {Map}
-   */
-  var _visibleLayers = new Map();
+
   /**
    * Property: _statsParams
    *  @type {Map}
    */
-  var _layersStatsParams = new Map();
-
-  /**
-   * Property: _visibleFeatures
-   *  @type {Map}
-   */
-  var _visibleFeatures = new Map();
-
-  /**
-   *  Property: _currentSelectedLayer
-   *  @type {String}
-   */
-  var _currentSelectedLayer = "";
+  var _layersStatsParams = new Array();
 
 
   /**
@@ -34,18 +13,13 @@ var stats = (function() {
    */
    var _prepareReadyLayers = (statsParams) => {
     var layerId = "";
-    var nbLayers = 0;
-    statsParams.forEach((stat,i) => {
+    statsParams.forEach((stat) => {
       layerId = stat.layerId;
       var mvLayer = mviewer.getLayer(layerId) ? mviewer.getLayer(layerId).layer : null;
-      // Should never happens but we could check if layer.id not already exist in _statsParams
-      if(mvLayer && mvLayer.getVisible()) _visibleLayers.set(layerId, stat);
-      _visibleFeatures.set(layerId, []);
 
-      nbLayers++;
-      if (!_currentSelectedLayer && (nbLayers == 1 && mvLayer && mvLayer.getVisible() || mvLayer && mvLayer.getVisible())) {
-        _currentSelectedLayer =  layerId;
-      }
+      mvLayer.on('change:visible', function(e) {
+        _refreshStats(statsParams);
+      });
     });
   }
 
@@ -62,22 +36,18 @@ var stats = (function() {
       mviewer.customComponents.stats.config.options = options.mviewer[mviewerId];
       options = mviewer.customComponents.stats.config.options;
     }
-    // get stats 
-    var stats = mviewer.customComponents.stats.config.options.stats;
+    // get stats configuration
+    _layersStatsParams = mviewer.customComponents.stats.config.options.stats;
 
-    stats.forEach(stat => {
-      _layersStatsParams.set(stat.layerId, stat);
-    });
+    if (_layersStatsParams.length > 0) {
 
-    if (_layersStatsParams.size > 0) {
-
-      // wait map ready and prepare layers to avoid empty filter panel
+      // wait map ready and prepare layers to avoid empty panel
       mviewer.getMap().once('rendercomplete', function(e) {
         _prepareReadyLayers(_layersStatsParams);
         _initPanel();
       });
      
-      //Add filter button to toolstoolbar
+      //Add button to toolstoolbar
       var button = `
       <button id="statsbtn" class="btn btn-default btn-raised"
         onclick="stats.toggle();"  title="Afficher les stats" i18n="tbar.right.stat"
@@ -103,6 +73,7 @@ var stats = (function() {
     var options = mviewer.customComponents.stats.config.options;
     // show panel if wanted
     if (mviewer.customComponents.stats.config.options.open && window.innerWidth > 360) {
+      $('#statsbtn').addClass('active');
       $("#statsPanel").show();
     }
     // Add draggable on panel
@@ -115,34 +86,69 @@ var stats = (function() {
       placement: options.tooltipPosition || 'bottom-left'
     });
     mviewer.getMap().on('moveend', function(e) {
-      _refreshStats(_layersStatsParams);
+      if ($("#statsPanel").is(':visible')) {
+        _refreshStats(_layersStatsParams);
+      }
     });
 
   };
+  var _getStatContent = (features,statsParams) => {
+    var value = '';
+    if (statsParams.operator=='COUNT') {
+      var value = features.length;
+    } else if (statsParams.operator=='MEAN') {
+      var sum = features.reduce((accumulator, object) => {
+        return accumulator + Number(object.get(statsParams.field));
+      }, 0); 
+      value = Math.round(sum /features.length *100)/100;
+    } else if (statsParams.operator=='SUM') {
+      value = features.reduce((accumulator, object) => {
+        return accumulator + Number(object.get(statsParams.field));
+      }, 0); 
+    } else if (statsParams.operator=='MAX') {
+      const arrMax = arr => Math.max(...arr);
+      value = arrMax(features.map(x => x.get(statsParams.field)));
+      
+    } else if (statsParams.operator=='MIN') {
+      const arrMin = arr => Math.min(...arr);
+      value = arrMin(features.map(x => x.get(statsParams.field)));
+    }
+    
+    var content = statsParams.template.replace('{x}',value);
+    //return `${statsParams.template} ${features.length}`;
+    return content;
+  }
 
   var _refreshStats = (_layersStatsParams) => {
-    for (var [layerId, params] of _layersStatsParams) {
+    _layersStatsParams.forEach((params,i) => {
+      var layerId=params.layerId;
       if (mviewer.getLayer(layerId) && mviewer.getLayer(layerId).layer) {
         var source = mviewer.getLayer(layerId).layer.getSource();
         var extent = mviewer.getMap().getView().calculateExtent(mviewer.getMap().getSize());
         var features = source instanceof ol.source.Cluster ? source.getSource().getFeaturesInExtent(extent) : source.getFeaturesInExtent(extent);
-        
-       
-        $("#selectLayerFilter").html(features.length+" Objets");
-        if($('#selectLayerFilter').hasClass('effect1')){
-          $('#selectLayerFilter').removeClass('effect1');
-          $('#selectLayerFilter').addClass('effect2');
+        var content = _getStatContent(features,params);
+        var statElement = $("#statpanel_"+i);
+        if (statElement.length) {
+          statElement.html(content);
+        } else {
+          var newId = "statpanel_"+i;
+          $("#selectLayerFilter").append(`<div id="${newId}" class="statElement">${content}</div>`);
         }
-        else if($('#selectLayerFilter').hasClass('effect2')){
-          $('#selectLayerFilter').removeClass('effect2');
-          $('#selectLayerFilter').addClass('effect1');
+        if(mviewer.getLayer(layerId).layer.getVisible()) {
+          statElement.show();
+        } else {
+          statElement.hide();
         }
-        else{
-          $('#selectLayerFilter').addClass('effect1');
+        if (statElement.hasClass('stat_effect')) {
+          statElement.removeClass('stat_effect');
+          void statElement[0].offsetWidth; //Important sinon l'animation ne se redéclenche pas cf https://css-tricks.com/restart-css-animation/
+          statElement.addClass('stat_effect');
+        } else {
+          statElement.addClass('stat_effect');
         }
         
       }
-    }
+    });
 
   }
   /**
@@ -153,12 +159,12 @@ var stats = (function() {
   var _toggle = function() {
     // show or hide filter panel
     if ($("#statsPanel").is(':visible')) {
-      $('#statsbtn').removeClass('btn.focus');
-      $('#statsbtn').removeClass('btn.active');
+      $('#statsbtn').blur();
+      $('#statsbtn').removeClass('active');
       $("#statsPanel").hide();
     } else {
-      $('#statsbtn').addClass('btn.focus');
-      $('#statsbtn').addClass('btn.active');
+      _refreshStats(_layersStatsParams);
+      $('#statsbtn').addClass('active');
       $("#statsPanel").show();
     }
   };
