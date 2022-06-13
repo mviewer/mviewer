@@ -208,14 +208,12 @@ var filter = (function() {
       }
       const layerConfig = mviewer.customComponents.filter.config.options.layers.find(x => x.layerId == layerId);
       if (layerConfig.downloadFormats && layerConfig.downloadFormats.length) {
-        var url = mviewer.getLayer(layerConfig.layerId).layer.getSource().getUrl()
-        if (url.apply || url.indexOf('http')==0) {
+        try {
           _addDownLoadPanel(destinationDivId, layerConfig);
-        } else {
-          mviewer.alert("L'option downloadFormats ne fonctionne qu'avec des couches WFS", "alert-info")
-          console.error("L'option downloadFormats ne fonctionne qu'avec des couches WFS")
+        } catch (error) {
+           mviewer.alert("L'option downloadFormats ne fonctionne qu'avec des couches WFS", "alert-info")
+           console.error("L'option downloadFormats ne fonctionne qu'avec des couches WFS")
         }
-        
       }
       
 
