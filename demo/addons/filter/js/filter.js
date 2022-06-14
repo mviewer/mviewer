@@ -259,16 +259,21 @@ var filter = (function() {
   };
 
   var _download = function(layerConfig, format) {
-    var url = mviewer.getLayer(layerConfig.layerId).layer.getSource().getUrl()
+    var url = mviewer.getLayer(layerConfig.layerId).layer.getSource().getUrl();
+    var parseURL = new URLSearchParams(url);
     
     if(url.apply){ // Si getUrl() renvoie une fonction
       url = mviewer.getLayer(layerConfig.layerId).layer.getSource().getUrl().apply(null, []);
     }
-    //remove output Format
-    url = url.replace(new RegExp(/&outputFormat(.*)(&|$)/),'');
-    url += `&outputFormat=${format.format}`;
-    url += _getFilter(layerConfig.layerId);
-    window.open(url, "target='_blank'")
+    if (format.format) {
+      // manage format and replace if already exists - use mixed method to change outputFormat param
+      url = parseURL.has("outputFormat") ? url.replace(new RegExp(/&outputFormat(.*)(&|$)/), '') : url;
+      url += `&outputFormat=${format.format}`;
+    }
+    if (_getFilter(layerConfig.layerId)) { // add only if filters exist
+      url += _getFilter(layerConfig.layerId);
+    }
+    window.open(url, "target='_blank'");
   }
 
   /**
