@@ -1,6 +1,10 @@
 /*
 * Ex de css à modifier / customiser
 */
+.stat-panel-title{
+  text-align: center;
+}
+
 .statsPanel{
     background-color: #FFFFFF;
     display: none;
@@ -10,22 +14,39 @@
     left: 200px;
     padding: 5px 15px 2px;
     z-index: 1000000 !important;
-    height: 200px;
+    min-height: 300px;
+    max-width: 80vw;
+
 }
 
-.stat_effect > span {
-  animation: openclose 3s ease;
+.stat_effect > span.structcss {
+  animation: fade_animation 3s ease;
 }
 
+.stat_effect > span > .stat_value {
+  animation: from_top_animation 1s ease-in-out;
+}
 
-@keyframes openclose {
+@keyframes fade_animation {
   from {
     opacity : 0;
   }
   to {
     opacity : 1;
+
   }      
+}
+
+@keyframes from_top_animation {
+  from {
+    position: relative;
+    top: -40px;
   }
+  to {
+    top: 0px;
+    position: unset;
+  }      
+}
 
 .structcss{
   color:#464a57;
@@ -38,8 +59,10 @@
   margin: 5px;
   padding:20px;
   text-align: center;
-  box-shadow: 0 6px 12px hsla(0,0%,50%,.1);
+  box-shadow: 0 6px 12px black;
   border-radius: 8px;
   background: #fff;
   color:#464a57;
+  overflow: hidden;
+  font-size: 25px;
 }

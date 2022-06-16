@@ -114,7 +114,8 @@ var stats = (function() {
       value = arrMin(features.map(x => x.get(statsParams.field)));
     }
     
-    var content = statsParams.template.replace('{x}',value);
+
+    var content = statsParams.template.replace('{x}',value.toLocaleString());
     //return `${statsParams.template} ${features.length}`;
     return content;
   }

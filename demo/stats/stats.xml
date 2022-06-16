@@ -2,7 +2,7 @@
 <config>
 <application
     id="stats"
-    title="Filtrage des données avec un plugin Mviewer"
+    title="Affichage de statistiques avec un plugin Mviewer"
     logo=""
     help=""
     style="css/themes/default.css"
@@ -27,6 +27,21 @@
             name="Sites pour l'aide économique et l'innovation"
             visible="true"
             url="demo/filter/customlayers/structures.js"
+            queryable="true"
+            type="customlayer"
+            opacity="1"     
+            expanded="true"
+            attribution="Source : &lt;a href='https://data.bretagne.bzh' target='_blank'>Open Data Région Bretagne &lt;/a>"
+            metadata=""
+            metadata-csw="">
+        </layer>
+    </theme>
+     <theme name="Population"  collapsed="true" id="population" icon="fas fa-laptop-house">
+        <layer id="population_communes"
+            toplayer="true"
+            name="Population des communes"
+            visible="true"
+            url="customlayers/population_communes.js" 
             queryable="true"
             type="customlayer"
             opacity="1"     

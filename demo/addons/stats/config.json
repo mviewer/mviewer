@@ -7,15 +7,39 @@
     "mviewer":{
       "stats":{
         "tooltipPosition": "bottom-left",
-        "title": "Stats sur le JDD Structures",
+        "title": "Stats sur les Structures et la population des communes",
         "open": true,
         "style": {
           "border": "1px #2e5367 solid",
-          "background": "#2e5367",
-          "text": "white",
+          "background": "white",
+          "text": "black",
           "colorButton": "#2e5367"
         },
         "stats": [
+          {
+            "type": "stat",
+            "layerId": "population_communes",
+            "field": "",
+            "template":"<span><span class='stat_value'>{x}</span> Communes</span>",
+            "operator": "COUNT",
+            "__operator": "SUM,MAX,MEAN,COUNT"
+          },
+          {
+            "type": "stat",
+            "layerId": "population_communes",
+            "field": "population",
+            "template":"<span class='structcss'>{x} Habitants</span>",
+            "operator": "SUM",
+            "__operator": "SUM,MAX,MEAN,COUNT"
+          },
+          {
+            "type": "stat",
+            "layerId": "population_communes",
+            "field": "population",
+            "template":"<span class='structcss'>Population moyenne<br> par commune: {x} Habitants</span>",
+            "operator": "MEAN",
+            "__operator": "SUM,MAX,MEAN,COUNT"
+          },
         {
           "type": "stat",
           "layerId": "structures",
@@ -26,25 +50,17 @@
         },
         {
           "type": "stat",
-          "layerId": "structures",
-          "field": "cp",
-          "template":"Moyenne : {x} ",
-          "operator": "MEAN",
-          "__operator": "SUM,MAX,MEAN,COUNT"
-        },
-        {
-          "type": "stat",
-          "layerId": "structures",
-          "field": "cp",
-          "template":"MIN : {x} ",
+          "layerId": "population_communes",
+          "field": "population",
+          "template":"plus petite commune : {x} habitants",
           "operator": "MIN",
           "__operator": "SUM,MAX,MEAN,COUNT"
         },
         {
           "type": "stat",
-          "layerId": "structures",
-          "field": "cp",
-          "template":"MAX : {x} ",
+          "layerId": "population_communes",
+          "field": "population",
+          "template":"plus grande commune : {x} habitants ",
           "operator": "MAX",
           "__operator": "SUM,MAX,MEAN,COUNT"
         }
