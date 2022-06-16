@@ -46,7 +46,7 @@
             type="customlayer"
             opacity="1"     
             expanded="true"
-            attribution="Source : &lt;a href='https://data.bretagne.bzh' target='_blank'>Open Data Région Bretagne &lt;/a>"
+            attribution="Source : OSM"
             metadata=""
             metadata-csw="">
         </layer>
