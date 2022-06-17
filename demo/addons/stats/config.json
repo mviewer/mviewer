@@ -1,7 +1,7 @@
 {
   "js": ["js/stats.js", "js/jquery.easyDrag.min.js"],
   "css": "css/stats.css",
-  "html": "stats.html?v=2",
+  "html": "stats.html",
   "target": "page-content-wrapper",
   "options": {
     "mviewer":{

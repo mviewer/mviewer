@@ -1,23 +1,21 @@
-var stats = (function() {
+var stats = (function () {
 
   /**
    * Property: _statsParams
-   *  @type {Map}
+   *  @type {Array}
    */
   var _layersStatsParams = new Array();
-
 
   /**
    * PrepareLayer before create panel
    *
    */
-   var _prepareReadyLayers = (statsParams) => {
-    var layerId = "";
+  var _prepareReadyLayers = (statsParams) => {
     statsParams.forEach((stat) => {
-      layerId = stat.layerId;
+      var layerId = stat.layerId;
       var mvLayer = mviewer.getLayer(layerId) ? mviewer.getLayer(layerId).layer : null;
 
-      mvLayer.on('change:visible', function(e) {
+      mvLayer.on('change:visible', function (e) {
         _refreshStats(statsParams);
       });
     });
@@ -27,12 +25,12 @@ var stats = (function() {
    * Public Method: _initTool exported as init
    *
    */
-  var _initTool = function() {
+  var _initTool = function () {
     console.log("_initTool");
     // get config for a specific mviewer
     var mviewerId = configuration.getConfiguration().application.id;
     var options = mviewer.customComponents.stats.config.options;
-    if(mviewerId && options.mviewer && options.mviewer[mviewerId]) {
+    if (mviewerId && options.mviewer && options.mviewer[mviewerId]) {
       mviewer.customComponents.stats.config.options = options.mviewer[mviewerId];
       options = mviewer.customComponents.stats.config.options;
     }
@@ -42,11 +40,11 @@ var stats = (function() {
     if (_layersStatsParams.length > 0) {
 
       // wait map ready and prepare layers to avoid empty panel
-      mviewer.getMap().once('rendercomplete', function(e) {
+      mviewer.getMap().once('rendercomplete', function (e) {
         _prepareReadyLayers(_layersStatsParams);
         _initPanel();
       });
-     
+
       //Add button to toolstoolbar
       var button = `
       <button id="statsbtn" class="btn btn-default btn-raised"
@@ -69,7 +67,7 @@ var stats = (function() {
    *
    * Recour au setTimeout car aucun event ne se déclenche correctement à la fin du chargement des données
    */
-  var _initPanel = function() {
+  var _initPanel = function () {
     var options = mviewer.customComponents.stats.config.options;
     // show panel if wanted
     if (mviewer.customComponents.stats.config.options.open && window.innerWidth > 360) {
@@ -85,57 +83,66 @@ var stats = (function() {
     $('[data-toggle="filter-tooltip"]').tooltip({
       placement: options.tooltipPosition || 'bottom-left'
     });
-    mviewer.getMap().on('moveend', function(e) {
+    mviewer.getMap().on('moveend', function (e) {
       if ($("#statsPanel").is(':visible')) {
         _refreshStats(_layersStatsParams);
       }
     });
 
   };
-  var _getStatContent = (features,statsParams) => {
-    var value = '';
-    if (statsParams.operator=='COUNT') {
-      var value = features.length;
-    } else if (statsParams.operator=='MEAN') {
-      var sum = features.reduce((accumulator, object) => {
-        return accumulator + Number(object.get(statsParams.field));
-      }, 0); 
-      value = Math.round(sum /features.length *100)/100;
-    } else if (statsParams.operator=='SUM') {
-      value = features.reduce((accumulator, object) => {
-        return accumulator + Number(object.get(statsParams.field));
-      }, 0); 
-    } else if (statsParams.operator=='MAX') {
-      const arrMax = arr => Math.max(...arr);
-      value = arrMax(features.map(x => x.get(statsParams.field)));
-      
-    } else if (statsParams.operator=='MIN') {
-      const arrMin = arr => Math.min(...arr);
-      value = arrMin(features.map(x => x.get(statsParams.field)));
-    }
-    
 
-    var content = statsParams.template.replace('{x}',value.toLocaleString());
-    //return `${statsParams.template} ${features.length}`;
+  /**
+   * Private Method: _getStatContent
+   *
+   * get stat content given the feature list and a stat config paramerter
+   **/
+  var _getStatContent = (features, statsParam) => {
+    var value = '';
+    if (statsParam.operator === 'COUNT') {
+      value = features.length;
+    } else if (statsParam.operator === 'MEAN') {
+      var sum = features.reduce((accumulator, object) => {
+        return accumulator + Number(object.get(statsParam.field));
+      }, 0);
+      value = Math.round(sum / features.length * 100) / 100;
+    } else if (statsParam.operator === 'SUM') {
+      value = features.reduce((accumulator, object) => {
+        return accumulator + Number(object.get(statsParam.field));
+      }, 0);
+    } else if (statsParam.operator === 'MAX') {
+      const arrMax = arr => Math.max(...arr);
+      value = arrMax(features.map(x => x.get(statsParam.field)));
+
+    } else if (statsParam.operator === 'MIN') {
+      const arrMin = arr => Math.min(...arr);
+      value = arrMin(features.map(x => x.get(statsParam.field)));
+    }
+
+    var content = statsParam.template.replace('{x}', value.toLocaleString());
     return content;
   }
-
+  
+  /**
+   * Private Method: _refreshStats
+   *
+   * Refresh stats in panel
+   **/
   var _refreshStats = (_layersStatsParams) => {
-    _layersStatsParams.forEach((params,i) => {
-      var layerId=params.layerId;
+    _layersStatsParams.forEach((params, i) => {
+      var layerId = params.layerId;
       if (mviewer.getLayer(layerId) && mviewer.getLayer(layerId).layer) {
         var source = mviewer.getLayer(layerId).layer.getSource();
         var extent = mviewer.getMap().getView().calculateExtent(mviewer.getMap().getSize());
         var features = source instanceof ol.source.Cluster ? source.getSource().getFeaturesInExtent(extent) : source.getFeaturesInExtent(extent);
-        var content = _getStatContent(features,params);
-        var statElement = $("#statpanel_"+i);
+        var content = _getStatContent(features, params);
+        var statElement = $("#statpanel_" + i);
         if (statElement.length) {
           statElement.html(content);
         } else {
-          var newId = "statpanel_"+i;
+          var newId = "statpanel_" + i;
           $("#selectLayerFilter").append(`<div id="${newId}" class="statElement">${content}</div>`);
         }
-        if(mviewer.getLayer(layerId).layer.getVisible()) {
+        if (mviewer.getLayer(layerId).layer.getVisible()) {
           statElement.show();
         } else {
           statElement.hide();
@@ -147,7 +154,7 @@ var stats = (function() {
         } else {
           statElement.addClass('stat_effect');
         }
-        
+
       }
     });
 
@@ -157,7 +164,7 @@ var stats = (function() {
    *
    * Open filtering panel
    **/
-  var _toggle = function() {
+  var _toggle = function () {
     // show or hide filter panel
     if ($("#statsPanel").is(':visible')) {
       $('#statsbtn').blur();
@@ -170,8 +177,8 @@ var stats = (function() {
     }
   };
 
-  var _setStyle = function() {
-    if(!mviewer.customComponents.stats.config.options.style) return;
+  var _setStyle = function () {
+    if (!mviewer.customComponents.stats.config.options.style) return;
     var style = mviewer.customComponents.stats.config.options.style;
     $('.textlabel').css('color', style.text || 'black');
     $('#statsPanel').css('background-color', style.background || 'white');
