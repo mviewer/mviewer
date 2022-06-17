@@ -30,6 +30,7 @@ les paramètres suivants permettent de configurer un indicateur:
 * operator: type d'opération à réaliser parmi COUNT (nombre d'objets), SUM (somme des valeurs de l'attribut), MIN(valeur minimum de l'attribut), MAX(valeur maximum de l'attribut), MEAN(valeur moyenne de l'attribut)
 
 ## Exemple de configuration
+![capture exemple](./img/stats_exemple.png)
 
 Ex pour afficher le nombre de communes sur la carte
 ```
