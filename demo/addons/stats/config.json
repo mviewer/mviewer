@@ -28,7 +28,7 @@
             "type": "stat",
             "layerId": "population_communes",
             "field": "population",
-            "template":"<span class='structcss'>{x} Habitants</span>",
+            "template":"<span class='anim_fade'>{x} Habitants</span>",
             "operator": "SUM",
             "__operator": "SUM,MAX,MEAN,COUNT"
           },
@@ -36,7 +36,7 @@
             "type": "stat",
             "layerId": "population_communes",
             "field": "population",
-            "template":"<span class='structcss'>Population moyenne<br> par commune: {x} Habitants</span>",
+            "template":"<span class='anim_fade'>Population moyenne<br> par commune: {x} Habitants</span>",
             "operator": "MEAN",
             "__operator": "SUM,MAX,MEAN,COUNT"
           },
@@ -44,7 +44,7 @@
           "type": "stat",
           "layerId": "structures",
           "field": "form_jur",
-          "template":"<span class='structcss'>Structures :<br> {x} Objets</span>",
+          "template":"<span class='anim_fade'>Structures :<br> {x} Objets</span>",
           "operator": "COUNT",
           "__operator": "SUM,MAX,MEAN,COUNT"
         },

@@ -19,7 +19,11 @@
 
 }
 
-.stat_effect > span.structcss {
+.anim_fade{
+  color:#464a57;
+}
+
+.stat_effect > span.anim_fade {
   animation: fade_animation 3s ease;
 }
 
@@ -48,9 +52,7 @@
   }      
 }
 
-.structcss{
-  color:#464a57;
-}
+
 
 .statElement {
   min-width: 400px;
