@@ -16,8 +16,8 @@ Une description courte du problème
 
 Etapes à suivre pour reproduire votre problème du type : 
 
-1. Aller sur la plage https://mon.mviewer.xml
-2. Cliqué sur Rechercher
+1. Aller sur la page https://mon.mviewer.xml
+2. Cliquer sur Rechercher
 3. Saisir quelque chose
 4. Voir que rien ne se passe (ou l'erreur si identifiable)
 
@@ -37,6 +37,5 @@ Merci de remplir ces informations si connues :
  - Version [e.g. 22]
 
 **Informations complémentaires / Additional context**
-
 
 Préciser par exemple si le problème a été vu suite à l'installation d'une nouvelle version ou suite à des modifications que vous auriez faites dans votre Mviewer.

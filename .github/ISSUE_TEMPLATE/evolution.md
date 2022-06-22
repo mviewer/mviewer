@@ -18,4 +18,4 @@ Si vous avez une idée de comment mettre en place cette évolution, vous pouvez 
 
 **Informations complémentaires / Additional context**
 
-Toutes informations complémentaire que vous jugez utiles.
+Toutes informations complémentaires que vous jugez utiles.
