@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<application
+		title="Téléchargement de données après filtre"
+		id="sinp-filter"
+		logo=""
+		help="mviewer_help.html"
+		style=""
+		exportpng="false"
+		favicon="https://www.geo2france.fr/favicon.ico"
+		showhelp="false"
+		coordinates="false"
+		measuretools="false"
+		togglealllayersfromtheme="true">
+	</application>
+	<extensions>
+        <extension type="component" id="filter" path="demo/addons"/>
+	</extensions>
+	<mapoptions maxzoom="18" projection="EPSG:3857" center="318589,6459450" zoom="8" />
+	<olscompletion type="ban" url="https://api-adresse.data.gouv.fr/search/" attribution="" />
+	<searchparameters bbox="false" localities="true" features="false" static="false"/>
+	<baselayers style="gallery"><!-- style="default"||gallery" -->
+		<baselayer
+			type="WMS"
+			id="ortho2021"
+			layers="HR.ORTHOIMAGERY.ORTHOPHOTOS"
+			label="Orthophoto 2021"
+			title="Orthophoto 2021"
+			thumbgallery="img/basemap/ortho.jpg"
+			url="https://wxs.ign.fr/ortho/geoportail/r/wms"
+			maxzoom="19"
+			visible="false"
+			format="image/png"
+			attribution="IGN"/>
+		<baselayer
+			type="WMS"
+			id="osmgp1"
+			layers="faded"
+			label="OSM - Géo2France"
+			title="OSM"
+			thumbgallery="img/basemap/osm.png"
+			url="https://osm.geo2france.fr/mapcache/"
+			maxzoom="19"
+			visible="true"
+			format="image/png"
+			attribution="Géo2France/OSM"
+			tiled="false" />
+	</baselayers>
+	<themes mini="false">		
+		<theme name="SINP Hauts-de-France"  collapsed="true" id="sinp" icon="flag">
+			<layer id="occurence_public_filter"
+				toplayer="true" vectorlegend="true"
+				name="Points de Mutualisation Fibre"
+				visible="true"
+				url="demo/filter/customlayers/occurence_public_filter.js"
+				queryable="true"
+				type="customlayer"
+				opacity="1"     
+				expanded="true"
+				attribution="Magellium"
+				metadata="https://www.data.gouv.fr/fr/datasets/localisations-des-points-de-mutualisation-fibre-pmz-dans-openstreetmap/">
+			</layer>	
+		</theme>
+		<theme name="Données de contexte"  collapsed="true" id="environnement2" icon="map">
+			<layer
+				id="cadastre_2020"
+				name="Cadastre (PCI vecteur 2020)"
+				attribution="Source : DGFiP"
+				visible="false"
+				opacity="0.5"
+				queryable="true"
+				infoformat="application/vnd.ogc.gml"
+				url="https://www.geo2france.fr:443/geoserver/pci/ows?">
+			</layer>
+			<layer
+				id="communes"
+				name="Communes"
+				attribution="Source : IGN/Région Hauts-de-France"
+				queryable="true"
+				style="polygon_pointilles,contour_bleu,contour_orange,contour_blanc,contour_jaune,contour jaune avec étiquettes,contour_noir,contour_rouge,contour_gris,polygon_blanc,polygon_violet,polygon_rouge,polygon_bleu,polygon_gris,polygon_vert,hachures_vers_la_gauche,hachures_horizontales,hachures_verticales,hachures_vers_la_droite"
+				infoformat="application/vnd.ogc.gml"
+				url="https://www.geo2france.fr/geoserver/spld/ows?"
+				metadata-csw="https://www.geo2france.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=278fd502-b096-4491-a529-e617b71a1c8f"
+				metadata="https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/278fd502-b096-4491-a529-e617b71a1c8f">
+			</layer>
+			<layer
+				id="epci"
+				name="EPCI"
+				visible="false"
+				attribution="Source : IGN/Région Hauts-de-France"
+				queryable="true"
+				style="EPCI contour noir avec étiquettes,EPCI aplat bleu avec étiquettes,EPCI aplat blanc avec étiquettes,EPCI aplat jaune avec étiquettes,EPCI aplat orange avec étiquettes,EPCI aplat rouge avec étiquettes,EPCI contour bleu avec étiquettes,EPCI contour jaune avec étiquettes,EPCI contour blanc avec étiquettes,EPCI contour rouge avec étiquettes,EPCI contour orange avec étiquettes,contour_bleu,contour_orange,contour_blanc,contour_jaune,contour jaune avec étiquettes,contour_noir,contour_rouge,contour_gris,polygon_blanc,polygon_violet,polygon_rouge,polygon_bleu,polygon_gris,polygon_vert,hachures_vers_la_gauche,hachures_horizontales,hachures_verticales,hachures_vers_la_droite"
+				infoformat="application/vnd.ogc.gml"
+				url="https://www.geo2france.fr/geoserver/spld/ows?"
+				metadata-csw="https://www.geo2france.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=791b9687-7b77-4db1-a78e-61a517668c3b"
+				metadata="https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/791b9687-7b77-4db1-a78e-61a517668c3b">
+			</layer>
+			<layer
+				id="RGEALTI_hillshade_regular_semitransparent_1M_LAMB93_HdF_cog_bilinear"
+				name="Ombrage relief"
+				queryable="false"
+				visible="true"
+				opacity="0.5"
+				showintoc="false"
+				url="https://www.geo2france.fr/geoserver/geo2france/ows"
+				infoformat="application/vnd.ogc.gml"
+				attribution="IGN-Géo2France" >
+			</layer>
+			<layer 
+				id="masque_hdf_ign_carto_latin1" 
+				name="Masque Hauts-de-France" 
+				attribution="Source : Géo2France" 
+				opacity="0.7" 
+				visible="true" 
+				queryable="false"
+				showintoc="false"
+				infoformat="application/vnd.ogc.gml" 
+				url="https://www.geo2france.fr:443/geoserver/cr_hdf/ows?" 
+				legendurl="https://www.geo2france.fr/geoserver/cr_hdf/ows?service=WMS&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=masque_hdf_ign_carto_latin1">
+			</layer>
+		</theme>
+	</themes>
+</config>

@@ -6,7 +6,7 @@
 Configurer - Traduction
 =========================
 
-Cette parge vous servira à comprendre et mettre en place les éléments pour traduire le mviewer.
+Cette page vous servira à comprendre et mettre en place les éléments pour traduire le mviewer.
 
 `Démonstration kartenn <http://kartenn.region-bretagne.fr/kartoviz/?config=demo/lang.xml&lang=fr>`_.
 
@@ -19,7 +19,7 @@ Le mviewer utilise la libraire `i18n.js <https://i18njs.com/>`_ pour traduire l'
 
 **Principe**
 
-La traduction s'appuie sur un dictionnaire de traduction (fichier mviewer.i18n.json).
+La traduction s'appuie sur un dictionnaire de traduction (fichier `mviewer i18n json <https://github.com/geobretagne/mviewer/blob/develop/docs/doc_tech/config_translate.rst>`_).
 Tous les éléments html disposant d'un attribut i18n seront traduits si une correspondance est trouvée dans le dictionnaire::
 
     <span i18n="une.cle.a.traduire"> une valeur par défaut </span>

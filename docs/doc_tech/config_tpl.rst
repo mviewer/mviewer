@@ -12,6 +12,26 @@ Personnalisation de la fiche d'information
 Pour les couches de type vecteur et WMS, il est possible de définir un template afin de formater côté client, la fiche d'information des entités sélectionnées.
 Le moteur de template (logic less) utilisé est Mustache : https://github.com/janl/mustache.js
 
+Ce qu'il faut savoir de Mustache
+--------------------------------
+
+- On fait référence à la valeur d'un champ de cette façon : ``{{champ}}``.
+- Il est possible de gérer une absence de valeur ou une valeur false de cette façon :
+
+.. code-block:: xml
+       :linenos:
+
+        {{#champ2}}
+            Ce texte s'affiche si champ2 contient une valeur ou est différent de false.
+        {{/champ2}}
+
+La finalité du template est ici de fabriquer un contenu formaté HTML. L'ajout des balises <style> permet de personnaliser l'affichage du champ via du CSS. Exemple ci-dessous sur le formatage du texte et d'un bouton pour clic.
+
+Pour aller plus loin sur la personnalisation, consulter les différentes documentation sur HTML et CSS.
+
+Nous avons la possibilité d'injecter du code via la balise <script>.
+
+
 Exemple de template structuré
 --------------------------------
 
@@ -68,34 +88,21 @@ Exemple de template structuré
             }
         </style>
 
-Les éléments en rouge sont obligatoires.
+Les éléments suivants en rouge sont obligatoires.
 
-Explications : ``{{#features}}{{/features}}`` est une boucle effectuée sur chaque entité présente dans la couche sélectionnée.
-``<li id="{{feature_ol_uid}}" class="item"></li>`` est une entrée de liste html utilisée par le mviewer. S'il y a plusieurs entrées de liste car plusieurs entités sélectionnées, le mviewer présentera les réponses sous la forme d'un carousel.
-Pour synchroniser le carousel et la sous-sélection sur la carte lors d'un clic, l'injection de la ``feature_ol_uid`` est requise dans l' ``id`` de la balise.
-Puisque une ``feature id`` n'est pas obligatoire comme attribut pour une feature l' ``ol_uid`` interne d'OpenLayers est utilisée à ce propos.
+**Explications du template mustache** : 
 
-Ce qu'il faut savoir de Mustache
---------------------------------
+- ``{{#features}}{{/features}}`` est une boucle effectuée sur chaque entité présente dans la couche sélectionnée.
+- {{surface}} affiche le contenu du champ surface.
+- ``<li id="{{feature_ol_uid}}" class="item"></li>`` est une entrée de liste html utilisée par le mviewer. S'il y a plusieurs entrées de liste car plusieurs entités sélectionnées, le mviewer présentera les réponses sous la forme d'un carousel.
+- Pour synchroniser le carousel et la sous-sélection sur la carte lors d'un clic, l'injection de la ``feature_ol_uid`` est requise dans l' ``id`` de la balise.
+- Puisque une ``feature id`` n'est pas obligatoire comme attribut pour une feature l' ``ol_uid`` interne d'OpenLayers est utilisée à ce propos.
+- <style> permet d'injecter du code CSS / HTML de personnalisation des styles utilisés dans le template.
+- <script> permet d'injecter du code javascript.
 
-- On fait référence à la valeur d'un champ de cette façon : ``{{champ}}``.
-- Il est possible de gérer une absence de valeur ou une valeur false de cette façon :
-
-.. code-block:: xml
-       :linenos:
-
-        {{#champ2}}
-            Ce texte s'affiche si champ2 contient une valeur ou est différent de false.
-        {{/champ2}}
-
-La finalité du template est ici de fabriquer un contenu formaté HTML. L'ajout des balises <style> permet de personnaliser l'affichage du champ via du CSS. Exemple ici sur le formatage du texte et d'un bouton pour clic.
-
-Pour aller plus loin sur la personnalisation, consulter les différentes documentation sur HTML et CSS.
-
-Nous avons la possibilité d'injecter du code via la balise <script>.
 
 Résultat de l'exemple ci-dessus
---------------------------------
+****************************
 
 .. image:: ../_images/dev/config_tpl/exemple_template.png
               :width: 400
@@ -129,7 +136,7 @@ Exemple 2 pour *monchampjson* = ``[{"nom": "item1", "code": 1}, {"nom": "item2",
             <li>{{nom}} - {{code}}</li>
         {{/monchampjson}}
 
-Exemple 3 pour afficher un tableau
+Exemple 3 pour afficher un tableau comme dans ici https://kartenn.region-bretagne.fr/kartoviz/?config=demo/jsonfields.xml
 
 .. code-block:: xml
        :linenos:
@@ -146,7 +153,7 @@ Exemple 3 pour afficher un tableau
         </table>
 
 Résultat du template ci dessus
--------------------------------
+****************************
 
 .. image:: ../_images/dev/config_tpl/exemple_template_table.png
               :width: 400
@@ -155,7 +162,7 @@ Résultat du template ci dessus
 
 
 Itérer sur les champs disponibles
----------------------------------
+****************************
 
 En plus d'afficher la valeur d'un champ comme expliqué précédemment, il est aussi possible de lire et parcourir l'ensemble des champs disponibles avec  ``{{#fields_kv}}...{{/fields_kv}}``.
 

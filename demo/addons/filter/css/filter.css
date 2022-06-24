@@ -7,7 +7,7 @@
   left: 60px;
   padding: 5px 15px 2px;
   max-width: 250px;
-  z-index: 1000000 !important;
+  z-index: 1000 !important;
 }
 
 .advancedFilter h2 {
@@ -72,4 +72,14 @@
   right: 30px;
   top: 4px;
   color: #9DE0EF;
+}
+
+.download-btn{
+  color:white;
+  margin:10px;
+  cursor: pointer;
+}
+.download-section{
+  margin-top: 5px;
+  margin-bottom: 15px;
 }

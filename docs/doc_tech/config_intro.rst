@@ -12,7 +12,10 @@ Le visualiseur cartographique mviewer consomme des données et des services serv
 Si aucune configuration n'est indiquée dans l'URL, c'est la configuration par défaut qui s'applique ( **apps/default.xml**).
 
 Il est possible de créer n fichiers de configuration (config1.xml, config2.xml...) de façon à  créer plusieurs applications thématiques à  partir d'une seule instance mviewer. Pour appeler une configuration particulière, il suffit alors de rajouter le paramètre **config** dans l'url, exemple `?config=demo/geobretagne.xml <http://kartenn.region-bretagne.fr/kartoviz/?config=demo/geobretagne.xml>`_ .
-Pour d'autres exemples, consulter la page : `démos <http://kartenn.region-bretagne.fr/kartoviz/demo/>`_.
+
+Pour voir des **exemples d'applications et de fichiers de configuration XML**, rendez vous à cette page : `démos <http://kartenn.region-bretagne.fr/kartoviz/demo/>`_.
+
+En cliquant sur **Sources**, vous accèderez au fichier XML et le le bouton **Live!** vous permet de visualisation l'application.
 
 Structure du fichier de configuration
 --------------------------------------
@@ -62,6 +65,7 @@ Paramètres d'URL utilisés pour les permaliens
 * ``z`` : Zoom de la carte (1 à 20).
 * ``lb`` : Identifiant de la couche de fond affichée.
 * ``c_[monparam]`` : où mon param est l'identifiant du composant personnalisé ou de la couche personalisée. La valeur du paramètre peut ensuite être utilisée par le composant ou la couche concernée. exemple c_mycustomlayer=red,blue,green
+* Plus d'informations sur les permaliens ":ref:`othertools`" menu Partage de carte
 
 Sections de configurations
 ----------------------------

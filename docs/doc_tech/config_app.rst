@@ -9,7 +9,8 @@ Configurer - Application
 
 Personnalisation de l'application
 
-**Syntaxe**
+Syntaxe
+-----------------
 
 .. code-block:: xml
        :linenos:
@@ -43,20 +44,25 @@ Personnalisation de l'application
 		favicon=""
         />
 
-**Paramètres**
+Paramètres principaux
+-----------------
 
-* ``titlehtml`` :guilabel:`studio` : optionnel de type texte, il permet d'utiliser du HTML uniquement pour le titre de l'application. Utiliser **title** avec ce paramètre pour le titre de l'onglet et la page de chargement.
 * ``title`` :guilabel:`studio` : paramètre optionnel de type texte qui définit le titre de l'application. Valeur par défaut **mviewer**.
 * ``logo`` :guilabel:`studio` : paramètre optionnel de type url qui définit l'emplacement du logo de l'application. Valeur par défaut **img/logo/earth-globe.svg**.
 * ``help`` :guilabel:`studio` : paramètre optionnel de type url qui définit l'emplacement du fichier html de l'aide.
 * ``showhelp`` :guilabel:`studio` : paramètre optionnel de type booléen (true/false) précisant si l'aide est affichée en popup au démarrage de l'application. Valeur par défaut **false**.
-* ``titlehelp``: paramètre optionnel de type texte qui définit le titre de la popup d'aide. Valeur par défaut **Documentation**.
-* ``iconhelp``: paramètre optionnel de type texte qui précise l'icône à utiliser afin d'illustrer la thématique. Les valeurs possibles sont à choisir parmi cette liste : http://fontawesome.io/icons/
 * ``style`` :guilabel:`studio` : paramètre optionnel de type url précisant la feuille de style à utiliser afin de modifier l'apparence de l'application (couleurs, polices...). Valeur par défaut **css/themes/default.css**. Voir : ":ref:`configcss`".
 * ``exportpng`` :guilabel:`studio` : paramètre optionnel de type booléen (true/false) activant l'export de la carte en png. Valeur par défaut **false**. Attention l'export ne fonctionne qu'avec des couches locales (même origine) ou avec des couches servies avec  `CORS <https://enable-cors.org/>`_ activé.
 * ``measuretools`` :guilabel:`studio` : paramètre optionnel de type booléen (true/false) activant les outils de mesure. Valeur par défaut **false**.
 * ``zoomtools`` : paramètre optionnel de type booléen (true/false) activant les outils de zoom +/-. Valeur par défaut **true**.
 * ``initialextenttool`` : paramètre optionnel de type booléen (true/false) activant le bouton de retour à l'étendue initiale. Valeur par défaut **true**.
+
+Paramètres secondaires
+-----------------
+
+* ``titlehtml`` :guilabel:`studio` : optionnel de type texte, il permet d'utiliser du HTML uniquement pour le titre de l'application. Utiliser **title** avec ce paramètre pour le titre de l'onglet et la page de chargement.
+* ``titlehelp``: paramètre optionnel de type texte qui définit le titre de la popup d'aide. Valeur par défaut **Documentation**.
+* ``iconhelp``: paramètre optionnel de type texte qui précise l'icône à utiliser afin d'illustrer la thématique. Les valeurs possibles sont à choisir parmi cette liste sur le site Fontawesome : https://fontawesome.com/v5/search?m=free
 * ``stats``: paramètre optionnel de type booléen (true/false) activant l'envoi de stats d'utilisation l'application. Valeur par défaut **false**.
 * ``statsurl``: paramètre optionnel de type url précisant l'url du service reccueillant les données d'utilisation de l'application (ip, application title, date). Ce service n'est pas proposé dans mviewer.
 * ``coordinates`` :guilabel:`studio` : paramètre optionnel de type booléen (true/false) activant l'affichage des coordonnées GPS ( navbar) lors de l'interrogation. Valeur par défaut **false**.
@@ -74,14 +80,15 @@ Personnalisation de l'application
 * ``favicon``: URL du fichier image à utiliser comme favicon de l'application.
 
 
-**Exemple**
+Exemple
+-----------------
 
 .. code-block:: xml
        :linenos:
 
 	<application title="Exemple"
 		logo="img/logo/g.png"
-		help=""
+		help="help/aide.html"
 		exportpng="false"
 		measuretools="true"
 		favicon="https://www.bretagne.bzh/app/themes/bretagne/dist/img/icons/favicon.ico"

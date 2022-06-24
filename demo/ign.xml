@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <application panelstate="open" title="Réutilisation données IGN" logo="" help="" exportpng="true" legend="true" measuretools="true" legendasimage="false" popup="false" print="false" style="css/themes/default.css" />
+    <mapoptions maxzoom="18" projection="EPSG:3857" center="-255516,6140243" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
+
+	<baselayers style="gallery"><!-- style="default"||gallery" -->     
+        <baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoPortail" maxscale="1000" thumbgallery="img/basemap/ortho.jpg"
+            url="https://wxs.ign.fr/essentiels/geoportail/wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" format="image/jpeg" visible="false" fromcapacity="false"
+            attribution="&lt;a href='https://www.geoportail.gouv.fr/' target='_blank'>&lt;img src='https://www.geoportail.gouv.fr/assets/images/logo-geoportail.svg'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
+        <baselayer  type="WMTS" id="plan" label="Plan IGN" title="GéoPortail" maxscale="2000" thumbgallery="img/basemap/plan_ign.png" opacity="0.8"
+            url="https://wxs.ign.fr/decouverte/geoportail/wmts" layers="GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2" format="image/png" visible="true" fromcapacity="false"
+            attribution="&lt;a href='https://www.geoportail.gouv.fr/' target='_blank'>&lt;img src='https://www.geoportail.gouv.fr/assets/images/logo-geoportail.svg'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
+        <baselayer  type="WMTS" id="rpg2020" label="RPG2020" title="RPG2020" thumbgallery="img/basemap/rpg.png" 
+            url="https://wxs.ign.fr/agriculture/geoportail/wmts" layers="LANDUSE.AGRICULTURE2020" format="image/png" visible="false" fromcapacity="false"
+            attribution="&lt;a href='https://www.geoportail.gouv.fr/' target='_blank'>&lt;img src='https://www.geoportail.gouv.fr/assets/images/logo-geoportail.svg'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
+        <baselayer  type="WMTS" id="slopes" label="Elevation" title="Elevation" thumbgallery="img/basemap/elevation.png" 
+            url="https://wxs.ign.fr/altimetrie/geoportail/wmts" layers="ELEVATION.SLOPES" format="image/jpeg" visible="false" fromcapacity="false"
+            attribution="&lt;a href='https://www.geoportail.gouv.fr/' target='_blank'>&lt;img src='https://www.geoportail.gouv.fr/assets/images/logo-geoportail.svg'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
+    </baselayers> 
+    <olscompletion url="https://wxs.ign.fr/essentiels/ols/apis/completion" type="IGN" attribution="IGN"/>
+    <searchparameters bbox="true" localities="true" features="true"/>
+
+    <extensions>    
+        <extension type="component" id="isochroneAddon" path="demo/addons"/>
+    </extensions>
+    <themes>
+        <theme name="Géodésie"  id="geodesie" collapsed="false" icon="fas fa-caret-right">
+			<layer id="BDGEODESIQUE-RN_BDD-POI_WLD" name="Repère géodésique" visible="false" tiled="false"
+				queryable="true" 
+                infoformat="text/html" featurecount="5"                
+				url="https://wxs.ign.fr/geodesie/geoportail/v/wms" 
+				attribution="IGN" 
+				metadata="https://geoservices.ign.fr/sites/default/files/2021-07/IGNF_DONNEES_GEODESIQUES.html"
+				metadata-csw="" />	
+		</theme>
+        <theme name="Agriculture"  id="agri" collapsed="false" icon="fas fa-caret-right">
+			<layer id="LANDUSE.AGRICULTURE2020" name="RPG2020" visible="false" tiled="true"
+				queryable="true" 
+                infoformat="text/html" featurecount="5"                
+				url="https://wxs.ign.fr/agriculture/geoportail/r/wms" 
+				attribution="IGN" 
+				metadata=""
+				metadata-csw="" />	
+		</theme>
+        <theme name="Environnement"  id="environnement" collapsed="false" icon="fas fa-caret-right">
+			<layer id="PROTECTEDAREAS.RN" name="RN" visible="false" tiled="true"
+				queryable="true" 
+                infoformat="text/html" featurecount="5"                
+				url="https://wxs.ign.fr/environnement/geoportail/r/wms" 
+				attribution="IGN" 
+				metadata=""
+				metadata-csw="" />	
+			<layer id="pnr" name="PNR WFS" visible="false" tiled="true"
+                type="customlayer"
+                vectorlegend="true"
+				queryable="true" 
+                infoformat="text/html" featurecount="5" 
+				tooltip="true"	tooltipcontent="{{nom}}"				
+				url="customlayers/pnr_ign.js" 
+				attribution="IGN" 
+				metadata=""
+				metadata-csw="" />	
+		</theme>
+		<theme id="gpu" url="https://geobretagne.fr/apps/gpu/config.xml" name="Documents d'urbanisme" collapsed="true" icon="fas fa-caret-right"> 
+		</theme> 
+
+    </themes>
+</config>

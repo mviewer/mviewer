@@ -5,6 +5,48 @@
   "target": "page-content-wrapper",
   "options": {
     "mviewer":{
+      "sinp-filter":{
+        "tooltipPosition": "bottom-left",
+        "title": "Filtrer",
+        "open": true,
+        "zoomOnFeatures": true,
+        "legendTitle": "Sélectionner une donnée :",
+        
+        "style": {
+          "border": "1px #2e5367 solid",
+          "background": "#2e5367",
+          "text": "white",
+          "colorButton": "#2e5367"
+        },
+        "layers": [{
+          "layerId": "occurence_public_filter",
+          "downloadFormats":[ 
+            { "label": "CSV", "format": "CSV" },
+            { "label": "Shapefiles", "format": "SHAPE-ZIP" },
+            { "label": "Geojson", "format": "application/json" }
+          ],
+          "filter": [{
+              "attribut": "man_made",
+              "type": "combobox",
+              "label": "Man_made",
+			        "updateOnChange": true
+            },
+            {
+              "attribut": "operator",
+              "type": "button",
+              "label": "Operator",
+              "updateOnChange": true
+            },
+            {
+              "attribut": "colour",
+              "type": "button",
+              "label": "colour",
+              "updateOnChange": true
+            }
+          ]
+        }	
+		]
+      },
       "filter":{
         "tooltipPosition": "bottom-left",
         "title": "Filtrer",

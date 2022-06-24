@@ -4,31 +4,34 @@
     <mapoptions maxzoom="19" projection="EPSG:3857" center="-220750.13768758904,6144925.57790189" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
   
     <baselayers style="gallery">
-        <baselayer  type="OSM" id="positron" label="Positron" title="CartoDb" thumbgallery="img/basemap/positron.png" 
+        <baselayer  type="OSM" id="positron" label="Positron" title="Carto" thumbgallery="img/basemap/positron.png" 
             url="http://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20" 
-            visible="true" attribution="Map tiles by  &lt;a href='https://cartodb.com/attributions' target='_blank'>CartoDb &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/' target='_blank'>CC BY 3.0 &lt;/a>" />
+            visible="true" attribution="Map tiles by  &lt;a href='https://carto.com/attributions' target='_blank'>Carto &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/' target='_blank'>CC BY 3.0 &lt;/a>" />
         <baselayer  type="OSM" id="osm1" label="OpenStreetMap" title="OpenStreetMap" thumbgallery="img/basemap/osm.png" 
             url="http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
             attribution="© MapQuest. Données : les contributeurs d'&lt;a href='https://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='https://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" visible="false"/>
 		<baselayer visible="false" id="osm_google" 
 			thumbgallery="img/basemap/osm_google.png" title="GéoBretagne" label="OpenStreetMap GéoBretagne" type="WMS" url="https://osm.geobretagne.fr/gwc01/service/wms" layers="osm:google" format="image/png" 
             attribution="GéoBretagne. Données : les contributeurs d'&lt;a href='https://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='https://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>"/>
-        <baselayer  type="OSM" id="darkmatter" label="Dark Matter" title="CartoDb" thumbgallery="img/basemap/darkmatter.png" 
+        <baselayer  type="OSM" id="darkmatter" label="Dark Matter" title="Carto" thumbgallery="img/basemap/darkmatter.png" 
             url="http://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png" maxzoom="20" 
-            visible="false" attribution="Map tiles by  &lt;a href='https://cartodb.com/attributions' target='_blank'>CartoDb &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/' target='_blank'>CC BY 3.0 &lt;/a>" />
+            visible="false" attribution="Map tiles by  &lt;a href='https://carto.com/attributions' target='_blank'>Carto &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/' target='_blank'>CC BY 3.0 &lt;/a>" />
 		<baselayer visible="false" id="ortho1" 
 			thumbgallery="img/basemap/ortho.jpg" title="GéoBretagne" label="Photo aérienne GéoBretagne" type="WMTS" url="https://tile.geobretagne.fr/gwc02/service/wmts" layers="satellite" format="image/png" style="_null" matrixset="EPSG:3857" fromcapacity="false" 
 			attribution="&lt;a href='https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/3a0ac2e3-7af1-4dec-9f36-dae6b5a8c731' target='_blank' >Partenaires GéoBretagne - IGN&lt;/a>"/>
-        <baselayer  type="WMS" id="photo2" label="Photo aérienne 1950" title="GéoBretagne" thumbgallery="img/basemap/ortho-ancien.jpg"
+        <baselayer  type="WMS" id="photo2" label="Photo aérienne GéoBretagne 1950" title="GéoBretagne" thumbgallery="img/basemap/ortho-ancien.jpg"
 			url="https://tile.geobretagne.fr/gwc02/service/wms" layers="satellite-ancien" format="image/jpeg" visible="false"
 			attribution="&lt;a href='https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/048622c5-b333-4c2b-94ec-40a41608dc06' target='_blank' >Partenaires GéoBretagne - IGN&lt;/a>"/>
         <baselayer  visible="false" type="WMTS" id="ortho_ir" 
 			label="Photo aérienne infra rouge"   title="GéoBretagne" thumbgallery="img/basemap/ir.jpg"
             url="https://geobretagne.fr/geoserver/gwc/service/wmts"   layers="photo:ir-composite" format="image/jpeg" style="_null" matrixset="EPSG:3857"
             fromcapacity="false"   attribution="&lt;a href='https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=434b82a8-8d3c-4d9f-9eb3-0485f1a63eb6' target='_blank' >Partenaires GéoBretagne - IGN &lt;/a>" />
-        <baselayer type="OSM" id="esriworldimagery" 
-			label="Esri world imagery" title="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg"
-            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" visible="false" attribution="&lt;a href='https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9' target='_blank' >ESRI word imagery&lt;/a>"/>
+        <baselayer  type="WMTS" id="ortho2" label="Photo aérienne IGN" title="GéoPortail" maxscale="1000" thumbgallery="img/basemap/ortho.jpg"
+            url="https://wxs.ign.fr/essentiels/geoportail/wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" format="image/jpeg" visible="false" fromcapacity="false"
+            attribution="&lt;a href='https://geoservices.ign.fr/services-web-decouverte' target='_blank'>&lt;img src='img/basemap/geoservices.png'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
+        <baselayer  type="WMTS" id="plan" label="Plan IGN" title="GéoPortail" maxscale="2000" thumbgallery="img/basemap/plan_ign.png" opacity="0.8"
+            url="https://wxs.ign.fr/decouverte/geoportail/wmts" layers="GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2" format="image/png" visible="false" fromcapacity="false"
+            attribution="&lt;a href='https://geoservices.ign.fr/services-web-decouverte' target='_blank'>&lt;img src='img/basemap/geoservices.png'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
         <baselayer  type="fake" id="fake" label="Carroyage" title="Carroyage" thumbgallery="img/basemap/grid.png" visible="false"  />
     </baselayers>     
     <proxy url=""/>
@@ -146,23 +149,22 @@
             </group>
         </theme>                    
         <theme name="Découpages territoriaux"  collapsed="true" id="territoire" icon="fas fa-globe">
-        <layer id="commune" name="Commune" visible="false" queryable="false" 
+			<layer id="commune" name="Commune" visible="false" queryable="false" 
                 fields="nom_geo" aliases="Nom" 
-                type="customlayer" style="" opacity="1" legendurl="img/legend/commune.png" 
-                url="customlayers/commune.js" 
+                type="customlayer" style="" opacity="1" legendurl="https://kartenn.region-bretagne.fr/kartoviz/apps/region/territoire/img/commune.png" 
+                url="https://kartenn.region-bretagne.fr/kartoviz/apps/region/territoire/customlayers/commune.js" 
                 tooltip="true" tooltipenabled="true"
                 attribution="Source: GéoBretagne" 
-                metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=b08e6cb1-236c-49b7-88f9-42b500d274d5" 
+                metadata="https://geobretagne.fr/geonetwork/srv/eng/catalog.search?node=srv#/metadata/b08e6cb1-236c-49b7-88f9-42b500d274d5" 
                 metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=b08e6cb1-236c-49b7-88f9-42b500d274d5"/>	    
-            <layer id="epci" name="Intercommunalité" visible="true" queryable="false" toplayer="true"
-                fields="nom_geo" aliases="Nom"
-                customcontrol="true"
-                type="customlayer" style="" opacity="1" legendurl="img/legend/epci.png" 
-                url="customlayers/epci.js" 
+            <layer id="epci" name="Intercommunalité" visible="true" queryable="false" 
+                fields="nom_geo" aliases="Nom" toplayer="true"
+                type="customlayer" style="" opacity="1" legendurl="https://kartenn.region-bretagne.fr/kartoviz/apps/region/territoire/img/epci.png" 
+                url="https://kartenn.region-bretagne.fr/kartoviz/apps/region/territoire/customlayers/epci.js" 
                 tooltip="true" tooltipenabled="true"
                 attribution="Source: GéoBretagne" 
-                metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=2298d744-49cb-4fcb-9487-26f916fecdff" 
-                metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=2298d744-49cb-4fcb-9487-26f916fecdff"/>       
+                metadata="https://geobretagne.fr/geonetwork/srv/eng/catalog.search?node=srv#/metadata/2298d744-49cb-4fcb-9487-26f916fecdff" 
+                metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=2298d744-49cb-4fcb-9487-26f916fecdff"/>           
         </theme>
 
     </themes>

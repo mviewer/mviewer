@@ -72,36 +72,36 @@ Configurer - Les couches
                 expanded=""
                 metadata=""
                 metadata-csw=""
-		infopanel=""
+                infopanel=""
                 index="">
                 <template url=""></template>
         </layer>
 
-Paramètres pour une configuration minimaliste
+Paramètres obligatoires pour une configuration minimaliste
 =================================================
 
-* ``name`` :guilabel:`studio` : paramètre obligatoire de type texte qui précise le nom de la couche.
-* ``url`` :guilabel:`studio` : paramètre obligatoire de type URL (URL du service web).
-* ``id`` :guilabel:`studio` : paramètre obligatoire de type texte qui renseigne l'identifiant technique de la couche côté serveur WMS ou WFS.
+* ``name`` :guilabel:`studio` : paramètre de type texte qui précise le nom de la couche.
+* ``url`` :guilabel:`studio` : paramètre de type URL (URL du service web).
+* ``id`` :guilabel:`studio` : paramètre de type texte qui renseigne l'identifiant technique de la couche côté serveur WMS ou WFS.
 
 
 Paramètres pour gérer l'affichage de la couche
 ===================================================
 
-* ``index``: Ordre d'affichage de la couche sur la carte et dans la légende au démarrage. Les couches avec ce paramètre seront visibles sous les toplayers. Les couches sans ce paramètre ni toplayer seront affichées dans l'ordre d'écriture dans le XML.
-* ``scalemin`` :guilabel:`studio` : Échelle minimum de la couche
-* ``scalemax`` :guilabel:`studio` : Échelle maximum de la couche
-* ``dynamiclegend`` : Booléen précisant si la légende est liée à l'échelle de la carte et si elle nécessite d'être actualisée à chaque changement d'échelle de la carte.
-* ``visible`` :guilabel:`studio` :  Booléen stipulant est ce que la couche est actuellement visible
-* ``exclusive``:  Booléen stipulant si la couche est exclusive. Si la valeur est "true", l'affichage de cette couche masquera automatiquement toutes les autres couches ayant ce paramètre activé.
+* ``visible`` :guilabel:`studio` :  Booléen stipulant si la couche est visible par défaut.
+* ``opacity`` :guilabel:`studio` : Opacité de la couche (1 par défaut).
+* ``tiled`` :guilabel:`studio` : Booléen stipulant si on désire un affichage tuilé de la couche. Très utile pour affichage de grosses couches.
 * ``style`` :guilabel:`studio` : Style(s) de la couche. Si plusieurs styles , utiliser la virgule comme séparateur. Si la couche est de type wms, il faut faire référence à un style sld. Si la couche est de type geojson, il faut faire référence à un style définit dans lib/featurestyles.js. Si la couche est de type customlayer, le style n'est pas défini ici.
 * ``styletitle`` : Titres à utiliser pour la liste des styles associés.
 * ``stylesalias`` :guilabel:`studio` : Titres à utiliser pour chaques style. utiliser la virgule comme séparateur si plusieurs styles.
 * ``sld`` :guilabel:`studio` : Lien vers un SLD stocké sur le web. Dans ce fichier SLD, la balise sld:Name contenue dans sld:NamedLayer doit être égale au nom de la couche. Si plusieurs styles , utiliser la virgule comme séparateur. S'applique uniquement aux layers WMS. Il faut indiquer l'URL résolvable par le serveur WMS du ou des sld.
-* ``tiled`` :guilabel:`studio` : Booléen stipulant est ce que la couche est tuilée
-* ``opacity`` :guilabel:`studio` : Opacité de la couche (1 par défaut)
+* ``index``: Ordre d'affichage de la couche sur la carte et dans la légende au démarrage. Les couches avec ce paramètre seront visibles sous les toplayers. Les couches sans ce paramètre ni toplayer seront affichées dans l'ordre d'écriture dans le XML.
+* ``scalemin`` :guilabel:`studio` : Échelle minimum de la couche.
+* ``scalemax`` :guilabel:`studio` : Échelle maximum de la couche.
+* ``dynamiclegend`` : Booléen précisant si la légende est liée à l'échelle de la carte et si elle nécessite d'être actualisée à chaque changement d'échelle de la carte.
+* ``exclusive``:  Booléen stipulant si la couche est exclusive. Si la valeur est "true", l'affichage de cette couche masquera automatiquement toutes les autres couches ayant ce paramètre activé.
 * ``legendurl`` :guilabel:`studio` : url permettant de récupérer la légende. Si non défini, c'est un GetLegendGraphic qui est effectué.
-* ``filter`` :guilabel:`studio` : Expression CQL permettant de filtrer la couche ex: insee=35000 Ou INTERSECT(the_geom, POINT (-74.817265 40.5296504)) [tutorial] (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial)
+* ``filter`` :guilabel:`studio` : Expression CQL permettant de filtrer la couche ex: insee=35000 Ou INTERSECT(the_geom, POINT (-74.817265 40.5296504)) [tutorial] (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial).
 * ``toplayer``: Précise si la couche demeure figée. Booléen. Défaut = true. Si plusieurs couches sont en toplayer, elles seront affichées dans l'ordre d'écriture du XML.
 * ``expanded`` :guilabel:`studio` : Booléan précisant si le panneau de la couche est agrandi au démarrage. La valeur par défaut est false.
 * ``showintoc`` :  Booléen stipulant si la couche est affichée dans la légende. La valeur par défaut est true.
@@ -110,36 +110,35 @@ Paramètres pour gérer attributions et métadonnées
 =====================================================
 
 * ``attribution`` :guilabel:`studio` : Copyright de la couche. Le mot-clé "metadata" permet de récupérer cette information depuis des métadonnées compliantes au Dublin Core (champs "source").
-* ``metadata`` :guilabel:`studio` : Lien vers la fiche de metadonnées complète
+* ``metadata`` :guilabel:`studio` : Lien vers la fiche de metadonnées complète.
 * ``metadata-csw`` :guilabel:`studio` : Requête CSW pour l'affiche dans la popup du détail de la couche. Mviewer récupère également la date de création ou dernière mise à jour si cela est en Dublin Core.
 
 Paramètres pour gérer l'interrogation et la mise en forme de la fiche d'interrogation de la couche
 ===================================================================================================
 
-* ``queryable`` :guilabel:`studio` : Booléen stipulant est ce que la couche est intérrogeable via un GetFeatureInfo
-* ``infoformat`` :guilabel:`studio` : Format du GetFeatureInfo. 2 formats sont supportés : text/html et application/vnd.ogc.gml
+* ``queryable`` :guilabel:`studio` : Booléen stipulant est ce que la couche est intérrogeable via un GetFeatureInfo.
+* ``infoformat`` :guilabel:`studio` : Format du GetFeatureInfo. 2 formats sont supportés : text/html et application/vnd.ogc.gml. Le format application/vnd.ogc.gml est demandé pour l'utilisation de templates.
 * ``infohighlight`` : Booléen précisant si les features de la couche sont mises en surbrillance en interrogeant leurs informations, défaut = true. Si false un markeur est affiché. Les styles utilisés pour la mise en surbrillance peuvent être configurés (voir ":ref:`configstyles`").
-* ``featurecount`` :guilabel:`studio` : Nombre d'éléments retournés lors de l'interrogation
-* ``fields`` :guilabel:`studio` :  Si les informations retournées par l'interrogation est au format GML, fields représente les attributs à parser pour générer la vignette
+* ``featurecount`` :guilabel:`studio` : Nombre d'éléments maximun retournés lors de l'interrogation.
+* ``fields`` :guilabel:`studio` :  Si les informations retournées par l'interrogation est au format GML, fields représente les attributs à parser pour générer la vignette.
 * ``aliases`` :guilabel:`studio` : Si les informations retournées par l'interrogation est au format GML, aliases représente le renommage des champs parsés.
 * ``fieldsjson`` : Liste des champs de type json. Avec ce paramètre, mviewer parse le contenu des champs spécifiés en JSON, ce qui permet ensuite d'exploiter ces valeurs dans des boucles de templates mustache  pour afficher une liste, un tableau...
 
 Paramètres pour gérer la recherche
 ======================================
 
-* ``searchable``: Booléen précisant si la couche est interrogeable via la barre de recherche
-* ``searchengine``: elasticsearch|fuse. Défault=elasticsearch.
-* ``searchid``: Nom du champ à utiliser côté WMS afin de faire le lien avec l'_id elasticsearch
-* ``iconsearch``: Lien vers l'image utilisée pour illustrer le résultat d'une recherche ElasticSearch
+* ``searchable``: Booléen précisant si la couche est interrogeable via la barre de recherche.
+* ``searchengine``: Moteur de recherche utilisé entre elasticsearch et fuse. Défault=elasticsearch.
+* ``searchid``: Nom du champ à utiliser côté WMS afin de faire le lien avec l'_id elasticsearch.
+* ``iconsearch``: Lien vers l'image utilisée pour illustrer le résultat d'une recherche elasticsearch.
 * ``fusesearchkeys``: Chaîne de caractères contenant la liste des champs de la couche à indexer pour la recherche. Les noms des champs doivent être séparés par des virgules. À n'utiliser que si searchengine = fuse.
-* ``fusesearchresult``: Chaîne de caractères décrivant l'information à afficher dans les résultats de recherche. Cette chaîne contient soit le nom d'un champ de la couche soit un template Mustache combinant plusieurs noms de champs. Exemple : "{{name}} ({{city}})". A n'utiliser que si searchengine = fuse
+* ``fusesearchresult``: Chaîne de caractères décrivant l'information à afficher dans les résultats de recherche. Cette chaîne contient soit le nom d'un champ de la couche soit un template Mustache combinant plusieurs noms de champs. Exemple : "{{name}} ({{city}})". A n'utiliser que si searchengine = fuse.
 
 
 Paramètres pour les couches non WMS
 =======================================
 
-* ``type``: Type de la couche (wms|geojson|kml|customlayer|import) default=wms. Si customlayer est défini, il faut instancier un Layer OpenLayers dans un fichier javascript ayant pour nom l'id de la couche (voir ":ref:`configfuse`"). Ce fichier js doit être placé dans le répertoire customlayers/
-Pour le type import l'extension `fileimport` doit être activée.
+* ``type``: Type de la couche (wms|geojson|kml|customlayer|import) default=wms. Si customlayer est défini, il faut instancier un Layer OpenLayers dans un fichier javascript ayant pour nom l'id de la couche (voir ":ref:`configfuse`"). Ce fichier js doit être placé dans le répertoire customlayers/. Pour le type import l'extension `fileimport` doit être activée.
 * ``tooltip``: Pour les couches de type vecteur uniquement. Booléen précisant si les entités de la couche sont affichées sous forme d'infobulle au survol de la souris. (Les infobulles ne fonctionnent qu'avec une seule couche à la fois). Valeur par défaut = false.
 * ``tooltipenabled``: Précise la couche prioritaire pour l'affichage des infobulles.
 * ``tooltipcontent``: Chaîne de caractères décrivant l'information à afficher dans les infobulles. Cette chaîne contient soit le nom d'un champ de la couche soit un template Mustache (code html) combinant plusieurs noms de champs. Exemple : ``tooltipcontent="{{name}} - ({{city}})"``.
@@ -152,26 +151,26 @@ Pour le type import l'extension `fileimport` doit être activée.
 	L'expression valide pour l'expression précédente est :
 	``tooltipcontent="{name}} &lt;/br&gt; {{city}}"``
 
-* ``vectorlegend`` : Booléen précisant si la légende pour les couches de type vecteur (customlayer ou import) est dynamiquement créée
-* ``nohighlight`` : Booléen précisant, pour les couches de type vecteur (customlayer, geojson ou import), si la mise en surbrillance du hover est désactivée
+* ``vectorlegend`` : Booléen précisant si la légende pour les couches de type vecteur (customlayer ou import) est dynamiquement créée.
+* ``nohighlight`` : Booléen précisant, pour les couches de type vecteur (customlayer, geojson ou import), si la mise en surbrillance du hover est désactivée.
 
 Paramètres pour gérer la dimension temporelle des couches WMS
 ================================================================
 
 * ``timefilter``: Booléen précisant si la dimension temporelle est activée pour cette couche. Voir (http://docs.geoserver.org/latest/en/user/services/wms/time.html)
-* ``timeinterval``: day|month|year
-* ``timecontrol``: calendar|slider|slider-range
-* ``timevalues``: valeurs séparées par des virgules - À utiliser avec le controle slider pour des valeurs non régulières ex (1950, 1976, 1980, 2004).
-* ``timemin``: Date mini format : "yyyy-mm-dd"
-* ``timemax``: Date maxi format : "yyyy-mm-dd"
+* ``timeinterval``: Intervalle de temps day|month|year
+* ``timecontrol``: Type d'affichage de l'intervalle de temps calendar|slider|slider-range
+* ``timevalues``: Valeurs temporelles séparées par des virgules. À utiliser avec le controle slider pour des valeurs non régulières ex (1950, 1976, 1980, 2004).
+* ``timemin``: Date mini format : "yyyy-mm-dd".
+* ``timemax``: Date maxi format : "yyyy-mm-dd".
 
 Paramètres pour gérer le filtre attributaire (liste déroulante) des couches WMS
 ===================================================================================
 
-* ``attributefilter`` :guilabel:`studio` :  Booléen précisant si on active la sélection attributaire par menu déroulant
+* ``attributefilter`` :guilabel:`studio` :  Booléen précisant si on active la sélection attributaire par menu déroulant.
 * ``attributefield`` :guilabel:`studio` : Nom du champ à utiliser avec le contrôle attributefilter.
-* ``attributevalues`` :guilabel:`studio` : valeurs séparées par des virgules.
-* ``attributelabel``:  Texte à afficher pour la liste déroulante associée.
+* ``attributevalues`` :guilabel:`studio` : Valeurs de la sélection attributaire séparées par des virgules.
+* ``attributelabel``:  Texte à afficher pour chaque atttribut de la liste déroulante associée.
 * ``attributestylesync``: Booléen qui précise s'il convient d'appliquer un style (sld) spécifique lors du filtre attributaire. Dans ce cas la convention est la suivante : nom_style@attributevalue ou url_style_externe@attributevalue.sld.
 * ``attributefilterenabled``: Booléen précisant si le filtre est activé par défaut (avec la première valeur de la liste attributevalues).
 * ``attributeoperator`` : guilabel:`studio` : Opérateur utilisé pour construire le filtre. (= ou like). Defaut = "=". Attention dans le cas de like, le wildcard est harcodé : %
@@ -191,37 +190,17 @@ Autres paramètres
 
 * ``customcontrolpath`` : Texte Précisant le répertoire hébergeant les fichiers nécessaires au contrôle. Dans ce pépertoire, il faut déposer un fichier js et un fichier html ayant pour nom l'id de la couche. La structure du js doit être la suivante : (../controls/epci.js). Valeur par défaut = customcontrols.
 * ``secure`` :guilabel:`studio` : Texte précisant le niveau de protection de la couche Les valeurs possibles sont :
-
-* ``public`` : (ou paramètre absent), l'accès à la couche est public
-* ``global`` : l'accès à la couche est contrainte par le CAS geoserver. Un test est effectué pour savoir si la couche est accessible. Si ce n'est pas le cas, la couche est retirée du panneau et de la carte.
-* ``layer`` : l'accès à la couche nécessite une authentification sur le service (WMS). Un bouton "cadenas" est ajouté dans la légende pour cette couche. Au clic sur ce bouton, un formulaire est affiché permettant de saisir des identifiants d'accès qui seront envoyés à chaque appel au service.
+    * ``public`` : (ou paramètre absent), l'accès à la couche est public
+    * ``global`` : l'accès à la couche est contrainte par le CAS geoserver. Un test est effectué pour savoir si la couche est accessible. Si ce n'est pas le cas, la couche est retirée du panneau et de la carte.
+    * ``layer`` : l'accès à la couche nécessite une authentification sur le service (WMS). Un bouton "cadenas" est ajouté dans la légende pour cette couche. Au clic sur ce bouton, un formulaire est affiché permettant de saisir des identifiants d'accès qui seront envoyés à chaque appel au service.
 
 * ``authorization`` : Permet d'indiquer des identifiants par défaut si secure est à "layer"
 * ``useproxy`` :guilabel:`studio` : Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de crossOrigin lorsque CORS n'est pas activé sur le serveur distant.
 * ``owsoptions`` : Pour une couche WMS, permet de forcer certains paramètres des requêtes GetMap. Exemple : "VERSION:1.1.1,EXCEPTIONS:application/vnd.ogc.se_inimage".
-* ``infopanel`` : Permet d'indiquer quel panel d'interrogation utiliser parmis `top-panel` ou `bottom-panel` ou `modal-panel`. Exemple: `infopanel="bottom-panel"`.
+* ``infopanel`` : Permet d'indiquer quel panel d'interrogation utiliser parmis top-panel ou bottom-panel ou modal-panel. Exemple: `infopanel="bottom-panel"`.
 
-**Syntaxe** ``<template>``
-******************************
-
-Elément enfant de ``<layer>``
-
-Cet élément optionnel, permet d'associer un template type Mustache (https://github.com/janl/mustache.js) à la fiche d'information de la couche.
- Pour fonctionner, il faut que le paramètre  ``infoformat`` ait la valeur "application/vnd.ogc.gml".
- Le template peut être un fichier statique ex templates/template1.mst ou directement saisi dans le noeud <template> avec les balises <![CDATA[ ]]>.
-
-.. code-block:: xml
-       :linenos:
-
-	   <template   url="" />
-
-**Paramètres**
-
-* ``url``: paramètre optionnel de type url qui indique l'emplacement du template à utiliser.
-
-
-Paramétrage de géstion de l'ordre d'affichage des couches
-=========================================================
+Zoom sur le paramétrage de gestion de l'ordre d'affichage des couches
+====================
 
 .. code-block:: xml
        :linenos:
@@ -229,17 +208,13 @@ Paramétrage de géstion de l'ordre d'affichage des couches
 	   <layer   index="1" showintoc="true" toplayer="true"/>
 
 Par défaut, les couches sont affichées sur la carte par ordre d'appararition dans le fichier de configuration XML.
-L'utilisateur a la possibilité d'utiliser les paramètres suivants pour forcer l'affichage :
+L'utilisateur a la possibilité d'utiliser les paramètres suivants pour forcer l'affichage au démarrage de l'application :
 
-* toplayer
-
-Ce paramètre va forcer l'affichage de la couche au dessus des autres couches.
+* ``toplayer`` : Ce paramètre va forcer l'affichage de la couche au dessus des autres couches.
 Si plusieurs toplayers sont renseignés dans le fichier de configuration, toutes les toplayers seront au dessus et selon l'ordre d'apparition dans la configuration XML.
 Si une couche a un toplayer et un index de renseigné, l'index est ignoré.
 
-* index
-
-L'objectif de ce paramètre est donc d'afficher la légende de façon identique à l'affichage sur la carte à l'initialisation de la carte.
+* ``index`` : L'objectif de ce paramètre est donc d'afficher la légende de façon identique à l'affichage sur la carte à l'initialisation de la carte.
 
 Ce paramètre va permettre de forcer l'affichage de la couche à une position pour un index souhaité.
 Ce paramètre `index` correspond sur la carte au paramètre [zIndex](https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html) d'une couche OpenLayers.
@@ -254,7 +229,7 @@ Si deux couches ont le même index dans un même fichier de configuration XML, p
 	   <layer   index="1" />
            <layer   index="2" />
 
-* showintoc
+* ``showintoc``
 
 Avec ce paramètre renseigné, les paramètres index et toplayer sont également pris en compte pour l'affichage sur la carte.
 
@@ -281,3 +256,24 @@ Dans le cas où une configuration XML comprend des couches avec le paramètre `i
 
 On retrouvera donc en premier les toplayer, ensuite les couches avec index et enfin les couches sans index.
 Pour rappel, les couches avec un index en doublon et placée en seconde position dans le XML sont considérée sans index et sont concernées par ce mécanisme d'affichage. Elles s'afficheront donc selon les autres couches sans paramètres dans l'ordre d'apparition dans XML.
+
+
+**Syntaxe** ``<template>``
+******************************
+
+Elément enfant de ``<layer>``
+
+Cet élément optionnel, permet d'associer un template type Mustache (https://github.com/janl/mustache.js) à la fiche d'information de la couche.
+ Pour fonctionner, il faut que le paramètre  ``infoformat`` ait la valeur "application/vnd.ogc.gml".
+ Le template peut être un fichier statique ex templates/template1.mst ou directement saisi dans le noeud <template> avec les balises <![CDATA[ ]]>.
+
+.. code-block:: xml
+       :linenos:
+
+	   <template   url="" />
+
+**Paramètres**
+
+* ``url``: paramètre optionnel de type url qui indique l'emplacement du template à utiliser.
+
+
