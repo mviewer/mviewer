@@ -3,6 +3,27 @@
 mviewer.customLayers.occurence_public_filter = {};
 var occurence_public_filter = mviewer.customLayers.occurence_public_filter;
 
+/*style*/
+occurence_public_filter.legend = { items: [
+    {
+        label: "Occurence",
+        geometry: "Point",
+        styles: [new ol.style.Style({
+			image: new ol.style.Circle({
+        fill: new ol.style.Fill({
+            color: '#848484'
+        }),
+        stroke: new ol.style.Stroke({
+            color: "#ffffff",
+            width: 1
+        }),
+        radius: 7
+		})
+		})]
+    }
+] };
+
+
 /*création de la couche ol*/
 mviewer.customLayers.occurence_public_filter.layer = new ol.layer.Vector({
 	source: new ol.source.Vector({
@@ -28,13 +49,9 @@ mviewer.customLayers.occurence_public_filter.layer = new ol.layer.Vector({
 		strategy: ol.loadingstrategy.bbox,
 		format: new ol.format.GeoJSON()
 	}),
-	style : [new ol.style.Style({
-      image: new ol.style.Circle({
-      radius: 7,
-      fill: new ol.style.Fill({ color: '#848484' }),
-      stroke: new ol.style.Stroke({ color: 'white', width: 1 })
-    })
-	})]
+        style: function(feature, resolution) {
+            return occurence_public_filter.legend.items[0].styles;
+        }
 
 });
 
