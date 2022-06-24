@@ -72,8 +72,10 @@ const layerfilter = (function() {
   }
 
   return {
+      filter: _layerfilter,
       init : function () {
           _input = document.getElementById("layerfilter-field");
+          if(!_input) return;
           _input.addEventListener('keyup', _layerfilter);
           _clearbutton = document.getElementById("layerfilter-clear");
           _clearbutton.addEventListener('click', _clearfilter);
