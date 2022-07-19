@@ -16,6 +16,7 @@ Syntaxe
        :linenos:
 
 	<application
+		id=""
 		titlehtml=""
 		title=""
 		logo=""
@@ -49,6 +50,7 @@ Paramètres principaux
 
 * ``title`` :guilabel:`studio` : paramètre optionnel de type texte qui définit le titre de l'application. Valeur par défaut **mviewer**.
 * ``logo`` :guilabel:`studio` : paramètre optionnel de type url qui définit l'emplacement du logo de l'application. Valeur par défaut **img/logo/earth-globe.svg**.
+* ``id`` : identifiant de l'application. Il est utilisé dans l'extension filtre pour faire référence à l'application.
 * ``help`` :guilabel:`studio` : paramètre optionnel de type url qui définit l'emplacement du fichier html de l'aide.
 * ``showhelp`` :guilabel:`studio` : paramètre optionnel de type booléen (true/false) précisant si l'aide est affichée en popup au démarrage de l'application. Valeur par défaut **false**.
 * ``style`` :guilabel:`studio` : paramètre optionnel de type url précisant la feuille de style à utiliser afin de modifier l'apparence de l'application (couleurs, polices...). Valeur par défaut **css/themes/default.css**. Voir : ":ref:`configcss`".
