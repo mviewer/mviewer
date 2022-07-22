@@ -109,6 +109,14 @@ Ces propriétés supplémentaires ne sont pas obligatoires mais peuvent permettr
 * dataSeparator
 Permet d'indiquer le séparateur si plusieurs valeurs sont contenues dans un champ pour une entité.
 
+* updateOnChange
+
+Cette propriété permet de mettre à jour l'interface des filtres selon les attributs disponibles dans les entités filtrées. 
+
+Ainsi, si notre attribut `marché` de type liste (combobox) est configuré `updateOnChange: true` et que les entités filtrées et visibles à l'écran n'ont que 2 valeurs de marché, alors la liste ne contiendra que les deux valeurs de marché selon le filtre réalisé.
+
+Vous aurez un exemple ici de configration :  [exemple pour l'image précédente](https://github.com/geobretagne/mviewer/blob/master/demo/addons/filter/config.json#L22-L47).
+
 
 **4. Ajouter des boutons pour télécharger les données filtrées (uniquement pour les source WFS)**
 
@@ -133,16 +141,6 @@ Si vous rajoutez la propriété *downloadFormats* avec une liste de formats, des
 Dans [notre jeu de données](https://github.com/geobretagne/mviewer/blob/master/demo/filter/data/structures.json), l'attribut `marché` contient la valeur `Algues ; Europe ; Accompagnement et Ressources ;`.
 
 En indiquant le séparateur, le plugin sera capable de proposer de filtrer la couche sur les valeur disponibles de l'attribut `marché`.
-
-
-* updateOnChange
-
-Cette propriété permet de mettre à jour l'interface des filtres selon les attributs disponibles dans les entités filtrées. 
-
-Ainsi, si notre attribut `marché` de type liste (combobox) est configuré `updateOnChange: true` et que les entités filtrées et visibles à l'écran n'ont que 2 valeurs de marché, alors la liste ne contiendra que les deux valeurs de marché selon le filtre réalisé.
-
-Vous aurez un exemple ici de configration :  [exemple pour l'image précédente](https://github.com/geobretagne/mviewer/blob/master/demo/addons/filter/config.json#L22-L47).
-
 
 ## Exemple
 
