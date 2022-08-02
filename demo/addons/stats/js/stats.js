@@ -50,7 +50,7 @@ var stats = (function () {
       <button id="statsbtn" class="btn btn-default btn-raised"
         onclick="stats.toggle();"  title="Afficher les stats" i18n="tbar.right.stat"
         tabindex="116" accesskey="f">
-        <span class="glyphicon glyphicon-filter" aria-hidden="true">
+        <span class="glyphicon glyphicon-stats" aria-hidden="true">
         </span>
       </button>`;
       $("#toolstoolbar").prepend(button);

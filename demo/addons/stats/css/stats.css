@@ -10,7 +10,7 @@
     display: none;
     text-align: left;
     position: fixed;
-    bottom: 40px;
+    top: 60vh;
     left: 200px;
     padding: 5px 15px 2px;
     z-index: 1000000 !important;
