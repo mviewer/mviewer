@@ -10,17 +10,17 @@
         "title": "Statistiques sur les structures et la population des communes",
         "open": true,
         "style": {
-          "border": "1px #2e5367 solid",
+          "border": "",
           "background": "white",
-          "text": "black",
-          "colorButton": "#2e5367"
+          "text": "#5f5f5f",
+          "colorButton": "#333333"
         },
         "stats": [
           {
             "type": "stat",
             "layerId": "population_communes",
             "field": "",
-            "template":"<span><span class='stat_value'>{x}</span> Communes</span>",
+            "template":"<div class='statContainer Default'><span class='statValue'>{x}</span><span class='statLabel'>Communes</span></div>",
             "operator": "COUNT",
             "__operator": "SUM,MAX,MEAN,COUNT"
           },
@@ -28,7 +28,7 @@
             "type": "stat",
             "layerId": "population_communes",
             "field": "population",
-            "template":"<span class='anim_fade'>{x} Habitants</span>",
+            "template":"<div class='statContainer Icon-end'><div class='statsIcon'><img src='demo/stats/img/icon_population.svg'></div><div class='statsText'><span class='statValue' style='color: #ea6a65;'>{x}</span> </br><span class='statLabel'>Habitants</span> </div></div>",
             "operator": "SUM",
             "__operator": "SUM,MAX,MEAN,COUNT"
           },
@@ -36,7 +36,7 @@
             "type": "stat",
             "layerId": "population_communes",
             "field": "population",
-            "template":"<span class='anim_fade'>Population moyenne<br> par commune: {x} Habitants</span>",
+            "template":"<div class='statContainer Default'><span class='statValue' style='color: #ea6a65;'>{x} habitants</span><span class='statLabel'>Populations moyenne par commune</span></div>",
             "operator": "MEAN",
             "__operator": "SUM,MAX,MEAN,COUNT"
           },
@@ -44,7 +44,7 @@
           "type": "stat",
           "layerId": "structures",
           "field": "form_jur",
-          "template":"<span class='anim_fade'>Structures :<br> {x} Objets</span>",
+          "template":"<div class='statContainer Icon-start'><div class='statsIcon'><img src='demo/stats/img/icon_site.svg'></div><div class='statsText'><span class='statValue' style='color: #2a9aa9;'>{x} sites</span> </br><span class='statLabel'>pour l'aide économique et l'innovation</span> </div></div>",
           "operator": "COUNT",
           "__operator": "SUM,MAX,MEAN,COUNT"
         },
@@ -52,7 +52,7 @@
           "type": "stat",
           "layerId": "population_communes",
           "field": "population",
-          "template":"plus petite commune : {x} habitants",
+          "template":"La commune avec la population minimale possède {x} habitants",
           "operator": "MIN",
           "__operator": "SUM,MAX,MEAN,COUNT"
         },
@@ -60,7 +60,7 @@
           "type": "stat",
           "layerId": "population_communes",
           "field": "population",
-          "template":"plus grande commune : {x} habitants ",
+          "template":"La commune avec la population maximale possède {x} habitants ",
           "operator": "MAX",
           "__operator": "SUM,MAX,MEAN,COUNT"
         }

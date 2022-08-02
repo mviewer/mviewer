@@ -180,7 +180,7 @@ var stats = (function () {
   var _setStyle = function () {
     if (!mviewer.customComponents.stats.config.options.style) return;
     var style = mviewer.customComponents.stats.config.options.style;
-    $('.textlabel').css('color', style.text || 'black');
+    $('.titleHeader').css('color', style.text || 'black');
     $('#statsPanel').css('background-color', style.background || 'white');
     $('#statsPanel').css('border', style.border || '0px transparent solid');
   }
