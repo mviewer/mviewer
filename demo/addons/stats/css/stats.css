@@ -6,7 +6,7 @@
 #statsPanel {
 	position: fixed;
 	left: 10rem;
-  top: 45rem;
+  top: calc(100vh - 300px);
 	z-index: 900;
 	max-width: 90rem;
 	background-color: #FFFFFF;
