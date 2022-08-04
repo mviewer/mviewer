@@ -301,3 +301,35 @@ mviewer.templates.featureInfo.accordion = [
         '</div>',
     '</div>'
 ].join("");
+
+mviewer.templates.featureInfo.allintabs = [
+    '<div id="{{panel}}-selector">',
+        '<div class="row">',
+            '<div class="col-md-12">',
+                '<div class="tabs-left">',
+                    '<ul class="nav nav-tabs">',
+                    '{{#layers}}',
+                        '<li title="{{name}}" class="{{#firstlayer}}active{{/firstlayer}}" data-layerid="{{layerid}}" {{#initiallayerid}}initiallayerid="{{initiallayerid}}" {{/initiallayerid}}>',
+                            '<a onclick="mviewer.setInfoPanelTitle(this,\'{{panel}}\');" title="{{name}}" href="#slide-{{panel}}-{{id}}" data-toggle="tab">',
+                                '<span class="fa {{theme_icon}}"></span>',
+                                '{{#multiple}}<span class="item-number">{{index}}</spanclass>{{/multiple}}',
+                            '</a>',
+                        '</li>',
+                    '{{/layers}}',
+                    '</ul>',
+                    '<div class="tab-content">',
+                    '{{#layers}}',
+                        '<div  role="tabpanel" class="{{#firstlayer}}active in {{/firstlayer}}tab-pane" id="slide-{{panel}}-{{id}}" >',
+                            '<div id="carousel-{{panel}}-{{id}}" div class="carousel slide" data-interval="false">',
+                                '<ul class="carousel-inner" role="listbox">',
+                                '{{{html}}}',
+                                '</ul>',
+                            '</div>',
+                        '</div>',
+                    '{{/layers}}',
+                    '</div>',
+                 '</div>',
+            '</div>',
+        '</div>',
+    '</div>'
+].join("");
