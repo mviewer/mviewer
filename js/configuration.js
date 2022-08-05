@@ -502,6 +502,7 @@ var configuration = (function () {
                     }
                     var mvid;
                     var oLayer = {};
+                    Object.assign(oLayer, layer);
                     var clean_ident = layerId.replace(/:|,| |\./g,'');
                     var _overLayers = mviewer.getLayers();
                     if (_overLayers[clean_ident] ) {
