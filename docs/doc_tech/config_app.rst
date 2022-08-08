@@ -71,8 +71,8 @@ Paramètres secondaires
 * ``geoloc``: paramètre optionnel de type booléen (true/false) activant la géolocalisation. Nécessite une connection **https**. Valeur par défaut **false**.
 * ``mouseposition``: paramètre optionnel de type booléen (true/false) activant l'affichage des coordonnées correspondant à la position de la souris. Les coordonnées sont affichées en bas à droite de la carte. Valeur par défaut **false**.
 * ``togglealllayersfromtheme`` :guilabel:`studio` : Ajoute un bouton dans le panneau de gauche pour chaque thématique afin d'afficher/masquer toutes les couches de la thématique.Valeur : true/false. Valeur par défaut **false**.
-* ``templaterightinfopanel``: Template à utiliser pour le rendu du panneau de droite. Valeur à choisir parmi les templates de mviewer.templates.featureInfo (default|brut|accordion). Valeur par défaut **default**.
-* ``templatebottominfopanel``: Template à utiliser pour le rendu du panneau du bas. Valeur à choisir parmi les templates de mviewer.templates.featureInfo (default|brut|accordion). Valeur par défaut **default**.
+* ``templaterightinfopanel``: Template à utiliser pour le rendu du panneau de droite. Valeur à choisir parmi les templates de mviewer.templates.featureInfo (default|brut|accordion|allintabs). Valeur par défaut **default**.
+* ``templatebottominfopanel``: Template à utiliser pour le rendu du panneau du bas. Valeur à choisir parmi les templates de mviewer.templates.featureInfo (default|brut|accordion|allintabs). Valeur par défaut **default**.
 * ``studio``: Lien vers le mviewerstudio pour modifier la carte en cours.
 * ``home``: Lien vers le site parent de mviewer
 * ``mapfishurl``: Lien permettant d'afficher les couches courantes visibles vers un mapfishapp (geOrchestra) cible
