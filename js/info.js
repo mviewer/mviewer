@@ -164,6 +164,7 @@ var info = (function () {
             var pixel = evt.pixel;
             var vectorLayers = {};
             var format = new ol.format.GeoJSON();
+            var f_idx=0;
             _map.forEachFeatureAtPixel(pixel, function(feature, layer) {
                 var l = layer.get('mviewerid');
                 if (l && l != 'featureoverlay' && l != 'selectoverlay' && l != 'subselectoverlay' && l != 'elasticsearch' ) {
@@ -178,7 +179,8 @@ var info = (function () {
                             vectorLayers[l].features.push(feature);
                         } else {
                             if (_overLayers[l] && _panelsTemplate[_overLayers[l].infospanel]=='allintabs') {
-                                l = l + '_' + feature.get('id');
+                                l = l + '_' + f_idx;
+                                f_idx++;
                             }
                             vectorLayers[l] = {features:[]};
                             vectorLayers[l].features.push(feature);
