@@ -304,13 +304,13 @@ var info = (function () {
             if (configuration.getConfiguration().application.sortlayersinfopanel && configuration.getConfiguration().application.sortlayersinfopanel=='toc'){ //toc order
                 // les couches de la toc dans l'ordre 
                 for (var j = 0; j < infoLayers.length; j++) {// layers not shown in toc but queried first
-                    if (_tocsertedlayers.indexOf(infoLayers[j].initiallayerid ? infoLayers[j].initiallayerid:infoLayers[j].layerid) === -1){
+                    if (_tocsortedlayers.indexOf(infoLayers[j].initiallayerid ? infoLayers[j].initiallayerid:infoLayers[j].layerid) === -1){
                         orderedlayers.push(infoLayers[j]);
                     }
                 }
-                for (var i = 0; i < _tocsertedlayers.length; i++) {
+                for (var i = 0; i < _tocsortedlayers.length; i++) {
                     for (var j = 0; j < infoLayers.length; j++) {
-                        if ((infoLayers[j].initiallayerid ? infoLayers[j].initiallayerid:infoLayers[j].layerid) == _tocsertedlayers[i]){
+                        if ((infoLayers[j].initiallayerid ? infoLayers[j].initiallayerid:infoLayers[j].layerid) == _tocsortedlayers[i]){
                             orderedlayers.push(infoLayers[j]);
                         }
                     }
@@ -869,7 +869,7 @@ var info = (function () {
         _projection = mviewer.getProjection();
         _overLayers = mviewer.getLayers();
         _captureCoordinatesOnClick = configuration.getCaptureCoordinates();
-        _tocsertedlayers = $(".mv-nav-item").map(function() {
+        _tocsortedlayers = $(".mv-nav-item").map(function() {
                 return $(this).attr('data-layerid');
             }).get();
         if (configuration.getConfiguration().application.templaterightinfopanel) {
