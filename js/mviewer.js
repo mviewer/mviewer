@@ -798,7 +798,7 @@ mviewer = (function () {
                 }
             });
         }
-        _map.addLayer(l);
+        setTimeout(function(){_map.addLayer(l);},100);
         if (oLayer.type === "customlayer" && mviewer.customLayers[oLayer.id]) {
             mviewer.customLayers[oLayer.id].config = oLayer;
         }
