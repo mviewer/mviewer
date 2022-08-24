@@ -43,6 +43,7 @@ var stats = (function () {
       mviewer.getMap().once('rendercomplete', function (e) {
         _prepareReadyLayers(_layersStatsParams);
         _initPanel();
+        _refreshStats(_layersStatsParams);
       });
 
       //Add button to toolstoolbar
@@ -79,7 +80,7 @@ var stats = (function () {
       handle: 'h2',
       container: $('#map')
     });
-    
+
     mviewer.getMap().on('moveend', function (e) {
       if ($("#statsPanel").is(':visible')) {
         _refreshStats(_layersStatsParams);
