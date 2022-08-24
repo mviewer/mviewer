@@ -1661,6 +1661,48 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
  }
 
 /*******************************
+------------- ADD LAYER PANEL
+********************************/
+#addlayers_tabs{
+  margin-bottom: 5px;
+}
+.layerGroup{
+  font-weight: bold;
+}
+#addlayers_results{
+  max-height: 60vh;
+  overflow: auto;
+  padding-right: 30px;
+}
+#addLayers_service_url{
+  width: 50%;
+  display: inline-block;
+}
+.csw_search{
+  width: 50%;
+  display: inline-block;
+}
+#addLayers_service_url_csw{
+  width: 50%;
+  display: inline-block;
+}
+.thumb_csw{
+  padding: 5px;
+  background-color: white;
+  border: 1px solid #bbb;
+  max-width: 180px;
+}
+.layer-result{
+  font-weight: bold;
+}
+.layer-result-row{
+  background-color: lightgray;
+  border: 2px solid white;
+  margin-top: 2px;
+  display: flex;
+align-items: center
+}
+/*******************************
 ------------- HELP PANEL
 ********************************/
 #help .modal-header{

@@ -507,6 +507,86 @@ body .popover-title{
 }
 
 /*******************************
+------------- ADD LAYER PANEL -----
+********************************/
+#addLayerMenuBtn a {
+    border-left:$theme-color-1 0px solid;
+	background:$theme-color-1;
+	color: $menu-background-color;
+  }
+
+
+#addLayerpanel {
+
+    .nav-tabs{
+        border-bottom: 2px solid $theme-color-1;
+    }
+
+    .nav-tabs>li>a{
+        border-radius: 0px 0px 0 0px;
+        color: $text-color-1;
+    }
+
+    .nav-tabs>li.active>a{
+        background-color: $theme-color-1;
+        border-color: $theme-color-1;
+        color: $theme-color-2;
+    }
+
+    .nav-tabs>li.active>a:hover{
+        color: $text-color-1;
+    }
+
+    .nav-tabs>li>a:hover{
+        border-color: #eee #eee $theme-color-1;
+        color: $theme-color-1;
+    }
+
+    .modal-title{
+        font-size: 25px;
+        font-family: $font-bold;
+        color: $theme-color-1;
+    }
+
+    .tab-pane h4{
+        font-family: $font-bold;
+        color: $theme-color-1;
+        font-size: 22px;
+        margin-top: 20px;
+    }
+
+    .tab-pane h5{
+        font-family: $font-bold;
+        color: $theme-color-1;
+        font-size: 16px;
+        margin-bottom: 2px;
+    }
+
+    .tab-pane h6{
+        font-family: $font-bold;
+        color: $theme-color-1;
+        font-size: 14px;
+        margin-bottom: 2px;
+    }
+
+    .tab-pane p{
+        color: $text-color-1;
+        font-size: 13px;
+        text-align: justify;
+    }
+
+    .tab-pane .visuel_tx{
+        color: $text-color-1;
+        font-size: 13px;
+    }
+
+    .tab-pane .visuel{
+        text-align: center;
+    }
+
+}
+
+/*******************************
 -------------LOADER INDICATOR
 ********************************/
 .mv-layer-indicator .loader {

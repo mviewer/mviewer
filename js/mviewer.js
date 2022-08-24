@@ -653,6 +653,13 @@ mviewer = (function () {
             mviewer.tools.measure.init();
         }
 
+        //AddLayers tool
+        if (appconfig.addlayerstools === "true") {
+            //Load measure module
+            mviewer.tools.addlayers = addlayers;
+            mviewer.tools.addlayers.init();
+        }
+
         //Activate GetFeatureInfo tool
         mviewer.setTool('info');
         
@@ -2419,7 +2426,10 @@ mviewer = (function () {
             if(sessionStorage.getItem(_service_url))
                 $("#user").val(sessionStorage.getItem(_service_url).split(':')[0]);
         },
-
+        /**
+         * Public Method: add Layer in legend
+         *
+         */
         addLayer: function (layer) {
             if (!layer || !layer.showintoc) {
                 return;
