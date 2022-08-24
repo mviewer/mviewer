@@ -6,7 +6,6 @@
   "options": {
     "mviewer":{
       "stats":{
-        "tooltipPosition": "bottom-left",
         "title": "Statistiques sur les structures et la population des communes",
         "open": true,
         "style": {

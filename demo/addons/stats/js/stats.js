@@ -79,10 +79,7 @@ var stats = (function () {
       handle: 'h2',
       container: $('#map')
     });
-    // Update tooltip on button
-    $('[data-toggle="filter-tooltip"]').tooltip({
-      placement: options.tooltipPosition || 'bottom-left'
-    });
+    
     mviewer.getMap().on('moveend', function (e) {
       if ($("#statsPanel").is(':visible')) {
         _refreshStats(_layersStatsParams);

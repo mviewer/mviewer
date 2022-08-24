@@ -22,7 +22,6 @@ La valeur de l'indicateur statistique se met à jour en fonction :
 Dans le fichier stats/config.json, indiquez les paramètres généraux du plugin : 
 
     "id_mviewer":{
-        "tooltipPosition": "bottom-left", // Position du panel
         "title": "Titre du panel",
         "open": true, // Panel ouvert à défaut
         "style": {
@@ -31,7 +30,7 @@ Dans le fichier stats/config.json, indiquez les paramètres généraux du plugin
           "text": "#5f5f5f",
           "colorButton": "#333333"
         },
-        "id_mviewer": [
+        "stats": [
           // Insérer ici les paramètres des indicateurs présentés ci-dessous
       ]
      }
