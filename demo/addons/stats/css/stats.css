@@ -54,14 +54,14 @@ a.closeStats {
 
 /* Blocs des stats */
 
-#selectLayerFilter {
+#statsPanelContent {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: space-between;
 }
 
-#selectLayerFilter>.statElement {
+#statsPanelContent>.statElement {
 	flex: auto;
 }
 
