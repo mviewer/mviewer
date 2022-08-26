@@ -138,7 +138,7 @@ var stats = (function () {
           statElement.html(content);
         } else {
           var newId = "statpanel_" + i;
-          $("#selectLayerFilter").append(`<div id="${newId}" class="statElement">${content}</div>`);
+          $("#statsPanelContent").append(`<div id="${newId}" class="statElement">${content}</div>`);
         }
         if (mviewer.getLayer(layerId).layer.getVisible()) {
           statElement.show();
