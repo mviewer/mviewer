@@ -213,7 +213,16 @@ var addlayers = (function () {
         }
         _loaded = true;
 
-        
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const layerUrl = urlParams.get('layer_url');
+        const layerName = urlParams.get('layer_name');
+        const layerTitle = urlParams.get('layer_title');
+        console.log(layerUrl);
+        console.log(layerName);
+        console.log(layerTitle);
+        _addLayer({Name:layerName,Url:layerUrl,Title:layerTitle});
+
     }
 
     /**
@@ -275,14 +284,14 @@ var addlayers = (function () {
             console.log(layer);
             let btn = $('<button class="vcenter">Ajouter</button>');
             let childContainerRow = $(`<div class="row"></div>`);
-            let childContainerCol = $(`<div class="col-md-10 col-md-offset-1">  
+            let childContainerCol = $(`<div class="col-md-12">  
                                     </div>`);
             childContainerRow.append(childContainerCol);
             btn.click(function(){
                 _addLayer(layer);
               }); 
             let rowClass=layer.Layer && layer.Layer.length>0 ? "":"layer-result-row";
-            const layerContentRow = $(`<div class="row pl-1 ${rowClass}"></div>`);
+            const layerContentRow = $(`<div class="row pl-1 ${rowClass}" style="padding-left: 20px;"></div>`);
             let layerContent = $(`<div class="col-md-8"> </div>`);
             const btnContent = $(`<div class="col-md-1"> </div>`);
             
@@ -292,7 +301,7 @@ var addlayers = (function () {
               layer.Abstract = "";
             }
             if(layer.Layer && layer.Layer.length>0){
-              layerContent = $(`<div class="col-md-11"> </div>`);
+              layerContent = $(`<div class="col-md-12"> </div>`);
               title = $(`<span class="layer-result layerGroup" title="${layer.Title}">${layer.Title}</span>`);
               layerContentRow.append(layerContent);
               layerContent.append(title);
@@ -519,15 +528,15 @@ var addlayers = (function () {
           const regEx = new RegExp(searchMask, 'ig');
           if (!regEx.test(capabilitiesUrl)) {
             if (capabilitiesUrl.indexOf('?') > 0) {
-              capabilitiesUrl = `${capabilitiesUrl}&request=getCapabilities`;
+              capabilitiesUrl = `${capabilitiesUrl}&request=GetCapabilities`;
             } else {
-              capabilitiesUrl = `${capabilitiesUrl}?request=getCapabilities`;
+              capabilitiesUrl = `${capabilitiesUrl}?request=GetCapabilities`;
             }
           }
           const serviceSearchMask = 'service=';
           const serviceRegEx = new RegExp(serviceSearchMask, 'ig');
           if (!serviceRegEx.test(capabilitiesUrl)) {
-            capabilitiesUrl = `${capabilitiesUrl}&service=wms`;
+            capabilitiesUrl = `${capabilitiesUrl}&service=WMS`;
           }
           _getCapabilities(capabilitiesUrl);
         }
