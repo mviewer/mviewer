@@ -473,7 +473,6 @@
         <script type="text/javascript" src="lib/i18njs/i18n.js" ></script>
         <script type="text/javascript" src="lib/moment/moment.js" ></script>
         <script type="text/javascript" src="lib/lodash-4.17.21/lodash.min.js" ></script>
-
         <script type="text/javascript">
             if (typeof(mviewer) == 'undefined' || typeof(configuration) == 'undefined' ||  typeof(info) == 'undefined' ) {
                 $('.single4').hide();
@@ -485,7 +484,7 @@
         <script type="text/javascript">
         var API = {};
         $(document).ready(function () {
-            if (typeof(mviewer) != 'undefined' && typeof(configuration) != 'undefined' &&  typeof(info) != 'undefined' ) {
+        if (typeof(mviewer) != 'undefined' && typeof(configuration) != 'undefined' &&  typeof(info) != 'undefined' ) {
                 "use strict";
                 if (window.location.search) {
                     $.extend(API, $.parseJSON('{"' + decodeURIComponent(window.location.search.substring(1)
@@ -605,7 +604,7 @@
                       }
                 });
                 $("#right-panel .close,#bottom-panel .mv-close").click(function () {mviewer.hideLocation()});
-            } 
+             }
         });
         </script>
         <script type="text/javascript" src="lib/simple-slidebar/slidebar_menu.js"></script>
