@@ -43,6 +43,7 @@ Syntaxe
 		lang=""
 		langfile=""
 		favicon=""
+        sortlayersinfopanel=""
         />
 
 Paramètres principaux
@@ -80,6 +81,7 @@ Paramètres secondaires
 * ``lang``: Langue à utiliser pour l'interface. Passer "?lang=en" dans l'url pour forcer la langue et ignorer la config. Par défaut, lang n'est pas activé. Le fichier mviewer.i18n.json contient les expressions à traduire dans différentes langues. Pour traduire le texte d'un élément html, il faut que cet élément dispose d'un attribut i18n=texte.a.traduire. En javascript la traduction s'appuie sur la méthode mviewer.tr("texte.a.traduire").
 * ``langfile``: URL du fichier de traduction supplémentaire à utiliser en complément de mviewer.i18n.json.
 * ``favicon``: URL du fichier image à utiliser comme favicon de l'application.
+* ``sortlayersinfopanel``: mode de tri des couches dans le panneau d'information en suivant la légende qui suit l'ordre des couches de la map (valeur **default**) ou la toc (valeur **toc**). Valeur par défaut **default**.
 
 
 Exemple
