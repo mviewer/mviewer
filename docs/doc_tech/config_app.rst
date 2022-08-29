@@ -43,7 +43,7 @@ Syntaxe
 		lang=""
 		langfile=""
 		favicon=""
-		sortlayersinfopanel=""
+        sortlayersinfopanel=""
         />
 
 Paramètres principaux
