@@ -196,14 +196,7 @@ var addlayers = (function () {
             var button = `<li class="half" id="addLayerMenuBtn">
               <a href="#" onclick="mviewer.tools.addlayers.toggle();"><span class="fa-stack fa-lg pull-left col-sm-3">
                 <i class="fas fa-plus fa-solid "></i></span>Ajouter des données
-                </a></li>`
-
-            /*var button = [
-                '<button class="mv-modetools btn btn-default btn-raised" href="#"',
-                    ' onclick="mviewer.tools.addlayers.toggle();" id="addLayerbtn" title="Ajouter des données" i18n="measure.button.main"',
-                    ' tabindex="108" accesskey="8">',
-                            '<span class="glyphicon glyphicon-plus" aria-hidden="true">Ajouter des données</span>',
-                    '</button>'].join("");*/
+                </a></li>`;
     
             $("#menu").append('<hr>').append(button);
 
@@ -213,16 +206,20 @@ var addlayers = (function () {
         }
         _loaded = true;
 
-        const queryString = window.location.search;
+        /*const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const layerUrl = urlParams.get('layer_url');
         const layerName = urlParams.get('layer_name');
-        const layerTitle = urlParams.get('layer_title');
-        console.log(layerUrl);
-        console.log(layerName);
-        console.log(layerTitle);
-        _addLayer({Name:layerName,Url:layerUrl,Title:layerTitle});
-
+        const layerTitle = urlParams.get('layer_title');*/
+       
+        console.log(API.layer_url);
+        console.log(API.layer_name);
+        console.log(API.layer_title);
+        console.log(API.addLayer);
+        if(API.addLayer){
+          const layerInfos=JSON.parse(API.addLayer);
+          _addLayer({Name:layerInfos.name,Url:layerInfos.url,Title:layerInfos.title});
+        }
     }
 
     /**
@@ -350,6 +347,7 @@ var addlayers = (function () {
             draggable:true,
             checked:true,
             opacity:1,
+            style:'',
             infospanel:'right-panel',
             id:clean_ident,
             layerid:clean_ident,
@@ -360,6 +358,7 @@ var addlayers = (function () {
           oLayer.stylesalias= layer.Style[0].Title;
         }
         oLayer.legendurl=mviewer.getLegendUrl(oLayer);
+        console.log(oLayer.legendurl)
         configuration.processWmsLayer(oLayer,{},[]);
         let theme = configuration.getThemes()['mesdonnees'];
         if(theme==undefined){
@@ -434,17 +433,9 @@ var addlayers = (function () {
       }
       $("#addlayers_results").empty();
       let startPos = _pagingInfos.currentPage*_pagingInfos.pageSize+1;
-      var params = `?request=GetRecords&service=CSW&version=2.0.2&typeNames=csw:Record&resultType=results&maxRecords=${_pagingInfos.pageSize}&startPosition=${startPos}&ELEMENTSETNAME=full`;
-      /*var filter = encodeURIComponent(`<ogc:Filter xmlns:ogc="http://www.opengis.net/ogc"
-        xmlns:gml="http://www.opengis.net/gml">
-        <ogc:PropertyIsLike escapeChar="" singleChar="_" wildCard="%">
-        <ogc:PropertyName>Title</ogc:PropertyName>
-        <ogc:Literal>%risques%</ogc:Literal>
-        </ogc:PropertyIsLike>
-        </ogc:Filter>`);
-      var url = _urlCsw + params+"&constraintLanguage=FILTER&CONSTRAINT_LANGUAGE_VERSION=1.1.0&CONSTRAINT="+filter;*/
-      var filter = encodeURIComponent(filterTxt);
-      var url = _urlCsw + params+"&constraintLanguage=CQL_TEXT&CONSTRAINT_LANGUAGE_VERSION=1.1.0&CONSTRAINT="+filter;
+      const params = `?request=GetRecords&service=CSW&version=2.0.2&typeNames=csw:Record&resultType=results&maxRecords=${_pagingInfos.pageSize}&startPosition=${startPos}&ELEMENTSETNAME=full`;
+      const filter = encodeURIComponent(filterTxt);
+      const url = _urlCsw + params+"&constraintLanguage=CQL_TEXT&CONSTRAINT_LANGUAGE_VERSION=1.1.0&CONSTRAINT="+filter;
       _ajaxPromise({
         url: url,
         type: 'get',
@@ -453,9 +444,8 @@ var addlayers = (function () {
         function onSuccess(data) {
           console.log(data);
           if(data.indexOf('ExceptionReport')>0){
-            var message = "Problème réseau pour intérroger "+url+"<br>";
+            let message = "Problème réseau pour intérroger "+url+"<br>";
             message += data;
-            
             _error(message);
             return;
           }
