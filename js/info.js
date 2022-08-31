@@ -424,7 +424,7 @@ var info = (function () {
 
                     if (configuration.getConfiguration().mobile) {
                         $("#modal-panel").modal("show");
-                        if (_featureTooltip.getElement().children.length) {
+                        if (_featureTooltip && _featureTooltip.getElement().children.length) {
                             $(_featureTooltip.getElement()).popover('hide')
                         }
                     } else {
