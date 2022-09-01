@@ -12,28 +12,49 @@ var capabilitiesParser = (function () {
     
     let nbTotalResults = Number(capabilitiesFromXML.GetRecordsResponse.SearchResults["@attributes"].numberOfRecordsMatched);
     let nextRecord = Number(capabilitiesFromXML.GetRecordsResponse.SearchResults["@attributes"].nextRecord);
-
-    const layers = capabilitiesFromXML.GetRecordsResponse.SearchResults.Record.map(x=>{
-      
-      console.log(x)
-      if( !Array.isArray(x["dc:URI"])){
-        x["dc:URI"]=[x["dc:URI"]];
-      }
-      let retour = {
-        Name:x["dc:URI"].find(x=>x["@attributes"] && x["@attributes"].protocol.indexOf("OGC:WMS")>=0)["@attributes"].name,
-        Url:x["dc:URI"].find(x=>x["@attributes"] && x["@attributes"].protocol.indexOf("OGC:WMS")>=0)["#text"],
-        Title:x["dc:title"]["#text"],
-        Abstract:x["dc:description"]["#text"]
-      };
-      console.log(retour.Name)
-      
-      let thumbnail = x["dc:URI"].find(x=>x["@attributes"] 
-        && x["@attributes"].name 
-        && x["@attributes"].name.indexOf("thumbnail")>=0);
-      if(thumbnail){
-        retour.Thumbnail = thumbnail["#text"];
-      }
-      return retour;
+    let layers = [];
+    if(nbTotalResults==0){
+      return {nbTotalResults,nextRecord,layers};
+    }
+    layers = capabilitiesFromXML.GetRecordsResponse.SearchResults.Record 
+      .filter(x=>{                       // filter record that don't contain WMS layer name or url
+        if( !Array.isArray(x["dc:URI"])){
+          x["dc:URI"]=[x["dc:URI"]];
+        }
+        if(!x["dc:URI"]){
+          return false;
+        }
+        let wmsRessource = x["dc:URI"].find(x=> x && x["@attributes"] 
+            && (
+                (x["@attributes"].protocol && x["@attributes"].protocol.indexOf("OGC:WMS")>=0) || 
+                (x["@attributes"].name && x["@attributes"].name.toUpperCase().indexOf("WMS")>=0)));
+        return wmsRessource != undefined 
+          && wmsRessource["@attributes"].name 
+          && wmsRessource["@attributes"].name.length>0;
+      })
+      .map(x=>{   
+        if( !Array.isArray(x["dc:URI"])){
+          x["dc:URI"]=[x["dc:URI"]];
+        }
+        let wmsRessource = x["dc:URI"].find(x=>x["@attributes"] 
+          && ((x["@attributes"].protocol && x["@attributes"].protocol.indexOf("OGC:WMS")>=0) 
+          || (x["@attributes"].name && x["@attributes"].name.toUpperCase().indexOf("WMS")>=0)));
+        console.log(wmsRessource)
+        let retour = {
+          Name:wmsRessource["@attributes"].name,
+          Url:wmsRessource["#text"],
+          Title:x["dc:title"]["#text"],
+          Abstract:x["dc:description"]["#text"]
+        };
+        console.log(retour.Name)
+        
+        let thumbnail = x["dc:URI"].find(x=>x["@attributes"] 
+          && x["@attributes"].name 
+          && x["@attributes"].name.indexOf("thumbnail")>=0);
+        if(thumbnail){
+          retour.Thumbnail = thumbnail["#text"];
+        }
+        return retour;
       }
 
       
@@ -172,25 +193,36 @@ var addlayers = (function () {
 
     var _selectedServer = null;
 
-    var  _loading = false;
-
-    var _currentUrl = undefined;
-
     var _loaded = false;
+
+    var _config = false;
 
     var _pagingInfos = {pageSize:100,
       currentPage:0,
       nbPages:1,
       };
+    
     /**
      * Public Method: _init exported as init
      * @param {ol.Map}
      */
-
     var _init = function () {
         if(!_loaded){
             _map = mviewer.getMap();
-
+            fetch("data/ogc_csw_server.json")
+            .then(response => response.json())
+            .catch(function(error) {
+              console.log(error);
+            }).then(json=>{
+              _config=json;
+              json.csw.map(x=>{
+                $("#addLayers_service_url_csw_select").append(`<option value="${x.url}">${x.label}</option>`)
+              });
+              json.ogc.map(x=>{
+                $("#addLayers_service_url_select").append(`<option value="${x.url}">${x.label}</option>`)
+              });
+              
+            })
             //Add html elements to the DOM
             
             var button = `<li class="half" id="addLayerMenuBtn">
@@ -203,15 +235,21 @@ var addlayers = (function () {
             $("#addLayerpanel").on('hidden.bs.modal', function (e) {
               _addlayersEnabled = false;
             })
+
+            $("#addLayers_service_url_select").change(function(){
+              _url = $("#addLayers_service_url_select").val();
+              $("#addLayers_service_url").val(_url)
+              _connectServer();
+              //alert('select '+$("#addLayers_service_url_select").val())
+            }); 
+            $("#addLayers_service_url_csw_select").change(function(){
+              _url = $("#addLayers_service_url_csw_select").val();
+              $("#addLayers_service_url_csw").val(_url)
+              _connectCsw();
+            }); 
         }
         _loaded = true;
 
-        /*const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const layerUrl = urlParams.get('layer_url');
-        const layerName = urlParams.get('layer_name');
-        const layerTitle = urlParams.get('layer_title');*/
-       
         console.log(API.layer_url);
         console.log(API.layer_name);
         console.log(API.layer_title);
@@ -242,6 +280,8 @@ var addlayers = (function () {
         
         _url = $("#addLayers_service_url").val();
         _connectServer();
+        
+        
         // alert('connect'+$("#addLayers_service_url").val())
     }
 
@@ -279,13 +319,15 @@ var addlayers = (function () {
         parentDiv.empty();
         $.each(layerList, function (id, layer) {
             console.log(layer);
-            let btn = $('<button class="vcenter">Ajouter</button>');
+            let btn = $('<button class="vcenter"><span class="glyphicon glyphicon-plus"></span></button>');
+
+            // glyphicon glyphicon-ok
             let childContainerRow = $(`<div class="row"></div>`);
             let childContainerCol = $(`<div class="col-md-12">  
                                     </div>`);
             childContainerRow.append(childContainerCol);
             btn.click(function(){
-                _addLayer(layer);
+                _addLayer(layer,this);
               }); 
             let rowClass=layer.Layer && layer.Layer.length>0 ? "":"layer-result-row";
             const layerContentRow = $(`<div class="row pl-1 ${rowClass}" style="padding-left: 20px;"></div>`);
@@ -305,7 +347,10 @@ var addlayers = (function () {
               layerContent.append(childContainerRow);
               _showLayerList(layer.Layer,childContainerCol);
             }else{
-              layerContentRow.append(btnContent);
+              if(layer.Url && layer.Name){
+                layerContentRow.append(btnContent);
+              }
+              
               layerContentRow.append(layerContent);
               layerContent.append(title);
               layerContent.append(`<br/><span class="layer-result-descr" title="${layer.Abstract}">${layer.Abstract}</span>`);
@@ -326,7 +371,7 @@ var addlayers = (function () {
     /**
      * public Method: _addLayer. Used to add layer to the map when user click on the button
      */
-    var _addLayer = function(layer){
+    var _addLayer = function(layer,btn){
         console.log(layer);
         let wmsUrl = _url
         if(layer.Url){
@@ -358,9 +403,8 @@ var addlayers = (function () {
           oLayer.stylesalias= layer.Style[0].Title;
         }
         oLayer.legendurl=mviewer.getLegendUrl(oLayer);
-        console.log(oLayer.legendurl)
         configuration.processWmsLayer(oLayer,{},[]);
-        let theme = configuration.getThemes()['mesdonnees'];
+        /*let theme = configuration.getThemes()['mesdonnees'];
         if(theme==undefined){
             theme = {
                 groups:false,
@@ -371,14 +415,16 @@ var addlayers = (function () {
             };
             configuration.getThemes()['mesdonnees']= theme;
         }
-        theme.layers[oLayer.id] = oLayer;
+        theme.layers[oLayer.id] = oLayer;*/
         //mviewer.initDataList();
         //mviewer.showCheckedLayers();
         mviewer.addLayer(oLayer);
         info.addQueryableLayer(oLayer);
-        //mviewer.showLayersByAttrOrder(mviewer.getLayersAttribute('rank'));
-        //mviewer.orderLayerByIndex();
-        
+        console.log(this);
+        if(btn){
+          btn.innerHTML='<span class="glyphicon glyphicon-ok"></span>';
+        }
+  
     }
 
     /**
@@ -389,8 +435,7 @@ var addlayers = (function () {
         console.log('getCapabilities');
         const self = this;
         const headers = {};
-        _loading = true;
-        _currentUrl = url;
+        $("#addlayers_results_loading").show();
         _ajaxPromise({
             url: url,
             type: 'get',
@@ -404,7 +449,7 @@ var addlayers = (function () {
                     _layerList = _resultList.layers;
                     _showLayerList(_layerList,$("#addlayers_results"));
                 }
-                _loading = false;
+                $("#addlayers_results_loading").hide();
             },
             function onError(jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR);
@@ -413,29 +458,44 @@ var addlayers = (function () {
                   message += jqXHR.responseText;
                 }
                 _error(message);
-                _loading = false;
+                $("#addlayers_results_loading").hide();
             }
           ).catch(function errorHandler(error) {
             console.log(error)
             var message = "Problème réseau pour intérroger "+url+"<br>";
             _error(message);
-            _loading = false;
+            $("#addlayers_results_loading").hide();
           });
 
     }
-
+    /**
+     * private Method: _connectCsw. Used to retrieve a layer list 
+     * by querying a CSW Service
+     */
     var _connectCsw  = function (){
       _urlCsw = $("#addLayers_service_url_csw").val();
       let filterCsw = $("#addLayers_service_filter_csw").val();
-      let filterTxt = `(protocol='OGC:WMS-1.1.1-http-get-map' OR protocol='OGC:WMS')`;
-      if(filterCsw.length>0){
-        filterTxt += `AND title Like '%${filterCsw}%'`
+      let selectedServer = _config.csw.find(x=>x.url==_urlCsw);
+      let filterTxt = `protocol='OGC:WMS-1.1.1-http-get-map' OR protocol='OGC:WMS'`;// protocol='OGC:WMS-1.1.1-http-get-map' OR protocol='OGC:WMS' OR  csw:title LIKE '%wms%'
+      if(selectedServer){
+        filterTxt = selectedServer.defaultfilter;
       }
+    
+      if(filterCsw.length>0){
+        if(filterTxt.length>0){
+          filterTxt = `(${filterTxt}) AND title Like '%${filterCsw}%'`
+        }
+        else{
+          filterTxt = `title Like '%${filterCsw}%'`
+        }
+      }
+
       $("#addlayers_results").empty();
       let startPos = _pagingInfos.currentPage*_pagingInfos.pageSize+1;
       const params = `?request=GetRecords&service=CSW&version=2.0.2&typeNames=csw:Record&resultType=results&maxRecords=${_pagingInfos.pageSize}&startPosition=${startPos}&ELEMENTSETNAME=full`;
       const filter = encodeURIComponent(filterTxt);
       const url = _urlCsw + params+"&constraintLanguage=CQL_TEXT&CONSTRAINT_LANGUAGE_VERSION=1.1.0&CONSTRAINT="+filter;
+      $("#addlayers_results_loading").show();
       _ajaxPromise({
         url: url,
         type: 'get',
@@ -458,7 +518,7 @@ var addlayers = (function () {
             _showLayerList(_layerList,$("#addlayers_results"));
             _addPager();
           }
-          _loading = false;
+          $("#addlayers_results_loading").hide();
         },
         function onError(jqXHR, textStatus, errorThrown) {
             console.log(jqXHR);
@@ -467,24 +527,35 @@ var addlayers = (function () {
               message += jqXHR.responseText;
             }
             _error(message);
-            _loading = false;
+            $("#addlayers_results_loading").hide();
         }
       ).catch(function errorHandler(error) {
         console.log(error)
         var message = "Problème réseau pour intérroger "+url+"<br>";
         _error(message);
-        _loading = false;
+        $("#addlayers_results_loading").hide();
       });
     }
+
+    /**
+     * public Method: _previousPage. Used when a user ask for previous page
+     */
     var _previousPage = function(){
       _pagingInfos.currentPage -= 1;
       _connectCsw();
     }
+
+    /**
+     * public Method: _nextPage. Used when a user ask for next page
+     */
     var _nextPage = function(){
       _pagingInfos.currentPage += 1;
       _connectCsw();
     }
     
+    /**
+     * private Method: _addPager. add pagination buttons to result list
+     */
     var _addPager = function(){
       $("#addlayers_results_pager").empty();
       const previousDisabled = _pagingInfos.currentPage == 0 ? "disabled":"";

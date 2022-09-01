@@ -1663,6 +1663,11 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
 /*******************************
 ------------- ADD LAYER PANEL
 ********************************/
+
+.loading_container{
+  z-index: 10000;
+  height: 50px;
+}
 #addlayers_tabs{
   margin-bottom: 5px;
 }
@@ -1670,7 +1675,7 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
   font-weight: bold;
 }
 #addlayers_results{
-  max-height: 60vh;
+  max-height: 50vh;
   overflow: auto;
   padding-right: 30px;
 }
@@ -1682,6 +1687,13 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
   width: 50%;
   display: inline-block;
 }
+.addLayers_service_url_select {
+  width: 50%;
+  display: inline-block;
+  margin-bottom: 4px;
+  height: 28px;
+}
+
 #addLayers_service_url_csw{
   width: 50%;
   display: inline-block;
@@ -1696,12 +1708,19 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
   font-weight: bold;
 }
 .layer-result-row{
-  background-color: lightgray;
-  border: 2px solid white;
+  border-radius: 2px;
   margin-top: 2px;
+  /*
+  border: 2px solid white;*/
+  margin: 5px;
   display: flex;
-align-items: center
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
 }
+/*
+.layer-result-row:nth-child(2n) {
+  background-color: rgba(130,33,115,.1);
+}*/
 /*******************************
 ------------- HELP PANEL
 ********************************/

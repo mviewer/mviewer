@@ -326,27 +326,14 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col">
-                                            Url du service : 
+                                            Choisisser un serveur : 
+                                            <select id="addLayers_service_url_select" class="form-control form-control-sm addLayers_service_url_select">
+                                                <option value=""></option>
+                                            </select><br>
+                                            ...ou saisissez l'url du service : 
                                             <input type="text" id="addLayers_service_url"
-                                            value="https://www.geo2france.fr/geoserver/hdf_common/ows"
+                                            value=""
                                             />
-                                            <!-- 
-                                            https://qgisserver.hautsdefrance.fr/cgi-bin/qgis_mapserv.fcgi?MAP=/var/www/data/qgis/applications/sraddet_2020_08.qgz
-                                            https://ogc.geo-ide.developpement-durable.gouv.fr/wxs?map=/opt/data/carto/geoide-catalogue/1.4/org_38148/cac35f5b-fa24-442f-8297-9e9495f06f36.internet.map
-                                            https://wxs.ign.fr/ortho/geoportail/r/wms
-                                            https://www.geo2france.fr/geoserver/hdf_common/ows
-                                             <input type="text" id="addLayers_service_url"
-                                            value="https://magosm.magellium.com/geoserver/wms?request=GetCapabilities&version=1.3.0&service=wms"
-                                            />
-                                            <input type="text" id="addLayers_service_url"
-                                            value="https://demo.lizmap.com/lizmap/index.php/lizmap/service/?repository=demo&project=covid_19_fr&SERVICE=WMS&REQUEST=GetCapabilities"
-                                            />  -->
-                                            <!--<input type="text" id="addLayers_service_url"
-                                            value="http://ws.carmen.developpement-durable.gouv.fr/WMS/6/carte7_SDC?request=getCapabilities"
-                                            /> -->
-                                           
-                                            
-                                            
                                             <button onclick="mviewer.tools.addlayers.connect();"
                                                 type="button">
                                                 Connexion&nbsp;<span class="glyphicon glyphicon-chevron-right"></span>
@@ -358,16 +345,17 @@
                             </div>  
                             <div role="tabpanel" class="tab-pane" id="add_csw">
                                 <h4 i18n="addlayers.modal.csw">Ajouter des données issue d'un service CSW</h4>
-                                Url du service : 
+                                Choisisser un serveur : 
+                                            <select id="addLayers_service_url_csw_select" class="form-control form-control-sm addLayers_service_url_select">
+                                                <option value=""></option>
+                                            </select><br>
+                                ...ou saisissez l'url du service : 
                                 <input type="text" id="addLayers_service_url_csw" class="form-control"
-                                    value="https://www.pigma.org/geonetwork/srv/eng/csw"
+                                    value=""
                                 /><br>
-                                <input type="text" id="addLayers_service_filter_csw" class="form-control csw_search" 
+                                Filter:<input type="text" id="addLayers_service_filter_csw" class="form-control csw_search" 
                                 placeholder="Rechercher...">
-                                <!--
-                                <input type="text" id="addLayers_service_url_csw"
-                                    value="https://download.data.grandlyon.com/catalogue/srv/eng/csw"
-                                /> -->
+                               
                                
                                 <button onclick="mviewer.tools.addlayers.connectCsw();"
                                     type="button">
@@ -376,6 +364,14 @@
                             </div>  
                         </div>
                         <div class="container-fluid">
+                            <div class="row" id="addlayers_results_loading" style="display:none">
+                                <div class="col-md-12 col-sm-12 col-xs-12 text-center center-block">
+                                        <div class="loading_container">
+                                            <div class="single4"></div>
+                                             Chargement...
+                                        </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12" id="addlayers_results">
                                 </div>
