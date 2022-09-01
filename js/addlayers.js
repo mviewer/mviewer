@@ -347,7 +347,7 @@ var addlayers = (function () {
               layerContent.append(childContainerRow);
               _showLayerList(layer.Layer,childContainerCol);
             }else{
-              if(layer.Url && layer.Name){
+              if(layer.Name){
                 layerContentRow.append(btnContent);
               }
               
