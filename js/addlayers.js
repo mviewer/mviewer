@@ -244,8 +244,13 @@ var addlayers = (function () {
       fetch("data/ogc_csw_server.json")
         .then((response) => response.json())
         .catch(function (error) {
-          mviewer.alert("Impossible de récupérer la liste des serveurs csw et ogc", "alert-warning")
-          console.error("Impossible de récupérer la liste des serveurs csw et ogc");
+          mviewer.alert(
+            "Impossible de récupérer la liste des serveurs csw et ogc",
+            "alert-warning"
+          );
+          console.error(
+            "Impossible de récupérer la liste des serveurs csw et ogc"
+          );
           console.log(error);
         })
         .then((json) => {
@@ -468,7 +473,8 @@ var addlayers = (function () {
       url: url,
       type: "get",
       dataType: "text",
-    }).then(
+    })
+      .then(
         function onSuccess(data) {
           const capabilities = capabilitiesParser.parse(data, url);
           _resultList = capabilities;
@@ -519,14 +525,18 @@ var addlayers = (function () {
     let startPos = _pagingInfos.currentPage * _pagingInfos.pageSize + 1;
     const params = `?request=GetRecords&service=CSW&version=2.0.2&typeNames=csw:Record&resultType=results&maxRecords=${_pagingInfos.pageSize}&startPosition=${startPos}&ELEMENTSETNAME=full`;
     const filter = encodeURIComponent(filterTxt);
-    const url = _urlCsw + params + "&constraintLanguage=CQL_TEXT&CONSTRAINT_LANGUAGE_VERSION=1.1.0&CONSTRAINT=" +
+    const url =
+      _urlCsw +
+      params +
+      "&constraintLanguage=CQL_TEXT&CONSTRAINT_LANGUAGE_VERSION=1.1.0&CONSTRAINT=" +
       filter;
     $("#addlayers_results_loading").show();
     _ajaxPromise({
       url: url,
       type: "get",
       dataType: "text",
-    }).then(
+    })
+      .then(
         function onSuccess(data) {
           if (data.indexOf("ExceptionReport") > 0) {
             let message = "Problème réseau pour intérroger " + url + "<br>";
@@ -600,7 +610,7 @@ var addlayers = (function () {
                   </nav>`;
     $("#addlayers_results_pager").append(pager);
   };
-  
+
   /**
    * private Method: _connectServer. Used to get url and check and
    * process it before calling getCapabilities
