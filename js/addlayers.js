@@ -26,10 +26,10 @@ var capabilitiesParser = (function () {
         }
         let wmsRessource = x["dc:URI"].find(x=> x && x["@attributes"] 
             && (
-                (x["@attributes"].protocol && x["@attributes"].protocol.indexOf("OGC:WMS")>=0) || 
-                (x["@attributes"].name && x["@attributes"].name.toUpperCase().indexOf("WMS")>=0)));
-        return wmsRessource != undefined 
-          && wmsRessource["@attributes"].name 
+                (x["@attributes"].protocol && x["@attributes"].protocol.indexOf("OGC:WMS")>=0) 
+                ));
+        return wmsRessource != undefined && wmsRessource["#text"].indexOf("application.i2") < 0
+          && wmsRessource["@attributes"].name && wmsRessource["@attributes"].name.indexOf(' ') < 0
           && wmsRessource["@attributes"].name.length>0;
       })
       .map(x=>{   
@@ -38,12 +38,23 @@ var capabilitiesParser = (function () {
         }
         let wmsRessource = x["dc:URI"].find(x=>x["@attributes"] 
           && ((x["@attributes"].protocol && x["@attributes"].protocol.indexOf("OGC:WMS")>=0) 
-          || (x["@attributes"].name && x["@attributes"].name.toUpperCase().indexOf("WMS")>=0)));
+          ));
+          let url = wmsRessource["#text"];
+          let name = wmsRessource["@attributes"].name;
+          let title = x["dc:title"]["#text"];
+          if(url.indexOf("&layers")>0){ //GeoIDe Case
+            let sp = new URLSearchParams(url);
+            console.log(sp);
+            if(!title){
+              title = name;
+            }
+            name=sp.get("layers");
+          }
         console.log(wmsRessource)
         let retour = {
-          Name:wmsRessource["@attributes"].name,
-          Url:wmsRessource["#text"],
-          Title:x["dc:title"]["#text"],
+          Name:name,
+          Url:url,
+          Title:title,
           Abstract:x["dc:description"]["#text"]
         };
         console.log(retour.Name)

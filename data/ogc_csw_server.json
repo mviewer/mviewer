@@ -8,7 +8,7 @@
 "csw":[ 
     {"label":"Catalogue PIGMA","url":"https://www.pigma.org/geonetwork/srv/eng/csw","defaultfilter":"protocol='OGC:WMS-1.1.1-http-get-map' OR protocol='OGC:WMS'"},
     {"label":"Catalogue GrandLyon","url":"https://download.data.grandlyon.com/catalogue/srv/eng/csw","defaultfilter":"protocol='OGC:WMS-1.1.1-http-get-map' OR protocol='OGC:WMS'"},
-    {"label":"Catalogue Geo2France","url":"https://www.geo2france.fr/geonetwork/srv/fre/csw","defaultfilter":"title LIKE '*'"},
+    {"label":"Catalogue Geo2France","url":"https://www.geo2france.fr/geonetwork/srv/fre/csw","defaultfilter":"linkProtocol='OGC:WMS'"},
     {"label":"Catalogue GeoBretagne","url":"https://geobretagne.fr/geonetwork/srv/fre/csw","defaultfilter":"protocol='OGC:WMS-1.1.1-http-get-map' OR protocol='OGC:WMS'"}
     
 ]
