@@ -58,7 +58,7 @@ mviewer.templates.layerControl = [
                     'data-target="#loginpanel"', 
                     'onclick="mviewer.setLoginInfo(this);"', 
                     'id="ar#{{layerid}}"', 
-                    'title="Données accés restreint"', 
+                    'title="Données accès restreint"', 
                     'i18n="theme.layers.restricted',
                     'tabindex="111" accesskey="11" class="btn btn-default btn-raised">',
                 '<span class="lock-icon glyphicon glyphicon-lock" aria-hidden="true"></span>',
