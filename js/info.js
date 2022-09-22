@@ -934,6 +934,14 @@ var info = (function () {
     var _addQueryableLayer = function (oLayer) {
         _queryableLayers.push(oLayer.layer);
     };
+    
+    /**
+     * Public Method: _getQueriedFeatures
+     *
+     */
+    var _getQueriedFeatures = function() {
+        return _queriedFeatures;
+    }
 
     return {
         init: init,
@@ -946,7 +954,8 @@ var info = (function () {
         queryMap: _queryMap,
         formatHTMLContent: createContentHtml,
         templateHTMLContent: applyTemplate,
-        addQueryableLayer: _addQueryableLayer
+        addQueryableLayer: _addQueryableLayer,
+        getQueriedFeatures: _getQueriedFeatures,
     };
 
 })();
