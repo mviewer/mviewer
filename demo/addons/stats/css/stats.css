@@ -1,0 +1,166 @@
+/*
+* Plugin Stats 
+* Feuille de style
+*/
+
+#statsPanel {
+	position: fixed;
+	left: 10rem;
+  top: calc(100vh - 300px);
+	z-index: 900;
+	max-width: 90rem;
+	background-color: #FFFFFF;
+	display: none;
+	border: none !important;
+	padding: 1.5rem;
+	box-shadow: 0 2px 20px 0 rgb(0 0 0 / 10%), 0 2px 20px 0 rgb(0 0 0 / 10%);
+	border-radius: 5px;
+	font-family: sans-serif;
+}
+
+/* Icône pour fermer le panel */
+
+a.closeStats {
+	font-size: 40px;
+	font-weight: 400;
+	opacity: 0.2;
+	position: absolute;
+	top: 0px;
+	right: 25px;
+	cursor: default;
+}
+
+/* Titre */
+.statsHeader {
+	margin: 5px;
+	display: flex;
+	align-content: stretch;
+	justify-content: flex-start;
+	align-items: baseline;
+}
+
+.statsHeader svg {
+	vertical-align: -2px;
+	color: #5f5f5f;
+	margin-right: 5px;
+}
+
+.titleHeader {
+	font-size: 18px;
+	font-weight: 500;
+	color: #5f5f5f;
+	margin-bottom: 8px;
+}
+
+/* Blocs des stats */
+
+#statsPanelContent {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+#statsPanelContent>.statElement {
+	flex: auto;
+}
+
+.statElement {
+	width: 350px;
+	min-height: 80px;
+	margin: 5px;
+	padding: 1rem;
+	border-radius: 6px;
+	background: #f3f3f3;
+	color: #5f5f5f;
+	overflow: hidden;
+	font-size: 16px;
+}
+
+.statElement>span {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Default */
+
+.statContainer.Default {
+	display: flex;
+	align-content: flex-start;
+	justify-content: center;
+	flex-wrap: nowrap;
+	flex-direction: column;
+	height: 100%;
+}
+
+.statValue {
+	font-size: 18px;
+	font-weight: 600;
+}
+
+/* Icône */
+
+.statContainer.Icon-end {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: row-reverse;
+	height: 100%;
+}
+
+.statContainer.Icon-start {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	flex-direction: row;
+	height: 100%;
+}
+
+.statContainer.Icon-start .statsText {
+	margin-left: 15px;
+}
+
+.statsIcon img {
+	width: 60px;
+}
+
+/* Animation pour la transition de la valeur */
+
+.statValue_Scroll, .statValue_Fade {
+	margin-right: 5px;
+}
+
+.statValue_Fade {
+	color: #464a57;
+}
+
+.stat_effect>span>.statValue_Fade {
+	animation: fade_animation 3s ease;
+}
+
+.stat_effect>span>.statValue_Scroll {
+	animation: from_top_animation 1s ease-in-out;
+}
+
+@keyframes fade_animation {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes from_top_animation {
+	from {
+		position: relative;
+		top: -40px;
+	}
+
+	to {
+		top: 0px;
+		position: unset;
+	}
+}
