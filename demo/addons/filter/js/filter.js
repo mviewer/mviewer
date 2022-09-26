@@ -999,6 +999,15 @@ var filter = (function() {
     $('.textlabel').css('color', style.text || 'black');
     $('#advancedFilter').css('background-color', style.background || 'white');
     $('#advancedFilter').css('border', style.border || '0px transparent solid');
+    // position
+    $('#advancedFilter').css('right', style.right || '60px');
+    $('#advancedFilter').css('left', style.left || '');
+    $('#advancedFilter').css('top', style.top || '65px');
+    $('#advancedFilter').css('bottom', style.bottom || '');
+    // button style
+    $('.label-info').css('background-color', style.unSelectedBtnColor || 'grey');
+    $('.label-info').css('color', style.textSelectBtnColor || 'black');
+    $('.form-check-label-checked').css('background-color', style.selectedBtnColor || '#5bc0de');
   }
 
   return {

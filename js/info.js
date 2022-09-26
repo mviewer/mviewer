@@ -164,6 +164,7 @@ var info = (function () {
             var pixel = evt.pixel;
             var vectorLayers = {};
             var format = new ol.format.GeoJSON();
+            var f_idx=0;
             _map.forEachFeatureAtPixel(pixel, function(feature, layer) {
                 var l = layer.get('mviewerid');
                 if (l && l != 'featureoverlay' && l != 'selectoverlay' && l != 'subselectoverlay' && l != 'elasticsearch' ) {
@@ -177,6 +178,10 @@ var info = (function () {
                         if (vectorLayers[l] && vectorLayers[l].features) {
                             vectorLayers[l].features.push(feature);
                         } else {
+                            if (_overLayers[l] && _panelsTemplate[_overLayers[l].infospanel]=='allintabs') {
+                                l = l + '_' + f_idx;
+                                f_idx++;
+                            }
                             vectorLayers[l] = {features:[]};
                             vectorLayers[l].features.push(feature);
                         }
@@ -184,12 +189,14 @@ var info = (function () {
                 }
             });
             for(var layerid in vectorLayers) {
-                if (mviewer.customLayers[layerid] && mviewer.customLayers[layerid].handle) {
-                    mviewer.customLayers[layerid].handle(vectorLayers[layerid].features, views);
-                } else if (mviewer.customControls[layerid] && mviewer.customControls[layerid].handle){
-                    mviewer.customControls[layerid].handle(vectorLayers[layerid].features);
+                var originLayer = (layerid.lastIndexOf("_") < 0 ? layerid : layerid.substring(0, layerid.lastIndexOf("_")) );
+                if (mviewer.customLayers[originLayer] && mviewer.customLayers[originLayer].handle) {
+                    mviewer.customLayers[originLayer].handle(vectorLayers[originLayer].features, views);
+                } else if (mviewer.customControls[originLayer] && mviewer.customControls[originLayer].handle){
+                    mviewer.customControls[originLayer].handle(vectorLayers[originLayer].features);
                 } else {
-                    var l = _overLayers[layerid];
+                    var l = _overLayers[originLayer];
+                    
                     if (l) {
                         var panel = l.infospanel;
                         if (configuration.getConfiguration().mobile) {
@@ -211,11 +218,12 @@ var info = (function () {
                         views[panel].layers.push({
                             "panel": panel,
                             "id": id,
-                            "firstlayer": (id === 1),
+                            "firstlayer": false, // firstlayer attribute is calculated after ordering layers with orderViewsLayersByMap
                             "manyfeatures": (features.length > 1),
                             "nbfeatures": features.length,
                             "name": name,
                             "layerid": layerid,
+                            "initiallayerid": originLayer,
                             "theme_icon": theme_icon,
                             "html": html_result
                         });
@@ -291,7 +299,12 @@ var info = (function () {
 
             var mapLayersOrder = [];
             viewsLayers.forEach(lv => {
+                
+                if (mapLayers.indexOf(lv.layerid) > -1){
                 mapLayersOrder[mapLayers.indexOf(lv.layerid)] = lv;
+                } else {
+                    mapLayersOrder[lv.id] = lv; // when display template is allintabs all layers are virtually renamed (one fictive layer per feature)
+                }
             })
             return mapLayersOrder.filter(f => f).reverse();
         }
@@ -377,29 +390,57 @@ var info = (function () {
                         }
                         var features = getFeatureInfo.features;
                         if (features.length > 0) {
-                            if (layerinfos.template) {
-                                html_result.push(applyTemplate(features, layerinfos));
+                            if (_panelsTemplate[panel]=='allintabs') {
+                                features.forEach(function(feature, index) {
+                                    if (layerinfos.template) {
+                                       html_result.push(applyTemplate([feature], layerinfos));
+                                    } else {
+                                        html_result.push(createContentHtml([feature], layerinfos));
+                                    }
+                                });
                             } else {
-                                html_result.push(createContentHtml(features, layerinfos));
+                                if (layerinfos.template) {
+                                    html_result.push(applyTemplate(features, layerinfos));
+                                } else {
+                                    html_result.push(createContentHtml(features, layerinfos));
+                                }
                             }
                         }
                     }
                 }
-                //If some results, apppend panels views
+                //If many results, append panels views
                 if (html_result.length > 0) {
                     //Set view with layer info & html formated features
-                    views[panel].layers.push({
-                        "panel": panel,
-                        "id": id,
-                        "firstlayer": false,
-                        "manyfeatures": (features.length > 1),
-                        "nbfeatures": features.length,
-                        "name": name,
-                        "layerid": layerid,
-                        "theme_icon": theme_icon,
-                        "html": html_result.join(""),
-                        "pin": showPin
-                    });
+                    if (_panelsTemplate[panel]=='allintabs') {
+                        for (var i = 0; i < html_result.length; i++) {
+                            views[panel].layers.push({
+                                "panel": panel,
+                                "id": views[panel].layers.length + 1,
+                                "firstlayer": false,
+                                "manyfeatures": false,
+                                "nbfeatures": 1,
+                                "name": name,
+                                "layerid": layerid + '_' + i,
+                                "initiallayerid" : layerid,
+                                "theme_icon": theme_icon,
+                                "html": html_result[i],
+                                "pin": showPin
+                            });
+                        }
+                    } else {
+                        views[panel].layers.push({
+                            "panel": panel,
+                            "id": views[panel].layers.length + 1,
+                            "firstlayer": false,
+                            "manyfeatures": (features.length > 1),
+                            "nbfeatures": features.length,
+                            "name": name,
+                            "layerid": layerid,
+                            "theme_icon": theme_icon,
+                            "html": html_result.join(""),
+                            "pin": showPin
+                        });
+                    }
                 }
             });
             var infoLayers = [];
@@ -934,6 +975,14 @@ var info = (function () {
     var _addQueryableLayer = function (oLayer) {
         _queryableLayers.push(oLayer.layer);
     };
+    
+    /**
+     * Public Method: _getQueriedFeatures
+     *
+     */
+    var _getQueriedFeatures = function() {
+        return _queriedFeatures;
+    }
 
     return {
         init: init,
@@ -946,7 +995,8 @@ var info = (function () {
         queryMap: _queryMap,
         formatHTMLContent: createContentHtml,
         templateHTMLContent: applyTemplate,
-        addQueryableLayer: _addQueryableLayer
+        addQueryableLayer: _addQueryableLayer,
+        getQueriedFeatures: _getQueriedFeatures,
     };
 
 })();
