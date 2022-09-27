@@ -3,14 +3,14 @@
 Le catalogue propose des exemples de fonctionnalités pouvant être mobilisées dans l'application mviewer. Il est possible de visualiser l'exemple en live *(Démo)* et de visualiser le fichier de configuration `.XML` *(Code)*. L'ensemble des exemples est disponible dans le dossier `mviewer/demo`. 
 
 ## 1. Fonctionnement du catalogue
-Le catalogue est construit autour d'une page HTML `index.html` et d'un template MST  `demo/catalogue/template/catalogue.mst` pour la création des `cards` à la volée. Les informations des différents exemples sont indiquées dans le fichier `demo/catalogue/data.json`.
+Le catalogue est construit autour d'une page HTML `demo/index.html` et d'un template MST  `demo/catalogue/template/catalogue.mst` pour la création des `cards` à la volée. Les informations des différents exemples sont indiquées dans le fichier `demo/catalogue/data.json`.
 De plus, une barre de recherche a été ajoutée permettant de filtrer les exemples.
 
 Les ressources du catalogue sont localisées dans les dossiers suivants : 
- - `catalogue/css/` : Dossier contenant les feuilles de style .css
- - `catalogue/img/` : Dossier contenant les images
- - `catalogue/js/` :  Dossier contenant les scripts javascript pour les fonctionnalités du catalogue (barre de recherche et génération des cards)
- - `catalogue/template/` : Dossier contenant le template .mst 
+ - `demo/catalogue/css/` : Dossier contenant les feuilles de style .css
+ - `demo/catalogue/img/` : Dossier contenant les images
+ - `demo/catalogue/js/` :  Dossier contenant les scripts javascript pour les fonctionnalités du catalogue (barre de recherche et génération des cards)
+ - `demo/catalogue/template/` : Dossier contenant le template .mst 
 
 
 **Attention : Il ne faut pas modifier les fichiers `index.html` et `catalogue.mst`**
