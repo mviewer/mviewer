@@ -1,7 +1,8 @@
 # Thème Design.fr
 
 Dans le cadre d'un projet avec l'ARS Ile-de-France, un thème Mviewer a été développé, reprenant la nouvelle identité visuelle de l'état, [le Système de Design de l'état](https://www.systeme-de-design.gouv.fr/). Ce thème s'adresse aux développeurs et aux concepteurs, qu'ils soient agents publics ou prestataires pour des sites Internet de l'État (Ministères, Administrations centrales, Préfectures, Ambassades, etc.). Il permet d'apporter une cohérence graphique avec les sites institutionnels. 
- 
+![image](https://user-images.githubusercontent.com/22764056/192546099-ee1b3014-20d9-469a-a049-6cb753a07700.png)
+
 Le thème reprend tous les codes et principes de la marque de l'Etat et recommandés par le système de Design (DSFR). Pour des raisons techniques, les composants d'interface n'ont pas été remplacé par ceux proposés par la librairie DSFR mais sont stylisés dans le même esprit. Toutefois, la librairie est intégrée au thème, il est donc possible de mobiliser des [élements d'interface](https://www.systeme-de-design.gouv.fr/elements-d-interface) dans la page d'accueil, les customcontrols ou dans les templates (voir ci-dessous).
 
 
