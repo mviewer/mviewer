@@ -1,0 +1,52 @@
+
+{{#config}}
+    {{#searchable}}
+    <div class="row mt-4" id="search">
+        <div class="col-md-12">
+            <h4>Rechercher une fonctionnalité</h4>
+            <div class="input-group mb-3 ">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="iconSearch">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path fill="none" d="M0 0h24v24H0z"/><path d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z" fill="rgba(255,255,255,1)"/></svg>                  </span>
+                </div>
+                <input type="text" class="form-control" placeholder="{{placeholder}}" id="inputSearch" aria-label="Words" aria-describedby="basic-addon1">
+            </div>
+        </div>
+    </div>
+    {{/searchable}}
+{{/config}}
+<div class="row mt-2 card-apps-contain">
+    <!--START EACH CARDS FROM JSON DATA FILE-->
+    {{#data}}
+    <!--Card-->
+        <div class="col-lg-4 mt-4 searchable {{typeapp}}" id="{{id}}">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-level level-{{level}}">
+                <span>{{level}}</span>
+              </div> 
+              <h4 class="card-title mt-2">{{title}}</h4>
+              {{#description}}
+                    <p class="card-text">{{description}}</p>
+              {{/description}}  
+              {{#tags}}
+                    <p class="card-tags"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path fill="none" d="M0 0h24v24H0z"/><path d="M8.686 4l2.607-2.607a1 1 0 0 1 1.414 0L15.314 4H19a1 1 0 0 1 1 1v3.686l2.607 2.607a1 1 0 0 1 0 1.414L20 15.314V19a1 1 0 0 1-1 1h-3.686l-2.607 2.607a1 1 0 0 1-1.414 0L8.686 20H5a1 1 0 0 1-1-1v-3.686l-2.607-2.607a1 1 0 0 1 0-1.414L4 8.686V5a1 1 0 0 1 1-1h3.686zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" fill="rgba(128,128,128,1)"/></svg>
+                    {{tags}}</p>
+              {{/tags}}
+            </div>            
+            <div class="card-footer">   
+              <div class="btn-group" role="group" aria-label="Basic example">
+              {{#url_source}}
+                <a href="{{url_source}}" target="_blank" type="button" class="btn btn-outline-primary">Code</a>
+              {{/url_source}}  
+              {{#url_demo}}
+                <a href="{{url_demo}}" target="_blank" type="button" class="btn btn-outline-primary">Démo</a>
+              {{/url_demo}}    
+              </div>              
+            </div>
+          </div>          
+        </div>  
+        <!--/.Card-->
+    {{/data}}
+</div>
+
