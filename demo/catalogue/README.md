@@ -6,7 +6,7 @@ Le catalogue propose des exemples de fonctionnalités pouvant être mobilisées 
 
 ## 1. Fonctionnement du catalogue
 Le catalogue est construit autour d'une page HTML `demo/index.html` et d'un template MST  `demo/catalogue/template/catalogue.mst` pour la création des `cards` à la volée. Les informations des différents exemples sont indiquées dans le fichier `demo/catalogue/data.json`.
-De plus, une barre de recherche a été ajoutée permettant de filtrer les exemples.
+De plus, une barre de recherche a été ajoutée permettant de filtrer les exemples à partir des mots clés déclarés dans les `tags`.
 
 Les ressources du catalogue sont localisées dans les dossiers suivants : 
  - `demo/catalogue/css/` : Dossier contenant les feuilles de style .css
@@ -28,8 +28,7 @@ Pour ajouter une nouvelle démonstration, il faut renseigner les informations da
    {  
 		"id":"1",  
 		"title": "GéoBretagne",  
-		"words": "flux, Géobretagne, WMS, flux",  
-		"tags": "Géobretagne, WMS",  
+		"tags": "Géobretagne, WMS,  flux",  
 		"description":"Exemple exploitant uniquement des flux GéoBretagne pour les fonds cartographiques et pour les thématiques.",  
 		"level":"simple",  
 		"url_source":"../demo/geobretagne.xml",  
@@ -38,8 +37,7 @@ Pour ajouter une nouvelle démonstration, il faut renseigner les informations da
 
 `id` : identifiant unique pour les exemples   
 `title` : Titre de l'exemple  
-`words` : Mots clés à utiliser pour la recherche  
-`tags` : Mots clés représentant la démonstration (technologies utilisées, concept)  
+`tags` : Mots clés représentant la démonstration (technologies utilisées, concept) et à utiliser pour la barre de recherche
 `description` : Texte de description de l'exemple  
 `level `: Niveau de difficulté `simple` | `intermédiaire` | `avancé` *(veuillez respecter la casse et les accents)*  
 `url_source` : lien vers le fichier de configuration .xml   
