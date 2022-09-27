@@ -22,25 +22,25 @@ Pour ajouter une nouvelle démonstration, il faut renseigner les informations da
 
  1. Ouvrir `catalogue/data.json` dans un éditeur  
  2. A la suite des exemples existants, ajouter votre démonstration comme ci-dessous en
-    respectant les champs indiqués :
-   {
-		"id":"1",
-		"title": "GéoBretagne",
-		"words": "flux, Géobretagne, WMS, flux",
-		"tags": "Géobretagne, WMS",
-		"description":"Exemple exploitant uniquement des flux GéoBretagne pour les fonds cartographiques et pour les thématiques.",
-		"level":"simple",
-		"url_source":"../demo/geobretagne.xml",
-		"url_demo":"../?config=demo/geobretagne.xml"
-	}
+    respectant les champs indiqués :  
+   {  
+		"id":"1",  
+		"title": "GéoBretagne",  
+		"words": "flux, Géobretagne, WMS, flux",  
+		"tags": "Géobretagne, WMS",  
+		"description":"Exemple exploitant uniquement des flux GéoBretagne pour les fonds cartographiques et pour les thématiques.",  
+		"level":"simple",  
+		"url_source":"../demo/geobretagne.xml",  
+		"url_demo":"../?config=demo/geobretagne.xml"  
+	}  
 
-`id` : identifiant unique pour les exemples 
-`title` : Titre de l'exemple
-`words` : Mots clés à utiliser pour la recherche
-`tags` : Mots clés représentant la démonstration (technologies utilisées, concept)
-`description` : Texte de description de l'exemple
-`level `: Niveau de difficulté `simple` | `intermédiaire` | `avancé` *(veuillez respecter la casse et les accents)*
-`url_source` : lien vers le fichier de configuration .xml 
-`url_demo` : lien vers l'application mviewer en ligne représentant l'exemple
+`id` : identifiant unique pour les exemples   
+`title` : Titre de l'exemple  
+`words` : Mots clés à utiliser pour la recherche  
+`tags` : Mots clés représentant la démonstration (technologies utilisées, concept)  
+`description` : Texte de description de l'exemple  
+`level `: Niveau de difficulté `simple` | `intermédiaire` | `avancé` *(veuillez respecter la casse et les accents)*  
+`url_source` : lien vers le fichier de configuration .xml   
+`url_demo` : lien vers l'application mviewer en ligne représentant l'exemple  
 
 
