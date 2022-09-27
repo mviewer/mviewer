@@ -23,6 +23,15 @@ Feuille de style du catalogue des fonctionnalités
     opacity: 0.7;
 }
 
+.nav-link {
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.nav-link:hover {
+    background-color: var(--primary);
+    color: white;
+}
+
 /* Input search */
 #iconSearch {
 	background-color: var(--primary);
