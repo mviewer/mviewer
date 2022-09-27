@@ -2,6 +2,8 @@
 
 Le catalogue propose des exemples de fonctionnalités pouvant être mobilisées dans l'application mviewer. Il est possible de visualiser l'exemple en live *(Démo)* et de visualiser le fichier de configuration `.XML` *(Code)*. L'ensemble des exemples est disponible dans le dossier `mviewer/demo`. 
 
+![image](https://user-images.githubusercontent.com/22764056/192487768-ed227e52-f1ff-4a9f-8dd2-eea99e4c45b6.png)
+
 ## 1. Fonctionnement du catalogue
 Le catalogue est construit autour d'une page HTML `demo/index.html` et d'un template MST  `demo/catalogue/template/catalogue.mst` pour la création des `cards` à la volée. Les informations des différents exemples sont indiquées dans le fichier `demo/catalogue/data.json`.
 De plus, une barre de recherche a été ajoutée permettant de filtrer les exemples.
