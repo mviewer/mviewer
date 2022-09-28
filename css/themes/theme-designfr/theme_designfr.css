@@ -1263,6 +1263,7 @@ a#btn-mode-su-menu {
 
 .xs .navbar-toggle {
 	background-color: white !important;
+	padding: 0!important;
 	border: none;
 	color: var(--bf500);
 }
@@ -1279,7 +1280,8 @@ a#btn-mode-su-menu {
 }
 
 .xs.mode-d .mv-title {
-	padding: 14px 0px !important
+	padding: 5px 0px !important;
+    width: 300px!important;
 }
 
 .xs.mode-d .title-app {
