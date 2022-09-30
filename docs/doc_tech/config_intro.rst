@@ -57,12 +57,13 @@ Il est possible d'instancier un mviewer avec des **paramètres** de configuratio
 * ``mode`` : Mode d'affichage à utiliser (d - default, s - simplifié, u - ultrasimplifié). Le mode simplifié ne dispose pas du panneau des thématiques et le mode ultra simplifié ne dispose pas de la barre de navigation.
 * ``title`` : Titre à utiliser. Seulement exploité en mode défault et simplifié.
 * ``topics`` : Thèmes à filtrer.
-* ``addLayer`` : pour ajouter une couche WMS à la carte.
-ce paramètre prends comme valeur un objet JSON contenant 
-** url : url du service
-** name : nom de la couche (layername)
-** title : label/titre à afficher dans mviewer
+* ``addLayer`` : pour ajouter une couche WMS à la carte. ce paramètre prends comme valeur un objet **JSON** contenant
 
+  * ``url`` : url du service
+  * ``name`` : nom de la couche (layername)
+  * ``title`` : label/titre à afficher dans mviewer
+
+exemple pour le paramètre **addLayer** : ``&addLayer={\%22url\%22:\%22https://www.geo2france.fr/geoserver/hdf_common/ows\%22,\%22name\%22:\%22Antennes__HdF_EnService_Agreg\%22,\%22title\%22:\%22Antennes_test\%22}`` 
 
 Paramètres d'URL utilisés pour les permaliens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
