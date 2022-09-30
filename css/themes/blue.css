@@ -6,20 +6,19 @@
 ------------- FONTS -----------
 ********************************/
 @font-face {
-  font-family: "roboto_bold";
-  src: url("../font/Roboto/Roboto-Bold.ttf");
-}
+  font-family: 'roboto_bold';
+  src: url("../font/Roboto/Roboto-Bold.ttf"); }
+
 @font-face {
-  font-family: "roboto_regular";
-  src: url("../font/Roboto/Roboto-Regular.ttf");
-}
+  font-family: 'roboto_regular';
+  src: url("../font/Roboto/Roboto-Regular.ttf"); }
+
 /*******************************
 ------------- GENERAL -----------
 ********************************/
 .mv-theme {
   background-color: #032e46;
-  color: #ffffff;
-}
+  color: white; }
 
 /*******************************
 ------------- NAVBAR -----------
@@ -27,73 +26,60 @@
 #mv-navbar {
   border-color: #032e46;
   background-color: #032e46;
-  /* Help button */
-}
-#mv-navbar .navbar-brand {
-  color: #ffffff;
-  font-size: 20px;
-}
-#mv-navbar .mv-title {
-  color: #ffffff;
-  font-size: 18px;
-  font-family: "roboto_bold", Arial, Sans-serif;
-  letter-spacing: 0.5px;
-}
-#mv-navbar .navbar-toggle {
-  border-color: #032e46;
-  color: #ffffff;
-}
-#mv-navbar .mv-navbar-btn {
-  color: #032e46;
-}
+  /* Help button */ }
+  #mv-navbar .navbar-brand {
+    color: white;
+    font-size: 20px; }
+  #mv-navbar .mv-title {
+    color: white;
+    font-size: 18px;
+    font-family: "roboto_bold", Arial, Sans-serif;
+    letter-spacing: 0.5px; }
+  #mv-navbar .navbar-toggle {
+    border-color: #032e46;
+    color: white; }
+  #mv-navbar .mv-navbar-btn {
+    color: #032e46; }
 
 /*******************************
 ------------- MAP CONTROLS -----
 ********************************/
 #map .ol-control button {
-  color: #ffffff;
-  background-color: #032e46;
-}
+  color: white;
+  background-color: #032e46; }
 #map .ol-control button:focus, #map #map .ol-control button:hover {
-  background-color: #032e46;
-}
+  background-color: #032e46; }
 #map .ol-scale-line-inner {
-  font-family: "roboto_regular", Arial, Sans-serif;
-}
+  font-family: "roboto_regular", Arial, Sans-serif; }
 
 /*******************************
 ------------- LEFT PANEL -------
 ********************************/
 /* thematic title */
 #menu > li > a {
-  font-family: "roboto_bold", Arial, Sans-serif;
-}
+  font-family: "roboto_bold", Arial, Sans-serif; }
 
 /* group & layer title */
 #sidebar-wrapper a {
-  font-family: "roboto_regular", Arial, Sans-serif;
-}
+  font-family: "roboto_regular", Arial, Sans-serif; }
 
 /* all titles hover */
 #menu li a:hover {
   border-left: #032e46 0px solid;
   background: #032e46;
-  color: #f8f8f8;
-}
+  color: #f8f8f8; }
 
 /*******************************
 ------------- RIGHT PANEL ------
 ********************************/
 /* Titre de la couche interrogée active */
 #right-panel .mv-header {
-  background-color: #032e46;
-}
-#right-panel .mv-header h5 {
-  color: #ffffff;
-  font-family: "roboto_bold", Arial, Sans-serif;
-  font-size: 13px;
-  background-color: #032e46;
-}
+  background-color: #032e46; }
+  #right-panel .mv-header h5 {
+    color: white;
+    font-family: "roboto_bold", Arial, Sans-serif;
+    font-size: 13px;
+    background-color: #032e46; }
 
 /*******************************
 ------------- BOTTOM PANEL
@@ -102,386 +88,259 @@
 #bottom-panel .mv-header h5 {
   font-family: "roboto_bold", Arial, Sans-serif;
   color: #032e46;
-  font-size: 13px;
-}
+  font-size: 13px; }
 
 /* Boutton de fermeture */
 #bottom-panel-btn .fa-chevron-down {
   background: #032e46;
-  color: #ffffff;
-}
+  color: white; }
 
 /*******************************
 ------------- INFO FEATURE------
 ********************************/
 .popup-content {
-  font-family: "roboto_regular", Arial, Sans-serif;
-}
+  font-family: "roboto_regular", Arial, Sans-serif; }
 
 .popup-content .nav-tabs > li.active > a,
 .popup-content .nav-tabs > li.active > a:hover,
 .popup-content .nav-tabs > li.active > a:focus {
   border: 0;
-  border-left: thick solid #032e46;
-}
+  border-left: thick solid #032e46; }
 
 .popup-content .nav-tabs .active .glyphicon,
 .popup-content .nav-tabs .active .fa {
-  color: #032e46;
-}
+  color: #032e46; }
 
 /*******************************
 -------------CSS Fiche info GML
 ********************************/
 .gml-item-field-name {
-  font-family: "roboto_regular", Arial, Sans-serif;
-}
+  font-family: "roboto_regular", Arial, Sans-serif; }
 
 .gml-item-field-value {
-  font-family: "roboto_regular", Arial, Sans-serif;
-}
+  font-family: "roboto_regular", Arial, Sans-serif; }
 
 .gml-item-title {
   font-family: "roboto_regular", Arial, Sans-serif;
   color: #032e46;
-  font-size: 24px;
-}
+  font-size: 24px; }
 
 /*******************************
 -------------LAYERS PANEL ------
 ********************************/
 #layers-container-box-header {
-  background-color: #032e46;
-}
+  background-color: #032e46; }
 
 #layers-container {
   /* Opacité */
-  /* Temporalité */
-}
-#layers-container a {
-  color: #032e46;
-  font-family: "roboto_bold", Arial, Sans-serif;
-}
-#layers-container .mv-layer-options {
-  color: #555;
-}
-#layers-container .mv-layer-options p {
-  font-family: "roboto_regular", Arial, Sans-serif;
-}
-#layers-container .form-group label {
-  font-family: "roboto_bold", Arial, Sans-serif;
-}
-#layers-container .form-control {
-  font-family: "roboto_regular", Arial, Sans-serif;
-  color: #555;
-}
-#layers-container .datepicker .active {
-  background-color: #032e46;
-}
-#layers-container .mv-layer-options .slider-selection {
-  background: #032e46;
-}
-#layers-container .mv-layer-options .slider-handle {
-  background: #032e46;
-}
-#layers-container .mv-layer-options .tooltip-inner {
-  background-color: #032e46;
-  border-radius: 4px;
-  font-family: "roboto_regular", Arial, Sans-serif;
-}
-#layers-container .mv-layer-options .tooltip.top .tooltip-arrow {
-  border-top-color: #032e46;
-}
-#layers-container .mv-layer-options .form-group-timer .slider-selection {
-  background: #032e46;
-  -webkit-box-shadow: inset 0 0px 0 rgba(0, 0, 0, 0);
-}
-#layers-container .slider.slider-horizontal .slider-tick-label-container {
-  font-family: "roboto_regular", Arial, Sans-serif;
-}
-#layers-container .slider-tick.round.in-selection {
-  background: #032e46;
-  background-image: none;
-  -webkit-box-shadow: inset 0 0px 0 rgba(0, 0, 0, 0);
-}
-#layers-container .form-group-timer .slider-tick.round {
-  background: #032e46;
-  background-image: none;
-  -webkit-box-shadow: inset 0 0px 0 rgba(0, 0, 0, 0);
-  opacity: 1;
-}
-#layers-container .form-group-timer .tooltip.bottom .tooltip-arrow {
-  border-bottom-color: #032e46;
-}
-#layers-container .mv-layer-options .form-group-timer .slider-track-high {
-  background: #032e46;
-}
-#layers-container span.mv-time-player-selection {
-  color: #ffffff;
-  font-size: 13px;
-  background-color: #032e46;
-}
+  /* Temporalité */ }
+  #layers-container a {
+    color: #032e46;
+    font-family: "roboto_bold", Arial, Sans-serif; }
+  #layers-container .mv-layer-options {
+    color: #555555; }
+  #layers-container .mv-layer-options p {
+    font-family: "roboto_regular", Arial, Sans-serif; }
+  #layers-container .form-group label {
+    font-family: "roboto_bold", Arial, Sans-serif; }
+  #layers-container .form-control {
+    font-family: "roboto_regular", Arial, Sans-serif;
+    color: #555555; }
+  #layers-container .datepicker .active {
+    background-color: #032e46; }
+  #layers-container .mv-layer-options .slider-selection {
+    background: #032e46; }
+  #layers-container .mv-layer-options .slider-handle {
+    background: #032e46; }
+  #layers-container .mv-layer-options .tooltip-inner {
+    background-color: #032e46;
+    border-radius: 4px;
+    font-family: "roboto_regular", Arial, Sans-serif; }
+  #layers-container .mv-layer-options .tooltip.top .tooltip-arrow {
+    border-top-color: #032e46; }
+  #layers-container .mv-layer-options .form-group-timer .slider-selection {
+    background: #032e46;
+    -webkit-box-shadow: inset 0 0px 0 rgba(0, 0, 0, 0); }
+  #layers-container .slider.slider-horizontal .slider-tick-label-container {
+    font-family: "roboto_regular", Arial, Sans-serif; }
+  #layers-container .slider-tick.round.in-selection {
+    background: #032e46;
+    background-image: none;
+    -webkit-box-shadow: inset 0 0px 0 rgba(0, 0, 0, 0); }
+  #layers-container .form-group-timer .slider-tick.round {
+    background: #032e46;
+    background-image: none;
+    -webkit-box-shadow: inset 0 0px 0 rgba(0, 0, 0, 0);
+    opacity: 1; }
+  #layers-container .form-group-timer .tooltip.bottom .tooltip-arrow {
+    border-bottom-color: #032e46; }
+  #layers-container .mv-layer-options .form-group-timer .slider-track-high {
+    background: #032e46; }
+  #layers-container span.mv-time-player-selection {
+    color: white;
+    font-size: 13px;
+    background-color: #032e46; }
 
 /*******************************
 ------------- POPOVER
 ********************************/
 body .popover-content {
-  font-family: "roboto_regular", Arial, Sans-serif;
-}
+  font-family: "roboto_regular", Arial, Sans-serif; }
 
 body .popover-title {
-  font-family: "roboto_bold", Arial, Sans-serif;
-}
+  font-family: "roboto_bold", Arial, Sans-serif; }
 
 /*******************************
 ---------- BASEMAP CONTROL -----
 ********************************/
 #basemapslist li.active {
-  box-shadow: 0px 0px 2px 2px #032e46, 0px 0px 3px 3px rgba(200, 200, 200, 0.5);
-}
+  box-shadow: 0px 0px 2px 2px #032e46, 0px 0px 3px 3px rgba(200, 200, 200, 0.5); }
 
 /*******************************
 --------- BUTTONS RIGHT TOOLBAR
 ********************************/
 #toolstoolbar .btn-default.enabled {
   background-color: #032e46;
-  border-color: #032e46;
-}
+  border-color: #032e46; }
 
 #drawtoolsoptions .btn-default.active,
 #drawtoolsoptions .btn-default:active,
 #drawtoolsoptions .btn-default:focus,
 #drawtoolsoptions .btn-default.focus {
   background-color: #032e46;
-  border-color: #032e46;
-}
+  border-color: #032e46; }
 
 /*******************************
 ------------- ALERTS --------
 ********************************/
 #alerts-zone .alert.alert-info {
   background-color: #032e46;
-  color: #ffffff;
-}
+  color: white; }
 
 #alerts-zone .close {
-  color: #ffffff;
-  text-shadow: 0 1px 0 #000;
-}
+  color: white;
+  text-shadow: 0 1px 0 #000; }
 
 /*******************************
 ------------- TOOLTIPS --------
 ********************************/
 .tooltip2 {
   background: #032e46;
-  font-family: "roboto_regular", Arial, Sans-serif;
-}
+  font-family: "roboto_regular", Arial, Sans-serif; }
 
 .tooltip-measure-static {
   background-color: #032e46;
-  font-family: "roboto_regular", Arial, Sans-serif;
-}
+  font-family: "roboto_regular", Arial, Sans-serif; }
 
 .tooltip-measure:before,
 .tooltip-measure-static:before {
-  border-top: 6px solid #032e46;
-}
+  border-top: 6px solid #032e46; }
 
 .tooltip-measure-static:before {
-  border-top-color: #032e46;
-}
+  border-top-color: #032e46; }
 
 /* Custom-tooltip-infopanel */
 .mv-tooltip.tooltip-inner {
   background-color: #032e46;
   padding: 8px 8px 8px;
-  color: #ffffff;
+  color: white;
   font-family: "roboto_regular", Arial, Sans-serif;
   font-size: 11px;
-  letter-spacing: 1;
-}
+  letter-spacing: 1; }
 
 .tooltip.right .mv-tooltip.tooltip-arrow {
-  border-right-color: #032e46;
-}
+  border-right-color: #032e46; }
 
 .tooltip.top .mv-tooltip.tooltip-arrow {
-  border-top-color: #032e46;
-}
+  border-top-color: #032e46; }
 
 .tooltip.left .mv-tooltip.tooltip-arrow {
-  border-left-color: #032e46;
-}
+  border-left-color: #032e46; }
 
 /*******************************
 ------------- SEARCH TOOLBAR
 ********************************/
 #searchtool .btn-default {
-  color: #032e46;
-}
+  color: #032e46; }
 
 #parameterspanel {
-  font-family: "roboto_regular", Arial, Sans-serif;
-}
-#parameterspanel .modal-header {
-  color: #555;
-  font-size: 13px;
-}
+  font-family: "roboto_regular", Arial, Sans-serif; }
+  #parameterspanel .modal-header {
+    color: #555555;
+    font-size: 13px; }
 
 /* Search results */
 #searchresults {
   font-family: "roboto_regular", Arial, Sans-serif;
-  color: #555;
-}
-#searchresults a.list-group-item.disabled {
-  font-family: "roboto_bold", Arial, Sans-serif;
-}
-#searchresults a:hover {
-  font-family: "roboto_bold", Arial, Sans-serif;
-  color: #032e46;
-}
+  color: #555555; }
+  #searchresults a.list-group-item.disabled {
+    font-family: "roboto_bold", Arial, Sans-serif; }
+  #searchresults a:hover {
+    font-family: "roboto_bold", Arial, Sans-serif;
+    color: #032e46; }
 
 .searchresults-title {
   background-color: #032e46;
   border-color: #032e46;
-  color: #ffffff;
-  font-family: "roboto_bold", Arial, Sans-serif;
-}
+  color: white;
+  font-family: "roboto_bold", Arial, Sans-serif; }
 
 .searchresults-title .close,
 .searchresults-title .close:hover,
 .searchresults-title .close:focus,
 .searchresults-title .close:active,
 .searchresults-title .close:visited {
-  color: #ffffff;
-}
+  color: white; }
 
 /* Partager la carte*/
 #sharepanel {
-  font-family: "roboto_regular", Arial, Sans-serif;
-}
+  font-family: "roboto_regular", Arial, Sans-serif; }
 
 /*******************************
 ------------- HELP PANEL -----
 ********************************/
 #help .nav-tabs {
-  border-bottom: 2px solid #032e46;
-}
+  border-bottom: 2px solid #032e46; }
 #help .nav-tabs > li > a {
   border-radius: 0px 0px 0 0px;
-  color: #555;
-}
+  color: #555555; }
 #help .nav-tabs > li.active > a {
   background-color: #032e46;
   border-color: #032e46;
-  color: #ffffff;
-}
+  color: white; }
 #help .nav-tabs > li.active > a:hover {
-  color: #555;
-}
+  color: #555555; }
 #help .nav-tabs > li > a:hover {
-  border-color: #eee #eee #032e46;
-  color: #032e46;
-}
+  border-color: #eeeeee #eeeeee #032e46;
+  color: #032e46; }
 #help .modal-title {
   font-size: 25px;
   font-family: "roboto_bold", Arial, Sans-serif;
-  color: #032e46;
-}
+  color: #032e46; }
 #help .tab-pane h4 {
   font-family: "roboto_bold", Arial, Sans-serif;
   color: #032e46;
   font-size: 22px;
-  margin-top: 20px;
-}
+  margin-top: 20px; }
 #help .tab-pane h5 {
   font-family: "roboto_bold", Arial, Sans-serif;
   color: #032e46;
   font-size: 16px;
-  margin-bottom: 2px;
-}
+  margin-bottom: 2px; }
 #help .tab-pane h6 {
   font-family: "roboto_bold", Arial, Sans-serif;
   color: #032e46;
   font-size: 14px;
-  margin-bottom: 2px;
-}
+  margin-bottom: 2px; }
 #help .tab-pane p {
-  color: #555;
+  color: #555555;
   font-size: 13px;
-  text-align: justify;
-}
+  text-align: justify; }
 #help .tab-pane .visuel_tx {
-  color: #555;
-  font-size: 13px;
-}
+  color: #555555;
+  font-size: 13px; }
 #help .tab-pane .visuel {
-  text-align: center;
-}
-
-/*******************************
-------------- ADD LAYER PANEL -----
-********************************/
-#addLayerMenuBtn a {
-  border-left: #032e46 0px solid;
-  background: #032e46;
-  color: #f8f8f8;
-}
-
-#addLayerpanel .nav-tabs {
-  border-bottom: 2px solid #032e46;
-}
-#addLayerpanel .nav-tabs > li > a {
-  border-radius: 0px 0px 0 0px;
-  color: #555;
-}
-#addLayerpanel .nav-tabs > li.active > a {
-  background-color: #032e46;
-  border-color: #032e46;
-  color: #ffffff;
-}
-#addLayerpanel .nav-tabs > li.active > a:hover {
-  color: #555;
-}
-#addLayerpanel .nav-tabs > li > a:hover {
-  border-color: #eee #eee #032e46;
-  color: #032e46;
-}
-#addLayerpanel .modal-title {
-  font-size: 25px;
-  font-family: "roboto_bold", Arial, Sans-serif;
-  color: #032e46;
-}
-#addLayerpanel .tab-pane h4 {
-  font-family: "roboto_bold", Arial, Sans-serif;
-  color: #032e46;
-  font-size: 22px;
-  margin-top: 20px;
-}
-#addLayerpanel .tab-pane h5 {
-  font-family: "roboto_bold", Arial, Sans-serif;
-  color: #032e46;
-  font-size: 16px;
-  margin-bottom: 2px;
-}
-#addLayerpanel .tab-pane h6 {
-  font-family: "roboto_bold", Arial, Sans-serif;
-  color: #032e46;
-  font-size: 14px;
-  margin-bottom: 2px;
-}
-#addLayerpanel .tab-pane p {
-  color: #555;
-  font-size: 13px;
-  text-align: justify;
-}
-#addLayerpanel .tab-pane .visuel_tx {
-  color: #555;
-  font-size: 13px;
-}
-#addLayerpanel .tab-pane .visuel {
-  text-align: center;
-}
+  text-align: center; }
 
 /*******************************
 -------------LOADER INDICATOR
@@ -490,41 +349,33 @@ body .popover-title {
   border-top: 1.1em solid rgba(3, 46, 70, 0.2);
   border-right: 1.1em solid rgba(3, 46, 70, 0.2);
   border-bottom: 1.1em solid rgba(3, 46, 70, 0.2);
-  border-left: 1.1em solid #032e46;
-}
+  border-left: 1.1em solid #032e46; }
 
 .mv-iframe-indicator .loader {
   border-top: 1.1em solid rgba(3, 46, 70, 0.2);
   border-right: 1.1em solid rgba(3, 46, 70, 0.2);
   border-bottom: 1.1em solid rgba(3, 46, 70, 0.2);
-  border-left: 1.1em solid #032e46;
-}
+  border-left: 1.1em solid #032e46; }
 
 #mv-navbar {
-  font-family: "roboto_bold", Arial, Sans-serif;
-}
+  font-family: "roboto_bold", Arial, Sans-serif; }
 
 #mv-navbar.navbar-default .navbar-nav > li > a {
-  color: #ffffff;
-}
+  color: white; }
 
 @media (max-width: 991px) {
   #legend-modal .modal-header,
-#modal-panel .modal-header,
-#sharepanel .modal-header,
-#thematic-modal .modal-header {
+  #modal-panel .modal-header,
+  #sharepanel .modal-header,
+  #thematic-modal .modal-header {
     background: #032e46;
-    color: #ffffff;
+    color: white;
     padding: 12px 15px;
-    font-family: "roboto_regular", Arial, Sans-serif;
-  }
-  #legend-modal .modal-header .close,
-#sharepanel .modal-header .close,
-#modal-panel .modal-header .close,
-#thematic-modal .modal-header .close {
-    color: #ffffff;
-    opacity: 0.9;
-  }
-}
+    font-family: "roboto_regular", Arial, Sans-serif; }
 
-/*# sourceMappingURL=blue.css.map */
+  #legend-modal .modal-header .close,
+  #sharepanel .modal-header .close,
+  #modal-panel .modal-header .close,
+  #thematic-modal .modal-header .close {
+    color: white;
+    opacity: .9; } }
