@@ -57,6 +57,12 @@ Il est possible d'instancier un mviewer avec des **paramètres** de configuratio
 * ``mode`` : Mode d'affichage à utiliser (d - default, s - simplifié, u - ultrasimplifié). Le mode simplifié ne dispose pas du panneau des thématiques et le mode ultra simplifié ne dispose pas de la barre de navigation.
 * ``title`` : Titre à utiliser. Seulement exploité en mode défault et simplifié.
 * ``topics`` : Thèmes à filtrer.
+* ``addLayer`` : pour ajouter une couche WMS à la carte.
+ce paramètre prends comme valeur un objet JSON contenant 
+** url : url du service
+** name : nom de la couche (layername)
+** title : label/titre à afficher dans mviewer
+
 
 Paramètres d'URL utilisés pour les permaliens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
