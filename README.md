@@ -24,6 +24,65 @@ Le déploiement se passe en trois étapes :
   Vous avez maintenant un visualiseur géographique fonctionnel avec les couches de la Région Bretagne
 * Si vous souhaitez publier vos propres couches/thèmes, modifiez le fichier `apps/default.xml`
 
+## Node.js
+
+Mviewer peut également être publié via Node.js et NPM (testé avec v18.9.1).
+
+1. Install Node et npm
+  
+Pour installer Node et Npm sous Linux / debian : 
+
+- Suivre ces instructions :
+
+https://github.com/nodesource/distributions/blob/master/README.md
+
+- ou utiliser NVM (conseillé) :
+
+```
+sudo apt install curl 
+curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+source ~/.profile
+nvm install 18
+```
+
+2. Clone du code source
+
+```
+git clone https://github.com/geobretagne/mviewer.git
+cd mviewer
+```
+
+3. Installation
+
+```
+npm install
+```
+
+4. Démo live
+
+npm start
+
+Par défaut, mviewer est maintenant accessible à cette adresse :
+
+**localhost:5000**
+
+
+### Pour modifier les paramètres du serveur
+
+Pour modifier le port our les options d'exécution...
+
+Modifer la commande `start` dans le `package.json`.
+
+`"start": "serve -p 8080"`
+
+### Pour Réinstaller ou mettre à jour
+
+```
+rm -rf node_modules
+rm -rf package-lock.json
+npm install
+```
+
 ## Docker
 
 Si vous souhaitez faire tourner mviewer dans un conteneur docker, un `Dockerfile` est à votre disposition.
