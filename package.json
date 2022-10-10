@@ -4,7 +4,7 @@
   "description": "Mviewer",
   "main": "index.html",
   "scripts": {
-    "start": "serve -p 5000",
+    "start": "live-server --port=5051",
     "build": "echo This is a very simple mviewer app, there is no bundler or bundling involved!"
   },
   "repository": {
@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/geobretagne/mviewer/issues"
   },
-  "homepage": "."
+  "homepage": ".",
+  "dependencies": {
+    "live-server": "^1.2.2"
+  }
 }
