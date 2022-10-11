@@ -1,0 +1,24 @@
+<!--
+    *
+    Exemple de template mobilisant des éléments d'interface 
+    de la librairie DSFR-Version 1.6.0
+    *
+    à mobiliser avec le thème GouvFr
+-->
+
+{{#features}}
+	<li id="{{feature_ol_uid}}" class="item" style="width:100%;">
+        <p class="fr-badge fr-badge--blue-ecume">{{millesime}}</p>
+		<h3 class="title-feature"> {{nom}}</h3>
+        <p class="fr-mb-4w">Type de collectivité : {{level}}</p>
+        <span class="fr-fi--lg fr-icon-map-pin-user-fill" aria-hidden="true"></span>
+        <h4><span id="dens_value_{{code_geo}}">#</span> hab/km²</h4>
+        <p>Densité de population en {{millesime}} <br><i>pour l'entité sélectionnée</i></p>             
+	</li>
+    <script>
+        /* 2 decimals for density value */
+        let value = {{densite}};
+        let value_dec = value.toFixed(2);
+        document.getElementById("dens_value_{{code_geo}}").innerHTML=value_dec;
+    </script>
+{{/features}}
