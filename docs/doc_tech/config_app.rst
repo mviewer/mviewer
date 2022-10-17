@@ -81,6 +81,35 @@ Paramètres secondaires
 * ``langfile``: URL du fichier de traduction supplémentaire à utiliser en complément de mviewer.i18n.json.
 * ``favicon``: URL du fichier image à utiliser comme favicon de l'application.
 
+Modes de templates
+-----------------
+
+Exemples pour un affichage à droite (templaterightinfopanel)
+
+
+* ``default``: Une entrée par couche avec un carroussel pour navigation par entités.
+
+.. image:: ../_images/tech/default.png
+              :alt: default
+              :align: center   
+
+* ``brut``: Affichage à la suite de toutes les entités avec encapsulation par couche.
+
+.. image:: ../_images/tech/brut.png
+              :alt: brut
+              :align: center   
+
+* ``accordion``: Affichage par couche avec carroussel et pliage/dépliage lors du changement de couche.
+
+.. image:: ../_images/tech/accordion.png
+              :alt: accordion
+              :align: center   
+
+* ``allintabs``: Affichage à la suite avec une entrée par entité.
+
+.. image:: ../_images/tech/allintabs.png
+              :alt: allintabs
+              :align: center   
 
 Exemple
 -----------------
