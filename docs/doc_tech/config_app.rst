@@ -84,8 +84,7 @@ Paramètres secondaires
 Modes de templates
 -----------------
 
-Exemples pour un affichage à droite (templaterightinfopanel)
-
+Modes d'affichage des templates soit à droite (templaterightinfopanel), soit en bas (templatebottominfopanel).
 
 * ``default``: Une entrée par couche avec un carroussel pour navigation par entités.
 
