@@ -512,7 +512,7 @@
             API.config = configFile;
 
             var theme = (API.theme) ? API.theme : null;
-            
+
             $.ajax({
                 url: configFile + '?_dc=' + (new Date()).getTime(),
                 dataType: "xml",
