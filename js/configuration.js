@@ -205,6 +205,50 @@ var configuration = (function () {
 
 
     };
+    /**
+     * 
+     * @param {string} file path
+     * @returns Promise
+     */
+    const _callJsonFile = (file) => 
+    fetch(file)
+        .then(r => r)
+            .then(r => r.json())
+    /**
+     * Set mviewer env values
+     * @param {any} d 
+     */
+    const _dispatchCustomEvent = (d) => {
+        const envDataReady = new CustomEvent('environementInfosAvailable', {detail: d})
+        document.dispatchEvent(envDataReady);
+    }
+    /**
+     * Get env values from file.
+     * Default file is located in apps/.env and could be overload by config.env file with same name as config.xml file.
+     * Default env file could be given by URL like ?env=apps/myApp/.en
+     * @param {string} file path
+     */
+    const _getEnvData = (appsEnvfile, defaultFile) => {
+        console.log("getEventData");
+        
+        _callJsonFile(defaultFile)
+        .then( defaultEnv => 
+            // if apps env file exists wi overload default apps/.env file with .env file with same xml name
+            // as demo.env, demo.xml
+            _callJsonFile(appsEnvfile)
+            .then(appsEnv => _dispatchCustomEvent({...defaultEnv, ...appsEnv}))
+            // else finally load only apps/.env file is loaded
+            .catch(e => _dispatchCustomEvent(defaultEnv))
+        ).catch(e => {
+            // if no apps/.env file exists we search specific .env file for this context
+            _callJsonFile(appsEnvfile)
+                .then(appsEnv => _dispatchCustomEvent(appsEnv))
+                .catch(e => {
+                    // else, finally load with any env values
+                    _dispatchCustomEvent({});
+                })
+        });
+    }
 
     var _load = function (conf) {
 
@@ -474,8 +518,9 @@ var configuration = (function () {
                         }
                     });
                 }
-                layers.reverse().forEach( function (layer) {
-                   if (layer) { /* to escape group without layer */
+                layers.reverse().forEach(function (layerConfig) {
+                    const layer = mviewer.env ? { ...layerConfig, url: Mustache.render(layerConfig.url, mviewer?.env) } : layerConfig;
+                    if (layer) { /* to escape group without layer */
                     layerRank+=1;
                     var layerId = layer.id;
                     if (layer.url) {
@@ -969,7 +1014,8 @@ var configuration = (function () {
         getConfiguration: function () { return _configuration; },
         getLang: function () { return _lang },
         getLanguages: function () { return _languages; },
-        setLang: function (lang) { _lang = lang; mviewer.lang.lang = lang;}
+        setLang: function (lang) { _lang = lang; mviewer.lang.lang = lang; },
+        getEnvData: _getEnvData
     };
 
 })();
