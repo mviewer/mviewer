@@ -57,6 +57,15 @@ var configuration = (function () {
 
     const _blankSrc = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
 
+    /**
+     * Usefull to decode string encoded hex code
+     * @param {string} str 
+     * @returns decoded string
+     */
+    var _decodeString = str => {
+        return str.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#x27;/g, '\'').replace(/&#x2F;/g, '/');
+    };
+
     var _parseXML = function (xml) {
         var _conf = $.xml2json(xml);
         // transtype baselayer, theme, group, layer
@@ -228,18 +237,23 @@ var configuration = (function () {
      * Default env file could be given by URL like ?env=apps/myApp/.en
      * @param {string} file path
      */
-    const _getEnvData = (appsEnvfile, defaultFile) => {
-        console.log("getEventData");
-        
+    const _getEnvData = (appsEnvfile, defaultFile) => {       
         _callJsonFile(defaultFile)
         .then( defaultEnv => 
             // if apps env file exists wi overload default apps/.env file with .env file with same xml name
             // as demo.env, demo.xml
-            _callJsonFile(appsEnvfile)
-            .then(appsEnv => _dispatchCustomEvent({...defaultEnv, ...appsEnv}))
-            // else finally load only apps/.env file is loaded
-            .catch(e => _dispatchCustomEvent(defaultEnv))
+            {
+                console.log(defaultEnv);
+                return _callJsonFile(appsEnvfile)
+                    .then(appsEnv => {
+                        console.log(appsEnv);
+                        return _dispatchCustomEvent({ ...defaultEnv, ...appsEnv })
+                    })
+                // else finally load only apps/.env file is loaded
+                .catch(e => _dispatchCustomEvent(defaultEnv))
+            }
         ).catch(e => {
+            console.log("Error with default file");
             // if no apps/.env file exists we search specific .env file for this context
             _callJsonFile(appsEnvfile)
                 .then(appsEnv => _dispatchCustomEvent(appsEnv))
@@ -248,6 +262,17 @@ var configuration = (function () {
                     _dispatchCustomEvent({});
                 })
         });
+    }
+
+    /**
+     * From env. file, Get templated string path rendered by Mustache
+     * ...and decoded
+     * @param {string} str 
+     * @returns full templated string decoded
+     */
+    var _renderEnvPath = (str) => {
+        if (!str) return;
+        return _decodeString(Mustache.render(str, mviewer?.env))
     }
 
     var _load = function (conf) {
@@ -519,7 +544,15 @@ var configuration = (function () {
                     });
                 }
                 layers.reverse().forEach(function (layerConfig) {
-                    const layer = mviewer.env ? { ...layerConfig, url: Mustache.render(layerConfig.url, mviewer?.env) } : layerConfig;
+                    const layer = mviewer.env ? {
+                        ...layerConfig,
+                        url: _renderEnvPath(layerConfig.url),
+                        legendurl:_renderEnvPath(layerConfig.legendurl),
+                        metadata_csw:_renderEnvPath(layerConfig.metadata_csw),
+                        metadata:_renderEnvPath(layerConfig.metadata),
+                        sld: layerConfig.sld && layerConfig.sld.split(",").map(sld => _renderEnvPath(sld)).join(","),
+                        template: layerConfig.template && { ...layerConfig.template, url: _renderEnvPath(layerConfig.template.url) }
+                    } : layerConfig;
                     if (layer) { /* to escape group without layer */
                     layerRank+=1;
                     var layerId = layer.id;
@@ -1015,7 +1048,8 @@ var configuration = (function () {
         getLang: function () { return _lang },
         getLanguages: function () { return _languages; },
         setLang: function (lang) { _lang = lang; mviewer.lang.lang = lang; },
-        getEnvData: _getEnvData
+        getEnvData: _getEnvData,
+        renderEnvPath: _renderEnvPath
     };
 
 })();
