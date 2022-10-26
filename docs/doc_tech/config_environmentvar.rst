@@ -26,14 +26,14 @@ Pour faciliter cette transition, un système basé sur un/des fichier(s) ``.env`
 
 Les variables d’environnement sont principalement des liens pour accéder aux ressources des couches. Ils sont donc propres à chaque environnement.
 
-Variable définit dans ``apps/.env``  sur un environnement de recette : 
+Variable définie dans ``apps/.env``  sur un environnement de recette : 
 ::
 
     {
         "fqdn": "map.recette.fr"
     }
 
-La même variable définit dans ``apps/.env``  sur un environnement de production : 
+La même variable définie dans ``apps/.env``  sur un environnement de production : 
 ::
 
     {
@@ -58,11 +58,11 @@ Dans le répertoire ``/apps``, créez un nouveau fichier nommé ``.env`` et déf
 
 
 .. Note::
-    Les variables définies dans le fichier ``.env`` pourront être appelés dans l’ensemble des applications disponibles dans le répertoire ``/apps``. 
+    Les variables définies dans le fichier ``.env`` pourront être appelées dans l’ensemble des applications disponible dans le répertoire ``/apps``. 
 
 **Variables spécifiques à une application**
 
-Si l’on souhaite définir des variables pour une **application spécifique** nommé ``MaCarte.xml``, il est possible de créer un fichier d’environnement dédiée à cette application. 
+Si l’on souhaite définir des variables pour une **application spécifique** nommée ``MaCarte.xml``, il est possible de créer un fichier d’environnement dédié à cette application. 
 Dans le même répertoire que l’application, créez un nouveau fichier nommé ``MaCarte.env`` (le fichier d’environnement doit avoir le même nom que le fichier de configuration .XML). Dans ce fichier, définissez une ou plusieurs variable(s) comme ci-dessous :
 ::
 
