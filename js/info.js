@@ -179,7 +179,7 @@ var info = (function () {
                             vectorLayers[l].features.push(feature);
                         } else {
                             if (_overLayers[l] && _panelsTemplate[_overLayers[l].infospanel]=='allintabs') {
-                                l = l + '_' + f_idx;
+                                l = l + '_#' + f_idx;
                                 f_idx++;
                             }
                             vectorLayers[l] = {features:[]};
@@ -189,7 +189,7 @@ var info = (function () {
                 }
             });
             for(var layerid in vectorLayers) {
-                var originLayer = (layerid.lastIndexOf("_") < 0 ? layerid : layerid.substring(0, layerid.lastIndexOf("_")) );
+                var originLayer = (layerid in _overLayers ? layerid : layerid.substring(0, layerid.lastIndexOf("_#")) );
                 if (mviewer.customLayers[originLayer] && mviewer.customLayers[originLayer].handle) {
                     mviewer.customLayers[originLayer].handle(vectorLayers[originLayer].features, views);
                 } else if (mviewer.customControls[originLayer] && mviewer.customControls[originLayer].handle){
