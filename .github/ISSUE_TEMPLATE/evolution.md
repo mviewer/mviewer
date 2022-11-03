@@ -7,15 +7,15 @@ assignees: ''
 
 ---
 
-**Description / Describe**
+**Présentation**
 
 Une courte et description de ce que vous voulez.
 Cela peut toucher une fonctionnalité qui existe (ex: améliorer un outil de mesure) ou l'ajout d'une nouvelle fonctionnalité qui n'existe pas dans le Mviewer.
 
-**Description détaillée / Detailed description**
+**Description fonctionnelle**
 
-Si vous avez une idée de comment mettre en place cette évolution, vous pouvez tout détailler ici.
+Le fonctionnement prévu (ne concerne par le code à modifier ou des aspects trop techniques).
 
-**Informations complémentaires / Additional context**
+**Description technique**
 
-Toutes informations complémentaires que vous jugez utiles.
+Fonctionnement technique proposé (e.g librairie, extrait de code, etc.)
