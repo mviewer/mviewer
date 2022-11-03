@@ -1,0 +1,29 @@
+{
+  "name": "mviewer",
+  "version": "3.8.1-snapshot",
+  "description": "Mviewer",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server --port=5051",
+    "build": "echo This is a very simple mviewer app, there is no bundler or bundling involved!"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geobretagne/mviewer.git"
+  },
+  "keywords": [
+    "mviewer",
+    "master",
+    "preview",
+    "demo"
+  ],
+  "author": "PSC Mviewer",
+  "license": "GNU General Public License v3.0",
+  "bugs": {
+    "url": "https://github.com/geobretagne/mviewer/issues"
+  },
+  "homepage": ".",
+  "dependencies": {
+    "live-server": "^1.2.2"
+  }
+}

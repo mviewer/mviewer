@@ -2,3 +2,5 @@ dist/*
 node*
 panels/*
 *.env
+node*
+package-*
