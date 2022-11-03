@@ -126,19 +126,17 @@ const isochroneAddon = (function() {
             var url = mviewer.customComponents["isochroneAddon"].config.options.isochroneUrl;
 
             var dataParameters = {
-                            "location":_xy.join(","),
-                            "graphName":mode,
-                            "smoothing": true,
-                            "holes":true,
-                            "srs": "epsg:4326"   
+                            "resource": "bdtopo-iso",
+                            "point":_xy.join(","),
+                            "profile":mode
                         };
 
             if( times > 0 && distances === 0){
-              dataParameters["time"]=times;
-              dataParameters["method"]="time";
+              dataParameters["costValue"]=times;
+              dataParameters["costType"]="time";
             } else if( distances > 0 && times === 0) {
-              dataParameters["distance"]=distances;
-              dataParameters["method"]="distance";
+              dataParameters["costValue"]=distances;
+              dataParameters["costType"]="distance";
             }else{
               mviewer.alert("Isochrones : Il faut définir soit un temps soit une distance, pas les deux", "alert-info")
               return;
@@ -174,8 +172,8 @@ const isochroneAddon = (function() {
      */
 
     var _showResult = function (data) {
-            var format = new ol.format.WKT();
-            var feature = format.readFeature(data.wktGeometry, {
+            var format = new ol.format.GeoJSON();
+            var feature = format.readFeature(data.geometry, {
                     dataProjection: 'EPSG:4326',
                     featureProjection: 'EPSG:3857'
                   });
