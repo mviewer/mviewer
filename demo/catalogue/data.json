@@ -290,6 +290,15 @@
       "url_demo":"../?config=demo/filter/filter.xml"
     },
     {
+      "id":"39", 
+      "title": "Plugin - Stat",
+      "tags": "Plugin mviewer (customComponent), stat",
+      "description":"Exemple d'application mobilisant le plugin 'stat' afin d'avoir des statistiques interactives selon le zoom de la carte.",       
+      "level":"avancé",
+      "url_source":"../demo/stats/stats.xml",
+      "url_demo":"../?config=demo/stats/stats.xml"
+    },
+    {
       "id":"32", 
       "title": "Intégration en iframe",
       "tags": "iframe, affichage, fullscreen",
