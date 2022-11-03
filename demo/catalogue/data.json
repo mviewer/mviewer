@@ -360,15 +360,6 @@
       "level":"intermédiaire",
       "url_source":"../demo/theme-designfr/theme-designfr.xml",
       "url_demo":"../?config=demo/theme-designfr/theme-designfr.xml"
-    },
-    {
-      "id":"38", 
-      "title": "Release 3.7",
-      "tags": "Release, évolutions",
-      "description":"Exemple d'application présentant les évolutions de la version 3.7 de mviewer",       
-      "level":"",
-      "url_source":"../demo/v3.7.xml",
-      "url_demo":"../?config=demo/v3.7.xml"
     }
   ]
 }
