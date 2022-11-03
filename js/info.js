@@ -462,7 +462,14 @@ var info = (function () {
                     $("#"+panel+" .popup-content").append(template);
                     var title = $( `a[href*='slide-${panel}-']` ).closest("li").attr("title")
                     $("#"+panel+" .mv-header h5").text(title);
-
+                    
+                    const infoPanelReadyEvent = new CustomEvent('infopanel-ready', {
+                        detail: {
+                          panel: panel
+                        }
+                    });
+                    document.dispatchEvent(infoPanelReadyEvent);
+                    
                     if (configuration.getConfiguration().mobile) {
                         $("#modal-panel").modal("show");
                         if (_featureTooltip.getElement().children.length) {
