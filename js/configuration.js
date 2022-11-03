@@ -502,6 +502,7 @@ var configuration = (function () {
                     }
                     var mvid;
                     var oLayer = {};
+                    Object.assign(oLayer, layer);
                     var clean_ident = layerId.replace(/:|,| |\./g,'');
                     var _overLayers = mviewer.getLayers();
                     if (_overLayers[clean_ident] ) {
@@ -512,17 +513,14 @@ var configuration = (function () {
                         doublons[clean_ident] = 0;
                     }
                     oLayer.id = mvid;
-                    oLayer.icon = icon;
                     oLayer.layername = layerId;
                     oLayer.type = layer.type || "wms";
                     oLayer.theme = themeid;
                     oLayer.rank = layerRank;
                     oLayer.index = layer.index ? parseFloat(layer.index): null;
-                    oLayer.name = layer.name;
                     oLayer.title = layer.name;
                     oLayer.layerid = mvid;
                     oLayer.infospanel = layer.infopanel ||'right-panel';
-                    oLayer.featurecount = layer.featurecount;
                     //styles
                     if (layer.style && layer.style !== "") {
                         var styles = layer.style.split(",");
@@ -566,7 +564,6 @@ var configuration = (function () {
                         mviewer.setTopLayer(oLayer.id);
                         oLayer.draggable = false;
                     }
-                    oLayer.filter = layer.filter;
                     oLayer.opacity = parseFloat(layer.opacity || "1");
                     oLayer.tooltip =  (layer.tooltip === "true") ? true : false;
                     oLayer.tooltipenabled =  (layer.tooltipenabled === "true") ? true : false;
@@ -586,11 +583,8 @@ var configuration = (function () {
 
                     oLayer.attributefilter =  (layer.attributefilter &&
                         layer.attributefilter === "true") ? true : false;
-                    oLayer.attributefield = layer.attributefield;
                     oLayer.attributeoperator = layer.attributeoperator || "=";
                     oLayer.wildcardpattern = layer.wildcardpattern || "%value%";
-                    oLayer.styletitle = layer.styletitle;
-                    oLayer.attributelabel = layer.attributelabel;
                     if (layer.attributevalues && layer.attributevalues.search(",")) {
                         oLayer.attributevalues = layer.attributevalues.split(",");
                     }
@@ -609,13 +603,10 @@ var configuration = (function () {
                     }
                     oLayer.customcontrol = (layer.customcontrol === "true") ? true : false;
                     oLayer.customcontrolpath = layer.customcontrolpath || "customcontrols";
-                    oLayer.attribution = layer.attribution;
-                    oLayer.metadata = layer.metadata;
                     oLayer.metadatacsw = layer["metadata_csw"];
                     if (oLayer.metadata) {
                         oLayer.summary = '<a href="'+oLayer.metadata+'" target="_blank">En savoir plus</a>';
                     }
-                    oLayer.url = layer.url;
                     //Mustache template
                     if (layer.template && layer.template.url) {
                         $.get(mviewer.ajaxURL(layer.template.url, _proxy), function(template) {
@@ -632,7 +623,6 @@ var configuration = (function () {
                     if (oLayer.searchable) {
                         oLayer = search.configSearchableLayer(oLayer, layer);
                     }
-                    oLayer.infoformat = layer.infoformat;
                     oLayer.checked = (layer.visible === "true") ? true : false;
                     oLayer.visiblebydefault = (oLayer.checked) ? true : false;
                     oLayer.tiled = (layer.tiled === "true") ? true : false;
@@ -848,8 +838,8 @@ var configuration = (function () {
                         }
                         oLayer.geocoder = layer.geocoder || false;
                         oLayer.geocoderurl = layer.geocoderurl || false;
-                        oLayer.xfield = layer.xfield;
-                        oLayer.yfield = layer.yfield;
+//                        oLayer.xfield = layer.xfield;
+//                        oLayer.yfield = layer.yfield;
                         //allow transformation to mapProjection before map is initialized
                         oLayer.mapProjection = conf.mapoptions.projection;
                         mviewer.processLayer(oLayer, l);
