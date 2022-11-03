@@ -353,6 +353,15 @@
       "url_demo":"../?config=demo/filter/filter_download.xml"
     },
     {
+      "id":"40", 
+      "title": "Utilisation du thème avec identité visuelle de l'état",
+      "tags": "thème,CSS,état,design",
+      "description":"Exemple d'application utilisant le thème CSS avec l'identité visuelle de l'état français",       
+      "level":"intermédiaire",
+      "url_source":"../demo/theme-designfr/theme-designfr.xml",
+      "url_demo":"../?config=demo/theme-designfr/theme-designfr.xml"
+    },
+    {
       "id":"38", 
       "title": "Release 3.7",
       "tags": "Release, évolutions",
