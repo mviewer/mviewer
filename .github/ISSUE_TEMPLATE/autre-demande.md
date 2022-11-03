@@ -7,10 +7,8 @@ assignees: ''
 
 ---
 
-**Description **
+**Question / description**
 
 Vous souhaitez partager quelque chose, demander des informations ou avoir de l'aide sur la configuration ou l'utilisation du Mviewer.
 
 Décrivez votre message ici, nous vous répondrons dès que possible 😉.
-
-**Question**
