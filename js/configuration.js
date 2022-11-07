@@ -591,6 +591,7 @@ var configuration = (function () {
                         doublons[clean_ident] = 0;
                     }
                     oLayer.id = mvid;
+                    oLayer.icon = icon;
                     oLayer.layername = layerId;
                     oLayer.type = layer.type || "wms";
                     oLayer.theme = themeid;
