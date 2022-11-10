@@ -1,0 +1,559 @@
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <title>Exemples de configuration mviewer</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+</head>
+<style>
+body {
+    width:100%;
+    height:100%;
+}
+.well {
+  min-height: 330px;
+  padding: 19px;
+  margin-bottom: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+}
+
+span.label.label-info {
+  margin-left: 5px;
+}
+
+h1 {
+    padding-left: 15px;
+}
+
+</style>
+<body>
+    <div class="page-header">
+        <h1>Exemples <small>de configurations mviewer</small></h1>
+    </div>
+    <div id="listeExemples">
+    <div class="container-fluid" id="exemple">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Simple</span><span class="label label-info">geobretagne</span><span class="label label-info">sld</span></p>
+                    <h3>GéoBretagne</h3>
+                    <hr><strong>Cet exemple exploite uniquement des flux GéoBretagne</strong></br>
+                    <p>Pour les fonds cartographiques et pour les thématiques.
+                    </p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/geobretagne.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/geobretagne.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-warning">Intermédiaire</span><span class="label label-info">Styles externes</span><span class="label label-info">sld</span></p>
+                    <h3>SLD WMS</h3>
+                    <hr><strong>Cet exemple exploite les capacités de stylage</strong></br>
+                    <p>du mviewer sur des couches WMS
+                    </p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/sld.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/sld.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+             <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Simple</span><span class="label label-info">OpenStreetMap</span><span class="label label-info">baselayer</span></p>
+                    <h3>Fonds cartographiques</h3>
+                    <hr><strong>Exemples de fonds cartographiques (flux tuilés) utilisés dans le mviewer</strong></br>
+                    <ul>
+                        <li>GéoBretagne</li>
+                        <li>Géoportail</li>
+                        <li>OpenStreetMap - MapQuest, Stamen, CartoDB</li>
+                    </ul>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/fonds.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/fonds.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-warning">Intermédiaire</span><span class="label label-info">Filtres CQL</span><span class="label label-info">filtre</span></p>
+                    <h3>Filtres CQL</h3>
+                    <hr><strong>Cet exemple illustre l'utilisation de filtres attributaires ou géographiques</strong></br>
+                    <ul>
+                        <li>couche 1 avec un filtre attributaire</li>
+                        <li>couche2 avec un géographique</li>
+                    </ul>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/cql.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/cql.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+             <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-warning">Intermédiaire</span><span class="label label-info">Temporalité</span><span class="label label-info">filtre</span></p>
+                    <h3>Filtres temporels</h3>
+                    <hr><strong>Cet exemple illustre l'utilisation de la dimension temporelle dans mviewer</strong></br>
+                    <ul>
+                        <li>couche 1 avec un slider temporel</li>
+                        <li>(coming soon) couche2 avec un controle calendrier</li>
+                    </ul>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/time.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/time.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Simple</span><span class="label label-info">Cadastre</span></p>
+                    <h3>Cadastre</h3>
+                    <hr><strong>Cet exemple illustre l'utilisation de 2 sources différentes du cadastre</strong></br>
+                    <ul>
+                        <li>geobretagne.fr (un flux vectoriel pour la Bretagne)</li>
+                        <li>cadastre.gouv.fr (un flux par commune)</li>
+                    </ul>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/cad.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/cad/cad.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Simple</span><span class="label label-info">wmc</span></p>
+                    <h3>Contexte</h3>
+                    <hr><strong>Utiliser un contexte de carte WMC</strong></br>
+                    <p>Cet exemple illustre l'utilisation d'un contexte de carte servant de source au panel des thématiques. Il est possible d'appeler plusieurs <strong>wmc</strong> en utilisant la virgule comme séparateur.</p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/base.wmc" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/base.xml&amp;wmc=https://geobretagne.fr/mapfishapp/ws/wmc/geodoc6ba6c7938ce46f2a06eea53e49919671.wmc" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Simple</span><span class="label label-info">sirene</span></p>
+                    <h3>SIRENE</h3>
+                    <hr><strong>Exemple de réutilisation de la base SIRENE</strong></br>
+                    <p></p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/sirene.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/sirene.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+             <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-warning">Intermédiaire</span><span class="label label-info">elasticsearch</span></p>
+                    <h3>ElasticSearch</h3>
+                    <hr><strong>Brancher le moteur de recherche sur un index ElasticSearch</strong></br>
+                    <p></p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/els.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/els.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+           <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-warning">Intermédiaire</span><span class="label label-info">fuse</span></p>
+                    <h3>Fuse</h3>
+                    <hr><strong>Faire une recherche sur une couche avec Fuse</strong></br>
+                    <p></p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/fuse.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/fuse.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-warning">Intermédiaire</span><span class="label label-info">customLayer</span><span class="label label-info">customControl</span></p>
+                    <h3>Custom Layer</h3>
+                    <hr><strong>Utilisation d'un layer personnalisé et d'un contrôle personnalisé</strong></br>
+                    <p></p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/customlayer.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/customlayer.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-warning">Intermédiaire</span><span class="label label-info">customLayer</span><span class="label label-info">custom Layer els</span></p>
+                    <h3>Custom Layer ELS</h3>
+                    <hr><strong>Utilisation d'un layer personnalisé dont la source est un index Elasticsearch et d'un contrôle personnalisé pour filtrer le contenu de la couche</strong></br>
+                    <p></p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/els2.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/els2.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Simple</span><span class="label label-info">exclusive</span></p>
+                    <h3>Couches exclusives</h3>
+                    <hr><strong>Exemple d'utilisation de couches exclusives</strong></br>
+                    <p></p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/exclusivelayer.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/exclusivelayer.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-warning">Intermédiaire</span><span class="label label-info">Isochrones</span><span class="label label-info">custom Control</span></p>
+                    <h3>couche et controle de couche personnalisé</h3>
+                    <hr><strong>Utilisation combinée d'une couche personnalisée et d'un contrôle personnalisé</strong></br>
+                    <p>La couche personnalisée permet d'afficher le résultat d'un calcul d'isochrones, service fournit par l'IGN.
+                    </p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/isochrones.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/isochrones.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Simple</span><span class="label label-info">template</span></p>
+                    <h3>Template panneau informations</h3>
+                    <hr><strong>Exemple d'utilisation d'un template appliqué au panneau de droite pour l'affichage des résultats de l'interrogation des couches</strong></br>
+                    <p></p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/template_rightpanel.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/template_rightpanel.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-danger">Avancé</span><span class="label label-info">template</span><span class="label label-info">dataviz</span><span class="label label-info">data.gouv.fr</span></p>
+                    <h3>Dataviz ChartJs</h3>
+                    <hr><strong>Exemple d'utilisation d'un template évolué appliqué à la couche des lycées</strong></br>
+                    <p></p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/dataviz.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/dataviz.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-danger">Avancé</span><span class="label label-info">image</span><span class="label label-info">dataviz</span><span class="label label-info">data.gouv.fr</span></p>
+                    <h3>Fichiers géoréférencés</h3>
+                    <hr><strong>Exemple d'utilisation de fichiers géoréférencés locaux - Tableaux d'assemblage du cadastre napoléonien</strong></br>
+                    <p></p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/napoleon.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/napoleon.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+             <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Simple</span><span class="label label-info">filter</span><span class="label label-info">Attribute</span><span class="label label-info">operator</span></p>
+                    <h3>Filtres attributaires</h3>
+                    <hr><strong>Exemple d'utilisation de filtres attributaires basé sur une expression de type field like %value% et field like %value</strong></br>
+                    <p></p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/attributefilter.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/attributefilter.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-danger">Avancé</span><span class="label label-info">wps</span><span class="label label-info">dataviz</span><span class="label label-info">geobretagne</span></p>
+                    <h3>Géotraitement WPS</h3>
+                    <hr><strong>Exemple d'utilisation d'un service WPS (Profil en long)</strong></br>
+                    <p></p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/profile.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/profile.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-danger">Avancé</span><span class="label label-info">cluster</span><span class="label label-info">fuse</span><span class="label label-info">opendata</span></p>
+                    <h3>Clusters de données vectorielles</h3>
+                    <hr><strong>Exemple d'utilisation d'un customlayer avec une source de type cluster</strong></br>
+                    <p></p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/cluster.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/cluster.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-danger">Avancé</span><span class="label label-info">fuse</span><span class="label label-info">légende auto</span><span class="label label-info">geojson</span></p>
+                    <h3>Données vectorielles</h3>
+                    <hr><strong>Exemple d'utilisation de couches vectorielles</strong></br>
+                    <p></p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/vector.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/vector.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-danger">Avancé</span><span class="label label-info">Thématiques</span><span class="label label-info">Réutilisation</span><span class="label label-info">include</span></p>
+                    <h3>Thématiques externes</h3>
+                    <hr><strong>Exemple d'utilisation de thématiques externes.</strong></br>
+                    <p>Les thématiques sont directement chargées depuis des instances mviewer distantes</p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/include.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/include.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Simple</span><span class="label label-info">Affichage</span><span class="label label-info">Réutilisation</span><span class="label label-info">include</span></p>
+                    <h3>Mode d'affichage simplifié</h3>
+                    <hr><strong>Exemple d'utilisation du mviewer en affichage simplifié.</strong></br>
+                    <p>Pour générer un affichage simplifié ou ultra-simplifié, il faut Cliquer sur le bouton "Partager une carte" et activer le mode désiré.</p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../?x=-324093&y=6166328&z=8&l=lycee*&lb=positron&mode=s&title=mviewer%20-%20mode%20simplifié" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Simple</span><span class="label label-info">CSV</span><span class="label label-info">Fichier local</span><span class="label label-info">geocodage</span></p>
+                    <h3>Géocodage automatique à partir d'un fichier csv</h3>
+                    <hr><strong>Exemple d'utilisation du mviewer avec deux fichiers csv.</strong></br>
+                    <p>Le premier fichier csv dispose d'informations localisables (adresse). il s'agit d'un fichier déposé sur un serveur. Le géocodage est opéré dynamiquement au chargement de la couche. Le deuxième fichier est est un géocodage effectué via un assistant à partir d'un fichier local</p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/csv.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/csv.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Simple</span><span class="label label-info">langue</span><span class="label label-info">Traduction</span><span class="label label-info">English</span></p>
+                    <h3>Multi linguisme</h3>
+                    <hr><strong>Exemple d'utilisation du mviewer avec une version française et une version anglaise</strong></br>
+                    <p>Cet exemple utilise un dictionnaire de traduction pour gérer le passage d'une langue à l'autre </p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/lang.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/lang.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-danger">Facile</span><span class="label label-info">recherche</span><span class="label label-info">animation</span></p>
+                    <h3>Animation sur la recherche</h3>
+                    <hr><strong>Cet exemple illustre la possibilité de rajouter du dynamisme dans la recherche</strong></br>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/animate.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/animate.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Avancé</span><span class="label label-info">swipe</span><span class="label label-info">customlayer</span><span class="label label-info">outil</span></p>
+                    <h3>Balayage de couche (swipe)</h3>
+                    <hr>Exemple d'utilisation du mviewer avec un <strong>customlayer</strong></br>
+                    <p>Cet exemple permet d'effectuer un balayage de couche à partir d'une image satellite proposée par Maptiler </p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/swipe/swipe.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/swipe/swipe.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Avancé</span><span class="label label-info">maptiler</span><span class="label label-info">customlayer</span><span class="label label-info">vector tiles</span></p>
+                    <h3>Tuiles vecteur</h3>
+                    <hr>Exemple d'utilisation du mviewer avec un <strong>customlayer</strong></br>
+                    <p>Cet exemple permet d'exploiter trois services de tuiles vecteurs à partir d'OSM </p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/tile/tiles.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/tile/tiles.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Avancé</span><span class="label label-info">customComponent</span><span class="label label-info">extensions</span><span class="label label-info">3d</span></p>
+                    <h3>Composant personnalisé</h3>
+                    <hr>Exemple d'utilisation du mviewer avec un <strong>customComponent</strong></br>
+                    <p>Exemple de création d'un composant personnalisé.</p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/customcomponent.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/customcomponent.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-warning">Intermédiaire</span><span class="label label-info">customComponent</span><span class="label label-info">extensions</span><span class="label label-info">logo</span></p>
+                    <h3>Composant personnalisé fullscreen</h3>
+                    <hr>Exemple d'utilisation du mviewer avec un <strong>customComponent</strong></br>
+                    <p>Exemple de création d'un composant personnalisé - Plein écran.</p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/fullscreen.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/fullscreen.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-warning">Intermédiaire</span><span class="label label-info">IFrame</span><span class="label label-info">extensions</span><span class="label label-info">fullscreen</span></p>
+                    <h3>Intégration en iframe</h3>
+                    <hr>Exemple d'utilisation du mviewer avec un <strong>customComponent</strong> dans une iframe</br>
+                    <p>Exemple d'intégration en iframe. Le bouton Plein écran permet d'afficher la carte en plein écran.</p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="iframe.html" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="iframe.html" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-warning">Intermédiaire</span><span class="label label-info">extensions</span><span class="label label-info">filter</span></p>
+                    <h3>Composant personnalisé filter</h3>
+                    <hr>Exemple d'utilisation du mviewer avec un <strong>customComponent</strong></br>
+                    <p>Exemple d'intégration d'un plugin permettant de filtrer les données facilement.</p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/filter/filter.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/filter/filter.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Simple</span><span class="label label-info">isochrones</span><span class="label label-info">custom control</span></p>
+                    <h3>Calcul d'isochrones</h3>
+                    <hr><strong>Utilisation combinée d'une couche personnalisée et d'un contrôle personnalisé</strong></br>
+                    <p>La couche personnalisée permet d'afficher le résultat d'un calcul d'isochrones avec un temps ou avec une distance, service fourni par l'IGN.</p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/isochroneAddon.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/isochroneAddon.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Simple</span><span class="label label-info">sélection</span><span class="label label-info">styles</span></p>
+                    <h3>Mise en surbrillance des entités sélectionnées</h3>
+                    <hr><strong>Définir le style (couleur, opacité...) des entités sélectionnées sur la carte</strong></br>
+                    <p></p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/selectionstyles.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/selectionstyles.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Simple</span><span class="label label-info">réutilisation</span></p>
+                    <h3>Démo réutilisation données IGN</h3>
+                    <hr><strong>Cette démo réutiliser les données et services de l'IGN dans différentes normes (WFS,WMS,WMTS).</strong></br>
+                    <p></p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/ign.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/ign.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Simple</span><span class="label label-info">filter</span><span class="label label-info">release</span><span class="label label-info">v3.8</span></p>
+                    <h3>Démo mviewer champ json</h3>
+                    <hr><strong>Cette démo utilise le paramètre de champ jsonfields qui permet par la suite d'itérer sur des listes avec les templates sans code javascript.</strong></br>
+                    <p>Dans le cas présenté ici, le champ communes contient la liste des communes pour chaque EPCI</p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/jsonfields.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/jsonfields.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Intermédiaire</span><span class="label label-info">release</span><span class="label label-info">v3.5</span></p>
+                    <h3>Démo téléchargement données</h3>
+                    <hr><strong>Cette démo utilise l'extension filter pour télécharger une extraction des données au format geojson, csv ou shapefile.</strong></br>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/filter/filter_download.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/filter/filter_download.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Simple</span><span class="label label-info">release</span><span class="label label-info">v3.5</span></p>
+                    <h3>Démo mviewer release v3.5</h3>
+                    <hr><strong>Cette démo utilise les évolutions de la version 3.5 de mviewer.</strong></br>
+                    <p></p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/v3.5.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/v3.5.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Simple</span><span class="label label-info">release</span><span class="label label-info">v3.6</span></p>
+                    <h3>Démo mviewer release v3.6</h3>
+                    <hr><strong>Cette démo utilise les évolutions de la version 3.6 de mviewer.</strong></br>
+                    <p></p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/v3.6.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/v3.6.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="well">
+                    <p class="text-right"><span class="label label-success">Simple</span><span class="label label-info">release</span><span class="label label-info">v3.7</span></p>
+                    <h3>Démo mviewer release v3.7</h3>
+                    <hr><strong>Cette démo utilise les évolutions de la version 3.7 de mviewer.</strong></br>
+                    <p></p>
+                    <hr>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-xs"><a href="../demo/v3.7.xml" target="_blank" class="btn btn-danger"><span class="glyphicon glyphicon-download"></span> Sources</a><a href="../?config=demo/v3.7.xml" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-globe"></span> Live!</a></div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div><!-- Fin de row -->
+
+
+    </div><!-- Fin exemple -->
+</div><!-- Fin listExemple -->
+    <script>
+        $(document).ready(function(){
+		/*$('.carousel').carousel({
+		  interval: 2000
+		});*/
+	  });
+    </script>
+
+
+</body>
+</html>

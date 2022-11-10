@@ -27,6 +27,7 @@ var utils = (function () {
             if (layer && layer.sld) {
                 var name = layer.name;
                 var slds = layer.sld.split(",");
+                slds = slds.map(sld => configuration.renderEnvPath(sld));
                 slds.forEach(function (sld, i) {
                     if (!regexp.test(sld)) {
                         test = 0;

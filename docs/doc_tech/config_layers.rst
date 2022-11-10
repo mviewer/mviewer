@@ -94,7 +94,7 @@ Paramètres pour gérer l'affichage de la couche
 * ``style`` :guilabel:`studio` : Style(s) de la couche. Si plusieurs styles , utiliser la virgule comme séparateur. Si la couche est de type wms, il faut faire référence à un style sld. Si la couche est de type geojson, il faut faire référence à un style définit dans lib/featurestyles.js. Si la couche est de type customlayer, le style n'est pas défini ici.
 * ``styletitle`` : Titres à utiliser pour la liste des styles associés.
 * ``stylesalias`` :guilabel:`studio` : Titres à utiliser pour chaques style. utiliser la virgule comme séparateur si plusieurs styles.
-* ``sld`` :guilabel:`studio` : Lien vers un SLD stocké sur le web. Dans ce fichier SLD, la balise sld:Name contenue dans sld:NamedLayer doit être égale au nom de la couche. Si plusieurs styles , utiliser la virgule comme séparateur. S'applique uniquement aux layers WMS. Il faut indiquer l'URL résolvable par le serveur WMS du ou des sld.
+* ``sld`` :guilabel:`studio` : Lien vers un SLD stocké sur le web. Dans ce fichier SLD, la balise sld:Name contenue dans sld:NamedLayer doit être égale au nom de la couche sans mention du namespace. Exemple <sld:Name>aeroports</sld:Name>. Si plusieurs styles , utiliser la virgule comme séparateur. S'applique uniquement aux layers WMS. Il faut indiquer l'URL résolvable par le serveur WMS du ou des sld.
 * ``index``: Ordre d'affichage de la couche sur la carte et dans la légende au démarrage. Les couches avec ce paramètre seront visibles sous les toplayers. Les couches sans ce paramètre ni toplayer seront affichées dans l'ordre d'écriture dans le XML.
 * ``scalemin`` :guilabel:`studio` : Échelle minimum de la couche.
 * ``scalemax`` :guilabel:`studio` : Échelle maximum de la couche.

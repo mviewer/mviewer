@@ -94,13 +94,19 @@ var info = (function () {
      */
     var _firstlayerFeatures;
 
+     /**
+     * Property: _tocsortedlayers
+     * Array of string
+     * Used to store all layerids sorted according to the toc
+     */
+    var _tocsortedlayers;
+
     /**
      * Private Method: _customizeHTML
      * @param html {Array}
      * @param featurescount {Integer}
      *
      */
-
     var _customizeHTML = function (html, featurescount) {
         //manipulate html to activate first item.
         var tmp = document.createElement('div');
@@ -164,6 +170,7 @@ var info = (function () {
             var pixel = evt.pixel;
             var vectorLayers = {};
             var format = new ol.format.GeoJSON();
+            var f_idx=0;
             _map.forEachFeatureAtPixel(pixel, function(feature, layer) {
                 var l = layer.get('mviewerid');
                 if (l && l != 'featureoverlay' && l != 'selectoverlay' && l != 'subselectoverlay' && l != 'elasticsearch' ) {
@@ -177,6 +184,10 @@ var info = (function () {
                         if (vectorLayers[l] && vectorLayers[l].features) {
                             vectorLayers[l].features.push(feature);
                         } else {
+                            if (_overLayers[l] && _panelsTemplate[_overLayers[l].infospanel]=='allintabs') {
+                                l = l + '_#' + f_idx;
+                                f_idx++;
+                            }
                             vectorLayers[l] = {features:[]};
                             vectorLayers[l].features.push(feature);
                         }
@@ -184,12 +195,14 @@ var info = (function () {
                 }
             });
             for(var layerid in vectorLayers) {
-                if (mviewer.customLayers[layerid] && mviewer.customLayers[layerid].handle) {
-                    mviewer.customLayers[layerid].handle(vectorLayers[layerid].features, views);
-                } else if (mviewer.customControls[layerid] && mviewer.customControls[layerid].handle){
-                    mviewer.customControls[layerid].handle(vectorLayers[layerid].features);
+                var originLayer = (layerid in _overLayers ? layerid : layerid.substring(0, layerid.lastIndexOf("_#")) );
+                if (mviewer.customLayers[originLayer] && mviewer.customLayers[originLayer].handle) {
+                    mviewer.customLayers[originLayer].handle(vectorLayers[originLayer].features, views);
+                } else if (mviewer.customControls[originLayer] && mviewer.customControls[originLayer].handle){
+                    mviewer.customControls[originLayer].handle(vectorLayers[originLayer].features);
                 } else {
-                    var l = _overLayers[layerid];
+                    var l = _overLayers[originLayer];
+                    
                     if (l) {
                         var panel = l.infospanel;
                         if (configuration.getConfiguration().mobile) {
@@ -211,11 +224,12 @@ var info = (function () {
                         views[panel].layers.push({
                             "panel": panel,
                             "id": id,
-                            "firstlayer": (id === 1),
+                            "firstlayer": false, // firstlayer attribute is calculated after ordering layers with orderViewsLayersByMap
                             "manyfeatures": (features.length > 1),
                             "nbfeatures": features.length,
                             "name": name,
                             "layerid": layerid,
+                            "initiallayerid": originLayer,
                             "theme_icon": theme_icon,
                             "html": html_result
                         });
@@ -291,9 +305,33 @@ var info = (function () {
 
             var mapLayersOrder = [];
             viewsLayers.forEach(lv => {
+                
+                if (mapLayers.indexOf(lv.layerid) > -1){
                 mapLayersOrder[mapLayers.indexOf(lv.layerid)] = lv;
+                } else {
+                    mapLayersOrder[lv.id] = lv; // when display template is allintabs all layers are virtually renamed (one fictive layer per feature)
+                }
             })
-            return mapLayersOrder.filter(f => f).reverse();
+                        var infoLayers = mapLayersOrder.filter(f => f);
+            var orderedlayers = [];
+            if (configuration.getConfiguration().application.sortlayersinfopanel && configuration.getConfiguration().application.sortlayersinfopanel=='toc'){ //toc order
+                // les couches de la toc dans l'ordre 
+                for (var j = 0; j < infoLayers.length; j++) {// layers not shown in toc but queried first
+                    if (_tocsortedlayers.indexOf(infoLayers[j].initiallayerid ? infoLayers[j].initiallayerid:infoLayers[j].layerid) === -1){
+                        orderedlayers.push(infoLayers[j]);
+                    }
+                }
+                for (var i = 0; i < _tocsortedlayers.length; i++) {
+                    for (var j = 0; j < infoLayers.length; j++) {
+                        if ((infoLayers[j].initiallayerid ? infoLayers[j].initiallayerid:infoLayers[j].layerid) == _tocsortedlayers[i]){
+                            orderedlayers.push(infoLayers[j]);
+                        }
+                    }
+                }
+            } else { // ordered with legend (=map order)
+                orderedlayers = infoLayers.reverse();
+            }
+            return orderedlayers
         }
 
         /**
@@ -377,29 +415,57 @@ var info = (function () {
                         }
                         var features = getFeatureInfo.features;
                         if (features.length > 0) {
-                            if (layerinfos.template) {
-                                html_result.push(applyTemplate(features, layerinfos));
+                            if (_panelsTemplate[panel]=='allintabs') {
+                                features.forEach(function(feature, index) {
+                                    if (layerinfos.template) {
+                                       html_result.push(applyTemplate([feature], layerinfos));
+                                    } else {
+                                        html_result.push(createContentHtml([feature], layerinfos));
+                                    }
+                                });
                             } else {
-                                html_result.push(createContentHtml(features, layerinfos));
+                                if (layerinfos.template) {
+                                    html_result.push(applyTemplate(features, layerinfos));
+                                } else {
+                                    html_result.push(createContentHtml(features, layerinfos));
+                                }
                             }
                         }
                     }
                 }
-                //If some results, apppend panels views
+                //If many results, append panels views
                 if (html_result.length > 0) {
                     //Set view with layer info & html formated features
-                    views[panel].layers.push({
-                        "panel": panel,
-                        "id": id,
-                        "firstlayer": false,
-                        "manyfeatures": (features.length > 1),
-                        "nbfeatures": features.length,
-                        "name": name,
-                        "layerid": layerid,
-                        "theme_icon": theme_icon,
-                        "html": html_result.join(""),
-                        "pin": showPin
-                    });
+                    if (_panelsTemplate[panel]=='allintabs') {
+                        for (var i = 0; i < html_result.length; i++) {
+                            views[panel].layers.push({
+                                "panel": panel,
+                                "id": views[panel].layers.length + 1,
+                                "firstlayer": false,
+                                "manyfeatures": false,
+                                "nbfeatures": 1,
+                                "name": name,
+                                "layerid": layerid + '_' + i,
+                                "initiallayerid" : layerid,
+                                "theme_icon": theme_icon,
+                                "html": html_result[i],
+                                "pin": showPin
+                            });
+                        }
+                    } else {
+                        views[panel].layers.push({
+                            "panel": panel,
+                            "id": views[panel].layers.length + 1,
+                            "firstlayer": false,
+                            "manyfeatures": (features.length > 1),
+                            "nbfeatures": features.length,
+                            "name": name,
+                            "layerid": layerid,
+                            "theme_icon": theme_icon,
+                            "html": html_result.join(""),
+                            "pin": showPin
+                        });
+                    }
                 }
             });
             var infoLayers = [];
@@ -421,11 +487,18 @@ var info = (function () {
                     $("#"+panel+" .popup-content").append(template);
                     var title = $( `a[href*='slide-${panel}-']` ).closest("li").attr("title")
                     $("#"+panel+" .mv-header h5").text(title);
-
+                    
+                    const infoPanelReadyEvent = new CustomEvent('infopanel-ready', {
+                        detail: {
+                          panel: panel
+                        }
+                    });
+                    document.dispatchEvent(infoPanelReadyEvent);
+                    
                     if (configuration.getConfiguration().mobile) {
                         $("#modal-panel").modal("show");
-                        if (_featureTooltip.getElement().children.length) {
-                            _featureTooltip.getElement().popover('hide')
+                        if (_featureTooltip && _featureTooltip.getElement().children.length) {
+                            $(_featureTooltip.getElement()).popover('hide')
                         }
                     } else {
                         if (!$('#'+panel).hasClass("active")) {
@@ -844,6 +917,9 @@ var info = (function () {
         _projection = mviewer.getProjection();
         _overLayers = mviewer.getLayers();
         _captureCoordinatesOnClick = configuration.getCaptureCoordinates();
+        _tocsortedlayers = $(".mv-nav-item").map(function() {
+                return $(this).attr('data-layerid');
+            }).get();
         if (configuration.getConfiguration().application.templaterightinfopanel) {
             _panelsTemplate["right-panel"] = configuration.getConfiguration().application.templaterightinfopanel;
             _panelsTemplate["modal-panel"] = configuration.getConfiguration().application.templaterightinfopanel;
@@ -853,7 +929,7 @@ var info = (function () {
         }
         _sourceOverlay = mviewer.getSourceOverlay();
         $.each(_overLayers, function (i, layer) {
-            if (layer.queryable && layer.showintoc) {
+            if (layer.queryable) {
                 _addQueryableLayer(layer);
             }
         });
@@ -934,6 +1010,14 @@ var info = (function () {
     var _addQueryableLayer = function (oLayer) {
         _queryableLayers.push(oLayer.layer);
     };
+    
+    /**
+     * Public Method: _getQueriedFeatures
+     *
+     */
+    var _getQueriedFeatures = function() {
+        return _queriedFeatures;
+    }
 
     return {
         init: init,
@@ -946,7 +1030,8 @@ var info = (function () {
         queryMap: _queryMap,
         formatHTMLContent: createContentHtml,
         templateHTMLContent: applyTemplate,
-        addQueryableLayer: _addQueryableLayer
+        addQueryableLayer: _addQueryableLayer,
+        getQueriedFeatures: _getQueriedFeatures,
     };
 
 })();

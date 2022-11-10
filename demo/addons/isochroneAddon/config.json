@@ -5,7 +5,7 @@
     "target": "page-content-wrapper",
     "options": {
         "title": "Calcul d'isochrone",
-        "isochroneUrl":"https://kartenn.region-bretagne.fr/isochrone?", 
+        "isochroneUrl":"https://wxs.ign.fr/essentiels/geoportail/isochrone/rest/1.0.0/isochrone?", 
         "isohroneColor":"#b45793"   
     }
 }

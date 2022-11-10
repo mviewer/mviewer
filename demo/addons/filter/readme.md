@@ -109,6 +109,14 @@ Ces propriétés supplémentaires ne sont pas obligatoires mais peuvent permettr
 * dataSeparator
 Permet d'indiquer le séparateur si plusieurs valeurs sont contenues dans un champ pour une entité.
 
+* updateOnChange
+
+Cette propriété permet de mettre à jour l'interface des filtres selon les attributs disponibles dans les entités filtrées. 
+
+Ainsi, si notre attribut `marché` de type liste (combobox) est configuré `updateOnChange: true` et que les entités filtrées et visibles à l'écran n'ont que 2 valeurs de marché, alors la liste ne contiendra que les deux valeurs de marché selon le filtre réalisé.
+
+Vous aurez un exemple ici de configration :  [exemple pour l'image précédente](https://github.com/geobretagne/mviewer/blob/master/demo/addons/filter/config.json#L22-L47).
+
 
 **4. Ajouter des boutons pour télécharger les données filtrées (uniquement pour les source WFS)**
 
@@ -134,16 +142,6 @@ Dans [notre jeu de données](https://github.com/geobretagne/mviewer/blob/master/
 
 En indiquant le séparateur, le plugin sera capable de proposer de filtrer la couche sur les valeur disponibles de l'attribut `marché`.
 
-
-* updateOnChange
-
-Cette propriété permet de mettre à jour l'interface des filtres selon les attributs disponibles dans les entités filtrées. 
-
-Ainsi, si notre attribut `marché` de type liste (combobox) est configuré `updateOnChange: true` et que les entités filtrées et visibles à l'écran n'ont que 2 valeurs de marché, alors la liste ne contiendra que les deux valeurs de marché selon le filtre réalisé.
-
-Vous aurez un exemple ici de configration :  [exemple pour l'image précédente](https://github.com/geobretagne/mviewer/blob/master/demo/addons/filter/config.json#L22-L47).
-
-
 ## Exemple
 
 Vous pouvez retrouver un exemple complet dans les dossiers suivants : 
@@ -166,7 +164,33 @@ et dans le config.json :
       "filter":{
 
 ```
+## Mdoifier le style
 
+la configuration vous permet de modifier le style selon ces propriétés : 
+
+- **text**: couleur du text
+- **background**: couleur du background
+- **border**: règle pour la border
+- **right**: placement à partir de la droite (en pixel)
+- **left**: placement à partir de la gauche (en pixel)
+- **bottom**: placement à partir du bas (en pixel)
+- **top**: placement à partir du haut
+- **unSelectedBtnColor**: couleur du fond pour les tags sélectionnés
+- **textSelectBtnColor**: couleur du text pour les tags sélectionnés
+- **selectedBtnColor**: couleur du fond pour les boutons poussés
+
+**Exemple de configuration de style simple :**
+
+```
+"style": {
+    "border": "1px #2e5367 solid",
+    "background": "#2e5367",
+    "text": "white",
+    "colorButton": "#2e5367"
+},
+```
+
+[code lié](https://github.com/geobretagne/mviewer/blob/feature-652/demo/addons/filter/js/filter.js#L996-L1011)
 ## Pour aller plus loin...
 
 Une section de la documentation mviewer est disponible pour bien comprendre et mettre en oeuvre les plugins : 

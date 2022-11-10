@@ -1,0 +1,1606 @@
+/** 
+    * Feuille de style CSS - Visualiseur cartographique Mviewer
+    * Version 3.8
+    * https://github.com/geobretagne/mviewer
+
+    * Thème - Système de Design de l'etat 
+
+**/
+
+/* -- Généralités -- */
+
+/**
+* Import de la librairie DSFR-V1.6 
+**/
+@import url(dsfr-v1.6.0/dist/dsfr.min.css);
+@import url(dsfr-v1.6.0/dist/utility/icons/icons.min.css);
+
+/** Attention, il est indispensable d'importer le JS dans le fichier de config associé **/
+
+
+/* Gestion des conflits de style avec la librairie DSFR */
+
+[href] {
+	background: none;
+}
+
+.mv-nav-item {
+	padding: 2px 0 2px 30px;
+}
+
+.layerdisplay-title a {
+	cursor: default !important;
+}
+
+/**
+ * Déclaration des fontes
+ */
+
+@font-face {
+	font-family: Marianne;
+	src: url("dsfr-v1.6.0/dist/fonts/Marianne-Light.woff2") format("woff2"), url("dsfr-v1.6.0/dist/fonts/Marianne-Light.woff") format("woff");
+	font-weight: 300;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Marianne;
+	src: url("dsfr-v1.6.0/dist/fonts/Marianne-Light_Italic.woff2") format("woff2"), url("dsfr-v1.6.0/dist/fonts/Marianne-Light_Italic.woff") format("woff");
+	font-weight: 300;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Marianne;
+	src: url("dsfr-v1.6.0/dist/fonts/Marianne-Regular.woff2") format("woff2"), url("dsfr-v1.6.0/dist/fonts/Marianne-Regular.woff") format("woff");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Marianne;
+	src: url("dsfr-v1.6.0/dist/fonts/Marianne-Regular_Italic.woff2") format("woff2"), url("dsfr-v1.6.0/dist/fonts/Marianne-Regular_Italic.woff") format("woff");
+	font-weight: 400;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Marianne;
+	src: url("dsfr-v1.6.0/dist/fonts/Marianne-Medium.woff2") format("woff2"), url("dsfr-v1.6.0/dist/fonts/Marianne-Medium.woff") format("woff");
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Marianne;
+	src: url("dsfr-v1.6.0/dist/fonts/Marianne-Medium_Italic.woff2") format("woff2"), url("dsfr-v1.6.0/dist/fonts/Marianne-Medium_Italic.woff") format("woff");
+	font-weight: 500;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Marianne;
+	src: url("dsfr-v1.6.0/dist/fonts/Marianne-Bold.woff2") format("woff2"), url("dsfr-v1.6.0/dist/fonts/Marianne-Bold.woff") format("woff");
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Marianne;
+	src: url("dsfr-v1.6.0/dist/fonts/Marianne-Bold_Italic.woff2") format("woff2"), url("dsfr-v1.6.0/dist/fonts/Marianne-Bold_Italic.woff") format("woff");
+	font-weight: 700;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Spectral;
+	src: url("dsfr-v1.6.0/dist/fonts/Spectral-Regular.woff2") format("woff2"), url("dsfr-v1.6.0/dist/fonts/Spectral-Regular.woff") format("woff");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Spectral;
+	src: url("dsfr-v1.6.0/dist/fonts/Spectral-ExtraBold.woff2") format("woff2"), url("dsfr-v1.6.0/dist/fonts/Spectral-ExtraBold.woff") format("woff");
+	font-weight: 900;
+	font-style: normal;
+	font-display: swap;
+}
+
+/*  Définition des variables */
+/* 
+    Pour modifier la couleur globale du thème 
+    > Changer la valeur # de la couleur à la ligne 26
+*/
+
+:root {
+	--bf500: #000091;
+	--bf300-plain: #9a9aff;
+	--bf200-bf300: #ececff;
+	--g800: #1e1e1e;
+	--g700: #383838;
+	--g600: #6a6a6a;
+	--g500: #9c9c9c;
+	--g400: #cecece;
+	--g300: #e7e7e7;
+	--g200: #f0f0f0;
+	--g100: #f8f8f8;
+	--myfont: 'Marianne', sans-serif;
+}
+
+/* Page de chargement */
+
+#loading-page {
+	font-family: var(--myfont) !important;
+}
+
+
+#loader-subtitle {
+	color: var(--bf500) !important;
+}
+
+/* -- 
+    Navbar
+-- */
+
+#mv-navbar {
+	line-height: 5 !important;
+}
+
+.navbar-default {
+	border-color: var(--bf500);
+}
+
+#mv-navbar {
+	border-color: #fff;
+	background-color: #fff;
+	box-shadow: 0px 0px 30px 3px rgb(0 0 0 / 26%);
+}
+
+.navbar-header.fixed-brand {
+	padding: 10px 4px;
+}
+
+#mv-navbar a.navbar-brand,
+.mv-title {
+	color: var(--g700);
+	font-family: var(--myfont);
+	font-weight: 600;
+}
+
+img.mv-logo {
+	max-height: 65px !important;
+    margin-top: -20px !important;
+}
+
+/* Icône menu */
+
+.navbar-brand.menu-toggle span {
+	content: url(dsfr-v1.6.0/dist/icons/system/menu-fill.svg);
+	width: 25px;
+	filter: invert(13%) sepia(0%) saturate(428%) hue-rotate(136deg) brightness(100%) contrast(77%);
+}
+
+.navbar-brand.menu-toggle:hover {
+	opacity: 0.8;
+}
+
+a.navbar-brand::after {
+    display: none;
+}
+
+/* Style du titre html */
+
+.mv-title {
+	line-height: 1 !important;
+	padding: 16px 0px !important;
+	font-size: 18px;
+	font-family: var(--myfont);
+}
+
+.mv-title .title-app {
+	font-size: 19px;
+	line-height: 1.1;
+}
+
+.mv-title .subtitle-app {
+	font-size: 16px;
+	font-weight: 400;
+}
+
+.navbar-default .navbar-toggle {
+	border-color: #ffffff;
+}
+
+.glyphicon-th-large:before {
+	color: #ffffff;
+}
+
+.navbar-default .navbar-toggle:focus,
+.navbar-default .navbar-toggle:hover {
+	background-color: var(--bf500);
+}
+
+.ol-control button {
+	color: #fff !important;
+	background-color: var(--bf500) !important;
+}
+
+.ol-control button:focus,
+.ol-control button:hover {
+	background-color: var(--bf500);
+}
+
+.gml-item-title {
+	font-family: var(--myfont);
+	color: var(--bf500);
+	font-size: 24px;
+}
+
+/* Loader */
+.mv-layer-indicator .loader {
+	border-top: 1.1em solid rgba(3, 46, 70, 0.2);
+	border-right: 1.1em solid rgba(3, 46, 70, 0.2);
+	border-bottom: 1.1em solid rgba(3, 46, 70, 0.2);
+	border-left: 1.1em solid var(--bf500);
+}
+
+.mv-iframe-indicator .loader {
+	border-top: 1.1em solid rgba(3, 46, 70, 0.2);
+	border-right: 1.1em solid rgba(3, 46, 70, 0.2);
+	border-bottom: 1.1em solid rgba(3, 46, 70, 0.2);
+	border-left: 1.1em solid var(--bf500);
+}
+
+/* -- 
+    Barre de recherche 
+-- */
+
+#searchtool .btn-default {
+	background-color: var(--bf500) !important;
+	border-color: #ffffff00 !important;
+	color: white !important;
+	border-bottom-right-radius: 0px !important;
+	border-top-right-radius: 5px !important;
+}
+
+input#searchfield {
+	border-bottom-left-radius: 0px !important;
+	border-top-left-radius: 5px !important;
+	border-bottom-right-radius: 0px !important;
+	border-top-right-radius: 0px !important;
+	background-color: var(--g200);
+	border-bottom: 2px solid var(--bf500);
+}
+
+/* Position barre de recherche */
+
+#searchtool {
+	margin-right: 0px !important;
+	width: 300px !important;
+	font-family: var(--myfont);
+}
+
+#searchtool .form-group.input-group {
+	width: 100%;
+}
+
+/* Résultats de la recherche */
+
+#searchresults {
+	font-family: var(--myfont);
+	color: var(--g700) !important;
+	margin: 10px 7px;
+	right: 72px !important;
+	min-width: 265px !important;
+}
+
+.searchresults-title {
+	background-color: var(--bf500);
+	color: white;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 1.5;
+}
+
+.searchresults-title .close {
+	color: white;
+	font-weight: 300;
+}
+
+.searchresults-title .close:hover {
+	color: var(--bf500);
+	opacity: 0.7;
+	font-weight: 200;
+}
+
+#searchresults a.list-group-item.disabled {
+	color: var(--bf500);
+	font-weight: 500;
+}
+
+#searchresults li.list-group-item.disabled {
+	background-color: var(--bf500);
+	border-color: var(--bf500);
+	color: white !important;
+	font-family: var(--myfont);
+}
+
+#searchresults .list-group-item {
+	border: none;
+	line-height: 1.3;
+}
+
+#parameterspanel .modal-header {
+	color: #333;
+	font-size: 13px;
+	font-family: var(--myfont);
+}
+
+/* -- 
+    Bouton vers le panneau d'aide / Accueil 
+-- */
+
+button.btn.btn-default.navbar-btn.mv-navbar-btn {
+	width: 34px;
+	height: 45px;
+	min-width: 45px;
+	border: 0px !important;
+	font-size: 15px;
+	padding: 0px;
+	margin: 12px 22px 0px 0;
+}
+
+button.btn.btn-default.navbar-btn.mv-navbar-btn:hover {
+	background-color: var(--bf200-bf300);
+}
+
+#iconhelp span {
+	content: url(dsfr-v1.6.0/dist/icons/buildings/home-4-line.svg);
+	width: 20px;
+	filter: invert(12%) sepia(59%) saturate(6495%) hue-rotate(242deg) brightness(68%) contrast(133%);
+}
+
+/* -- 
+    ToolBar 
+-- */
+
+#zoomtoolbar {
+	top: 100px !important;
+}
+
+#toolstoolbar {
+	top: 190px !important;
+}
+
+#drawtoolsoptions {
+	top: 190px;
+	right: 50px;
+}
+
+#toolstoolbar.btn-warning {
+	background-color: var(--bf500);
+	border-color: var(--bf500);
+}
+
+#toolstoolbar.btn-warning:hover {
+	background-color: var(--bf500);
+	border-color: var(--bf500);
+}
+
+#alerts-zone .alert.alert-info {
+	background-color: var(--bf500);
+	color: #fff;
+}
+
+.alert {
+	font-family: var(--myfont);
+	font-size: 14px;
+	color: var(--g700) !important;
+	background-color: white !important;
+	border: 2px solid var(--bf500) !important;
+	border-radius: 0 !important;
+}
+
+#alerts-zone .close {
+	color: var(--bf500);
+	opacity: 1;
+}
+
+.datepicker .active {
+	background-color: var(--bf500) !important;
+}
+
+.leftpanel-btn:hover {
+	color: var(--bf500);
+}
+
+#drawtoolsoptions .btn-default.active,
+#drawtoolsoptions .btn-default:active,
+#drawtoolsoptions .btn-default.focus,
+#drawtoolsoptions .btn-default:focus {
+	background-color: var(--bf500);
+	border-color: var(--bf500);
+}
+
+/* Mesure */
+
+.tooltip2 {
+	background: var(--bf500);
+	font-family: var(--myfont);
+}
+
+.tooltip-measure-static {
+	background-color: var(--bf500);
+	font-family: var(--myfont);
+}
+
+.tooltip-measure:before,
+.tooltip-measure-static:before {
+	border-top: 6px solid var(--bf500);
+}
+
+.tooltip-measure-static:before {
+	border-top-color: var(--bf500);
+}
+
+/* custom-tooltip-feature */
+
+.tooltip-feature.tooltip-inner {
+	background-color: rgba(51, 51, 51, 0.95);
+	padding: 10px !important;
+	color: #fff;
+	font-family: var(--myfont);
+	font-size: 12px;
+}
+
+.tooltip.right .tooltip-feature.tooltip-arrow {
+	border-right-color: rgba(51, 51, 51, 0.95);
+}
+
+.tooltip.top .tooltip-feature.tooltip-arrow {
+	border-top-color: rgba(51, 51, 51, 0.95);
+}
+
+.tooltip.left .tooltip-feature.tooltip-arrow {
+	border-left-color: rgba(51, 51, 51, 0.95);
+}
+
+.tooltip-feature h5 {
+	margin-bottom: 0;
+}
+
+.tooltip-feature.tooltip.in {
+	opacity: 1;
+}
+
+/* Custom-tooltip-infopanel */
+
+.mv-tooltip.tooltip-inner {
+	padding: 10px !important;
+	color: #fff;
+	font-family: var(--myfont);
+	font-size: 11px;
+	letter-spacing: 1;
+}
+
+/* Partager la carte*/
+
+#sharepanel {
+	font-family: var(--myfont);
+}
+
+a#permalinklink {
+	font-family: var(--myfont);
+}
+
+.modal-content {
+	font-family: var(--myfont);
+}
+
+#sharepanel .radio-inline {
+	margin: 0 !important;
+}
+
+#sharepanel .close::before {
+	content: "Fermer ";
+}
+
+#sharepanel .close {
+	color: var(--bf500);
+	opacity: 1;
+	font-size: 16px;
+	font-weight: 600;
+}
+
+#sharepanel .close:hover {
+	opacity: 0.5;
+}
+
+#sharepanel .modal-content {
+	border: none;
+	padding: 15px;
+	width: 140%;
+}
+
+#sharepanel .modal-title center {
+	text-align: left;
+	margin-top: 15px;
+	font-weight: 700;
+	font-size: 23px;
+	color: var(--bf500);
+}
+
+#sharepanel .modal-share-title {
+	font-size: 16px;
+}
+
+#mv-display-mode {
+	display: inline-grid;
+	width: 100%;
+}
+
+#sharepanel .radio-inline {
+	padding: 20px;
+	padding-left: 40px !important;
+	border: 1px solid var(--g600);
+	margin: 5px 0 !important;
+	width: 100%;
+}
+
+#sharepanel .radio-inline:hover {
+	border: 1px solid var(--bf500);
+	background-color: var(--bf200-bf300);
+}
+
+#mv-display-mode::before {
+	content: "Partager votre carte avec les couches sélectionnées et l'emprise paramétrée :";
+	margin-bottom: 10px;
+}
+
+#mv-display-mode::after {
+	content: "Mode de partage";
+	margin-top: 20px;
+	font-size: 16px;
+	font-weight: 700;
+}
+
+/* Paramètres de recherche */
+
+#parameterspanel .modal-content {
+	border: none;
+	padding: 15px;
+	width: 140%;
+}
+
+#parameterspanel .close::before {
+	content: "Fermer ";
+}
+
+#parameterspanel .close {
+	color: var(--bf500);
+	opacity: 1;
+	font-size: 16px;
+	font-weight: 600;
+}
+
+#parameterspanel .close:hover {
+	opacity: 0.5;
+}
+
+#parameterspanel .modal-title {
+	margin-top: 20px;
+	font-weight: 700;
+	font-size: 23px;
+	color: var(--bf500);
+}
+
+#searchparameters li {
+	padding: 20px;
+	/* padding-left: 40px!important; */
+	border: 1px solid var(--g600);
+	margin: 5px 0 !important;
+	width: 100%;
+	font-size: 14px;
+}
+
+#searchparameters li:hover {
+	border: 1px solid var(--bf500);
+	background-color: var(--bf200-bf300);
+}
+
+#searchparameters {
+	padding: 0 !important;
+}
+
+/* Affichage des coordonnées */
+
+#coordinates {
+	padding: 0 !important;
+	font-family: var(--myfont);
+	font-weight: 400;
+	font-size: 13px;
+	margin: 0;
+	position: fixed;
+	right: 370px;
+	top: 7px;
+	color: var(--g800) !important;
+}
+
+/* -- 
+    Menu des couches 
+-- */
+
+#sidebar-wrapper {
+	background: #fff !important;
+}
+
+/* Position du menu */
+
+#menu {
+	margin-top: 83px
+}
+
+/* Titre des thématiques */
+
+#menu>li>a {
+	padding: 10px 9px !important;
+	font-weight: 500;
+	font-family: var(--myfont);
+	color: var(--g700) !important;
+	font-size: 13px;
+}
+
+#menu>li>a:hover {
+	background-color: #f6f6f6;
+	border: none !important
+}
+
+/* Titre des sous-groupes */
+
+#menu .level-2 a {
+	font-family: var(--myfont);
+	color: var(--g700) !important;
+}
+
+#menu .level-2 a:hover {
+	background-color: var(--myfont);
+	border: none;
+	color: var(--bf500) !important;
+	;
+}
+
+/* Titre des couches */
+
+#menu .mv-nav-item a {
+	font-family: var(--myfont);
+	color: var(--g700) !important;
+}
+
+#menu .mv-nav-item a:hover {
+	color: var(--bf500) !important;
+	background-color: #9e9e9e00;
+	border-right: 3px solid var(--bf500);
+	border-left: none !important;
+	;
+}
+
+/* Toogle couche */
+
+.toggle-theme-layers .badge {
+	color: var(--bf500);
+	background-color: var(--bf200-bf300);
+}
+
+/* -- 
+    Panel des Légendes et options des couches 
+-- */
+
+/* Position du bloc */
+
+#layers-container-box {
+	margin-top: 90px !important;
+	margin-left: 8px !important;
+	max-width: 270px !important;
+}
+
+#layers-container-box-header span {
+	background-color: var(--bf500) !important;
+}
+
+#layers-container {
+	margin-top: 5px;
+	box-shadow: 0px 0px 30px 0px rgb(0 0 0 / 10%);
+}
+
+#layers-container-box-header span:hover {
+	opacity: 0.8;
+}
+
+#layers-container-box-header {
+	background-color: #fff0;
+}
+
+.list-group-item {
+	border: 0px solid #ddd !important;
+}
+
+/* Icônes */
+
+.mv-grip {
+	color: var(--bf500) !important;
+	margin: 5px 0px !important;
+}
+
+#layers-container .icon-options {
+	color: #777;
+	font-size: smaller;
+}
+
+/* Titre de la couche */
+
+#layers-container a {
+	color: var(--bf500);
+	font-family: var(--myfont);
+	font-weight: 600;
+	font-size: 14px;
+}
+
+.layerdisplay-title {
+	margin: 8px 0px;
+	display: flex;
+	padding-left: 15px !important;
+	padding-right: 35px;
+}
+
+.mv-layer-remove {
+	position: absolute;
+	right: 0px !important;
+}
+
+.mv-layer-remove span {
+	content: url(dsfr-v1.6.0/dist/icons/system/close-line.svg);
+	width: 25px;
+	filter: invert(12%) sepia(59%) saturate(6495%) hue-rotate(242deg) brightness(68%) contrast(133%);
+}
+
+/* Labels des options */
+
+.layerdisplay-subtitle span {
+	font-family: var(--myfont) !important;
+	font-weight: 400;
+	padding: 2px 4px;
+}
+
+.layerdisplay-subtitle div {
+	background-color: #c1c1c14d;
+	padding: 5px 5px;
+	border-radius: 15px;
+	margin-right: 5px;
+	opacity: 0.9;
+}
+
+.selected-sld.fa span {
+	font-style: italic;
+	font-family: var(--myfont);
+}
+
+.selected-attribute.fa span {
+	font-style: italic;
+	font-family: var(--myfont);
+}
+
+.layerdisplay-subtitle .selected-sld {
+	padding-right: 0px !important;
+}
+
+/* Titres des sections */
+
+#layers-container .mv-layer-options p {
+	font-family: var(--myfont);
+	font-size: 13px;
+}
+
+.mv-layer-options {
+	color: var(--g700) !important;
+}
+
+.mv-layer-options a {
+	color: var(--g700) !important;
+	font-size: 13px !important;
+}
+
+.mv-layer-options .row {
+	padding: 2px 0px;
+}
+
+.mv-layer-options .form-control {
+	font-family: var(--myfont);
+	color: var(--g700) !important;
+	padding: 0px 12px !important;
+	background-color: var(--g200) !important;
+	border: none !important;
+	box-shadow: inset 0 -2px 0 0 var(--g600) !important;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	line-height: 1;
+	background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' viewBox='0 0 24 24' ><path fill='%231e1e1e' d='M12,13.1l5-4.9l1.4,1.4L12,15.9L5.6,9.5l1.4-1.4L12,13.1z'/></svg>") no-repeat right #ddd0;
+	background-size: 20px;
+	-webkit-appearance: none;
+	background-position-x: 94%;
+}
+
+.mv-layer-options .form-group label {
+	font-family: var(--myfont);
+	font-size: 13px;
+	margin-bottom: 10px;
+}
+
+.layer-tooltip {
+	font-weight: 400 !important;
+}
+
+/* Opacité */
+
+.slider-selection {
+	background: var(--bf500);
+	background-image: none !important;
+}
+
+.mv-layer-options .slider-track {
+	height: 4px !important;
+}
+
+.slider.slider-horizontal {
+	width: 95% !important;
+}
+
+.slider-handle.min-slider-handle.round {
+	background: var(--bf500);
+}
+
+.slider-handle.min-slider-handle.round:hover,
+.slider-handle.min-slider-handle.round:active {
+	-webkit-box-shadow: 0px 0px 0px 4px rgba(38, 50, 57, 0.4);
+	-moz-box-shadow: 0px 0px 0px 4px rgba(38, 50, 57, 0.4);
+	box-shadow: 0px 0px 0px 4px rgba(38, 50, 57, 0.4);
+}
+
+/* Temporalité */
+
+.form-group-timer {
+	padding: 0 10px 0 0;
+}
+
+.mv-layer-options .form-group-timer .slider-selection {
+	background: var(--bf500);
+	-webkit-box-shadow: inset 0 0px 0 rgba(0, 0, 0, 0);
+}
+
+.slider.slider-horizontal .slider-tick-label-container {
+	font-family: var(--myfont);
+}
+
+.slider-tick.round.in-selection {
+	background: var(--bf500);
+	background-image: none;
+	-webkit-box-shadow: inset 0 0px 0 rgba(0, 0, 0, 0);
+}
+
+.form-group-timer .slider-tick.round {
+	background: var(--bf500);
+	background-image: none;
+	-webkit-box-shadow: inset 0 0px 0 rgba(0, 0, 0, 0);
+	opacity: 1;
+}
+
+.form-group-timer .tooltip.bottom .tooltip-arrow {
+	border-bottom-color: var(--bf500);
+}
+
+.mv-layer-options .form-group-timer .slider-track-high {
+	background: var(--bf500);
+}
+
+span.mv-time-player-selection {
+	font-size: 12px;
+	background-color: var(--g200);
+	color: var(--g600);
+	font-family: var(--myfont);
+	border-radius: 20px !important;
+	position: absolute;
+	right: 17px;
+}
+
+/* Panel métadonnées */
+
+.popover,
+.arrow {
+	border: none !important;
+}
+
+.popover-content {
+	font-family: var(--myfont);	
+	padding: 20px 15px !important;
+}
+
+.popover-content p {
+	margin-bottom: 20px !important;
+	width: 250px;
+}
+
+.popover-content a {
+	font-family: var(--myfont);
+	color: white;
+	background-color: var(--bf500);
+	padding: 8px 14px;
+	font-style: normal !important;
+}
+
+.popover-content a:hover {
+	color: white !important;
+	background-color: var(--bf500);
+	opacity: 0.8;
+}
+
+/* -- 
+    Fond de plan 
+-- */
+
+ul#basemapslist p {
+	font-family: var(--myfont);
+}
+
+ul#basemapslist li.active {
+	border: 2.5px solid var(--bf500);
+}
+
+.ol-scale-line-inner {
+	font-family: var(--myfont);
+}
+
+#backgroundlayerstoolbar-gallery ul li {
+	height: 45px !important;
+	width: 45px !important;
+	border-radius: 0px !important;
+}
+
+#backgroundlayerstoolbar-gallery {
+	bottom: 23px !important;
+}
+
+/* Propulsé par mviewer */
+
+#mviewerinfosbar {
+	font-family: var(--myfont);
+	font-size: 11px;
+}
+
+#mviewerinfosbar a {
+	color: var(--bf500)
+}
+
+/* Crédits */
+
+.ol-attribution.ol-unselectable.ol-control {
+	font-family: var(--myfont);
+}
+
+.ol-attribution.ol-unselectable.ol-control a {
+	color: var(--bf500)
+}
+
+/*-- 
+    Popup et popover
+-- */
+
+.popover-content {
+	font-family: var(--myfont);
+}
+
+.popover-title {
+	font-family: var(--myfont);
+}
+
+.popup-content {
+	font-family: var(--myfont);
+}
+
+/* -- 
+    Fenêtres d'information >> Templates 
+-- */
+
+#right-panel.active {
+	width: 350px !important;
+}
+
+/* Onglets des couches sélectionnées */
+
+.popup-content .nav-tabs>li.active>a,
+.popup-content .nav-tabs>li.active>a:hover,
+.popup-content .nav-tabs>li.active>a:focus {
+	border-left: thick solid var(--bf500) !important;
+	border: none;
+}
+
+.popup-content .nav-tabs .active .glyphicon,
+.popup-content .nav-tabs .active .fa {
+	color: var(--bf500);
+}
+
+/* Entête */
+
+#right-panel .carousel-control {
+	width: 10% !important;
+}
+
+#right-panel .mv-header {
+	color: var(--bf500);
+	background-color: white;
+	padding-top: 80px !important;
+}
+
+#right-panel .mv-header h5 {
+	font-size: 13px;
+	padding: 6px;
+	font-family: var(--myfont) !important;
+	font-weight: 400 !important;
+}
+
+#right-panel .close {
+	font-weight: 300;
+	color: var(--bf500) !important;
+}
+
+/* Badge */
+
+#right-panel span.counter-slide,
+#bottom-panel-selector span.counter-slide {
+	background-color: var(--bf200-bf300) !important;
+	color: var(--bf500) !important;
+}
+
+/* Contenu */
+
+.title-feature {
+	color: var(--g800);
+	font-weight: 600;
+	margin-bottom: 15px;
+	align-items: center;
+}
+
+.subtitle-feature {
+	color: var(--g800);
+	margin-top: 30px;
+}
+
+.item h5 {
+	color: var(--g800);
+	margin-top: 15px;
+}
+
+#right-panel p,
+#bottom-panel-selector p {
+	color: var(--g700);
+	font-size: 13px;
+}
+
+/* Tableau */
+
+#right-panel table,
+#bottom-panel-selector table {
+	width: 100%;
+}
+
+#right-panel td,
+#bottom-panel-selector td {
+	padding: 6px;
+}
+
+#right-panel table tr:nth-child(odd) {
+	background-color: var(--g200);
+}
+
+#bottom-panel-selector table tr:nth-child(odd) {
+	background-color: var(--g200);
+}
+
+/* Tableau En mode simplifié */
+
+#modal-panel table {
+	width: 100%;
+}
+
+#modal-panel td {
+	padding: 6px;
+}
+
+#modal-panel table tr:nth-child(odd) {
+	background-color: #9e9e9e38;
+}
+
+/* Style pour les chiffres clés et la jauge */
+
+.bloc-number {
+	display: flex;
+	background-color: #9e9e9e21;
+	padding: 15px 15px;
+	margin: 15px 0px;
+}
+
+.bloc-number-jauge {
+	background-color: #9e9e9e21;
+	padding: 15px 15px;
+	margin: 15px 0px;
+	text-align: center;
+}
+
+.text-number {
+	margin: 0;
+	color: var(--g700);
+}
+
+.bloc-number .icon {
+	font-size: 20px;
+	padding: 20px 15px;
+	width: 20;
+	border-radius: 16px;
+	margin-right: 15px;
+}
+
+.number {
+	font-size: 26px !important;
+	font-weight: 700;
+	margin: 0;
+	margin-bottom: 10px;
+}
+
+.blocGraph {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+p.titleGraph {
+	color: #666;
+	margin-top: 5px;
+}
+
+/* Bottom panel */
+
+#bottom-panel .mv-header h5 {
+	font-family: var(--myfont);
+	color: var(--bf500);
+	font-size: 13px;
+}
+
+.fa-chevron-down {
+	color: #fff;
+}
+
+#bottom-panel-btn .fa-chevron-down {
+	background: var(--bf500);
+}
+
+/* Fiche info GML */
+
+.gml-item-field-name {
+	font-family: var(--myfont);
+}
+
+.gml-item-field-value {
+	font-family: var(--myfont);
+}
+
+/* -- 
+    Mode simplifié
+ -- */
+
+/* Btn d'affichage des légendes */
+
+a#btn-mode-su-menu {
+	background-color: var(--bf500);
+	font-family: var(--myfont);
+	color: white;
+	padding: 8px 14px;
+	top: 95px !important;
+	font-size: 14px;
+}
+
+/* -- 
+    Mode Ultra-simplifié 
+-- */
+
+/* Toolsbar*/
+
+.xs.mode-u #zoomtoolbar {
+	top: 70px !important;
+}
+
+.xs.mode-u #toolstoolbar {
+	top: 160px !important;
+}
+
+/* Barre de recherche */
+
+.xs.mode-u #searchtool {
+	margin-right: 15px !important;
+}
+
+.xs.mode-u #searchtool .btn-default {
+	background-color: var(--bf500) !important;
+	border-color: #673ab700 !important;
+	color: white !important;
+}
+
+.xs.mode-u #searchtool .form-group {
+	box-shadow: 0px 0px 20px 5px rgb(0 0 0 / 17%);
+}
+
+/* Btn d'affichage des légendes */
+
+.xs.mode-u #btn-mode-su-menu {
+	top: 10px !important;
+}
+
+/* -- 
+    Mobile 
+--*/
+
+/* Navbar */
+
+.xs.mode-d #mv-navbar {
+	line-height: 3.0 !important;
+}
+
+.xs .navbar-toggle {
+	background-color: white !important;
+	padding: 0!important;
+	border: none;
+	color: var(--bf500);
+}
+
+.xs .mv-nav a {
+	font-family: var(--myfont);
+	color: var(--g800) !important;
+	font-size: 14px;
+}
+
+.xs.mode-d .navbar-toggle {
+	background-color: #ffffff;
+	border: none;
+}
+
+.xs.mode-d .mv-title {
+	padding: 5px 0px !important;
+    width: 300px!important;
+}
+
+.xs.mode-d .title-app {
+	font-size: 15px;
+}
+
+.xs.mode-d .subtitle-app {
+	font-size: 11px;
+}
+
+.xs.mode-d #searchtool {
+	width: 100% !important;
+}
+
+/* Modal */
+.xs .modal-title {
+	color: var(--bf500);
+}
+
+.xs #menu {
+	margin: 0;
+}
+
+/* -- 
+    Addon Filter 
+-- */
+
+#advancedFilter {
+	padding: 20px;
+	font-family: var(--myfont);
+	box-shadow: 0px 0px 10px 3px rgb(0 0 0 / 17%);
+	z-index: 1000 !important;
+}
+
+.advancedFilter h2 {
+	color: var(--bf500) !important;
+	font-family: var(--myfont) !important;
+	font-size: 15px !important;
+}
+
+.download-section legend {
+	margin-bottom: 12px !important;
+}
+
+.download-btn {
+	background-color: var(--bf500);
+	padding: 6px;
+	margin: 3px !important;
+}
+
+.download-btn :hover {
+	opacity: 0.8;
+}
+
+.advancedFilter legend {
+	font-style: normal !important;
+	border: none;
+	margin-top: 10px;
+}
+
+.label-info {
+	background-color: var(--bf200-bf300) !important;
+	color: var(--bf500)!important;	
+	font-size: 10px !important;
+	font-weight: 400 !important;
+	border-radius: 0px !important;
+}
+
+.label-info:hover {
+	color: white!important;
+	background-color: var(--bf500) !important;
+}
+
+.advancedFilter .form-check-label-checked {
+	background-color: var(--bf500) !important;
+	color: white!important;
+}
+
+#advancedFilter .bootstrap-tagsinput {
+	width: 100%;
+	border-radius: 0px !important;
+	background-color: var(--g200) !important;
+	border: none !important;
+	box-shadow: inset 0 -2px 0 0 var(--g600) !important;
+	border-top-left-radius: 5px !important;
+	border-top-right-radius: 5px !important;
+}
+
+#advancedFilter .form-control {
+	padding: 0px 12px !important;
+	background-color: var(--g200) !important;
+	border: none !important;
+	box-shadow: inset 0 -2px 0 0 var(--g600) !important;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	line-height: 1;
+	background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' viewBox='0 0 24 24' ><path fill='%231e1e1e' d='M12,13.1l5-4.9l1.4,1.4L12,15.9L5.6,9.5l1.4-1.4L12,13.1z'/></svg>") no-repeat right #ddd0;
+	background-size: 20px;
+	-webkit-appearance: none;
+	background-position-x: 94%;
+}
+
+.filter-legend .glyphicon-trash {
+	right: 0 !important;
+	font-size: 11px !important;
+	color: #606060 !important;
+}
+
+.dropdown-menu>.active>a,
+.dropdown-menu>.active>a:focus,
+.dropdown-menu>.active>a:hover {
+	background-color: var(--bf500) !important;
+}
+
+
+
+/* -- 
+    Page d'accueil
+-- */
+
+/* Modifications des paramètres par défaut du mviewer / Panel help */
+
+#help .modal-title {
+	display: none;
+}
+
+#help .modal-header {
+	padding: 40px 40px 30px 40px !important;
+}
+
+/* Ajout du label Fermer à côté de la croix */
+
+#help .close::before {
+	content: "Fermer ";
+}
+
+#help .close {
+	color: var(--bf500);
+	opacity: 1;
+	font-size: 16px;
+	font-weight: 600;
+}
+
+#help .close:hover {
+	opacity: 0.5;
+}
+
+/* Propriétés de style de la fenêtre */
+
+.title-home {
+	font-size: 32px;
+	font-weight: 700;
+	line-height: 1;
+	color: var(--g700);
+	margin: 30px 0;
+}
+
+.subtitle-home {
+	font-size: 18px;
+	font-weight: 700;
+	color: var(--bf500);
+}
+
+.text-home p {
+	font-size: 15px !important;
+	color: var(--g700);
+	line-height: 1.4;
+}
+
+.btnGroup-home {
+	display: flex;
+	margin: 20px 0;
+}
+
+.btnGroup-home .fr-btn {
+	margin-right: 10px;
+}
+
+.note-home {
+	font-size: 11px;
+	font-style: italic;
+	text-align: right;
+}
+
+.topSpace {
+	margin-top: 10px;
+}
+
+/* -- 
+    CUSTOM CONTROLS
+    Personnalisation des éléments HTML 
+-- */
+
+.mv-custom-controls {
+	font-family: var(--myfont);
+}
+
+.custom-title {
+	font-weight: 600;
+	font-size: 13px;
+	color: var(--bf500);
+	margin-bottom: 5px;
+}
+
+.custom-block {
+	margin-bottom: 15px;
+}
+
+/* Checkbox */
+
+.fr-checkbox-group {
+	display: block;
+	position: relative;
+	padding-left: 30px;
+	margin: 5px 0px;
+	cursor: pointer;
+	font-size: 12.5px;
+	font-weight: 400;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.fr-checkbox-group input {
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+	height: 0;
+	width: 0;
+}
+
+.checkmark {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 20px;
+	width: 20px;
+	background-color: #eee;
+}
+
+.fr-checkbox-group:hover input~.checkmark {
+	background-color: #ccc;
+}
+
+.fr-checkbox-group input:checked~.checkmark {
+	background-color: var(--bf500);
+}
+
+.checkmark:after {
+	content: "";
+	position: absolute;
+	display: none;
+}
+
+.fr-checkbox-group input:checked~.checkmark:after {
+	display: block;
+}
+
+.fr-checkbox-group .checkmark:after {
+	left: 8px;
+	top: 4px;
+	width: 5px;
+	height: 10px;
+	border: solid white;
+	border-width: 0 2px 2px 0;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+
+/* Inline position */
+
+.check-inline .fr-checkbox-group {
+	display: inline-table;
+	padding-right: 20px;
+}
+
+/* Form control */
+
+.form-control-title {
+	margin-bottom: 5px;
+}
+
+/* BOUTONS */
+
+/* Btn */
+
+.fr-btn {
+	margin: 5px 0px;
+}
+
+.fr-btn a {
+	font-size: 14px !important;
+	font-weight: 400 !important;
+	padding: 0.2rem !important;
+	cursor: default;
+}
+
+/* Bouton avec fond */
+
+.fr-btn--primary a {
+	background-color: var(--bf500);
+	color: white !important;
+}
+
+.fr-btn--primary:hover {
+	opacity: 0.8;
+}
+
+/* Bouton avec contour */
+
+.fr-btn--secondary a {
+	color: var(--bf500) !important;
+}
+
+.fr-btn--secondary:hover {
+	background-color: var(--g200);
+	color: var(--bf500);
+}
+
+

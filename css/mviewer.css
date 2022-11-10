@@ -1509,6 +1509,10 @@ span.mv-time-player-selection {
 	margin-bottom: -4%;
 }
 
+.popover-content p {
+width: 250px;
+}
+
 /* Icone layers non coches
 Utiliser le code Unicode du caractere de la police awesome.
 */
