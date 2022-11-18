@@ -405,7 +405,7 @@ mviewer = (function () {
             legendUrl = layer.legendurl;
         } else if (layer.legendurl && layer.styles && (layer.styles.split(",").length === 1)) {
             legendUrl = layer.legendurl;
-        } else {
+        } else if(!layer.type === "tms") {
             legendUrl = getLegendGraphicUrl(layer.url, _getLegendParams(layer));
         }
         if (layer.dynamiclegend) {

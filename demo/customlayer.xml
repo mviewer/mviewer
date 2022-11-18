@@ -20,7 +20,7 @@
 </baselayers>
 <themes mini="false">
     <theme name="Morbihan"  collapsed="false" id="ocs56" icon="far fa-file-alt">
-        <layer id="ocs56" name="Couverture" visible="true" queryable="true"
+        <layer id="ocs56" name="Couverture" visible="false" queryable="true"
             type="customlayer" opacity="0.5" legendurl="img/blank.gif"
             url="customlayers/ocs56.js"
             customcontrol="true"
@@ -30,6 +30,17 @@
             metadata=""
             metadata-csw="">
         </layer>
+        <layer
+            id="PlanIGN"
+            name="Plan IGN vecteur" visible="true"
+            type="tms" opacity="0.9"
+            queryable="true"
+            filterstyle="fond_opaque,bati_surf"
+            maxzoom="25"
+            legendurl="demo/lycee.png"
+            styleurl="https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/standard.json"
+            style="PLAN_IGN"
+            url="https://wxs.ign.fr/parcellaire/geoportail/tms/1.0.0/PCI/{z}/{x}/{y}.pbf"/>
     </theme>
 </themes>
 </config>

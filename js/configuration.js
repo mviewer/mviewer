@@ -645,6 +645,7 @@ var configuration = (function () {
                         oLayer.draggable = false;
                     }
                     oLayer.opacity = parseFloat(layer.opacity || "1");
+                    oLayer.maxzoom = parseInt(layer.maxzoom || 20)
                     oLayer.tooltip =  (layer.tooltip === "true") ? true : false;
                     oLayer.tooltipenabled =  (layer.tooltipenabled === "true") ? true : false;
                     oLayer.tooltipcontent = layer.tooltipcontent ? layer.tooltipcontent : '';
@@ -710,8 +711,8 @@ var configuration = (function () {
                     oLayer.vectorlegend =  (layer.vectorlegend === "true") ? true : false;
                     oLayer.nohighlight =  (layer.nohighlight === "true") ? true : false;
                     oLayer.infohighlight =  (layer.infohighlight === "false") ? false : true;
-                    oLayer.showintoc =  (layer.showintoc && layer.showintoc === "false") ? false : true;
-                    oLayer.legendurl=(layer.legendurl)? layer.legendurl : mviewer.getLegendUrl(oLayer);
+                    oLayer.showintoc = (layer.showintoc && layer.showintoc === "false") ? false : true;
+                    oLayer.legendurl = (layer.legendurl) ? layer.legendurl : mviewer.getLegendUrl(oLayer);
                     if (oLayer.legendurl === "false") {oLayer.legendurl = "";}
                     oLayer.useproxy = (layer.useproxy === "true") ? true : false;
                     if (layer.fields) {
@@ -776,7 +777,33 @@ var configuration = (function () {
                     }
 
                     themeLayers[oLayer.id] = oLayer;
-                    var l= null;
+                      var l = null;
+                      if (oLayer.type === "tms") {
+                      // https://viglino.github.io/ol-ext/examples/layer/map.layer.gppvtile.html?lon=2.346439&lat=48.854790&z=15
+                        let vecLayer = new ol.layer.VectorTile({
+                          opacity: oLayer.opacity,
+                          title: layer.name,
+                          renderMode: 'vector',
+                          source: new ol.source.VectorTile({
+                          url: oLayer.url,
+                          format: new ol.format.MVT(),
+                          maxZoom: oLayer.maxzoom
+                        }),
+                        declutter: false
+                      });
+                      l = vecLayer;
+                      
+                      fetch(oLayer.styleurl).then(function(response) {
+                        response.json().then(function (glStyle) {
+                          let filter = layer.filterstyle.split(",");
+                          let newStyles = {
+                            ...glStyle, layers: glStyle.layers.filter(lyr => !filter.includes(lyr["source-layer"]))
+                          };
+                          olms.applyStyle(vecLayer, newStyles, "plan_ign");
+                        });
+                      });
+                      mviewer.processLayer(oLayer, vecLayer);
+                    }
                     if (oLayer.type === 'wms') {
                         _processWmsLayer(oLayer);
                     } //end wms
