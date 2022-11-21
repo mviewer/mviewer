@@ -243,7 +243,6 @@ var configuration = (function () {
             // if apps env file exists wi overload default apps/.env file with .env file with same xml name
             // as demo.env, demo.xml
             {
-                console.log(defaultEnv);
                 return _callJsonFile(appsEnvfile)
                     .then(appsEnv => {
                         console.log(appsEnv);
