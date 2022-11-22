@@ -1151,7 +1151,7 @@ mviewer = (function () {
                 l.set('name', baselayer.label);
                 l.set('blid', baselayer.id);
                 break;
-            case "TMS":
+            case "vector-tms":
                 let vecLayer = new ol.layer.VectorTile({
                     opacity: baselayer.opacity,
                     title: baselayer.title,
