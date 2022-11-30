@@ -290,6 +290,15 @@
       "url_demo":"../?config=demo/filter/filter.xml"
     },
     {
+      "id":"39", 
+      "title": "Plugin - Stat",
+      "tags": "Plugin mviewer (customComponent), stat",
+      "description":"Exemple d'application mobilisant le plugin 'stat' afin d'avoir des statistiques interactives selon le zoom de la carte.",       
+      "level":"avancé",
+      "url_source":"../demo/stats/stats.xml",
+      "url_demo":"../?config=demo/stats/stats.xml"
+    },
+    {
       "id":"32", 
       "title": "Intégration en iframe",
       "tags": "iframe, affichage, fullscreen",
@@ -344,13 +353,13 @@
       "url_demo":"../?config=demo/filter/filter_download.xml"
     },
     {
-      "id":"38", 
-      "title": "Release 3.7",
-      "tags": "Release, évolutions",
-      "description":"Exemple d'application présentant les évolutions de la version 3.7 de mviewer",       
-      "level":"",
-      "url_source":"../demo/v3.7.xml",
-      "url_demo":"../?config=demo/v3.7.xml"
+      "id":"40", 
+      "title": "Utilisation du thème avec identité visuelle de l'état",
+      "tags": "thème,CSS,état,design",
+      "description":"Exemple d'application utilisant le thème CSS avec l'identité visuelle de l'état français",       
+      "level":"intermédiaire",
+      "url_source":"../demo/theme-designfr/theme-designfr.xml",
+      "url_demo":"../?config=demo/theme-designfr/theme-designfr.xml"
     }
   ]
 }

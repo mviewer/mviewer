@@ -9,7 +9,7 @@ var configuration = (function () {
 
     // Mviewer version a saisir manuellement
 
-    var VERSION = "3.8.1-snapshot";
+    var VERSION = "3.10-snapshot";
 
     var _showhelp_startup = false;
 
@@ -56,6 +56,15 @@ var configuration = (function () {
     var _proxy = "";
 
     const _blankSrc = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
+
+    /**
+     * Usefull to decode string encoded hex code
+     * @param {string} str 
+     * @returns decoded string
+     */
+    var _decodeString = str => {
+        return str.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#x27;/g, '\'').replace(/&#x2F;/g, '/');
+    };
 
     var _parseXML = function (xml) {
         var _conf = $.xml2json(xml);
@@ -205,6 +214,65 @@ var configuration = (function () {
 
 
     };
+    /**
+     * 
+     * @param {string} file path
+     * @returns Promise
+     */
+    const _callJsonFile = (file) => 
+    fetch(file)
+        .then(r => r)
+            .then(r => r.json())
+    /**
+     * Set mviewer env values
+     * @param {any} d 
+     */
+    const _dispatchCustomEvent = (d) => {
+        const envDataReady = new CustomEvent('environementInfosAvailable', {detail: d})
+        document.dispatchEvent(envDataReady);
+    }
+    /**
+     * Get env values from file.
+     * Default file is located in apps/.env and could be overload by config.env file with same name as config.xml file.
+     * Default env file could be given by URL like ?env=apps/myApp/.en
+     * @param {string} file path
+     */
+    const _getEnvData = (appsEnvfile, defaultFile) => {       
+        _callJsonFile(defaultFile)
+        .then( defaultEnv => 
+            // if apps env file exists wi overload default apps/.env file with .env file with same xml name
+            // as demo.env, demo.xml
+            {
+                return _callJsonFile(appsEnvfile)
+                    .then(appsEnv => {
+                        console.log(appsEnv);
+                        return _dispatchCustomEvent({ ...defaultEnv, ...appsEnv })
+                    })
+                // else finally load only apps/.env file is loaded
+                .catch(e => _dispatchCustomEvent(defaultEnv))
+            }
+        ).catch(e => {
+            console.log("Error with default file");
+            // if no apps/.env file exists we search specific .env file for this context
+            _callJsonFile(appsEnvfile)
+                .then(appsEnv => _dispatchCustomEvent(appsEnv))
+                .catch(e => {
+                    // else, finally load with any env values
+                    _dispatchCustomEvent({});
+                })
+        });
+    }
+
+    /**
+     * From env. file, Get templated string path rendered by Mustache
+     * ...and decoded
+     * @param {string} str 
+     * @returns full templated string decoded
+     */
+    var _renderEnvPath = (str) => {
+        if (!str) return;
+        return _decodeString(Mustache.render(str, mviewer?.env))
+    }
 
     var _load = function (conf) {
 
@@ -474,8 +542,17 @@ var configuration = (function () {
                         }
                     });
                 }
-                layers.reverse().forEach( function (layer) {
-                   if (layer) { /* to escape group without layer */
+                layers.reverse().forEach(function (layerConfig) {
+                    const layer = mviewer.env ? {
+                        ...layerConfig,
+                        url: _renderEnvPath(layerConfig.url),
+                        legendurl:_renderEnvPath(layerConfig.legendurl),
+                        metadata_csw:_renderEnvPath(layerConfig.metadata_csw),
+                        metadata:_renderEnvPath(layerConfig.metadata),
+                        sld: layerConfig.sld && layerConfig.sld.split(",").map(sld => _renderEnvPath(sld)).join(","),
+                        template: layerConfig.template && { ...layerConfig.template, url: _renderEnvPath(layerConfig.template.url) }
+                    } : layerConfig;
+                    if (layer) { /* to escape group without layer */
                     layerRank+=1;
                     var layerId = layer.id;
                     if (layer.url) {
@@ -502,6 +579,7 @@ var configuration = (function () {
                     }
                     var mvid;
                     var oLayer = {};
+                    Object.assign(oLayer, layer);
                     var clean_ident = layerId.replace(/:|,| |\./g,'');
                     var _overLayers = mviewer.getLayers();
                     if (_overLayers[clean_ident] ) {
@@ -518,11 +596,9 @@ var configuration = (function () {
                     oLayer.theme = themeid;
                     oLayer.rank = layerRank;
                     oLayer.index = layer.index ? parseFloat(layer.index): null;
-                    oLayer.name = layer.name;
                     oLayer.title = layer.name;
                     oLayer.layerid = mvid;
                     oLayer.infospanel = layer.infopanel ||'right-panel';
-                    oLayer.featurecount = layer.featurecount;
                     //styles
                     if (layer.style && layer.style !== "") {
                         var styles = layer.style.split(",");
@@ -566,7 +642,6 @@ var configuration = (function () {
                         mviewer.setTopLayer(oLayer.id);
                         oLayer.draggable = false;
                     }
-                    oLayer.filter = layer.filter;
                     oLayer.opacity = parseFloat(layer.opacity || "1");
                     oLayer.tooltip =  (layer.tooltip === "true") ? true : false;
                     oLayer.tooltipenabled =  (layer.tooltipenabled === "true") ? true : false;
@@ -586,11 +661,8 @@ var configuration = (function () {
 
                     oLayer.attributefilter =  (layer.attributefilter &&
                         layer.attributefilter === "true") ? true : false;
-                    oLayer.attributefield = layer.attributefield;
                     oLayer.attributeoperator = layer.attributeoperator || "=";
                     oLayer.wildcardpattern = layer.wildcardpattern || "%value%";
-                    oLayer.styletitle = layer.styletitle;
-                    oLayer.attributelabel = layer.attributelabel;
                     if (layer.attributevalues && layer.attributevalues.search(",")) {
                         oLayer.attributevalues = layer.attributevalues.split(",");
                     }
@@ -609,14 +681,10 @@ var configuration = (function () {
                     }
                     oLayer.customcontrol = (layer.customcontrol === "true") ? true : false;
                     oLayer.customcontrolpath = layer.customcontrolpath || "customcontrols";
-                    oLayer.attribution = layer.attribution;
-                    oLayer.metadata = layer.metadata;
                     oLayer.metadatacsw = layer["metadata_csw"];
                     if (oLayer.metadata) {
                         oLayer.summary = '<a href="'+oLayer.metadata+'" target="_blank">En savoir plus</a>';
                     }
-                    oLayer.url = layer.url;
-                    oLayer.owsoptions = layer.owsoptions;
                     //Mustache template
                     if (layer.template && layer.template.url) {
                         $.get(mviewer.ajaxURL(layer.template.url, _proxy), function(template) {
@@ -633,7 +701,6 @@ var configuration = (function () {
                     if (oLayer.searchable) {
                         oLayer = search.configSearchableLayer(oLayer, layer);
                     }
-                    oLayer.infoformat = layer.infoformat;
                     oLayer.checked = (layer.visible === "true") ? true : false;
                     oLayer.visiblebydefault = (oLayer.checked) ? true : false;
                     oLayer.tiled = (layer.tiled === "true") ? true : false;
@@ -746,8 +813,8 @@ var configuration = (function () {
                         }
                         oLayer.geocoder = layer.geocoder || false;
                         oLayer.geocoderurl = layer.geocoderurl || false;
-                        oLayer.xfield = layer.xfield;
-                        oLayer.yfield = layer.yfield;
+//                        oLayer.xfield = layer.xfield;
+//                        oLayer.yfield = layer.yfield;
                         //allow transformation to mapProjection before map is initialized
                         oLayer.mapProjection = conf.mapoptions.projection;
                         mviewer.processLayer(oLayer, l);
@@ -975,7 +1042,9 @@ var configuration = (function () {
         getConfiguration: function () { return _configuration; },
         getLang: function () { return _lang },
         getLanguages: function () { return _languages; },
-        setLang: function (lang) { _lang = lang; mviewer.lang.lang = lang;}
+        setLang: function (lang) { _lang = lang; mviewer.lang.lang = lang; },
+        getEnvData: _getEnvData,
+        renderEnvPath: _renderEnvPath
     };
 
 })();
