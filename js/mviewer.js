@@ -322,7 +322,7 @@ mviewer = (function () {
                     }
                 }),
             ],
-            interactions: ol.interaction.defaults({
+            interactions: ol.interaction.defaults.defaults({
               doubleClickZoom: false
             }),
             overlays: overlays,
