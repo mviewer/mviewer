@@ -1342,7 +1342,12 @@ mviewer = (function () {
                 //layerIdOrName is layername
                 l = _getLayerByName(layerIdOrName);
                 richLayer.name = layerIdOrName;
-                richLayer.layerid = l.get("mviewerid");
+                if (l) {
+                    richLayer.layerid = l.get("mviewerid");
+                } else {
+                    richLayer.layerid = layerIdOrName;
+                }
+                
             }
             layersWithOptions[richLayer.layerid] = richLayer;
 
