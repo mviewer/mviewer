@@ -90,7 +90,7 @@ var filter = (function() {
 
     // custom from config
     $('#filterTitle').text(options.title);
-    _setStyle();
+    _setStyle(true);
   };
 
   /**
@@ -993,17 +993,19 @@ var filter = (function() {
     }
   };
 
-  var _setStyle = function() {
+  var _setStyle = function(reinitPosition = false) {
     if(!mviewer.customComponents.filter.config.options.style) return;
     var style = mviewer.customComponents.filter.config.options.style;
     $('.textlabel').css('color', style.text || 'black');
     $('#advancedFilter').css('background-color', style.background || 'white');
     $('#advancedFilter').css('border', style.border || '0px transparent solid');
     // position
-    $('#advancedFilter').css('right', style.right || '60px');
-    $('#advancedFilter').css('left', style.left || '');
-    $('#advancedFilter').css('top', style.top || '65px');
-    $('#advancedFilter').css('bottom', style.bottom || '');
+    if (reinitPosition) {
+      $('#advancedFilter').css('right', style.right || '60px');
+      $('#advancedFilter').css('left', style.left || '');
+      $('#advancedFilter').css('top', style.top || '65px');
+      $('#advancedFilter').css('bottom', style.bottom || ''); 
+    }
     // button style
     $('.label-info').css('background-color', style.unSelectedBtnColor || 'grey');
     $('.label-info').css('color', style.textSelectBtnColor || 'black');
