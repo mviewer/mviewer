@@ -5,7 +5,7 @@
     
 	<baselayers style="gallery">
         <baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoBretagne" thumbgallery="img/basemap/ortho.jpg" 
-            url="https://tile.geobretagne.fr/gwc02/service/wmts" layers="satellite" format="image/png" visible="false"
+            url="https://tile.geobretagne.fr/gwc02/service/wmts" layers="satellite" format="image/jpeg" visible="false"
             attribution="&lt;a href='https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/3a0ac2e3-7af1-4dec-9f36-dae6b5a8c731' target='_blank' >partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver&lt;/a>" style="_null" matrixset="EPSG:3857" fromcapacity="false"/>
         <baselayer  type="OSM" id="osm1" label="OpenStreetMap" title="OpenSTreetMap" thumbgallery="img/basemap/osm.png" 
 			url="http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
