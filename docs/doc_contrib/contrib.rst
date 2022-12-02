@@ -19,6 +19,111 @@ Cependant vous pouvez ressentir le besoin de modifier mviewer pour créer vos pr
 Vous trouverez ici une présentation et des recommandations pour créer vos cartes et vos fonctionnalités sans modifier le cœur (ou presque).
 Vous obtiendrez un mviewer maintenable et vous n'aurez plus l'appréhension de toucher aux mauvais fichiers.
 
+Code style
+---------------------
+
+.. warning::
+    Ne jamais modifier les fichiers présentés ci-dessous, sauf si la modification des règles de style est demandées par la communauté !
+
+Cette section vous permettra de connaître les règles à utiliser lors de l'écriture du code dans mviewer.
+Ces règles permettent d'assurer que les contributions sont uniformes (e.g indentations, longueur de lignes, etc.) et le code de meilleur qualité.
+
+Les règles de style permettent également d'adopter les bonnes règles pour tous afin de faciliter la comparaison des fichiers et les contributions.
+
+**1. Formattage dans VS Code**
+
+Dans VS Code, vous trouverez un fichier `.vscode/settings.json`.
+
+Ce fichier contient des règles de paramétrage de VS Code qui peuvent être réutilisées par défaut par tous les développeur qui utilisent VS Code avec mviewer.
+
+Ce fichier `settings.json` permet de définir le formatter par défaut par type de language.
+
+Il permet aussi d'utiliser le formattage automatique à la sauvegarde : 
+
+::
+
+    "editor.formatOnSave": false
+
+Dans VS Code, si vous n'utilisez pas ce fichier, vous pouvez formatter à la sauvegarde automatiquement via les préférences VS Code décrites plus bas. 
+
+**2. Prettier**
+
+Mviewer utilise `Prettier <https://prettier.io/>`_.
+Nous conseillons d'utiliser l'éditeur Visual Studio Code et son plugin `Prettier - Code formatter <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>`_.
+
+* Installation
+
+Via `npm` (voir `ici <https://github.com/geobretagne/mviewer#d%C3%A9ploiement-avec-nodejs>`_ pour installer `npm`):
+
+::
+
+    npm install
+
+A l'ouverture du projet mviewer avec VS Code, le plugin détectera automatiquement les fichiers `.prettierrc` et `.prettierignore`.
+Les règles seront donc automatiquement détectées et vous pourrez alors utiliser `Prettier` pour appliquer les règles de style au code mviewer.
+
+* Fichier .prettierrc
+
+C'est le fichier de configuration de Prettier (format JSON).
+Il contient toutes les règles à utiliser par Prettier.
+
+Ce fichier situé à la racine contient les règles que toute la communauté utilise.
+
+Pour plus d'informations sur la configuration :
+
+https://prettier.io/docs/en/configuration.html
+
+* Fichier .prettierignore
+
+Ce fichier permet d'ignorer certains fichiers ou dossier du code mviewer.
+
+::
+
+    # Ignore artifacts:
+    build
+    coverage
+
+    # Ignore all HTML files:
+    *.html
+
+    # Ignore folders :
+    **/lib
+
+Pour plus d'informations, sur ce fichier :
+
+https://prettier.io/docs/en/ignore.html
+
+**3. Formatter vos fichiers avec Prettier**
+
+Avec VS Code, Le formattage peut être réalisé à la sauvegarde ou à la demande.
+
+- Formattage à la sauvegarde
+
+Vous devez paramétrer votre éditeur pour formatter à la sauvegarde ou utiliser le fichier `.vscode` décrit plus haut.
+
+Avec VS Code, aller dans Fichier > Préférences > Paramètres et rechercher `format on save`.
+Cocher alors `Editor:Format on save` pour activer le formattage à la sauvegarde.
+
+- Formattage à la demande
+
+Avec VS Code, réaliser un clic droit dans le fichier et cliquer sur `mettre en forme le document avec... `.
+Sélectionner alors `Prettier` dans la liste .
+
+- Fromattage via `npm`
+
+Le fichier `/mviewer/package.json` contient une commande `pretty`.
+Cette commande va effectuer un formattage sur les fichiers `.js` et `.json` des répertoires `/js`, `/demo`, `/customcontrols`, `/customlayers`.
+
+::
+
+    "pretty": "prettier --write \"./mviewer.i18n.json\" \"./js/**/*.{js,json}\" \"./demo/**/*.{js,json}\" \"./customcontrols/*.{js,json}\" \"./customlayers/*.{js,json}\""
+
+Elle s'exécute dans le répertoire `/mviewer` comme ceci :
+
+:: 
+
+    npm install
+    npm run pretty
 
 Le cœur de mviewer
 ------------------
