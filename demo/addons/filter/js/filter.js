@@ -1016,9 +1016,14 @@ var filter = (function() {
     init: () => {
       try {
         _initFilterTool()
-      } catch (error) { 
+      } catch (error) {
         $(document).on("layersLoaded", () => {
-          _initFilterTool();      
+          try {
+            _initFilterTool();
+          } catch (e) {
+            $(document).on("configurationCompleted", _initFilterTool)
+          }
+          
         });
       }
     },
