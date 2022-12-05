@@ -2,11 +2,11 @@
   background-color: #FFFFFF;
   display: none;
   text-align: left;
-  position: fixed;
+  position: fixed !important;
   top: 240px;
   left: 60px;
   padding: 5px 15px 2px;
-  max-width: 250px;
+  max-width: 350px;
   z-index: 1000 !important;
 }
 
