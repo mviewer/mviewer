@@ -1016,15 +1016,9 @@ var filter = (function() {
     init: () => {
       try {
         _initFilterTool()
-      } catch (error) {
+      } catch (error) { 
         $(document).on("layersLoaded", () => {
-          // wait layers loading
-          try {
-            _initFilterTool();
-          } catch (e) {
-            // wait config loading
-            $(document).on("configurationCompleted", _initFilterTool)
-          }
+          _initFilterTool();      
         });
       }
     },
