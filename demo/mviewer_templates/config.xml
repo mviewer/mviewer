@@ -20,6 +20,7 @@
         <theme name="Templates - Fenêtre droite"  collapsed="false" id="templates" icon="fas fa-caret-right">
             <group name="Texte" id="grp1">
                 <layer id="parc_naturel_regional" name="Template 1.1" type="wms" 
+                visible="true"
                 exclusive="true"
                 url="https://ows.region-bretagne.fr/geoserver/rb/wms" 
                 tiled="false" 
