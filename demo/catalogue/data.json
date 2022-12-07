@@ -360,6 +360,15 @@
       "level":"intermédiaire",
       "url_source":"../demo/theme-designfr/theme-designfr.xml",
       "url_demo":"../?config=demo/theme-designfr/theme-designfr.xml"
+    },
+    {
+      "id":"41", 
+      "title": "Mviewer Templates",
+      "tags": "Templates, mst, fiche d'information, modèle",
+      "description":"Application pour visualiser et télécharger différents modèles de fenêtres d'informations",       
+      "level":"intermédiaire",
+      "url_source":"../demo//mviewer_templates/config.xml",
+      "url_demo":"../?config=demo/mviewer_templates/config.xml"
     }
   ]
 }
