@@ -1013,7 +1013,21 @@ var filter = (function() {
   }
 
   return {
-    init: _initFilterTool,
+    init: () => {
+      try {
+        _initFilterTool()
+      } catch (error) {
+        $(document).on("layersLoaded", () => {
+          // wait layers loading
+          try {
+            _initFilterTool();
+          } catch (e) {
+            // wait config loading
+            $(document).on("configurationCompleted", _initFilterTool)
+          }
+        });
+      }
+    },
     toggle: _toggle,
     filterFeatures: _filterFeatures,
     layersFiltersParams: _layersFiltersParams,
