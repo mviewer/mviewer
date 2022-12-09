@@ -139,13 +139,15 @@ var configuration = (function () {
         //load components
         //each component is rendered in Component constructor;
         //When all is done, trigger componentLoaded event
-        var components = $(conf).find("extension[type='component']");
-        components.toArray().forEach(function(component) {
-            var id = $(component).attr("id");
-            var path = $(component).attr("path");
-            if (path && id) {
-                mviewer.customComponents[id] = new Component(id, path);
-            }
+        $(document).on("ready-for-component", () => {
+            var components = $(conf).find("extension[type='component']");
+            components.toArray().forEach(function (component) {
+                var id = $(component).attr("id");
+                var path = $(component).attr("path");
+                if (path && id) {
+                    mviewer.customComponents[id] = new Component(id, path);
+                }
+            });
         });
 
     };
