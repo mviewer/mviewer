@@ -552,6 +552,7 @@
                                 favicon.attributes.href.value = ico;
                             }
                             configuration.load(_conf);
+                            $(document).trigger("ready-for-component");
                             setTimeout(function () {
                                 $("#loading-page").hide();
                                 $("#main").css("opacity", 1).hide();
