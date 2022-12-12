@@ -487,135 +487,135 @@
         <script type="text/javascript">
         var API = {};
         $(document).ready(function () {
-			if (typeof(mviewer) != 'undefined' && typeof(configuration) != 'undefined' &&  typeof(info) != 'undefined' ) {
-	            "use strict";
-	            if (window.location.search) {
-	                $.extend(API, $.parseJSON('{"' + decodeURIComponent(window.location.search.substring(1)
-	                    .replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}'));
-	            }
-	
-	            // Search for a config param
-	            var configFile = (API.config);
-	            var defaultEnvFile = (API.env) || "apps/.env";
-	
-	            // If no config param, search for a fragment (#)
-	            if (!API.config) {
-	                var fragment = window.location.hash.split('#')[1];
-	                if (fragment) {
-	                    configFile = fragment;
-	                    if (!configFile.startsWith("/")) {
-	                        configFile = "/".concat(configFile)
-	                    }
-	                    configFile = "apps".concat(configFile);
-	                }
-	                if (configFile) {
-	                    if (!configFile.endsWith(".xml")) {
-	                        configFile = configFile.concat(".xml");
-	                    }
-	                }
-	            }
-	
-	            // If no config param nor fragment then use the default config file
-	            if (!configFile) {
-	                configFile = "apps/default.xml";
-	            }
-	
-	            // Save the config file path in the API object
-	            API.config = configFile;
-	
-	            var theme = (API.theme) ? API.theme : null;
-	
-	            $.ajax({
-	                url: configFile + '?_dc=' + (new Date()).getTime(),
-	                dataType: "xml",
-	                success: function (xml) {
-	                    $( document ).on( "layersLoaded", function (e) {
-	                        mviewer.overLayersReady();
-	                        mviewer.showLayersByAttrOrder(mviewer.getLayersAttribute('rank'));
-	                        mviewer.orderLayerByIndex();
-	                    });
-	                    //load conf
-	                    $( document ).on( "configurationCompleted", function (e, eData) {
-	                        // load env var
-	                        configuration.getEnvData(configFile.replace(".xml", ".env"), defaultEnvFile);
-	                        // load config on env var available
-	                        document.addEventListener("environementInfosAvailable", r => {
-	                            // set mviewer en from environment file
-	                            mviewer.env = {...r.detail};
-	                            //get JSON conf from xml;
-	                            var _conf = configuration.parseXML(eData.xml);
-	                            var style = "css/themes/default.css";
-	                            if (!theme && _conf.application.style && _conf.application.style.match("css")) {
-	                                style = _conf.application.style;
-	                            } else if (theme) {
-	                                style = "css/themes/" + theme + ".css";
-	                            }
-	                            $('head').prepend('<link rel="stylesheet" href="' + style + '" type="text/css" />');
-	                            var title = "";
-	                            if (_conf.application.title) {
-	                                title = _conf.application.title;
-	                                $("#loader-subtitle").empty();
-	                                $("#loader-subtitle").append(title);
-	                            }
-	                            if (_conf.application.favicon) {
-	                                let ico = _conf.application.favicon;
-	                                let favicon = document.querySelector('link[rel="icon"]');
-	                                favicon.attributes.href.value = ico;
-	                            }
-	                            configuration.load(_conf);
-	                            setTimeout(function () {
-	                                $("#loading-page").hide();
-	                                $("#main").css("opacity", 1).hide();
-	                                $("#main").fadeIn(1500);
-	                                mviewer.getMap().updateSize();
-	                                mviewer.initToolTip();
-	                            }, 2000);
-	                        });
-	                    $( "#map" ).focus();
-	                    });
-	                    $( document ).on( "applicationExtended", function (e, eData) {
-	                        configuration.complete(eData.xml);
-	                    });
-	                    configuration.getExtensions(xml);
-	                }, // fin success config
-	                error: function (request, status, error) {
-	                    if (request.statusCode().status === 404) {
-	                        $("#error h1").text(`Erreur ${request.statusCode().status} : ${error}`);
-	                        document.location.href="pages/error_404.html?xml=" + configFile;
-	                    } else if (status === 'parsererror') {
-	                        document.location.href="pages/error_400.html?xml=" + configFile;
-	                    }
-	                    $("#error").show();
-	                    $("#loading-page").hide();
-	                }
-	            });
-	
-	            Sortable.create(document.getElementById('layers-container'), {
-	                handle: '.layerdisplay-title',
-	                draggable: '.draggable',
-	                filter: '.toplayer',
-	                onUpdate: function (evt) {
-	                    var actionMove = {
-	                        layerName: $(evt.item).attr("data-layerid"),
-	                        layerRef: "",
-	                        action: ""};
-	                    var itemsList = $(evt.from).find(".list-group-item");
-	                    //New position in the list
-	                    var newPos = evt.newIndex;
-	                    if (newPos < itemsList.length -1) {
-	                        //Get the under layer name
-	                        actionMove.layerRef = $(itemsList[newPos +1]).attr("data-layerid");
-	                        actionMove.action = "up"
-	                    } else {
-	                        //Get the over layer name
-	                        actionMove.layerRef = $(itemsList[newPos -1]).attr("data-layerid");
-	                        actionMove.action = "down";
-	                    }
-	                    mviewer.orderLayer(actionMove);
-	                  }
-	            });
-	            $("#right-panel .close,#bottom-panel .mv-close").click(function () {mviewer.hideLocation()});
-			}
+            if (typeof(mviewer) != 'undefined' && typeof(configuration) != 'undefined' &&  typeof(info) != 'undefined' ) {
+                "use strict";
+                if (window.location.search) {
+                    $.extend(API, $.parseJSON('{"' + decodeURIComponent(window.location.search.substring(1)
+                        .replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}'));
+                }
+
+                // Search for a config param
+                var configFile = (API.config);
+                var defaultEnvFile = (API.env) || "apps/.env";
+
+                // If no config param, search for a fragment (#)
+                if (!API.config) {
+                    var fragment = window.location.hash.split('#')[1];
+                    if (fragment) {
+                        configFile = fragment;
+                        if (!configFile.startsWith("/")) {
+                            configFile = "/".concat(configFile)
+                        }
+                        configFile = "apps".concat(configFile);
+                    }
+                    if (configFile) {
+                        if (!configFile.endsWith(".xml")) {
+                            configFile = configFile.concat(".xml");
+                        }
+                    }
+                }
+
+                // If no config param nor fragment then use the default config file
+                if (!configFile) {
+                    configFile = "apps/default.xml";
+                }
+
+                // Save the config file path in the API object
+                API.config = configFile;
+
+                var theme = (API.theme) ? API.theme : null;
+
+                $.ajax({
+                    url: configFile + '?_dc=' + (new Date()).getTime(),
+                    dataType: "xml",
+                    success: function (xml) {
+                        $( document ).on( "layersLoaded", function (e) {
+                            mviewer.overLayersReady();
+                            mviewer.showLayersByAttrOrder(mviewer.getLayersAttribute('rank'));
+                            mviewer.orderLayerByIndex();
+                        });
+                        //load conf
+                        $( document ).on( "configurationCompleted", function (e, eData) {
+                            // load env var
+                            configuration.getEnvData(configFile.replace(".xml", ".env"), defaultEnvFile);
+                            // load config on env var available
+                            document.addEventListener("environementInfosAvailable", r => {
+                                // set mviewer en from environment file
+                                mviewer.env = {...r.detail};
+                                //get JSON conf from xml;
+                                var _conf = configuration.parseXML(eData.xml);
+                                var style = "css/themes/default.css";
+                                if (!theme && _conf.application.style && _conf.application.style.match("css")) {
+                                    style = _conf.application.style;
+                                } else if (theme) {
+                                    style = "css/themes/" + theme + ".css";
+                                }
+                                $('head').prepend('<link rel="stylesheet" href="' + style + '" type="text/css" />');
+                                var title = "";
+                                if (_conf.application.title) {
+                                    title = _conf.application.title;
+                                    $("#loader-subtitle").empty();
+                                    $("#loader-subtitle").append(title);
+                                }
+                                if (_conf.application.favicon) {
+                                    let ico = _conf.application.favicon;
+                                    let favicon = document.querySelector('link[rel="icon"]');
+                                    favicon.attributes.href.value = ico;
+                                }
+                                configuration.load(_conf);
+                                setTimeout(function () {
+                                    $("#loading-page").hide();
+                                    $("#main").css("opacity", 1).hide();
+                                    $("#main").fadeIn(1500);
+                                    mviewer.getMap().updateSize();
+                                    mviewer.initToolTip();
+                                }, 2000);
+                            });
+                        $( "#map" ).focus();
+                        });
+                        $( document ).on( "applicationExtended", function (e, eData) {
+                            configuration.complete(eData.xml);
+                        });
+                        configuration.getExtensions(xml);
+                    }, // fin success config
+                    error: function (request, status, error) {
+                        if (request.statusCode().status === 404) {
+                            $("#error h1").text(`Erreur ${request.statusCode().status} : ${error}`);
+                            document.location.href="pages/error_404.html?xml=" + configFile;
+                        } else if (status === 'parsererror') {
+                            document.location.href="pages/error_400.html?xml=" + configFile;
+                        }
+                        $("#error").show();
+                        $("#loading-page").hide();
+                    }
+                });
+
+                Sortable.create(document.getElementById('layers-container'), {
+                    handle: '.layerdisplay-title',
+                    draggable: '.draggable',
+                    filter: '.toplayer',
+                    onUpdate: function (evt) {
+                        var actionMove = {
+                            layerName: $(evt.item).attr("data-layerid"),
+                            layerRef: "",
+                            action: ""};
+                        var itemsList = $(evt.from).find(".list-group-item");
+                        //New position in the list
+                        var newPos = evt.newIndex;
+                        if (newPos < itemsList.length -1) {
+                            //Get the under layer name
+                            actionMove.layerRef = $(itemsList[newPos +1]).attr("data-layerid");
+                            actionMove.action = "up"
+                        } else {
+                            //Get the over layer name
+                            actionMove.layerRef = $(itemsList[newPos -1]).attr("data-layerid");
+                            actionMove.action = "down";
+                        }
+                        mviewer.orderLayer(actionMove);
+                      }
+                });
+                $("#right-panel .close,#bottom-panel .mv-close").click(function () {mviewer.hideLocation()});
+            }
         });
         </script>
         <script type="text/javascript" src="lib/simple-slidebar/slidebar_menu.js"></script>
