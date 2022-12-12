@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
 <application
-    title="Exemple de custom layer"
+    title="Exemple TMS avec les flux IGN"
     logo=""
     help=""
     style="css/themes/default.css"
