@@ -1,0 +1,5 @@
+{{#features}} 
+    <li class="item" id="{{feature_ol_uid}}"> 
+        <h2>Catégorie : {{symbo}}</h2>
+    </li>
+{{/features}}

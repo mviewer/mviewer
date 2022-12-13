@@ -61,12 +61,14 @@ Elément enfant de ``<baselayers>`` permettant le paramétrage de chaque fond de
 		title=""
 		maxscale=""
 		thumbgallery=""
-		url="" layers=""
+		url=""
+		layers=""
 		format=""
 		visible=""
 		fromcapacity=""
 		attribution=""
 		style=""
+		styleurl=""
 		matrixset=""
 		maxzoom=""
 		opacity=""
@@ -74,17 +76,18 @@ Elément enfant de ``<baselayers>`` permettant le paramétrage de chaque fond de
 
 **Paramètres principaux**
 
-* ``type``: paramètre obligatoire de type texte qui définit le type de la couche. Les options sont OSM, WMTS, WMS, fake. Fake permet de disposer d'un fond vierge. C'est alors le motif ou la couleur du fond de l'application qui s'affiche.
+* ``type``: paramètre obligatoire de type texte qui définit le type de la couche. Les options sont OSM, WMTS, WMS, vector-tms et fake. Fake permet de disposer d'un fond vierge. C'est alors le motif ou la couleur du fond de l'application qui s'affiche.
 * ``id``: paramètre obligatoire de type texte pour attribuer un identifiant unique et interne à la couche
 * ``label``: paramètre obligatoire de type texte pour définir le nom du fond de plan
 * ``title``: paramètre obligatoire de type texte pour définir le sous-titre du fond de plan. Utilisé avec le mode "gallery"
 * ``thumbgallery``: paramètre obligatoire de type url permettant de sélecionner l'imagette à associer au fond de plan.
-* ``url``: paramètre obligatoire de type url définissant l'URL du service web OSM, WMTS ou WMS.
+* ``url``: paramètre obligatoire de type url définissant l'URL du service web OSM, WMTS, WMS ou vector-tms.
+* ``styleurl``: paramètre optionnel de type url définissant le fichier de style au format JSON à utiliser. (Obligatoire pour les couches de type vector-tms)
 * ``layers``: paramètre optionnel de type texte définissant l'identifiant technique de la couche. (Obligatoire pour les couches de type WMS et WMTS)
 * ``format``: paramètre optionnel de type texte définissant le Format d'image retourné par le serveur. (Obligatoire pour les couches de type WMS et WMTS)
 * ``visible`` :guilabel:`studio` : paramètre obligatoire de type booléen (true/false) précisant si la couche est visible au démarrage. Il s'agit d'un paramètre exclusif. Une seule couche de fond peut être affichée sur la carte. Attention un baseselayer et un seul doit disposer du paramètre visible="true".
 * ``attribution``: paramètre obligatoire alimentant le contrôle attributions de la carte ( |CreditsIcon| ).
-* ``style`` : paramètre optionnel précisant le style à associer à la couche. Paramètre obligatoire pour les couches de type WMTS
+* ``style`` : paramètre optionnel précisant le style à associer à la couche. (Obligatoire pour les couches de type WMTS et vector-tms. Pour le type vector-tms, le style correspond à la valeur indiquée en tant que première clé de la propriété "sources" du fichier de style au format JSON).
 
 **Paramètres secondaires**
 
@@ -92,7 +95,7 @@ Elément enfant de ``<baselayers>`` permettant le paramétrage de chaque fond de
 * ``maxscale``: paramètre optionnel définissant l'échelle max du fond de plan
 * ``fromcapacity``: paramètre optionnel de type booléen (true/false)spécifique aux fonds de plan WMTS. Permet la construction de la couche à  partir des capacités du service WMTS.
 * ``matrixset`` : paramètre optionnel précisant le style à associer à la couche. Paramètre obligatoire pour les couches de type WMTS si le paramètre **fromcapacity** n'est pas activé
-* ``maxzoom``: paramètre optionnel de type numérique définissant le zoom maximum pour la couche.
+* ``maxzoom``: paramètre optionnel de type numérique définissant le zoom maximum pour la couche (pas géré pour le type vector-tms).
 * ``opacity``: Opacité du fond de carte . Valeur numérique de 0 à 1. Défaut = 1.
 
 

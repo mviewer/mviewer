@@ -171,7 +171,7 @@ var info = (function () {
             var vectorLayers = {};
             var format = new ol.format.GeoJSON();
             var f_idx=0;
-            _map.forEachFeatureAtPixel(pixel, function(feature, layer) {
+            _map.forEachFeatureAtPixel(pixel, function (feature, layer) {
                 var l = layer.get('mviewerid');
                 if (l && l != 'featureoverlay' && l != 'selectoverlay' && l != 'subselectoverlay' && l != 'elasticsearch' ) {
                     var queryable = _overLayers[l].queryable;
@@ -833,7 +833,7 @@ var info = (function () {
             if (activeAttributeValue) {
                 feature.set(activeAttributeValue, true);
             }
-            var geometryName = feature.getGeometryName();
+            var geometryName = feature.getGeometryName ? feature.getGeometryName() : "";
             var excludedPropNames = ['fields_kv', 'serialized', 'feature_ol_uid', 'mviewerid', geometryName];
             var extractFeaturePropertiesFn = function (properties) {
                 return Object.keys(properties).reduce((filteredProps, propertyName) => {
@@ -852,14 +852,17 @@ var info = (function () {
                     return {key, value};
                 })
             }
-            feature.setProperties({'fields_kv': fields_kv});
-            // add a serialized version of the object so it can easily be passed through HTML GET request
-            // you can deserialize it with `JSON.parse(decodeURIComponent(feature.getProperties().serialized()))`
-            // when data is the serialized data
-            var serialized = function () {
-                return encodeURIComponent(JSON.stringify(extractFeaturePropertiesFn(feature.getProperties())));
+            // except  vector tile feature
+            if (feature.setProperties) {
+                feature.setProperties({ 'fields_kv': fields_kv });
+                // add a serialized version of the object so it can easily be passed through HTML GET request
+                // you can deserialize it with `JSON.parse(decodeURIComponent(feature.getProperties().serialized()))`
+                // when data is the serialized data
+                var serialized = function () {
+                    return encodeURIComponent(JSON.stringify(extractFeaturePropertiesFn(feature.getProperties())));
+                }
+                feature.setProperties({'serialized': serialized})
             }
-            feature.setProperties({'serialized': serialized})
             // attach ol_uid to identify feature in DOM (not all features have a feature id as property)
             obj.features.push({...feature.getProperties(), feature_ol_uid: feature.ol_uid});
         });

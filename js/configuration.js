@@ -645,6 +645,8 @@ var configuration = (function () {
                         oLayer.draggable = false;
                     }
                     oLayer.opacity = parseFloat(layer.opacity || "1");
+                    oLayer.maxzoom = parseInt(layer.maxzoom)
+                    oLayer.minzoom = parseInt(layer.minzoom)
                     oLayer.tooltip =  (layer.tooltip === "true") ? true : false;
                     oLayer.tooltipenabled =  (layer.tooltipenabled === "true") ? true : false;
                     oLayer.tooltipcontent = layer.tooltipcontent ? layer.tooltipcontent : '';
@@ -710,8 +712,8 @@ var configuration = (function () {
                     oLayer.vectorlegend =  (layer.vectorlegend === "true") ? true : false;
                     oLayer.nohighlight =  (layer.nohighlight === "true") ? true : false;
                     oLayer.infohighlight =  (layer.infohighlight === "false") ? false : true;
-                    oLayer.showintoc =  (layer.showintoc && layer.showintoc === "false") ? false : true;
-                    oLayer.legendurl=(layer.legendurl)? layer.legendurl : mviewer.getLegendUrl(oLayer);
+                    oLayer.showintoc = (layer.showintoc && layer.showintoc === "false") ? false : true;
+                    oLayer.legendurl = (layer.legendurl) ? layer.legendurl : mviewer.getLegendUrl(oLayer);
                     if (oLayer.legendurl === "false") {oLayer.legendurl = "";}
                     oLayer.useproxy = (layer.useproxy === "true") ? true : false;
                     if (layer.fields) {
@@ -776,7 +778,40 @@ var configuration = (function () {
                     }
 
                     themeLayers[oLayer.id] = oLayer;
-                    var l= null;
+                      var l = null;
+                      if (oLayer.type === "vector-tms") {
+                        let defaultZoom = {};
+                        if (oLayer.maxzoom) {
+                            defaultZoom.maxZoom = oLayer.maxzoom;
+                        }
+                        if (oLayer.minzoom) {
+                            defaultZoom.minZoom = oLayer.minzoom
+                        }  
+                        let vecLayer = new ol.layer.VectorTile({
+                          opacity: oLayer.opacity,
+                          title: layer.name,
+                          source: new ol.source.VectorTile({
+                            url: oLayer.url,
+                            format: new ol.format.MVT(),
+                            ...defaultZoom
+                          }),
+                        declutter: false
+                      });
+                      l = vecLayer;
+                      
+                        if (oLayer.styleurl) {
+                          fetch(oLayer.styleurl).then(function(response) {
+                            response.json().then(function (glStyle) {
+                              let filter = layer.filterstyle ? layer.filterstyle.split(",") : [];
+                              let newStyles = {
+                                ...glStyle, layers: glStyle.layers.filter(lyr => !filter.includes(lyr["source-layer"]))
+                              };
+                              olms.applyStyle(vecLayer, newStyles, layerConfig.style);
+                            });
+                          }); 
+                      }
+                      mviewer.processLayer(oLayer, vecLayer);
+                    }
                     if (oLayer.type === 'wms') {
                         _processWmsLayer(oLayer);
                     } //end wms
