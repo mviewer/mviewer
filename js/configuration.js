@@ -780,15 +780,20 @@ var configuration = (function () {
                     themeLayers[oLayer.id] = oLayer;
                       var l = null;
                       if (oLayer.type === "vector-tms") {
-                      // https://viglino.github.io/ol-ext/examples/layer/map.layer.gppvtile.html?lon=2.346439&lat=48.854790&z=15
+                        let defaultZoom = {};
+                        if (oLayer.maxzoom) {
+                            defaultZoom.maxZoom = oLayer.maxzoom;
+                        }
+                        if (oLayer.minzoom) {
+                            defaultZoom.minZoom = oLayer.minzoom
+                        }  
                         let vecLayer = new ol.layer.VectorTile({
                           opacity: oLayer.opacity,
                           title: layer.name,
                           source: new ol.source.VectorTile({
                             url: oLayer.url,
                             format: new ol.format.MVT(),
-                            maxZoom: oLayer.maxzoom,
-                            minZoom: oLayer.minZoom
+                            ...defaultZoom
                           }),
                         declutter: false
                       });
