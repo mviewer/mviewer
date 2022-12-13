@@ -405,7 +405,7 @@ mviewer = (function () {
             legendUrl = layer.legendurl;
         } else if (layer.legendurl && layer.styles && (layer.styles.split(",").length === 1)) {
             legendUrl = layer.legendurl;
-        } else {
+        } else if(!layer.type === "vector-tms") {
             legendUrl = getLegendGraphicUrl(layer.url, _getLegendParams(layer));
         }
         if (layer.dynamiclegend) {
@@ -1148,6 +1148,31 @@ mviewer = (function () {
             case "fake":
                 l = new ol.layer.Base({});
                 _backgroundLayers.push(l);
+                l.set('name', baselayer.label);
+                l.set('blid', baselayer.id);
+                break;
+            case "vector-tms":
+                let vecLayer = new ol.layer.VectorTile({
+                    opacity: baselayer.opacity,
+                    title: baselayer.title,
+                    source: new ol.source.VectorTile({
+                      url: baselayer.url,
+                      format: new ol.format.MVT(),
+                      maxZoom: baselayer.maxzoom,
+                      minZoom: baselayer.minZoom
+                    }),
+                  declutter: false
+                });
+                l = vecLayer;
+                _backgroundLayers.push(l);
+                _map.addLayer(l);
+                if (baselayer.styleurl) {
+                    fetch(baselayer.styleurl).then(function(response) {
+                      response.json().then(function (glStyle) {
+                        olms.applyStyle(vecLayer, glStyle, baselayer.style);
+                      });
+                    });
+                }
                 l.set('name', baselayer.label);
                 l.set('blid', baselayer.id);
                 break;
@@ -2309,7 +2334,7 @@ mviewer = (function () {
          */
         highlightSubFeature: function (feature) {
             _sourceSubSelectOverlay.clear();
-            if (feature) {
+            if (feature && typeof getGeometryName === "function") {
                 _sourceSubSelectOverlay.addFeature(feature);
             }
         },

@@ -45,6 +45,44 @@
 				attribution="Région Bretagne"
 				metadata="https://kartenn.region-bretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/99e78163-ce9a-4eee-9ea0-36afc2a53d25"
                 metadata-csw="https://kartenn.region-bretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25" />
+            <layer
+                id="pciign"
+                name="PCI"
+                visible="true"
+                type="vector-tms"
+                opacity="0.9"
+                queryable="true"
+
+                filterstyle="borne_limite_propriete"
+                maxzoom="15"
+                styleurl="https://wxs.ign.fr/static/vectorTiles/styles/PCI/pci.json"
+
+                infopanel="right-panel"
+                legendurl="demo/lycee.png"
+                metadata="https://geoservices.ign.fr/services-web-essentiels"
+                attribution="Source: IGN"
+                style="pci"
+                url="https://wxs.ign.fr/parcellaire/geoportail/tms/1.0.0/PCI/{z}/{x}/{y}.pbf">
+            </layer>
+            <layer
+                id="bdtopo"
+                name="BD TOP"
+                visible="true"
+                type="vector-tms"
+                opacity="0.9"
+                queryable="true"
+
+                tilesize="1"
+                filterstyle=""
+                styleurl="https://wxs.ign.fr/static/vectorTiles/styles/BDTOPO/bati.json"
+
+                infopanel="right-panel"
+                legendurl="demo/lycee.png"
+                metadata="https://geoservices.ign.fr/services-web-essentiels"
+                attribution="Source: IGN"
+                style="bdtopo"
+                url="https://wxs.ign.fr/topographie/geoportail/tms/1.0.0/BDTOPO/{z}/{x}/{y}.pbf">
+            </layer>
 		</theme>
     </themes>
 </config>

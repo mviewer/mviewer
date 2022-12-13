@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+<application
+    title="Exemple TMS avec les flux IGN"
+    logo=""
+    help=""
+    style="css/themes/default.css"
+    exportpng="false"
+    showhelp="false"
+    coordinates="false"
+    measuretools="false"
+    togglealllayersfromtheme="false">
+</application>
+<mapoptions maxzoom="18" projection="EPSG:3857" center="-324758.482762259,6050184.623044413" zoom="15" />
+<olscompletion type="ban" url="https://api-adresse.data.gouv.fr/search/" attribution="" />
+<searchparameters bbox="false" localities="true" features="false" static="false"/>
+<baselayers style="default">
+    <baselayer visible="false" id="positron" thumbgallery="img/basemap/positron.png" title="CartoDb" label="Positron" type="OSM" url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution="Map tiles by  &lt;a href=&quot;https://cartodb.com/attributions&quot;&gt;CartoDb&lt;/a&gt;, under  &lt;a href=&quot;https://creativecommons.org/licenses/by/3.0/&quot;&gt;CC BY 3.0 &lt;/a&gt;"  ></baselayer>
+    <baselayer visible="true" id="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg" title="Esri world imagery" label="Esri world imagery" type="OSM" url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"  ></baselayer>
+    <baselayer visible="true" id="plan_ign" thumbgallery="img/basemap/plan_ign.png" title="Plan IGN" label="TMS Plan IGN" type="vector-tms" url="https://wxs.ign.fr/parcellaire/geoportail/tms/1.0.0/PCI/{z}/{x}/{y}.pbf" styleurl="https://wxs.ign.fr/static/vectorTiles/styles/PLAN.IGN/essentiels/standard.json" style="plan_ign" attribution="IGN"  ></baselayer>
+</baselayers>
+<themes mini="false">
+    <theme name="Vecteur TMS"  collapsed="false" id="vtms" icon="far fa-file-alt">
+        <layer
+            id="adminExpress"
+            name="Admin Express"
+            visible="false"
+            type="vector-tms"
+            opacity="0.9"
+            queryable="true"
+            filterstyle=""
+            maxzoom="15"
+            styleurl="https://wxs.ign.fr/static/vectorTiles/styles/ADMIN_EXPRESS/adminexpress.json"
+            infopanel="right-panel"
+            legendurl=""
+            metadata="https://geoservices.ign.fr/services-web-essentiels"
+            attribution="Source: IGN"
+            style="adminexpress"
+            url="https://wxs.ign.fr/essentiels/geoportail/tms/1.0.0/ADMIN_EXPRESS/{z}/{x}/{y}.pbf">
+            <template url="demo/ignvectortms.mst"></template>
+        </layer>
+        <layer
+            id="pciign"
+            name="PCI"
+            visible="true"
+            type="vector-tms"
+            opacity="0.9"
+            queryable="true"
+            filterstyle="borne_limite_propriete"
+            maxzoom="15"
+            styleurl="https://wxs.ign.fr/static/vectorTiles/styles/PCI/pci.json"
+            infopanel="right-panel"
+            legendurl=""
+            metadata="https://geoservices.ign.fr/services-web-essentiels"
+            attribution="Source: IGN"
+            style="pci"
+            url="https://wxs.ign.fr/parcellaire/geoportail/tms/1.0.0/PCI/{z}/{x}/{y}.pbf">
+        </layer>
+    </theme>
+</themes>
+</config>
