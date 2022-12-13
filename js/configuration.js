@@ -778,110 +778,7 @@ var configuration = (function () {
                     themeLayers[oLayer.id] = oLayer;
                     var l= null;
                     if (oLayer.type === 'wms') {
-                        var wms_params = {
-                            'LAYERS': layer.id,
-                            'STYLES': (themeLayers[oLayer.id].style)? themeLayers[oLayer.id].style : '',
-                            'FORMAT': 'image/png',
-                            'TRANSPARENT': true
-                        };
-                        var source;
-                        if (oLayer.filter) {
-                            wms_params['CQL_FILTER'] = oLayer.filter;
-                        }
-                        if (oLayer.attributefilter && oLayer.attributefilterenabled &&
-                            oLayer.attributevalues.length > 1) {
-                            wms_params['CQL_FILTER'] = mviewer.makeCQL_Filter(oLayer.attributefield, oLayer.attributeoperator, oLayer.attributevalues[0], oLayer.wildcardpattern);
-                        }
-                        if (oLayer.sld) {
-                            wms_params['SLD'] = oLayer.sld;
-                        }
-
-                        // Use owsoptions to overload default Getmap params
-                        Object.assign(wms_params, getParamsFromOwsOptionsString(layer.owsoptions));
-
-                        function customWmsImageLoader(image, src) {
-                            if (oLayer.useproxy) {
-                                src = _proxy + encodeURIComponent(src);
-                            }
-
-                            // S'il existe des idenfiants d'accès pour ce layer, on les injecte
-                            var _ba_ident = sessionStorage.getItem(layer.url);
-                            if (_ba_ident && _ba_ident != '') {
-                                var xhr = new XMLHttpRequest();
-                                xhr.responseType = 'blob';
-                                xhr.open('GET', src);
-
-                                xhr.setRequestHeader("Authorization","Basic " + window.btoa( _ba_ident));
-                                xhr.addEventListener('loadend', function (evt) {
-                                    var data = this.response;
-                                    if (this.status == '401') {
-                                        image.getImage().src = _blankSrc;
-                                    } else if (data && data !== undefined) {
-                                        image.getImage().src = URL.createObjectURL(data);
-                                    }
-                                });
-                                xhr.onload = function() {
-                                    image.getImage().src = src;
-                                };
-                                xhr.send();
-                            } else {
-                                image.getImage().src = src;
-                            }
-                        }
-
-                        switch (oLayer.tiled) {
-                            case true:
-                                wms_params['TILED'] = true;
-                                source = new ol.source.TileWMS({
-                                    url: layer.url,
-                                    crossOrigin: _crossorigin,
-                                    tileLoadFunction: customWmsImageLoader,
-                                    params: wms_params
-                                });
-
-                                l = new ol.layer.Tile({
-                                    source: source
-                                });
-                                break;
-
-                            case false:
-                                source = new ol.source.ImageWMS({
-                                    url: layer.url,
-                                    crossOrigin: _crossorigin,
-                                    imageLoadFunction: customWmsImageLoader,
-                                    params: wms_params
-                                });
-
-                                l = new ol.layer.Image({
-                                    source:source
-                                });
-                                break;
-                        }
-
-                        source.set('layerid', oLayer.layerid);
-                        source.on('imageloadstart', function(event) {
-                            $("#loading-" + event.target.get('layerid')).show();
-                        });
-
-                        source.on('imageloadend', function(event) {
-                            $("#loading-" + event.target.get('layerid')).hide();
-                        });
-
-                        source.on('imageloaderror', function(event) {
-                            $("#loading-" + event.target.get('layerid')).hide();
-                        });
-                        source.on('tileloadstart', function(event) {
-                            $("#loading-" + event.target.get('layerid')).show();
-                        });
-
-                        source.on('tileloadend', function(event) {
-                            $("#loading-" + event.target.get('layerid')).hide();
-                        });
-
-                        source.on('tileloaderror', function(event) {
-                            $("#loading-" + event.target.get('layerid')).hide();
-                        });
-                       mviewer.processLayer(oLayer, l);
+                        _processWmsLayer(oLayer);
                     } //end wms
                     if (oLayer.type === 'geojson') {
                         l = new ol.layer.Vector({
@@ -1026,11 +923,119 @@ var configuration = (function () {
         }
     };
 
+    var _processWmsLayer = function(oLayer){
+        var wms_params = {
+            'LAYERS': oLayer.layername,
+            'STYLES': (oLayer.style)? oLayer.style : '',
+            'FORMAT': 'image/png',
+            'TRANSPARENT': true
+        };
+        var source;
+        if (oLayer.filter) {
+            wms_params['CQL_FILTER'] = oLayer.filter;
+        }
+        if (oLayer.attributefilter && oLayer.attributefilterenabled &&
+            oLayer.attributevalues.length > 1) {
+            wms_params['CQL_FILTER'] = mviewer.makeCQL_Filter(oLayer.attributefield, oLayer.attributeoperator, oLayer.attributevalues[0], oLayer.wildcardpattern);
+        }
+        if (oLayer.sld) {
+            wms_params['SLD'] = oLayer.sld;
+        }
+
+        // Use owsoptions to overload default Getmap params
+        Object.assign(wms_params, getParamsFromOwsOptionsString(oLayer.owsoptions));
+
+        function customWmsImageLoader(image, src) {
+            if (oLayer.useproxy) {
+                src = _proxy + encodeURIComponent(src);
+            }
+
+            // S'il existe des idenfiants d'accès pour ce layer, on les injecte
+            var _ba_ident = sessionStorage.getItem(oLayer.url);
+            if (_ba_ident && _ba_ident != '') {
+                var xhr = new XMLHttpRequest();
+                xhr.responseType = 'blob';
+                xhr.open('GET', src);
+
+                xhr.setRequestHeader("Authorization","Basic " + window.btoa( _ba_ident));
+                xhr.addEventListener('loadend', function (evt) {
+                    var data = this.response;
+                    if (this.status == '401') {
+                        image.getImage().src = _blankSrc;
+                    } else if (data && data !== undefined) {
+                        image.getImage().src = URL.createObjectURL(data);
+                    }
+                });
+                xhr.onload = function() {
+                    image.getImage().src = src;
+                };
+                xhr.send();
+            } else {
+                image.getImage().src = src;
+            }
+        }
+
+        switch (oLayer.tiled) {
+            case true:
+                wms_params['TILED'] = true;
+                source = new ol.source.TileWMS({
+                    url: oLayer.url,
+                    crossOrigin: _crossorigin,
+                    tileLoadFunction: customWmsImageLoader,
+                    params: wms_params
+                });
+
+                l = new ol.layer.Tile({
+                    source: source
+                });
+                break;
+
+            case false:
+                source = new ol.source.ImageWMS({
+                    url: oLayer.url,
+                    crossOrigin: _crossorigin,
+                    imageLoadFunction: customWmsImageLoader,
+                    params: wms_params
+                });
+
+                l = new ol.layer.Image({
+                    source:source
+                });
+                break;
+        }
+
+        source.set('layerid', oLayer.layerid);
+        source.on('imageloadstart', function(event) {
+            $("#loading-" + event.target.get('layerid')).show();
+        });
+
+        source.on('imageloadend', function(event) {
+            $("#loading-" + event.target.get('layerid')).hide();
+        });
+
+        source.on('imageloaderror', function(event) {
+            $("#loading-" + event.target.get('layerid')).hide();
+        });
+        source.on('tileloadstart', function(event) {
+            $("#loading-" + event.target.get('layerid')).show();
+        });
+
+        source.on('tileloadend', function(event) {
+            $("#loading-" + event.target.get('layerid')).hide();
+        });
+
+        source.on('tileloaderror', function(event) {
+            $("#loading-" + event.target.get('layerid')).hide();
+        });
+       mviewer.processLayer(oLayer, l);
+    }
+
     return {
         parseXML: _parseXML,
         getExtensions: _getExtensions,
         load: _load,
         complete: _complete,
+        processWmsLayer:_processWmsLayer,
         getThemes: function () { return _themes; },
         getDefaultBaseLayer: function () { return _defaultBaseLayer; },
         getProxy: function () { return _proxy; },

@@ -304,6 +304,89 @@
             </div>
           </div>
         </div>
+         <!-- ADD LAYER PANEL -->
+         <div id="addLayerpanel" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" role="document">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" i18n="addlayers.modal.title">Ajouter des données</h4>
+                    </div>
+                    <div class="modal-body" >
+                        <ul class="nav nav-tabs" role="tablist">    
+                            <li role="presentation" class="active">
+                                <a href="#add_ogc" aria-controls="profile" role="tab" data-toggle="tab" i18n="addlayers.modal.ogc">OGC</a></li>
+                            <li role="presentation" >
+                                <a href="#add_csw" aria-controls="messages" role="tab" data-toggle="tab" i18n="addlayers.modal.csw">CSW</a></li>
+                        </ul>
+                         <!-- Tab panes -->
+                        <div class="tab-content" id="addlayers_tabs">
+                            <div role="tabpanel" class="tab-pane active" id="add_ogc">
+                                <h4 i18n="addlayers.modal.ogc">Ajouter des données issue d'un service OGC</h4>
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col">
+                                            Choisissez un serveur : 
+                                            <select id="addLayers_service_url_select" class="form-control form-control-sm addLayers_service_url_select">
+                                                <option value=""></option>
+                                            </select><br>
+                                            ...ou saisissez l'url du service : 
+                                            <input type="text" id="addLayers_service_url"
+                                            value=""
+                                            />
+                                            <button onclick="mviewer.tools.addlayers.connect();"
+                                                type="button">
+                                                Connexion&nbsp;<span class="glyphicon glyphicon-chevron-right"></span>
+                                            </button>      
+                                        </div>
+                                    </div>
+                                </div>  
+                                
+                            </div>  
+                            <div role="tabpanel" class="tab-pane" id="add_csw">
+                                <h4 i18n="addlayers.modal.csw">Ajouter des données issue d'un service CSW</h4>
+                                Choisissez un serveur : 
+                                            <select id="addLayers_service_url_csw_select" class="form-control form-control-sm addLayers_service_url_select">
+                                                <option value=""></option>
+                                            </select><br>
+                                ...ou saisissez l'url du service : 
+                                <input type="text" id="addLayers_service_url_csw" class="form-control"
+                                    value=""
+                                /><br>
+                                Filter:<input type="text" id="addLayers_service_filter_csw" class="form-control csw_search" 
+                                placeholder="Rechercher...">
+                               
+                               
+                                <button onclick="mviewer.tools.addlayers.connectCsw();"
+                                    type="button">
+                                    Connexion&nbsp;<span class="glyphicon glyphicon-chevron-right"></span>
+                                </button> 
+                            </div>  
+                        </div>
+                        <div class="container-fluid">
+                            <div class="row" id="addlayers_results_loading" style="display:none">
+                                <div class="col-md-12 col-sm-12 col-xs-12 text-center center-block">
+                                        <div class="loading_container">
+                                            <div class="single4"></div>
+                                             Chargement...
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12" id="addlayers_results">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12 text-center center-block" id="addlayers_results_pager">
+                                </div>
+                            </div>
+                        </div>
+                       
+                        
+                    </div>
+                </div>
+            </div>
+          </div>
         <!-- SHARE PANEL -->
         <div id="sharepanel" class="modal fade" tabindex="-1" role="dialog" >
             <div class="modal-dialog modal-sm">
@@ -463,6 +546,7 @@
         <script type="text/javascript" src="js/configuration.js"></script>
         <script type="text/javascript" src="js/zoom.js"></script>
         <script type="text/javascript" src="js/measure.js"></script>
+        <script type="text/javascript" src="js/addlayers.js"></script>
         <script type="text/javascript" src="js/info.js"></script>
         <script type="text/javascript" src="js/search.js"></script>
         <script src="lib/papaparse-4.6.3/papaparse.min.js"></script>

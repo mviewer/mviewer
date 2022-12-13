@@ -1665,6 +1665,61 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
  }
 
 /*******************************
+------------- ADD LAYER PANEL
+********************************/
+
+.loading_container{
+  z-index: 10000;
+  height: 50px;
+}
+#addlayers_tabs{
+  margin-bottom: 5px;
+}
+.layerGroup{
+  font-weight: bold;
+}
+#addlayers_results{
+  max-height: 50vh;
+  overflow: auto;
+  padding-right: 30px;
+}
+#addLayers_service_url{
+  width: 50%;
+  display: inline-block;
+}
+.csw_search{
+  width: 50%;
+  display: inline-block;
+}
+.addLayers_service_url_select {
+  width: 50%;
+  display: inline-block;
+  margin-bottom: 4px;
+  height: 28px;
+}
+
+#addLayers_service_url_csw{
+  width: 50%;
+  display: inline-block;
+}
+.thumb_csw{
+  padding: 5px;
+  background-color: white;
+  border: 1px solid #bbb;
+  max-width: 180px;
+}
+.layer-result{
+  font-weight: bold;
+}
+.layer-result-row{
+  border-radius: 2px;
+  margin-top: 2px;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
+}
+/*******************************
 ------------- HELP PANEL
 ********************************/
 #help .modal-header{
