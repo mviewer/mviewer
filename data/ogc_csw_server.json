@@ -1,0 +1,15 @@
+{
+"ogc":[
+    {"label":"Geoserver geo2France","url":"https://www.geo2france.fr/geoserver/hdf_common/ows"},
+    {"label":"QGIS Server hauts de france","url":"https://qgisserver.hautsdefrance.fr/cgi-bin/qgis_mapserv.fcgi?MAP=/var/www/data/qgis/applications/sraddet_2020_08.qgz"},
+    {"label":"Mapserver GeoIDE","url":"https://ogc.geo-ide.developpement-durable.gouv.fr/wxs?map=/opt/data/carto/geoide-catalogue/1.4/org_38148/cac35f5b-fa24-442f-8297-9e9495f06f36.internet.map"},
+    {"label":"Geoportail IGN","url":"https://wxs.ign.fr/ortho/geoportail/r/wms"}
+],
+"csw":[ 
+    {"label":"Catalogue PIGMA","url":"https://www.pigma.org/geonetwork/srv/eng/csw","defaultfilter":"protocol='OGC:WMS-1.1.1-http-get-map' OR protocol='OGC:WMS'"},
+    {"label":"Catalogue GrandLyon","url":"https://download.data.grandlyon.com/catalogue/srv/eng/csw","defaultfilter":"protocol='OGC:WMS-1.1.1-http-get-map' OR protocol='OGC:WMS'"},
+    {"label":"Catalogue Geo2France","url":"https://www.geo2france.fr/geonetwork/srv/fre/csw","defaultfilter":"linkProtocol='OGC:WMS'"},
+    {"label":"Catalogue GeoBretagne","url":"https://geobretagne.fr/geonetwork/srv/fre/csw","defaultfilter":"protocol='OGC:WMS-1.1.1-http-get-map' OR protocol='OGC:WMS'"}
+    
+]
+}

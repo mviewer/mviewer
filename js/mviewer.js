@@ -653,6 +653,13 @@ mviewer = (function () {
             mviewer.tools.measure.init();
         }
 
+        //AddLayers tool
+        if (appconfig.addlayerstools === "true") {
+            //Load measure module
+            mviewer.tools.addlayers = addlayers;
+            mviewer.tools.addlayers.init();
+        }
+
         //Activate GetFeatureInfo tool
         mviewer.setTool('info');
         
@@ -1335,7 +1342,12 @@ mviewer = (function () {
                 //layerIdOrName is layername
                 l = _getLayerByName(layerIdOrName);
                 richLayer.name = layerIdOrName;
-                richLayer.layerid = l.get("mviewerid");
+                if (l) {
+                    richLayer.layerid = l.get("mviewerid");
+                } else {
+                    richLayer.layerid = layerIdOrName;
+                }
+                
             }
             layersWithOptions[richLayer.layerid] = richLayer;
 
@@ -2419,7 +2431,10 @@ mviewer = (function () {
             if(sessionStorage.getItem(_service_url))
                 $("#user").val(sessionStorage.getItem(_service_url).split(':')[0]);
         },
-
+        /**
+         * Public Method: add Layer in legend
+         *
+         */
         addLayer: function (layer) {
             if (!layer || !layer.showintoc) {
                 return;
