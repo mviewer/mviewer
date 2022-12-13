@@ -797,7 +797,7 @@ var configuration = (function () {
                         if (oLayer.styleurl) {
                           fetch(oLayer.styleurl).then(function(response) {
                             response.json().then(function (glStyle) {
-                              let filter = layer.filterstyle.split(",");
+                              let filter = layer.filterstyle ? layer.filterstyle.split(",") : [];
                               let newStyles = {
                                 ...glStyle, layers: glStyle.layers.filter(lyr => !filter.includes(lyr["source-layer"]))
                               };
