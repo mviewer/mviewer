@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <application
+        title="Test multiple customlayers"
+        titlehelp="À propos des cartes thématiques"
+        showhelp="false"
+        exportpng="false"
+        measuretools="false"
+        togglealllayersfromtheme="false"
+        /> 
+
+    <mapoptions maxzoom="22" minzoom="11" projection="EPSG:3857" center="-185600.24433942206,6125077.984905125" zoom="14" />
+
+    <baselayers style="default"><!-- style="default"||gallery" -->
+        <baselayer visible="true" id="pvcisimple" thumbgallery="apps/img/basemap/pvcisimple.jpg" title="Rennes Metropole" label="Plan de ville" type="WMTS" url="https://public.sig.rennesmetropole.fr/geowebcache/service/wmts?service/wmts?" layers="ref_fonds:pvci_simple_gris" format="image/png" style="_null" matrixset="EPSG:3857" fromcapacity="false" attribution="&lt;a href=&quot;https://public.sig.rennesmetropole.fr/geonetwork/srv/fre/catalog.search#/metadata/2ff4b02a-7d1e-4e9c-a0c2-dddbb11a3168&quot; target=&quot;_blank&quot; &gt;Rennes Métropole&lt;/a&gt;" maxzoom="22"  maxscale="1000" ></baselayer>
+    </baselayers>
+
+
+    <themes mini="true" legendmini="false">
+        <theme id="theme-20180625145740" name="Activités d'été" collapsed="true" icon="fas fa-map-marker-alt">
+            <layer
+                id="ete_monuments"
+                name="Monuments phare"
+                type="customlayer"
+                url="apps/customlayer/ete-monuments.js"
+                visible="true"
+                tooltip="false"
+                tooltipenabled="false"
+                tooltipcontent=""
+                metadata="undefined"
+                metadata-csw="https://public.sig.rennesmetropole.fr/geonetwork/srv/fre/catalog.search#/metadata/2ff4b02a-7d1e-4e9c-a0c2-dddbb11a3168"
+                queryable="true"
+                featurecount="6"
+                tabcolor='#d9762b'
+                infopanel="right-panel">
+            </layer>
+            <layer
+                id="ete_parcs"
+                name="Parcs"
+                type="customlayer"
+                url="apps/customlayer/ete-parcs.js"
+                visible="true"
+                tooltip="false"
+                tooltipenabled="false"
+                tooltipcontent=""
+                metadata="undefined"
+                metadata-csw="https://public.sig.rennesmetropole.fr/geonetwork/srv/fre/catalog.search#/metadata/2ff4b02a-7d1e-4e9c-a0c2-dddbb11a3168"
+                queryable="true"
+                featurecount="6"
+                tabcolor='#cc8db2'
+                infopanel="right-panel">
+            </layer>
+            <layer
+                id="ete_equipements"
+                name="Equipements de quartier"
+                type="customlayer"
+                url="apps/customlayer/ete-equipmt.js"
+                visible="true"
+                tooltip="false"
+                tooltipenabled="false"
+                tooltipcontent=""
+                metadata="undefined"
+                metadata-csw="https://public.sig.rennesmetropole.fr/geonetwork/srv/fre/catalog.search#/metadata/2ff4b02a-7d1e-4e9c-a0c2-dddbb11a3168"
+                queryable="true"
+                featurecount="6"
+                tabcolor='#faca50'
+                infopanel="right-panel">
+            </layer>
+            <layer
+                id="ete_sport"
+                name="Sport et fil de l'eau"
+                type="customlayer"
+                url="apps/customlayer/ete-sport.js"
+                visible="true"
+                tooltip="false"
+                tooltipenabled="false"
+                tooltipcontent=""
+                metadata="undefined"
+                metadata-csw="https://public.sig.rennesmetropole.fr/geonetwork/srv/fre/catalog.search#/metadata/2ff4b02a-7d1e-4e9c-a0c2-dddbb11a3168"
+                queryable="true"
+                featurecount="6"
+                tabcolor='#62bcf5'
+                infopanel="right-panel">
+            </layer>
+            <layer
+                id="ete_au_vert"
+                name="Au vert"
+                type="customlayer"
+                url="apps/customlayer/ete-au-vert.js"
+                visible="true"
+                tooltip="false"
+                tooltipenabled="false"
+                tooltipcontent=""
+                metadata="undefined"
+                metadata-csw="https://public.sig.rennesmetropole.fr/geonetwork/srv/fre/catalog.search#/metadata/2ff4b02a-7d1e-4e9c-a0c2-dddbb11a3168"
+                queryable="true"
+                featurecount="6"
+                tabcolor='#439147'
+                infopanel="right-panel">
+            </layer> 
+<!--            <layer
+                id="ete_glisse"
+                name="Spots de glisse"
+                type="customlayer"
+                url="apps/customlayer/ete-glisse.js"
+                visible="true"
+                tooltip="false"
+                tooltipenabled="false"
+                tooltipcontent=""
+                metadata="undefined"
+                metadata-csw="https://public.sig.rennesmetropole.fr/geonetwork/srv/fre/catalog.search#/metadata/46a39b8c-5ec4-449a-bfe1-8410d0b76c84"
+                queryable="true"
+                featurecount="6"
+                tabcolor='#E44C2D'
+                infopanel="right-panel">
+            </layer>
+-->
+        </theme>
+    </themes>
+</config>

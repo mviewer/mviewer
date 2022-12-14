@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="Calque_1"
+   data-name="Calque 1"
+   viewBox="0 0 38.608002 25.263"
+   version="1.1"
+   sodipodi:docname="sportCulture17-01.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   width="38.608002"
+   height="25.263">
+  <metadata
+     id="metadata19">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     id="namedview17"
+     showgrid="true"
+     inkscape:zoom="1.3865528"
+     inkscape:cx="-262.06389"
+     inkscape:cy="-129.67855"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Calque_1"
+     inkscape:document-rotation="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid844"
+       originx="-437.296"
+       originy="-491.11723" />
+  </sodipodi:namedview>
+  <defs
+     id="defs4">
+    <style
+       id="style2">.cls-1{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:9px;}</style>
+  </defs>
+  <g
+     id="g845"
+     transform="matrix(0.1,0,0,0.1,-0.742,-7.318)">
+    <polygon
+       class="cls-1"
+       points="139.67,321.31 185.83,321.31 245.58,249.19 316.05,238.91 316.05,153.44 11.92,153.44 11.92,238.91 82.31,249.19 "
+       id="polygon6" />
+    <line
+       class="cls-1"
+       x1="15.19"
+       y1="186.19"
+       x2="310.32999"
+       y2="186.19"
+       id="line8" />
+    <line
+       class="cls-1"
+       x1="360.76999"
+       y1="100.49"
+       x2="332.63"
+       y2="128.57001"
+       id="line10" />
+    <line
+       class="cls-1"
+       x1="389"
+       y1="171.53999"
+       x2="349.04001"
+       y2="171.53999"
+       id="line12" />
+    <line
+       class="cls-1"
+       x1="289.79001"
+       y1="77.68"
+       x2="289.79001"
+       y2="114.93"
+       id="line14" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.0502702"
+       d="M 16.803945,169.78957 V 157.94708 H 163.98917 311.17439 v 11.84249 11.84249 H 163.98917 16.803945 Z"
+       id="path846" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.0502702"
+       d="m 129.78463,301.14966 c -6.72134,-8.44362 -19.3667,-24.33747 -28.10081,-35.31968 -8.734101,-10.98219 -16.342195,-20.25848 -16.906874,-20.61396 -0.564679,-0.35549 -4.180655,-1.10401 -8.035506,-1.66341 -38.635188,-5.60647 -57.050657,-8.29551 -58.366553,-8.52273 l -1.570942,-0.27127 V 212.78732 190.81603 H 163.98917 311.17439 v 21.95479 21.95478 l -1.32926,0.26648 c -0.73109,0.14656 -15.79402,2.35563 -33.47316,4.90905 -24.41878,3.52684 -32.43432,4.84769 -33.35232,5.49601 -0.66463,0.46939 -14.26538,16.60324 -30.22389,35.85302 l -29.01548,34.99958 -20.88752,0.12597 -20.88752,0.12597 z"
+       id="path848" />
+  </g>
+</svg>
