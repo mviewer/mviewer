@@ -1,11 +1,10 @@
 {
-    "fr": {
-        "legend.title": "Afficher ou masquer la légende",
-        "custom.title": "Dummy fr"
-    },
-    "en": {
-        "legend.title": "Display or hide the legend",
-        "custom.title": "Dummy en"
-    }
+  "fr": {
+    "legend.title": "Afficher ou masquer la légende",
+    "custom.title": "Dummy fr"
+  },
+  "en": {
+    "legend.title": "Display or hide the legend",
+    "custom.title": "Dummy en"
+  }
 }
-

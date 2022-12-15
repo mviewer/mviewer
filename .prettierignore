@@ -2,4 +2,5 @@
 *.css
 *.mst
 **/lib
+templates.js
 **/.git
