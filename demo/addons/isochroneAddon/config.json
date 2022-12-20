@@ -1,11 +1,11 @@
 {
-    "js": ["isochroneAddon.js","jquery.easyDrag.min.js"],
-    "css": "isochroneAddon.css",
-    "html": "isochroneAddon.html",
-    "target": "page-content-wrapper",
-    "options": {
-        "title": "Calcul d'isochrone",
-        "isochroneUrl":"https://wxs.ign.fr/essentiels/geoportail/isochrone/rest/1.0.0/isochrone?", 
-        "isohroneColor":"#b45793"   
-    }
+  "js": ["isochroneAddon.js", "jquery.easyDrag.min.js"],
+  "css": "isochroneAddon.css",
+  "html": "isochroneAddon.html",
+  "target": "page-content-wrapper",
+  "options": {
+    "title": "Calcul d'isochrone",
+    "isochroneUrl": "https://wxs.ign.fr/essentiels/geoportail/isochrone/rest/1.0.0/isochrone?",
+    "isohroneColor": "#b45793"
+  }
 }

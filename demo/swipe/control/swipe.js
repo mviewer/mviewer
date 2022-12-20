@@ -96,32 +96,35 @@ class Swipe extends AdvancedCustomControl {
   constructor(id) {
     // Initialize CustomControl superClass
     super(id);
-
   }
   // Mandatory - code executed when panel is opened
   init() {
     var _map = mviewer.getMap();
-    var html = '<div><style>' + _css + '</style><input id="swipe" type="range" style="width: 100%;position: fixed;bottom: 60px;"></div>';
-    var _swipeElement = document.getElementById('swipe');
+    var html =
+      "<div><style>" +
+      _css +
+      '</style><input id="swipe" type="range" style="width: 100%;position: fixed;bottom: 60px;"></div>';
+    var _swipeElement = document.getElementById("swipe");
     if (!_swipeElement) {
       $("#map").append(html);
-      _swipeElement = document.getElementById('swipe');
-      _swipeElement.addEventListener('input', function () {
-        _map.render();
-      }, false);
+      _swipeElement = document.getElementById("swipe");
+      _swipeElement.addEventListener(
+        "input",
+        function () {
+          _map.render();
+        },
+        false
+      );
     }
 
     $("#swipe-select").click(function () {
       mviewer.setBaseLayer(this.value);
     });
-
   }
   // Mandatory - code executed when panel is closed
   destroy() {
     $("#swipe").remove();
-
   }
-
 }
 // Create The Swipe CustomControl
 new Swipe("swipe");

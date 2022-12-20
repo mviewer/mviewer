@@ -12,844 +12,905 @@
  */
 
 mviewer = (function () {
-    /*
-     * Private
-     */
+  /*
+   * Private
+   */
 
-    proj4.defs("EPSG:2154",
-        "+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 " +
-        "+units=m +no_defs");
+  proj4.defs(
+    "EPSG:2154",
+    "+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 " +
+      "+units=m +no_defs"
+  );
 
-    ol.proj.proj4.register(proj4);
+  ol.proj.proj4.register(proj4);
 
-    /**
-     * Property: _proxy
-     * Ajax proxy to use for crossdomain requests
-     * It could be georchestra security-proxy
-     */
+  /**
+   * Property: _proxy
+   * Ajax proxy to use for crossdomain requests
+   * It could be georchestra security-proxy
+   */
 
-    var _proxy = "";
+  var _proxy = "";
 
-    var _bsize = ""; /* bootstrap size */
+  var _bsize = ""; /* bootstrap size */
 
-    var _mediaSize = "";
+  var _mediaSize = "";
 
-    var _geolocation;
+  var _geolocation;
 
-    var _sourceGeolocation;
+  var _sourceGeolocation;
 
-    var _events = {
-        _confLoaded: false,
-        _overLayersLoaded: 0,
-        _overLayersTotal: 0,
-        overLayersLoadedListener: function(val) {},
-        set overLayersLoaded(val) {
-            this._overLayersLoaded = val;
-            this.overLayersLoadedListener(val);
-        },
-        get overLayersLoaded() {
-            return this._overLayersLoaded;
-        },
-        set overLayersTotal(val) {
-            this._overLayersTotal = val;
-        },
-        get overLayersTotal() {
-            return this._overLayersTotal;
-        },
-        confLoadedListener: function(val) {},
-        set confLoaded(val) {
-            this._confLoaded = val;
-            this.confLoadedListener(val);
-        },
-        get confLoaded() {
-            return this._confLoaded;
-        },
-        registerOverLayersLoadedListener: function(listener) {
-            this.overLayersLoadedListener = listener;
-        },
-        registerConfLoadedListener: function(listener) {
-            this.confLoadedListener = listener;
-        }
-    };
+  var _events = {
+    _confLoaded: false,
+    _overLayersLoaded: 0,
+    _overLayersTotal: 0,
+    overLayersLoadedListener: function (val) {},
+    set overLayersLoaded(val) {
+      this._overLayersLoaded = val;
+      this.overLayersLoadedListener(val);
+    },
+    get overLayersLoaded() {
+      return this._overLayersLoaded;
+    },
+    set overLayersTotal(val) {
+      this._overLayersTotal = val;
+    },
+    get overLayersTotal() {
+      return this._overLayersTotal;
+    },
+    confLoadedListener: function (val) {},
+    set confLoaded(val) {
+      this._confLoaded = val;
+      this.confLoadedListener(val);
+    },
+    get confLoaded() {
+      return this._confLoaded;
+    },
+    registerOverLayersLoadedListener: function (listener) {
+      this.overLayersLoadedListener = listener;
+    },
+    registerConfLoadedListener: function (listener) {
+      this.confLoadedListener = listener;
+    },
+  };
 
-    _events.registerOverLayersLoadedListener(function(val) {
-        if (val === _events.overLayersTotal && _events.confLoaded === true) {
-            $(document).trigger("layersLoaded");
-        }
+  _events.registerOverLayersLoadedListener(function (val) {
+    if (val === _events.overLayersTotal && _events.confLoaded === true) {
+      $(document).trigger("layersLoaded");
+    }
+  });
+
+  _events.registerConfLoadedListener(function (val) {
+    if (_events.overLayersLoaded === _events.overLayersTotal && val === true) {
+      $(document).trigger("layersLoaded");
+    }
+  });
+
+  var _overLayersReady = function () {
+    mviewer.init();
+    _applyPermalink();
+    //Get backgroundlayer value if exists
+    if (
+      API.lb &&
+      $.grep(_backgroundLayers, function (n) {
+        return n.get("blid") === API.lb;
+      })[0]
+    ) {
+      mviewer.setBaseLayer(API.lb);
+    } else {
+      mviewer.setBaseLayer(configuration.getDefaultBaseLayer());
+    }
+    _showCheckedLayers();
+  };
+
+  var _applyPermalink = function () {
+    //Get  x, y & z url parameters if exists
+    if (API.x && API.y && API.z) {
+      var center = [parseFloat(API.x), parseFloat(API.y)];
+      var zoom = parseInt(API.z);
+      _map.getView().setCenter(center);
+      _map.getView().setZoom(zoom);
+    }
+    //get visible layers
+    if (API.l) {
+      _setVisibleOverLayers(API.l);
+    }
+  };
+
+  /**
+   * Property: _ajaxURL
+   *
+   */
+
+  var _ajaxURL = function (url, optionalProxy) {
+    // relative path
+    if (url.indexOf("http") != 0) {
+      return url;
+    }
+    // same domain
+    else if (url.indexOf(location.protocol + "//" + location.host) === 0) {
+      return url;
+    } else {
+      if (optionalProxy) {
+        return optionalProxy + encodeURIComponent(url);
+      } else if (_proxy) {
+        return _proxy + encodeURIComponent(url);
+      } else {
+        return url;
+      }
+    }
+  };
+
+  /**
+   * Property: _map
+   * {ol.Map} The map
+   */
+
+  var _map = null;
+
+  /**
+   * Property: _projection
+   * {ol.projection} The map projection
+   */
+
+  var _projection = null;
+
+  /**
+   * Property: _center
+   *
+   */
+
+  var _center = null;
+  /**
+   * Property: _rotation
+   *
+   */
+
+  var _rotation = false;
+
+  /**
+   * Property: _backgroundLayers
+   * Array -  of  OpenLayers.Layer
+   */
+
+  var _backgroundLayers = [];
+
+  /**
+   * Property: _overLayers
+   * {object} hash of all overlay Layers (static)
+   */
+
+  var _overLayers = {};
+
+  /**
+   * Property: _scaledDependantLayers
+   * Array of {OpenLayers.Layers.WMS} .
+   */
+
+  var _scaledDependantLayers = [];
+
+  var _scaledDependantLayersLegend = [];
+
+  /**
+   * Property: _themes
+   * {object} hash of all overlay Layers (for each sub theme) - static.
+   */
+
+  var _themes = null;
+
+  /**
+   * Property: _marker
+   * marker used to locate features on the map.
+   * @type {ol.Overlay}
+   */
+
+  var _marker = null;
+
+  var _topLayer = false;
+
+  var _exclusiveLayer;
+
+  /**
+   * Property: renderer
+   * @type {ol.Renderer}
+   */
+
+  var _renderer = "canvas";
+
+  /**
+   * Property: _sourceOverlay
+   * @type {ol.source.Vector}
+   * Used to highlight hovered vector features
+   */
+
+  var _sourceOverlay;
+
+  /**
+   * Property: _overlayFeatureLayer
+   * @type {ol.layer.Vector}
+   * Used to highlight hovered vector features
+   */
+
+  var _overlayFeatureLayer = false;
+
+  /**
+   * Property: _sourceSelectOverlay
+   * @type {ol.source.Vector}
+   * Used to highlight selected vector features
+   */
+
+  var _sourceSelectOverlay;
+
+  /**
+   * Property: _selectOverlayFeatureLayer
+   * @type {ol.layer.Vector}
+   * Used to highlight selected vector features
+   */
+
+  var _selectOverlayFeatureLayer = false;
+
+  var _sourceSubSelectOverlay;
+
+  /**
+   * Property: _subSelectOverlayFeatureLayer
+   * @type {ol.layer.Vector}
+   * Used to highlight sub selected vector features
+   */
+
+  var _subSelectOverlayFeatureLayer = false;
+
+  /**
+   * Property: _infoLayers
+   * Array of custom panel objects
+   * Used to keep track of layers displayed in info panels
+   */
+  var _infoLayers = [];
+
+  var _setVariables = function () {
+    _proxy = configuration.getProxy();
+  };
+
+  var _initMap = function (mapoptions) {
+    _zoom = parseInt(mapoptions.zoom) || 8;
+    if (mapoptions.rotation === "true") {
+      _rotation = true;
+    } else {
+      $("#northbtn").hide();
+    }
+    _center = mapoptions.center.split(",").map(Number);
+    //Projection
+    switch (mapoptions.projection) {
+      case "EPSG:3857":
+      case "EPSG:4326":
+        _projection = ol.proj.get(mapoptions.projection);
+        break;
+
+      default:
+        _projection = new ol.proj.Projection({
+          code: mapoptions.projection,
+          extent: mapoptions.projextent.split(",").map(function (item) {
+            return parseFloat(item);
+          }),
+        });
+    }
+    utils.initWMTSMatrixsets(_projection);
+    var overlays = [];
+    // init marker to create overlay on great marker
+    search.initSearchMarker(configuration.getConfiguration().searchparameters);
+    //Create overlay (red pin) used by showLocation method
+    _marker = new ol.Overlay({
+      positioning: "bottom-center",
+      element: $("#mv_marker")[0],
+      stopEvent: false,
     });
-
-    _events.registerConfLoadedListener(function(val) {
-        if (_events.overLayersLoaded === _events.overLayersTotal && val === true) {
-            $(document).trigger("layersLoaded");
-        }
-    });
-
-    var _overLayersReady = function () {
-        mviewer.init();
-        _applyPermalink();
-         //Get backgroundlayer value if exists
-        if (API.lb && $.grep(_backgroundLayers, function (n) {
-            return n.get('blid') === API.lb;
-        })[0]) {
-            mviewer.setBaseLayer(API.lb);
-        } else {
-            mviewer.setBaseLayer(configuration.getDefaultBaseLayer());
-        }
-        _showCheckedLayers();
-    };
-
-    var _applyPermalink = function () {
-        //Get  x, y & z url parameters if exists
-        if (API.x && API.y && API.z) {
-            var center =   [parseFloat(API.x), parseFloat(API.y)];
-            var zoom = parseInt(API.z);
-            _map.getView().setCenter(center);
-            _map.getView().setZoom(zoom);
-        }
-        //get visible layers
-        if (API.l) {
-            _setVisibleOverLayers(API.l);
-        }
-    };
-
-
-
-    /**
-     * Property: _ajaxURL
-     *
-     */
-
-    var _ajaxURL = function (url, optionalProxy) {
-        // relative path
-        if (url.indexOf('http')!=0) {
-            return url;
-        }
-        // same domain
-        else if (url.indexOf(location.protocol + '//' + location.host)===0) {
-            return url;
-        }
-        else {
-            if (optionalProxy) {
-                return  optionalProxy + encodeURIComponent(url);
-            } else if (_proxy) {
-                return  _proxy + encodeURIComponent(url);
-            } else {
-                return url;
-            }
-        }
-    };
-
-    /**
-     * Property: _map
-     * {ol.Map} The map
-     */
-
-    var _map = null;
-
-
-    /**
-     * Property: _projection
-     * {ol.projection} The map projection
-     */
-
-    var _projection = null;
-
-    /**
-     * Property: _center
-     *
-     */
-
-    var _center = null;
-    /**
-      * Property: _rotation
-      *
-      */
-
-    var _rotation = false;
-
-    /**
-     * Property: _backgroundLayers
-     * Array -  of  OpenLayers.Layer
-     */
-
-    var _backgroundLayers = [];
-
-    /**
-     * Property: _overLayers
-     * {object} hash of all overlay Layers (static)
-     */
-
-    var _overLayers = {};
-
-    /**
-     * Property: _scaledDependantLayers
-     * Array of {OpenLayers.Layers.WMS} .
-     */
-
-    var _scaledDependantLayers = [];
-
-    var _scaledDependantLayersLegend = [];
-
-    /**
-     * Property: _themes
-     * {object} hash of all overlay Layers (for each sub theme) - static.
-     */
-
-    var _themes = null;
-
-    /**
-     * Property: _marker
-     * marker used to locate features on the map.
-     * @type {ol.Overlay}
-     */
-
-    var _marker = null;
-
-    var _topLayer = false;
-
-    var _exclusiveLayer;
-
-    /**
-     * Property: renderer
-     * @type {ol.Renderer}
-     */
-
-    var _renderer = 'canvas';
-
-    /**
-     * Property: _sourceOverlay
-     * @type {ol.source.Vector}
-     * Used to highlight hovered vector features
-     */
-
-    var _sourceOverlay;
-
-    /**
-     * Property: _overlayFeatureLayer
-     * @type {ol.layer.Vector}
-     * Used to highlight hovered vector features
-     */
-
-    var _overlayFeatureLayer = false;
-
-    /**
-     * Property: _sourceSelectOverlay
-     * @type {ol.source.Vector}
-     * Used to highlight selected vector features
-     */
-
-    var _sourceSelectOverlay;
-
-    /**
-     * Property: _selectOverlayFeatureLayer
-     * @type {ol.layer.Vector}
-     * Used to highlight selected vector features
-     */
-
-    var _selectOverlayFeatureLayer = false;
-
-    var _sourceSubSelectOverlay;
-
-    /**
-     * Property: _subSelectOverlayFeatureLayer
-     * @type {ol.layer.Vector}
-     * Used to highlight sub selected vector features
-     */
-
-    var _subSelectOverlayFeatureLayer = false;
-
-    /**
-     * Property: _infoLayers
-     * Array of custom panel objects
-     * Used to keep track of layers displayed in info panels
-     */
-    var _infoLayers = [];
-
-    var _setVariables = function () {
-        _proxy = configuration.getProxy();
-    };
-
-    var _initMap = function (mapoptions) {
-        _zoom = parseInt(mapoptions.zoom) || 8;
-        if (mapoptions.rotation === "true" ) {
-            _rotation = true;
-        } else {
-             $("#northbtn").hide();
-        }
-        _center = mapoptions.center.split(",").map(Number);
-        //Projection
-        switch (mapoptions.projection) {
-            case "EPSG:3857":
-            case "EPSG:4326":
-                _projection = ol.proj.get(mapoptions.projection);
-                break;
-
-            default:
-                _projection = new ol.proj.Projection({
-                    code: mapoptions.projection,
-                    extent: mapoptions.projextent.split(",").map(function(item) {return parseFloat(item);})
-                });
-        }
-        utils.initWMTSMatrixsets(_projection);
-        var overlays = [];
-        // init marker to create overlay on great marker
-        search.initSearchMarker(configuration.getConfiguration().searchparameters);
-        //Create overlay (red pin) used by showLocation method
-        _marker = new ol.Overlay({ positioning: 'bottom-center', element: $("#mv_marker")[0], stopEvent: false});
-        overlays.push(_marker);
-        _map = new ol.Map({
-            target: 'map',
-            controls: [
-                //new ol.control.FullScreen(),
-                new ol.control.Attribution({ collapsible: true }),
-                new ol.control.ScaleLine({
-                    units: mapoptions.scaleunits || 'metric',
-                    bar: mapoptions.scalebar === 'true',
-                    steps: parseInt(mapoptions.scalesteps) || 2,
-                    text: mapoptions.scaletext == 'true',
-                    maxWidth: 100
-                }),
-                new ol.control.MousePosition({
-                    projection: _projection.getCode(),
-                    undefinedHTML: 'y , x',
-                    className: 'custom-mouse-position',
-                    target: document.getElementById('mouse-position'),
-                    coordinateFormat: function(coordinate) {
-                        let getCoord = ol.coordinate.toStringHDMS(ol.proj.transform(coordinate,
-                            _projection.getCode(), 'EPSG:4326'));
-                        let coordStr = getCoord.replace(/ /g,"").replace("N","N - ");
-                        return coordStr;
-                    }
-                }),
-            ],
-            interactions: ol.interaction.defaults.defaults({
-              doubleClickZoom: false
-            }),
-            overlays: overlays,
-            renderer: _renderer,
-            view: new ol.View({
-                projection: _projection,
-                maxZoom: mapoptions.maxzoom || 19,
-                center: _center,
-                enableRotation: _rotation,
-                zoom: _zoom,
-                extent: mapoptions.maxextent
-                    ? mapoptions.maxextent.split(",").map(function(item) {return parseFloat(item);})
-                    : undefined
+    overlays.push(_marker);
+    _map = new ol.Map({
+      target: "map",
+      controls: [
+        //new ol.control.FullScreen(),
+        new ol.control.Attribution({ collapsible: true }),
+        new ol.control.ScaleLine({
+          units: mapoptions.scaleunits || "metric",
+          bar: mapoptions.scalebar === "true",
+          steps: parseInt(mapoptions.scalesteps) || 2,
+          text: mapoptions.scaletext == "true",
+          maxWidth: 100,
+        }),
+        new ol.control.MousePosition({
+          projection: _projection.getCode(),
+          undefinedHTML: "y , x",
+          className: "custom-mouse-position",
+          target: document.getElementById("mouse-position"),
+          coordinateFormat: function (coordinate) {
+            let getCoord = ol.coordinate.toStringHDMS(
+              ol.proj.transform(coordinate, _projection.getCode(), "EPSG:4326")
+            );
+            let coordStr = getCoord.replace(/ /g, "").replace("N", "N - ");
+            return coordStr;
+          },
+        }),
+      ],
+      interactions: ol.interaction.defaults.defaults({
+        doubleClickZoom: false,
+      }),
+      overlays: overlays,
+      renderer: _renderer,
+      view: new ol.View({
+        projection: _projection,
+        maxZoom: mapoptions.maxzoom || 19,
+        center: _center,
+        enableRotation: _rotation,
+        zoom: _zoom,
+        extent: mapoptions.maxextent
+          ? mapoptions.maxextent.split(",").map(function (item) {
+              return parseFloat(item);
             })
-        });
+          : undefined,
+      }),
+    });
 
-        const mapReadyEvent = new CustomEvent('map-ready', {
-            detail: {
-              map: _map
-            }
-        });
-        document.dispatchEvent(mapReadyEvent);
+    const mapReadyEvent = new CustomEvent("map-ready", {
+      detail: {
+        map: _map,
+      },
+    });
+    document.dispatchEvent(mapReadyEvent);
 
-         _map.on('moveend', _mapChange);
-        //Handle zoom change
-        _map.getView().on('change:resolution', _mapZoomChange);
-        return _map;
+    _map.on("moveend", _mapChange);
+    //Handle zoom change
+    _map.getView().on("change:resolution", _mapZoomChange);
+    return _map;
+  };
+
+  /**
+   * _message Show message method.
+   * @param {String} msg
+   */
+
+  var _message = function (msg, cls) {
+    var item = $(
+      [
+        '<div class="alert ' + cls + ' alert-dismissible" role="alert">',
+        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">',
+        '<span aria-hidden="true">&times;</span></button>',
+        mviewer.tr(msg),
+        "</div>",
+      ].join("")
+    );
+    $("#alerts-zone").append(item);
+  };
+
+  var _deleteLayer = function (layername) {
+    $("[data-layerid='" + layername + "']").remove();
+    _map.removeLayer(_overLayers[layername].layer);
+    delete _overLayers[layername];
+  };
+
+  /**
+   * Get legend params object.
+   * @param {ol.layer} layer
+   * @returns params object
+   */
+  var _getLegendParams = (layer) => {
+    var legendParams = {
+      LAYER: layer.layername,
+      STYLE: layer.style,
+      FORMAT: "image/png",
+      TRANSPARENT: true,
     };
 
-    /**
-     * _message Show message method.
-     * @param {String} msg
-     */
+    if (layer.sld) {
+      legendParams["SLD"] = encodeURIComponent(layer.sld);
+    } else {
+      legendParams["STYLE"] = encodeURIComponent(layer.style);
+    }
+    return legendParams;
+  };
 
-    var _message = function (msg, cls) {
-        var item = $(['<div class="alert '+cls+' alert-dismissible" role="alert">',
-            '<button type="button" class="close" data-dismiss="alert" aria-label="Close">',
-            '<span aria-hidden="true">&times;</span></button>',
-            mviewer.tr(msg),
-            '</div>'].join (""));
-            $("#alerts-zone").append(item);
-    };
+  /**
+   *
+   * @param {object} layer - ol.layer object
+   * @param {*} scale - usefull with dynamicLegend is true
+   * @returns
+   */
+  var _getlegendurl = function (layer, scale) {
+    var legendUrl = "";
+    if (layer.legendurl && !layer.styles) {
+      legendUrl = layer.legendurl;
+    } else if (layer.legendurl && layer.styles && layer.styles.split(",").length === 1) {
+      legendUrl = layer.legendurl;
+    } else if (!layer.type === "vector-tms") {
+      legendUrl = getLegendGraphicUrl(layer.url, _getLegendParams(layer));
+    }
+    if (layer.dynamiclegend) {
+      if (!scale) {
+        scale = _calculateScale(_map.getView().getResolution());
+      }
+      // TODO: this line of code is not robust since OGC parameter names are not case sensitive
+      legendUrl = legendUrl.split("&scale=")[0] += "&scale=" + scale;
+    }
+    return legendUrl;
+  };
 
-    var _deleteLayer = function (layername) {
-        $( "[data-layerid='"+layername+"']").remove();
-        _map.removeLayer(_overLayers[layername].layer);
-        delete _overLayers[layername];
-    };
+  //{styles:stylePublic, label: "Public", geometry: "Point"}
+  /**
+   * _drawVectorLegend draw vector legend  method.
+   * @param {String} layerid
+   * @param {Array} items. Array of {styles:ol.styles , label: string, geometry: Point|Polygon|LineString)
+   */
 
-    /**
-     * Get legend params object.
-     * @param {ol.layer} layer
-     * @returns params object
-     */
-    var _getLegendParams = (layer) => {
-        var legendParams = {
-            'LAYER': layer.layername,
-            'STYLE': layer.style,
-            'FORMAT': 'image/png',
-            'TRANSPARENT': true
-        };
+  var _drawVectorLegend = function (layerid, items) {
+    //Remove classic getLegendUrl
+    $("#legend-" + layerid).remove();
+    var canvas = document.getElementById("vector-legend-" + layerid);
+    if (canvas) {
+      var marginTop = 15;
+      var marginLeft = 15;
+      var itemHeight = 20;
+      var textAlign = "Middle";
+      var textBaseline = "End";
+      verticalPosition = 0;
+      var geomWidth = 25;
+      var geomHeight = 15;
+      var verticalSpace = itemHeight - geomHeight;
+      var ctx = canvas.getContext("2d");
+      var fontsize = 12;
+      vectorContext = ol.render.toContext(ctx, {
+        size: [250, items.length * itemHeight + marginTop],
+      });
+      items.forEach(function (item, id) {
+        var geometry;
+        verticalPosition += itemHeight;
+        switch (item.geometry) {
+          case "Point":
+            geometry = new ol.geom.Point([
+              marginLeft + geomWidth / 2,
+              verticalPosition - geomHeight / 2,
+            ]);
+            break;
+          case "LineString":
+            geometry = new ol.geom.LineString([
+              [marginLeft, -marginTop + verticalPosition],
+              [marginLeft + geomWidth, -marginTop + verticalPosition + geomHeight],
+            ]);
+            break;
 
-        if (layer.sld) {
-            legendParams['SLD'] = encodeURIComponent(layer.sld);
-        } else {
-            legendParams['STYLE'] = encodeURIComponent(layer.style);
+          case "Polygon":
+            geometry = new ol.geom.Polygon([
+              [
+                [marginLeft, -marginTop + verticalPosition],
+                [marginLeft, -marginTop + verticalPosition + geomHeight],
+                [marginLeft + geomWidth, -marginTop + verticalPosition + geomHeight],
+                [marginLeft + geomWidth, -marginTop + verticalPosition],
+                [marginLeft, -marginTop + verticalPosition],
+              ],
+            ]);
+            break;
         }
-        return legendParams;
+
+        item.styles.forEach(function (style) {
+          let stl = style.clone();
+          stl.setText(
+            new ol.style.Text({
+              textAlign: textAlign,
+              textBaseline: textBaseline,
+              font: fontsize + "px roboto_regular, Arial, Sans-serif",
+              text: item.label,
+              fill: new ol.style.Fill({ color: "rgba(153, 153, 153, 1)" }),
+              offsetX: geomWidth,
+              offsetY: verticalSpace,
+            })
+          );
+          vectorContext.setStyle(stl);
+          vectorContext.drawGeometry(geometry);
+        });
+      });
+    }
+  };
+
+  var _convertScale2Resolution = function (scale) {
+    return (scale * 0.28) / 1000;
+  };
+
+  /**
+   * Geoloalisation
+   * Private Method: _initGeolocation
+   *
+   */
+
+  var _initGeolocation = function () {
+    _geolocation = new ol.Geolocation({
+      projection: _projection,
+      trackingOptions: {
+        enableHighAccuracy: true,
+      },
+    });
+    _sourceGeolocation = new ol.source.Vector();
+    var layerposition = new ol.layer.Vector({
+      source: _sourceGeolocation,
+    });
+    _map.addLayer(layerposition);
+  };
+
+  /**
+   * Private Method: initVectorOverlay
+   * this layer is used to render ol.Feature in methods
+   * - zoomToLocation
+   */
+
+  var _initVectorOverlay = function () {
+    _sourceOverlay = new ol.source.Vector();
+    _overlayFeatureLayer = new ol.layer.Vector({
+      source: _sourceOverlay,
+      style: mviewer.featureStyles.highlight,
+    });
+    _overlayFeatureLayer.set("mviewerid", "featureoverlay");
+    _map.addLayer(_overlayFeatureLayer);
+  };
+
+  /**
+   * Private Method: initSelectOverlay
+   * this layer is used to render ol.Feature in info tool
+   */
+
+  var _initSelectOverlay = function () {
+    var default_selection_style = {
+      point: {
+        radius: "7",
+        fillcolor: "82, 98, 217",
+        opacity: "0.5",
+        strokecolor: "82, 98, 217",
+        strokewidth: "4",
+      },
+      line: {
+        opacity: "1",
+        strokecolor: "82, 98, 217",
+        strokewidth: "4",
+      },
+      polygon: {
+        fillcolor: "82, 98, 217",
+        opacity: "0.5",
+        strokecolor: "82, 98, 217",
+        strokewidth: "4",
+      },
+    };
+    var selection_style = {};
+    if (
+      configuration.getConfiguration().styles &&
+      configuration.getConfiguration().styles.selectionstyle
+    ) {
+      selection_style = Object.assign(
+        {},
+        default_selection_style,
+        configuration.getConfiguration().styles.selectionstyle
+      );
+    } else {
+      selection_style = default_selection_style;
+    }
+    _sourceSelectOverlay = new ol.source.Vector();
+    _selectOverlayFeatureLayer = new ol.layer.Vector({
+      source: _sourceSelectOverlay,
+      style: getSelectStyle.bind(this, selection_style),
+      mviewerid: "selectoverlay",
+    });
+    _map.addLayer(_selectOverlayFeatureLayer);
+  };
+
+  /**
+   * Private Method: initSubSelectOverlay
+   * this layer is used to render ol.Feature of sub selection in info tool
+   */
+
+  var _initSubSelectOverlay = function () {
+    var default_subselection_style = {
+      point: {
+        radius: "7",
+        fillcolor: "252, 186, 3",
+        opacity: "0.5",
+        strokecolor: "82, 98, 217",
+        strokewidth: "2",
+      },
+      line: {
+        opacity: "1",
+        strokecolor: "252, 186, 3",
+        strokewidth: "2",
+      },
+      polygon: {
+        fillcolor: "252, 186, 3",
+        opacity: "0.5",
+        strokecolor: "252, 186, 3",
+        strokewidth: "2",
+      },
+    };
+    var subselection_style = {};
+    if (
+      configuration.getConfiguration().styles &&
+      configuration.getConfiguration().styles.subselectionstyle
+    ) {
+      subselection_style = Object.assign(
+        {},
+        default_subselection_style,
+        configuration.getConfiguration().styles.subselectionstyle
+      );
+    } else {
+      subselection_style = default_subselection_style;
+    }
+    _sourceSubSelectOverlay = new ol.source.Vector();
+    _subSelectOverlayFeatureLayer = new ol.layer.Vector({
+      source: _sourceSubSelectOverlay,
+      style: getSelectStyle.bind(this, subselection_style),
+      mviewerid: "subselectoverlay",
+    });
+    _map.addLayer(_subSelectOverlayFeatureLayer);
+  };
+
+  var _initTooltip = function () {
+    //Activate tooltips on tools buttons
+    if (!configuration.getConfiguration().mobile) {
+      $("[title]").each((i, el) => {
+        [placement, trigger, html, container, template] = [
+          "left",
+          "hover",
+          true,
+          "body",
+          mviewer.templates.tooltip,
+        ];
+        if ($(el).attr("tooltip")) {
+          // element with "tooltip" params used to custom tooltip element
+          [placement, trigger, html, container, template] = $(el)
+            .attr("tooltip")
+            .split(","); //.map(e => `${e}`);
+          template = template.split(".").forEach((e) => (t = t ? t[e] : window[e]));
+        }
+        // create tooltip
+        $(el).tooltip({
+          placement: placement,
+          trigger: trigger,
+          html: html,
+          container: container,
+          template: template,
+        });
+      });
+    }
+  };
+
+  /**
+   * Private Method: initTools
+   * Tools can be set or unset. Only one tool can be enabled like a switch.
+   * The default enabled tool is info (getFeatureInfo control)
+   * Tools must have this methods : enable & disabled & init
+   *
+   */
+
+  _initTools = function () {
+    //GetFeatureInfo tool
+    mviewer.tools.info = info;
+    mviewer.tools.info.init();
+    const appconfig = configuration.getConfiguration().application;
+
+    //Measure tool
+    if (appconfig.measuretools === "true") {
+      //Load measure module
+      mviewer.tools.measure = measure;
+      mviewer.tools.measure.init();
     }
 
-    /**
-     *
-     * @param {object} layer - ol.layer object
-     * @param {*} scale - usefull with dynamicLegend is true
-     * @returns
-     */
-    var _getlegendurl = function (layer, scale) {
-        var legendUrl = "";
-        if (layer.legendurl && !layer.styles) {
-            legendUrl = layer.legendurl;
-        } else if (layer.legendurl && layer.styles && (layer.styles.split(",").length === 1)) {
-            legendUrl = layer.legendurl;
-        } else if(!layer.type === "vector-tms") {
-            legendUrl = getLegendGraphicUrl(layer.url, _getLegendParams(layer));
+    //AddLayers tool
+    if (appconfig.addlayerstools === "true") {
+      //Load measure module
+      mviewer.tools.addlayers = addlayers;
+      mviewer.tools.addlayers.init();
+    }
+
+    //Activate GetFeatureInfo tool
+    mviewer.setTool("info");
+
+    //Measure tools
+    const zoomBtnActivate = appconfig.zoomtools === "true" || !appconfig.zoomtools;
+    const zoomToExtentBtnActivate =
+      appconfig.initialextenttool === "true" || !appconfig.initialextenttool;
+    if (zoomToExtentBtnActivate || zoomBtnActivate) {
+      //Load zoom toolbar module if one of button is activate
+      mviewer.tools.zoom = zoom;
+      zoom.init();
+    }
+    if (zoomToExtentBtnActivate) zoom.initExtentBtn();
+    if (zoomBtnActivate) zoom.initZoomBtn();
+  };
+
+  var _initShare = function () {
+    var displayMode = API.mode || "d";
+    $("#mv-display-mode input")
+      .filter('[value="' + displayMode + '"]')
+      .attr("checked", true);
+    $("#mv-display-mode input").change(function () {
+      mviewer.setPermalink();
+    });
+  };
+
+  /**
+   * Private Method: _initPanelsPopup
+   *
+   */
+
+  var _initPanelsPopup = function () {
+    if (configuration.getConfiguration().application.help) {
+      $.ajax({
+        url: configuration.getConfiguration().application.help,
+        dataType: "text",
+        success: function (html) {
+          $("#help .modal-body").append(html);
+        },
+      });
+    }
+  };
+
+  /**
+   * Private Method: _mapChange
+   *
+   *Parameter e - event
+   */
+
+  var _mapChange = function (e) {
+    if ($("#sharepanel-popup").css("visibility") === "visible") {
+      mviewer.setPermalink();
+    }
+    if (search.options.features && $("#searchfield").val()) {
+      search.sendElasticsearchRequest($("#searchfield").val());
+    }
+  };
+
+  /**
+   * Private Method: _calculateScale
+   *
+   * Parameter res - resolution
+   */
+
+  var _calculateScale = function (res) {
+    var ppi = 25.4 / 0.28;
+    return (res * ppi) / 0.0254;
+  };
+
+  /**
+   * Private Method: _mapZoomChange
+   *
+   *Parameter e - event
+   */
+
+  var _mapZoomChange = function (e) {
+    var resolution = e.target.getResolution();
+    var scale = _calculateScale(resolution);
+    _updateLayersScaleDependancy(scale);
+    _updateLegendsScaleDependancy(scale);
+  };
+
+  /**
+   * Private Method: _getLayerByName
+   *
+   * Parameter name - layer name
+   */
+
+  var _getLayerByName = function (name) {
+    return $.grep(_map.getLayers().getArray(), function (layer, i) {
+      return layer.get("name") === name;
+    })[0];
+  };
+
+  var _processLayer = function (oLayer, l) {
+    oLayer.layer = l;
+    l.setVisible(oLayer.checked);
+    l.setOpacity(oLayer.opacity);
+    if (oLayer.scale && oLayer.scale.max) {
+      l.setMaxResolution(_convertScale2Resolution(oLayer.scale.max));
+    }
+    if (oLayer.scale && oLayer.scale.min) {
+      l.setMinResolution(_convertScale2Resolution(oLayer.scale.min));
+    }
+    l.set("name", oLayer.name);
+    l.set("mviewerid", oLayer.id);
+    l.set("infohighlight", oLayer.infohighlight);
+
+    if (oLayer.searchable) {
+      search.processSearchableLayer(oLayer);
+    }
+    if (oLayer.scale) {
+      _scaledDependantLayers.push(oLayer);
+    }
+    if (oLayer.dynamiclegend) {
+      _scaledDependantLayersLegend.push(oLayer);
+    }
+    _overLayers[oLayer.id] = oLayer;
+
+    if (oLayer.metadatacsw && oLayer.metadatacsw.search("http") >= 0) {
+      $.ajax({
+        dataType: "xml",
+        layer: oLayer.id,
+        url: _ajaxURL(oLayer.metadatacsw),
+        success: function (result) {
+          var summary = "";
+          if ($(result).find("dct\\:abstract, abstract").length > 0) {
+            summary = "<p>" + $(result).find("dct\\:abstract, abstract").text() + "</p>";
+          } else {
+            summary =
+              "<p>" +
+              $(result)
+                .find("gmd\\:identificationInfo, identificationInfo")
+                .find("gmd\\:MD_DataIdentification,  MD_DataIdentification")
+                .find("gmd\\:abstract, abstract")
+                .find("gco\\:CharacterString, CharacterString")
+                .text() +
+              "</p>";
+          }
+          if (_overLayers[this.layer].metadata) {
+            summary +=
+              '<a href="' +
+              _overLayers[this.layer].metadata +
+              '" target="_blank">En savoir plus</a>';
+          }
+          _overLayers[this.layer].summary = summary;
+
+          var modifiedDate =
+            $(result).find("dct\\:modified, modified").text() ||
+            $(result).find("dct\\:created, created").text();
+          _overLayers[this.layer].modifiedDate = modifiedDate;
+
+          //use source from metadata as attribution if conf is set to "metadata"
+          if (_overLayers[this.layer].attribution === "metadata") {
+            var source = $(result).find("dc\\:source, source").text();
+            _overLayers[this.layer].attribution = `Source : ${source}`;
+            $(`#${this.layer}-attribution`).text(`Source : ${source}`);
+          }
+
+          //update visible layers on the map
+          $(`#${this.layer}-layer-summary`).attr("data-content", summary);
+          $(`#${this.layer}-date`).text(modifiedDate);
+        },
+      });
+    }
+    _map.addLayer(l);
+    if (oLayer.type === "customlayer" && mviewer.customLayers[oLayer.id]) {
+      mviewer.customLayers[oLayer.id].config = oLayer;
+    }
+    _events.overLayersLoaded += 1;
+  };
+
+  /**
+   * Private Method: _updateMedia
+   *
+   */
+
+  var _updateMedia = function (s) {
+    switch (s) {
+      case "xs":
+      case "sm":
+        if (_mediaSize === "xl") {
+          _updateViewPort("xs");
         }
-        if (layer.dynamiclegend) {
-            if (!scale) {
-                scale = _calculateScale(_map.getView().getResolution());
-            }
-            // TODO: this line of code is not robust since OGC parameter names are not case sensitive
-            legendUrl = legendUrl.split("&scale=")[0] += "&scale="+scale;
+        break;
+      case "md":
+      case "lg":
+        if (_mediaSize === "xs") {
+          _updateViewPort("xl");
         }
-        return legendUrl;
-    };
+        break;
+    }
+  };
 
+  /**
+   * Private Method: _updateViewPort
+   *
+   */
 
-     //{styles:stylePublic, label: "Public", geometry: "Point"}
-    /**
-     * _drawVectorLegend draw vector legend  method.
-     * @param {String} layerid
-     * @param {Array} items. Array of {styles:ol.styles , label: string, geometry: Point|Polygon|LineString)
-     */
-
-    var _drawVectorLegend = function (layerid, items) {
-		//Remove classic getLegendUrl
-        $("#legend-"+layerid).remove();
-        var canvas = document.getElementById("vector-legend-" + layerid);
-        if (canvas) {
-            var marginTop = 15;
-            var marginLeft = 15;
-            var itemHeight = 20;
-            var textAlign = "Middle";
-            var textBaseline = "End";
-            verticalPosition = 0;
-            var geomWidth = 25;
-            var geomHeight = 15;
-            var verticalSpace = itemHeight - geomHeight;
-            var ctx = canvas.getContext('2d');
-            var fontsize = 12;
-            vectorContext = ol.render.toContext(ctx, {
-                size: [250, (items.length * itemHeight) + marginTop]
-            });
-            items.forEach( function (item, id) {
-                var geometry;
-                verticalPosition+= itemHeight;
-                switch (item.geometry) {
-                    case 'Point':
-                        geometry = new ol.geom.Point([marginLeft + (geomWidth/2),
-                            verticalPosition - (geomHeight/2)]);
-                        break;
-                    case 'LineString':
-                        geometry = new ol.geom.LineString([[marginLeft, -marginTop + verticalPosition],
-                            [marginLeft + geomWidth, -marginTop + verticalPosition + geomHeight]]);
-                        break;
-
-                    case 'Polygon':
-                        geometry = new ol.geom.Polygon([[
-                            [marginLeft, -marginTop + verticalPosition],
-                            [marginLeft, -marginTop + verticalPosition + geomHeight],
-                            [marginLeft + geomWidth, -marginTop + verticalPosition + geomHeight],
-                            [marginLeft + geomWidth, -marginTop + verticalPosition],
-                            [marginLeft, -marginTop + verticalPosition]]]);
-                        break;
-                }
-
-                item.styles.forEach(function (style) {
-                    let stl = style.clone();
-                    stl.setText(new ol.style.Text({
-                        textAlign: textAlign,
-                        textBaseline: textBaseline,
-                        font: fontsize+"px roboto_regular, Arial, Sans-serif",
-                        text: item.label,
-                        fill: new ol.style.Fill({color: "rgba(153, 153, 153, 1)"}),
-                        offsetX: geomWidth,
-                        offsetY: verticalSpace
-                    }));
-                    vectorContext.setStyle(stl);
-                    vectorContext.drawGeometry(geometry);
-                });
-            });
-        }
-    };
-
-    var _convertScale2Resolution = function (scale) {
-         return scale * 0.28/1000;
-    };
-
-    /**
-     * Geoloalisation
-     * Private Method: _initGeolocation
-     *
-     */
-
-    var _initGeolocation = function () {
-        _geolocation = new ol.Geolocation({
-            projection: _projection,
-            trackingOptions: {
-                enableHighAccuracy: true
-            }
-        });
-        _sourceGeolocation = new ol.source.Vector();
-        var layerposition = new ol.layer.Vector({
-          source: _sourceGeolocation
-        });
-        _map.addLayer(layerposition);
-    };
-
-    /**
-     * Private Method: initVectorOverlay
-     * this layer is used to render ol.Feature in methods
-     * - zoomToLocation
-     */
-
-    var _initVectorOverlay = function () {
-        _sourceOverlay = new ol.source.Vector();
-        _overlayFeatureLayer = new ol.layer.Vector({
-            source: _sourceOverlay,
-            style: mviewer.featureStyles.highlight
-        });
-        _overlayFeatureLayer.set('mviewerid', 'featureoverlay');
-        _map.addLayer(_overlayFeatureLayer);
-    };
-
-
-    /**
-     * Private Method: initSelectOverlay
-     * this layer is used to render ol.Feature in info tool
-     */
-
-    var _initSelectOverlay = function () {
-        var default_selection_style = {
-            point: {
-                radius: "7",
-                fillcolor: "82, 98, 217",
-                opacity: "0.5",
-                strokecolor: "82, 98, 217",
-                strokewidth: "4"
-            },
-            line: {
-                opacity: "1",
-                strokecolor: "82, 98, 217",
-                strokewidth: "4"
-            },
-            polygon: {
-                fillcolor: "82, 98, 217",
-                opacity: "0.5",
-                strokecolor: "82, 98, 217",
-                strokewidth: "4"
-            }
-        };
-        var selection_style = {};
-        if (configuration.getConfiguration().styles && configuration.getConfiguration().styles.selectionstyle) {
-            selection_style = Object.assign({}, default_selection_style, configuration.getConfiguration().styles.selectionstyle);
-        } else {
-            selection_style = default_selection_style;
-        }
-        _sourceSelectOverlay = new ol.source.Vector();
-        _selectOverlayFeatureLayer = new ol.layer.Vector({
-            source: _sourceSelectOverlay,
-            style: getSelectStyle.bind(this, selection_style),
-            mviewerid: 'selectoverlay'
-        });
-        _map.addLayer(_selectOverlayFeatureLayer);
-    };
-
-
-    /**
-     * Private Method: initSubSelectOverlay
-     * this layer is used to render ol.Feature of sub selection in info tool
-     */
-
-    var _initSubSelectOverlay = function () {
-        var default_subselection_style = {
-            point: {
-                radius: "7",
-                fillcolor: "252, 186, 3",
-                opacity: "0.5",
-                strokecolor: "82, 98, 217",
-                strokewidth: "2"
-            },
-            line: {
-                opacity: "1",
-                strokecolor: "252, 186, 3",
-                strokewidth: "2"
-            },
-            polygon: {
-                fillcolor: "252, 186, 3",
-                opacity: "0.5",
-                strokecolor: "252, 186, 3",
-                strokewidth: "2"
-            }
-        };
-        var subselection_style = {};
-        if (configuration.getConfiguration().styles && configuration.getConfiguration().styles.subselectionstyle) {
-            subselection_style = Object.assign({}, default_subselection_style, configuration.getConfiguration().styles.subselectionstyle);
-        } else {
-            subselection_style = default_subselection_style;
-        }
-        _sourceSubSelectOverlay = new ol.source.Vector();
-        _subSelectOverlayFeatureLayer = new ol.layer.Vector({
-            source: _sourceSubSelectOverlay,
-            style: getSelectStyle.bind(this, subselection_style),
-            mviewerid: 'subselectoverlay'
-        });
-        _map.addLayer(_subSelectOverlayFeatureLayer);
-    };
-
-    var _initTooltip = function () {
-        //Activate tooltips on tools buttons
-        if (!configuration.getConfiguration().mobile) {
-            $("[title]").each((i,el) => {
-                [placement, trigger, html, container, template] = ['left', 'hover', true, 'body', mviewer.templates.tooltip];
-                if ($(el).attr('tooltip')) {
-                    // element with "tooltip" params used to custom tooltip element
-                    [placement, trigger, html, container, template] = $(el).attr('tooltip').split(",");//.map(e => `${e}`);
-                    template = template.split(".").forEach(e => t = t ? t[e] : window[e]);
-                }
-                // create tooltip
-                $(el).tooltip({
-                    placement: placement,
-                    trigger: trigger,
-                    html: html,
-                    container: container,
-                    template: template
-                });
-            });
-        }
-    };
-
-    /**
-     * Private Method: initTools
-     * Tools can be set or unset. Only one tool can be enabled like a switch.
-     * The default enabled tool is info (getFeatureInfo control)
-     * Tools must have this methods : enable & disabled & init
-     *
-     */
-
-    _initTools = function () {
-        //GetFeatureInfo tool
-        mviewer.tools.info = info;
-        mviewer.tools.info.init();
-        const appconfig = configuration.getConfiguration().application;
-
-        //Measure tool
-        if (appconfig.measuretools === "true") {
-            //Load measure module
-            mviewer.tools.measure = measure;
-            mviewer.tools.measure.init();
-        }
-
-        //AddLayers tool
-        if (appconfig.addlayerstools === "true") {
-            //Load measure module
-            mviewer.tools.addlayers = addlayers;
-            mviewer.tools.addlayers.init();
-        }
-
-        //Activate GetFeatureInfo tool
-        mviewer.setTool('info');
-        
-        //Measure tools
-        const zoomBtnActivate = appconfig.zoomtools === "true" || !appconfig.zoomtools;
-        const zoomToExtentBtnActivate = appconfig.initialextenttool === "true" || !appconfig.initialextenttool;
-        if (zoomToExtentBtnActivate || zoomBtnActivate) {
-            //Load zoom toolbar module if one of button is activate
-            mviewer.tools.zoom = zoom;
-            zoom.init();
-        }
-        if (zoomToExtentBtnActivate) zoom.initExtentBtn();
-        if (zoomBtnActivate) zoom.initZoomBtn();
-    };
-
-    var _initShare = function () {
-        var displayMode =  API.mode || 'd';
-        $("#mv-display-mode input").filter('[value="'+  displayMode +'"]').attr('checked', true);
-        $( "#mv-display-mode input" ).change(function() {
-            mviewer.setPermalink();
-        });
-    };
-
-    /**
-     * Private Method: _initPanelsPopup
-     *
-     */
-
-    var _initPanelsPopup = function () {
-        if (configuration.getConfiguration().application.help) {
-            $.ajax({
-                url: configuration.getConfiguration().application.help,
-                dataType: "text",
-                success: function (html) {
-                    $("#help .modal-body").append(html);
-                }
-            });
-        }
-    };
-
-    /**
-     * Private Method: _mapChange
-     *
-     *Parameter e - event
-     */
-
-    var _mapChange = function (e) {
-        if ($("#sharepanel-popup").css("visibility") === "visible") {
-            mviewer.setPermalink();
-        }
-        if (search.options.features && $("#searchfield").val()) {
-           search.sendElasticsearchRequest($("#searchfield").val());
-        }
-    };
-
-    /**
-     * Private Method: _calculateScale
-     *
-     * Parameter res - resolution
-     */
-
-    var _calculateScale = function (res) {
-        var ppi = 25.4/0.28;
-        return res*ppi/0.0254;
-    };
-
-    /**
-     * Private Method: _mapZoomChange
-     *
-     *Parameter e - event
-     */
-
-    var _mapZoomChange = function (e) {
-        var resolution = e.target.getResolution();
-        var scale = _calculateScale(resolution);
-        _updateLayersScaleDependancy(scale);
-        _updateLegendsScaleDependancy(scale);
-    };
-
-    /**
-     * Private Method: _getLayerByName
-     *
-     * Parameter name - layer name
-     */
-
-    var _getLayerByName = function (name) {
-        return $.grep(_map.getLayers().getArray(), function(layer, i) { return layer.get('name') === name; })[0];
-    };
-
-    var _processLayer = function (oLayer, l) {
-        oLayer.layer = l;
-        l.setVisible(oLayer.checked);
-        l.setOpacity(oLayer.opacity);
-        if (oLayer.scale && oLayer.scale.max) { l.setMaxResolution(_convertScale2Resolution(oLayer.scale.max)); }
-        if (oLayer.scale && oLayer.scale.min) { l.setMinResolution(_convertScale2Resolution(oLayer.scale.min)); }
-        l.set('name', oLayer.name);
-        l.set('mviewerid', oLayer.id);
-        l.set('infohighlight', oLayer.infohighlight);
-
-        if (oLayer.searchable) {
-            search.processSearchableLayer(oLayer);
-        }
-        if (oLayer.scale) {
-            _scaledDependantLayers.push(oLayer);
-        }
-        if (oLayer.dynamiclegend) {
-            _scaledDependantLayersLegend.push(oLayer);
-        }
-        _overLayers[oLayer.id] = oLayer;
-
-        if (oLayer.metadatacsw && oLayer.metadatacsw.search("http")>=0) {
-            $.ajax({
-                dataType: "xml",
-                layer: oLayer.id,
-                url:  _ajaxURL(oLayer.metadatacsw),
-                success: function (result) {
-                    var summary = "";
-                    if ($(result).find("dct\\:abstract, abstract").length > 0) {
-                        summary = '<p>'+ $(result).find("dct\\:abstract, abstract").text()+ '</p>';
-                    } else {
-                        summary = '<p>'+$(result).find("gmd\\:identificationInfo, identificationInfo")
-                            .find("gmd\\:MD_DataIdentification,  MD_DataIdentification")
-                            .find("gmd\\:abstract, abstract").find("gco\\:CharacterString, CharacterString").text()+ '</p>';
-                    }
-                    if (_overLayers[this.layer].metadata) {
-                        summary += '<a href="'+_overLayers[this.layer].metadata+'" target="_blank">En savoir plus</a>';
-                    }
-                    _overLayers[this.layer].summary = summary;
-
-                    var modifiedDate = $(result).find("dct\\:modified, modified").text() || $(result).find("dct\\:created, created").text();
-                    _overLayers[this.layer].modifiedDate = modifiedDate;
-
-                    //use source from metadata as attribution if conf is set to "metadata"
-                    if (_overLayers[this.layer].attribution === "metadata") {
-                        var source = $(result).find("dc\\:source, source").text();
-                        _overLayers[this.layer].attribution = `Source : ${source}`;
-                        $(`#${this.layer}-attribution`).text(`Source : ${source}`);
-                    }
-
-                    //update visible layers on the map
-                    $(`#${this.layer}-layer-summary`).attr("data-content", summary);
-                    $(`#${this.layer}-date`).text(modifiedDate);
-                }
-            });
-        }
-        _map.addLayer(l);
-        if (oLayer.type === "customlayer" && mviewer.customLayers[oLayer.id]) {
-            mviewer.customLayers[oLayer.id].config = oLayer;
-        }
-        _events.overLayersLoaded += 1;
-    };
-
-    /**
-     * Private Method: _updateMedia
-     *
-     */
-
-    var _updateMedia = function (s) {
-        switch (s) {
-            case "xs":
-            case "sm":
-                if (_mediaSize === "xl") {
-                    _updateViewPort("xs");
-                }
-                break;
-            case "md":
-            case "lg":
-                if (_mediaSize === "xs") {
-                    _updateViewPort("xl");
-                }
-                break;
-        }
-
-    };
-
-    /**
-     * Private Method: _updateViewPort
-     *
-     */
-
-    var _updateViewPort = function (s, displayMode) {
-        _mediaSize = s;
-        if (s === "xs") {
-            $("#wrapper, #main").removeClass("xl").addClass("xs");
-            $("#menu").appendTo("#thematic-modal .modal-body");
-            $("#legend").appendTo("#legend-modal .modal-body");
-            configuration.getConfiguration().mobile = true;
-            if (displayMode) {
-                $("#wrapper, #main").addClass("mode-" + displayMode);
-				$("#page-content-wrapper").append(`
+  var _updateViewPort = function (s, displayMode) {
+    _mediaSize = s;
+    if (s === "xs") {
+      $("#wrapper, #main").removeClass("xl").addClass("xs");
+      $("#menu").appendTo("#thematic-modal .modal-body");
+      $("#legend").appendTo("#legend-modal .modal-body");
+      configuration.getConfiguration().mobile = true;
+      if (displayMode) {
+        $("#wrapper, #main").addClass("mode-" + displayMode);
+        $("#page-content-wrapper").append(`
                     <a 
                         id="btn-mode-su-menu"
                         class="btn btn-sm btn-default"
@@ -861,2371 +922,2599 @@ mviewer = (function () {
                         i18n="data.toggle">
                         <i class="fas fa-layer-group"></i>
                         <span i18n="data.toggle"> Afficher la légende</span>
-                    </a>`
-                );                 
-                if (displayMode === "u") {
-                    $("#mv-navbar").remove();
-                }
-            }
-        } else {
-            $("#wrapper, #main").removeClass("xs").addClass("xl");
-            $("#menu").appendTo("#sidebar-wrapper");
-            $("#legend").appendTo("#layers-container-box");
-            configuration.getConfiguration().mobile = false;
+                    </a>`);
+        if (displayMode === "u") {
+          $("#mv-navbar").remove();
         }
-    };
+      }
+    } else {
+      $("#wrapper, #main").removeClass("xs").addClass("xl");
+      $("#menu").appendTo("#sidebar-wrapper");
+      $("#legend").appendTo("#layers-container-box");
+      configuration.getConfiguration().mobile = false;
+    }
+  };
 
-    /**
-     * Private Method: _initDisplayMode
-     *
-     */
+  /**
+   * Private Method: _initDisplayMode
+   *
+   */
 
-    var _initDisplayMode = function () {
-        var displayMode = "d"; /* d :default, s: simple, u: ultrasimple */
-        if (API.mode && (API.mode === "s" || API.mode === "u")) {
-            displayMode = API.mode;
-            if (API.mode === "u") {
-                //Show searchtool on main div
-                $("#searchtool").appendTo("#main");
-                $("#searchtool").removeClass("navbar-form");
-            }
+  var _initDisplayMode = function () {
+    var displayMode = "d"; /* d :default, s: simple, u: ultrasimple */
+    if (API.mode && (API.mode === "s" || API.mode === "u")) {
+      displayMode = API.mode;
+      if (API.mode === "u") {
+        //Show searchtool on main div
+        $("#searchtool").appendTo("#main");
+        $("#searchtool").removeClass("navbar-form");
+      }
+    }
+    if ($(window).width() < 992 || displayMode !== "d") {
+      _mediaSize = "xs";
+      configuration.getConfiguration().mobile = true;
+    } else {
+      _mediaSize = "xl";
+      configuration.getConfiguration().mobile = false;
+    }
+    if (_mediaSize === "xs") {
+      _updateViewPort("xs", displayMode);
+    }
+    if (displayMode === "d") {
+      $(window).resize(function () {
+        var w = $(this).width();
+        var s = "";
+        if (w < 768) {
+          s = "xs";
+        } else if (w < 992) {
+          s = "sm";
+        } else if (w < 1200) {
+          s = "md";
+        } else if (w >= 1200) {
+          s = "lg";
         }
-        if ($(window).width() < 992 || displayMode !== "d") {
-            _mediaSize = "xs";
-            configuration.getConfiguration().mobile = true;
-        } else {
-            _mediaSize = "xl";
-            configuration.getConfiguration().mobile = false;
+        if (s !== _bsize) {
+          _bsize = s;
+          _updateMedia(_bsize);
         }
-        if (_mediaSize === "xs") {
-            _updateViewPort("xs", displayMode);
-        }
-        if (displayMode === "d") {
-            $(window).resize(function() {
-                var w = $(this).width();
-                var s = "";
-                if (w < 768) {
-                    s = 'xs';
-                } else if (w < 992) {
-                    s = 'sm';
-                } else if (w < 1200) {
-                    s = 'md';
-                } else if (w >= 1200) {
-                    s = 'lg';
-                }
-                if (s !== _bsize) {
-                    _bsize = s;
-                    _updateMedia(_bsize);
-                }
-            });
-        }
-        if (configuration.getConfiguration().mobile) {
-            $("#thematic-modal .modal-body").append('<ul class="sidebar-nav nav-pills nav-stacked" id="menu"></ul>');
-            $("#legend").appendTo("#legend-modal .modal-body");
-        } else {
-            $("#sidebar-wrapper").append('<ul class="sidebar-nav nav-pills nav-stacked" id="menu"></ul>');
-        }
-
-        $('.navbar-collapse a, #map').on('click', function(){
-            if ( $( '.navbar-collapse' ).hasClass('in') ) {
-                $('.navbar-toggle').click();
-            }
-        });
-
-    };
-    /**
-     * Private Method: _initDataList
-     *
-     * Parameter
-     */
-
-    var _initDataList = function () {
-        var htmlListGroup = '';
-        var reverse_themes = [];
-        var crossorigin = '';
-        _themes = configuration.getThemes();
-		var topics = false;
-		if (API.topics) {
-			topics = API.topics.split(",");
-		}
-        $.each(_themes, function (id, theme) {
-			if (topics) {
-				if (topics.indexOf(theme.id) >= 0) {
-					reverse_themes.push(theme);
-				}
-			} else {
-				reverse_themes.push(theme);
-			}
-        });
-
-        $.each(reverse_themes.reverse(), function (id, theme) {
-            var reverse_layers = [];
-            var groups = [];
-            var classes = [];
-            var view = {
-                id:theme.id,
-                name: theme.name,
-                icon: theme.icon,
-                layers:false,
-                groups: false,
-                toggleAllLayers: false,
-                cls: ""
-            };
-             if (configuration.getConfiguration().application.togglealllayersfromtheme === "true") {
-                 view.toggleAllLayers = true;
-                 classes.push("empty");
-             }
-            //GROUPS
-            if (_themes[theme.id].groups) {
-                classes.push("level-1");
-                $.each(_themes[theme.id].groups, function (id, group) {
-                    var grp = {title: group.name, layers: [] };
-                    $.each(group.layers, function (id, layer) {
-                        if (layer.showintoc) {
-                            grp.layers.unshift(layer);
-                        }
-                    });
-                    groups.push(grp);
-                });
-                view.groups = groups;
-                view.cls = classes.join(" ");
-            //NO GROUPS
-            } else {
-                 $.each(_themes[theme.id].layers, function (id, layer) {
-                    if (layer.showintoc) {
-                        reverse_layers.push(layer);
-                    }
-
-                });
-                view.layers = reverse_layers.reverse();
-                view.cls = classes.join(" ");
-            }
-            htmlListGroup += _renderHTMLFromTemplate(mviewer.templates.theme, view);
-        });
-        var panelMini = configuration.getConfiguration().themes.mini;
-        panelMini = panelMini && (panelMini === 'true') || false;
-        var legendmini = configuration.getConfiguration().themes.legendmini || null;
-        legendmini = legendmini != null ? legendmini && (legendmini === 'true') || false : legendmini;
-
-        if (panelMini) {
-            // hide all panels
-            mviewer.toggleMenu(false);
-            mviewer.toggleLegend(false);
-        }
-        if(!legendmini && panelMini && legendmini != null) {
-            // hide legend panel
-            mviewer.toggleLegend(false);
-        } else if(legendmini && !panelMini && legendmini != null) {
-            // display legend panel
-            mviewer.toggleLegend(false);
-        }
-        $("#menu").html(htmlListGroup);
-        initMenu();
-        // Open theme item if set to collapsed=false
-        if (configuration.getConfiguration().themes.theme !== undefined) {
-            var expanded_theme = $.grep(configuration.getConfiguration().themes.theme, function(obj){return obj.collapsed === "false";});
-            if (expanded_theme.length > 0) {
-                $("#theme-layers-"+expanded_theme[0].id+">a").click();
-            }
-        }
-        //Add remove and add layers button on them
-        if (configuration.getConfiguration().application.togglealllayersfromtheme === "true") {
-            $(".toggle-theme-layers").on("click",mviewer.toggleAllThemeLayers);
-        }
-    };
-
-    // manage legend display
-    var _setLayerScaleStatus = function (layer, scale) {
-        if (layer.scale) {
-            var isVector = layer.vectorlegend;
-            var isVisible = scale >= layer.scale.min && scale <= layer.scale.max;
-            if(isVector) {
-                return _setVectorLegendStatus(layer, isVisible);
-            }
-            _setUrlLegendStatus(layer, isVisible);
-        }
-    };
-
-    // manage display for vector legend
-    var _setVectorLegendStatus = (layer, visible) => {
-        var panel = $('#vector-legend-'+layer.id);
-        var cl =  'hide'+layer.id;
-        if(visible) {
-            panel.removeClass('hidden');
-            panel.parents().find('.'+cl).remove()
-        } else {
-            panel.addClass('hidden');
-            if(!panel.parents().find('.'+cl).length){
-                var img = `<img class="${cl} img-responsive" src="img/invisible.png" style="max-width:30%">`;
-                $('#vector-legend-'+layer.id).parent().append(img);
-            }
-        }
+      });
+    }
+    if (configuration.getConfiguration().mobile) {
+      $("#thematic-modal .modal-body").append(
+        '<ul class="sidebar-nav nav-pills nav-stacked" id="menu"></ul>'
+      );
+      $("#legend").appendTo("#legend-modal .modal-body");
+    } else {
+      $("#sidebar-wrapper").append(
+        '<ul class="sidebar-nav nav-pills nav-stacked" id="menu"></ul>'
+      );
     }
 
-    // manage static legend display
-    var _setUrlLegendStatus = function (layer, visible) {
-        var legendUrl = _getlegendurl(layer);
-        var panel = $('#legend-'+layer.id);
-        if (visible) {
-            panel.attr("src",legendUrl);
-            panel.closest("li").removeClass("glyphicon mv-invisible");
-        } else {
-            panel.attr("src","img/invisible.png");
-            panel.closest("li").addClass("glyphicon mv-invisible");
-        }
-    };
+    $(".navbar-collapse a, #map").on("click", function () {
+      if ($(".navbar-collapse").hasClass("in")) {
+        $(".navbar-toggle").click();
+      }
+    });
+  };
+  /**
+   * Private Method: _initDataList
+   *
+   * Parameter
+   */
 
-    var _setLayerLegend = function (layer, scale) {
-        if (layer.dynamiclegend) {
-            var legendUrl = _getlegendurl(layer,scale);
-            $('#legend-'+layer.id).attr("src",legendUrl);
+  var _initDataList = function () {
+    var htmlListGroup = "";
+    var reverse_themes = [];
+    var crossorigin = "";
+    _themes = configuration.getThemes();
+    var topics = false;
+    if (API.topics) {
+      topics = API.topics.split(",");
+    }
+    $.each(_themes, function (id, theme) {
+      if (topics) {
+        if (topics.indexOf(theme.id) >= 0) {
+          reverse_themes.push(theme);
         }
-    };
+      } else {
+        reverse_themes.push(theme);
+      }
+    });
 
-    var _updateLayersScaleDependancy = function (scale) {
-        $.each( _scaledDependantLayers, function (i, item) {
-            _setLayerScaleStatus(item, scale);
+    $.each(reverse_themes.reverse(), function (id, theme) {
+      var reverse_layers = [];
+      var groups = [];
+      var classes = [];
+      var view = {
+        id: theme.id,
+        name: theme.name,
+        icon: theme.icon,
+        layers: false,
+        groups: false,
+        toggleAllLayers: false,
+        cls: "",
+      };
+      if (
+        configuration.getConfiguration().application.togglealllayersfromtheme === "true"
+      ) {
+        view.toggleAllLayers = true;
+        classes.push("empty");
+      }
+      //GROUPS
+      if (_themes[theme.id].groups) {
+        classes.push("level-1");
+        $.each(_themes[theme.id].groups, function (id, group) {
+          var grp = { title: group.name, layers: [] };
+          $.each(group.layers, function (id, layer) {
+            if (layer.showintoc) {
+              grp.layers.unshift(layer);
+            }
+          });
+          groups.push(grp);
         });
-    };
-
-    var _updateLegendsScaleDependancy = function (scale) {
-        $.each( _scaledDependantLayersLegend, function (i, item) {
-            _setLayerLegend(item, scale);
-        });
-    };
-
-    var _setThemeStatus = function (id, prop) {
-        var theme = $('#theme-layers-' + id);
-        if (!prop) {
-            prop = _getThemeStatus(id);
-        }
-        switch (prop.status) {
-            case "empty":
-                theme.removeClass("half full").addClass(prop.status);
-                break;
-            case "full":
-                theme.removeClass("half empty").addClass(prop.status);
-                break;
-            case "half":
-                theme.removeClass("empty full").addClass(prop.status);
-                break;
-        }
-        theme.find(".toggle-theme-layers .badge").text([prop.visible, prop.all].join("/"));
-    };
-
-    _getThemeStatus = function (id) {
-        var theme = $('#theme-layers-' + id);
-        var nbLayers = theme.find("input").length;
-        var visLayers = theme.find("input[value='true']").length;
-        var status = "";
-        if (visLayers === 0 ) {
-            status = "empty";
-        } else if (visLayers === nbLayers ){
-            status = "full";
-        } else {
-            status = "half";
-        }
-        return {"visible" : visLayers, "all": nbLayers, "status": status};
-    };
-
-    /**
-     * Method: _createBaseLayer
-     * Create an {OpenLayers.Layer}.OSM|WMTS|WMS
-     *
-     * Parameters:
-     * params - [ xml ] a baselayer node    present in config.xml.
-     */
-
-    var _createBaseLayer = function (baselayer) {
-        var crossorigin = configuration.getCrossorigin();
-        var l;
-        function setBaseOpacity(layer, value){
-            if(layer && value) {
-                layer.setOpacity(Number(value));
-            }
-        }
-        switch (baselayer.type) {
-            case "fake":
-                l = new ol.layer.Base({});
-                _backgroundLayers.push(l);
-                l.set('name', baselayer.label);
-                l.set('blid', baselayer.id);
-                break;
-            case "vector-tms":
-                let vecLayer = new ol.layer.VectorTile({
-                    opacity: baselayer.opacity,
-                    title: baselayer.title,
-                    source: new ol.source.VectorTile({
-                      url: baselayer.url,
-                      format: new ol.format.MVT(),
-                      maxZoom: baselayer.maxzoom,
-                      minZoom: baselayer.minZoom
-                    }),
-                  declutter: false
-                });
-                l = vecLayer;
-                _backgroundLayers.push(l);
-                _map.addLayer(l);
-                if (baselayer.styleurl) {
-                    fetch(baselayer.styleurl).then(function(response) {
-                      response.json().then(function (glStyle) {
-                        olms.applyStyle(vecLayer, glStyle, baselayer.style);
-                      });
-                    });
-                }
-                l.set('name', baselayer.label);
-                l.set('blid', baselayer.id);
-                break;
-            case "WMS":
-                var params = {
-                                'LAYERS': baselayer.layers,
-                                'VERSION': '1.1.1',
-                                'FORMAT': baselayer.format,
-                                'TRANSPARENT': false
-                };
-                if (baselayer.tiled !== "false") {
-                    params.TILED = true;
-                }
-
-                // Use owsoptions to overload default Getmap params
-                Object.assign(params, getParamsFromOwsOptionsString(baselayer.owsoptions));
-
-                l =  new ol.layer.Tile({
-                    source: new ol.source.TileWMS({
-                        url: baselayer.url,
-                        crossOrigin: crossorigin,
-                        maxZoom: baselayer.maxzoom || 18,
-                        params: params,
-                        attributions:  baselayer.attribution
-                    }),
-                    visible: false
-                });
-                l.set('name', baselayer.label);
-                l.set('blid', baselayer.id);
-                setBaseOpacity(l,baselayer.opacity);
-                _backgroundLayers.push(l);
-                _map.addLayer(l);
-                break;
-            case "WMTS":
-                if (baselayer.fromcapacity === "false") {
-                    var matrixset = baselayer.matrixset;
-                    var projectionExtent = _projection.getExtent();
-                    l = new ol.layer.Tile({
-                        source: new ol.source.WMTS({
-                            url:  baselayer.url,
-                            crossOrigin: crossorigin,
-                            layer: baselayer.layers,
-                            matrixSet: matrixset,
-                            style: baselayer.style,
-                            format: baselayer.format,
-                            attributions: baselayer.attribution,
-                            projection: _projection,
-                            tileGrid: new ol.tilegrid.WMTS({
-                                origin: ol.extent.getTopLeft(projectionExtent),
-                                resolutions: utils.getWMTSTileResolutions(matrixset),
-                                matrixIds: utils.getWMTSTileMatrix(matrixset)
-                            })
-                        })
-                    });
-                    l.setVisible(false);
-                    l.set('name', baselayer.label);
-                    l.set('blid', baselayer.id);
-                    setBaseOpacity(l,baselayer.opacity);
-                    _map.addLayer(l);
-                    _backgroundLayers.push(l);
-                }
-                else {
-                    $.ajax({
-                        url:_ajaxURL(baselayer.url),
-                        dataType: "xml",
-                        data: {
-                            SERVICE: "WMTS",
-                            VERSION: "1.0.0",
-                            REQUEST: "GetCapabilities"
-                        },
-                        success: function (xml) {
-                            var getCapabilitiesResult = (new ol.format.WMTSCapabilities()).read(xml);
-                            var WMTSOptions = ol.source.WMTS.optionsFromCapabilities( getCapabilitiesResult, {
-                                layer: baselayer.layers,
-                                matrixSet: baselayer.matrixset,
-                                format:baselayer.format,
-                                style: baselayer.style
-                            });
-                            WMTSOptions.attributions = baselayer.attribution;
-                            l = new ol.layer.Tile({ source: new ol.source.WMTS(WMTSOptions) });
-                            l.set('name', baselayer.label);
-                            l.set('blid', baselayer.id);
-                            setBaseOpacity(l,baselayer.opacity);
-                            _map.getLayers().insertAt(0,l);
-                            _backgroundLayers.push(l);
-                            if( baselayer.visible === 'true' ) {
-                                l.setVisible(true);
-                            } else {
-                                l.setVisible(false);
-                            }
-                        }
-                    });
-                }
-                break;
-
-            case "OSM":
-                l = new ol.layer.Tile({
-                    source: new ol.source.OSM({
-                        url: baselayer.url,
-                        crossOrigin: 'anonymous',
-                        maxZoom: baselayer.maxzoom || 18,
-                        attributions: baselayer.attribution
-                    }),
-                    visible: false
-                });
-                l.set('name', baselayer.label);
-                l.set('blid', baselayer.id);
-                setBaseOpacity(l,baselayer.opacity);
-                _backgroundLayers.push(l);
-                _map.addLayer(l);
-                break;
-        }
-    };
-
-    /**
-     * Private Method: _getVisibleOverLayers
-     *
-     */
-
-    var _getVisibleOverLayers = function () {
-        var layers = [];
-        $.each(_overLayers, function (i, item) {
-            var layerparams = [];
-            if (item.layer.getVisible() && item.showintoc) {
-                layerparams.push(item.layerid);
-                if (item.type === "wms") {
-                    //get current style if many styles
-                    var source = item.layer.getSource();
-                    if(item.styles && source.getParams().STYLES) {
-                        layerparams.push(source.getParams().STYLES.trim());
-                    } else {
-                        layerparams.push("");
-                    }
-                    //get current filter if necessary
-                    if (item.attributefilter && source.getParams()['CQL_FILTER']) {
-                        layerparams.push(source.getParams()['CQL_FILTER'].trim());
-                    } else {
-                        layerparams.push("");
-                    }
-                    //get current time filter if necessary
-                    if (item.timefilter && source.getParams()['TIME']) {
-                        layerparams.push(source.getParams()['TIME']);
-                    }
-
-                }
-
-                layers.push(layerparams.join("*").replace(/\*$/i, ""));
-            }
-        });
-        return layers.join(",");
-    };
-
-    /**
-     * Private Method: _setVisibleOverLayers
-     *
-     */
-
-    var _setVisibleOverLayers = function (lst) {
-        var errors = [];
-        var errorLayers =[];
-        var layers = lst.split(",");
-        var layersWithOptions = {};
-        layers.forEach(function (layer, i) {
-            //search layer by id or by name in overLayers collection
-            //layer with options - layername*style*cql_filter*time
-            var layerWithOptions = layer.split("*");
-            var richLayer = {};
-            var layerIdOrName = layerWithOptions[0];
-            switch (layerWithOptions.length) {
-                case 2:
-                    richLayer.style = layerWithOptions[1];
-                    break;
-                case 3:
-                    richLayer.style = layerWithOptions[1];
-                    richLayer.filter = layerWithOptions[2];
-                    break;
-                case 4:
-                    richLayer.style = layerWithOptions[1];
-                    richLayer.filter = layerWithOptions[2];
-                    richLayer.time = layerWithOptions[3];
-                    break;
-            }
-
-            var l = false;
-            if (mviewer.getLayers()[layerIdOrName] && mviewer.getLayers()[layerIdOrName].showintoc
-                && mviewer.getLayers()[layerIdOrName].layer) {
-                //layerIdOrName is layerid
-                l =  mviewer.getLayers()[layerIdOrName].layer;
-                richLayer.layerid = layerIdOrName;
-                richLayer.name = mviewer.getLayers()[layerIdOrName].name;
-            } else {
-                //layerIdOrName is layername
-                l = _getLayerByName(layerIdOrName);
-                richLayer.name = layerIdOrName;
-                if (l) {
-                    richLayer.layerid = l.get("mviewerid");
-                } else {
-                    richLayer.layerid = layerIdOrName;
-                }
-                
-            }
-            layersWithOptions[richLayer.layerid] = richLayer;
-
-            if (l) {
-                (l.src)?l.src.setVisible(true):l.setVisible(true);
-            } else {
-                errors.push(i);
-            }
-        });
-        errors.forEach(function(err) {
-            errorLayers.push(layers[err]);
-            delete layers[err];
-        });
-        if (errorLayers.length > 0) {
-            mviewer.alert("Couche(s) "+ errorLayers.join(", ") + " non disponible(s)", "alert-danger");
-        }
-        _overwiteThemeProperties(layersWithOptions);
-    };
-
-    /**
-     * Private Method: _showCheckedLayers
-     *
-     * Parameter
-     */
-
-    var _showCheckedLayers = function () {
-        var checkedLayers = $.map(_overLayers, function(layer, index) {
-            if (layer.checked) {
-                return layer;
-            }
-        });
-        $.each( checkedLayers, function ( index, layer) {
-            if (layer) {
-                var l = layer.layer;
-                if (l && $(".list-group-item.mv-layer-details[data-layerid='"+layer.id+"']").length === 0) {
-                    (l.src)?l.src.setVisible(true):l.setVisible(true);
-                    mviewer.addLayer(layer);
-                }
-            }
-        });
-    };
-
-    /**
-     * Private Method: _overwiteThemeProperties
-     *
-     * Parameter: layers (Hash of richlayers (layerid, style, filter))
-     */
-
-    var _overwiteThemeProperties = function (layersWithOptions) {
-        var showLayer = function (layerControler, layerOptions) {
-            layerControler.checked = true;
-            layerControler.visiblebydefault = true;
-            var li = $(".mv-nav-item[data-layerid='"+layerControler.layerid+"']");
-            if (layerOptions.style && layerControler.type === "wms") {
-                layerControler.layer.getSource().getParams()['STYLES'] = layerOptions.style;
-                layerControler.style = layerOptions.style;
-                layerControler.legendurl = _getlegendurl(layerControler);
-            }
-            if (layerOptions.filter && layerControler.type === "wms") {
-                layerControler.layer.getSource().getParams()['CQL_FILTER'] = layerOptions.filter;
-                layerControler.filter = layerOptions.filter;
-            }
-            mviewer.toggleLayer(li);
-            if (layerOptions.time && layerControler.type === "wms") {
-                //layerControler.layer.getSource().getParams()['TIME'] = layerOptions.time;
-                var timeControl = $("#"+layerControler.layerid+"-layer-timefilter");
-                if (timeControl.hasClass("mv-slider-timer")) {
-                    timeControl.slider('setValue', layerControler.timevalues.indexOf(layerOptions.time), true, true);
-                }
-            }
-
-        };
-
-        var hideLayer = function (layerControler) {
-            layerControler.checked = false;
-            if (layerControler.layer && layerControler.showintoc) {
-                layerControler.layer.setVisible(false);
-            }
-            layerControler.visiblebydefault = false;
-        };
-        $.each(_themes, function (i, theme) {
-            $.each(theme.layers, function (j, l) {
-                if (layersWithOptions[l.layerid]) {
-                    var options = layersWithOptions[l.layerid];
-                    showLayer(l, options);
-                } else {
-                    hideLayer(l);
-                }
-            });
-             $.each(theme.groups, function (g, group) {
-                 $.each(group.layers, function (i, l) {
-                    if (layersWithOptions[l.layerid]) {
-                        var options = layersWithOptions[l.layerid];
-                        showLayer(l, options);
-                    } else {
-                        hideLayer(l);
-                    }
-                });
-             });
-
-        });
-    };
-
-    /**
-     * Private Method:  parseWMCResponse
-     *
-     */
-
-    var _parseWMCResponse = function (response, wmcid) {
-        var crossorigin = configuration.getCrossorigin();
-        var wmc = $('ViewContext', response);
-        var wmc_extent = {};
-        wmc_extent.srs=$(wmc).find('General > BoundingBox').attr('SRS');
-        wmc_extent.minx = parseInt($(wmc).find('General > BoundingBox').attr('minx'));
-        wmc_extent.miny = parseInt($(wmc).find('General > BoundingBox').attr('miny'));
-        wmc_extent.maxx = parseInt($(wmc).find('General > BoundingBox').attr('maxx'));
-        wmc_extent.maxy = parseInt($(wmc).find('General > BoundingBox').attr('maxy'));
-        var map_extent = ol.proj.transformExtent([wmc_extent.minx, wmc_extent.miny, wmc_extent.maxx,
-            wmc_extent.maxy], wmc_extent.srs, _projection.getCode());
-        var title = $(wmc).find('General > Title').text() ||  $(wmc).attr('id');
-        var themeLayers = {};
-        var layerRank = 0 ;
-        $(wmc).find('LayerList > Layer').each(function() {
-            layerRank+=1;
-            // we only consider queryable layers
-            if ($(this).attr('queryable')=='1') {
-                var oLayer = {};
-                oLayer.checked = ($(this).attr('hidden')==='0')?true:false;
-                oLayer.id = $(this).children('Name').text();
-                oLayer.rank = layerRank;
-                oLayer.infospanel = "right-panel";
-                oLayer.layerid = $(this).children('Name').text();
-                oLayer.layername = oLayer.id;
-                oLayer.name = $(this).children('Title').text();
-                oLayer.title = $(this).children('Title').text();
-                oLayer.attribution = $(this).find("attribution").find("Title").text() || "";
-                oLayer.metadata = $(this).find('MetadataURL > OnlineResource').attr('xlink:href');
-                //fixme
-                if (oLayer.metadata && oLayer.metadata.search('geonetwork') > 1) {
-                    var mdid = oLayer.metadata.split('#/metadata/')[1];
-                    oLayer.metadatacsw = oLayer.metadata.substring(0,oLayer.metadata.search('geonetwork')) +
-                        'geonetwork/srv/eng/csw?SERVICE=CSW&VERSION=2.0.2&REQUEST=GetRecordById&elementSetName=full&ID=' +
-                        mdid;
-                }
-                oLayer.style = $(this).find("StyleList  > Style[current='1'] > Name").text();
-                oLayer.sld = ($(this).find("StyleList  > Style[current='1'] > SLD > OnlineResource").attr('xlink:href'));
-                if (!oLayer.sld && $(this).find("StyleList  > Style > Name").length > 1) {
-                    oLayer.styles = $(this).find("StyleList  > Style > Name").map(function (id,name) { return $(name).text(); }).toArray().join(",");
-                    oLayer.stylesalias = oLayer.styles;
-                }
-                oLayer.url = $(this).find('Server > OnlineResource').attr('xlink:href');
-                oLayer.queryable = true;
-                oLayer.infoformat = 'text/html';
-                oLayer.format = $(this).find("FormatList  > Format[current='1']").text();
-                oLayer.visiblebydefault = oLayer.checked;
-                oLayer.tiled = false;
-                oLayer.legendurl = _getlegendurl(oLayer);
-                oLayer.opacity = parseFloat($(this).find("opacity").text() || "1");
-                var minscale = parseFloat($(this).find("MinScaleDenominator").text());
-                var maxscale = parseFloat($(this).find("MaxScaleDenominator").text());
-                if (!isNaN(minscale) || !isNaN(maxscale)) {
-                    oLayer.scale = {};
-                    if (!isNaN(minscale)) {
-                        oLayer.scale.min = minscale;
-                    }
-                    if (!isNaN(maxscale)) {
-                        oLayer.scale.max = maxscale;
-                    }
-                }
-
-                oLayer.theme = wmcid;
-                themeLayers[oLayer.id] = oLayer;
-                var wms_params = {
-                    'LAYERS': oLayer.id,
-                    'STYLES':oLayer.style,
-                    'FORMAT': 'image/png',
-                    'TRANSPARENT': true
-                };
-                if (oLayer.sld) {
-                    wms_params['SLD'] = oLayer.sld;
-                }
-                var l = new ol.layer.Image({
-                    source: new ol.source.ImageWMS({
-                        url: oLayer.url,
-                        crossOrigin: crossorigin,
-                        params: wms_params
-                    })
-                });
-
-                l.setVisible(oLayer.checked);
-                l.setOpacity(oLayer.opacity);
-                if (oLayer.scale && oLayer.scale.max) { l.setMaxResolution(_convertScale2Resolution(oLayer.scale.max)); }
-                if (oLayer.scale && oLayer.scale.min) { l.setMinResolution(_convertScale2Resolution(oLayer.scale.min)); }
-                l.set('name', oLayer.name);
-                l.set('mviewerid', oLayer.id);
-                themeLayers[oLayer.id].layer = l;
-                _overLayers[oLayer.id] = themeLayers[oLayer.id];
-                if (oLayer.scale) {
-                    _scaledDependantLayers.push(oLayer);
-                }
-            }
-
-        });
-        return {title: title, extent:map_extent, layers:themeLayers};
-    };
-
-    var _flash = function (feature, source) {
-        var duration = 1000;
-        var start = new Date().getTime();
-        var listenerKey;
-
-        function animate(event) {
-            var vectorContext = ol.render.getVectorContext(event);
-            var flashGeom = feature.getGeometry().clone();
-            var elapsed = event.frameState.time - start;
-            var elapsedRatio = elapsed / duration;
-            // radius will be 5 at start and 30 at end.
-            var radius = ol.easing.easeOut(elapsedRatio) * 25;
-            var opacity = ol.easing.easeOut(1 - elapsedRatio);
-
-            var flashStyle = new ol.style.Style({
-                image: new ol.style.Circle({
-                    radius: radius,
-                    snapToPixel: false,
-                    stroke: new ol.style.Stroke({
-                        color: 'rgba(255, 0, 0, ' + opacity + ')',
-                        width: 3,
-                        opacity: opacity
-                    })
-                })
-            });
-            vectorContext.setStyle(flashStyle);
-            vectorContext.drawGeometry(flashGeom);
-            if (elapsed > duration) {
-                ol.Observable.unByKey(listenerKey);
-                source.removeFeature(feature);
-                return;
-            }
-            // tell OL to continue postcompose animation
-            _map.render();
-        }
-        listenerKey = _getLayerByName("flash").on('postrender', animate);
-    };
-
-    var _calculateTicksPositions = function (values) {
-        var min = values[0];
-        var max = values[values.length - 1];
-        var interval = max - min;
-        var positions = [0];
-        for (var i = 1; i < values.length - 1; ++i) {
-            var val = values[i];
-            var pos = parseInt((val - min)/interval * 100);
-            positions.push(pos);
-        }
-        positions.push(100);
-        return positions;
-    };
-
-    var _createPseudoTicks = function (values) {
-        var ticks = [];
-        for (var i = 0; i <= values.length - 1; ++i) {
-            ticks.push(i);
-        }
-        return ticks;
-    };
-
-        /**
-         * Private Method: _getLonLatZfromGeometry
-         *
-         */
-
-    var _getLonLatZfromGeometry = function (geometry, proj, maxzoom) {
-        var xyz = {};
-		var coordinates;
-        //For Point or multiPoints with one point
-        if ((geometry.getType() === "MultiPoint" && geometry.getPoints().length === 1)) {
-            coordinates = geometry.getPoints()[0].flatCoordinates;
-            xyz = { lon: coordinates[0],
-                    lat: coordinates[1],
-                    zoom: maxzoom || 15
-            };
-        } else if (geometry.getType() === "Point") {
-			coordinates = geometry.getFlatCoordinates();
-            xyz = { lon: coordinates[0],
-                    lat: coordinates[1],
-                    zoom: maxzoom || 15
-			};
-
-		} else {
-            var extent = geometry.getExtent();
-            var projExtent = ol.proj.transformExtent(extent, proj, _projection.getCode());
-            var resolution = _map.getView().getResolutionForExtent(projExtent, _map.getSize());
-            var zoom = parseInt(_map.getView().getZoomForResolution(resolution));
-            if (maxzoom && zoom > maxzoom) { zoom = maxzoom; }
-            var center = ol.proj.transform(ol.extent.getCenter(extent),proj, 'EPSG:4326');
-            xyz = { lon: center[0],
-                    lat: center[1],
-                    zoom: zoom
-            };
-        }
-        return xyz;
-    };
-
-    var _configureTranslate = function (dic) {
-        var lang = configuration.getLang();
-        var languages = configuration.getLanguages();
-        if (languages.length > 1) {
-            var langitems = [];
-            var showHelp = (configuration.getConfiguration().application.showhelp === "true");
-            languages.forEach(function(language) {
-                var langStr = "";
-                var icon = language;
-                var p;
-                if (language === "en") {
-                    icon = "gb";
-                }
-                if (langitems.length === 0 && showHelp) {
-                    // set no padding for the first item element
-                    // help popup only
-                    p = 0;
-                }
-                langitems.push('<li style="padding-left:' + p + '" type="button" class="btn mv-translate""><a href="#" idlang="' + language + '"><span style="margin-right: 5px;" class="flag-icon flag-icon-squared flag-icon-' + icon + '"></span><span>' + language + '</span></a></li>');
-            });
-
-            // if help popup only
-            if (showHelp) {
-                $("#help .modal-body").append('<ul style="padding-left:0">' + langitems.join("") + '</ul>');
-
-            } else {
-                // display selector or modal according to device
-                $("#lang-button, #lang-selector").addClass("enabled");
-                $("#lang-body>ul").append(langitems.join(""));
-                $("#lang-selector>ul").append(langitems.join(""));
-            }
-            $(".mv-translate a").click(function() {
-                _changeLanguage($(this).attr("idlang"));
-            });
-        }
-
-        mviewer.lang = {};
-        //load i18n for all languages availables
-        Object.entries(dic).forEach(function (l) {
-            mviewer.lang[l[0]] = i18n.create({"values": l[1]});
-        });
-        if (mviewer.lang[lang]) {
-            mviewer.tr = mviewer.lang[lang];
-            _elementTranslate("body");
-            mviewer.lang.lang = lang;
-        } else {
-             console.log("langue non disponible " + lang);
-        }
-        mviewer.lang.changeLanguage = _changeLanguage;
-    };
-
-    var _initTranslate = function() {
-        mviewer.tr = function (s) { return s; };
-        if (configuration.getLang()) {
-            var extraFile = configuration.getConfiguration().application.langfile;
-            var defaultFile = "mviewer.i18n.json";
-            if (!extraFile) {
-                $.ajax({
-                    url: defaultFile,
-                    dataType: "json",
-                    success: _configureTranslate,
-                    error: function () {
-                        console.log("Error: can't load JSON lang file!")
-                    }
-                });
-            } else {
-                $.when( $.getJSON( defaultFile ), $.getJSON( extraFile ) ).then(
-                    function( a, b ) {
-                        var globalDic = a[0];
-                        var extraDic = b[0];
-                        $.extend(true, globalDic, extraDic);
-                        _configureTranslate(globalDic);
-                    },
-                    function () {
-                        console.log("Error: can't load all JSON lang files!");
-                    }
-                );
-            }
-        }
-    };
-
-    /**
-     * Translate DOM elements
-     * @param element String - tag to identify DOM elements to translate
-     */
-
-    var _elementTranslate = function (element) {
-        // translate each html elements with i18n as attribute
-        var lang = configuration.getLang();
-        var htmlType = ["placeholder", "title", "accesskey", "alt", "value", "data-original-title"];
-        var _element = $(element);
-        _element.find("[i18n]").each((i, el) => {
-            let find = false;
-            let tr = mviewer.lang[lang]($(el).attr("i18n"));
-            htmlType.forEach((att) => {
-                if ($(el).attr(att) && tr) {
-                    $(el).attr(att, tr);
-                    find = true;
-                }
-            });
-            if(!find && $(el).text().indexOf("{{")=== -1) {
-                $(el).text(tr);
-            }
-        });
-        var ret = (element === "body")?true:_element[0].outerHTML;
-        return ret;
-    };
-
-    var _changeLanguage = function(lang) {
-        if (typeof mviewer.lang[lang] === "function" ) {
-            configuration.setLang(lang);
-            mviewer.tr = mviewer.lang[lang];
-            _elementTranslate("body");
-        } else {
-            console.log("langue non disponible " + lang);
-        }
-    };
-
-    var _renderHTMLFromTemplate = function(tpl, data) {
-        var result = Mustache.render(tpl, data);
-        var lang = configuration.getLang();
-        if ( lang && mviewer.lang && mviewer.lang[lang]) {
-            result = _elementTranslate(result);
-        }
-        return result;
-    };
-
-    /*
-     * Public
-     */
-
-    return {
-        flash:  function (proj,x,y) {
-            var source, vector;
-            var vectorLayer = _getLayerByName("flash");
-            if (!vectorLayer) {
-                source = new ol.source.Vector({
-                    wrapX: false,
-                });
-                vector = new ol.layer.Vector({
-                    source: source,
-                    style: mviewer.featureStyles.crossStyle
-                });
-                vector.set('name', "flash");
-                _map.addLayer(vector);
-                source.on('addfeature', function(e) {
-                    _flash(e.feature, source);
-                });
-            } else {
-                vector = vectorLayer;
-                source = vectorLayer.getSource();
-            }
-            var geom = new ol.geom.Point(ol.proj.transform([x, y],
-                proj, _map.getView().getProjection().getCode()));
-            var feature = new ol.Feature(geom);
-            source.addFeature(feature);
-        },
-
-        /**
-         * Public Method: setTool
-         *
-         */
-
-        setTool: function (tool, option) {
-            //Deactivate active Tool if new tool is different
-            if (mviewer.tools.activeTool && mviewer.tools[mviewer.tools.activeTool]) {
-                mviewer.tools[mviewer.tools.activeTool].disable();
-            }
-            //Activate new tool
-            if (mviewer.tools[tool]) {
-                mviewer.tools[tool].enable(option);
-                mviewer.tools.activeTool = tool;
-            }
-        },
-
-        /**
-         * Public Method: setTool
-         *
-         */
-
-        unsetTool: function (tool) {
-            //Deactivate active Tool
-            if (mviewer.tools.activeTool === tool  && mviewer.tools[tool]) {
-                mviewer.tools[tool].disable();
-            }
-            //activate getFeatureInfo
-            if (tool !== 'info') {
-                mviewer.tools.info.enable();
-                mviewer.tools.activeTool = 'info';
-            }
-        },
-
-        /**
-         * Public Method: zoomToInitialExtent
-         *
-         */
-
-        zoomToInitialExtent: function () {
-           _map.getView().setCenter(_center);
-           _map.getView().setZoom(_zoom);
-        },
-
-        /**
-         * Public Method: getActiveBaseLayer
-         *
-         */
-
-        getActiveBaseLayer: function () {
-            var result = null;
-            for (var i = 0; i < _backgroundLayers.length; i += 1) {
-                var l = _backgroundLayers[i];
-                if (l.getVisible()) {
-                    result = l.get('blid');
-                    break;
-                }
-            }
-            return result;
-        },
-
-        /**
-         * Public Method: setActiveBaseLayer
-         *
-         */
-
-        setBaseLayer: function (baseLayerId) {
-            if ($(".mini").length ==1 && $(".no-active").length > 0) {
-                mviewer.bgtoogle();
-                return;
-            }
-            var nexid = null;
-            for (var i = 0; i < _backgroundLayers.length; i += 1) {
-                var l = _backgroundLayers[i];
-                if (l.get('blid') === baseLayerId) {
-                    l.setVisible(true);
-                    nexid=(i+1)%_backgroundLayers.length;
-                 } else {
-                    l.setVisible(false);
-                 }
-            }
-            if (configuration.getConfiguration().baselayers.style === 'default') {
-                //get the next thumb
-                var thumb = configuration.getConfiguration().baselayers.baselayer[nexid].thumbgallery;
-                var title = configuration.getConfiguration().baselayers.baselayer[nexid].label;
-                $("#backgroundlayersbtn").css("background-image", 'url("'+thumb+'")');
-                if (!configuration.getConfiguration().mobile) {
-                    $("#backgroundlayersbtn").attr("title", title);
-                    $("#backgroundlayersbtn").tooltip('destroy').tooltip({
-                        placement: 'left',
-                        trigger: 'hover',
-                        html: true,
-                        container: 'body',
-                        template: mviewer.templates.tooltip
-                     });
-                }
-            }
-            $.each(_backgroundLayers, function (id, layer) {
-                var opt = configuration.getConfiguration().baselayers.style;
-                var elem = (opt === "gallery") ? $('#' + layer.get('blid') + '_btn')
-                    .closest('li') : $('#' + layer.get('blid') + '_btn');
-                if (layer.getVisible()) {
-                    elem.removeClass("no-active");
-                    elem.addClass("active");
-                } else {
-                    elem.removeClass("active");
-                    elem.addClass("no-active");
-                }
-            });
-            mviewer.bgtoogle();
-        },
-
-        /**
-         * Public Method: changeLayerOpacity
-         *
-         */
-
-        changeLayerOpacity: function (id, value) {
-            _overLayers[id].opacity = parseFloat(value);
-            _overLayers[id].layer.setOpacity(_overLayers[id].opacity);
-        },
-
-        /**
-         * Public Method: getLayerOpacity
-         *
-         */
-
-        getLayerOpacity: function (id) {
-            return _overLayers[id].layer.getOpacity();
-        },
-
-        bgtoogle: function () {
-            $("#backgroundlayerstoolbar-gallery .no-active").toggle();
-            //$("#backgroundlayerstoolbar-gallery .bglt-btn").toggleClass("mini");
-        },
-
-        /**
-         * Public Method: getLayerMetadata
-         *
-         */
-
-        getLayerMetadata: function (id) {
-            return {url:_overLayers[id].metadata, csw:_overLayers[id].metadatacsw};
-        },
-
-        /**
-         * Public Method: toggleOverLayer
-         *
-         */
-
-        toggleOverLayer: function (id) {
-            _overLayers[id].checked = !_overLayers[id].checked;
-            if (_overLayers[id].checked) {
-                _overLayers[id].layer.setVisible(true);
-            } else {
-                _overLayers[id].layer.setVisible(false);
-            }
-        },
-
-        reorderLayer: function (layer, newIndex) {
-            var layers = _map.getLayers().getArray();
-            var oldIndex = layers.indexOf(layer);
-            layers.splice(newIndex, 0, layers.splice(oldIndex, 1)[0]);
-            _map.render();
-            mviewer.orderLegendByMap();
-        },
-
-        orderLayer: function (actionMove) {
-            if (actionMove.layerRef) {
-                var layers = _map.getLayers().getArray();
-                var layer = _overLayers[actionMove.layerName];
-                var layerRef = _overLayers[actionMove.layerRef];
-                var oldIndex = layers.indexOf(layer.layer);
-                var refIndex = layers.indexOf(layerRef.layer);
-                var newIndex = null;
-                if (actionMove.action === "up") {
-                    newIndex = refIndex +1;
-                } else {
-                    newIndex = refIndex;
-                }
-                layers.splice(newIndex, 0, layers.splice(oldIndex, 1)[0]);
-                //put overlayFeatureLayer on the top of the map
-                if (_overlayFeatureLayer) {
-                    _map.removeLayer(_overlayFeatureLayer);
-                    _map.getLayers().setAt(_map.getLayers().getArray().length, _overlayFeatureLayer);
-                }
-                _map.render();
-            }
-        },
-
-        /**
-         * Reorder layers according to layer rank.
-         * Rank is define by xml config file input (not by index or toplayer)
-         */
-        showLayersByAttrOrder: function(layers, reverse) {
-            // to keep baseLayer as first map layers
-            var baseLayersCount = configuration.getConfiguration().baselayers.baselayer.length;
-            let layersByRank = _.mapValues(_.invert(_.invert(layers)),parseInt);
-            var ids = reverse ? _.keys(layersByRank).reverse() : _.keys(layersByRank);
-            ids.forEach((id, pos) => {
-                var layer = _map.getLayers().getArray().filter(olLyr => olLyr.get("mviewerid") === id);
-                if(layer.length) mviewer.reorderLayer(layer[0], pos + baseLayersCount);
-            })
-            // now, order legend items according to map layers order
-            mviewer.orderTopLayer();
-            mviewer.orderLegendByMap();
-        },
-
-        /**
-         * Find layer into legend and set new legend position according to map visibility
-         * @param {String} layerId
-         * @param {Number} position
-         */
-        setLegendLayerPos: function(layerId, position) {
-            if(layerId) {
-                var legendItem = $(`#layers-container>li[data-layerid="${layerId}"]`);
-                // change layer position into legend
-                switch(position) {
-                    case 0:
-                        // first element
-                        $('#layers-container').prepend(legendItem);
-                        break;
-                    default:
-                        // others
-                        legendItem.insertBefore($(`#layers-container li:eq(${position})`));
-                        break;
-                }
-            }
-        },
-
-        /**
-         * Order layers according to map layers order and visibility
-         */
-        orderLegendByMap: function() {
-            var mviewerLayersId = Object.keys(mviewer.getLayers());
-            var mapLayers = mviewer.getMap().getLayers().getArray();
-            // get mapLayers and remove them from layers order
-            var countBaseLayers = configuration.getConfiguration().baselayers.baselayer.length;
-            mapLayers = mapLayers.slice(countBaseLayers);
-            // to only get visible layers and layers from themes
-            mapLayers = mapLayers.filter(layer => layer.getVisible() && mviewerLayersId.indexOf(layer.getProperties().mviewerid)>-1);
-            // only keep id and reverse to get order as we need on map
-            mapLayers = mapLayers.map(layer => layer.getProperties().mviewerid).reverse();
-            // now, we could order legend by map layers
-            $(`#layers-container>li[data-layerid]`).each((i,li)=> {
-                // get legend element
-                var legendLayerId = $(li).attr('data-layerid');
-                // get map position
-                mviewer.setLegendLayerPos(legendLayerId, mapLayers.indexOf(legendLayerId));
-            })
-        },
-
-        /**
-         * Return object to identify a given attribute value for each layer
-         * @param {String} attr
-         */
-        getLayersAttribute: function(attr) {
-            if(!attr) return;
-            var mLayers = Object.keys(mviewer.getLayers());
-            mLayers = mLayers.map(m => [m, mviewer.getLayers()[m][attr]]);
-            return Object.fromEntries(mLayers);
-        },
-
-        /**
-         * Get index param for each layer and order layers according to layer's index
-         */
-        orderLayerByIndex: function() {
-            var layersIndex = _.omitBy(mviewer.getLayersAttribute('index'), _.isNull);
-            var ids = _.keys(layersIndex);
-            if(!ids.length) return;
-            var newOrder = _.keys(_.mapValues(_.invert(_.invert(layersIndex)),parseInt));
-
-            // now we search null index position according to xml
-            var rankLayers = mviewer.getLayersAttribute('rank');
-            var rankLyrOrder = _.keys(_.mapValues(_.invert(_.invert(rankLayers)),parseInt));
-            var rankLyrWithoutindex = rankLyrOrder.filter(id => !newOrder.includes(id)).reverse();
-            newOrder = newOrder.concat(rankLyrWithoutindex);
-            newOrder = newOrder.filter(item => item) // remove null or undefined
-            mviewer.showLayersByAttrOrder(_.mapValues(_.invert(newOrder),parseInt),true);
-        },
-
-        /**
-         * Get toplayer according to xml order and pass all top layer to the top
-         */
-        orderTopLayer: function() {
-            var topLayers = mviewer.getLayersAttribute('toplayer');
-            var topLayersId = Object.keys(topLayers).filter(lyr => topLayers[lyr]).reverse();
-            // break if no top layers
-            if(!topLayersId.length) return;
-
-            // count base layers
-            var countLayers = configuration.getConfiguration().baselayers.baselayer.length;
-            // count themes layers
-            var themes = configuration.getConfiguration().themes.theme;
-            var topLayersByTheme = [];
-            themes.forEach(e => {
-                if(e.group && e.group.length) {
-                    countLayers += e.group.map(d => d.layer.length).reduce((a, b) => a + b, 0);
-                    e.group.forEach(g => {
-                        topLayersByTheme = [...topLayersByTheme, ...g.layer.filter(x => x.toplayer === "true")];
-                    })
-                }
-                if(e.layer && e.layer.length) {
-                    countLayers += e.layer.length;
-                    topLayersByTheme = [...topLayersByTheme, ...e.layer.filter(x => x.toplayer === "true")];
-                }
-            });
-            // get top layers id by xml order
-            let topLayersByXmlOrder = topLayersByTheme.reverse().map(l => l.id);
-            // parse top layers by xml order and be sur to dlisplay in this order
-            topLayersByXmlOrder.forEach(id => {
-                var layer = mviewer.getLayer(id).layer;
-                if(!layer) return; // no top layer to display
-
-                // set first layer over others theme or background layers and before system layers
-                mviewer.reorderLayer(layer, countLayers);
-            })
-        },
-
-        /**
-         * Public Method: openStudio
-         */
-        openStudio: function() {
-            // get xml config file
-            var configFile = API.config ? API.config : 'config.xml';
-            // get domain url and clean
-            var splitStr = window.location.href.split('?')[0].split('#')[0].split('/');
-            splitStr = splitStr.slice(0,splitStr.length-1).join('/');
-            // create absolute config file url
-            var url = splitStr + '/' + configFile;
-            // send config file to studio
-            if(url) {
-                window.open(configuration.getConfiguration().application.studio + url, '_blank');
-            }
-        },
-
-        /**
-         * Public Method: setPermalink
-         *
-         */
-
-        setPermalink: function () {
-            var c = _map.getView().getCenter();
-            var linkParams = {};
-            if (!API.wmc){
-                linkParams.x = encodeURIComponent(Math.round(c[0]));
-                linkParams.y = encodeURIComponent(Math.round(c[1]));
-                linkParams.z = encodeURIComponent(_map.getView().getZoom());
-                linkParams.l = encodeURIComponent(_getVisibleOverLayers());
-            }
-            linkParams.lb = encodeURIComponent(this.getActiveBaseLayer());
-            if (API.config) {
-                linkParams.config = API.config;
-            }
-            if (API.lang) {
-                linkParams.lang = API.lang;
-            }
-            if (API.wmc) {
-                linkParams.wmc = API.wmc;
-            }
-            linkParams.mode = $('input[name=mv-display-mode]:checked').val();
-
-            //Get extra params from API. Params has to begin with c_
-            let reg = /^c_(.*)/;
-            for (const [key, value] of Object.entries(API)) {
-                if (key.match(reg)) {
-                    linkParams[key] = encodeURIComponent(API[key]);
-                }
-            }
-
-            function params(data) {
-                return Object.keys(data).map(key => `${key}=${data[key]}`).join('&');
-            }
-
-            var url = window.location.href.split('#')[0].split('?')[0] + '?' + params(linkParams);
-            $("#permalinklink").attr('href',url).attr("target", "_blank");
-            $("#permaqr").attr("src","http://chart.apis.google.com/chart?cht=qr&chs=140x140&chl=" + encodeURIComponent(url));
-            return url;
-        },
-
-        /**
-         * Public Method: getMap
-         *
-         */
-
-        getMap: function () {
-            return _map;
-        },
-
-        /**
-         * Public Method: init
-         *
-         */
-
-        init: function () {
-                _setVariables();
-                _initTranslate();
-                _initDisplayMode();
-                _initDataList();
-                _initVectorOverlay();
-                _initSelectOverlay();
-                _initSubSelectOverlay();
-                search.init(configuration.getConfiguration());
-                _initPanelsPopup();
-                _initGeolocation();
-                _initTools();
-                _initShare();
-        },
-
-        customLayers: {},
-
-        customControls: {},
-
-        customComponents: {},
-
-        tools: { activeTool: false},
-
-         /**
-         * Public Method: popupPhoto
-         *
-         */
-
-        popupPhoto: function (src) {
-            $("#imagepopup").find("img").attr("src",src);
-            $("#imagepopup").modal('show');
-        },
-
-        /**
-         * Public Method: zoomToLocation
-         *
-         */
-
-        zoomToLocation: function (x, y, zoom, querymap, srs) {
-            if (_sourceOverlay) {
-                _sourceOverlay.clear();
-            }
-            var ptResult = ol.proj.transform([x, y], srs || 'EPSG:4326', _projection.getCode());
-            if (configuration.getConfiguration().searchparameters) {
-                duration=parseInt(configuration.getConfiguration().searchparameters.duration)
-                if (! duration ){ duration = 1000 }
-                if (configuration.getConfiguration().searchparameters.animate==="true"){
-                    _map.getView().animate({center:ptResult,zoom:zoom,duration:duration})
-                } else {
-                    _map.getView().setCenter(ptResult);
-                    _map.getView().setZoom(zoom);
-                }
-            } else {
-                _map.getView().setCenter(ptResult);
-                _map.getView().setZoom(zoom);
-            }
-
-            if (querymap) {
-                var i = function () {
-                    var e = {
-                        coordinate:ptResult,
-                        pixel: _map.getPixelFromCoordinate(_map.getView().getCenter())
-                    };
-                    info.queryMap(e);
-                };
-                setTimeout(i, 250);
-            }
-        },
-
-
-
-        /**
-         * Public Method: showLocation
-         *
-         */
-
-        showLocation: function (proj,x, y, showMarker) {
-            //marker
-            $("#mv_marker").hide();
-            var ptResult = ol.proj.transform([x, y], proj, _projection.getCode());
-            if(showMarker != false || showMarker === undefined) {
-                _marker.setPosition(ptResult);
-                $("#mv_marker").show();
-            }
-            _map.render();
-        },
-
-        /**
-         * Public Method: highlightFeatures
-         *
-         */
-        highlightFeatures: function (features) {
-            _sourceSelectOverlay.clear();
-            // note: features from vectortiles provoke error on addFeatures()
-            // workaround: exclude them by checking if feature has a getGeometryName() function
-            if (features.length > 0 && typeof features[0].getGeometryName === "function") {
-                _sourceSelectOverlay.addFeatures(features);
-            }
-        },
-
-        /**
-         * Public Method: highlightSubFeature
-         *
-         */
-        highlightSubFeature: function (feature) {
-            _sourceSubSelectOverlay.clear();
-            if (feature && typeof getGeometryName === "function") {
-                _sourceSubSelectOverlay.addFeature(feature);
-            }
-        },
-
-        /**
-         * Public Method: print
-         *
-         */
-
-        print: function () {
-
-        },
-
-        /**
-         * Public Method: geoloc
-         *
-         */
-
-        geoloc: function () {
-            if (!$("#geolocbtn").hasClass('enabled')){
-              $("#geolocbtn").addClass('enabled');
-              _geolocation.setTracking(true);
-              _geolocation.once('change', function(evt) {
-                _map.getView().setZoom(18);
-              });
-              geolocON = _geolocation.on('change', function(evt) {
-                coordinates = _geolocation.getPosition();
-                _map.getView().setCenter(coordinates);
-                iconFeature = new ol.Feature({
-                  geometry: new ol.geom.Point(coordinates)
-                });
-                iconFeatureStyle = new ol.style.Style({
-                  image: new ol.style.Icon({
-                    src: 'img/legend/hiking_custom.png'
-                  })
-                });
-                iconFeature.setStyle(iconFeatureStyle);
-
-                var accuracyFeature = new ol.Feature();
-                accuracyFeature.setGeometry(_geolocation.getAccuracyGeometry());
-                _sourceGeolocation.clear();
-                _sourceGeolocation.addFeature(iconFeature);
-                _sourceGeolocation.addFeature(accuracyFeature);
-            });
-          } else {
-            $("#geolocbtn").removeClass('enabled');
-            _geolocation.setTracking(false);
-            _sourceGeolocation.clear();
+        view.groups = groups;
+        view.cls = classes.join(" ");
+        //NO GROUPS
+      } else {
+        $.each(_themes[theme.id].layers, function (id, layer) {
+          if (layer.showintoc) {
+            reverse_layers.push(layer);
           }
-        },
+        });
+        view.layers = reverse_layers.reverse();
+        view.cls = classes.join(" ");
+      }
+      htmlListGroup += _renderHTMLFromTemplate(mviewer.templates.theme, view);
+    });
+    var panelMini = configuration.getConfiguration().themes.mini;
+    panelMini = (panelMini && panelMini === "true") || false;
+    var legendmini = configuration.getConfiguration().themes.legendmini || null;
+    legendmini =
+      legendmini != null ? (legendmini && legendmini === "true") || false : legendmini;
 
-        /**
-         * Public Method: geoloc
-         *
-         */
+    if (panelMini) {
+      // hide all panels
+      mviewer.toggleMenu(false);
+      mviewer.toggleLegend(false);
+    }
+    if (!legendmini && panelMini && legendmini != null) {
+      // hide legend panel
+      mviewer.toggleLegend(false);
+    } else if (legendmini && !panelMini && legendmini != null) {
+      // display legend panel
+      mviewer.toggleLegend(false);
+    }
+    $("#menu").html(htmlListGroup);
+    initMenu();
+    // Open theme item if set to collapsed=false
+    if (configuration.getConfiguration().themes.theme !== undefined) {
+      var expanded_theme = $.grep(
+        configuration.getConfiguration().themes.theme,
+        function (obj) {
+          return obj.collapsed === "false";
+        }
+      );
+      if (expanded_theme.length > 0) {
+        $("#theme-layers-" + expanded_theme[0].id + ">a").click();
+      }
+    }
+    //Add remove and add layers button on them
+    if (
+      configuration.getConfiguration().application.togglealllayersfromtheme === "true"
+    ) {
+      $(".toggle-theme-layers").on("click", mviewer.toggleAllThemeLayers);
+    }
+  };
 
-        northRotate: function () {
-            //_map.getView().setRotation(0);
-            _map.getView().animate({rotation: 0});
-        },
+  // manage legend display
+  var _setLayerScaleStatus = function (layer, scale) {
+    if (layer.scale) {
+      var isVector = layer.vectorlegend;
+      var isVisible = scale >= layer.scale.min && scale <= layer.scale.max;
+      if (isVector) {
+        return _setVectorLegendStatus(layer, isVisible);
+      }
+      _setUrlLegendStatus(layer, isVisible);
+    }
+  };
 
-        /**
-         * Public Method: hideLocation
-         *
-         */
+  // manage display for vector legend
+  var _setVectorLegendStatus = (layer, visible) => {
+    var panel = $("#vector-legend-" + layer.id);
+    var cl = "hide" + layer.id;
+    if (visible) {
+      panel.removeClass("hidden");
+      panel
+        .parents()
+        .find("." + cl)
+        .remove();
+    } else {
+      panel.addClass("hidden");
+      if (!panel.parents().find("." + cl).length) {
+        var img = `<img class="${cl} img-responsive" src="img/invisible.png" style="max-width:30%">`;
+        $("#vector-legend-" + layer.id)
+          .parent()
+          .append(img);
+      }
+    }
+  };
 
-        hideLocation: function ( ) {
-            _sourceSelectOverlay.clear();
-            _sourceSubSelectOverlay.clear();
-            $("#mv_marker").hide();
-        },
+  // manage static legend display
+  var _setUrlLegendStatus = function (layer, visible) {
+    var legendUrl = _getlegendurl(layer);
+    var panel = $("#legend-" + layer.id);
+    if (visible) {
+      panel.attr("src", legendUrl);
+      panel.closest("li").removeClass("glyphicon mv-invisible");
+    } else {
+      panel.attr("src", "img/invisible.png");
+      panel.closest("li").addClass("glyphicon mv-invisible");
+    }
+  };
 
-        /**
-         * Public Method: sendToGeorchestra
-         *
-         */
+  var _setLayerLegend = function (layer, scale) {
+    if (layer.dynamiclegend) {
+      var legendUrl = _getlegendurl(layer, scale);
+      $("#legend-" + layer.id).attr("src", legendUrl);
+    }
+  };
 
-        sendToGeorchestra: function () {
-            var params = {
-                "services": [],
-                "layers" : []
-            };
-            $.each(_overLayers, function(i, layer) {
-                if (layer.layer.getVisible()) {
-                    var layername = layer.id;
-                    params.layers.push({
-                        "layername" : layername,
-                        "owstype" : "WMS",
-                        "owsurl" : layer.url
-                    });
-                }
+  var _updateLayersScaleDependancy = function (scale) {
+    $.each(_scaledDependantLayers, function (i, item) {
+      _setLayerScaleStatus(item, scale);
+    });
+  };
+
+  var _updateLegendsScaleDependancy = function (scale) {
+    $.each(_scaledDependantLayersLegend, function (i, item) {
+      _setLayerLegend(item, scale);
+    });
+  };
+
+  var _setThemeStatus = function (id, prop) {
+    var theme = $("#theme-layers-" + id);
+    if (!prop) {
+      prop = _getThemeStatus(id);
+    }
+    switch (prop.status) {
+      case "empty":
+        theme.removeClass("half full").addClass(prop.status);
+        break;
+      case "full":
+        theme.removeClass("half empty").addClass(prop.status);
+        break;
+      case "half":
+        theme.removeClass("empty full").addClass(prop.status);
+        break;
+    }
+    theme.find(".toggle-theme-layers .badge").text([prop.visible, prop.all].join("/"));
+  };
+
+  _getThemeStatus = function (id) {
+    var theme = $("#theme-layers-" + id);
+    var nbLayers = theme.find("input").length;
+    var visLayers = theme.find("input[value='true']").length;
+    var status = "";
+    if (visLayers === 0) {
+      status = "empty";
+    } else if (visLayers === nbLayers) {
+      status = "full";
+    } else {
+      status = "half";
+    }
+    return { visible: visLayers, all: nbLayers, status: status };
+  };
+
+  /**
+   * Method: _createBaseLayer
+   * Create an {OpenLayers.Layer}.OSM|WMTS|WMS
+   *
+   * Parameters:
+   * params - [ xml ] a baselayer node    present in config.xml.
+   */
+
+  var _createBaseLayer = function (baselayer) {
+    var crossorigin = configuration.getCrossorigin();
+    var l;
+    function setBaseOpacity(layer, value) {
+      if (layer && value) {
+        layer.setOpacity(Number(value));
+      }
+    }
+    switch (baselayer.type) {
+      case "fake":
+        l = new ol.layer.Base({});
+        _backgroundLayers.push(l);
+        l.set("name", baselayer.label);
+        l.set("blid", baselayer.id);
+        break;
+      case "vector-tms":
+        let vecLayer = new ol.layer.VectorTile({
+          opacity: baselayer.opacity,
+          title: baselayer.title,
+          source: new ol.source.VectorTile({
+            url: baselayer.url,
+            format: new ol.format.MVT(),
+            maxZoom: baselayer.maxzoom,
+            minZoom: baselayer.minZoom,
+          }),
+          declutter: false,
+        });
+        l = vecLayer;
+        _backgroundLayers.push(l);
+        _map.addLayer(l);
+        if (baselayer.styleurl) {
+          fetch(baselayer.styleurl).then(function (response) {
+            response.json().then(function (glStyle) {
+              olms.applyStyle(vecLayer, glStyle, baselayer.style);
             });
-            if (params.layers.length > 0) {
-                $("#georchestraFormData").val(JSON.stringify(params));
-                $("#georchestraForm").submit();
-            }
-        },
+          });
+        }
+        l.set("name", baselayer.label);
+        l.set("blid", baselayer.id);
+        break;
+      case "WMS":
+        var params = {
+          LAYERS: baselayer.layers,
+          VERSION: "1.1.1",
+          FORMAT: baselayer.format,
+          TRANSPARENT: false,
+        };
+        if (baselayer.tiled !== "false") {
+          params.TILED = true;
+        }
 
-        /**
-         * Public Method: mapShare
-         *
-         */
+        // Use owsoptions to overload default Getmap params
+        Object.assign(params, getParamsFromOwsOptionsString(baselayer.owsoptions));
 
-        mapShare: function () {
-            var myurl = this.setPermalink();
-        }, // fin function tools toolbar
-
-        /**
-         * Public Method: setLoginInfo
-         *
-         */
-
-        setLoginInfo: function (ctx) {
-            var _layer_id = ctx.id.split('#')[1];
-            var _service_url = mviewer.getLayers()[_layer_id].url;
-            $("#login-panel-service-url").html("<small><i>" + _service_url + "</i></small>");
-            $("#service-url").val(_service_url);
-            $("#layer-id").val(_layer_id);
-            if(sessionStorage.getItem(_service_url))
-                $("#user").val(sessionStorage.getItem(_service_url).split(':')[0]);
-        },
-        /**
-         * Public Method: add Layer in legend
-         *
-         */
-        addLayer: function (layer) {
-            if (!layer || !layer.showintoc) {
-                return;
-            }
-            if (layer.exclusive) {
-                //remove previous exclusive layer if exists
-                if (_exclusiveLayer) {
-                    var el = $(".mv-layer-details[data-layerid='"+_exclusiveLayer+"']");
-                    if (el.length > 0) {
-                        mviewer.removeLayer(el);
-                    }
+        l = new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: baselayer.url,
+            crossOrigin: crossorigin,
+            maxZoom: baselayer.maxzoom || 18,
+            params: params,
+            attributions: baselayer.attribution,
+          }),
+          visible: false,
+        });
+        l.set("name", baselayer.label);
+        l.set("blid", baselayer.id);
+        setBaseOpacity(l, baselayer.opacity);
+        _backgroundLayers.push(l);
+        _map.addLayer(l);
+        break;
+      case "WMTS":
+        if (baselayer.fromcapacity === "false") {
+          var matrixset = baselayer.matrixset;
+          var projectionExtent = _projection.getExtent();
+          l = new ol.layer.Tile({
+            source: new ol.source.WMTS({
+              url: baselayer.url,
+              crossOrigin: crossorigin,
+              layer: baselayer.layers,
+              matrixSet: matrixset,
+              style: baselayer.style,
+              format: baselayer.format,
+              attributions: baselayer.attribution,
+              projection: _projection,
+              tileGrid: new ol.tilegrid.WMTS({
+                origin: ol.extent.getTopLeft(projectionExtent),
+                resolutions: utils.getWMTSTileResolutions(matrixset),
+                matrixIds: utils.getWMTSTileMatrix(matrixset),
+              }),
+            }),
+          });
+          l.setVisible(false);
+          l.set("name", baselayer.label);
+          l.set("blid", baselayer.id);
+          setBaseOpacity(l, baselayer.opacity);
+          _map.addLayer(l);
+          _backgroundLayers.push(l);
+        } else {
+          $.ajax({
+            url: _ajaxURL(baselayer.url),
+            dataType: "xml",
+            data: {
+              SERVICE: "WMTS",
+              VERSION: "1.0.0",
+              REQUEST: "GetCapabilities",
+            },
+            success: function (xml) {
+              var getCapabilitiesResult = new ol.format.WMTSCapabilities().read(xml);
+              var WMTSOptions = ol.source.WMTS.optionsFromCapabilities(
+                getCapabilitiesResult,
+                {
+                  layer: baselayer.layers,
+                  matrixSet: baselayer.matrixset,
+                  format: baselayer.format,
+                  style: baselayer.style,
                 }
-                _exclusiveLayer = layer.layerid;
+              );
+              WMTSOptions.attributions = baselayer.attribution;
+              l = new ol.layer.Tile({ source: new ol.source.WMTS(WMTSOptions) });
+              l.set("name", baselayer.label);
+              l.set("blid", baselayer.id);
+              setBaseOpacity(l, baselayer.opacity);
+              _map.getLayers().insertAt(0, l);
+              _backgroundLayers.push(l);
+              if (baselayer.visible === "true") {
+                l.setVisible(true);
+              } else {
+                l.setVisible(false);
+              }
+            },
+          });
+        }
+        break;
+
+      case "OSM":
+        l = new ol.layer.Tile({
+          source: new ol.source.OSM({
+            url: baselayer.url,
+            crossOrigin: "anonymous",
+            maxZoom: baselayer.maxzoom || 18,
+            attributions: baselayer.attribution,
+          }),
+          visible: false,
+        });
+        l.set("name", baselayer.label);
+        l.set("blid", baselayer.id);
+        setBaseOpacity(l, baselayer.opacity);
+        _backgroundLayers.push(l);
+        _map.addLayer(l);
+        break;
+    }
+  };
+
+  /**
+   * Private Method: _getVisibleOverLayers
+   *
+   */
+
+  var _getVisibleOverLayers = function () {
+    var layers = [];
+    $.each(_overLayers, function (i, item) {
+      var layerparams = [];
+      if (item.layer.getVisible() && item.showintoc) {
+        layerparams.push(item.layerid);
+        if (item.type === "wms") {
+          //get current style if many styles
+          var source = item.layer.getSource();
+          if (item.styles && source.getParams().STYLES) {
+            layerparams.push(source.getParams().STYLES.trim());
+          } else {
+            layerparams.push("");
+          }
+          //get current filter if necessary
+          if (item.attributefilter && source.getParams()["CQL_FILTER"]) {
+            layerparams.push(source.getParams()["CQL_FILTER"].trim());
+          } else {
+            layerparams.push("");
+          }
+          //get current time filter if necessary
+          if (item.timefilter && source.getParams()["TIME"]) {
+            layerparams.push(source.getParams()["TIME"]);
+          }
+        }
+
+        layers.push(layerparams.join("*").replace(/\*$/i, ""));
+      }
+    });
+    return layers.join(",");
+  };
+
+  /**
+   * Private Method: _setVisibleOverLayers
+   *
+   */
+
+  var _setVisibleOverLayers = function (lst) {
+    var errors = [];
+    var errorLayers = [];
+    var layers = lst.split(",");
+    var layersWithOptions = {};
+    layers.forEach(function (layer, i) {
+      //search layer by id or by name in overLayers collection
+      //layer with options - layername*style*cql_filter*time
+      var layerWithOptions = layer.split("*");
+      var richLayer = {};
+      var layerIdOrName = layerWithOptions[0];
+      switch (layerWithOptions.length) {
+        case 2:
+          richLayer.style = layerWithOptions[1];
+          break;
+        case 3:
+          richLayer.style = layerWithOptions[1];
+          richLayer.filter = layerWithOptions[2];
+          break;
+        case 4:
+          richLayer.style = layerWithOptions[1];
+          richLayer.filter = layerWithOptions[2];
+          richLayer.time = layerWithOptions[3];
+          break;
+      }
+
+      var l = false;
+      if (
+        mviewer.getLayers()[layerIdOrName] &&
+        mviewer.getLayers()[layerIdOrName].showintoc &&
+        mviewer.getLayers()[layerIdOrName].layer
+      ) {
+        //layerIdOrName is layerid
+        l = mviewer.getLayers()[layerIdOrName].layer;
+        richLayer.layerid = layerIdOrName;
+        richLayer.name = mviewer.getLayers()[layerIdOrName].name;
+      } else {
+        //layerIdOrName is layername
+        l = _getLayerByName(layerIdOrName);
+        richLayer.name = layerIdOrName;
+        if (l) {
+          richLayer.layerid = l.get("mviewerid");
+        } else {
+          richLayer.layerid = layerIdOrName;
+        }
+      }
+      layersWithOptions[richLayer.layerid] = richLayer;
+
+      if (l) {
+        l.src ? l.src.setVisible(true) : l.setVisible(true);
+      } else {
+        errors.push(i);
+      }
+    });
+    errors.forEach(function (err) {
+      errorLayers.push(layers[err]);
+      delete layers[err];
+    });
+    if (errorLayers.length > 0) {
+      mviewer.alert(
+        "Couche(s) " + errorLayers.join(", ") + " non disponible(s)",
+        "alert-danger"
+      );
+    }
+    _overwiteThemeProperties(layersWithOptions);
+  };
+
+  /**
+   * Private Method: _showCheckedLayers
+   *
+   * Parameter
+   */
+
+  var _showCheckedLayers = function () {
+    var checkedLayers = $.map(_overLayers, function (layer, index) {
+      if (layer.checked) {
+        return layer;
+      }
+    });
+    $.each(checkedLayers, function (index, layer) {
+      if (layer) {
+        var l = layer.layer;
+        if (
+          l &&
+          $(".list-group-item.mv-layer-details[data-layerid='" + layer.id + "']")
+            .length === 0
+        ) {
+          l.src ? l.src.setVisible(true) : l.setVisible(true);
+          mviewer.addLayer(layer);
+        }
+      }
+    });
+  };
+
+  /**
+   * Private Method: _overwiteThemeProperties
+   *
+   * Parameter: layers (Hash of richlayers (layerid, style, filter))
+   */
+
+  var _overwiteThemeProperties = function (layersWithOptions) {
+    var showLayer = function (layerControler, layerOptions) {
+      layerControler.checked = true;
+      layerControler.visiblebydefault = true;
+      var li = $(".mv-nav-item[data-layerid='" + layerControler.layerid + "']");
+      if (layerOptions.style && layerControler.type === "wms") {
+        layerControler.layer.getSource().getParams()["STYLES"] = layerOptions.style;
+        layerControler.style = layerOptions.style;
+        layerControler.legendurl = _getlegendurl(layerControler);
+      }
+      if (layerOptions.filter && layerControler.type === "wms") {
+        layerControler.layer.getSource().getParams()["CQL_FILTER"] = layerOptions.filter;
+        layerControler.filter = layerOptions.filter;
+      }
+      mviewer.toggleLayer(li);
+      if (layerOptions.time && layerControler.type === "wms") {
+        //layerControler.layer.getSource().getParams()['TIME'] = layerOptions.time;
+        var timeControl = $("#" + layerControler.layerid + "-layer-timefilter");
+        if (timeControl.hasClass("mv-slider-timer")) {
+          timeControl.slider(
+            "setValue",
+            layerControler.timevalues.indexOf(layerOptions.time),
+            true,
+            true
+          );
+        }
+      }
+    };
+
+    var hideLayer = function (layerControler) {
+      layerControler.checked = false;
+      if (layerControler.layer && layerControler.showintoc) {
+        layerControler.layer.setVisible(false);
+      }
+      layerControler.visiblebydefault = false;
+    };
+    $.each(_themes, function (i, theme) {
+      $.each(theme.layers, function (j, l) {
+        if (layersWithOptions[l.layerid]) {
+          var options = layersWithOptions[l.layerid];
+          showLayer(l, options);
+        } else {
+          hideLayer(l);
+        }
+      });
+      $.each(theme.groups, function (g, group) {
+        $.each(group.layers, function (i, l) {
+          if (layersWithOptions[l.layerid]) {
+            var options = layersWithOptions[l.layerid];
+            showLayer(l, options);
+          } else {
+            hideLayer(l);
+          }
+        });
+      });
+    });
+  };
+
+  /**
+   * Private Method:  parseWMCResponse
+   *
+   */
+
+  var _parseWMCResponse = function (response, wmcid) {
+    var crossorigin = configuration.getCrossorigin();
+    var wmc = $("ViewContext", response);
+    var wmc_extent = {};
+    wmc_extent.srs = $(wmc).find("General > BoundingBox").attr("SRS");
+    wmc_extent.minx = parseInt($(wmc).find("General > BoundingBox").attr("minx"));
+    wmc_extent.miny = parseInt($(wmc).find("General > BoundingBox").attr("miny"));
+    wmc_extent.maxx = parseInt($(wmc).find("General > BoundingBox").attr("maxx"));
+    wmc_extent.maxy = parseInt($(wmc).find("General > BoundingBox").attr("maxy"));
+    var map_extent = ol.proj.transformExtent(
+      [wmc_extent.minx, wmc_extent.miny, wmc_extent.maxx, wmc_extent.maxy],
+      wmc_extent.srs,
+      _projection.getCode()
+    );
+    var title = $(wmc).find("General > Title").text() || $(wmc).attr("id");
+    var themeLayers = {};
+    var layerRank = 0;
+    $(wmc)
+      .find("LayerList > Layer")
+      .each(function () {
+        layerRank += 1;
+        // we only consider queryable layers
+        if ($(this).attr("queryable") == "1") {
+          var oLayer = {};
+          oLayer.checked = $(this).attr("hidden") === "0" ? true : false;
+          oLayer.id = $(this).children("Name").text();
+          oLayer.rank = layerRank;
+          oLayer.infospanel = "right-panel";
+          oLayer.layerid = $(this).children("Name").text();
+          oLayer.layername = oLayer.id;
+          oLayer.name = $(this).children("Title").text();
+          oLayer.title = $(this).children("Title").text();
+          oLayer.attribution = $(this).find("attribution").find("Title").text() || "";
+          oLayer.metadata = $(this)
+            .find("MetadataURL > OnlineResource")
+            .attr("xlink:href");
+          //fixme
+          if (oLayer.metadata && oLayer.metadata.search("geonetwork") > 1) {
+            var mdid = oLayer.metadata.split("#/metadata/")[1];
+            oLayer.metadatacsw =
+              oLayer.metadata.substring(0, oLayer.metadata.search("geonetwork")) +
+              "geonetwork/srv/eng/csw?SERVICE=CSW&VERSION=2.0.2&REQUEST=GetRecordById&elementSetName=full&ID=" +
+              mdid;
+          }
+          oLayer.style = $(this).find("StyleList  > Style[current='1'] > Name").text();
+          oLayer.sld = $(this)
+            .find("StyleList  > Style[current='1'] > SLD > OnlineResource")
+            .attr("xlink:href");
+          if (!oLayer.sld && $(this).find("StyleList  > Style > Name").length > 1) {
+            oLayer.styles = $(this)
+              .find("StyleList  > Style > Name")
+              .map(function (id, name) {
+                return $(name).text();
+              })
+              .toArray()
+              .join(",");
+            oLayer.stylesalias = oLayer.styles;
+          }
+          oLayer.url = $(this).find("Server > OnlineResource").attr("xlink:href");
+          oLayer.queryable = true;
+          oLayer.infoformat = "text/html";
+          oLayer.format = $(this).find("FormatList  > Format[current='1']").text();
+          oLayer.visiblebydefault = oLayer.checked;
+          oLayer.tiled = false;
+          oLayer.legendurl = _getlegendurl(oLayer);
+          oLayer.opacity = parseFloat($(this).find("opacity").text() || "1");
+          var minscale = parseFloat($(this).find("MinScaleDenominator").text());
+          var maxscale = parseFloat($(this).find("MaxScaleDenominator").text());
+          if (!isNaN(minscale) || !isNaN(maxscale)) {
+            oLayer.scale = {};
+            if (!isNaN(minscale)) {
+              oLayer.scale.min = minscale;
             }
-            var classes = ["list-group-item", "mv-layer-details"];
-            if (!layer.toplayer) {
-                classes.push("draggable");
-            } else {
-                classes.push("toplayer");
+            if (!isNaN(maxscale)) {
+              oLayer.scale.max = maxscale;
             }
+          }
 
-            var view = {
-                cls:classes.join(" "),
-                layerid: layer.layerid,
-                title: layer.title,
-                opacity: layer.opacity,
-                crossorigin: layer.crossorigin,
-                legendurl: layer.legendurl,
-                attribution: layer.attribution,
-                modifiedDate: layer.modifiedDate,
-                metadata: layer.metadata,
-                tooltipControl: false,
-                styleControl: false,
-                attributeControl: false,
-                timeControl: false
-            };
+          oLayer.theme = wmcid;
+          themeLayers[oLayer.id] = oLayer;
+          var wms_params = {
+            LAYERS: oLayer.id,
+            STYLES: oLayer.style,
+            FORMAT: "image/png",
+            TRANSPARENT: true,
+          };
+          if (oLayer.sld) {
+            wms_params["SLD"] = oLayer.sld;
+          }
+          var l = new ol.layer.Image({
+            source: new ol.source.ImageWMS({
+              url: oLayer.url,
+              crossOrigin: crossorigin,
+              params: wms_params,
+            }),
+          });
 
-            if (layer.type === 'customlayer' && layer.tooltip) {
-                view.tooltipControl = true;
-            }
-            if (layer.styles && layer.styles.split(",").length > 1 &&
-                layer.stylesalias && layer.stylesalias.split(",").length > 1) {
-                view.styleControl = true;
-                var styles = [];
-                layer.styles.split(",").forEach( function (style, i) {
-                    styles.push ({"style" : style, "label": layer.stylesalias.split(",")[i]});
-                });
-                view.styles = styles;
-            }
+          l.setVisible(oLayer.checked);
+          l.setOpacity(oLayer.opacity);
+          if (oLayer.scale && oLayer.scale.max) {
+            l.setMaxResolution(_convertScale2Resolution(oLayer.scale.max));
+          }
+          if (oLayer.scale && oLayer.scale.min) {
+            l.setMinResolution(_convertScale2Resolution(oLayer.scale.min));
+          }
+          l.set("name", oLayer.name);
+          l.set("mviewerid", oLayer.id);
+          themeLayers[oLayer.id].layer = l;
+          _overLayers[oLayer.id] = themeLayers[oLayer.id];
+          if (oLayer.scale) {
+            _scaledDependantLayers.push(oLayer);
+          }
+        }
+      });
+    return { title: title, extent: map_extent, layers: themeLayers };
+  };
 
-            if (layer.attributefilter && layer.attributevalues != "undefined" && layer.attributefield != "undefined") {
-                view.attributeControl = true;
-                view.attributeLabel = layer.attributelabel;
-                view.styleTitle = layer.styletitle;
-                var options = [];
-                if (layer.attributefilterenabled === false) {
-                    options.push({"label": "Par défaut", "attribute": "all"});
-                }
-                layer.attributevalues.forEach(function (attribute) {
-                    options.push({"label": attribute, "attribute": attribute});
-                });
-                view.attributes = options;
-            }
+  var _flash = function (feature, source) {
+    var duration = 1000;
+    var start = new Date().getTime();
+    var listenerKey;
 
-            if (layer.timefilter) {
-                view.timeControl = true;
-            }
+    function animate(event) {
+      var vectorContext = ol.render.getVectorContext(event);
+      var flashGeom = feature.getGeometry().clone();
+      var elapsed = event.frameState.time - start;
+      var elapsedRatio = elapsed / duration;
+      // radius will be 5 at start and 30 at end.
+      var radius = ol.easing.easeOut(elapsedRatio) * 25;
+      var opacity = ol.easing.easeOut(1 - elapsedRatio);
 
-            if (layer.secure) {
-                view.secure = (layer.secure === "true") ? "global" : layer.secure;
-                if(layer.secure == "layer")
-                    view.secure_layer = true;
-            }
+      var flashStyle = new ol.style.Style({
+        image: new ol.style.Circle({
+          radius: radius,
+          snapToPixel: false,
+          stroke: new ol.style.Stroke({
+            color: "rgba(255, 0, 0, " + opacity + ")",
+            width: 3,
+            opacity: opacity,
+          }),
+        }),
+      });
+      vectorContext.setStyle(flashStyle);
+      vectorContext.drawGeometry(flashGeom);
+      if (elapsed > duration) {
+        ol.Observable.unByKey(listenerKey);
+        source.removeFeature(feature);
+        return;
+      }
+      // tell OL to continue postcompose animation
+      _map.render();
+    }
+    listenerKey = _getLayerByName("flash").on("postrender", animate);
+  };
 
-            var item = _renderHTMLFromTemplate(mviewer.templates.layerControl, view);
-            if (layer.customcontrol && mviewer.customControls[layer.layerid] && mviewer.customControls[layer.layerid].form) {
-                item = $(item).find('.mv-custom-controls').append(mviewer.customControls[layer.layerid].form).closest(".mv-layer-details");
-            }
+  var _calculateTicksPositions = function (values) {
+    var min = values[0];
+    var max = values[values.length - 1];
+    var interval = max - min;
+    var positions = [0];
+    for (var i = 1; i < values.length - 1; ++i) {
+      var val = values[i];
+      var pos = parseInt(((val - min) / interval) * 100);
+      positions.push(pos);
+    }
+    positions.push(100);
+    return positions;
+  };
 
-            if (_topLayer && $("#layers-container .toplayer").length > 0) {
-                $("#layers-container .toplayer").last().after(item);
-            } else {
-                $("#layers-container").prepend(item);
-            }
+  var _createPseudoTicks = function (values) {
+    var ticks = [];
+    for (var i = 0; i <= values.length - 1; ++i) {
+      ticks.push(i);
+    }
+    return ticks;
+  };
 
-            //Dynamic vector Legend
-            if (layer.vectorlegend  && mviewer.customLayers[layer.layerid] && mviewer.customLayers[layer.layerid].legend) {
-                _drawVectorLegend( layer.layerid, mviewer.customLayers[layer.layerid].legend.items );
-            }
+  /**
+   * Private Method: _getLonLatZfromGeometry
+   *
+   */
 
-			//Dynamic vector Legend
-            if (layer.vectorlegend  && layer.legend && layer.legend.items) {
-                _drawVectorLegend( layer.layerid, layer.legend.items );
-            }
+  var _getLonLatZfromGeometry = function (geometry, proj, maxzoom) {
+    var xyz = {};
+    var coordinates;
+    //For Point or multiPoints with one point
+    if (geometry.getType() === "MultiPoint" && geometry.getPoints().length === 1) {
+      coordinates = geometry.getPoints()[0].flatCoordinates;
+      xyz = { lon: coordinates[0], lat: coordinates[1], zoom: maxzoom || 15 };
+    } else if (geometry.getType() === "Point") {
+      coordinates = geometry.getFlatCoordinates();
+      xyz = { lon: coordinates[0], lat: coordinates[1], zoom: maxzoom || 15 };
+    } else {
+      var extent = geometry.getExtent();
+      var projExtent = ol.proj.transformExtent(extent, proj, _projection.getCode());
+      var resolution = _map.getView().getResolutionForExtent(projExtent, _map.getSize());
+      var zoom = parseInt(_map.getView().getZoomForResolution(resolution));
+      if (maxzoom && zoom > maxzoom) {
+        zoom = maxzoom;
+      }
+      var center = ol.proj.transform(ol.extent.getCenter(extent), proj, "EPSG:4326");
+      xyz = { lon: center[0], lat: center[1], zoom: zoom };
+    }
+    return xyz;
+  };
 
-            _setLayerScaleStatus(layer, _calculateScale(_map.getView().getResolution()));
-            $("#"+layer.layerid+"-layer-opacity").slider({});
-            $("#"+layer.layerid+"-layer-summary").popover({container: 'body', html: true});
-            $("#"+layer.layerid+"-layer-summary").attr("data-content",layer.summary);
-            if (layer.attributefilterenabled === true) {
-                //Activate  CQL for this layer
-            }
-            //Time Filter
-            //Time Filter slider and slider-range
-            if (layer.timefilter && (layer.timecontrol === 'slider' || layer.timecontrol === 'slider-range')) {
-                var ticks_labels;
-                var ticks;
-                var slider_options;
-                var default_values;
-                var onSliderChange;
-                if (layer.timevalues) {
+  var _configureTranslate = function (dic) {
+    var lang = configuration.getLang();
+    var languages = configuration.getLanguages();
+    if (languages.length > 1) {
+      var langitems = [];
+      var showHelp = configuration.getConfiguration().application.showhelp === "true";
+      languages.forEach(function (language) {
+        var langStr = "";
+        var icon = language;
+        var p;
+        if (language === "en") {
+          icon = "gb";
+        }
+        if (langitems.length === 0 && showHelp) {
+          // set no padding for the first item element
+          // help popup only
+          p = 0;
+        }
+        langitems.push(
+          '<li style="padding-left:' +
+            p +
+            '" type="button" class="btn mv-translate""><a href="#" idlang="' +
+            language +
+            '"><span style="margin-right: 5px;" class="flag-icon flag-icon-squared flag-icon-' +
+            icon +
+            '"></span><span>' +
+            language +
+            "</span></a></li>"
+        );
+      });
 
-                    ticks_labels = layer.timevalues;
-                    ticks = _createPseudoTicks(layer.timevalues);
-                    if (layer.timecontrol === 'slider') {
-                        default_value = parseInt(ticks_labels[ticks_labels.length -1]);
-                        $(".mv-time-player-selection[data-layerid='"+layer.layerid+"']").text(default_value);
-                    } else if (layer.timecontrol === 'slider-range') {
-                        default_value = [0, layer.timevalues.length -1];
-                        //Set wms filter to see all data and not only the last
-                        var range = [parseInt(layer.timevalues[0]), parseInt(layer.timevalues[layer.timevalues.length -1])];
-                        wms_timefilter = range.join("/");
-                        mviewer.setLayerTime( layer.layerid, wms_timefilter );
-                    }
+      // if help popup only
+      if (showHelp) {
+        $("#help .modal-body").append(
+          '<ul style="padding-left:0">' + langitems.join("") + "</ul>"
+        );
+      } else {
+        // display selector or modal according to device
+        $("#lang-button, #lang-selector").addClass("enabled");
+        $("#lang-body>ul").append(langitems.join(""));
+        $("#lang-selector>ul").append(langitems.join(""));
+      }
+      $(".mv-translate a").click(function () {
+        _changeLanguage($(this).attr("idlang"));
+      });
+    }
 
-                    slider_options = {
-                        value:default_value,
-                        tooltip: 'show',
-                        tooltip_position: 'bottom',
-                        ticks_labels: ticks_labels,
-                        ticks: ticks,
-                        step:1,
-                        formatter: function(val) {
-                            var value;
-                            if (Array.isArray(val)) {
-                                if (val[0] === val[1]) {
-                                    value = parseInt(ticks_labels[val[0]]);
-                                } else {
-                                    value = [parseInt(ticks_labels[val[0]]), parseInt(ticks_labels[val[1]])];
-                                }
-                            } else {
-                                value = parseInt(ticks_labels[val]);
-                            }
-                            return value;
-                        }
-                    };
+    mviewer.lang = {};
+    //load i18n for all languages availables
+    Object.entries(dic).forEach(function (l) {
+      mviewer.lang[l[0]] = i18n.create({ values: l[1] });
+    });
+    if (mviewer.lang[lang]) {
+      mviewer.tr = mviewer.lang[lang];
+      _elementTranslate("body");
+      mviewer.lang.lang = lang;
+    } else {
+      console.log("langue non disponible " + lang);
+    }
+    mviewer.lang.changeLanguage = _changeLanguage;
+  };
 
-                    onSliderChange = function (data) {
-                        var wms_timefilter;
-                        if (Array.isArray(data.value.newValue)) {
-                                wms_timefilter = [parseInt(ticks_labels[data.value.newValue[0]]),
-                                parseInt(ticks_labels[data.value.newValue[1]])].join("/");
-                            } else {
-                                wms_timefilter = parseInt(ticks_labels[data.value.newValue]);
-                            }
-                        mviewer.setLayerTime( layer.layerid, wms_timefilter );
-                    };
+  var _initTranslate = function () {
+    mviewer.tr = function (s) {
+      return s;
+    };
+    if (configuration.getLang()) {
+      var extraFile = configuration.getConfiguration().application.langfile;
+      var defaultFile = "mviewer.i18n.json";
+      if (!extraFile) {
+        $.ajax({
+          url: defaultFile,
+          dataType: "json",
+          success: _configureTranslate,
+          error: function () {
+            console.log("Error: can't load JSON lang file!");
+          },
+        });
+      } else {
+        $.when($.getJSON(defaultFile), $.getJSON(extraFile)).then(
+          function (a, b) {
+            var globalDic = a[0];
+            var extraDic = b[0];
+            $.extend(true, globalDic, extraDic);
+            _configureTranslate(globalDic);
+          },
+          function () {
+            console.log("Error: can't load all JSON lang files!");
+          }
+        );
+      }
+    }
+  };
 
-                } else if (layer.timemin && layer.timemax) {
-                    default_value = parseInt(layer.timemax);
-                    ticks_labels = [layer.timemin];
-                    ticks = [parseInt(layer.timemin)];
-                    for (var i = parseInt(layer.timemin)+1; i < parseInt(layer.timemax); i++) {
-                        ticks_labels.push('');
-                        ticks.push(i);
-                    }
-                    ticks_labels.push(layer.timemax);
-                    ticks.push(parseInt(layer.timemax));
+  /**
+   * Translate DOM elements
+   * @param element String - tag to identify DOM elements to translate
+   */
 
-                    slider_options = {
-                        min:parseInt(layer.timemin),
-                        max:parseInt(layer.timemax),
-                        step:1,
-                        value:default_value,
-                        tooltip: 'show',
-                        tooltip_position: 'bottom',
-                        ticks_labels: ticks_labels,
-                        ticks: ticks
-                   };
+  var _elementTranslate = function (element) {
+    // translate each html elements with i18n as attribute
+    var lang = configuration.getLang();
+    var htmlType = [
+      "placeholder",
+      "title",
+      "accesskey",
+      "alt",
+      "value",
+      "data-original-title",
+    ];
+    var _element = $(element);
+    _element.find("[i18n]").each((i, el) => {
+      let find = false;
+      let tr = mviewer.lang[lang]($(el).attr("i18n"));
+      htmlType.forEach((att) => {
+        if ($(el).attr(att) && tr) {
+          $(el).attr(att, tr);
+          find = true;
+        }
+      });
+      if (!find && $(el).text().indexOf("{{") === -1) {
+        $(el).text(tr);
+      }
+    });
+    var ret = element === "body" ? true : _element[0].outerHTML;
+    return ret;
+  };
 
-                    onSliderChange = function ( data ) {
-                        mviewer.setLayerTime( layer.layerid, data.value.newValue );
-                    };
+  var _changeLanguage = function (lang) {
+    if (typeof mviewer.lang[lang] === "function") {
+      configuration.setLang(lang);
+      mviewer.tr = mviewer.lang[lang];
+      _elementTranslate("body");
+    } else {
+      console.log("langue non disponible " + lang);
+    }
+  };
 
-                }
-                //slider && slider-range
+  var _renderHTMLFromTemplate = function (tpl, data) {
+    var result = Mustache.render(tpl, data);
+    var lang = configuration.getLang();
+    if (lang && mviewer.lang && mviewer.lang[lang]) {
+      result = _elementTranslate(result);
+    }
+    return result;
+  };
 
-                $("#"+layer.layerid+"-layer-timefilter")
-                    .addClass("mv-slider-timer")
-                    .slider(slider_options);
-                $("#"+layer.layerid+"-layer-timefilter").slider().on('change', onSliderChange);
-                if (ticks_labels.length > 7) {
-                    $("#"+layer.layerid+"-layer-timefilter").closest(".form-group")
-                        .find(".slider-tick-label").addClass("mv-time-vertical");
-                }
+  /*
+   * Public
+   */
 
-                if (layer.timecontrol === 'slider') {
-                    //Activate the time player
-                    $('.mv-time-player[data-layerid="'+layer.layerid+'"]').click(function(e) {
-                        var ctrl = e.currentTarget;
-                        $(ctrl).toggleClass("active");
-                        if ($(ctrl).hasClass("active")) {
-                            mviewer.playLayerTime($(ctrl).attr("data-layerid"), ctrl);
-                        }
-                    });
+  return {
+    flash: function (proj, x, y) {
+      var source, vector;
+      var vectorLayer = _getLayerByName("flash");
+      if (!vectorLayer) {
+        source = new ol.source.Vector({
+          wrapX: false,
+        });
+        vector = new ol.layer.Vector({
+          source: source,
+          style: mviewer.featureStyles.crossStyle,
+        });
+        vector.set("name", "flash");
+        _map.addLayer(vector);
+        source.on("addfeature", function (e) {
+          _flash(e.feature, source);
+        });
+      } else {
+        vector = vectorLayer;
+        source = vectorLayer.getSource();
+      }
+      var geom = new ol.geom.Point(
+        ol.proj.transform([x, y], proj, _map.getView().getProjection().getCode())
+      );
+      var feature = new ol.Feature(geom);
+      source.addFeature(feature);
+    },
 
+    /**
+     * Public Method: setTool
+     *
+     */
 
-                // slider-range
-                } else if (layer.timecontrol === 'slider-range') {
-                    $("#"+layer.layerid+"-layer-timefilter").closest(".form-group")
-                        .removeClass("form-group-timer").addClass("form-group-timer-range");
-                    //Remove time player
-                    $('.mv-time-player[data-layerid="'+layer.layerid+'"]').remove();
+    setTool: function (tool, option) {
+      //Deactivate active Tool if new tool is different
+      if (mviewer.tools.activeTool && mviewer.tools[mviewer.tools.activeTool]) {
+        mviewer.tools[mviewer.tools.activeTool].disable();
+      }
+      //Activate new tool
+      if (mviewer.tools[tool]) {
+        mviewer.tools[tool].enable(option);
+        mviewer.tools.activeTool = tool;
+      }
+    },
+
+    /**
+     * Public Method: setTool
+     *
+     */
+
+    unsetTool: function (tool) {
+      //Deactivate active Tool
+      if (mviewer.tools.activeTool === tool && mviewer.tools[tool]) {
+        mviewer.tools[tool].disable();
+      }
+      //activate getFeatureInfo
+      if (tool !== "info") {
+        mviewer.tools.info.enable();
+        mviewer.tools.activeTool = "info";
+      }
+    },
+
+    /**
+     * Public Method: zoomToInitialExtent
+     *
+     */
+
+    zoomToInitialExtent: function () {
+      _map.getView().setCenter(_center);
+      _map.getView().setZoom(_zoom);
+    },
+
+    /**
+     * Public Method: getActiveBaseLayer
+     *
+     */
+
+    getActiveBaseLayer: function () {
+      var result = null;
+      for (var i = 0; i < _backgroundLayers.length; i += 1) {
+        var l = _backgroundLayers[i];
+        if (l.getVisible()) {
+          result = l.get("blid");
+          break;
+        }
+      }
+      return result;
+    },
+
+    /**
+     * Public Method: setActiveBaseLayer
+     *
+     */
+
+    setBaseLayer: function (baseLayerId) {
+      if ($(".mini").length == 1 && $(".no-active").length > 0) {
+        mviewer.bgtoogle();
+        return;
+      }
+      var nexid = null;
+      for (var i = 0; i < _backgroundLayers.length; i += 1) {
+        var l = _backgroundLayers[i];
+        if (l.get("blid") === baseLayerId) {
+          l.setVisible(true);
+          nexid = (i + 1) % _backgroundLayers.length;
+        } else {
+          l.setVisible(false);
+        }
+      }
+      if (configuration.getConfiguration().baselayers.style === "default") {
+        //get the next thumb
+        var thumb =
+          configuration.getConfiguration().baselayers.baselayer[nexid].thumbgallery;
+        var title = configuration.getConfiguration().baselayers.baselayer[nexid].label;
+        $("#backgroundlayersbtn").css("background-image", 'url("' + thumb + '")');
+        if (!configuration.getConfiguration().mobile) {
+          $("#backgroundlayersbtn").attr("title", title);
+          $("#backgroundlayersbtn").tooltip("destroy").tooltip({
+            placement: "left",
+            trigger: "hover",
+            html: true,
+            container: "body",
+            template: mviewer.templates.tooltip,
+          });
+        }
+      }
+      $.each(_backgroundLayers, function (id, layer) {
+        var opt = configuration.getConfiguration().baselayers.style;
+        var elem =
+          opt === "gallery"
+            ? $("#" + layer.get("blid") + "_btn").closest("li")
+            : $("#" + layer.get("blid") + "_btn");
+        if (layer.getVisible()) {
+          elem.removeClass("no-active");
+          elem.addClass("active");
+        } else {
+          elem.removeClass("active");
+          elem.addClass("no-active");
+        }
+      });
+      mviewer.bgtoogle();
+    },
+
+    /**
+     * Public Method: changeLayerOpacity
+     *
+     */
+
+    changeLayerOpacity: function (id, value) {
+      _overLayers[id].opacity = parseFloat(value);
+      _overLayers[id].layer.setOpacity(_overLayers[id].opacity);
+    },
+
+    /**
+     * Public Method: getLayerOpacity
+     *
+     */
+
+    getLayerOpacity: function (id) {
+      return _overLayers[id].layer.getOpacity();
+    },
+
+    bgtoogle: function () {
+      $("#backgroundlayerstoolbar-gallery .no-active").toggle();
+      //$("#backgroundlayerstoolbar-gallery .bglt-btn").toggleClass("mini");
+    },
+
+    /**
+     * Public Method: getLayerMetadata
+     *
+     */
+
+    getLayerMetadata: function (id) {
+      return { url: _overLayers[id].metadata, csw: _overLayers[id].metadatacsw };
+    },
+
+    /**
+     * Public Method: toggleOverLayer
+     *
+     */
+
+    toggleOverLayer: function (id) {
+      _overLayers[id].checked = !_overLayers[id].checked;
+      if (_overLayers[id].checked) {
+        _overLayers[id].layer.setVisible(true);
+      } else {
+        _overLayers[id].layer.setVisible(false);
+      }
+    },
+
+    reorderLayer: function (layer, newIndex) {
+      var layers = _map.getLayers().getArray();
+      var oldIndex = layers.indexOf(layer);
+      layers.splice(newIndex, 0, layers.splice(oldIndex, 1)[0]);
+      _map.render();
+      mviewer.orderLegendByMap();
+    },
+
+    orderLayer: function (actionMove) {
+      if (actionMove.layerRef) {
+        var layers = _map.getLayers().getArray();
+        var layer = _overLayers[actionMove.layerName];
+        var layerRef = _overLayers[actionMove.layerRef];
+        var oldIndex = layers.indexOf(layer.layer);
+        var refIndex = layers.indexOf(layerRef.layer);
+        var newIndex = null;
+        if (actionMove.action === "up") {
+          newIndex = refIndex + 1;
+        } else {
+          newIndex = refIndex;
+        }
+        layers.splice(newIndex, 0, layers.splice(oldIndex, 1)[0]);
+        //put overlayFeatureLayer on the top of the map
+        if (_overlayFeatureLayer) {
+          _map.removeLayer(_overlayFeatureLayer);
+          _map
+            .getLayers()
+            .setAt(_map.getLayers().getArray().length, _overlayFeatureLayer);
+        }
+        _map.render();
+      }
+    },
+
+    /**
+     * Reorder layers according to layer rank.
+     * Rank is define by xml config file input (not by index or toplayer)
+     */
+    showLayersByAttrOrder: function (layers, reverse) {
+      // to keep baseLayer as first map layers
+      var baseLayersCount = configuration.getConfiguration().baselayers.baselayer.length;
+      let layersByRank = _.mapValues(_.invert(_.invert(layers)), parseInt);
+      var ids = reverse ? _.keys(layersByRank).reverse() : _.keys(layersByRank);
+      ids.forEach((id, pos) => {
+        var layer = _map
+          .getLayers()
+          .getArray()
+          .filter((olLyr) => olLyr.get("mviewerid") === id);
+        if (layer.length) mviewer.reorderLayer(layer[0], pos + baseLayersCount);
+      });
+      // now, order legend items according to map layers order
+      mviewer.orderTopLayer();
+      mviewer.orderLegendByMap();
+    },
+
+    /**
+     * Find layer into legend and set new legend position according to map visibility
+     * @param {String} layerId
+     * @param {Number} position
+     */
+    setLegendLayerPos: function (layerId, position) {
+      if (layerId) {
+        var legendItem = $(`#layers-container>li[data-layerid="${layerId}"]`);
+        // change layer position into legend
+        switch (position) {
+          case 0:
+            // first element
+            $("#layers-container").prepend(legendItem);
+            break;
+          default:
+            // others
+            legendItem.insertBefore($(`#layers-container li:eq(${position})`));
+            break;
+        }
+      }
+    },
+
+    /**
+     * Order layers according to map layers order and visibility
+     */
+    orderLegendByMap: function () {
+      var mviewerLayersId = Object.keys(mviewer.getLayers());
+      var mapLayers = mviewer.getMap().getLayers().getArray();
+      // get mapLayers and remove them from layers order
+      var countBaseLayers = configuration.getConfiguration().baselayers.baselayer.length;
+      mapLayers = mapLayers.slice(countBaseLayers);
+      // to only get visible layers and layers from themes
+      mapLayers = mapLayers.filter(
+        (layer) =>
+          layer.getVisible() &&
+          mviewerLayersId.indexOf(layer.getProperties().mviewerid) > -1
+      );
+      // only keep id and reverse to get order as we need on map
+      mapLayers = mapLayers.map((layer) => layer.getProperties().mviewerid).reverse();
+      // now, we could order legend by map layers
+      $(`#layers-container>li[data-layerid]`).each((i, li) => {
+        // get legend element
+        var legendLayerId = $(li).attr("data-layerid");
+        // get map position
+        mviewer.setLegendLayerPos(legendLayerId, mapLayers.indexOf(legendLayerId));
+      });
+    },
+
+    /**
+     * Return object to identify a given attribute value for each layer
+     * @param {String} attr
+     */
+    getLayersAttribute: function (attr) {
+      if (!attr) return;
+      var mLayers = Object.keys(mviewer.getLayers());
+      mLayers = mLayers.map((m) => [m, mviewer.getLayers()[m][attr]]);
+      return Object.fromEntries(mLayers);
+    },
+
+    /**
+     * Get index param for each layer and order layers according to layer's index
+     */
+    orderLayerByIndex: function () {
+      var layersIndex = _.omitBy(mviewer.getLayersAttribute("index"), _.isNull);
+      var ids = _.keys(layersIndex);
+      if (!ids.length) return;
+      var newOrder = _.keys(_.mapValues(_.invert(_.invert(layersIndex)), parseInt));
+
+      // now we search null index position according to xml
+      var rankLayers = mviewer.getLayersAttribute("rank");
+      var rankLyrOrder = _.keys(_.mapValues(_.invert(_.invert(rankLayers)), parseInt));
+      var rankLyrWithoutindex = rankLyrOrder
+        .filter((id) => !newOrder.includes(id))
+        .reverse();
+      newOrder = newOrder.concat(rankLyrWithoutindex);
+      newOrder = newOrder.filter((item) => item); // remove null or undefined
+      mviewer.showLayersByAttrOrder(_.mapValues(_.invert(newOrder), parseInt), true);
+    },
+
+    /**
+     * Get toplayer according to xml order and pass all top layer to the top
+     */
+    orderTopLayer: function () {
+      var topLayers = mviewer.getLayersAttribute("toplayer");
+      var topLayersId = Object.keys(topLayers)
+        .filter((lyr) => topLayers[lyr])
+        .reverse();
+      // break if no top layers
+      if (!topLayersId.length) return;
+
+      // count base layers
+      var countLayers = configuration.getConfiguration().baselayers.baselayer.length;
+      // count themes layers
+      var themes = configuration.getConfiguration().themes.theme;
+      var topLayersByTheme = [];
+      themes.forEach((e) => {
+        if (e.group && e.group.length) {
+          countLayers += e.group.map((d) => d.layer.length).reduce((a, b) => a + b, 0);
+          e.group.forEach((g) => {
+            topLayersByTheme = [
+              ...topLayersByTheme,
+              ...g.layer.filter((x) => x.toplayer === "true"),
+            ];
+          });
+        }
+        if (e.layer && e.layer.length) {
+          countLayers += e.layer.length;
+          topLayersByTheme = [
+            ...topLayersByTheme,
+            ...e.layer.filter((x) => x.toplayer === "true"),
+          ];
+        }
+      });
+      // get top layers id by xml order
+      let topLayersByXmlOrder = topLayersByTheme.reverse().map((l) => l.id);
+      // parse top layers by xml order and be sur to dlisplay in this order
+      topLayersByXmlOrder.forEach((id) => {
+        var layer = mviewer.getLayer(id).layer;
+        if (!layer) return; // no top layer to display
+
+        // set first layer over others theme or background layers and before system layers
+        mviewer.reorderLayer(layer, countLayers);
+      });
+    },
+
+    /**
+     * Public Method: openStudio
+     */
+    openStudio: function () {
+      // get xml config file
+      var configFile = API.config ? API.config : "config.xml";
+      // get domain url and clean
+      var splitStr = window.location.href.split("?")[0].split("#")[0].split("/");
+      splitStr = splitStr.slice(0, splitStr.length - 1).join("/");
+      // create absolute config file url
+      var url = splitStr + "/" + configFile;
+      // send config file to studio
+      if (url) {
+        window.open(configuration.getConfiguration().application.studio + url, "_blank");
+      }
+    },
+
+    /**
+     * Public Method: setPermalink
+     *
+     */
+
+    setPermalink: function () {
+      var c = _map.getView().getCenter();
+      var linkParams = {};
+      if (!API.wmc) {
+        linkParams.x = encodeURIComponent(Math.round(c[0]));
+        linkParams.y = encodeURIComponent(Math.round(c[1]));
+        linkParams.z = encodeURIComponent(_map.getView().getZoom());
+        linkParams.l = encodeURIComponent(_getVisibleOverLayers());
+      }
+      linkParams.lb = encodeURIComponent(this.getActiveBaseLayer());
+      if (API.config) {
+        linkParams.config = API.config;
+      }
+      if (API.lang) {
+        linkParams.lang = API.lang;
+      }
+      if (API.wmc) {
+        linkParams.wmc = API.wmc;
+      }
+      linkParams.mode = $("input[name=mv-display-mode]:checked").val();
+
+      //Get extra params from API. Params has to begin with c_
+      let reg = /^c_(.*)/;
+      for (const [key, value] of Object.entries(API)) {
+        if (key.match(reg)) {
+          linkParams[key] = encodeURIComponent(API[key]);
+        }
+      }
+
+      function params(data) {
+        return Object.keys(data)
+          .map((key) => `${key}=${data[key]}`)
+          .join("&");
+      }
+
+      var url =
+        window.location.href.split("#")[0].split("?")[0] + "?" + params(linkParams);
+      $("#permalinklink").attr("href", url).attr("target", "_blank");
+      $("#permaqr").attr(
+        "src",
+        "http://chart.apis.google.com/chart?cht=qr&chs=140x140&chl=" +
+          encodeURIComponent(url)
+      );
+      return url;
+    },
+
+    /**
+     * Public Method: getMap
+     *
+     */
+
+    getMap: function () {
+      return _map;
+    },
+
+    /**
+     * Public Method: init
+     *
+     */
+
+    init: function () {
+      _setVariables();
+      _initTranslate();
+      _initDisplayMode();
+      _initDataList();
+      _initVectorOverlay();
+      _initSelectOverlay();
+      _initSubSelectOverlay();
+      search.init(configuration.getConfiguration());
+      _initPanelsPopup();
+      _initGeolocation();
+      _initTools();
+      _initShare();
+    },
+
+    customLayers: {},
+
+    customControls: {},
+
+    customComponents: {},
+
+    tools: { activeTool: false },
+
+    /**
+     * Public Method: popupPhoto
+     *
+     */
+
+    popupPhoto: function (src) {
+      $("#imagepopup").find("img").attr("src", src);
+      $("#imagepopup").modal("show");
+    },
+
+    /**
+     * Public Method: zoomToLocation
+     *
+     */
+
+    zoomToLocation: function (x, y, zoom, querymap, srs) {
+      if (_sourceOverlay) {
+        _sourceOverlay.clear();
+      }
+      var ptResult = ol.proj.transform([x, y], srs || "EPSG:4326", _projection.getCode());
+      if (configuration.getConfiguration().searchparameters) {
+        duration = parseInt(configuration.getConfiguration().searchparameters.duration);
+        if (!duration) {
+          duration = 1000;
+        }
+        if (configuration.getConfiguration().searchparameters.animate === "true") {
+          _map.getView().animate({ center: ptResult, zoom: zoom, duration: duration });
+        } else {
+          _map.getView().setCenter(ptResult);
+          _map.getView().setZoom(zoom);
+        }
+      } else {
+        _map.getView().setCenter(ptResult);
+        _map.getView().setZoom(zoom);
+      }
+
+      if (querymap) {
+        var i = function () {
+          var e = {
+            coordinate: ptResult,
+            pixel: _map.getPixelFromCoordinate(_map.getView().getCenter()),
+          };
+          info.queryMap(e);
+        };
+        setTimeout(i, 250);
+      }
+    },
+
+    /**
+     * Public Method: showLocation
+     *
+     */
+
+    showLocation: function (proj, x, y, showMarker) {
+      //marker
+      $("#mv_marker").hide();
+      var ptResult = ol.proj.transform([x, y], proj, _projection.getCode());
+      if (showMarker != false || showMarker === undefined) {
+        _marker.setPosition(ptResult);
+        $("#mv_marker").show();
+      }
+      _map.render();
+    },
+
+    /**
+     * Public Method: highlightFeatures
+     *
+     */
+    highlightFeatures: function (features) {
+      _sourceSelectOverlay.clear();
+      // note: features from vectortiles provoke error on addFeatures()
+      // workaround: exclude them by checking if feature has a getGeometryName() function
+      if (features.length > 0 && typeof features[0].getGeometryName === "function") {
+        _sourceSelectOverlay.addFeatures(features);
+      }
+    },
+
+    /**
+     * Public Method: highlightSubFeature
+     *
+     */
+    highlightSubFeature: function (feature) {
+      _sourceSubSelectOverlay.clear();
+      if (feature && typeof getGeometryName === "function") {
+        _sourceSubSelectOverlay.addFeature(feature);
+      }
+    },
+
+    /**
+     * Public Method: print
+     *
+     */
+
+    print: function () {},
+
+    /**
+     * Public Method: geoloc
+     *
+     */
+
+    geoloc: function () {
+      if (!$("#geolocbtn").hasClass("enabled")) {
+        $("#geolocbtn").addClass("enabled");
+        _geolocation.setTracking(true);
+        _geolocation.once("change", function (evt) {
+          _map.getView().setZoom(18);
+        });
+        geolocON = _geolocation.on("change", function (evt) {
+          coordinates = _geolocation.getPosition();
+          _map.getView().setCenter(coordinates);
+          iconFeature = new ol.Feature({
+            geometry: new ol.geom.Point(coordinates),
+          });
+          iconFeatureStyle = new ol.style.Style({
+            image: new ol.style.Icon({
+              src: "img/legend/hiking_custom.png",
+            }),
+          });
+          iconFeature.setStyle(iconFeatureStyle);
+
+          var accuracyFeature = new ol.Feature();
+          accuracyFeature.setGeometry(_geolocation.getAccuracyGeometry());
+          _sourceGeolocation.clear();
+          _sourceGeolocation.addFeature(iconFeature);
+          _sourceGeolocation.addFeature(accuracyFeature);
+        });
+      } else {
+        $("#geolocbtn").removeClass("enabled");
+        _geolocation.setTracking(false);
+        _sourceGeolocation.clear();
+      }
+    },
+
+    /**
+     * Public Method: geoloc
+     *
+     */
+
+    northRotate: function () {
+      //_map.getView().setRotation(0);
+      _map.getView().animate({ rotation: 0 });
+    },
+
+    /**
+     * Public Method: hideLocation
+     *
+     */
+
+    hideLocation: function () {
+      _sourceSelectOverlay.clear();
+      _sourceSubSelectOverlay.clear();
+      $("#mv_marker").hide();
+    },
+
+    /**
+     * Public Method: sendToGeorchestra
+     *
+     */
+
+    sendToGeorchestra: function () {
+      var params = {
+        services: [],
+        layers: [],
+      };
+      $.each(_overLayers, function (i, layer) {
+        if (layer.layer.getVisible()) {
+          var layername = layer.id;
+          params.layers.push({
+            layername: layername,
+            owstype: "WMS",
+            owsurl: layer.url,
+          });
+        }
+      });
+      if (params.layers.length > 0) {
+        $("#georchestraFormData").val(JSON.stringify(params));
+        $("#georchestraForm").submit();
+      }
+    },
+
+    /**
+     * Public Method: mapShare
+     *
+     */
+
+    mapShare: function () {
+      var myurl = this.setPermalink();
+    }, // fin function tools toolbar
+
+    /**
+     * Public Method: setLoginInfo
+     *
+     */
+
+    setLoginInfo: function (ctx) {
+      var _layer_id = ctx.id.split("#")[1];
+      var _service_url = mviewer.getLayers()[_layer_id].url;
+      $("#login-panel-service-url").html("<small><i>" + _service_url + "</i></small>");
+      $("#service-url").val(_service_url);
+      $("#layer-id").val(_layer_id);
+      if (sessionStorage.getItem(_service_url))
+        $("#user").val(sessionStorage.getItem(_service_url).split(":")[0]);
+    },
+    /**
+     * Public Method: add Layer in legend
+     *
+     */
+    addLayer: function (layer) {
+      if (!layer || !layer.showintoc) {
+        return;
+      }
+      if (layer.exclusive) {
+        //remove previous exclusive layer if exists
+        if (_exclusiveLayer) {
+          var el = $(".mv-layer-details[data-layerid='" + _exclusiveLayer + "']");
+          if (el.length > 0) {
+            mviewer.removeLayer(el);
+          }
+        }
+        _exclusiveLayer = layer.layerid;
+      }
+      var classes = ["list-group-item", "mv-layer-details"];
+      if (!layer.toplayer) {
+        classes.push("draggable");
+      } else {
+        classes.push("toplayer");
+      }
+
+      var view = {
+        cls: classes.join(" "),
+        layerid: layer.layerid,
+        title: layer.title,
+        opacity: layer.opacity,
+        crossorigin: layer.crossorigin,
+        legendurl: layer.legendurl,
+        attribution: layer.attribution,
+        modifiedDate: layer.modifiedDate,
+        metadata: layer.metadata,
+        tooltipControl: false,
+        styleControl: false,
+        attributeControl: false,
+        timeControl: false,
+      };
+
+      if (layer.type === "customlayer" && layer.tooltip) {
+        view.tooltipControl = true;
+      }
+      if (
+        layer.styles &&
+        layer.styles.split(",").length > 1 &&
+        layer.stylesalias &&
+        layer.stylesalias.split(",").length > 1
+      ) {
+        view.styleControl = true;
+        var styles = [];
+        layer.styles.split(",").forEach(function (style, i) {
+          styles.push({ style: style, label: layer.stylesalias.split(",")[i] });
+        });
+        view.styles = styles;
+      }
+
+      if (
+        layer.attributefilter &&
+        layer.attributevalues != "undefined" &&
+        layer.attributefield != "undefined"
+      ) {
+        view.attributeControl = true;
+        view.attributeLabel = layer.attributelabel;
+        view.styleTitle = layer.styletitle;
+        var options = [];
+        if (layer.attributefilterenabled === false) {
+          options.push({ label: "Par défaut", attribute: "all" });
+        }
+        layer.attributevalues.forEach(function (attribute) {
+          options.push({ label: attribute, attribute: attribute });
+        });
+        view.attributes = options;
+      }
+
+      if (layer.timefilter) {
+        view.timeControl = true;
+      }
+
+      if (layer.secure) {
+        view.secure = layer.secure === "true" ? "global" : layer.secure;
+        if (layer.secure == "layer") view.secure_layer = true;
+      }
+
+      var item = _renderHTMLFromTemplate(mviewer.templates.layerControl, view);
+      if (
+        layer.customcontrol &&
+        mviewer.customControls[layer.layerid] &&
+        mviewer.customControls[layer.layerid].form
+      ) {
+        item = $(item)
+          .find(".mv-custom-controls")
+          .append(mviewer.customControls[layer.layerid].form)
+          .closest(".mv-layer-details");
+      }
+
+      if (_topLayer && $("#layers-container .toplayer").length > 0) {
+        $("#layers-container .toplayer").last().after(item);
+      } else {
+        $("#layers-container").prepend(item);
+      }
+
+      //Dynamic vector Legend
+      if (
+        layer.vectorlegend &&
+        mviewer.customLayers[layer.layerid] &&
+        mviewer.customLayers[layer.layerid].legend
+      ) {
+        _drawVectorLegend(
+          layer.layerid,
+          mviewer.customLayers[layer.layerid].legend.items
+        );
+      }
+
+      //Dynamic vector Legend
+      if (layer.vectorlegend && layer.legend && layer.legend.items) {
+        _drawVectorLegend(layer.layerid, layer.legend.items);
+      }
+
+      _setLayerScaleStatus(layer, _calculateScale(_map.getView().getResolution()));
+      $("#" + layer.layerid + "-layer-opacity").slider({});
+      $("#" + layer.layerid + "-layer-summary").popover({
+        container: "body",
+        html: true,
+      });
+      $("#" + layer.layerid + "-layer-summary").attr("data-content", layer.summary);
+      if (layer.attributefilterenabled === true) {
+        //Activate  CQL for this layer
+      }
+      //Time Filter
+      //Time Filter slider and slider-range
+      if (
+        layer.timefilter &&
+        (layer.timecontrol === "slider" || layer.timecontrol === "slider-range")
+      ) {
+        var ticks_labels;
+        var ticks;
+        var slider_options;
+        var default_values;
+        var onSliderChange;
+        if (layer.timevalues) {
+          ticks_labels = layer.timevalues;
+          ticks = _createPseudoTicks(layer.timevalues);
+          if (layer.timecontrol === "slider") {
+            default_value = parseInt(ticks_labels[ticks_labels.length - 1]);
+            $(".mv-time-player-selection[data-layerid='" + layer.layerid + "']").text(
+              default_value
+            );
+          } else if (layer.timecontrol === "slider-range") {
+            default_value = [0, layer.timevalues.length - 1];
+            //Set wms filter to see all data and not only the last
+            var range = [
+              parseInt(layer.timevalues[0]),
+              parseInt(layer.timevalues[layer.timevalues.length - 1]),
+            ];
+            wms_timefilter = range.join("/");
+            mviewer.setLayerTime(layer.layerid, wms_timefilter);
+          }
+
+          slider_options = {
+            value: default_value,
+            tooltip: "show",
+            tooltip_position: "bottom",
+            ticks_labels: ticks_labels,
+            ticks: ticks,
+            step: 1,
+            formatter: function (val) {
+              var value;
+              if (Array.isArray(val)) {
+                if (val[0] === val[1]) {
+                  value = parseInt(ticks_labels[val[0]]);
                 } else {
-                    //Remove time player
-                    $('.mv-time-player[data-layerid="'+layer.layerid+'"]').remove();
+                  value = [
+                    parseInt(ticks_labels[val[0]]),
+                    parseInt(ticks_labels[val[1]]),
+                  ];
                 }
-            }
+              } else {
+                value = parseInt(ticks_labels[val]);
+              }
+              return value;
+            },
+          };
 
-            //Time Filter calendar
-            if (layer.timefilter && layer.timecontrol === 'calendar') {
-                var options = {format: "yyyy-mm-dd", language: "fr", todayHighlight: true, minViewMode: 0,  autoclose: true};
-                if (layer.timemin && layer.timemax) {
-                    options.startDate = new Date(layer.timemin);
-                    options.endDate = new Date(layer.timemax)
-                }
-
-                switch (layer.timeinterval) {
-                    case "year":
-                        options.minViewMode = 2;
-                         break;
-                    case "month":
-                        options.startView = 2,
-                        options.minViewMode = 1;
-                         break;
-                    default:
-                        break;
-                }
-                $("#"+layer.layerid+"-layer-timefilter")
-                    .addClass("mv-calendar-timer")
-                    .addClass("form-control")
-                    .wrap('<div class="input-group date"></div>');
-
-                $("#"+layer.layerid+"-layer-timefilter")
-
-                $("#"+layer.layerid+"-layer-timefilter").closest('div')
-                    .append('<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>')
-                    .datepicker(options);
-
-                $("#"+layer.layerid+"-layer-timefilter").on('change', function(data,cc){
-                        mviewer.setLayerTime( layer.layerid, data.currentTarget.value );
-                });
-
-            }
-            //End Time filter
-            if ($("#layers-container").find("li").length > 1) {
-                //set Layer to top on the map
-                var actionMove = {
-                    layerName: layer.layerid,
-                    layerRef: $("#layers-container li[data-layerid='"+layer.layerid+"']").next().attr("data-layerid"),
-                    action: "up"};
-
-                mviewer.orderLayer(actionMove);
-            }
-            var oLayer = _overLayers[layer.layerid];
-            oLayer.layer.setVisible(true);
-            //Only for second and more loads
-            if (oLayer.attributefilter && oLayer.layer.getSource().getParams()['CQL_FILTER']) {
-                var activeFilter = oLayer.layer.getSource().getParams()['CQL_FILTER'];
-                var wildcard = oLayer.wildcardpattern.split("value")[0];
-                var reg = new RegExp(wildcard + "|'", "g");
-                var activeAttributeValue = activeFilter.split(oLayer.attributeoperator)[1].replace(reg, "").trim();
-                $("#"+layer.layerid+"-attributes-selector option[value='"+activeAttributeValue+"']").prop("selected", true);
-                $('.mv-layer-details[data-layerid="'+layer.layerid+'"] .layerdisplay-subtitle .selected-attribute span')
-                    .text(activeAttributeValue);
-            }
-
-            var activeStyle = false;
-            if (oLayer.type==='wms' && oLayer.layer.getSource().getParams()['STYLES']) {
-                activeStyle = oLayer.layer.getSource().getParams()['STYLES'];
-                var refStyle= activeStyle;
-                //update legend image if nec.
-                var res = mviewer.getMap().getView().getResolution();
-                var ppi = 25.4/0.28;
-                var scale = res*ppi/0.0254;
-                if(layer.scale && scale >= layer.scale.min && scale <= layer.scale.max){
-                    var legendUrl = _getlegendurl(layer);
-                    $("#legend-" + layer.layerid).attr("src", legendUrl);
-                }
-            }
-            if (oLayer.styles ) {
-                var selectCtrl = $("#"+layer.layerid+"-styles-selector")[0];
-                if (activeStyle) {
-                    var selectedStyle = $("#"+layer.layerid+"-styles-selector option[value*='"+activeStyle.split('@')[0]+"']")
-                        .prop("selected", true);
-                }
-                $('.mv-layer-details[data-layerid="'+layer.layerid+'"] .layerdisplay-subtitle .selected-sld span')
-                    .text(selectCtrl.options[selectCtrl.selectedIndex].label);
+          onSliderChange = function (data) {
+            var wms_timefilter;
+            if (Array.isArray(data.value.newValue)) {
+              wms_timefilter = [
+                parseInt(ticks_labels[data.value.newValue[0]]),
+                parseInt(ticks_labels[data.value.newValue[1]]),
+              ].join("/");
             } else {
-                $('.mv-layer-details[data-layerid="'+layer.layerid+'"] .layerdisplay-subtitle .selected-sld').remove();
+              wms_timefilter = parseInt(ticks_labels[data.value.newValue]);
             }
+            mviewer.setLayerTime(layer.layerid, wms_timefilter);
+          };
+        } else if (layer.timemin && layer.timemax) {
+          default_value = parseInt(layer.timemax);
+          ticks_labels = [layer.timemin];
+          ticks = [parseInt(layer.timemin)];
+          for (var i = parseInt(layer.timemin) + 1; i < parseInt(layer.timemax); i++) {
+            ticks_labels.push("");
+            ticks.push(i);
+          }
+          ticks_labels.push(layer.timemax);
+          ticks.push(parseInt(layer.timemax));
 
-            if (!oLayer.attributefilter) {
-                $('.mv-layer-details[data-layerid="'+layer.layerid+'"] .layerdisplay-subtitle .selected-attribute').remove();
-            }
-            if (!oLayer.attributefilter && !oLayer.styles) {
-                $('.mv-layer-details[data-layerid="'+layer.layerid+'"] .layerdisplay-subtitle').remove();
-            }
+          slider_options = {
+            min: parseInt(layer.timemin),
+            max: parseInt(layer.timemax),
+            step: 1,
+            value: default_value,
+            tooltip: "show",
+            tooltip_position: "bottom",
+            ticks_labels: ticks_labels,
+            ticks: ticks,
+          };
 
-            var li = $(".mv-nav-item[data-layerid='"+layer.layerid+"']");
-            li.find("a span").removeClass("mv-unchecked").addClass("mv-checked");
-            li.find("input").val(true);
-            // activate custom controls
-            if (layer.customcontrol && mviewer.customControls[layer.layerid]) {
-                mviewer.customControls[layer.layerid].init();
+          onSliderChange = function (data) {
+            mviewer.setLayerTime(layer.layerid, data.value.newValue);
+          };
+        }
+        //slider && slider-range
+
+        $("#" + layer.layerid + "-layer-timefilter")
+          .addClass("mv-slider-timer")
+          .slider(slider_options);
+        $("#" + layer.layerid + "-layer-timefilter")
+          .slider()
+          .on("change", onSliderChange);
+        if (ticks_labels.length > 7) {
+          $("#" + layer.layerid + "-layer-timefilter")
+            .closest(".form-group")
+            .find(".slider-tick-label")
+            .addClass("mv-time-vertical");
+        }
+
+        if (layer.timecontrol === "slider") {
+          //Activate the time player
+          $('.mv-time-player[data-layerid="' + layer.layerid + '"]').click(function (e) {
+            var ctrl = e.currentTarget;
+            $(ctrl).toggleClass("active");
+            if ($(ctrl).hasClass("active")) {
+              mviewer.playLayerTime($(ctrl).attr("data-layerid"), ctrl);
             }
-            if (layer.type === 'customlayer' && layer.tooltip && layer.tooltipenabled) {
-                info.toggleTooltipLayer($('.layer-tooltip[data-layerid="'+layer.layerid+'"]')[0]);
+          });
+
+          // slider-range
+        } else if (layer.timecontrol === "slider-range") {
+          $("#" + layer.layerid + "-layer-timefilter")
+            .closest(".form-group")
+            .removeClass("form-group-timer")
+            .addClass("form-group-timer-range");
+          //Remove time player
+          $('.mv-time-player[data-layerid="' + layer.layerid + '"]').remove();
+        } else {
+          //Remove time player
+          $('.mv-time-player[data-layerid="' + layer.layerid + '"]').remove();
+        }
+      }
+
+      //Time Filter calendar
+      if (layer.timefilter && layer.timecontrol === "calendar") {
+        var options = {
+          format: "yyyy-mm-dd",
+          language: "fr",
+          todayHighlight: true,
+          minViewMode: 0,
+          autoclose: true,
+        };
+        if (layer.timemin && layer.timemax) {
+          options.startDate = new Date(layer.timemin);
+          options.endDate = new Date(layer.timemax);
+        }
+
+        switch (layer.timeinterval) {
+          case "year":
+            options.minViewMode = 2;
+            break;
+          case "month":
+            (options.startView = 2), (options.minViewMode = 1);
+            break;
+          default:
+            break;
+        }
+        $("#" + layer.layerid + "-layer-timefilter")
+          .addClass("mv-calendar-timer")
+          .addClass("form-control")
+          .wrap('<div class="input-group date"></div>');
+
+        $("#" + layer.layerid + "-layer-timefilter");
+
+        $("#" + layer.layerid + "-layer-timefilter")
+          .closest("div")
+          .append(
+            '<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>'
+          )
+          .datepicker(options);
+
+        $("#" + layer.layerid + "-layer-timefilter").on("change", function (data, cc) {
+          mviewer.setLayerTime(layer.layerid, data.currentTarget.value);
+        });
+      }
+      //End Time filter
+      if ($("#layers-container").find("li").length > 1) {
+        //set Layer to top on the map
+        var actionMove = {
+          layerName: layer.layerid,
+          layerRef: $("#layers-container li[data-layerid='" + layer.layerid + "']")
+            .next()
+            .attr("data-layerid"),
+          action: "up",
+        };
+
+        mviewer.orderLayer(actionMove);
+      }
+      var oLayer = _overLayers[layer.layerid];
+      oLayer.layer.setVisible(true);
+      //Only for second and more loads
+      if (oLayer.attributefilter && oLayer.layer.getSource().getParams()["CQL_FILTER"]) {
+        var activeFilter = oLayer.layer.getSource().getParams()["CQL_FILTER"];
+        var wildcard = oLayer.wildcardpattern.split("value")[0];
+        var reg = new RegExp(wildcard + "|'", "g");
+        var activeAttributeValue = activeFilter
+          .split(oLayer.attributeoperator)[1]
+          .replace(reg, "")
+          .trim();
+        $(
+          "#" +
+            layer.layerid +
+            "-attributes-selector option[value='" +
+            activeAttributeValue +
+            "']"
+        ).prop("selected", true);
+        $(
+          '.mv-layer-details[data-layerid="' +
+            layer.layerid +
+            '"] .layerdisplay-subtitle .selected-attribute span'
+        ).text(activeAttributeValue);
+      }
+
+      var activeStyle = false;
+      if (oLayer.type === "wms" && oLayer.layer.getSource().getParams()["STYLES"]) {
+        activeStyle = oLayer.layer.getSource().getParams()["STYLES"];
+        var refStyle = activeStyle;
+        //update legend image if nec.
+        var res = mviewer.getMap().getView().getResolution();
+        var ppi = 25.4 / 0.28;
+        var scale = (res * ppi) / 0.0254;
+        if (layer.scale && scale >= layer.scale.min && scale <= layer.scale.max) {
+          var legendUrl = _getlegendurl(layer);
+          $("#legend-" + layer.layerid).attr("src", legendUrl);
+        }
+      }
+      if (oLayer.styles) {
+        var selectCtrl = $("#" + layer.layerid + "-styles-selector")[0];
+        if (activeStyle) {
+          var selectedStyle = $(
+            "#" +
+              layer.layerid +
+              "-styles-selector option[value*='" +
+              activeStyle.split("@")[0] +
+              "']"
+          ).prop("selected", true);
+        }
+        $(
+          '.mv-layer-details[data-layerid="' +
+            layer.layerid +
+            '"] .layerdisplay-subtitle .selected-sld span'
+        ).text(selectCtrl.options[selectCtrl.selectedIndex].label);
+      } else {
+        $(
+          '.mv-layer-details[data-layerid="' +
+            layer.layerid +
+            '"] .layerdisplay-subtitle .selected-sld'
+        ).remove();
+      }
+
+      if (!oLayer.attributefilter) {
+        $(
+          '.mv-layer-details[data-layerid="' +
+            layer.layerid +
+            '"] .layerdisplay-subtitle .selected-attribute'
+        ).remove();
+      }
+      if (!oLayer.attributefilter && !oLayer.styles) {
+        $(
+          '.mv-layer-details[data-layerid="' + layer.layerid + '"] .layerdisplay-subtitle'
+        ).remove();
+      }
+
+      var li = $(".mv-nav-item[data-layerid='" + layer.layerid + "']");
+      li.find("a span").removeClass("mv-unchecked").addClass("mv-checked");
+      li.find("input").val(true);
+      // activate custom controls
+      if (layer.customcontrol && mviewer.customControls[layer.layerid]) {
+        mviewer.customControls[layer.layerid].init();
+      }
+      if (layer.type === "customlayer" && layer.tooltip && layer.tooltipenabled) {
+        info.toggleTooltipLayer(
+          $('.layer-tooltip[data-layerid="' + layer.layerid + '"]')[0]
+        );
+      }
+      if (layer.expanded) {
+        this.toggleLayerOptions(
+          $('.mv-layer-details[data-layerid="' + layer.layerid + '"]')[0]
+        );
+      }
+      $("#legend").removeClass("empty");
+      if (
+        configuration.getConfiguration().application.togglealllayersfromtheme === "true"
+      ) {
+        var newStatus = _getThemeStatus(layer.theme);
+        _setThemeStatus(layer.theme, newStatus);
+      }
+      mviewer.orderTopLayer();
+      mviewer.orderLegendByMap();
+      // display layer with permalink params
+      oLayer.layer.getSource().refresh();
+      // create tooltip for this layer legend UI
+      _initTooltip();
+    },
+    removeLayer: function (el) {
+      var item;
+      if (!$(el).is("li")) {
+        item = $(el).closest("li");
+      } else {
+        item = $(el);
+      }
+      var layerid = item.attr("data-layerid");
+      var layer = _overLayers[layerid];
+      item.remove();
+      layer.layer.setVisible(false);
+      var li = $(".mv-nav-item[data-layerid='" + layerid + "']");
+      li.find("a span").removeClass("mv-checked").addClass("mv-unchecked");
+      li.find("input").val(false);
+      // deactivate custom controls
+      if (layer.customcontrol && mviewer.customControls[layer.layerid]) {
+        mviewer.customControls[layer.layerid].destroy();
+      }
+      //Remove Layer infos in info panels
+      mviewer.removeLayerInfo(layer.layerid);
+      //check if layers-container is empty
+      if ($("#layers-container .list-group-item").length === 0) {
+        $("#legend").addClass("empty");
+      }
+      if (
+        configuration.getConfiguration().application.togglealllayersfromtheme === "true"
+      ) {
+        var newStatus = _getThemeStatus(layer.theme);
+        _setThemeStatus(layer.theme, newStatus);
+      }
+      // clear tooltip
+      $(".mv-tooltip").remove();
+    },
+    removeAllLayers: function () {
+      $("#layers-container .list-group-item").each(function (id, item) {
+        mviewer.removeLayer(item);
+      });
+    },
+    toggleLayer: function (el) {
+      var li = $(el).closest("li");
+      if (li.find("input").val() === "false") {
+        mviewer.addLayer(_overLayers[$(li).data("layerid")]);
+      } else {
+        var el = $(".mv-layer-details[data-layerid='" + li.data("layerid") + "']");
+        mviewer.removeLayer(el);
+      }
+    },
+    toggleMenu: function (transition) {
+      if (transition) {
+        $("#wrapper, #sidebar-wrapper, #page-content-wrapper").removeClass(
+          "notransition"
+        );
+      } else {
+        $("#wrapper, #sidebar-wrapper, #page-content-wrapper").addClass("notransition");
+      }
+      $("#wrapper").toggleClass("toggled-2");
+      $("#menu-toggle-2,.menu-toggle").toggleClass("closed");
+      $("#menu ul").hide();
+    },
+
+    toggleLegend: function () {
+      $("#legend").toggleClass("active");
+    },
+    toggleParameter: function (li) {
+      var span = $(li).find("span");
+      var parameter = false;
+      if (span.hasClass("mv-unchecked") === true) {
+        span.removeClass("mv-unchecked").addClass("mv-checked");
+        parameter = true;
+      } else {
+        span.removeClass("mv-checked").addClass("mv-unchecked");
+      }
+      switch (li.id) {
+        case "param_search_bbox":
+          _searchparams.bbox = parameter;
+          break;
+        case "param_search_localities":
+          _searchparams.localities = parameter;
+          break;
+        case "param_search_features":
+          _searchparams.features = parameter;
+          break;
+      }
+    },
+    toggleLayerOptions: function (el) {
+      $(el).closest("li").find(".mv-layer-options").slideToggle();
+      //hack slider js
+      $(el).closest("li").find(".mv-slider-timer").slider("relayout");
+      if ($(el).find("span.state-icon").hasClass("glyphicon glyphicon-chevron-down")) {
+        $(el)
+          .find("span.state-icon")
+          .removeClass("glyphicon glyphicon-chevron-down")
+          .addClass("glyphicon glyphicon-chevron-up");
+      } else {
+        $(el)
+          .find("span.state-icon")
+          .removeClass("glyphicon glyphicon-chevron-up")
+          .addClass("glyphicon glyphicon-chevron-down");
+      }
+    },
+
+    setLayerStyle: function (layerid, style, selectCtrl) {
+      var _layerDefinition = _overLayers[layerid];
+      var styleRef = style;
+      var _source = _layerDefinition.layer.getSource();
+      if (_layerDefinition.attributefilter && _layerDefinition.attributestylesync) {
+        //Récupère la valeur active de la liste déroulante
+        //var attributeValue = $("#"+ layerid + "-attributes-selector").val();
+        var attributeValue = "all";
+        var styleBase = style.split("@")[0];
+        if (_source.getParams().CQL_FILTER) {
+          attributeValue = _source
+            .getParams()
+            .CQL_FILTER.split(" " + _layerDefinition.attributeoperator + " ")[1]
+            .replace(/\'/g, "");
+        }
+        if (attributeValue != "all") {
+          style = [styleBase, "@", attributeValue.toLowerCase().sansAccent()].join("");
+        }
+      }
+      if (_layerDefinition.sld) {
+        if (!/.(sld|SLD)$/.test(style)) {
+          style += ".sld";
+        }
+        _source.getParams()["SLD"] = style;
+        _layerDefinition.sld = style;
+      } else {
+        _source.getParams()["STYLES"] = style;
+        _layerDefinition.style = style;
+      }
+      _source.updateParams({ dc: new Date().valueOf() });
+      _source.changed();
+      var styleLabel = $(selectCtrl)
+        .find("option[value='" + styleBase + "'], option[value='" + styleRef + "']")
+        .attr("label");
+      $(
+        '.mv-layer-details[data-layerid="' +
+          layerid +
+          '"] .layerdisplay-subtitle .selected-sld span'
+      ).text(styleLabel);
+      var legendUrl = _getlegendurl(_layerDefinition);
+      $("#legend-" + layerid).fadeOut("slow", function () {
+        // Animation complete
+        $("#legend-" + layerid)
+          .attr("src", legendUrl)
+          .fadeIn();
+      });
+      $('.mv-nav-item[data-layerid="' + layerid + '"]')
+        .attr("data-legendurl", legendUrl)
+        .data("legendurl", legendUrl);
+    },
+
+    makeCQL_Filter: function (fld, operator, value, wildcardpattern) {
+      var cql_filter = "";
+      if (operator == "=") {
+        cql_filter = fld + " = " + "'" + value.replace("'", "''") + "'";
+      } else if (operator == "like") {
+        cql_filter =
+          fld +
+          " like " +
+          "'" +
+          wildcardpattern.replace("value", value.replace("'", "''")) +
+          "'";
+      }
+      return cql_filter;
+    },
+
+    setLayerAttribute: function (layerid, attributeValue, selectCtrl) {
+      var _layerDefinition = _overLayers[layerid];
+      var _source = _layerDefinition.layer.getSource();
+      if (attributeValue === "all") {
+        delete _source.getParams()["CQL_FILTER"];
+      } else {
+        var cql_filter = this.makeCQL_Filter(
+          _layerDefinition.attributefield,
+          _layerDefinition.attributeoperator,
+          attributeValue,
+          _layerDefinition.wildcardpattern
+        );
+        _source.getParams()["CQL_FILTER"] = cql_filter;
+      }
+      if (_layerDefinition.attributestylesync) {
+        //need update legend ad style applied to the layer
+        var currentStyle;
+        var newStyle;
+        if (_layerDefinition.sld) {
+          currentStyle = _layerDefinition.sld;
+        } else {
+          currentStyle = _layerDefinition.style;
+        }
+        //Respect this convention in sld naming : stylename@attribute eg style1@departement plus no accent no Capitale.
+        if (attributeValue != "all") {
+          newStyle = [
+            currentStyle.split("@")[0],
+            "@",
+            attributeValue.sansAccent().toLowerCase(),
+          ].join("");
+        } else {
+          newStyle = currentStyle.split("@")[0];
+        }
+        if (_layerDefinition.sld) {
+          newStyle += ".sld";
+          _source.getParams()["SLD"] = newStyle;
+          _layerDefinition.sld = newStyle;
+        } else {
+          _source.getParams()["STYLES"] = newStyle;
+          _layerDefinition.style = newStyle;
+        }
+        var legendUrl = _getlegendurl(_layerDefinition);
+        $("#legend-" + layerid).fadeOut("slow", function () {
+          // Animation complete
+          $("#legend-" + layerid)
+            .attr("src", legendUrl)
+            .fadeIn();
+        });
+        $('.mv-nav-item[data-layerid="' + layerid + '"]')
+          .attr("data-legendurl", legendUrl)
+          .data("legendurl", legendUrl);
+      }
+      _source.updateParams({ dc: new Date().valueOf() });
+      _source.changed();
+      $(
+        '.mv-layer-details[data-layerid="' +
+          layerid +
+          '"] .layerdisplay-subtitle .selected-attribute span'
+      ).text(selectCtrl.options[selectCtrl.selectedIndex].label);
+    },
+
+    setLayerTime: function (layerid, filter_time) {
+      //Fix me
+      var str = filter_time.toString();
+      var test = str.length;
+      switch (test) {
+        case 6:
+          filter_time = str.substr(0, 4) + "-" + str.substr(4, 2);
+          break;
+        case 8:
+          filter_time =
+            str.substr(0, 4) + "-" + str.substr(4, 2) + "-" + str.substr(6, 2);
+          break;
+        default:
+          filter_time = filter_time;
+      }
+      var _layerDefinition = _overLayers[layerid];
+      var _source = _layerDefinition.layer.getSource();
+      _source.getParams()["TIME"] = filter_time;
+      $(".mv-time-player-selection[data-layerid='" + layerid + "']").text("Patientez...");
+      var key = _source.on("imageloadend", function () {
+        ol.Observable.unByKey(key);
+        $(".mv-time-player-selection[data-layerid='" + layerid + "']").text(filter_time);
+      });
+      _source.changed();
+
+      if (_source.hasOwnProperty("tileClass")) {
+        _source.updateParams({ ol3_salt: Math.random() });
+      }
+    },
+
+    playLayerTime: function (layerid, ctrl) {
+      var t = $("#" + layerid + "-layer-timefilter");
+      var timevalues = _overLayers[layerid].timevalues;
+      var animation;
+      t.slider({ tooltip: "always" }).slider("refresh");
+
+      function play() {
+        if (
+          $(ctrl).hasClass("active") &&
+          $("#" + layerid + "-layer-timefilter").length > 0
+        ) {
+          var nextvalue = (t.slider("getValue") + 1) % timevalues.length;
+          t.slider("setValue", nextvalue, true, true);
+        } else {
+          t.slider({ tooltip: "show" }).slider("refresh");
+          clearInterval(animation);
+        }
+      }
+      animation = setInterval(play, 2000);
+    },
+
+    setInfoPanelTitle: function (el, panel) {
+      var title = $(el).attr("data-original-title");
+      $("#" + panel + " .mv-header h5").text(title);
+    },
+
+    nextBackgroundLayer: function () {
+      //Get activeLayer
+      var id = 0;
+      for (var i = 0; i < _backgroundLayers.length; i += 1) {
+        var l = _backgroundLayers[i];
+        if (l.getVisible()) {
+          id = i;
+          break;
+        }
+      }
+      var nexid = (id + 1) % _backgroundLayers.length;
+      var i, ii;
+      for (i = 0, ii = _backgroundLayers.length; i < ii; ++i) {
+        _backgroundLayers[i].set("visible", i == nexid);
+      }
+      nexid = (nexid + 1) % _backgroundLayers.length;
+      //get the next thumb
+      var thumb =
+        configuration.getConfiguration().baselayers.baselayer[nexid].thumbgallery;
+      var title = configuration.getConfiguration().baselayers.baselayer[nexid].label;
+      $("#backgroundlayersbtn").css("background-image", 'url("' + thumb + '")');
+      if (!configuration.getConfiguration().mobile) {
+        $("#backgroundlayersbtn").attr("data-original-title", title);
+        $("#backgroundlayersbtn").tooltip("hide").tooltip({
+          placement: "top",
+          trigger: "hover",
+          html: true,
+          container: "body",
+          template: mviewer.templates.tooltip,
+        });
+      }
+    },
+
+    /**
+     * Public Method: getLayer
+     *
+     */
+
+    getLayer: function (idlayer) {
+      return _overLayers[idlayer];
+    },
+
+    removeLayerInfo: function (layerid) {
+      var tab = $('.nav-tabs li[data-layerid="' + layerid + '"]');
+      var panel = tab.closest(".popup-content").parent();
+      var tabs = tab.parent().find("li");
+      var info = $(tab.find("a").attr("href"));
+
+      _sourceSelectOverlay.getFeatures().forEach((feature) => {
+        if (feature.get("mviewerid") === layerid) {
+          _sourceSelectOverlay.removeFeature(feature);
+          _sourceSubSelectOverlay.getFeatures().forEach((subFeature) => {
+            if (feature.ol_uid === subFeature.ol_uid) {
+              _sourceSubSelectOverlay.removeFeature(subFeature);
             }
-            if (layer.expanded) {
-                this.toggleLayerOptions($('.mv-layer-details[data-layerid="'+layer.layerid+'"]')[0]);
-            }
-            $("#legend").removeClass("empty");
-            if (configuration.getConfiguration().application.togglealllayersfromtheme === "true") {
-                var newStatus = _getThemeStatus(layer.theme);
-                _setThemeStatus(layer.theme, newStatus);
-            }
-            mviewer.orderTopLayer();
-            mviewer.orderLegendByMap();
-            // display layer with permalink params
-            oLayer.layer.getSource().refresh()
-            // create tooltip for this layer legend UI
-            _initTooltip();
-        },
-        removeLayer: function (el) {
-            var item;
-            if ( !$(el).is( "li" ) ) {
-                item = $(el).closest("li");
-            } else {
-                item = $(el);
-            }
-            var layerid = item.attr("data-layerid");
-            var layer = _overLayers[layerid];
-            item.remove();
-            layer.layer.setVisible(false);
-            var li = $(".mv-nav-item[data-layerid='"+layerid+"']");
-            li.find("a span").removeClass("mv-checked").addClass("mv-unchecked");
-            li.find("input").val(false);
-            // deactivate custom controls
-            if (layer.customcontrol && mviewer.customControls[layer.layerid]) {
-                mviewer.customControls[layer.layerid].destroy();
-            }
-            //Remove Layer infos in info panels
-            mviewer.removeLayerInfo(layer.layerid);
-            //check if layers-container is empty
-            if ($("#layers-container .list-group-item").length === 0) {
-                $("#legend").addClass("empty");
-            }
-            if (configuration.getConfiguration().application.togglealllayersfromtheme === "true") {
-                var newStatus = _getThemeStatus(layer.theme);
-                _setThemeStatus(layer.theme, newStatus);
-            }
-            // clear tooltip
-            $(".mv-tooltip").remove();
-        },
-        removeAllLayers: function () {
-            $("#layers-container .list-group-item").each( function (id, item) {
-                mviewer.removeLayer(item);
+          });
+        }
+      });
+      // remove layer from infoLayers
+      _infoLayers = _infoLayers.filter((infoLayer) => {
+        return infoLayer.layerid !== layerid;
+      });
+      // get layers with pin
+      var pinLayers = _infoLayers.filter((infoLayer) => {
+        return infoLayer.pin;
+      });
+      // remove pin on last layer with pin
+      if (pinLayers.length === 0) {
+        $("#mv_marker").hide();
+      }
+
+      if (tabs.length === 1) {
+        tab.remove();
+        info.remove();
+        if (panel.hasClass("active")) {
+          panel.toggleClass("active");
+        }
+        $("#mv_marker").hide();
+      } else {
+        if (tab.hasClass("active")) {
+          //Activation de l'item suivant
+          var _next_tab = tab.next();
+          _next_tab.find("a").click();
+          tab.remove();
+          info.remove();
+        } else {
+          tab.remove();
+          info.remove();
+        }
+      }
+    },
+
+    alert: function (msg, cls) {
+      _message(msg, cls);
+    },
+
+    legendSize: function (img) {
+      if (img.width > 250) {
+        //$(img).addClass("big-legend");
+        $(img).closest("div").addClass("big-legend");
+        $(img)
+          .parent()
+          .append(
+            '<span onclick="mviewer.popupPhoto(' +
+              "this.parentElement.getElementsByTagName('img')[0].src)\" " +
+              'class="text-big-legend"><span><span class="glyphicon glyphicon-resize-full" aria-hidden="true">' +
+              "</span> Agrandir la légende</span></span>"
+          );
+      }
+    },
+
+    toggleAllThemeLayers: function (e) {
+      e.preventDefault;
+      var themeid = $(e.currentTarget).closest("li").attr("id").split("theme-layers-")[1];
+      var theme = _themes[themeid];
+      var status = _getThemeStatus(themeid);
+      var visibility = false;
+      if (status.status !== "full") {
+        visibility = true;
+      }
+      if (visibility) {
+        if (theme.groups) {
+          $.each(theme.groups, function (key, group) {
+            $.each(group.layers, function (key, layer) {
+              if (!layer.layer.getVisible()) {
+                mviewer.addLayer(layer);
+              }
             });
-        },
-        toggleLayer: function (el) {
-            var li = $(el).closest("li");
-            if ( li.find("input").val() === 'false' ) {
-                mviewer.addLayer(_overLayers[$(li).data("layerid")]);
-            } else {
-                var el = $(".mv-layer-details[data-layerid='"+li.data("layerid")+"']")
-                mviewer.removeLayer(el);
+          });
+        } else {
+          $.each(theme.layers, function (key, layer) {
+            if (!layer.layer.getVisible()) {
+              mviewer.addLayer(layer);
             }
-        },
-        toggleMenu: function (transition) {
-            if (transition) {
-                $( "#wrapper, #sidebar-wrapper, #page-content-wrapper").removeClass("notransition");
-            } else {
-                $( "#wrapper, #sidebar-wrapper, #page-content-wrapper").addClass("notransition");
-            }
-            $("#wrapper").toggleClass("toggled-2");
-            $("#menu-toggle-2,.menu-toggle").toggleClass("closed");
-            $('#menu ul').hide();
-        },
-
-        toggleLegend: function () {
-            $("#legend").toggleClass("active");
-        },
-        toggleParameter: function (li) {
-            var span = $(li).find("span");
-            var parameter = false;
-            if (span.hasClass('mv-unchecked') === true ) {
-                span.removeClass('mv-unchecked').addClass('mv-checked');
-                parameter = true;
-            } else {
-                span.removeClass('mv-checked').addClass('mv-unchecked');
-            }
-            switch (li.id) {
-                case "param_search_bbox":
-                    _searchparams.bbox = parameter;
-                    break;
-                case "param_search_localities":
-                    _searchparams.localities = parameter;
-                    break;
-                case "param_search_features":
-                    _searchparams.features = parameter;
-                    break;
-            }
-
-        },
-        toggleLayerOptions: function (el) {
-            $(el).closest("li").find(".mv-layer-options").slideToggle();
-            //hack slider js
-            $(el).closest("li").find(".mv-slider-timer").slider('relayout');
-            if ($(el).find("span.state-icon").hasClass("glyphicon glyphicon-chevron-down")) {
-                $(el).find("span.state-icon").removeClass("glyphicon glyphicon-chevron-down").addClass("glyphicon glyphicon-chevron-up");
-            } else {
-                $(el).find("span.state-icon").removeClass("glyphicon glyphicon-chevron-up").addClass("glyphicon glyphicon-chevron-down");
-            }
-        },
-
-        setLayerStyle: function (layerid, style, selectCtrl) {
-            var _layerDefinition = _overLayers[layerid];
-            var styleRef = style;
-            var _source = _layerDefinition.layer.getSource();
-            if (_layerDefinition.attributefilter && _layerDefinition.attributestylesync) {
-            //Récupère la valeur active de la liste déroulante
-                //var attributeValue = $("#"+ layerid + "-attributes-selector").val();
-                var attributeValue = 'all';
-                var styleBase = style.split('@')[0];
-                if (_source.getParams().CQL_FILTER) {
-                    attributeValue = _source.getParams().CQL_FILTER.split(" " + _layerDefinition.attributeoperator + " ")[1].replace(/\'/g, "");
-                }
-                if ( attributeValue != 'all' ) {
-                    style = [styleBase, '@', attributeValue.toLowerCase().sansAccent()].join("");
-                }
-            }
-            if (_layerDefinition.sld) {
-                if (!/.(sld|SLD)$/.test(style)) {
-                    style += ".sld";
-                }
-                _source.getParams()['SLD'] = style;
-                _layerDefinition.sld = style;
-            } else {
-                _source.getParams()['STYLES'] = style;
-                _layerDefinition.style = style;
-            }
-            _source.updateParams({"dc": new Date().valueOf()});
-            _source.changed();
-            var styleLabel = $(selectCtrl).find("option[value='"+styleBase+"'], option[value='"+styleRef+"']").attr("label");
-            $('.mv-layer-details[data-layerid="'+layerid+'"] .layerdisplay-subtitle .selected-sld span').text(styleLabel);
-            var legendUrl = _getlegendurl(_layerDefinition);
-            $("#legend-" + layerid).fadeOut( "slow", function() {
-                // Animation complete
-                 $("#legend-" + layerid).attr("src", legendUrl).fadeIn();
+          });
+        }
+      } else {
+        if (theme.groups) {
+          $.each(theme.groups, function (key, group) {
+            $.each(group.layers, function (key, layer) {
+              if (layer.layer.getVisible()) {
+                mviewer.removeLayer($(".mv-layer-details[data-layerid='" + key + "']"));
+              }
             });
-            $('.mv-nav-item[data-layerid="'+layerid+'"]').attr("data-legendurl",legendUrl).data("legendurl",legendUrl);
-
-        },
-
-        makeCQL_Filter: function (fld,operator,value, wildcardpattern) {
-            var cql_filter = "";
-            if (operator == "=") {
-                    cql_filter = fld + " = " + "'" + value.replace("'","''") + "'";
-                } else if (operator == "like") {
-                    cql_filter = fld + " like " + "'" + wildcardpattern.replace("value", value.replace("'","''")) + "'";
-                }
-            return cql_filter;
-        },
-
-        setLayerAttribute: function (layerid, attributeValue, selectCtrl) {
-            var _layerDefinition = _overLayers[layerid];
-            var _source = _layerDefinition.layer.getSource();
-            if ( attributeValue === 'all' ) {
-                delete _source.getParams()['CQL_FILTER'];
-            } else {
-                var cql_filter = this.makeCQL_Filter(_layerDefinition.attributefield, _layerDefinition.attributeoperator,
-                    attributeValue, _layerDefinition.wildcardpattern);
-                _source.getParams()['CQL_FILTER'] = cql_filter;
+          });
+        } else {
+          $.each(theme.layers, function (key, layer) {
+            if (layer.layer.getVisible()) {
+              mviewer.removeLayer($(".mv-layer-details[data-layerid='" + key + "']"));
             }
-            if (_layerDefinition.attributestylesync) {
-                //need update legend ad style applied to the layer
-                var currentStyle;
-                var newStyle;
-                if (_layerDefinition.sld) {
-                    currentStyle =  _layerDefinition.sld;
-                } else {
-                    currentStyle =  _layerDefinition.style;
-                }
-                //Respect this convention in sld naming : stylename@attribute eg style1@departement plus no accent no Capitale.
-                if (attributeValue != 'all') {
-                    newStyle = [currentStyle.split("@")[0], "@", attributeValue.sansAccent().toLowerCase()].join("");
-                } else {
-                    newStyle = currentStyle.split("@")[0];
-                }
-                if (_layerDefinition.sld) {
-                    newStyle += ".sld";
-                    _source.getParams()['SLD'] = newStyle;
-                    _layerDefinition.sld = newStyle;
-                } else {
-                    _source.getParams()['STYLES'] = newStyle;
-                    _layerDefinition.style = newStyle;
-                }
-                var legendUrl = _getlegendurl(_layerDefinition);
-                $("#legend-" + layerid).fadeOut( "slow", function() {
-                    // Animation complete
-                    $("#legend-" + layerid).attr("src", legendUrl).fadeIn();
-                });
-                $('.mv-nav-item[data-layerid="'+layerid+'"]').attr("data-legendurl",legendUrl).data("legendurl",legendUrl);
-            }
-            _source.updateParams({"dc": new Date().valueOf()});
-            _source.changed();
-            $('.mv-layer-details[data-layerid="'+layerid+'"] .layerdisplay-subtitle .selected-attribute span')
-                .text(selectCtrl.options[selectCtrl.selectedIndex].label);
-        },
+          });
+        }
+      }
+      _setThemeStatus(themeid);
+      e.stopPropagation();
+    },
 
-        setLayerTime: function (layerid, filter_time) {
-            //Fix me
-            var str = filter_time.toString();
-            var test = str.length;
-            switch (test) {
+    getLayers: function () {
+      return _overLayers;
+    },
 
-                case 6:
-                    filter_time = str.substr(0,4) + '-' + str.substr(4,2);
-                    break;
-                case 8:
-                    filter_time = str.substr(0,4) + '-' + str.substr(4,2) +  '-' + str.substr(6,2);
-                    break;
-                default:
-                    filter_time = filter_time;
-            }
-            var _layerDefinition = _overLayers[layerid];
-            var _source = _layerDefinition.layer.getSource();
-            _source.getParams()['TIME'] = filter_time;
-            $(".mv-time-player-selection[data-layerid='"+layerid+"']").text('Patientez...');
-            var key = _source.on('imageloadend', function() {
-                ol.Observable.unByKey(key);
-                $(".mv-time-player-selection[data-layerid='"+layerid+"']").text(filter_time);
-            });
-            _source.changed();
+    getLonLatZfromGeometry: _getLonLatZfromGeometry,
 
-            if (_source.hasOwnProperty("tileClass")) {
-                _source.updateParams({'ol3_salt': Math.random()});
-            }
-        },
+    ajaxURL: _ajaxURL,
 
-        playLayerTime: function (layerid, ctrl) {
-            var t = $("#"+layerid+"-layer-timefilter");
-            var timevalues = _overLayers[layerid].timevalues;
-            var animation;
-            t.slider({tooltip:'always'}).slider('refresh');
+    parseWMCResponse: _parseWMCResponse,
 
-            function play() {
-                if ($(ctrl).hasClass("active") && $("#"+layerid+"-layer-timefilter").length > 0) {
-                    var nextvalue = (t.slider('getValue')+1)%timevalues.length;
-                    t.slider('setValue', nextvalue, true, true);
-                } else {
-                    t.slider({tooltip:'show'}).slider('refresh');
-                    clearInterval(animation);
-                }
-            }
-            animation = setInterval(play, 2000);
-        },
+    deleteLayer: _deleteLayer,
 
-        setInfoPanelTitle: function (el, panel) {
-            var title = $(el).attr("data-original-title");
-            $("#"+panel +" .mv-header h5").text(title);
-        },
+    processLayer: _processLayer,
 
-        nextBackgroundLayer: function () {
-            //Get activeLayer
-            var id = 0;
-            for (var i = 0; i < _backgroundLayers.length; i += 1) {
-                var l = _backgroundLayers[i];
-                if (l.getVisible()) {
-                    id=i;
-                    break;
-                }
-            }
-            var nexid=(id+1)%_backgroundLayers.length;
-            var i, ii;
-            for (i = 0, ii = _backgroundLayers.length; i < ii; ++i) {
-                _backgroundLayers[i].set('visible', (i == nexid));
-            }
-            nexid=(nexid+1)%_backgroundLayers.length;
-            //get the next thumb
-            var thumb = configuration.getConfiguration().baselayers.baselayer[nexid].thumbgallery;
-            var title = configuration.getConfiguration().baselayers.baselayer[nexid].label;
-            $("#backgroundlayersbtn").css("background-image", 'url("'+thumb+'")');
-            if (!configuration.getConfiguration().mobile) {
-                $("#backgroundlayersbtn").attr("data-original-title", title);
-                $("#backgroundlayersbtn").tooltip('hide').tooltip({
-                    placement: 'top',
-                    trigger: 'hover',
-                    html: true,
-                    container: 'body',
-                    template: mviewer.templates.tooltip
-                });
-            }
-        },
+    initMap: _initMap,
 
-        /**
-         * Public Method: getLayer
-         *
-         */
+    getLegendUrl: _getlegendurl,
 
-        getLayer: function (idlayer) {
-            return _overLayers[idlayer];
-        },
+    getProjection: function () {
+      return _projection;
+    },
 
-        removeLayerInfo: function (layerid) {
-            var tab = $('.nav-tabs li[data-layerid="'+layerid+'"]');
-            var panel = tab.closest(".popup-content").parent();
-            var tabs = tab.parent().find("li");
-            var info = $(tab.find("a").attr("href"));
+    getSourceOverlay: function () {
+      return _sourceOverlay;
+    },
 
-            _sourceSelectOverlay.getFeatures().forEach(feature => {
-                if (feature.get("mviewerid") === layerid) {
-                    _sourceSelectOverlay.removeFeature(feature);
-                    _sourceSubSelectOverlay.getFeatures().forEach(subFeature => {
-                        if (feature.ol_uid === subFeature.ol_uid) {
-                            _sourceSubSelectOverlay.removeFeature(subFeature)
-                        }
-                    })
-                }
-            })
-            // remove layer from infoLayers
-            _infoLayers = _infoLayers.filter(infoLayer => {
-                return infoLayer.layerid !== layerid;
-            })
-            // get layers with pin
-            var pinLayers = _infoLayers.filter(infoLayer => {
-                return infoLayer.pin;
-            })
-            // remove pin on last layer with pin
-            if (pinLayers.length === 0) {
-                $("#mv_marker").hide();
-            }
+    setTopLayer: function (layer) {
+      _topLayer = layer;
+    },
 
-            if ( tabs.length === 1 ) {
-                tab.remove();
-                info.remove();
-                if (panel.hasClass("active")) {
-                    panel.toggleClass("active");
-                }
-                $("#mv_marker").hide();
-            } else {
-                if ( tab.hasClass("active") ) {
-                    //Activation de l'item suivant
-                    var _next_tab = tab.next();
-                    _next_tab.find("a").click();
-                    tab.remove();
-                    info.remove();
-                } else {
-                    tab.remove();
-                    info.remove();
-                }
-            }
+    setInfoLayers: function (infoLayers) {
+      _infoLayers = infoLayers;
+    },
 
-        },
+    createBaseLayer: _createBaseLayer,
 
-        alert: function (msg, cls) {
-            _message(msg, cls);
-        },
+    drawVectorLegend: _drawVectorLegend,
 
-        legendSize: function (img) {
-            if (img.width > 250) {
-                //$(img).addClass("big-legend");
-                $(img).closest("div").addClass("big-legend");
-                $(img).parent().append('<span onclick="mviewer.popupPhoto(' +
-                    'this.parentElement.getElementsByTagName(\'img\')[0].src)" ' +
-                    'class="text-big-legend"><span><span class="glyphicon glyphicon-resize-full" aria-hidden="true">' +
-                    '</span> Agrandir la légende</span></span>');
-            }
-        },
+    overLayersReady: _overLayersReady,
 
-        toggleAllThemeLayers: function (e) {
-            e.preventDefault;
-            var themeid = $(e.currentTarget).closest("li").attr("id").split("theme-layers-")[1];
-            var theme = _themes[themeid];
-            var status = _getThemeStatus(themeid);
-            var visibility = false;
-            if (status.status !== "full") {
-                visibility = true;
-            }
-            if (visibility) {
-                if (theme.groups) {
-                    $.each( theme.groups, function( key, group ) {
-                        $.each( group.layers, function( key, layer ) {
-                            if (!layer.layer.getVisible()) {
-                                mviewer.addLayer(layer);
-                            }
-                        });
-                    });
-                } else {
-                    $.each( theme.layers, function( key, layer ) {
-                        if (!layer.layer.getVisible()) {
-                            mviewer.addLayer(layer);
-                        }
-                    });
-                }
-            } else {
-                if (theme.groups) {
-                    $.each( theme.groups, function( key, group ) {
-                        $.each( group.layers, function( key, layer ) {
-                            if (layer.layer.getVisible()) {
-                                mviewer.removeLayer($(".mv-layer-details[data-layerid='"+key+"']"));
-                            }
-                        });
-                    });
-                } else {
-                    $.each( theme.layers, function( key, layer ) {
-                        if (layer.layer.getVisible()) {
-                            mviewer.removeLayer($(".mv-layer-details[data-layerid='"+key+"']"));
-                        }
-                    });
-                }
-            }
-            _setThemeStatus(themeid);
-            e.stopPropagation();
-        },
+    renderHTMLFromTemplate: _renderHTMLFromTemplate,
 
-        getLayers: function () {
-            return _overLayers;
-        },
+    initToolTip: _initTooltip,
 
-        getLonLatZfromGeometry: _getLonLatZfromGeometry,
-
-        ajaxURL : _ajaxURL,
-
-        parseWMCResponse: _parseWMCResponse,
-
-        deleteLayer: _deleteLayer,
-
-        processLayer: _processLayer,
-
-        initMap: _initMap,
-
-        getLegendUrl: _getlegendurl,
-
-        getProjection: function () { return _projection; },
-
-        getSourceOverlay: function () { return _sourceOverlay; },
-
-        setTopLayer: function (layer) { _topLayer = layer; },
-
-        setInfoLayers: function (infoLayers) { _infoLayers = infoLayers; },
-
-        createBaseLayer: _createBaseLayer,
-
-        drawVectorLegend: _drawVectorLegend,
-
-        overLayersReady: _overLayersReady,
-
-        renderHTMLFromTemplate : _renderHTMLFromTemplate,
-
-        initToolTip: _initTooltip,
-
-        events: function () { return _events; }
-
-
-    }; // fin return
-
+    events: function () {
+      return _events;
+    },
+  }; // fin return
 })();
