@@ -4,18 +4,23 @@
     <script src="https://openlayers.org/en/v5.3.0/examples/resources/mapbox-streets-v6-style.js"></script>
 */
 
-const maptilerkey = 'HIkwGFOll1LXr7hhVnMf';
+const maptilerkey = "HIkwGFOll1LXr7hhVnMf";
 const layer = new ol.layer.VectorTile({
-    source: new ol.source.VectorTile({
-      attributions: '© <a href="https://www.maptiler.com/copyright/">MapTiler</a> ' +
-        '© <a href="https://www.openstreetmap.org/copyright">' +
-        'OpenStreetMap contributors</a>',
-      format: new ol.format.MVT(),
-      url: 'https://api.maptiler.com/tiles/v3/' +
-          '{z}/{x}/{y}.pbf?key=' + maptilerkey
-    }),
-    style: createMapboxStreetsV6Style(ol.style.Style, ol.style.Fill, ol.style.Stroke, ol.style.Icon, ol.style.Text)
+  source: new ol.source.VectorTile({
+    attributions:
+      '© <a href="https://www.maptiler.com/copyright/">MapTiler</a> ' +
+      '© <a href="https://www.openstreetmap.org/copyright">' +
+      "OpenStreetMap contributors</a>",
+    format: new ol.format.MVT(),
+    url: "https://api.maptiler.com/tiles/v3/" + "{z}/{x}/{y}.pbf?key=" + maptilerkey,
+  }),
+  style: createMapboxStreetsV6Style(
+    ol.style.Style,
+    ol.style.Fill,
+    ol.style.Stroke,
+    ol.style.Icon,
+    ol.style.Text
+  ),
 });
-
 
 new CustomLayer("maptiler", layer);
