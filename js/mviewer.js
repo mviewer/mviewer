@@ -419,7 +419,7 @@ mviewer = (function () {
       legendUrl = layer.legendurl;
     } else if (layer.legendurl && layer.styles && layer.styles.split(",").length === 1) {
       legendUrl = layer.legendurl;
-    } else if (!layer.type === "vector-tms") {
+    } else if (layer.type !== "vector-tms") {
       legendUrl = getLegendGraphicUrl(layer.url, _getLegendParams(layer));
     }
     if (layer.dynamiclegend) {
