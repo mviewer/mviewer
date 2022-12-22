@@ -25,7 +25,8 @@
   },
   "homepage": ".",
   "dependencies": {
-    "live-server": "^1.2.2"
+    "live-server": "^1.2.2",
+    "sass": "^1.57.1"
   },
   "devDependencies": {
     "prettier": "^2.7.1"
