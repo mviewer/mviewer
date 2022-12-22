@@ -278,7 +278,6 @@ var configuration = (function () {
           return (
             _callJsonFile(appsEnvfile)
               .then((appsEnv) => {
-                console.log(appsEnv);
                 return _dispatchCustomEvent({ ...defaultEnv, ...appsEnv });
               })
               // else finally load only apps/.env file is loaded
