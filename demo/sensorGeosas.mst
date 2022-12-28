@@ -10,7 +10,7 @@
             </p>
         {{/observations}}
         <div class="chart-container" style="position: relative; margin: auto; height: 250px; width:80vh">
-            <canvas id="chart"></canvas>
+            <canvas id="chart-{{feature_ol_uid}}"></canvas>
         </div>
     </li>
     <script>
@@ -24,24 +24,25 @@
         return color;
     }
 
-    /*const mvLayer = "agricast";
-    const sensorthingsData = mviewer.sensorthings[mvLayer];
-    let featureWithObservations = mviewer.getLayer(mvLayer).layer.getSource().getFeatures().filter(x => x.ol_uid === sensorthingsData.featureIdSelected);
+    const mvLayerId = "agricast";
+    const mvLayer = mviewer.getLayer(mvLayerId).layer;
+    const sensorthingsClass = mvLayer.sensorthings;
+    let featureWithObservations = mvLayer.getSource().getFeatures().filter(x => x.ol_uid == {{feature_ol_uid}});
     const props = featureWithObservations[0].getProperties();
     
-    const streamsObs = sensorthingsData.selected.map(x => parseInt(x));
+    const streamsObs = sensorthingsClass.selectedStreams.map(x => parseInt(x));
     let streamsId = streamsObs[0];
     const firstDatastreamObservation = props.observations[streamsId].result;
     let datesValues = firstDatastreamObservation.map(o => new Date(o.resultTime).toLocaleDateString());
     let datasets = [];
     // DATASTREAM
-    if(sensorthingsData.datastreams && sensorthingsData.datastreams.length) {
-        datastreamDataset = streamsObs.map(data => {
+    if(sensorthingsClass.datastreams && sensorthingsClass.datastreams.length) {
+        let datastreamDataset = streamsObs.map(data => {
             if(!data && !props.observations[data]?.result) return;
             let observations = props.observations[data].result;
             let yValues = observations.map(o => o.result);
             let randomColor = getRandomColor();
-            const streams = sensorthingsData.datastreams;
+            const streams = sensorthingsClass.datastreams;
             return {
                 label: streams.filter(x => x.id === data)[0]?.name,
                 data: yValues,
@@ -54,12 +55,12 @@
         datasets = [...datasets, ...datastreamDataset];
     }
     // MULTIDATASTREAM
-    if(sensorthingsData.multidatastreams && sensorthingsData.multidatastreams.length) {
+    if(sensorthingsClass.multidatastreams && sensorthingsClass.multidatastreams.length) {
         streamsObs.map(data => {
             let observations = props.observations[data].result;
             let yValues = observations.map(o => o.result);
-            const streams = sensorthingsData.multidatastreams;
-            let unitOfMeasures = sensorthingsData.multidatastreams[0].unitOfMeasurements.map(x => x.name);
+            const streams = sensorthingsClass.multidatastreams;
+            let unitOfMeasures = sensorthingsClass.multidatastreams[0].unitOfMeasurements.map(x => x.name);
             let unitOfMeasurementsDataset = unitOfMeasures.map(unit => {
                 let randomColor = getRandomColor();
                 return {
@@ -87,8 +88,7 @@
             maintainAspectRatio: false
         }
     }
-    var ctx = document.getElementById('chart').getContext('2d');
+    var ctx = document.getElementById('chart-{{feature_ol_uid}}').getContext('2d');
     new Chart(ctx, config);
-    */
     </script>
 {{/features}}

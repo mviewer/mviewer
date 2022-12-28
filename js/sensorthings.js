@@ -5,6 +5,7 @@ class Sensorthings {
     this.template = mviewer.templates.ctrlSensor;
     this.customControl = document.querySelector(`#sensorthings-list-${config.id}`);
     this.selectedStreams = [];
+    this.processId = null;
     this.initLayer();
   }
 
@@ -151,21 +152,17 @@ class Sensorthings {
    * Trigger when user click on map features (same as things)
    * @param {array} things array - clicked layer features
    */
-  clickOnThings(things) {
+  clickOnThings(things, processId) {
+    this.processId = processId || null;
     const thigsUrls = things.map((thing) => this.requestSelectedThing(thing));
     let i = 0;
     Promise.all(thigsUrls).then((responses) => {
-      this.readStreams(
-        responses[0]
-          ? { ...responses[i], feature: things[i]}
-          : null
-      );
+      this.readStreams(responses[0] ? { ...responses[i], feature: things[i] } : null);
       i++;
     });
   }
 
   readStreams({ value, feature }) {
-    console.log("stream");
     let clickedStreams = value[0];
     const dataStreams = (clickedStreams && clickedStreams?.Datastreams) || null;
     const multiDataStreams = (clickedStreams && clickedStreams?.MultiDatastreams) || null;
@@ -215,9 +212,7 @@ class Sensorthings {
   getUrlsObservation() {
     return this.selectedStreams
       .map((id) => {
-        const dataStreamInfos = this.datastreams.filter(
-          (x) => x.id == id
-        )[0];
+        const dataStreamInfos = this.datastreams.filter((x) => x.id == id)[0];
         const multiDataStreamsInfos = this.multiDatastreams.filter((x) => x.id == id)[0];
         if (dataStreamInfos) {
           return fetch(
@@ -229,10 +224,9 @@ class Sensorthings {
             .then((r) => ({ ...dataStreamInfos, result: r.value }));
         }
         if (multiDataStreamsInfos) {
-          layer = multiDataStreamsInfos.layer;
           return fetch(
             `${multiDataStreamsInfos.url}/MultiDatastreams(${id})/Observations${
-              layer.top ? `?$top=${layer.top}` : ""
+              this.layer.top ? `?$top=${this.layer.top}` : ""
             }`
           )
             .then((r) => r.json())
@@ -241,7 +235,6 @@ class Sensorthings {
         return null;
       })
       .filter((x) => x);
-
   }
 
   onSelectStream() {
@@ -260,7 +253,9 @@ class Sensorthings {
       values[0].feature.setProperties({ observations: feature });
       this.featureIdSelected = values[0].feature.ol_uid;
       // PROCESS END
-      mviewer.dispatchEvent(`${ this.config.id }-sensortings-features-ready`, {detail: values[0].feature});
+      mviewer.dispatchEvent(`${this.processId}-sensortings-features-ready`, {
+        detail: values[0].feature,
+      });
     });
   }
 
@@ -289,7 +284,6 @@ class Sensorthings {
 }
 
 var sensorthingsA = (function () {
-
   const _showSensorList = (idLayer) => {
     if (mviewer.sensorthings[idLayer]) {
       info.displaySensorList(idLayer);

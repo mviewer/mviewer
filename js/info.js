@@ -249,23 +249,27 @@ var info = (function () {
             });
             // create general promise
             // will wait every things process and request realized in cascade
-            const getObservations = new Promise((resolveMain) => {
-              let getFeaturesByThings = vectorLayers[layerid].features.map(
-                (feature) =>
-                  new Promise((resolve) => {
-                    l.layer.sensorthings.clickOnThings([feature], resolve);
-                    document.addEventListener(
-                      `${layerid}-sensortings-features-ready`,
-                      (e) => resolve(e.detail.detail)
-                    );
-                  })
-              );
-              Promise.all(getFeaturesByThings).then((responses) =>
-                resolveMain(responses)
-              );
-            });
-
-            features = await getObservations;
+            async function getObservations(features) {
+              return new Promise((resolveMain) => {
+                let getFeaturesByThings = features.map(
+                  feature => {
+                    return new Promise((resolve) => {
+                      l.layer.sensorthings.clickOnThings([feature], feature.ol_uid);
+                      document.addEventListener(
+                        `${feature.ol_uid}-sensortings-features-ready`,
+                        (e) => resolve(e.detail.detail)
+                      );
+                    });
+                  }
+                );
+                Promise.all(getFeaturesByThings).then((responses) => {
+                  return resolveMain(responses);
+                });
+              });
+            }
+            // request first only
+            features = features[0];
+            features = await getObservations([features]);
           }
 
           if (l) {
