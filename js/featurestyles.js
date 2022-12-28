@@ -130,3 +130,18 @@ var createTextStyle = function (feature, resolution) {
     rotation: rotation,
   });
 };
+
+mviewer.featureStyles.sensorPolygon = (f) => {
+  return new ol.style.Style({
+      fill: new ol.style.Fill({color: 'rgba(212, 53, 50,0)'}),
+      stroke: new ol.style.Stroke({color: 'rgba(217, 85, 82,1)', width: 4})
+  })
+};
+
+mviewer.featureStyles.sensorPoint = (f) => new ol.style.Style({
+  image: new ol.style.Circle({
+    radius: 7,
+    fill: new ol.style.Fill({ color: 'rgba(212, 53, 50,0)' }),
+    stroke: new ol.style.Stroke({ color: 'rgba(217, 85, 82,1)', width: 4 })
+  })
+});

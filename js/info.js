@@ -145,8 +145,11 @@ var info = (function () {
    *
    */
 
-  var _queryMap = function (evt, options) {
+  async function _queryMap(evt, options) {
     var isClick = evt.type === "singleclick";
+    var requests = [];
+    var sensorPromises = [];
+    $(".popup-content").html("");
     _queriedFeatures = [];
     _firstlayerFeatures = [];
     var showPin = false;
@@ -238,6 +241,32 @@ var info = (function () {
           mviewer.customControls[originLayer].handle(vectorLayers[originLayer].features);
         } else {
           var l = _overLayers[originLayer];
+          let features = vectorLayers[layerid]?.features;
+          if (l && l.type === "sensorthings") {
+            // clean all sensors stream lists
+            [...document.querySelectorAll(".list-streams")].map((x) => {
+              x.innerHTML = "Veuillez cliquer la couche...";
+            });
+            // create general promise
+            // will wait every things process and request realized in cascade
+            const getObservations = new Promise((resolveMain) => {
+              let getFeaturesByThings = vectorLayers[layerid].features.map(
+                (feature) =>
+                  new Promise((resolve) => {
+                    l.layer.sensorthings.clickOnThings([feature], resolve);
+                    document.addEventListener(
+                      `${layerid}-sensortings-features-ready`,
+                      (e) => resolve(e.detail.detail)
+                    );
+                  })
+              );
+              Promise.all(getFeaturesByThings).then((responses) =>
+                resolveMain(responses)
+              );
+            });
+
+            features = await getObservations;
+          }
 
           if (l) {
             var panel = l.infospanel;
@@ -245,12 +274,10 @@ var info = (function () {
               panel = "modal-panel";
             }
             var name = l.name;
-            var theme = l.theme;
             var theme_icon = l.icon;
             var id = views[panel].layers.length + 1;
             //Create html content from features
             var html_result = "";
-            var features = vectorLayers[layerid].features;
             if (l.template) {
               html_result = applyTemplate(features, l);
             } else {
@@ -318,9 +345,6 @@ var info = (function () {
         });
       }
     }
-
-    var requests = [];
-    var carrousel = false;
 
     /**
      * This method test mime type from string content
@@ -401,7 +425,7 @@ var info = (function () {
      * This callback is return when all request are resolved (like promiseAll behavior)
      * @param {object} result
      */
-    var callback = function (result) {
+    var callback = function () {
       $.each(featureInfoByLayer, function (index, response) {
         var layerinfos = response.layerinfos;
         var panel = layerinfos.infospanel;
@@ -622,7 +646,7 @@ var info = (function () {
             var selectedFeature = _queriedFeatures.filter((feature) => {
               return feature.ol_uid == e.relatedTarget.id;
             });
-            if (!_queriedFeatures[0].get("features")) {
+            if (!_.isEmpty(_queriedFeatures) && _queriedFeatures[0].get("features")) {
               mviewer.highlightSubFeature(selectedFeature[0]);
             }
           });
@@ -674,40 +698,31 @@ var info = (function () {
       mviewer.highlightSubFeature(_firstlayerFeatures[0]);
     };
 
-    var ajaxFunction = function () {
-      urls.forEach(function (request) {
-        var _ba_ident = sessionStorage.getItem(request.layerinfos.url);
-        var optionalProxy = "";
-        if (request.layerinfos.useproxy) {
-          optionalProxy = configuration.getConfiguration().proxy.url;
-        }
-        requests.push(
-          $.ajax({
-            url: mviewer.ajaxURL(request.url, optionalProxy),
-            layer: request.layerinfos,
-            beforeSend: function (req) {
-              if (_ba_ident)
-                req.setRequestHeader("Authorization", "Basic " + btoa(_ba_ident));
-            },
-            success: function (response, textStatus, request) {
-              featureInfoByLayer.push({
-                response: response,
-                layerinfos: this.layer,
-                contenttype: request.getResponseHeader("Content-Type"),
-              });
-            },
-          })
-        );
-      });
-    };
-
-    // using $.when.apply() we can execute a function when all the requests
-    // in the array have completed
-    // this is promiseAll equivalent
-    $.when.apply(new ajaxFunction(), requests).done(function (result) {
-      callback(result);
+    urls.forEach(function (request) {
+      var _ba_ident = sessionStorage.getItem(request.layerinfos.url);
+      requests.push(
+        $.ajax({
+          url: mviewer.ajaxURL(request.url),
+          layer: request.layerinfos,
+          beforeSend: function (req) {
+            if (_ba_ident)
+              req.setRequestHeader("Authorization", "Basic " + btoa(_ba_ident));
+          },
+          success: function (response, textStatus, request) {
+            featureInfoByLayer.push({
+              response: response,
+              layerinfos: this.layer,
+              contenttype: request.getResponseHeader("Content-Type"),
+            });
+          },
+        })
+      );
     });
-  };
+    // wait all request before show info panel
+    Promise.all(requests).then(() => {
+      callback();
+    });
+  }
 
   /**
    * Private Method: _mouseOverFeature(evt)
