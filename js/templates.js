@@ -44,6 +44,22 @@ mviewer.templates.theme = `
     </ul>
 </li>`;
 
+const sensorThingsControl = `
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group form-group-timer ">
+            <label for="{{layerid}}-layer-sensorthings" i18n="legend.label.sensorthings">SensorThings</label>
+            <span class="fas fa-satellite-dish" data-layerid="{{layerid}}" style="margin-left: 3px;"></span>
+            <div class="panel panel-default">
+                <div class="panel-body list-streams" id="sensorthings-list-{{layerid}}">
+                    Veuillez sélectionner un capteur...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+`;
+
 mviewer.templates.layerControl = `
 <li class="{{cls}}" data-layerid="{{layerid}}" data-title=" {{title}}">
     <div class="row layerdisplay-title" >
@@ -174,19 +190,7 @@ mviewer.templates.layerControl = `
         </div>
     {{/timeControl}}
     {{#sensorthings}}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="form-group form-group-timer ">
-                <label for="{{layerid}}-layer-sensorthings" i18n="legend.label.sensorthings">SensorThings</label>
-                <span class="fas fa-satellite-dish" data-layerid="{{layerid}}" style="margin-left: 3px;"></span>
-                <div class="panel panel-default">
-                    <div class="panel-body list-streams" id="sensorthings-list-{{layerid}}">
-                        Veuillez sélectionner un capteur...
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        ${sensorThingsControl}
     {{/sensorthings}}
         <div class="mv-custom-controls" data-layerid="{{layerid}}"></div>
         </div>

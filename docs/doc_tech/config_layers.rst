@@ -151,6 +151,11 @@ Paramètre pour le type de couche sensorthings
 ======================================
 
 * ``url``: URI du service sensorthing.
+<<<<<<< HEAD
+=======
+* ``srs``: Code SRS (e.g EPSG:2154) de la donnée pour conversion vers EPSG:3857.
+* ``customstyle``: style (saisir un json en string) simple de type point ou polygon (radius, stroke, fill).
+>>>>>>> 5c425f6d (sensorthings as new layer class)
 * ``style``: Style à utiliser (sensorPolygon|sensorPoint) disponible dans le fichier ``js/featurestyles.js``.
 * ``top``: Nombre d'observations à retourner. La limite est par défaut définie par les capacités du serveur publiant le service.
 * ``defaultSensor``: Stream par défaut à afficher au clic. Valeur ``null`` par défaut.
@@ -158,6 +163,16 @@ Paramètre pour le type de couche sensorthings
 * ``datastreamsfilter``: Query param ``select`` tel que ``Datastreams($select=name,id)`` pour filtrer les champs ``Datastreams`` à retourner.
 * ``multidatastreamsfilter``: Query param ``select`` tel que ``MultiDatastreams($select=name,id)`` pour filtrer les champs ``MultiDatastreams`` à retourner.
 
+<<<<<<< HEAD
+=======
+Exemple pour le paramètre `customstyle` (préciser le type point ou polygon):
+
+.. code-block:: xml
+       :linenos:
+
+        customstyle='{ "point" : { "radius" : 5, "fill" : { "color" : "yellow" }, "stroke" : {"color" : "black", "width": 2}}}'
+
+>>>>>>> 5c425f6d (sensorthings as new layer class)
 Plus d'informations sur le type de couche OGC SensorThings : 
 
 .. Note::
@@ -165,8 +180,11 @@ Plus d'informations sur le type de couche OGC SensorThings :
         `Spécifications OGC <https://www.ogc.org/standards/sensorthings>`_
         `Schéma SensorThings API <https://developers.sensorup.com/docs/#sensorthingsAPISensing>`_
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 5c425f6d (sensorthings as new layer class)
 
 Paramètres pour les couches non WMS
 =======================================
