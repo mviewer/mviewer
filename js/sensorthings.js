@@ -6,6 +6,7 @@ class Sensorthings {
     this.customControl = document.querySelector(`#sensorthings-list-${config.id}`);
     this.selectedStreams = [];
     this.processId = null;
+    this.features = {};
     this.initLayer();
   }
 
@@ -26,6 +27,7 @@ class Sensorthings {
       this.layer.setStyle(style);
     }
   }
+  
   setMviewerStyle(styleName) {
     if (styleName && mviewer.featureStyles[this.config.style]) {
       this.layer.setStyle(mviewer.featureStyles[this.config.style]);
@@ -47,8 +49,8 @@ class Sensorthings {
     return this.layer.getSource().getFeatures();
   }
 
-  setDatastream(datastreams, feature) {
-    this.datastreams = datastreams.map((x) => ({
+  createDatastream(datastreams, feature) {
+    return datastreams.map((x) => ({
       ...x,
       id: x["@iot.id"],
       url: this.getConfigValue("url"),
@@ -57,8 +59,8 @@ class Sensorthings {
     }));
   }
 
-  setMultiDatastreams(multiDatastreams, feature) {
-    this.multiDatastreams = multiDatastreams.map((x) => ({
+  createMultiDatastreams(multiDatastreams, feature) {
+    return multiDatastreams.map((x) => ({
       ...x,
       id: x["@iot.id"],
       url: this.getConfigValue("url"),
@@ -115,7 +117,7 @@ class Sensorthings {
     this.layer.sensorthings = this;
   }
 
-  initCustomControlValue() {
+  getCustomControlValue() {
     if (document.getElementsByClassName("datastreams-checked").length) return;
     let defaultSelected = [...document.getElementsByClassName("datastreams")].filter(
       (x) => x.querySelector("a").innerText === this.config.defaultSensor
@@ -128,7 +130,7 @@ class Sensorthings {
   /**
    * Create selector in custom control to check sensor streams
    */
-  updateCustomControl = () => {
+  updateCustomControl = (feature) => {
     // nativ custom control
     const targetDOMCtrl = document.querySelector(
       `#sensorthings-list-${this.getConfigValue("id")}`
@@ -136,125 +138,56 @@ class Sensorthings {
     targetDOMCtrl.innerHTML = "";
     // create data to render in template
     const templateInfos = {
-      id: this.getConfigValue("top"),
-      datastreams: this.datastreams,
-      multidatastreams: this.multiDatastreams,
+      top: this.getConfigValue("top"),
+      datastreams: feature.datastreams,
+      multidatastreams: feature.multiDatastreams,
       id: this.getConfigValue("id"),
     };
     // create list from template
     var rendered = Mustache.render(mviewer.templates.ctrlSensor, templateInfos);
     targetDOMCtrl.innerHTML = rendered;
-    // init first value only if nothing was checked
-    this.initCustomControlValue();
   };
 
-  /**
-   * Trigger when user click on map features (same as things)
-   * @param {array} things array - clicked layer features
-   */
-  clickOnThings(things, processId) {
-    this.processId = processId || null;
-    const thigsUrls = things.map((thing) => this.requestSelectedThing(thing));
-    let i = 0;
-    Promise.all(thigsUrls).then((responses) => {
-      this.readStreams(responses[0] ? { ...responses[i], feature: things[i] } : null);
-      i++;
-    });
+  initCustomControl() {
+    if (!this.selectedStreams.length) {
+      // init first value only if nothing was checked
+      this.getCustomControlValue();
+    } else {
+      // else click on each to get observations data
+      this.selectedStreams.forEach((id) => {
+        this.onCustomControlClick(document.querySelector(`[data-datastreamid='${id}']`));
+      });
+    }
   }
 
-  readStreams({ value, feature }) {
-    let clickedStreams = value[0];
-    const dataStreams = (clickedStreams && clickedStreams?.Datastreams) || null;
-    const multiDataStreams = (clickedStreams && clickedStreams?.MultiDatastreams) || null;
-    this.setDatastream(dataStreams, feature);
-    this.setMultiDatastreams(multiDataStreams, feature);
-    this.updateCustomControl();
-  }
-  /**
-   *
-   * @param {ol.feature} thing to request
-   * @returns Promise
-   */
-  requestSelectedThing(thing) {
-    return new Promise((resolve, reject) => {
-      // selector
-      let selector = this.config.selector;
-      selector = (selector && `$select=${selector}`) || "";
-      // selector datastreams
-      let datastreamsfilter = this.config.datastreamsfilter;
-      datastreamsfilter =
-        datastreamsfilter && `Datastreams($select=${datastreamsfilter})`;
-      // selector multidatastreams
-      let multidatastreamsfilter = this.config.multidatastreamsfilter;
-      multidatastreamsfilter =
-        multidatastreamsfilter && `MultiDatastreams($select=${multidatastreamsfilter})`;
-      // join request URL
-      let fullStreamsfilter = [datastreamsfilter, multidatastreamsfilter].join(",");
-
-      fullStreamsfilter = fullStreamsfilter && `&$expand=${fullStreamsfilter}`;
-      return fetch(
-        `${
-          thing.getProperties()["Things@iot.navigationLink"]
-        }?${selector}${fullStreamsfilter}`
-      )
-        .then((r) => r.json())
-        .then((r) => resolve(r))
-        .catch((r) => {
-          reject();
-          console.log(
-            "Fail to request thing whith [" + thing.getProperties().mviewerid + "] layer"
-          );
-          return null;
-        });
-    });
-  }
-
-  getUrlsObservation() {
-    return this.selectedStreams
-      .map((id) => {
-        const dataStreamInfos = this.datastreams.filter((x) => x.id == id)[0];
-        const multiDataStreamsInfos = this.multiDatastreams.filter((x) => x.id == id)[0];
-        if (dataStreamInfos) {
-          return fetch(
-            `${dataStreamInfos.url}/Datastreams(${id})/Observations${
-              this.layer.top ? `?$top=${layer.top}` : ""
-            }`
-          )
-            .then((r) => r.json())
-            .then((r) => ({ ...dataStreamInfos, result: r.value }));
-        }
-        if (multiDataStreamsInfos) {
-          return fetch(
-            `${multiDataStreamsInfos.url}/MultiDatastreams(${id})/Observations${
-              this.layer.top ? `?$top=${this.layer.top}` : ""
-            }`
-          )
-            .then((r) => r.json())
-            .then((r) => ({ ...multiDataStreamsInfos, result: r.value }));
-        }
-        return null;
-      })
-      .filter((x) => x);
+  setupCustomControl(feature) {
+    this.updateCustomControl(feature);
+    this.initCustomControl();
   }
 
   onSelectStream() {
-    const urlsObservations = this.getUrlsObservation();
-    Promise.all(urlsObservations).then((values) => {
-      let feature = {
-        id: _.uniqueId(),
-        streamsCount: this.selectedStreams.length,
-        streamsNames: values.map((v) => v.name).join(", "),
-        streamsIds: values.map((v) => v.id).join(", "),
-        totalObservations: _.sum(values.map((v) => v.result.length)),
-      };
-      this.selectedStreams.forEach((id, idx) => {
-        feature[id] = values[idx];
-      });
-      values[0].feature.setProperties({ observations: feature });
-      this.featureIdSelected = values[0].feature.ol_uid;
-      // PROCESS END
-      mviewer.dispatchEvent(`${this.processId}-sensortings-features-ready`, {
-        detail: values[0].feature,
+    _.keys(this.features).forEach((f) => {
+      let featureToRead = this.features[f];
+      let urlsObservations = this.getUrlsObservation(featureToRead);
+
+      // const urlsObservations = this.getUrlsObservation();
+      Promise.all(urlsObservations).then((values) => {
+        let feature = {
+          id: _.uniqueId(),
+          streamsCount: this.selectedStreams.length,
+          streamsNames: values.map((v) => v.name).join(", "),
+          streamsIds: values.map((v) => v.id).join(", "),
+          totalObservations: _.sum(values.map((v) => v.result.length)),
+        };
+        this.selectedStreams.forEach((id, idx) => {
+          feature[id] = values[idx];
+        });
+        values[0].feature.setProperties({ observations: feature });
+        let featureIdSelected = values[0].feature.ol_uid;
+        // PROCESS END
+        mviewer.dispatchEvent(`${featureIdSelected}-sensortings-features-ready`, {
+          detail: values[0].feature,
+        });
       });
     });
   }
@@ -282,23 +215,3 @@ class Sensorthings {
     this.onSelectStream();
   }
 }
-
-var sensorthingsA = (function () {
-  const _showSensorList = (idLayer) => {
-    if (mviewer.sensorthings[idLayer]) {
-      info.displaySensorList(idLayer);
-      if (mviewer.sensorthings[idLayer]?.selected) {
-        mviewer.sensorthings[idLayer]?.selected.forEach((id) => {
-          // display list checked as previous state
-          _sensorDataStreamSelected(
-            document.querySelector(`[data-datastreamid='${id}']`),
-            true,
-            idLayer
-          );
-        });
-      }
-    }
-  };
-
-  return {};
-})();

@@ -10,7 +10,7 @@
             </p>
         {{/observations}}
         <div class="chart-container" style="position: relative; margin: auto; height: 250px; width:80vh">
-            <canvas id="chart"></canvas>
+            <canvas id="chart-lora-{{feature_ol_uid}}"></canvas>
         </div>
     </li>
     <script>
@@ -30,21 +30,25 @@
     let featureWithObservations = mvLayer.getSource().getFeatures().filter(x => x.ol_uid == {{feature_ol_uid}});
     const props = featureWithObservations[0].getProperties();
     
-    const streamsObs = sensorthingsClass.selectedStreams.map(x => parseInt(x));
-    let streamsId = streamsObs[0];
-    const firstDatastreamObservation = props.observations[streamsId].result;
-    let datesValues = firstDatastreamObservation.map(o => new Date(o.resultTime).toLocaleDateString());
+    let streamsObs = sensorthingsClass.selectedStreams;
+    if(!streamsObs.length) {
+        streamsObs = props.sensorthings.observations.map(o => o.id);
+    }
+    const observations = props.sensorthings.observations
+    let datesValues = observations[0].result.map(o => new Date(o.resultTime).toLocaleDateString());
     let datasets = [];
     // DATASTREAM
-    if(sensorthingsClass.datastreams && sensorthingsClass.datastreams.length) {
-        datastreamDataset = streamsObs.map(data => {
-            if(!data && !props.observations[data]?.result) return;
-            let observations = props.observations[data].result;
-            let yValues = observations.map(o => o.result);
+    let datastreams = props.sensorthings.datastreams;
+    let multidatastreams = props.sensorthings.multidatastreams;
+    // DATASTREAM
+    if(datastreams && datastreams.length) {
+        let datastreamDataset = streamsObs.map(data => {
+            let result = _.find(observations, {id: data})?.result;
+            if(!data && !result) return;
+            let yValues = result.map(o => o.result);
             let randomColor = getRandomColor();
-            const streams = sensorthingsClass.datastreams;
             return {
-                label: streams.filter(x => x.id === data)[0]?.name,
+                label: datastreams.filter(x => x.id === data)[0]?.name,
                 data: yValues,
                 borderWidth: 1.5,
                 borderColor: randomColor,
@@ -55,16 +59,15 @@
         datasets = [...datasets, ...datastreamDataset];
     }
     // MULTIDATASTREAM
-    if(sensorthingsClass.multiDatastreams && sensorthingsClass.multiDatastreams.length) {
+    if(multidatastreams && multidatastreams.length) {
         streamsObs.map(data => {
-            let observations = props.observations[data].result;
-            let yValues = observations.map(o => o.result);
-            const streams = sensorthingsClass.multiDatastreams;
-            let unitOfMeasures = sensorthingsClass.multiDatastreams[0].unitOfMeasurements.map(x => x.name);
+            let result = _.find(observations, {id: data})?.result;
+            console.log(result);
+            let unitOfMeasures = multidatastreams[0].unitOfMeasurements.map(x => x.name);
             let unitOfMeasurementsDataset = unitOfMeasures.map(unit => {
                 let randomColor = getRandomColor();
                 return {
-                    data: observations.map(o => o.result[unit]),
+                    data: result.map(o => o.result[unit]),
                     label: unit,
                     borderWidth: 1.5,
                     borderColor: randomColor,
@@ -88,7 +91,7 @@
             maintainAspectRatio: false
         }
     }
-    var ctx = document.getElementById('chart').getContext('2d');
+    var ctx = document.getElementById('chart-lora-{{feature_ol_uid}}').getContext('2d');
     new Chart(ctx, config);
     </script>
 {{/features}}

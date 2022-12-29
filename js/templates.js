@@ -390,7 +390,7 @@ mviewer.templates.featureInfo.allintabs = [
 mviewer.templates.ctrlSensor = `
 <ul class="nav-pills nav-stacked" style="list-style-type:none;">
     {{#datastreams}}
-    <li class="datastreams" onclick="mviewer.getLayer('{{idLayer}}').layer.sensorthings.onCustomControlClick(this, false)" data-datastreamid="{{id}}">
+    <li class="datastreams" onclick="mviewer.getLayer('{{idLayer}}').layer.sensorthings.onCustomControlClick(this, false)" name="{{name}}" data-datastreamid="{{id}}">
         <a href="#">
             <span class="state-icon far mv-unchecked" datastream-span-id="{{id}}"></span> {{name}}
             <input type="checkbox" class="hidden" value="false" datastream-input-id="{{id}}">
@@ -398,7 +398,7 @@ mviewer.templates.ctrlSensor = `
     </li>
     {{/datastreams}}
     {{#multidatastreams}}
-    <li class="datastreams" onclick="mviewer.getLayer('{{idLayer}}').layer.sensorthings.onCustomControlClick(this, false)" data-datastreamid="{{id}}">
+    <li class="datastreams" onclick="mviewer.getLayer('{{idLayer}}').layer.sensorthings.onCustomControlClick(this, false)" name="{{name}}" data-datastreamid="{{id}}">
         <a href="#">
             <span class="state-icon far mv-unchecked" datastream-span-id="{{id}}"></span> {{name}}
             <input type="checkbox" class="hidden" value="false" datastream-input-id="{{id}}">
