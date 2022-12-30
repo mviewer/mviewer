@@ -75,7 +75,7 @@
                 type="sensorthings"
                 name="API Geosas"
                 infopanel="bottom-panel"
-                visible="false"
+                visible="true"
                 legendurl="false"
                 queryable="true"
                 url="https://api.geosas.fr/agri4cast/v1.0"

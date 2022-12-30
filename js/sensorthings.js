@@ -7,13 +7,15 @@ class Sensorthings {
     this.processId = null;
     this.features = {};
     this.lastQuery = [];
-    this.initLayer();
+    this.initialized = false;
     this.streamEvent = `${ this.config.id }-select-stream`;
     this.onClickEvent = null;
     // usefull to create and update custom control list
     this.selectedStreams = [];
     this.datastreams = [];
     this.multidatastreams = [];
+    
+    this.initLayer();
   }
 
   setLastQuery(lastQuery = []) {
@@ -199,8 +201,9 @@ class Sensorthings {
   }
 
   query(e) {
+    this.changeStreamChecked(e.querySelector("span"));
+    this.selectedStreams = this.getCheckedStreams()
     info.queryMap(this.lastQuery);
-    this.selected = this.getCheckedStreams()
   }
 
   changeStreamChecked(span) {
@@ -236,14 +239,14 @@ class Sensorthings {
     );
   }
 
-  changeStreams(datastreams, multidatastreams) {
-    let streams =  [...datastreams.map(x => x.name), ...multidatastreams.map(x => x.name)]
-
+  changeStreams(datastreams, multidatastreams, force) {
+    if (this.initialized && !force) return;
+    let streams = [...datastreams.map(x => x.name), ...multidatastreams.map(x => x.name)]
     this.updateCustomControl(datastreams, multidatastreams);
     // check default
     let defaultStreamsChecked = this.getDefaultStreams(streams);
     this.changedStreamsChecked(defaultStreamsChecked);
-
     this.selectedStreams = this.getCheckedStreams();
+    this.initialized = true;
   }
 }
