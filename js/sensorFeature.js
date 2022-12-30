@@ -23,10 +23,16 @@ class SensorFeature {
           : null;
         // get datastreams
         this.getStreams(streamsSource);
-        this.currentControlStreams = [...document.querySelectorAll(`#sensorthings-list-agricast .datastreams span`)].map(x => x.getAttribute("name"));
+        this.currentControlStreams = [
+          ...document.querySelectorAll(`#sensorthings-list-agricast .datastreams span`),
+        ].map((x) => x.getAttribute("name"));
         let forceUpdate = !_.isEmpty(this.compareStreams());
 
-        this.sensorInstance.changeStreams(this.datastreams, this.multidatastreams, forceUpdate);
+        this.sensorInstance.changeStreams(
+          this.datastreams,
+          this.multidatastreams,
+          forceUpdate
+        );
 
         Promise.all(this.getObservations()).then((responses) => {
           this.feature.setProperties({
@@ -44,8 +50,13 @@ class SensorFeature {
   }
 
   compareStreams(comparator = "name") {
-    let newStreams = [...this.datastreams.map(x => x[comparator]), ...this.multidatastreams.map(x => x[comparator])];
-    let streams = [...document.querySelectorAll(`#sensorthings-list-agricast .datastreams span`)].map(x => x.getAttribute(comparator));
+    let newStreams = [
+      ...this.datastreams.map((x) => x[comparator]),
+      ...this.multidatastreams.map((x) => x[comparator]),
+    ];
+    let streams = [
+      ...document.querySelectorAll(`#sensorthings-list-agricast .datastreams span`),
+    ].map((x) => x.getAttribute(comparator));
     return _.difference(newStreams, streams).concat(_.difference(streams, newStreams));
   }
 

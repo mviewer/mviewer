@@ -821,8 +821,12 @@ var configuration = (function () {
             oLayer.tiled = layer.tiled === "true" ? true : false;
             oLayer.dynamiclegend = layer.dynamiclegend === "true" ? true : false;
             oLayer.vectorlegend = layer.vectorlegend === "true" ? true : false;
-            oLayer.nohighlight = layer.type != 'sensorthings' || (layer.nohighlight === "true") ? true : false;
-            oLayer.infohighlight = layer.type === 'sensorthings' || (layer.infohighlight === "false") ? false : true;
+            oLayer.nohighlight =
+              layer.type != "sensorthings" || layer.nohighlight === "true" ? true : false;
+            oLayer.infohighlight =
+              layer.type === "sensorthings" || layer.infohighlight === "false"
+                ? false
+                : true;
             oLayer.showintoc =
               layer.showintoc && layer.showintoc === "false" ? false : true;
             oLayer.legendurl = layer.legendurl
@@ -951,7 +955,7 @@ var configuration = (function () {
               mviewer.processLayer(oLayer, l);
             } // end geojson
             // ->- sensortings layer
-            if (oLayer.type === 'sensorthings') {
+            if (oLayer.type === "sensorthings") {
               l = new Sensorthings(oLayer);
             }
             // -X- sensortings layer

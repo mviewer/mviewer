@@ -8,13 +8,13 @@ class Sensorthings {
     this.features = {};
     this.lastQuery = [];
     this.initialized = false;
-    this.streamEvent = `${ this.config.id }-select-stream`;
+    this.streamEvent = `${this.config.id}-select-stream`;
     this.onClickEvent = null;
     // usefull to create and update custom control list
     this.selectedStreams = [];
     this.datastreams = [];
     this.multidatastreams = [];
-    
+
     this.initLayer();
   }
 
@@ -36,7 +36,9 @@ class Sensorthings {
   setClickEvent(e) {
     this.onClickEvent = e;
   }
-  getClickEvent() { return this.onClickEvent };
+  getClickEvent() {
+    return this.onClickEvent;
+  }
 
   setTemplate(template) {
     this.template = template;
@@ -55,7 +57,7 @@ class Sensorthings {
       this.layer.setStyle(style);
     }
   }
-  
+
   setMviewerStyle(styleName) {
     if (styleName && mviewer.featureStyles[this.config.style]) {
       this.layer.setStyle(mviewer.featureStyles[this.config.style]);
@@ -156,13 +158,15 @@ class Sensorthings {
   }
 
   getDefaultStreams(newStreams) {
-    let parentSelector = [...document.querySelectorAll(`#sensorthings-list-${ this.config.id } .datastreams`)];
+    let parentSelector = [
+      ...document.querySelectorAll(`#sensorthings-list-${this.config.id} .datastreams`),
+    ];
     if (this.config.defaultSensor && newStreams.includes(this.config.defaultSensor)) {
       return parentSelector.filter(
         (x) => x.querySelector("a").innerText === this.config.defaultSensor
       );
     } else {
-      return [parentSelector[0].querySelector("span")]
+      return [parentSelector[0].querySelector("span")];
     }
   }
 
@@ -181,7 +185,7 @@ class Sensorthings {
       datastreams: datastreams,
       multidatastreams: multidatastreams,
       id: this.getConfigValue("id"),
-      idLayer: this.layer.get("mviewerid")
+      idLayer: this.layer.get("mviewerid"),
     };
     // create list from template
     var rendered = Mustache.render(mviewer.templates.ctrlSensor, templateInfos);
@@ -202,7 +206,7 @@ class Sensorthings {
 
   query(e) {
     this.changeStreamChecked(e.querySelector("span"));
-    this.selectedStreams = this.getCheckedStreams()
+    this.selectedStreams = this.getCheckedStreams();
     info.queryMap(this.lastQuery);
   }
 
@@ -222,7 +226,7 @@ class Sensorthings {
   }
 
   changedStreamsChecked(spans) {
-    spans.forEach(s => this.changeStreamChecked(s));
+    spans.forEach((s) => this.changeStreamChecked(s));
   }
 
   onCustomControlClick(e) {
@@ -241,7 +245,10 @@ class Sensorthings {
 
   changeStreams(datastreams, multidatastreams, force) {
     if (this.initialized && !force) return;
-    let streams = [...datastreams.map(x => x.name), ...multidatastreams.map(x => x.name)]
+    let streams = [
+      ...datastreams.map((x) => x.name),
+      ...multidatastreams.map((x) => x.name),
+    ];
     this.updateCustomControl(datastreams, multidatastreams);
     // check default
     let defaultStreamsChecked = this.getDefaultStreams(streams);

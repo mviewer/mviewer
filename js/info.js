@@ -246,15 +246,15 @@ var info = (function () {
             l.layer.sensorthings.setLastQuery(evt);
             //call features information
             async function waitAllSensorFeatures(features) {
-              return new Promise(resolve => {
-                let sensorFeatures = features.map(f => {
+              return new Promise((resolve) => {
+                let sensorFeatures = features.map((f) => {
                   let sensorFeature = new SensorFeature(f, l.layer);
                   return sensorFeature.startSensorProcess();
                 });
-                Promise.all(sensorFeatures).then(responses => resolve(responses));
+                Promise.all(sensorFeatures).then((responses) => resolve(responses));
               });
             }
-            features = await waitAllSensorFeatures(features);         
+            features = await waitAllSensorFeatures(features);
           }
 
           if (l) {
