@@ -43,13 +43,14 @@
 
     
     if(datastreams && datastreams.length) {
+        console.log(streamsObs);
         let datastreamDataset = streamsObs.map(data => {
-            let result = _.find(observations, {id: data})?.result;
+            let result = _.find(observations, {name: data})?.result;
             if(!data && !result) return;
             let yValues = result.map(o => o.result);
             let randomColor = getRandomColor();
             return {
-                label: datastreams.filter(x => x.id === data)[0]?.name,
+                label: datastreams.filter(x => x.name === data)[0]?.name,
                 data: yValues,
                 borderWidth: 1.5,
                 borderColor: randomColor,

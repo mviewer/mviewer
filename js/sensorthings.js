@@ -4,11 +4,37 @@ class Sensorthings {
     this.layer = new ol.layer.Vector({});
     this.template = mviewer.templates.ctrlSensor;
     this.customControl = document.querySelector(`#sensorthings-list-${config.id}`);
-    this.selectedStreams = [];
     this.processId = null;
     this.features = {};
+    this.lastQuery = [];
     this.initLayer();
+    this.streamEvent = `${ this.config.id }-select-stream`;
+    this.onClickEvent = null;
+    // usefull to create and update custom control list
+    this.selectedStreams = [];
+    this.datastreams = [];
+    this.multidatastreams = [];
   }
+
+  setLastQuery(lastQuery = []) {
+    this.lastQuery = lastQuery;
+  }
+
+  getLastQuery() {
+    return this.lastQuery;
+  }
+
+  setStreamEvent(e) {
+    this.streamEvent = e;
+  }
+
+  getStreamEvent(e) {
+    return this.streamEvent;
+  }
+  setClickEvent(e) {
+    this.onClickEvent = e;
+  }
+  getClickEvent() { return this.onClickEvent };
 
   setTemplate(template) {
     this.template = template;
@@ -127,10 +153,21 @@ class Sensorthings {
     defaultSelected.click();
   }
 
+  getDefaultStreams(newStreams) {
+    let parentSelector = [...document.querySelectorAll(`#sensorthings-list-${ this.config.id } .datastreams`)];
+    if (this.config.defaultSensor && newStreams.includes(this.config.defaultSensor)) {
+      return parentSelector.filter(
+        (x) => x.querySelector("a").innerText === this.config.defaultSensor
+      );
+    } else {
+      return [parentSelector[0].querySelector("span")]
+    }
+  }
+
   /**
    * Create selector in custom control to check sensor streams
    */
-  updateCustomControl = (feature) => {
+  updateCustomControl = (datastreams, multidatastreams) => {
     // nativ custom control
     const targetDOMCtrl = document.querySelector(
       `#sensorthings-list-${this.getConfigValue("id")}`
@@ -139,9 +176,10 @@ class Sensorthings {
     // create data to render in template
     const templateInfos = {
       top: this.getConfigValue("top"),
-      datastreams: feature.datastreams,
-      multidatastreams: feature.multiDatastreams,
+      datastreams: datastreams,
+      multidatastreams: multidatastreams,
       id: this.getConfigValue("id"),
+      idLayer: this.layer.get("mviewerid")
     };
     // create list from template
     var rendered = Mustache.render(mviewer.templates.ctrlSensor, templateInfos);
@@ -154,64 +192,58 @@ class Sensorthings {
       this.getCustomControlValue();
     } else {
       // else click on each to get observations data
-      this.selectedStreams.forEach((id) => {
-        this.onCustomControlClick(document.querySelector(`[data-datastreamid='${id}']`));
+      this.selectedStreams.forEach((name) => {
+        this.onCustomControlClick(document.querySelector(`[name='${name}']`));
       });
     }
   }
 
-  setupCustomControl(feature) {
-    this.updateCustomControl(feature);
-    this.initCustomControl();
+  query(e) {
+    info.queryMap(this.lastQuery);
+    this.selected = this.getCheckedStreams()
   }
 
-  onSelectStream() {
-    _.keys(this.features).forEach((f) => {
-      let featureToRead = this.features[f];
-      let urlsObservations = this.getUrlsObservation(featureToRead);
-
-      // const urlsObservations = this.getUrlsObservation();
-      Promise.all(urlsObservations).then((values) => {
-        let feature = {
-          id: _.uniqueId(),
-          streamsCount: this.selectedStreams.length,
-          streamsNames: values.map((v) => v.name).join(", "),
-          streamsIds: values.map((v) => v.id).join(", "),
-          totalObservations: _.sum(values.map((v) => v.result.length)),
-        };
-        this.selectedStreams.forEach((id, idx) => {
-          feature[id] = values[idx];
-        });
-        values[0].feature.setProperties({ observations: feature });
-        let featureIdSelected = values[0].feature.ol_uid;
-        // PROCESS END
-        mviewer.dispatchEvent(`${featureIdSelected}-sensortings-features-ready`, {
-          detail: values[0].feature,
-        });
-      });
-    });
-  }
-
-  onCustomControlClick(e) {
-    const spanEl = e.getElementsByTagName("span")[0];
-    if (e.getElementsByClassName("mv-unchecked").length) {
-      spanEl.classList.remove("mv-unchecked");
-      spanEl.classList.add("mv-checked", "datastreams-checked");
+  changeStreamChecked(span) {
+    if (span.classList.contains("mv-unchecked")) {
+      span.classList.remove("mv-unchecked");
+      span.classList.add("mv-checked", "datastreams-checked");
     } else {
-      spanEl.classList.add("mv-unchecked");
-      spanEl.classList.remove("mv-checked", "datastreams-checked");
+      span.classList.add("mv-unchecked");
+      span.classList.remove("mv-checked", "datastreams-checked");
     }
-
     const checkedCollection = document.querySelectorAll(
       `#sensorthings-list-${this.config.id} .datastreams-checked`
     );
     // clean template panel if any checked
     if (!checkedCollection.length) return $(".popup-content").html("");
-    // else request data by selected stream and display panel
-    const selectedStreams = [...checkedCollection].map((i) =>
-      i.getAttribute("datastream-span-id")
+  }
+
+  changedStreamsChecked(spans) {
+    spans.forEach(s => this.changeStreamChecked(s));
+  }
+
+  onCustomControlClick(e) {
+    this.changeStreamChecked(e.querySelector("span"));
+  }
+
+  getCheckedStreams() {
+    const checkedCollection = document.querySelectorAll(
+      `#sensorthings-list-${this.config.id} .datastreams-checked`
     );
-    this.setSelectedStreams(selectedStreams);
-    this.onSelectStream();
+    return [...checkedCollection].map((i) =>
+      //i.getAttribute("datastream-span-id")
+      i.getAttribute("name")
+    );
+  }
+
+  changeStreams(datastreams, multidatastreams) {
+    let streams =  [...datastreams.map(x => x.name), ...multidatastreams.map(x => x.name)]
+
+    this.updateCustomControl(datastreams, multidatastreams);
+    // check default
+    let defaultStreamsChecked = this.getDefaultStreams(streams);
+    this.changedStreamsChecked(defaultStreamsChecked);
+
+    this.selectedStreams = this.getCheckedStreams();
   }
 }

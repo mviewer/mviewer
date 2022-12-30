@@ -3,11 +3,12 @@ class SensorFeature {
     this.layer = layer;
     this.config = layer.sensorthings.config;
     this.feature = feature;
+    this.sensorInstance = this.layer.sensorthings;
     this.thing = {};
     this.observations = {};
     this.datastreams = [];
     this.multidatastreams = [];
-    this.selectedStreams = [];
+    this.selectedStreams = this.layer.sensorthings.selectedStreams || [];
   }
 
   setSelectedStreams(streams) {
@@ -22,6 +23,7 @@ class SensorFeature {
         : null;
       // get datastreams
       this.getStreams(streamsSource);
+      this.sensorInstance.changeStreams(this.datastreams, this.multidatastreams);
       
       Promise.all(this.getObservations()).then(responses => {
         this.feature.setProperties({
@@ -31,7 +33,7 @@ class SensorFeature {
             datastreams: this.datastreams,
             multidatastreams: this.multidatastreams
           }
-        })
+        });
         resolveProcess(this.feature);
       });
     })
@@ -93,21 +95,15 @@ class SensorFeature {
   }
 
   getObservations() {
-    if (_.isEmpty(this.selectedStreams)) {
-      let streams = !_.isEmpty(this.datastreams) ? this.datastreams[0] : null;
-      streams = streams ? streams : !_.isEmpty(this.multidatastreams) ? this.multidatastreams[0] : null;
-      
-      this.setSelectedStreams([streams]);
-    }
-    let fetchPromises = this.selectedStreams
+    let fetchPromises = this.sensorInstance.getCheckedStreams()
       .map((stream) => {
-        const dataStreamInfos = this.datastreams.filter((x) => x.id == stream.id || x.name == stream.name)[0];
+        const dataStreamInfos = this.datastreams.filter((x) => x.id == stream || x.name == stream)[0];
         const multiDataStreamsInfos = this.multidatastreams.filter(
-          (x) => x.id == stream.id || x.name == stream.name
+          (x) => x.id == stream || x.name == stream
         )[0];
         if (dataStreamInfos) {
           return fetch(
-            `${ dataStreamInfos.url }/Datastreams(${ stream.id })/Observations${ this.layer.top ? `?$top=${ layer.top }` : ""
+            `${ dataStreamInfos.url }/Datastreams(${ dataStreamInfos.id })/Observations${ this.layer.top ? `?$top=${ layer.top }` : ""
             }`
           )
             .then((r) => r.json())
@@ -115,7 +111,7 @@ class SensorFeature {
         }
         if (multiDataStreamsInfos) {
           return fetch(
-            `${ multiDataStreamsInfos.url }/MultiDatastreams(${ stream.id })/Observations${ this.layer.top ? `?$top=${ this.layer.top }` : ""
+            `${ multiDataStreamsInfos.url }/MultiDatastreams(${ multiDataStreamsInfos.id })/Observations${ this.layer.top ? `?$top=${ this.layer.top }` : ""
             }`
           )
             .then((r) => r.json())

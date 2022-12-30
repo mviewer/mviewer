@@ -136,6 +136,7 @@ var info = (function () {
     // TODO : Clear search results
     //_clearSearchResults();
     _queryMap(evt);
+    console.log(evt);
   };
 
   /**
@@ -243,50 +244,8 @@ var info = (function () {
           var l = _overLayers[originLayer];
           let features = vectorLayers[layerid]?.features;
           if (l && l.type === "sensorthings") {
-            // clean all sensors stream lists
-            [...document.querySelectorAll(".list-streams")].map((x) => {
-              x.innerHTML = "Veuillez cliquer la couche...";
-            });
-            l.layer.sensorthings.setSelectedStreams([]);
-            // TEST 1
-            //========
-            // create general promise
-            // will wait every things process and request realized in cascade
-            // async function getObservations(features) {
-            //   return new Promise((resolveMain) => {
-            //     let getFeaturesByThings = features.map(
-            //       feature => {
-            //         return new Promise((resolve) => {
-            //           l.layer.sensorthings.clickOnThings([feature], feature.ol_uid);
-            //           document.addEventListener(
-            //             `${feature.ol_uid}-sensortings-features-ready`,
-            //             (e) => resolve(e.detail.detail)
-            //           );
-            //         });
-            //       }
-            //     );
-            //     Promise.all(getFeaturesByThings).then((responses) => {
-            //       return resolveMain(responses);
-            //     });
-            //   });
-            // }
-            // // request first only
-            // features = features[0];
-            // features = await getObservations([features]);
-
-            // TEST 2
-            //========
-            // async function getSensorFeatures(features, id) {
-            //   return new Promise(resolve => {
-            //     l.layer.sensorthings.clickOnThings(features, id);
-            //     // all features are requested
-            //     document.addEventListener(
-            //       `${id}-sensortings-features-ready`,
-            //       (e) => resolve(e.detail.detail)
-            //     );
-            //   })
-            // }
-            // features = await getSensorFeatures(features, _.uniqueId())
+            l.layer.sensorthings.setLastQuery(evt);
+            //call features information
             async function waitAllSensorFeatures(features) {
               return new Promise(resolve => {
                 let sensorFeatures = features.map(f => {
@@ -296,7 +255,7 @@ var info = (function () {
                 Promise.all(sensorFeatures).then(responses => resolve(responses));
               });
             }
-            features = await waitAllSensorFeatures(features);
+            features = await waitAllSensorFeatures(features);         
           }
 
           if (l) {
