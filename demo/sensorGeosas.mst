@@ -43,7 +43,6 @@
 
     
     if(datastreams && datastreams.length) {
-        console.log(streamsObs);
         let datastreamDataset = streamsObs.map(data => {
             let result = _.find(observations, {name: data})?.result;
             if(!data && !result) return;
