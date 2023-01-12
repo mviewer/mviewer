@@ -65,7 +65,6 @@ class SensorFeature {
       ...this.datastreams.map((x) => x[comparator]),
       ...this.multidatastreams.map((x) => x[comparator]),
     ];
-    console.log(this.config);
     let streams = [
       ...document.querySelectorAll(
         `#sensorthings-list-${this.config.id} .datastreams span`

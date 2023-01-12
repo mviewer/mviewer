@@ -98,33 +98,6 @@ class Sensorthings {
   }
 
   /**
-   * Create object to reprenset Datastreams.
-   * Will be insert as feature param. Usefull for info panel rendering.
-   * @param {Array} datastreams from Things
-   * @param {ol.Feature} feature clicked
-   * @returns <Array> of object that represent Datastream
-   */
-  createDatastream(datastreams, feature) {
-    return datastreams.map((x) => ({
-      ...x,
-      id: x["@iot.id"],
-      url: this.getConfigValue("url"),
-      feature: feature,
-      idLayer: this.getConfigValue("id"),
-    }));
-  }
-
-  createMultiDatastreams(multiDatastreams, feature) {
-    return multiDatastreams.map((x) => ({
-      ...x,
-      id: x["@iot.id"],
-      url: this.getConfigValue("url"),
-      feature: feature,
-      idLayer: this.getConfigValue("id"),
-    }));
-  }
-
-  /**
    * Return geojson features from layer service URI
    * Will populate vector layer
    * @param {any} oLayer mviewer layer as config object
