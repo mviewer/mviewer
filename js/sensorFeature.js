@@ -15,6 +15,10 @@ class SensorFeature {
     this.selectedStreams = streams || [];
   }
 
+  /**
+   * On queyrMap, will manage  things, streams, observations request in cascade
+   * @returns Promise
+   */
   startSensorProcess() {
     return new Promise((resolveProcess) =>
       this.getThing(this.feature).then((thingResponse) => {
@@ -24,7 +28,9 @@ class SensorFeature {
         // get datastreams
         this.getStreams(streamsSource);
         this.currentControlStreams = [
-          ...document.querySelectorAll(`#sensorthings-list-agricast .datastreams span`),
+          ...document.querySelectorAll(
+            `#sensorthings-list-${this.config.id} .datastreams span`
+          ),
         ].map((x) => x.getAttribute("name"));
         let forceUpdate = !_.isEmpty(this.compareStreams());
 
@@ -49,17 +55,30 @@ class SensorFeature {
     );
   }
 
+  /**
+   * Usefull to detect if Datastreams changes.
+   * @param {string} comparator as attribute name
+   * @returns Array of difference
+   */
   compareStreams(comparator = "name") {
     let newStreams = [
       ...this.datastreams.map((x) => x[comparator]),
       ...this.multidatastreams.map((x) => x[comparator]),
     ];
+    console.log(this.config);
     let streams = [
-      ...document.querySelectorAll(`#sensorthings-list-agricast .datastreams span`),
+      ...document.querySelectorAll(
+        `#sensorthings-list-${this.config.id} .datastreams span`
+      ),
     ].map((x) => x.getAttribute(comparator));
     return _.difference(newStreams, streams).concat(_.difference(streams, newStreams));
   }
 
+  /**
+   * Request thing from query map
+   * @param {ol.feature} feature clicked
+   * @returns
+   */
   getThing(feature) {
     return new Promise((resolve, reject) => {
       // selector
@@ -96,6 +115,10 @@ class SensorFeature {
     });
   }
 
+  /**
+   * Get streams from selection
+   * @param {any} object that contain value key as clicked stream
+   */
   getStreams({ value }) {
     let clickedStreams = value[0];
     const dataStreams = (clickedStreams && clickedStreams?.Datastreams) || null;
@@ -104,10 +127,20 @@ class SensorFeature {
     this.multidatastreams = this.createStreams(multiDataStreams);
   }
 
+  /**
+   * Get value config for a given key.
+   * @param {any} value
+   * @returns key's value
+   */
   getConfigValue(value) {
     return this.config[value];
   }
 
+  /**
+   * Return streams object list
+   * @param {Array} streams as Datastreams or MultiDatastreams
+   * @returns
+   */
   createStreams(streams) {
     return streams.map((x) => ({
       ...x,
@@ -116,6 +149,10 @@ class SensorFeature {
     }));
   }
 
+  /**
+   * Get observations from selected Datastreams
+   * @returns request as Promise
+   */
   getObservations() {
     let fetchPromises = this.sensorInstance
       .getCheckedStreams()

@@ -58,11 +58,20 @@ class Sensorthings {
     }
   }
 
+  /**
+   * Use a style from existing mviewer style to display things features.
+   * @param {string} styleName to use as layer style
+   */
   setMviewerStyle(styleName) {
     if (styleName && mviewer.featureStyles[this.config.style]) {
       this.layer.setStyle(mviewer.featureStyles[this.config.style]);
     }
   }
+
+  /**
+   * Set features from thing response.See this.getSensorFeatures method.
+   * @param {Array} features list of ol.feature
+   */
   setVectorSource(features = []) {
     this.layer.setSource(
       new ol.source.Vector({
@@ -71,14 +80,30 @@ class Sensorthings {
     );
   }
 
+  /**
+   * Get a value by key from config
+   * @param {string} value as key's config name
+   * @returns <any> key's value
+   */
   getConfigValue(value) {
     return this.config[value];
   }
 
+  /**
+   * Return features from layer source
+   * @returns <Array> of ol.feature
+   */
   getFeatures() {
     return this.layer.getSource().getFeatures();
   }
 
+  /**
+   * Create object to reprenset Datastreams.
+   * Will be insert as feature param. Usefull for info panel rendering.
+   * @param {Array} datastreams from Things
+   * @param {ol.Feature} feature clicked
+   * @returns <Array> of object that represent Datastream
+   */
   createDatastream(datastreams, feature) {
     return datastreams.map((x) => ({
       ...x,
@@ -99,6 +124,12 @@ class Sensorthings {
     }));
   }
 
+  /**
+   * Return geojson features from layer service URI
+   * Will populate vector layer
+   * @param {any} oLayer mviewer layer as config object
+   * @param {*} vecLayer ol.vector.layer
+   */
   getSensorFeatures(oLayer, vecLayer) {
     // location : api URL from xml config layer infos
     let locationUrl = `${oLayer.url}/Locations`;
@@ -147,6 +178,10 @@ class Sensorthings {
     this.layer.sensorthings = this;
   }
 
+  /**
+   * Click on selected or default streams that exists in custom control streams list
+   * @returns no
+   */
   getCustomControlValue() {
     if (document.getElementsByClassName("datastreams-checked").length) return;
     let defaultSelected = [...document.getElementsByClassName("datastreams")].filter(
@@ -157,6 +192,11 @@ class Sensorthings {
     defaultSelected.click();
   }
 
+  /**
+   * Return default Datastreams list from custom control
+   * @param {*} newStreams
+   * @returns list of span as clickable Datastreams
+   */
   getDefaultStreams(newStreams) {
     let parentSelector = [
       ...document.querySelectorAll(`#sensorthings-list-${this.config.id} .datastreams`),
@@ -192,6 +232,9 @@ class Sensorthings {
     targetDOMCtrl.innerHTML = rendered;
   };
 
+  /**
+   * Populate custom control from Datastreams
+   */
   initCustomControl() {
     if (!this.selectedStreams.length) {
       // init first value only if nothing was checked
@@ -204,12 +247,21 @@ class Sensorthings {
     }
   }
 
+  /**
+   * Query service on each stream checked change
+   * @param {any} e as event callback element
+   */
   query(e) {
     this.changeStreamChecked(e.querySelector("span"));
     this.selectedStreams = this.getCheckedStreams();
     info.queryMap(this.lastQuery);
   }
 
+  /**
+   * Manage custom control checkbox state and panel if no value checked
+   * @param {any} span html element
+   * @returns
+   */
   changeStreamChecked(span) {
     if (span.classList.contains("mv-unchecked")) {
       span.classList.remove("mv-unchecked");
@@ -225,24 +277,40 @@ class Sensorthings {
     if (!checkedCollection.length) return $(".popup-content").html("");
   }
 
+  /**
+   * Change all custom control checkbox states
+   * @param {any} spans list of spans from custom control Datastreams
+   */
   changedStreamsChecked(spans) {
     spans.forEach((s) => this.changeStreamChecked(s));
   }
 
+  /**
+   * Trigger on Datastream checkbox clicked
+   * @param {any} e callback event element
+   */
   onCustomControlClick(e) {
     this.changeStreamChecked(e.querySelector("span"));
   }
 
+  /**
+   * Get Datastreams checked
+   * @returns <Array:string> of Datastreams name
+   */
   getCheckedStreams() {
     const checkedCollection = document.querySelectorAll(
       `#sensorthings-list-${this.config.id} .datastreams-checked`
     );
-    return [...checkedCollection].map((i) =>
-      //i.getAttribute("datastream-span-id")
-      i.getAttribute("name")
-    );
+    return [...checkedCollection].map((i) => i.getAttribute("name"));
   }
 
+  /**
+   * Will update custom control list from Things repsonse
+   * @param {*} datastreams
+   * @param {*} multidatastreams
+   * @param {*} force
+   * @returns no
+   */
   changeStreams(datastreams, multidatastreams, force) {
     if (this.initialized && !force) return;
     let streams = [
