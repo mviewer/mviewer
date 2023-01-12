@@ -25,9 +25,9 @@ function getParamsFromOwsOptionsString(owsOptionsString) {
 
   kvArray.forEach(function (kv) {
     if (kv.includes(":")) {
-      let splited = kv.split(":")
+      let splited = kv.split(":");
       let key = splited[0];
-      let value = splited.slice(1).join(":")
+      let value = splited.slice(1).join(":");
       if (key !== "") {
         params[key] = value;
       }
