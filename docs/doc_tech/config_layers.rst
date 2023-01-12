@@ -77,7 +77,12 @@ Configurer - Les couches
                 infopanel=""
                 index=""
 		minzoom=""
-		maxzoom="">
+		maxzoom=""
+                top=""
+                defaultSensor=""
+                selector=""
+                datastreamsfilter=""
+                multidatastreamsfilter="">
                 <template url=""></template>
         </layer>
 
@@ -142,11 +147,31 @@ Paramètres pour gérer la recherche
 * ``fusesearchkeys``: Chaîne de caractères contenant la liste des champs de la couche à indexer pour la recherche. Les noms des champs doivent être séparés par des virgules. À n'utiliser que si searchengine = fuse.
 * ``fusesearchresult``: Chaîne de caractères décrivant l'information à afficher dans les résultats de recherche. Cette chaîne contient soit le nom d'un champ de la couche soit un template Mustache combinant plusieurs noms de champs. Exemple : "{{name}} ({{city}})". A n'utiliser que si searchengine = fuse.
 
+Paramètre pour le type de couche sensorthings
+======================================
+
+* ``url``: URI du service sensorthing.
+* ``style``: Style à utiliser (sensorPolygon|sensorPoint) disponible dans le fichier ``js/featurestyles.js``.
+* ``top``: Nombre d'observations à retourner. La limite est par défaut définie par les capacités du serveur publiant le service.
+* ``defaultSensor``: Stream par défaut à afficher au clic. Valeur ``null`` par défaut.
+* ``selector``: Query param ``select`` tel que ``Locations(33)/Things?$select=id,description`` pour filtrer les champs ``Things`` à retourner.
+* ``datastreamsfilter``: Query param ``select`` tel que ``Datastreams($select=name,id)`` pour filtrer les champs ``Datastreams`` à retourner.
+* ``multidatastreamsfilter``: Query param ``select`` tel que ``MultiDatastreams($select=name,id)`` pour filtrer les champs ``MultiDatastreams`` à retourner.
+
+Plus d'informations sur le type de couche OGC SensorThings : 
+
+.. Note::
+        Documentation utile :
+        `Spécifications OGC <https://www.ogc.org/standards/sensorthings>`_
+        `Schéma SensorThings API <https://developers.sensorup.com/docs/#sensorthingsAPISensing>`_
+
+
+
 
 Paramètres pour les couches non WMS
 =======================================
 
-* ``type``: Type de la couche (wms|geojson|kml|vector-tms|customlayer|import) default=wms. Si customlayer est défini, il faut instancier un Layer OpenLayers dans un fichier javascript ayant pour nom l'id de la couche (voir ":ref:`configfuse`"). Ce fichier js doit être placé dans le répertoire customlayers/. Pour le type import l'extension `fileimport` doit être activée.
+* ``type``: Type de la couche (wms|geojson|kml|vector-tms|sensorthings|customlayer|import) default=wms. Si customlayer est défini, il faut instancier un Layer OpenLayers dans un fichier javascript ayant pour nom l'id de la couche (voir ":ref:`configfuse`"). Ce fichier js doit être placé dans le répertoire customlayers/. Pour le type import l'extension `fileimport` doit être activée.
 * ``tooltip``: Pour les couches de type vecteur uniquement. Booléen précisant si les entités de la couche sont affichées sous forme d'infobulle au survol de la souris. (Les infobulles ne fonctionnent qu'avec une seule couche à la fois). Valeur par défaut = false.
 * ``tooltipenabled``: Précise la couche prioritaire pour l'affichage des infobulles.
 * ``tooltipcontent``: Chaîne de caractères décrivant l'information à afficher dans les infobulles. Cette chaîne contient soit le nom d'un champ de la couche soit un template Mustache (code html) combinant plusieurs noms de champs. Exemple : ``tooltipcontent="{{name}} - ({{city}})"``.
