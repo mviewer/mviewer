@@ -3138,6 +3138,7 @@ mviewer = (function () {
       }
     },
     toggleLayerOptions: function (el) {
+      console.log(el);
       $(el).closest("li").find(".mv-layer-options").slideToggle();
       //hack slider js
       $(el).closest("li").find(".mv-slider-timer").slider("relayout");

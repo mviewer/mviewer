@@ -243,6 +243,9 @@ var info = (function () {
           var l = _overLayers[originLayer];
           let features = vectorLayers[layerid]?.features;
           if (l && l.type === "sensorthings") {
+            let parentDomEl = document.querySelector(
+              `#layers-container [data-layerid='${layerid}']`
+            );
             l.layer.sensorthings.setLastQuery(evt);
             //call features information
             async function waitAllSensorFeatures(features) {
@@ -255,6 +258,9 @@ var info = (function () {
               });
             }
             features = await waitAllSensorFeatures(features);
+            if (parentDomEl.querySelector(".mv-layer-options").style.display === "none") {
+              parentDomEl.querySelector(`.icon-options`).click();
+            }
           }
 
           if (l) {
