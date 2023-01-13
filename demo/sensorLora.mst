@@ -57,7 +57,7 @@
         // MULTIDATASTREAM
         if(multidatastreams && multidatastreams.length) {
             streamsObs.map(data => {
-                let dataObservations = _.find(observations, {name: data})?.result;;
+                let dataObservations = _.find(observations, {name: data})?.result || [];
                 let yValues = dataObservations.map(o => o.result);
                 let unitOfMeasures = multidatastreams[0].unitOfMeasurements.map(x => x.name);
                 let unitOfMeasurementsDataset = unitOfMeasures.map(unit => {
