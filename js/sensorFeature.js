@@ -165,7 +165,7 @@ class SensorFeature {
         if (dataStreamInfos) {
           return fetch(
             `${dataStreamInfos.url}/Datastreams(${dataStreamInfos.id})/Observations${
-              this.layer.top ? `?$top=${layer.top}` : ""
+              this.config.top ? `?$top=${this.config.top}` : ""
             }`
           )
             .then((r) => r.json())
@@ -175,7 +175,7 @@ class SensorFeature {
           return fetch(
             `${multiDataStreamsInfos.url}/MultiDatastreams(${
               multiDataStreamsInfos.id
-            })/Observations${this.layer.top ? `?$top=${this.layer.top}` : ""}`
+            })/Observations${this.config.top ? `?$top=${this.config.top}` : ""}`
           )
             .then((r) => r.json())
             .then((r) => ({ ...multiDataStreamsInfos, result: r.value }));
