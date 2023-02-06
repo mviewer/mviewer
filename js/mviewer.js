@@ -845,7 +845,7 @@ mviewer = (function () {
             summary +=
               '<a href="' +
               _overLayers[this.layer].metadata +
-              '" target="_blank">En savoir plus</a>';
+              '" i18n="legend.moreinfo" target="_blank">En savoir plus</a>';
           }
           _overLayers[this.layer].summary = summary;
 
@@ -1901,6 +1901,17 @@ mviewer = (function () {
         $(el).text(tr);
       }
     });
+    _element.find("[data-content]").each((i, el) => {
+      var content = $("<div></div>").append($(el).attr("data-content"));
+      content.find("[i18n]").each((i, contentEl) => {
+        let tr = mviewer.lang[lang]($(contentEl).attr("i18n"));
+        if ($(contentEl).text().indexOf("{{") === -1) {
+          $(contentEl).text(tr);
+          $(el).attr("data-content", content[0].outerHTML);
+        }
+      });
+    });
+
     var ret = element === "body" ? true : _element[0].outerHTML;
     return ret;
   };

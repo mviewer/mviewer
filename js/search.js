@@ -140,7 +140,7 @@ var search = (function () {
    */
 
   var _clearSearchResults = function () {
-    $("#searchresults .list-group-item").remove();
+    $("#searchresults .list-group-item").not(".search-header").remove();
     $("#searchresults").hide();
   };
 
@@ -173,7 +173,7 @@ var search = (function () {
   };
 
   var _showResults = function (results) {
-    $("#searchresults").append(results);
+    $("#searchResultsContent").append(results);
     if (_searchparams.closeafterclick) {
       $("#searchresults .list-group-item").click(function () {
         $(".searchresults-title .close").trigger("click");
@@ -215,7 +215,8 @@ var search = (function () {
       var chars = $(this).val().length;
       if (chars === 0) {
       } else if (chars > 0 && chars < 3) {
-        $("#searchresults .list-group-item").remove();
+        $("#searchresults .list-group-item").not(".search-header").remove();
+        $("#searchresults .search-header").addClass("hidden");
       } else {
         _search($(this).val());
       }
@@ -243,7 +244,7 @@ var search = (function () {
           success: function (data) {
             var zoom = 12;
             var res = data.results;
-            var str = '<a class="geoportail list-group-item disabled">Localités</a>';
+            var str = "";
             //var str = '';
             for (var i = 0, len = res.length; i < len && i < 5; i++) {
               switch (res[i].classification) {
@@ -274,6 +275,8 @@ var search = (function () {
             $(".geoportail").remove();
             if (res.length > 0) {
               _showResults(str);
+              var header = $("[i18n='search.result.locations']");
+              header.removeClass("hidden");
             }
           },
         });
@@ -295,7 +298,7 @@ var search = (function () {
           success: function (data) {
             var zoom = 0;
             var res = data.features;
-            var str = '<a class="geoportail list-group-item disabled">Localités</a>';
+            var str = "";
             for (var i = 0, len = res.length; i < len && i < 5; i++) {
               var props = res[i].properties;
               var geom = res[i].geometry;
@@ -331,6 +334,8 @@ var search = (function () {
             }
             $(".geoportail").remove();
             _showResults(str);
+            var header = $("[i18n='search.result.locations']");
+            header.removeClass("hidden");
           },
         });
       }
@@ -598,7 +603,7 @@ var search = (function () {
           contentType: contentType,
           success: function (data) {
             _sourceEls.clear();
-            var str = '<a class="elasticsearch list-group-item disabled" >Entités</a>';
+            var str = "";
             var format = new ol.format.GeoJSON();
             var nb = data.hits.hits.length;
             for (var i = 0, nb; i < nb && i < 5; i++) {
@@ -671,6 +676,8 @@ var search = (function () {
             $(".elasticsearch").remove();
             if (nb > 0) {
               _showResults(str);
+              var header = $("[i18n='search.result.entities']");
+              header.removeClass("hidden");
             }
           },
           error: function (xhr, ajaxOptions, thrownError) {
