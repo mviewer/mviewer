@@ -377,7 +377,7 @@ var configuration = (function () {
     if (!conf.application.geoloc || !(conf.application.geoloc === "true")) {
       $("#geolocbtn").hide();
     }
-    if (!conf.application.studio || (conf.application.studio === "false")) {
+    if (!conf.application.studio || conf.application.studio === "false") {
       $("#studiolink").remove();
     }
     if (conf.application.home) {
