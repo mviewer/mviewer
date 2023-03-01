@@ -97,20 +97,20 @@ Paramètres pour gérer l'affichage de la couche
 * ``tiled`` :guilabel:`studio` : Booléen stipulant si on désire un affichage tuilé de la couche. Très utile pour affichage de grosses couches.
 * ``style`` :guilabel:`studio` : Style(s) de la couche. Si plusieurs styles , utiliser la virgule comme séparateur. Si la couche est de type wms, il faut faire référence à un style sld. Si la couche est de type geojson, il faut faire référence à un style définit dans lib/featurestyles.js. Si la couche est de type vector-tms, le style correspond à la valeur indiquée en tant que première clé de la propriété "sources" du fichier de style au format JSON. Si la couche est de type customlayer, le style n'est pas défini ici.
 * ``styleurl`` :guilabel:`studio` : pour les couches de type vector-tms uniquement, il indique l'URL vers le fichier de style au format JSON.
-* ``styletitle`` : Titres à utiliser pour la liste des styles associés.
+* ``styletitle`` :guilabel:`studio` : Titres à utiliser pour la liste des styles associés.
 * ``stylesalias`` :guilabel:`studio` : Titres à utiliser pour chaques style. utiliser la virgule comme séparateur si plusieurs styles.
 * ``sld`` :guilabel:`studio` : Lien vers un SLD stocké sur le web. Dans ce fichier SLD, la balise sld:Name contenue dans sld:NamedLayer doit être égale au nom de la couche sans mention du namespace. Exemple <sld:Name>aeroports</sld:Name>. Si plusieurs styles , utiliser la virgule comme séparateur. S'applique uniquement aux layers WMS. Il faut indiquer l'URL résolvable par le serveur WMS du ou des sld.
-* ``index``: Ordre d'affichage de la couche sur la carte et dans la légende au démarrage. Les couches avec ce paramètre seront visibles sous les toplayers. Les couches sans ce paramètre ni toplayer seront affichées dans l'ordre d'écriture dans le XML.
+* ``index`` :guilabel:`studio` : Ordre d'affichage de la couche sur la carte et dans la légende au démarrage. Les couches avec ce paramètre seront visibles sous les toplayers. Les couches sans ce paramètre ni toplayer seront affichées dans l'ordre d'écriture dans le XML.
 * ``scalemin`` :guilabel:`studio` : Échelle minimum de la couche.
 * ``scalemax`` :guilabel:`studio` : Échelle maximum de la couche.
-* ``dynamiclegend`` : Booléen précisant si la légende est liée à l'échelle de la carte et si elle nécessite d'être actualisée à chaque changement d'échelle de la carte.
-* ``exclusive``:  Booléen stipulant si la couche est exclusive. Si la valeur est "true", l'affichage de cette couche masquera automatiquement toutes les autres couches ayant ce paramètre activé.
+* ``dynamiclegend`` :guilabel:`studio` : Booléen précisant si la légende est liée à l'échelle de la carte et si elle nécessite d'être actualisée à chaque changement d'échelle de la carte.
+* ``exclusive`` :guilabel:`studio` :  Booléen stipulant si la couche est exclusive. Si la valeur est "true", l'affichage de cette couche masquera automatiquement toutes les autres couches ayant ce paramètre activé.
 * ``legendurl`` :guilabel:`studio` : url permettant de récupérer la légende. Si non défini, c'est un GetLegendGraphic qui est effectué.
 * ``filter`` :guilabel:`studio` : Expression CQL permettant de filtrer la couche ex: insee=35000 Ou INTERSECT(the_geom, POINT (-74.817265 40.5296504)) [tutorial] (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial).
 * ``filterstyle`` :guilabel:`studio` : pour les couches de type vector-tms uniquement. Il permet de ne pas conserver, dans le style, la représentation de certaines couches. Cela permet donc de ne pas représenter un type de données présent dans le flux tuilé vectoriel. Il faut indiquer ici le nom d'une ou de plusieurs couches référencées dans la propriété "source-layer" du fichier de style au format JSON. Lorsque plusieurs couches sont à ajouter, le séparateur est la virgule et sans espace.
-* ``toplayer``: Précise si la couche demeure figée. Booléen. Défaut = true. Si plusieurs couches sont en toplayer, elles seront affichées dans l'ordre d'écriture du XML.
+* ``toplayer`` :guilabel:`studio` : Précise si la couche demeure figée. Booléen. Défaut = true. Si plusieurs couches sont en toplayer, elles seront affichées dans l'ordre d'écriture du XML.
 * ``expanded`` :guilabel:`studio` : Booléan précisant si le panneau de la couche est agrandi au démarrage. La valeur par défaut est false.
-* ``showintoc`` :  Booléen stipulant si la couche est affichée dans la légende. La valeur par défaut est true.
+* ``showintoc`` :guilabel:`studio` :  Booléen stipulant si la couche est affichée dans la légende. La valeur par défaut est true.
 * ``minzoom`` :  pour les couches de type vector-tms, la valeur correspond au niveau de zoom minimal de visibilité de la couche. Par défaut, la valeur est récupérée à partir du fichier de style au format JSON. Pour plus de détail, voir la `documentation Openlayers <https://openlayers.org/en/latest/apidoc/module-ol_layer_VectorTile-VectorTileLayer.html>`_.
 * ``maxzoom`` :  pour les couches de type vector-tms, la valeur correpond au niveau de zoom maximal de visibilité de la couche. Par défaut, la valeur est récupérée à partir du fichier de style au format JSON. Pour plus de détail, voir la `documentation Openlayers <https://openlayers.org/en/latest/apidoc/module-ol_layer_VectorTile-VectorTileLayer.html>`_.
 
@@ -218,11 +218,11 @@ Zoom sur le paramétrage de gestion de l'ordre d'affichage des couches
 Par défaut, les couches sont affichées sur la carte par ordre d'appararition dans le fichier de configuration XML.
 L'utilisateur a la possibilité d'utiliser les paramètres suivants pour forcer l'affichage au démarrage de l'application :
 
-* ``toplayer`` : Ce paramètre va forcer l'affichage de la couche au dessus des autres couches.
+* ``toplayer`` :guilabel:`studio` : Ce paramètre va forcer l'affichage de la couche au dessus des autres couches.
 Si plusieurs toplayers sont renseignés dans le fichier de configuration, toutes les toplayers seront au dessus et selon l'ordre d'apparition dans la configuration XML.
 Si une couche a un toplayer et un index de renseigné, l'index est ignoré.
 
-* ``index`` : L'objectif de ce paramètre est donc d'afficher la légende de façon identique à l'affichage sur la carte à l'initialisation de la carte.
+* ``index`` :guilabel:`studio` : L'objectif de ce paramètre est donc d'afficher la légende de façon identique à l'affichage sur la carte à l'initialisation de la carte.
 
 Ce paramètre va permettre de forcer l'affichage de la couche à une position pour un index souhaité.
 Ce paramètre `index` correspond sur la carte au paramètre [zIndex](https://openlayers.org/en/latest/apidoc/module-ol_layer_Layer-Layer.html) d'une couche OpenLayers.
