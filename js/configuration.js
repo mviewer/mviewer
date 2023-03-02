@@ -374,10 +374,10 @@ var configuration = (function () {
     if (!conf.application.mouseposition || conf.application.mouseposition === "false") {
       $("#mouse-position").hide();
     }
-    if (!conf.application.geoloc || !conf.application.geoloc === "true") {
+    if (!conf.application.geoloc || !(conf.application.geoloc === "true")) {
       $("#geolocbtn").hide();
     }
-    if (!conf.application.studio) {
+    if (!conf.application.studio || conf.application.studio === "false") {
       $("#studiolink").remove();
     }
     if (conf.application.home) {
