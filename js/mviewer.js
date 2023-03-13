@@ -2671,7 +2671,7 @@ mviewer = (function () {
         layer.styles.split(",").forEach(function (style, i) {
           styles.push({ style: style, label: layer.stylesalias.split(",")[i] });
         });
-        view.styles = styles;        
+        view.styles = styles;
         view.styleTitle = layer.styletitle;
       }
 
