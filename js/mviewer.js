@@ -2672,6 +2672,7 @@ mviewer = (function () {
           styles.push({ style: style, label: layer.stylesalias.split(",")[i] });
         });
         view.styles = styles;
+        view.styleTitle = layer.styletitle;
       }
 
       if (
@@ -2681,7 +2682,6 @@ mviewer = (function () {
       ) {
         view.attributeControl = true;
         view.attributeLabel = layer.attributelabel;
-        view.styleTitle = layer.styletitle;
         var options = [];
         if (layer.attributefilterenabled === false) {
           options.push({ label: "Par défaut", attribute: "all" });
