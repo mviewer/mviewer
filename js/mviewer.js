@@ -133,8 +133,6 @@ mviewer = (function () {
     } else {
       if (optionalProxy) {
         return optionalProxy + encodeURIComponent(url);
-      } else if (_proxy) {
-        return _proxy + encodeURIComponent(url);
       } else {
         return url;
       }
