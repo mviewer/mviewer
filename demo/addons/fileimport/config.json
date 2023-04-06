@@ -1,5 +1,6 @@
 {
   "js": [
+    "lib/papaparse.min.js",
     "lib/zip.js",
     "lib/z-worker.js",
     "lib/inflate.js",
