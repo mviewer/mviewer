@@ -306,6 +306,7 @@ var addlayers = (function () {
         Name: layerInfos.name,
         Url: layerInfos.url,
         Title: layerInfos.title,
+        filter: layerInfos.filter,
       });
     }
   };
@@ -453,6 +454,7 @@ var addlayers = (function () {
       id: clean_ident,
       layerid: clean_ident,
       url: wmsUrl,
+      filter: layer.filter,
     };
     if (layer.Style) {
       oLayer.style = layer.Style[0].Name;
