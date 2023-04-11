@@ -1963,3 +1963,22 @@ div#login-box {
   height: 50%;
   font-size: 20px;
 }
+
+.caret-toggle h4 .state-icon{
+	font-size: 16px;
+	color: white;
+}
+
+.caret-toggle.collapsed h4 .state-icon.firstLayer:after {
+	content: "\2b";/*plus*/
+}
+.caret-toggle h4 .state-icon.firstLayer:after {
+	content: "\2212";/*moins*/
+}
+
+.caret-toggle h4 .state-icon.notFirstLayer:after {
+	content: "\2212";/*moins*/
+}
+.caret-toggle.collapsed h4 .state-icon.notFirstLayer:after {
+	content: "\2b";/*plus*/
+}
