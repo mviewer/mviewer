@@ -2319,7 +2319,7 @@ mviewer = (function () {
       var url = splitStr + "/" + configFile;
       // send config file to studio
       if (url) {
-        window.open(configuration.getConfiguration().application.studio + url, "_blank");
+        window.open(configuration.getConfiguration().application.studio + "?xml=" + url);
       }
     },
 
