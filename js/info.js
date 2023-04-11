@@ -668,9 +668,13 @@ var info = (function () {
     var ajaxFunction = function () {
       urls.forEach(function (request) {
         var _ba_ident = sessionStorage.getItem(request.layerinfos.url);
+        var optionalProxy = "";
+        if (request.layerinfos.useproxy) {
+          optionalProxy = configuration.getConfiguration().proxy.url;
+        }
         requests.push(
           $.ajax({
-            url: mviewer.ajaxURL(request.url),
+            url: mviewer.ajaxURL(request.url, optionalProxy),
             layer: request.layerinfos,
             beforeSend: function (req) {
               if (_ba_ident)
