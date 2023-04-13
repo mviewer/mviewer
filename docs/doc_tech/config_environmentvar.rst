@@ -22,18 +22,20 @@ La modification est manuelle et il y a souvent des erreurs. C'est aussi claireme
 Concept
 -------
 
-Pour faciliter cette transition, un système basé sur un/des fichier(s) ``.env`` permet de définir des **variables d’environnement**. 
+Pour faciliter cette transition, un système basé sur un/des fichier(s) ``.json`` permet de définir des **variables d’environnement**. 
 
-Les variables d’environnement sont principalement des liens pour accéder aux ressources des couches. Ils sont donc propres à chaque environnement.
+A noter que par défaut, un fichier ``apps/settings.json`` est fourni.
 
-Variable définie dans ``apps/.env``  sur un environnement de recette : 
+Les variables d’environnement qui peuvent être contenues dans ce type de fichier sont principalement des liens pour accéder aux ressources des couches. Ils sont donc propres à chaque environnement.
+
+Exemple de variable définie dans ``apps/settings.json``  sur un environnement de recette : 
 ::
 
     {
         "fqdn": "map.recette.fr"
     }
 
-La même variable définie dans ``apps/.env``  sur un environnement de production : 
+La même variable définie dans ``apps/settings.json``  sur un environnement de production : 
 ::
 
     {
@@ -42,14 +44,14 @@ La même variable définie dans ``apps/.env``  sur un environnement de productio
 
 Ainsi en définissant des variables communes aux différents environnements mais dont seule la valeur change d’un environnement à l’autre, **il n'est plus nécessaire de changer l'URL** des ressources à la main lors du passage d'un fichier de la préproduction à la production.
 
-
 Comment faire ?
 ---------------
+
 **1. Créer un fichier définissant les variables**
 
 **Variables globales**
 
-Dans le répertoire ``/apps``, créez un nouveau fichier nommé ``.env`` et définissez une ou plusieurs variable(s) comme ci-dessous : 
+Dans le répertoire ``/apps``, modifiez (ou créer si inexistant) le fichié ``settings.json`` et définissez une ou plusieurs variable(s) comme ci-dessous : 
 ::
 
     {
@@ -58,12 +60,14 @@ Dans le répertoire ``/apps``, créez un nouveau fichier nommé ``.env`` et déf
 
 
 .. Note::
-    Les variables définies dans le fichier ``.env`` pourront être appelées dans l’ensemble des applications disponible dans le répertoire ``/apps``. 
+    Les variables définies dans le fichier ``.json`` pourront être appelées dans l’ensemble des applications disponible dans le répertoire ``/apps``. 
 
 **Variables spécifiques à une application**
 
 Si l’on souhaite définir des variables pour une **application spécifique** nommée ``MaCarte.xml``, il est possible de créer un fichier d’environnement dédié à cette application. 
-Dans le même répertoire que l’application, créez un nouveau fichier nommé ``MaCarte.env`` (le fichier d’environnement doit avoir le même nom que le fichier de configuration .XML). Dans ce fichier, définissez une ou plusieurs variable(s) comme ci-dessous :
+Ainsi, dans le même répertoire que l’application, créez un nouveau fichier nommé ``MaCarte.json`` (le fichier d’environnement doit avoir le même nom que le fichier de configuration .XML).
+
+Dans ce fichier, définissez une ou plusieurs variable(s) comme ci-dessous comme on le ferez avec le fichier ``apps/settings.json``:
 ::
 
     {
@@ -75,11 +79,11 @@ Dans le même répertoire que l’application, créez un nouveau fichier nommé 
 
 **Comportement des fichiers d’environnement**
 
--	On utilise les variables par défaut du fichier ``apps/.env``
--	Si aucun fichier ``.env`` n'existe, alors le système actuel et classique fonctionnera afin de lire simplement le XML sans chercher à remplacer des URLs.
--	Si le code détecte un fichier ``.env`` du même nom que la config (et au même endroit) alors le fichier ``apps/.env`` est surchargé par le fichier ``.env`` qui accompagne la config
--	On peut utiliser l'URL pour préciser le fichier ``.env`` à utiliser (``e.g &env=apps/test/test.env``) afin de remplacer le fichier ``apps/.env`` par le fichier passé dans l'URL
--	Les ``.env`` sont ignorés par git via le ``.gitignore`` pour ne pas écraser les fichiers selon les environnement
+-	On utilise les variables par défaut du fichier ``apps/setings.json``
+-	Si aucun fichier ``.json`` n'existe, alors le système actuel et classique fonctionnera afin de lire simplement le XML sans chercher à remplacer des URLs.
+-	Si le code détecte un fichier ``.json`` du même nom que la config (et au même endroit) alors le fichier ``apps/settings.json`` est surchargé par le fichier ``.json`` qui accompagne la config (donc ``maConfig.json`` surchage et remplace les valeurs communes de ``apps/settings.json``)
+-	On peut utiliser l'URL pour préciser le fichier ``.json`` à utiliser (``e.g &env=apps/test/test.json``) afin de remplacer le fichier ``apps/settings.json`` par le fichier passé dans l'URL
+-	Les ``.json`` sont ignorés par git via le ``.gitignore`` pour ne pas écraser les fichiers selon les environnement et ne pas avoir à le réécrire à chaque mise à jour de son projet Git
 
 
 **2. Mobiliser les variables d’environnement dans le fichier de configuration**
@@ -132,14 +136,14 @@ J'ai une application sur une préprod qui a le domaine : ``map.recette.fr``
 Ma carte mviewer utilise un flux WMS de préprod et un customLayer avec un flux WFS de préprod.
 Je souhaite pouvoir changer facilement vers une plateforme de production qui a le domaine : ``map.fr``
 
-Alors je saisi sur ma recette ``apps/.env`` une variable aléatoire que j'appel ``fqdn`` :
+Alors je saisi sur ma recette ``apps/settings.json`` une variable aléatoire que j'appel ``fqdn`` :
 ::
 
     {
         "fqdn": "map.recette.fr"
     }
 
-et je saisi sur ma prod dans ``apps/.env`` la même variable avec la valeur qui convient :
+et je saisi sur mon serveur de production dans ``apps/settings.json`` la même variable avec la valeur qui convient :
 ::
 
     {
@@ -163,9 +167,9 @@ Dans mon customLayer je peux par ailleurs appeler directement l'url WFS via :
 
 **Exemple 2**
 
-J'ai 3 fichiers :
+Prenom ces 3 fichiers et le contenu associé :
 
-- ``apps/.env``
+- ``apps/settings.json``
 
 ::
 
@@ -173,7 +177,7 @@ J'ai 3 fichiers :
         "version": "3.8.1-snapshot"
     }
 
-- ``demo/test/test.env``
+- ``demo/test/test.json``
 
 ::
 
@@ -183,7 +187,7 @@ J'ai 3 fichiers :
 
 - ``demo/test/test.xml``
 
-Je peux ouvrir la console et voir le contenu de ``mviewer.env`` : 
+En chargeant la carte mviewer pour la configuration ``demo/test/test.xml``, je peux déjà ouvrir la console et voir mes variables et valeurs associés en saisissant en JavaScript ``mviewer.env`` afin de les consulter : 
 ::
 
     {
@@ -191,7 +195,9 @@ Je peux ouvrir la console et voir le contenu de ``mviewer.env`` :
         "version": "3.8.1-snapshot"
     }
 
-Je souhaite remplacer une variable de ``.env`` par défaut (dans cet exemple la variable ``version``) en écrasant celle-ci dans ``demo/test/test.env`` : 
+On comprend là que ``mviewer.env`` permet d'accéder aux variables depuis un customlayer, le coeur mviewer ou une extension.
+
+Si je souhaite à présent remplacer la valeur de la variable ``version`` fournie dans mon fichier ``apps/settings.json`` par défaut, je n'aurai qu'à l'ajouter avec la nouvelle valeur (ex: ``inconnu``) dans le fichier ``demo/test/test.json``: 
 ::
 
     {
@@ -199,7 +205,7 @@ Je souhaite remplacer une variable de ``.env`` par défaut (dans cet exemple la 
         "version": "inconnu"
     }
 
-Pour obtenir au chargement et via la console du navigateur avec ``mviewer.env`` : 
+On pourra ici encore obtenir via la console du navigateur la liste des variables et les valeurs avec le code JavaScript ``mviewer.env`` : 
 ::
 
     {
