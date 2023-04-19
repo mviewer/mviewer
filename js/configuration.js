@@ -191,8 +191,9 @@ var configuration = (function () {
       extraConf.toArray().forEach(function (theme) {
         var url = $(theme).attr("url");
         var id = $(theme).attr("id");
+        const external_overwrite = {"name": $(theme).attr("name"), "layersvisibility": $(theme).attr("layersvisibility") || "default"}
         var proxy = false;
-        if ($(conf).find("proxy").attr("url")) {
+        if ($(conf).find("proxy").attr("url") && $(conf).find("proxy").attr("url") != "") {
           proxy = $(conf).find("proxy").attr("url");
         }
         requests.push(
@@ -200,10 +201,20 @@ var configuration = (function () {
             url: mviewer.ajaxURL(url, proxy),
             crossDomain: true,
             themeId: id,
+            external_overwrite: external_overwrite,
             success: function (response, textStatus, request) {
               //Si thématique externe récupérée, on la charge dans la configuration courante
               var node = $(response).find("theme#" + this.themeId);
               if (node.length > 0) {
+                const theme_element = node[0];
+                //overwrite theme name and layers visiblility
+                theme_element.setAttribute("name", this.external_overwrite.name)
+                //overwrite layers visiblility
+                if (this.external_overwrite.layersvisibility == "all") {
+                  theme_element.querySelectorAll("layer").forEach(l => l.setAttribute("visible", "true"));
+                } else if (this.external_overwrite.layersvisibility == "none") {
+                  theme_element.querySelectorAll("layer").forEach(l => l.setAttribute("visible", "false"));
+                }
                 $(conf)
                   .find("theme#" + this.themeId)
                   .replaceWith(node);
