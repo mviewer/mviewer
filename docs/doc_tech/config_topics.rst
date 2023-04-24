@@ -150,7 +150,7 @@ Elément enfant de <themes>
 .. code-block:: xml
        :linenos:
 
-	<theme name=""  collapsed="" id="" url="" icon="" url="" layersvisibility=""/>
+	<theme name=""  collapsed="" id="" icon="" url="" layersvisibility=""/>
 
 **Paramètres**
 
