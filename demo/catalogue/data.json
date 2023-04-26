@@ -205,8 +205,8 @@
       "tags": "Thématiques, réutilisation",
       "description": "Exemple d'utilisation de thématiques externes. Les thématiques sont directement chargées depuis des instances mviewer distantes",
       "level": "avancé",
-      "url_source": "../demo/include.xml",
-      "url_demo": "../?config=demo/include.xml"
+      "url_source": "../demo/external.xml",
+      "url_demo": "../?config=demo/external.xml"
     },
     {
       "id": "23",
