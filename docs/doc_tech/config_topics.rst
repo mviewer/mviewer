@@ -150,7 +150,7 @@ Elément enfant de <themes>
 .. code-block:: xml
        :linenos:
 
-	<theme name=""  collapsed="" id="" url="" icon="" />
+	<theme name=""  collapsed="" id="" icon="" url="" layersvisibility=""/>
 
 **Paramètres**
 
@@ -158,6 +158,10 @@ Elément enfant de <themes>
 * ``id`` :guilabel:`studio` : paramètre obligatoire de type texte qui affecte un identifiant unique interne à la thématique.
 * ``collapsed`` :guilabel:`studio` : paramètre optionnel de type booléen (true/false) qui précise si la thématique est fermée au démarrage de l'application. Pour que la thématique soit ouverte au démarrage, il faut choisir l'option **false**. Attention, il ne peut y avoir qu'une thématique ayant ce paramètre à false. Valeur par défaut **true**.
 * ``icon`` :guilabel:`studio` : paramètre optionnel de type texte qui précise l'icône à utiliser afin d'illustrer la thématique. Les valeurs possibles sont à choisir parmi cette liste sur le site Fontawesome: https://fontawesome.com/v5/search?m=free. Une autre possibilité est d'uliser une classe css personnelle mobilisant une image. Il faut alors mettre la classe précédée d'un point comme valeur. exemple ".mycustomicon".
+* ``url`` :guilabel:`studio` : paramètre optionnel de type url(URL vers fichier xml) qui permet de récupérer une thématique complète depuis un config.xml externe.
+* ``layersvisibility`` :guilabel:`studio` : paramètre optionnel (all/none/default) qui précise la visibilités des couches dans la thématique externe. Valeur par défaut **default**.
+
+
 Voici un exemple d'icone personnalisée :
 
 .. code-block:: css
