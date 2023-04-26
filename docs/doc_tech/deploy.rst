@@ -106,7 +106,7 @@ Cette solution permet de mettre en place les mêmes possibilités que la méthod
 1. Création du fichier environemment
 
 .. code-block:: bash
-    :caption: .env
+    :caption: settings.json
 
     APPSPATH=/home/prod/mviewer-apps
 

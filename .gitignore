@@ -1,6 +1,6 @@
 dist/*
 node*
 panels/*
-*.env
+apps/*.json
 node*
 package-*

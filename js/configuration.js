@@ -265,29 +265,29 @@ var configuration = (function () {
   };
   /**
    * Get env values from file.
-   * Default file is located in apps/.env and could be overload by config.env file with same name as config.xml file.
-   * Default env file could be given by URL like ?env=apps/myApp/.en
+   * Default file is located in apps/settings.json and could be overload by [config_name].json file with same name as config.xml file.
+   * Default env file could be given by URL like ?env=apps/myApp/myApp.json
    * @param {string} file path
    */
   const _getEnvData = (appsEnvfile, defaultFile) => {
     _callJsonFile(defaultFile)
       .then((defaultEnv) =>
-        // if apps env file exists wi overload default apps/.env file with .env file with same xml name
-        // as demo.env, demo.xml
+        // if apps env file exists wi overload default apps/settings.json file with .json file with same xml name
+        // ex: demo.xml => demo.json
         {
           return (
             _callJsonFile(appsEnvfile)
               .then((appsEnv) => {
                 return _dispatchCustomEvent({ ...defaultEnv, ...appsEnv });
               })
-              // else finally load only apps/.env file is loaded
+              // else finally load only apps/settings.json file is loaded
               .catch((e) => _dispatchCustomEvent(defaultEnv))
           );
         }
       )
       .catch((e) => {
         console.log("Error with default file");
-        // if no apps/.env file exists we search specific .env file for this context
+        // if no apps/settings.json file exists we search specific .json file for this context
         _callJsonFile(appsEnvfile)
           .then((appsEnv) => _dispatchCustomEvent(appsEnv))
           .catch((e) => {
@@ -305,7 +305,7 @@ var configuration = (function () {
    */
   var _renderEnvPath = (str) => {
     if (!str) return;
-    return _decodeString(Mustache.render(str, mviewer?.env));
+    return _decodeString(Mustache.render(str, mviewer?.settings));
   };
 
   var _load = function (conf) {
@@ -587,7 +587,7 @@ var configuration = (function () {
           });
         }
         layers.reverse().forEach(function (layerConfig) {
-          const layer = mviewer.env
+          const layer = mviewer.settings
             ? {
                 ...layerConfig,
                 url: _renderEnvPath(layerConfig.url),
