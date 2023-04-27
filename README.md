@@ -1,38 +1,35 @@
-MVIEWER
-=============
+# MVIEWER
 
 Visualiseur géographique [Kartenn](https://kartenn.region-bretagne.fr/demo/) basé sur OpenLayers 6.3.1 et Bootstrap 3.3.6
 
 Liens utiles :
-* [Site officiel](https://mviewer.netlify.com/)
-* [Versions](https://github.com/geobretagne/mviewer/releases/)
-* [Démos](http://kartenn.region-bretagne.fr/kartoviz/demo/)
-* [Documentation](http://mviewerdoc.readthedocs.io/fr/stable/)
-* [Générateur d'applications](https://github.com/geobretagne/mviewerstudio/)
 
+- [Site officiel](https://mviewer.netlify.com/)
+- [Versions](https://github.com/geobretagne/mviewer/releases/)
+- [Démos](http://kartenn.region-bretagne.fr/kartoviz/demo/)
+- [Documentation](http://mviewerdoc.readthedocs.io/fr/stable/)
+- [Générateur d'applications](https://github.com/geobretagne/mviewerstudio/)
 
-Feuille de route
------------
+## Feuille de route
+
 La road map du projet est disponible à cette adresse : https://github.com/geobretagne/mviewer/projects/8
 
-Déploiement
------------
+## Déploiement
 
 Le déploiement se passe en trois étapes :
-* Cloner le projet dans le dossier de votre choix
-* Copier ce dossier dans le dossier /var/www/ ( ou autres dossiers de déploiement Apache)
+
+- Cloner le projet dans le dossier de votre choix
+- Copier ce dossier dans le dossier /var/www/ ( ou autres dossiers de déploiement Apache)
   Vous avez maintenant un visualiseur géographique fonctionnel avec les couches de la Région Bretagne
-* Si vous souhaitez publier vos propres couches/thèmes, modifiez le fichier `apps/default.xml`
+- Si vous souhaitez publier vos propres couches/thèmes, modifiez le fichier `apps/default.xml`
 
+## Déploiement avec Node.js
 
-Déploiement avec Node.js
------------
-
-Mviewer peut également être publié via Node.js et NPM (testé avec v18.9.1).
+Mviewer peut également être publié via Node.js et NPM (testé avec v19.8.1).
 
 **1. Install Node et npm**
-  
-Pour installer Node et Npm sous Linux / debian : 
+
+Pour installer Node et Npm sous Linux / debian :
 
 - Suivre ces instructions :
 
@@ -41,10 +38,11 @@ https://github.com/nodesource/distributions/blob/master/README.md
 - ou utiliser NVM (conseillé) :
 
 ```
-sudo apt install curl 
+sudo apt install curl
 curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
 source ~/.profile
-nvm install 18
+nvm install 19
+nvm use 19
 ```
 
 **2. Clone du code source**
@@ -62,6 +60,8 @@ npm install
 
 **4. Démo live**
 
+Pour démarrer le serveur de développement `vite`:
+
 `npm start`
 
 Par défaut, mviewer est maintenant accessible à l'adresse **localhost:5000**
@@ -70,9 +70,9 @@ Par défaut, mviewer est maintenant accessible à l'adresse **localhost:5000**
 
 Pour modifier le port our les options d'exécution...
 
-Modifer la commande `start` dans le `package.json`.
+Modifer la commande `start` dans le `package.json` avec par exemple :
 
-`"start": "serve -p 8080"`
+`"start": "vite --port=8080 --cors=true"`
 
 ### Pour Réinstaller ou mettre à jour
 
@@ -85,7 +85,6 @@ npm install
 ## Docker
 
 Si vous souhaitez faire tourner mviewer dans un conteneur docker, un `Dockerfile` est à votre disposition.
-
 
 ```bash
 # construire l'image docker (étape facultative, les images étant publiées sur [docker-hub](https://hub.docker.com/r/mviewer/mviewer))
@@ -114,8 +113,7 @@ Par ailleurs, une composition docker est disponible dans le dépot git de
 [mviewerstudio](https://github.com/geobretagne/mviewerstudio), incluant mviewer
 et mviewerstudio.
 
-Fichier apps/default.xml
-------------------------
+## Fichier apps/default.xml
 
 Le fichier de configuration permet la personnalisation des thèmes/couches du visualiseur ; une configuration par
 défaut est fournie dans `apps/default.xml`, vous pouvez le dupliquer et l'adapter à vos besoins en vous aidant de la [documentation.](http://mviewerdoc.readthedocs.io/fr/latest/)

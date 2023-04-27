@@ -45,7 +45,7 @@
 				queryable="true" fields="nom,code_epci" aliases="Nom,SIREN"
                 filter="code_epci NOT IN ('200043123')"
                 infoformat="application/vnd.ogc.gml" featurecount="5"
-				style="masque" 
+				style="masque" showintoc="false"
                 opacity="0.5" 
 				url="https://geobretagne.fr/geoserver/ign/wms" 
 				attribution="GéoBretagne - Filtre CQL attributaire (tous les EPCI sauf Auray-Quiberon) - filter=code_epci NOT IN ('200043123')" 

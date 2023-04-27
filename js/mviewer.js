@@ -133,8 +133,6 @@ mviewer = (function () {
     } else {
       if (optionalProxy) {
         return optionalProxy + encodeURIComponent(url);
-      } else if (_proxy) {
-        return _proxy + encodeURIComponent(url);
       } else {
         return url;
       }
@@ -845,7 +843,7 @@ mviewer = (function () {
             summary +=
               '<a href="' +
               _overLayers[this.layer].metadata +
-              '" target="_blank">En savoir plus</a>';
+              '" i18n="legend.moreinfo" target="_blank">En savoir plus</a>';
           }
           _overLayers[this.layer].summary = summary;
 
@@ -1901,6 +1899,17 @@ mviewer = (function () {
         $(el).text(tr);
       }
     });
+    _element.find("[data-content]").each((i, el) => {
+      var content = $("<div></div>").append($(el).attr("data-content"));
+      content.find("[i18n]").each((i, contentEl) => {
+        let tr = mviewer.lang[lang]($(contentEl).attr("i18n"));
+        if ($(contentEl).text().indexOf("{{") === -1) {
+          $(contentEl).text(tr);
+          $(el).attr("data-content", content[0].outerHTML);
+        }
+      });
+    });
+
     var ret = element === "body" ? true : _element[0].outerHTML;
     return ret;
   };
@@ -2661,6 +2670,7 @@ mviewer = (function () {
           styles.push({ style: style, label: layer.stylesalias.split(",")[i] });
         });
         view.styles = styles;
+        view.styleTitle = layer.styletitle;
       }
 
       if (
@@ -2670,7 +2680,6 @@ mviewer = (function () {
       ) {
         view.attributeControl = true;
         view.attributeLabel = layer.attributelabel;
-        view.styleTitle = layer.styletitle;
         var options = [];
         if (layer.attributefilterenabled === false) {
           options.push({ label: "Par défaut", attribute: "all" });

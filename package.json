@@ -4,7 +4,7 @@
   "description": "Mviewer",
   "main": "index.html",
   "scripts": {
-    "start": "live-server --port=5051",
+    "start": "vite --port=5051 --cors=true",
     "pretty": "prettier --write \"./mviewer.i18n.json\" \"./js/**/*.{js,json}\" \"./demo/**/*.{js,json}\" \"./customcontrols/*.{js,json}\" \"./customlayers/*.{js,json}\"",
     "prettier-check": "prettier --check \"./mviewer.i18n.json\" \"./js/**/*.{js,json}\" \"./demo/**/*.{js,json}\" \"./customcontrols/*.{js,json}\" \"./customlayers/*.{js,json}\""
   },
@@ -25,8 +25,8 @@
   },
   "homepage": ".",
   "dependencies": {
-    "live-server": "^1.2.2",
-    "sass": "^1.57.1"
+    "sass": "^1.57.1",
+    "vite": "^4.2.1"
   },
   "devDependencies": {
     "prettier": "^2.7.1"

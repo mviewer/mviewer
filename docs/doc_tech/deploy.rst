@@ -29,12 +29,12 @@ Dans un terminal, après vous être placé dans le dossier web Apache, exécuter
 
 .. code-block:: bash
 
-	git clone https://github.com/geobretagne/mviewer.git
+	git clone https://github.com/mviewer/mviewer.git
 
 Sans git
 ----------
 
-Télécharger ce `fichier zip <https://github.com/geobretagne/mviewer/archive/master.zip>`_ présent sur la page d'accueil du dépôt mviewer sur GitHub : https://github.com/geobretagne/mviewer
+Télécharger ce `fichier zip <https://github.com/mviewer/mviewer/archive/master.zip>`_ présent sur la page d'accueil du dépôt mviewer sur GitHub : https://github.com/mviewer/mviewer
 
 Dézipper le contenu du  zip dans le dossier web Apache **/var/www/** *(ou autres dossiers de déploiement Apache)*.
 
@@ -106,7 +106,7 @@ Cette solution permet de mettre en place les mêmes possibilités que la méthod
 1. Création du fichier environemment
 
 .. code-block:: bash
-    :caption: .env
+    :caption: settings.json
 
     APPSPATH=/home/prod/mviewer-apps
 
