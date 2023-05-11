@@ -754,6 +754,16 @@ ul#layers-container {
     margin-bottom: 0;
 }
 
+#page-content-wrapper:has(#bottom-panel.active) #backgroundlayerstoolbar-gallery{
+	margin-bottom: 340px;
+	transition: 0.5s;
+}
+
+#page-content-wrapper:has(#right-panel.active) #backgroundlayerstoolbar-gallery{
+	margin-right: 320px;
+	transition: 0.5s;
+}
+
 #backgroundlayersbtn {
   background-image: url("../img/basemap/osm.png");
   background-size: 39px 43px;
@@ -764,7 +774,6 @@ ul#layers-container {
   box-shadow: 0px 0px 30px 3px rgba(200, 200, 200, 0.5) ;
 }
 
-
 @media (min-width: 992px) {
     #backgroundlayerstoolbar-default {
         bottom: 15px;
@@ -772,6 +781,16 @@ ul#layers-container {
         float: right;
         position: fixed;
     }
+}
+
+#page-content-wrapper:has(#right-panel.active) #backgroundlayerstoolbar-default{
+  margin-right: 320px;
+  transition: 0.5s;
+}
+
+#page-content-wrapper:has(#bottom-panel.active) #backgroundlayerstoolbar-default{
+  margin-bottom: 340px;
+  transition: 0.5s;
 }
 
 @media (max-width: 991px) {
@@ -791,10 +810,20 @@ ul#layers-container {
 	right: 10px;
 }
 
+#page-content-wrapper:has(#right-panel.active) #zoomtoolbar{
+	margin-right: 320px;
+	transition: 0.5s;
+}
+
 #toolstoolbar {
 	position: fixed;
 	top: 160px;
 	right: 10px;
+}
+
+#page-content-wrapper:has(#right-panel.active) #toolstoolbar{
+	margin-right: 320px;
+	transition: 0.5s;
 }
 
 #drawtoolsoptions {
@@ -1653,6 +1682,16 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
 }
 .ol-attribution.ol-unselectable.ol-control.ol-collapsed{
 	border-radius: 30px;
+}
+
+#page-content-wrapper:has(#bottom-panel.active) .ol-attribution.ol-unselectable.ol-control.ol-collapsed{
+	margin-bottom: 345px;
+	transition: 0.5s;
+}
+
+#page-content-wrapper:has(#bottom-panel.active) .ol-scale-line.ol-unselectable{
+	margin-bottom: 350px;
+	transition: 0.5s;
 }
 
 #feature-info {
