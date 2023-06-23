@@ -217,6 +217,60 @@ Les champs ``{{#fields_kv}}`` et ``{{serialized}}`` sont tous les deux virtuels 
 S'ils ne sont pas utilisés, ils ne consomment pas de ressource.
 Ils ont été `ajoutés aux champs simples <https://github.com/geobretagne/mviewer/pull/206/files>`_ afin de faciliter certains flux de traitement des données.
 
+Exemples de scripts de reformatage de champs
+--------------------------------
+
+Reformatage d'un champ date
+****************************
+
+::
+
+	{{#features}}
+	<li id="{{feature_ol_uid}}" class="inventaire item" style="width:100%;">
+
+		<!-- ici la div qui contiendra la date à afficher -->
+		<!-- elle doit avoir un ID unique lié à la feature (champ id ou id openLayers peu importe tant que c'est unique)-->
+		<div id="date-area-{{feature_ol_uid}}"></div>
+		<!-- le script de formatage -->
+		<script>
+			let date = "{{date_field}}";
+			let id = "{{feature_ol_uid}}";
+			let divWithDate = document.getElementById("date-area-" + id);
+			// format de la date de la donnée d'entrée
+
+			// voir ici pour les correspondances du code que vous devez modifier / adapter selon le format d'entrée :
+			// https://momentjs.com/
+
+			let inDate = "YYYY-MM-DDT";
+			let outDate = "DD/MM/YYYY";
+
+			// on transforme
+			let dateFormated = moment(date, inDate).format(outDate);
+			// on met le nouveau format à afficher dans la div
+			divWithDate.innerHTML = dateFormated;
+		</script>
+	</li>
+	{{/features}}
+
+Arrondi d'un champ nombre
+****************************
+
+::
+
+	<li id="{{feature_ol_uid}}" class="inventaire item" style="width:100%;">
+		<div id="number"></div>
+		<script>
+			var maDiv = document.getElementById("number");
+
+			// Récupérer la valeur textuelle de la div en utilisant innerText ou textContent
+			var valeurTextuelle = maDiv.innerText; // ou maDiv.textContent
+
+			var pourcentageArrondi = parseInt(valeurTextuelle, 10); // 10 indique la base décimale
+
+			maDiv.innerText = pourcentageArrondi +"%"
+		</script>
+	</li>
+
 Appel depuis le XML
 --------------------------------
 
