@@ -68,7 +68,8 @@
               {
                 "attribut": "dep",
                 "type": "button",
-                "label": "Départements"
+                "label": "Départements",
+                "updateOnChange": true
               },
               {
                 "attribut": "ville",
@@ -96,10 +97,10 @@
             "layerId": "commune",
             "filter": [
               {
-                "attribut": "nom_geo",
+                "attribut": "nom",
                 "type": "textbox",
                 "label": "Commune",
-                "updateOnChange": false
+                "updateOnChange": true
               }
             ]
           }
