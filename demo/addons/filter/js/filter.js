@@ -1086,18 +1086,30 @@ var filter = (function () {
     }
   };
 
+<<<<<<< HEAD
   var _setStyle = function (reinitPosition = false) {
     if (!mviewer.customComponents.filter.config.options.style) return;
+=======
+  var _setStyle = function(reinitPosition = false) {
+    if(!mviewer.customComponents.filter.config.options.style) return;
+>>>>>>> f99b6100 (avoid position reset on select filter #699 (#700))
     var style = mviewer.customComponents.filter.config.options.style;
     $(".textlabel").css("color", style.text || "black");
     $("#advancedFilter").css("background-color", style.background || "white");
     $("#advancedFilter").css("border", style.border || "0px transparent solid");
     // position
     if (reinitPosition) {
+<<<<<<< HEAD
       $("#advancedFilter").css("right", style.right || "60px");
       $("#advancedFilter").css("left", style.left || "");
       $("#advancedFilter").css("top", style.top || "65px");
       $("#advancedFilter").css("bottom", style.bottom || "");
+=======
+      $('#advancedFilter').css('right', style.right || '60px');
+      $('#advancedFilter').css('left', style.left || '');
+      $('#advancedFilter').css('top', style.top || '65px');
+      $('#advancedFilter').css('bottom', style.bottom || ''); 
+>>>>>>> f99b6100 (avoid position reset on select filter #699 (#700))
     }
     // button style
     $(".label-info").css("background-color", style.unSelectedBtnColor || "grey");
