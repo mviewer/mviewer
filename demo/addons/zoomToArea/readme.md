@@ -1,6 +1,6 @@
 # Plugin - ZoomToArea
 
-Ce plugin permet à l'utilisateur de zoomer sur une zone d'interêt sélectionnée préalablement dans une liste déroulante située en haut à droite du header mviewer. 
+Ce plugin permet à l'utilisateur de zoomer sur une zone d'intérêt sélectionnée préalablement dans une liste déroulante située en haut à droite du header mviewer. 
 
 > **Attention** Pour le moment, ce plugin fonctionne uniquement avec des entités du type `polygon`.
 
