@@ -1,5 +1,4 @@
-const zoomToArea = (function() {
-
+const zoomToArea = function () {
   /**
    * Plugin's config
    */
@@ -9,43 +8,50 @@ const zoomToArea = (function() {
   let options = () => config()?.options?.mviewer[getId()];
 
   /**
-   * Create options to selectorAreas 
+   * Create options to selectorAreas
    * @param {Array} areasData as data features areas
    * @param {string} nameArea as field name of area name
-   * @param {string} idArea as field name of area id 
+   * @param {string} idArea as field name of area id
    */
   function createSelectorArea(areasData, nameArea, idArea) {
-      // Init select
-      $('.navbar-right').prepend(
-        `<li><select class="form-select" name="zoomAreaSelector" id="zoomAreaSelector">
-          <option value="">` + options()?.selectLabel + `</option>
+    // Init select
+    $(".navbar-right").prepend(
+      `<li><select class="form-select" name="zoomAreaSelector" id="zoomAreaSelector">
+          <option value="">` +
+        options()?.selectLabel +
+        `</option>
         </select></li>`
-      );
-      // Add areas options to select
-      const selector = document.getElementById('zoomAreaSelector');
-      for (const area of areasData) {
-          var opt = document.createElement("option");
-          opt.textContent = area.properties[nameArea];
-          opt.value = area.properties[idArea];
-          selector.appendChild(opt);
-      }
+    );
+    // Add areas options to select
+    const selector = document.getElementById("zoomAreaSelector");
+    for (const area of areasData) {
+      var opt = document.createElement("option");
+      opt.textContent = area.properties[nameArea];
+      opt.value = area.properties[idArea];
+      selector.appendChild(opt);
+    }
   }
 
   /**
    * Zoom to select area extend
    * @param {Array} data as data json
-   * @param {string} idArea as field name of area id 
+   * @param {string} idArea as field name of area id
    * @param {string} valueAreaSelected as option value of the selected area
    */
   function zoomToGeomArea(data, idArea, valueAreaSelected) {
-      features = new ol.format.GeoJSON({dataProjection:options()?.dataEPSG,featureProjection:getAppEPSG()}).readFeatures(data);
-      let areaSelected = features.filter(e => e.getProperties()[idArea] == valueAreaSelected);
-      let geometry = areaSelected[0].getGeometry().getExtent();     
-      // Create buffer
-      let extendBuffer = new ol.extent.buffer(geometry, options()?.bufferSize);
-      mviewer.getMap().getView().fit(extendBuffer, {
-          duration: 3000
-      });
+    features = new ol.format.GeoJSON({
+      dataProjection: options()?.dataEPSG,
+      featureProjection: getAppEPSG(),
+    }).readFeatures(data);
+    let areaSelected = features.filter(
+      (e) => e.getProperties()[idArea] == valueAreaSelected
+    );
+    let geometry = areaSelected[0].getGeometry().getExtent();
+    // Create buffer
+    let extendBuffer = new ol.extent.buffer(geometry, options()?.bufferSize);
+    mviewer.getMap().getView().fit(extendBuffer, {
+      duration: 3000,
+    });
   }
 
   /**
@@ -54,22 +60,22 @@ const zoomToArea = (function() {
    */
 
   fetch(options()?.dataUrl)
-      .then((response) => {
-          return response.json()
-      })
-      .then((data) => {
-          // Data success
-          const areasData = data.features;
-          createSelectorArea(areasData, options()?.fieldNameAreas, options()?.fieldIdAreas);
-          // Select Event
-          const selectArea = document.getElementById("zoomAreaSelector");
-          selectArea.addEventListener("change", (event) => {
-            if(event.target.value != ""){
-              zoomToGeomArea(data, options()?.fieldIdAreas, event.target.value);
-            }              
-          });
-      })
-      .catch(error => console.log("Error no areas data"));
-});
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      // Data success
+      const areasData = data.features;
+      createSelectorArea(areasData, options()?.fieldNameAreas, options()?.fieldIdAreas);
+      // Select Event
+      const selectArea = document.getElementById("zoomAreaSelector");
+      selectArea.addEventListener("change", (event) => {
+        if (event.target.value != "") {
+          zoomToGeomArea(data, options()?.fieldIdAreas, event.target.value);
+        }
+      });
+    })
+    .catch((error) => console.log("Error no areas data"));
+};
 
 new CustomComponent("zoomToArea", zoomToArea);

@@ -49,7 +49,13 @@ Dans VS Code, si vous n'utilisez pas ce fichier, vous pouvez formatter à la sau
 **2. Prettier**
 
 Mviewer utilise `Prettier <https://prettier.io/>`_.
-Nous conseillons d'utiliser l'éditeur Visual Studio Code et son plugin `Prettier - Code formatter <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>`_.
+
+
+Vous pouvez utiliser Prettier en ligne si vous ne vous voulez pas utiliser node.js en suivant les actions définies `ici <https://github.com/mviewer/mviewer/issues/739>`_
+
+
+Vous pouvez également utiliser l'éditeur Visual Studio Code et son plugin `Prettier - Code formatter <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>`_ (npm obligatoire).
+
 
 * Installation
 
