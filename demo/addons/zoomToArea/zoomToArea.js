@@ -17,9 +17,9 @@ const zoomToArea = function () {
     // Init select
     $(".navbar-right").prepend(
       `<li><select class="form-select" name="zoomAreaSelector" id="zoomAreaSelector">
-          <option value="">` +
-        options()?.selectLabel +
-        `</option>
+          <option value="">
+          ${options().selectLabel}
+          </option>
         </select></li>`
     );
     // Add areas options to select
@@ -39,7 +39,7 @@ const zoomToArea = function () {
    * @param {string} valueAreaSelected as option value of the selected area
    */
   function zoomToGeomArea(data, idArea, valueAreaSelected) {
-    features = new ol.format.GeoJSON({
+    let features = new ol.format.GeoJSON({
       dataProjection: options()?.dataEPSG,
       featureProjection: getAppEPSG(),
     }).readFeatures(data);
