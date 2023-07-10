@@ -73,6 +73,7 @@ Pour fonctionner, le plugin a besoin des paramètres suivants :
 		"dataEPSG": "EPSG:4326",
 		"fieldNameAreas": "name_feature",
 		"fieldIdAreas": "id_feature",
+		"fieldSortBy":"name_feature",
 		"bufferSize": 5000,
 		"selectLabel":"Sélectionner un territoire"
 	}
@@ -82,6 +83,7 @@ Pour fonctionner, le plugin a besoin des paramètres suivants :
  - `dataEPSG` : Projection des données sources 
  - `fieldNameAreas` : Nom du champs où se trouve le nom des entités
  - `fieldIdAreas` : Nom du champs où se trouve l'id des entités 
+ - `fieldSortBy` : Nom du champs pour ordonner les entités dans la liste déroulante (ordre croissant) 
  - `bufferSize`:  Valeur numérique définissant la taille du buffer réalisé autour des entités (permet de régler le niveau de zoom),
  - `selectLabel` : Label de la liste déroulante
 

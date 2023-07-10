@@ -73,8 +73,18 @@ const zoomToArea = function () {
     .then((data) => {
       // Data success
       const areasData = data.features;
-      createSelectorArea(areasData, options()?.fieldNameAreas, options()?.fieldIdAreas);
-      document.getElementById("loadingIndicator-zoomToArea").style.display = 'none';
+      // Sort data by attribute
+      let sortAreasData = _.sortBy(areasData, [
+        function (feature) {
+          return feature.properties[options()?.fieldSortBy];
+        },
+      ]);
+      createSelectorArea(
+        sortAreasData,
+        options()?.fieldNameAreas,
+        options()?.fieldIdAreas
+      );
+      document.getElementById("loadingIndicator-zoomToArea").style.display = "none";
       // Select Event
       const selectArea = document.getElementById("zoomAreaSelector");
       selectArea.addEventListener("change", (event) => {

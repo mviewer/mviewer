@@ -10,6 +10,7 @@
         "dataEPSG": "EPSG:4326",
         "fieldNameAreas": "pnr_nom",
         "fieldIdAreas": "pnr_ident",
+        "fieldSortBy": "pnr_nom",
         "bufferSize": 30000,
         "selectLabel": "Zoomer sur un territoire"
       }
