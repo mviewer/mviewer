@@ -15,7 +15,14 @@
     width: 94%;
 }
 
-/* déplacement du loader en cas d'activation du plugin */
+/* Déplacement du loader en cas d'activation du plugin */
 #loading-indicator .loader {
     right: 540px;
+}
+
+/* Loader durant le chargement des données */
+#loadingIndicator-zoomToArea {
+    position: absolute;
+    top: 10px;
+    left: -40px;
 }

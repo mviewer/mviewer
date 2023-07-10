@@ -7,6 +7,13 @@ const zoomToArea = function () {
   let config = () => mviewer.customComponents.zoomToArea.config;
   let options = () => config()?.options?.mviewer[getId()];
 
+  // Add loader during loading data
+  $(".navbar-right").prepend(
+    `<li><div id="loadingIndicator-zoomToArea">
+        <div class="loader">Loading...</div>
+    </div></li>`
+  );
+
   /**
    * Create options to selectorAreas
    * @param {Array} areasData as data features areas
@@ -67,6 +74,7 @@ const zoomToArea = function () {
       // Data success
       const areasData = data.features;
       createSelectorArea(areasData, options()?.fieldNameAreas, options()?.fieldIdAreas);
+      document.getElementById("loadingIndicator-zoomToArea").style.display = 'none';
       // Select Event
       const selectArea = document.getElementById("zoomAreaSelector");
       selectArea.addEventListener("change", (event) => {
