@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <application id="zoomtoarea" title="Plugin - zoomToArea" mouseposition="false" logo="" help="mviewer_help.html" measuretools="true" exportpng="true" style="css/themes/wet_asphalt.css" togglealllayersfromtheme="true"/>
+    <mapoptions maxzoom="19" projection="EPSG:3857" center="-220750.13768758904,6144925.57790189" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
+  
+    <baselayers>
+        <baselayer  type="OSM" id="positron" label="Positron" title="Carto" thumbgallery="img/basemap/positron.png" 
+            url="http://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20" 
+            visible="true" attribution="Map tiles by  &lt;a href='https://carto.com/attributions' target='_blank'>Carto &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/' target='_blank'>CC BY 3.0 &lt;/a>" />
+    </baselayers>     
+    <proxy url=""/>
+    <olscompletion url="https://api-adresse.data.gouv.fr/search/" type="ban" attribution="La recherche d'adresse est un service proposé par la BAN"/>
+    <searchparameters bbox="false" localities="true" features="false" /> 
+
+    <extensions>
+		<extension type="component" id="zoomToArea" path="demo/addons"/>
+	</extensions>
+
+    <themes mini="true" legendmini="false">          
+        <theme name="Environnement"  collapsed="false" id="environnement" icon="fas fa-leaf">
+            <layer id="reserve_naturelle_regionale" name="Réserves naturelles régionales"  visible="true" tiled="false"
+				searchable="false" queryable="true" fields="axe" aliases="axe"   
+				infoformat="application/vnd.ogc.gml" featurecount="1"
+				sld="https://kartenn.region-bretagne.fr/styles/reserve_naturelle.sld" 
+				url="https://ows.region-bretagne.fr/geoserver/rb/wms"
+				legendurl="https://kartenn.region-bretagne.fr/img/styles/rnr.png" 
+				attribution="Source: Région Bretagne" 
+				metadata="https://geobretagne.fr/geonetwork/srv/eng/catalog.search?node=srv#/metadata/77f8fc52-ae57-41d1-8f08-7b121b013f51"
+				metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=77f8fc52-ae57-41d1-8f08-7b121b013f51" >
+				<template url="https://kartenn.region-bretagne.fr/kartoviz/apps/region/global/templates/global.reserve_naturelle_reg.mst"></template>
+		    </layer> 
+            <layer id="parc_naturel_regional" name="Parcs naturels régionaux actifs et en projet" type="wms"
+                url="https://ows.region-bretagne.fr/geoserver/rb/wms" 
+                visible="true" tiled="false"
+                expanded ="false"
+                showintoc="false"
+                queryable="false" 
+                infoformat="application/vnd.ogc.gml"   
+                attribution="Région Bretagne" featurecount="1"
+                metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=9df1d4b7-221c-4424-af3f-50a898e3d333"
+                metadata-csw="https://geobretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=9df1d4b7-221c-4424-af3f-50a898e3d333">
+              </layer>
+        </theme>   
+    </themes>
+</config>

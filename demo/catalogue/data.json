@@ -367,8 +367,17 @@
       "tags": "Templates, mst, fiche d'information, modèle",
       "description": "Application pour visualiser et télécharger différents modèles de fenêtres d'informations",
       "level": "intermédiaire",
-      "url_source": "../demo//mviewer_templates/config.xml",
+      "url_source": "../demo/mviewer_templates/config.xml",
       "url_demo": "../?config=demo/mviewer_templates/config.xml"
+    },
+    {
+      "id": "42",
+      "title": "Zoomer sur une zone d'interêt (plugin)",
+      "tags": "zoom, plugin",
+      "description": "Exemple d'application mobilisant le plugin ZoomToArea permettant de zoomer sur des zones d'interêt",
+      "level": "intermédiaire",
+      "url_source": "../demo/zoomtoarea.xml",
+      "url_demo": "../?config=demo/zoomtoarea.xml"
     }
   ]
 }

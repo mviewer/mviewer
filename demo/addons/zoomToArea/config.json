@@ -1,0 +1,19 @@
+{
+  "js": ["zoomToArea.js"],
+  "css": "style.css",
+  "html": "zoomToArea.html",
+  "target": "page-content-wrapper",
+  "options": {
+    "mviewer": {
+      "zoomtoarea": {
+        "dataUrl": "https://ows.region-bretagne.fr/geoserver/rb/wfs?service=wfs&version=1.0.0&request=getfeature&typename=parc_naturel_regional&outputformat=application%2Fjson&srsName=EPSG:4326",
+        "dataEPSG": "EPSG:4326",
+        "fieldNameAreas": "pnr_nom",
+        "fieldIdAreas": "pnr_ident",
+        "fieldSortBy": "pnr_nom",
+        "bufferSize": 30000,
+        "selectLabel": "Zoomer sur un territoire"
+      }
+    }
+  }
+}

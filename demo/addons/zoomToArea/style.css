@@ -1,0 +1,28 @@
+#zoomAreaSelector {
+    color: #414243;
+    height: 34px;
+    padding: 5px 10px;
+    margin: 0.6rem;
+    border: none;
+    border-right: 7px white solid;
+    max-width: 250px;
+    background-color: white;
+}
+
+.xs #zoomAreaSelector {
+    max-width: 100%!important;
+    margin: 10px 15px;
+    width: 94%;
+}
+
+/* Déplacement du loader en cas d'activation du plugin */
+#loading-indicator .loader {
+    right: 540px;
+}
+
+/* Loader durant le chargement des données */
+#loadingIndicator-zoomToArea {
+    position: absolute;
+    top: 10px;
+    left: -40px;
+}
