@@ -174,7 +174,8 @@ var info = (function () {
     }
     if (_captureCoordinatesOnClick && _typeCoordinates === "xy") {
       var hdms = ol.coordinate.toStringXY(
-        ol.proj.transform(evt.coordinate, _projection.getCode(), "EPSG:4326"),5
+        ol.proj.transform(evt.coordinate, _projection.getCode(), "EPSG:4326"),
+        5
       );
       $("#coordinates span").text(hdms);
     }

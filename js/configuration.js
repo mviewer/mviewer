@@ -16,7 +16,7 @@ var configuration = (function () {
 
   var _captureCoordinates = false;
 
-  var _typecoordinate= "";
+  var _typecoordinate = "";
 
   var _lang = false;
 
@@ -384,11 +384,11 @@ var configuration = (function () {
     }
     if (conf.application.coordinates === "true") {
       _captureCoordinates = true;
-      if(conf.application.coordinatestype === "dms"){
+      if (conf.application.coordinatestype === "dms") {
         _typecoordinate = "dms";
       } else {
         _typecoordinate = "xy";
-	  }
+      }
     }
     if (conf.application.togglealllayersfromtheme === "true") {
       _toggleAllLayersFromTheme = true;
