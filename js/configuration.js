@@ -384,10 +384,10 @@ var configuration = (function () {
     }
     if (conf.application.coordinates === "true") {
       _captureCoordinates = true;
-	  if(conf.application.coordinatestype === "dms"){
-	  _typecoordinate = "dms";
-	  } else {
-	  _typecoordinate = "xy";
+      if(conf.application.coordinatestype === "dms"){
+        _typecoordinate = "dms";
+      } else {
+        _typecoordinate = "xy";
 	  }
     }
     if (conf.application.togglealllayersfromtheme === "true") {
