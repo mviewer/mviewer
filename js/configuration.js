@@ -16,6 +16,8 @@ var configuration = (function () {
 
   var _captureCoordinates = false;
 
+  var _typecoordinate= "";
+
   var _lang = false;
 
   var _languages = [];
@@ -382,6 +384,11 @@ var configuration = (function () {
     }
     if (conf.application.coordinates === "true") {
       _captureCoordinates = true;
+	  if(conf.application.coordinatestype === "dms"){
+	  _typecoordinate = "dms";
+	  } else {
+	  _typecoordinate = "xy";
+	  }
     }
     if (conf.application.togglealllayersfromtheme === "true") {
       _toggleAllLayersFromTheme = true;
@@ -1211,6 +1218,9 @@ var configuration = (function () {
     },
     getCaptureCoordinates: function () {
       return _captureCoordinates;
+    },
+    getTypeCoordinates: function () {
+      return _typecoordinate;
     },
     getConfiguration: function () {
       return _configuration;
