@@ -384,7 +384,7 @@ var configuration = (function () {
     }
     if (conf.application.coordinates === "true") {
       _captureCoordinates = true;
-	  _typecoordinate = conf.application.coordinatestype || "xy";
+      _typecoordinate = conf.application.coordinatestype || "xy";
     }
     if (conf.application.togglealllayersfromtheme === "true") {
       _toggleAllLayersFromTheme = true;

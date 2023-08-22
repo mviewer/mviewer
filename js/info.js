@@ -166,12 +166,17 @@ var info = (function () {
       return False;
     }
     if (_captureCoordinatesOnClick && _typeCoordinates) {
-      const coordAsText = _typeCoordinates === "dms" ? ol.coordinate.toStringHDMS : ol.coordinate.toStringXY;
+      const coordAsText =
+        _typeCoordinates === "dms"
+          ? ol.coordinate.toStringHDMS
+          : ol.coordinate.toStringXY;
       const coordPrec = _typeCoordinates === "dms" ? 0 : 5;
       let hdms = coordAsText(
-        ol.proj.transform(evt.coordinate, _projection.getCode(), "EPSG:4326"),coordPrec
-      );  
-      hdms = _typeCoordinates === "xy" ? hdms : hdms.replace(/ /g, "").replace("N", "N - ");
+        ol.proj.transform(evt.coordinate, _projection.getCode(), "EPSG:4326"),
+        coordPrec
+      );
+      hdms =
+        _typeCoordinates === "xy" ? hdms : hdms.replace(/ /g, "").replace("N", "N - ");
       $("#coordinates span").text(hdms);
     }
     //Request vector layers
