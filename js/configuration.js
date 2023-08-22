@@ -384,11 +384,7 @@ var configuration = (function () {
     }
     if (conf.application.coordinates === "true") {
       _captureCoordinates = true;
-      if (conf.application.coordinatestype === "dms") {
-        _typecoordinate = "dms";
-      } else {
-        _typecoordinate = "xy";
-      }
+	  _typecoordinate = conf.application.coordinatestype || "xy";
     }
     if (conf.application.togglealllayersfromtheme === "true") {
       _toggleAllLayersFromTheme = true;

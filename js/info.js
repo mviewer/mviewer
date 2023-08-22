@@ -165,21 +165,15 @@ var info = (function () {
     if (!_mvReady) {
       return False;
     }
-    if (_captureCoordinatesOnClick && _typeCoordinates === "dms") {
-      var hdms = ol.coordinate.toStringHDMS(
-        ol.proj.transform(evt.coordinate, _projection.getCode(), "EPSG:4326")
-      );
-      var hdms2 = hdms.replace(/ /g, "").replace("N", "N - ");
-      $("#coordinates span").text(hdms2);
-    }
-    if (_captureCoordinatesOnClick && _typeCoordinates === "xy") {
-      var hdms = ol.coordinate.toStringXY(
-        ol.proj.transform(evt.coordinate, _projection.getCode(), "EPSG:4326"),
-        5
-      );
+    if (_captureCoordinatesOnClick && _typeCoordinates) {
+      const coordAsText = _typeCoordinates === "dms" ? ol.coordinate.toStringHDMS : ol.coordinate.toStringXY;
+      const coordPrec = _typeCoordinates === "dms" ? 0 : 5;
+      let hdms = coordAsText(
+        ol.proj.transform(evt.coordinate, _projection.getCode(), "EPSG:4326"),coordPrec
+      );  
+      hdms = _typeCoordinates === "xy" ? hdms : hdms.replace(/ /g, "").replace("N", "N - ");
       $("#coordinates span").text(hdms);
     }
-
     //Request vector layers
     if (queryType === "map") {
       var pixel = evt.pixel;
