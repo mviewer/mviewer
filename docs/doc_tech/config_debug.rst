@@ -24,7 +24,7 @@ A venir...
 
 Ce problème peut venir de plusieurs facteurs.
 
-Bien vérifier le infoformat. Pour rappel 2 possibilités :
+Bien vérifier le infoformat. Pour rappel, 2 possibilités :
 
 * text/html : fichiers FTL GeoServer
 

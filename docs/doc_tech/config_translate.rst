@@ -19,7 +19,7 @@ Le mviewer utilise la libraire `i18n.js <https://i18njs.com/>`_ pour traduire l'
 
 **Principe**
 
-La traduction s'appuie sur un dictionnaire de traduction (fichier `mviewer i18n json <https://github.com/geobretagne/mviewer/blob/develop/docs/doc_tech/config_translate.rst>`_).
+La traduction s'appuie sur un dictionnaire de traduction (fichier `mviewer i18n json <https://github.com/mviewer/mviewer/blob/develop/docs/doc_tech/config_translate.rst>`_).
 Tous les éléments html disposant d'un attribut i18n seront traduits si une correspondance est trouvée dans le dictionnaire::
 
     <span i18n="une.cle.a.traduire"> une valeur par défaut </span>
@@ -55,7 +55,7 @@ Le texte affiché pour notre élément de la page (<span>) sera alors::
 Quels sont les paramètres de configuration utilisés ?
 -----------------------------------------------------
 
-Il vous faudra ajouter dans votre fichier de configuration les propriétés suivantes comme décrit dans  la `page mviewer <https://github.com/geobretagne/mviewer>`_: 
+Il vous faudra ajouter dans votre fichier de configuration les propriétés suivantes comme décrit dans  la `page mviewer <https://github.com/mviewer/mviewer>`_: 
 
 - lang
 
@@ -95,7 +95,7 @@ Avec "lang=fr" ou aucun paramètre "lang" vous n'ajouterez pas cette interface. 
 
 **Affichage du sélecteur**
 
-Deux types d'affichage existent: 
+Deux types d'affichage existent : 
 
 - Une liste de sélection::
 

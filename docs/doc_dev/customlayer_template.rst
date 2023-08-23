@@ -33,15 +33,15 @@ Voici un `rappel sur Mustache.js <https://zetcode.com/javascript/mustache/>`_.
 Rappels sur le fonctionnement des templates
 --------------------------------------------
 
-Les templates `Mustache <https://mustache.github.io/>`_ (format .mst) permettent d'afficher de façon standard ou personnalisée les informations d'une entités géographique visible sur la carte.
+Les templates `Mustache <https://mustache.github.io/>`_ (format .mst) permettent d'afficher de façon standard ou personnalisée les informations d'une entité géographique visible sur la carte.
 L'utilisateur cliquera alors sur la carte pour avoir des informations sur l'entité ciblée.
 
-Au clic, `le code mviewer <https://github.com/geobretagne/mviewer/blob/master/js/info.js#L304>`_ réalise une requête (`getFeatureInfo <https://docs.geoserver.org/stable/en/user/services/wms/reference.html#getfeatureinfo>`_) vers le serveur cartographique utilisé (e.g geoserver) afin d'iterroger la couche et obtenir les informations sur les entités localisées sous le clic.
+Au clic, `le code mviewer <https://github.com/mviewer/mviewer/blob/master/js/info.js#L304>`_ réalise une requête (`getFeatureInfo <https://docs.geoserver.org/stable/en/user/services/wms/reference.html#getfeatureinfo>`_) vers le serveur cartographique utilisé (ex. geoserver) afin d'interroger la couche et obtenir les informations sur les entités localisées sous le clic.
 
 .. note::
-    Les templates utilisés sont localisés dans le `fichier mviewer/js/templates.js <https://github.com/geobretagne/mviewer/blob/master/js/templates.js>`_.
+    Les templates utilisés sont localisés dans le `fichier mviewer/js/templates.js <https://github.com/mviewer/mviewer/blob/master/js/templates.js>`_.
 
-Si le résultat de la requête contient bien des informations à afficher, alors les informations seront intégrées par `ce code mviewer <https://github.com/geobretagne/mviewer/blob/d862151406effda754999aed570d71fdcf923889/js/info.js#L726>`_ dans le template à droite (right-panel) ou en bas (bottom-panel) au format HTML. C'est via la librairie Mustache.js que nous obtenons du HTML à partir d'un template (.mst) et d'information JSON.
+Si le résultat de la requête contient bien des informations à afficher, alors les informations seront intégrées par `ce code mviewer <https://github.com/mviewer/mviewer/blob/d862151406effda754999aed570d71fdcf923889/js/info.js#L726>`_ dans le template à droite (right-panel) ou en bas (bottom-panel) au format HTML. C'est via la librairie Mustache.js que nous obtenons du HTML à partir d'un template (.mst) et d'information JSON.
 
 .. image:: ../_images/develop/applytemplate.png
               :alt: schema apply template
@@ -54,7 +54,7 @@ Limite avec un custom layer
 Il est possible que le template à afficher se base sur des informations (``JSON``) qui ne sont pas fournies par les informations fournies par le serveur cartographique.
 C'est le cas par exemple si vous récupérez des données statistiques et que vous souhaitez afficher des données agrégées ou calculées.
 
-Vous rencontrerez ce problème si vous utilisez une représentation type cluster comme `ici <https://github.com/geobretagne/mviewer/blob/master/customlayers/cluster.js>`_.
+Vous rencontrerez ce problème si vous utilisez une représentation type cluster comme `ici <https://github.com/mviewer/mviewer/blob/master/customlayers/cluster.js>`_.
 
 Vous devrez donc organiser avec le JavaScript les informations ``JSON`` à fournir au template .mst afin de l'afficher correctement.
 
@@ -66,20 +66,20 @@ Une autre solution éxiste via l'utilisons d'une fonction personnalisée que nou
 Utilisation d'une fonction personnalisée
 ----------------------------------------
 
-Ce type de fonction permet de manipuler librement les données que l'on va fournir au template Mustache et qui seront afficher par la suite lors d'un clic sur un objet de la carte.
+Ce type de fonction permet de manipuler librement les données que l'on va fournir au template Mustache et qui seront affichées par la suite lors d'un clic sur un objet de la carte.
 
 Cette méthode est très utile pour :
 
-- Afficher les informations d'un cluster (car on cherche à afficher les features qui sont dans la feature Cluster)
-- Créer un mustache simple à partir d'informations complexes qui doivent être agrégées par le custom layer
-- Conserver le code JavaScript dans le custom layer pour alléger le fichier .mst
+- Afficher les informations d'un cluster (car on cherche à afficher les features qui sont dans la feature Cluster).
+- Créer un mustache simple à partir d'informations complexes qui doivent être agrégées par le custom layer.
+- Conserver le code JavaScript dans le custom layer pour alléger le fichier .mst.
 
-Vous trouverez ici un (`exemple avec un cluster <https://github.com/geobretagne/mviewer/blob/master/customlayers/cluster.js#L87>`_) native dans mviewer.
+Vous trouverez ici un (`exemple avec un cluster <https://github.com/mviewer/mviewer/blob/master/customlayers/cluster.js#L87>`_) native dans mviewer.
 
 Exemple d'utilisation
 ----------------------
 
-Voici un exemple de méthode (``handle``)pour manipuler les informations au sein d'une ou plusieurs features afin de les afficher dans le template mustache dédié :
+Voici un exemple de méthode (``handle``) pour manipuler les informations au sein d'une ou plusieurs features afin de les afficher dans le template mustache dédié :
 
 .. code-block:: javascript
   :linenos:

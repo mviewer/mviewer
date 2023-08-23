@@ -41,7 +41,7 @@ mviewer s'initialise avec un fichier de configuration - **config.xml**. Ce fichi
     Pour visualiser dans votre navigateur tous les flux mviewer, activez la console - touche ``F12`` avant le démarrage de l'application.
 
 
-- Résumé des fiches de métadonnées - .xml
+- résumé des fiches de métadonnées - .xml
 - templates de couche personnalisés - .mst
 - fichier d'aide personnalisé - .html
 - feuille de style personnalisée - .css
@@ -53,7 +53,7 @@ mviewer s'initialise avec un fichier de configuration - **config.xml**. Ce fichi
 Tout est personnalisable
 =============================
 
-Si mviewer est avant tout une application aux nombreux paramétrages possibles, il peut être nécessaire de personnaliser l'interface voire de créer des couches personnalisées avec leurs propres contrôles (liste déroulante, slider, calendrier...)
+Si mviewer est avant tout une application aux nombreux paramétrages possibles, il peut être nécessaire de personnaliser l'interface voire de créer des couches personnalisées avec leurs propres contrôles (liste déroulante, slider, calendrier...).
 Les couches personnalisées sont par exemple nécessaires pour appliquer une analyse thématique sur une source de données de type vecteur ou développer un nouveau type d'intéraction entre l'utilisateur et une source de données (mise à jour par exemple).
 
 Sans développement
@@ -66,6 +66,6 @@ Sans développement
 Avec développement
 --------------------
 
-- Une couche personnalisée - javascript
-- un contrôle personnalisé - javascrip + html
-- un composant personnalisé - javascript + html + css
+- couche personnalisée - JavaScript
+- contrôle personnalisé - JavaScript + HTML
+- composant personnalisé - JavaScript + HTML + CSS

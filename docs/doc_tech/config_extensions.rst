@@ -9,10 +9,10 @@ Configurer - Extensions
 Configuration globale
 --------------------
 
-Chargement de librairies javascripts externes ou de composants personnalisés.
+Chargement de librairies JavaScript externes ou de composants personnalisés.
 Ce module d'extension permet de répondre à deux cas d'usage :
 
-- J'ai besoin d'une librairie **javascript** (chart.js) pour faire mes templates de couche.
+- J'ai besoin d'une librairie **JavaScript** (chart.js) pour faire mes templates de couche.
 - J'ai besoin de créer un nouveau **composant** (mini carte de localisation) sans modifier le cœur de mviewer. Plus de précisions ici : ":ref:`configcustomcomponent`"
 
 **Syntaxe**
@@ -26,7 +26,7 @@ Ce module d'extension permet de répondre à deux cas d'usage :
 	</extensions>
 
 
-**Paramètres pour les extensions de type javascripts**
+**Paramètres pour les extensions de type JavaScript**
 
 * ``src``: paramètre obligatoire qui correspond à l'URL vers le fichier.
 
@@ -73,7 +73,7 @@ Cette extension permet d'afficher la carte en plein écran comme ceci :
               :align: center
 
 
-| Cette extension est très utile si vous intégré votre carte via une iframe.
+| Cette extension est très utile si vous intégrez votre carte via une iframe.
 | Il faut pour cela ajouter ceci dans votre XML :
 
 .. code-block:: xml
@@ -92,7 +92,7 @@ Cett extension permet d'ajouter la possibilité de calculer des isochrones dans 
               :alt: Calcul isochrone
               :align: center
 
-| Cette extension utilise le geoservices de l'IGN. Il permet de faire des isochrones sur les parcours piétons et voiture.
+| Cette extension utilise le geoservice de l'IGN. Il permet de faire des isochrones sur les parcours piétons et voiture.
 | Il faut pour cela ajouter ceci dans votre XML :
 
 .. code-block:: xml
@@ -119,7 +119,7 @@ Cette extension permet d'ajouter une couche dans votre mviewer. Attention, la co
         <extension type="component" id="fileimport" path="demo/addons"/>
     </extensions>
 
-| Puis une couche au niveau de l'import donc voici un exemple (plus d'info sur la conf https://github.com/geobretagne/mviewer/tree/master/demo/addons/fileimport) :
+| Puis une couche au niveau de l'import donc voici un exemple (plus d'info sur la conf https://github.com/mviewer/mviewer/tree/master/demo/addons/fileimport) :
 
 .. code-block:: xml
 
@@ -152,7 +152,7 @@ Cette extension permet de filtrer les entités d'une donnée :
 
 Elle nécessite plusieurs prérequis :
 
-* Elle s'applique sur les couches de types customlayer (couche vecteur avec création d'un fichier javascript pointant sur un flux WFS par exemple). Cela ne fonctionne pas sur wms. Pour plus d'information sur le fichier javascript à créer, se référer à cette page ":ref:`configfuse`".
+* Elle s'applique sur les couches de type customlayer (couche vecteur avec création d'un fichier JavaScript pointant sur un flux WFS par exemple). Cela ne fonctionne pas sur WMS. Pour plus d'information sur le fichier JavaScript à créer, se référer à cette page ":ref:`configfuse`".
 
 .. code-block:: xml
 
