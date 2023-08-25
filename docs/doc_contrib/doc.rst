@@ -18,7 +18,7 @@ Respectez le processus de contribution décrit dans la section ":ref:`ask`".
 
 **Sources**
 
-Les sources de la documentation sont disponibles sur GitHub `geobretagne/mviewer <https://github.com/geobretagne/mviewer.git>`_, dans le répertoire docs.
+Les sources de la documentation sont disponibles sur GitHub `mviewer/mviewer <https://github.com/mviewer/mviewer.git>`_, dans le répertoire docs.
 
 
 **Créez une issue sur GitHub**
@@ -47,7 +47,7 @@ Déployer la documentation en local
 *Si vous ne connaissez pas Apache, vous pouvez installer facilement* `XAMPP <https://www.apachefriends.org/fr/download.html>`_ *en suivant l'explicatif* ":ref:`installxamp`" *plus bas.*
 
 - Vous devez disposer des droits sur votre ordinateur pour installer python et disposer de pip.
-- Avoir réalisé un fork du repository `geobretagne/mviewer <https://github.com/geobretagne/mviewer.git>`_
+- Avoir réalisé un fork du repository `mviewer/mviewer <https://github.com/mviewer/mviewer.git>`_.
 - Avoir réalisé un clone de votre fork vers un répertoire local de votre ordinateur :
 
 ::
@@ -126,7 +126,7 @@ Déployer la documentation en local
     doc_test/sous_partie2
 
 
-- Comme décrit dans la syntaxe précédente, vous devez rajouter un dossier "doc_test" (où "doc_test" est le nom que vous avez choisis)
+- Comme décrit dans la syntaxe précédente, vous devez rajouter un dossier "doc_test" (où "doc_test" est le nom que vous avez choisis) :
 
 ::
 
@@ -140,7 +140,7 @@ Déployer la documentation en local
     ../mviewer/docs/doc_test/sous_partie1.rst
     ../mviewer/docs/doc_test/sous_partie2.rst
 
-- Inspirez-vous de l'existant pour comprendre l'organisation des fichiers avec index.rst
+- Inspirez-vous de l'existant pour comprendre l'organisation des fichiers avec index.rst.
 
 - Vous devrez écrire selon une syntaxe particulière. Recherchez dans les fichiers et dans les exemples de cette page pour vous aider.
 
@@ -199,7 +199,7 @@ Utilisez la syntaxe suivante (respectez les sauts de ligne) :
 
 ::
 
-    Une liste avec des numéros:
+    Une liste avec des numéros :
 
     #. Mon premier
     #. Mon second
@@ -210,7 +210,7 @@ Utilisez la syntaxe suivante (respectez les sauts de ligne) :
 Référencer une page
 ---------------------
 
-- Pour créer un point de référence .._reference: que l'ont peut citer comme lien depuis n'importe quelle page (lien interne)
+- Pour créer un point de référence .._reference: que l'ont peut citer comme lien depuis n'importe quelle page (lien interne).
 
 - Utilisez les titres pour afficher le texte à afficher comme référence :
 
@@ -227,7 +227,7 @@ Référencer une page
 
     Voir la ":ref:`reference`"
 
-- "Page de référence" sera cliquable pour s'y rendre
+- "Page de référence" sera cliquable pour s'y rendre.
 
 Lien, hyperlien
 ----------------
@@ -236,14 +236,14 @@ Utilisez la syntaxe suivante (respectez les sauts de lignes) :
 
 ::
 
-    Ceci est un `lien cliquable <https://github.com/geobretagne/mviewer>`_
+    Ceci est un `lien cliquable <https://github.com/mviewer/mviewer>`_
 
 
 
 Construire et déployer la documentation
 ---------------------------------------
 
-- Les sources de la documentation sont localisées dans votre dossier git/mviewer/docs crée par le clone (voir plus haut) :
+- Les sources de la documentation sont localisées dans votre dossier git/mviewer/docs créé par le clone (voir plus haut) :
 
 ::
 
@@ -277,9 +277,9 @@ Construire et déployer la documentation
 
     C:\xampp\mviewer-doc\
 
-- Déployez la documentation crée via la commande avec Apache2 si vous avez d'autres chemins d'accès
+- Déployez la documentation créée via la commande avec Apache2 si vous avez d'autres chemins d'accès.
 
-- Avec XAMPP Accédez à la documentation via localhost/mviewer-doc (mviewer-doc étant le nom de dossier que vous avez utilisé)
+- Avec XAMPP Accédez à la documentation via localhost/mviewer-doc (mviewer-doc étant le nom de dossier que vous avez utilisé).
 
 
 **Faites votre pull request**

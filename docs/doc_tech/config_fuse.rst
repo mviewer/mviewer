@@ -15,19 +15,19 @@ Fuse permet de rechercher une entité dans la barre de recherche sans installer 
 Création du fichier javascript
 ------------------------------
 
-Il est nécessaire de créer un fichier javascript pour utiliser la recherche Fuse. La donnée apparaît sur la carte au format vectoriel.
+Il est nécessaire de créer un fichier JavaScript pour utiliser la recherche Fuse. La donnée apparaît sur la carte au format vectoriel.
 
 
-Ce fichier devra :
+Dans ce fichier :
 
-* son nom et le nom de la variable déclarée au début être le même que le nom de la couche
+* son nom et le nom de la variable déclarée au début devront être identiques au nom de la couche
 * la donnée issue de la requête WFS devra être dans la même projection que le mviewer (ici 4326)
-* le style de la couche s'appuie sur openLayer (https://openlayers.org/workshop/fr/vector/style.html)
+* le style de la couche s'appuie sur OpenLayers (https://openlayers.org/workshop/fr/vector/style.html)
 
 Exemples de fichiers javascript
 ------------------------------
 
-Voici un premier exemple de fichier javascript pour une donnée ponctuelle (fichier auto_ecole.js)
+Voici un premier exemple de fichier JavaScript pour une donnée ponctuelle (fichier auto_ecole.js)
 
 .. code-block:: bash
 
@@ -324,4 +324,4 @@ Au niveau du fichier de configuration mviewer, il est nécessaire de faire les a
 * ``searchengine`` : activer le mode de recherche fuse
 * ``fusesearchkeys`` : champ dans lequel on va effectuer la recherche. Possible sur plusieurs champs (exemple : "NOM,TYPE")
 * ``fusesearchresult`` : expression d'affichage du résultat de la recherche
-* ``fusesearchthreshold`` : optionnel, cette valeur permet de préciser si la recherche doit retourner des résultat très proches de la saisie (0) ou tout mot ou partie de mot qui correspond (1)
+* ``fusesearchthreshold`` : optionnel, cette valeur permet de préciser si la recherche doit retourner des résultats très proches de la saisie (0) ou tout mot ou partie de mot qui correspond (1)

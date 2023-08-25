@@ -7,7 +7,7 @@
 Les fonctions publiques de mviewer
 ==================================
 
-Pour accéder à ces fonctions publiques il faut simplement utiliser l'objet ``mviewer`` et accéder à une fonction (``mviewer.nomDeLaFonction()``). 
+Pour accéder à ces fonctions publiques, il faut simplement utiliser l'objet ``mviewer`` et accéder à une fonction (``mviewer.nomDeLaFonction()``). 
 
 Il existe déjà les fonctions suivantes :
 
@@ -84,14 +84,14 @@ Il existe déjà les fonctions suivantes :
 
     .. function:: reorderLayer(layer, index)
               
-        :param Object layer: Couche openLayer depuis la carte (e.g depuis mviewer.getLayer(id)).
+        :param Object layer: Couche OpenLayers depuis la carte (e.g depuis mviewer.getLayer(id)).
         :param int index: Nouvel index de la couche sur la carte.
 
         :return: Permet de changer l'affichage d'une couche sur la carte (voir openLayers zindex).
 
     .. function:: showLayersByAttrOrder(layers, reverse)
               
-        :param Object layer: Dictionnaire des couches avec le zindex pour chacune (e.g {id1:1, id2:2,,,})
+        :param Object layer: Dictionnaire des couches avec le zindex pour chacune (ex. {id1:1, id2:2,,,})
         :param boolean reverse: reverse == true pour lire les couches dans le sens inverse de l'ordre de l'objet.
 
         :return: Permet de modifier l'ordre complet des couches de la carte, réordonnera les topLayer et la légende ensuite.

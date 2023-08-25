@@ -23,7 +23,7 @@ Cette méthode permet de créer des customs controls plus simples qu'avec la deu
 
 Dans ce cas précis on utilise la classe de base ``CustomControl`` dans le fichier ``custom.js``.
 
-La classe possède une méthode ``constructor()`` qui prend en paramètre les méthodes ``init()`` et ``destroy()`` que l'on peut définir dans le fichier Javascript (dans cet exemple ``moncontrol.js``)
+La classe possède une méthode ``constructor()`` qui prend en paramètre les méthodes ``init()`` et ``destroy()`` que l'on peut définir dans le fichier JavaScript (dans cet exemple ``moncontrol.js``)
 présent dans l'arborescence suivante::
 
     /apps
@@ -299,7 +299,7 @@ Pour ajouter une variable de classe privée il faut ajouter le **"#"** avant le 
     // Initialiser un objet avec la chaine de caractères "maVariablePrivee" dans la variable de classe privée #maVariablePrivee et l'id de couche "monControl".
     new MonControl("monControl","maVariablePrivee");
 
-Si vous voulez quand même pouvoir accéder et modifier la valeur de cette variable en dehors de ce code mais de manière plus sécuriser il faut déclarer une fonction ``get()`` pour récupérer la valeur et une fonction
+Si vous voulez quand même pouvoir accéder et modifier la valeur de cette variable en dehors de ce code mais de manière plus sécurisée, il faut déclarer une fonction ``get()`` pour récupérer la valeur et une fonction
 ``set(valeur)`` pour la modifier :
 
 ::

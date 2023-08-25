@@ -32,9 +32,9 @@ Nous installerons ensuite Git et le terminal Git Bash pour passer les commandes 
 Travailler avec un fork
 ------------------------
 
-**Règle générale** : Ne jamais modifier la branche MASTER.
+**Règle générale** : ne jamais modifier la branche MASTER.
 
-La branche master est une branche "mirroir" de la branche master du code initial (`geobretagne/mviewer <https://github.com/geobretagne/mviewer>`_).
+La branche master est une branche "mirroir" de la branche master du code initial (`mviewer/mviewer <https://github.com/mviewer/mviewer>`_).
 
 C'est votre point de départ pour tout nouveau travail et tout nouveau travail doit repartir d'une base à jour et propre.
 
@@ -57,7 +57,7 @@ Pour bien débuter, nous vous recommandons de réaliser un fork vers votre espac
 
 **Procédure**
 
-Sur la page `GitHub du mviewer <https://github.com/geobretagne/mviewer>`_ cliquer sur "Fork" en haut à droite.
+Sur la page `GitHub du mviewer <https://github.com/mviewer/mviewer>`_ cliquer sur "Fork" en haut à droite.
 
 .. image:: ../_images/contrib/fork1.png
               :alt: git fork repository
@@ -70,7 +70,7 @@ Vous détenez maintenant un fork disponible à l'adresse : https://github.com/MO
 
 Votre fork contient nativement les mêmes branches à l'identique, dont la branche **master**.
 
-Vous pourrez créer des nouvelles branches et modifier le code sans impacter le code natif du repository inital (`geobretagne/mviewer <https://github.com/geobretagne/mviewer>`_).
+Vous pourrez créer des nouvelles branches et modifier le code sans impacter le code natif du repository inital (`mviewer/mviewer <https://github.com/mviewer/mviewer>`_).
 
 - Ouvrez Git Bash
 
@@ -157,22 +157,22 @@ Pour mettre à jour la branche master de votre fork, nous devons définir en pre
 Définir un upstream
 -------------------
 
-Pour mettre à jour la branche master depuis le code de GéoBretagne, vous devrez indiquer quelle est la "source distante" (upstream). 
+Pour mettre à jour la branche master depuis le code de mviewer, vous devrez indiquer quelle est la "source distante" (upstream). 
 Votre "origin" sera votre votre repository mviewer (fork).
 
 Voici la manipulation.
 
 - Définir un upstream::
         
-        git remote add upstream https://github.com/geobretagne/mviewer
+        git remote add upstream https://github.com/mviewer/mviewer
 
 - Observer que vous avez bien un upstream::
     
         git remote -v
         > origin    https://github.com/YOUR_USERNAME/YOUR_FORK.git (fetch)
         > origin    https://github.com/YOUR_USERNAME/YOUR_FORK.git (push)
-        > upstream  https://github.com/geobretagne/mviewer.git (fetch)
-        > upstream  https://github.com/geobretagne/mviewer.git (push)
+        > upstream  https://github.com/mviewer/mviewer.git (fetch)
+        > upstream  https://github.com/mviewer/mviewer.git (push)
 
 
 Bravo ! Mettons maintenant à jour votre branche master.
@@ -190,7 +190,7 @@ Vous devrez un jour mettre à jour votre branche master au sein de votre fork. F
 
         cd C:\Users\jean\Documents\git\mviewer
 
-- Vérifiez que vous avez bien un upstream qui pointe vers https://github.com/geobretagne/mviewer.git (voir l'étape précédente).
+- Vérifiez que vous avez bien un upstream qui pointe vers https://github.com/mviewer/mviewer.git (voir l'étape précédente).
 
 - Positionnez vous sur la branche master::
         
@@ -200,11 +200,11 @@ Vous devrez un jour mettre à jour votre branche master au sein de votre fork. F
         
         git fetch upstream
 
-- Remplacez votre branche master (origin) par celle de géoBretagne (upstream)::
+- Remplacez votre branche master (origin) par celle de mviewer (upstream)::
         
         git reset --hard upstream/master
 
-- Poussez ensuite ce code récupéré depuis géoBretagne (upstream) vers votre branche master (origin)::
+- Poussez ensuite ce code récupéré depuis mviewer (upstream) vers votre branche master (origin)::
         
         git push origin master --force
         
@@ -283,7 +283,7 @@ Vous prendrez en compte la localisation de ces fichiers dans le fichier de confi
 URL de carte
 ------------
 
-Il vous faudra prendre en compte le dossier "apps" dans vos urls de carte ainsi:: 
+Il vous faudra prendre en compte le dossier "apps" dans vos URLs de carte ainsi:: 
 
         http://kartenn.region-bretagne.fr/kartoviz/?config=apps/aide-droit-carte.xml
 
@@ -292,7 +292,7 @@ Il vous faudra prendre en compte le dossier "apps" dans vos urls de carte ainsi:
 Addons
 ------
 
-Si vous souhaitez enrichir vos cartes de fonctionnalités (isochrones, recherches, filtres temporels, ...) vous pouvez dupliquer cet addon dans tous les dossiers de carte.
+Si vous souhaitez enrichir vos cartes de fonctionnalités (isochrones, recherches, filtres temporels...) vous pouvez dupliquer cet addon dans tous les dossiers de carte.
 
 Vous pouvez aussi créer un dossier "addons" dans le répertoire common et y ajouter la structure nécessaire (customlayers, customcontrols) pour être réexploitable par toutes les cartes :
 
@@ -366,7 +366,7 @@ Nous recommandons très fortement d'utiliser les commentaires. Mieux vaut trop d
 
 - Commentaires JavaScript::
 
-        // ceci est un commentaire une sune ligne
+        // ceci est un commentaire sur une ligne
         /* Ceci est 
         un commentaire sur plusieurs lignes*/
 
@@ -378,7 +378,7 @@ Nous recommandons très fortement d'utiliser les commentaires. Mieux vaut trop d
 
         <!--Je suis un commentaire HTML-->
 
-Pour les fonctions ou méthodes JavaScript, nous recommandons d'ajouter en commentaire:
+Pour les fonctions ou méthodes JavaScript, nous recommandons d'ajouter en commentaire :
 
 - Ce que fait cette fonction ou méthode
 - Les paramètres en entrée
@@ -386,7 +386,7 @@ Pour les fonctions ou méthodes JavaScript, nous recommandons d'ajouter en comme
 
 **Les indésirables**
 
-Nous déconseillons les affichages d'informations qui ne sont utiles qu'aux développeurs (console.log, alert, ...).
+Nous déconseillons les affichages d'informations qui ne sont utiles qu'aux développeurs (console.log, alert...).
 
 **Editeur de code**
 
@@ -399,7 +399,7 @@ Il n'y a pas d'obligation et vous êtes libre d'en choisir un.
 - autre
 
 
-Informations git & GitHub
+Informations Git & GitHub
 -------------------------
 
 Vous trouverez plus d'information sur la page ":ref:`git`".

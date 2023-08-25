@@ -11,12 +11,12 @@ Développer un Custom component
               :alt: Exemple de customcomponent
               :align: center
 
-L'ojectif est ici de créer un bouton dont la fonction est d'afficher la carte en mode "plein écran" en utilisant l'API html 5 ``requestFullscreen``.
+L'ojectif est ici de créer un bouton dont la fonction est d'afficher la carte en mode "plein écran" en utilisant l'API HTML 5 ``requestFullscreen``.
 
 .. sidebar:: Créez un répertoire avec :
 
-    - fichier html
-    - fichier javascript
+    - fichier HTML
+    - fichier JavaScript
     - fichier de configuration
     - fichier de style
 
@@ -37,14 +37,14 @@ L'ojectif est ici de créer un bouton dont la fonction est d'afficher la carte e
 
 
 
-L'exemple complet est disponible sur `github. <https://github.com/geobretagne/mviewer/tree/develop/demo/fullscreen>`_
+L'exemple complet est disponible sur `github. <https://github.com/mviewer/mviewer/tree/develop/demo/fullscreen>`_
 
 
 Ecrire le code html
 *******************
 
-Le code html est la partie visible du composant. Le code html sera intégré par mviewer et "dessiné" dans la ``div`` ciblée via le fichier config.json.
-Dans le cas présent on créé un simple bouton avec une icône **fontawesome**;
+Le code html est la partie visible du composant. Le code HTML sera intégré par mviewer et "dessiné" dans la ``div`` ciblée via le fichier config.json.
+Dans le cas présent on créé un simple bouton avec une icône **fontawesome** :
 
 .. code-block:: HTML
     :caption: fullscreen.html
@@ -57,7 +57,7 @@ Dans le cas présent on créé un simple bouton avec une icône **fontawesome**;
 Ecrire le code javascript
 *************************
 
-Le code javascript est la partie logique de notre composant. Dans lexemple ci-dessous, on associe une fonction à l'évènement ``click`` du bouton créé précédemment.
+Le code JavaScript est la partie logique de notre composant. Dans l'exemple ci-dessous, on associe une fonction à l'évènement ``click`` du bouton créé précédemment.
 
 
 .. code-block:: javascript
@@ -89,10 +89,10 @@ Le code javascript est la partie logique de notre composant. Dans lexemple ci-de
     ``const fullscreen = (function() {`` par ``var fullscreen = (function() {``
 
 
-Ecrire le code css
+Ecrire le code CSS
 ******************
 
-Le code css permet d'affiner le style de notre bouton.
+Le code CSS permet d'affiner le style de notre bouton.
 
 .. code-block:: javascript
     :caption: style.css

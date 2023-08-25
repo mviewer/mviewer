@@ -11,7 +11,7 @@ Développer un customLayer
               :alt: Exemple de customlayer
               :align: center
 
-L'ojectif est ici de créer une couche personnalisée de type ``heatmap`` à partir d'un fichier **KML** en utilisant la librairie ``Openlayers`` et en s'inspirant de cet `exemple. <https://openlayers.org/en/latest/examples/heatmap-earthquakes.html>`_  Avant tout, il faut préparer la structure de fichiers qui convient.
+L'ojectif est ici de créer une couche personnalisée de type ``heatmap`` à partir d'un fichier **KML** en utilisant la librairie ``Openlayers`` et en s'inspirant de cet `exemple. <https://openlayers.org/en/latest/examples/heatmap-earthquakes.html>`_.  Avant tout, il faut préparer la structure de fichiers qui convient.
 
 .. sidebar:: Créez un répertoire avec :
 
@@ -36,7 +36,7 @@ L'ojectif est ici de créer une couche personnalisée de type ``heatmap`` à par
 
 
 
-L'exemple complet est disponible sur `github. <https://github.com/geobretagne/mviewer/tree/develop/demo/heatmap>`_
+L'exemple complet est disponible sur `github. <https://github.com/mviewer/mviewer/tree/develop/demo/heatmap>`_
 
 
 Ecrire le customLayer
@@ -84,7 +84,7 @@ Ancienne méthode
 Nouvelle méthode
 ==================
 
-Depuis la version **3.2** de mviewer, une classe ``CustomLayer`` a été développée afin de faciliter la saisie de nouveaux customLayers
+Depuis la version **3.2** de mviewer, une classe ``CustomLayer`` a été développée afin de faciliter la saisie de nouveaux customLayers :
 
 .. code-block:: javascript
     :caption: customlayer.js
@@ -112,7 +112,7 @@ Depuis la version **3.2** de mviewer, une classe ``CustomLayer`` a été dévelo
 Ecrire le config.xml
 *********************
 
-Dans le fichier de configuration, il faut reprendre l'id du customlayer ``id="heatmap"``,  préciser ``type="customlayer"`` ainsi que l'URL du fichier ``url="demo/heatmap/customlayer.js"``
+Dans le fichier de configuration, il faut reprendre l'id du customlayer ``id="heatmap"``,  préciser ``type="customlayer"`` ainsi que l'URL du fichier ``url="demo/heatmap/customlayer.js"`` :
 
 .. code-block:: XML
     :caption: config.xml

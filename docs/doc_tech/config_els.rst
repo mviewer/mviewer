@@ -6,7 +6,7 @@
 Configurer - Une recherche basée sur un index Elasticsearch
 ===========================================================
 
-Permettre d'interroger un index Elasticsearch à  partir d'une saisie libre (exemple "Port de Brest"). Le résultat retourné est une collection de documents disposant d'un champ commun avec les entités géographiques servies par l'instance WMS/WFS. Par convention les types **elasticsearch** ont le même nom que les couches WMS/WFS.
+Permettre d'interroger un index Elasticsearch à partir d'une saisie libre (exemple "Port de Brest"). Le résultat retourné est une collection de documents disposant d'un champ commun avec les entités géographiques servies par l'instance WMS/WFS. Par convention les types **elasticsearch** ont le même nom que les couches WMS/WFS.
 
 
 Prérequis
@@ -86,11 +86,11 @@ En partant de la démo Elasticsearch : http://kartenn.region-bretagne.fr/kartovi
 
 **Attributs**
 
-* ``url``: Url de l'API Search
-* ``geometryfield``: Nom du champ utilisé par l'instance elasticsearch pour stocker la géométrie
-* ``linkid``: Nom du champ à  utiliser côté serveur wms/wfs pour faire le lien avec la propriété _id des documents elasticsearch
-* ``querymode`` *(optionnel)* : Query mode used by elasticsearch to find results : match ou term ou phrase - default = match. Le mode match convient pour la recherche libre et naturelle. Le mode phrase permet de faire des recherches sur une phrase et le mode terme permet de faire une recherche sur un terme exact. Il est à noter que l'utilisateur peut activer le mode terme en préfixant sa recherche de # et activer le mode phrase en encadrant sa recherche de "".
+* ``url``: URL de l'API Search
+* ``geometryfield``: nom du champ utilisé par l'instance elasticsearch pour stocker la géométrie
+* ``linkid``: nom du champ à  utiliser côté serveur wms/wfs pour faire le lien avec la propriété _id des documents elasticsearch
+* ``querymode`` *(optionnel)* : query mode used by elasticsearch to find results : match ou term ou phrase - default = match. Le mode match convient pour la recherche libre et naturelle. Le mode phrase permet de faire des recherches sur une phrase et le mode terme permet de faire une recherche sur un terme exact. Il est à noter que l'utilisateur peut activer le mode terme en préfixant sa recherche de # et activer le mode phrase en encadrant sa recherche de "".
 * ``doctypes`` *(optionnel)* : types des documents elasticsearch à  requêter systématiquement, indépendamment des couches affichées
 * ``version`` *(optionnel)* : version de l'instance elasticsearch (exemple = 5.3)
 
-Tester en Lançant  http://monserveur/mviewer/?config=demo/els.xml et saisir zola dans la barre de recherche.
+Tester en lançant  http://monserveur/mviewer/?config=demo/els.xml et saisir zola dans la barre de recherche.

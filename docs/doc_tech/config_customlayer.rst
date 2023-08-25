@@ -7,10 +7,10 @@ Configurer - Custom layer
 =========================
 
 
-Un custom layer est une couche personnalisée s'appuyant sur la librairie ``openlayers``. Exemples
+Un custom layer est une couche personnalisée s'appuyant sur la librairie ``OpenLayers``. Exemples
 
 - J'ai besoin d'afficher une couche de type KML.
-- J'ai besoin de créer une couche de type cluster avec une analyse personnalisée
+- J'ai besoin de créer une couche de type cluster avec une analyse personnalisée.
 - J'ai besoin d'une couche de tuiles vectorielles OSM...
 
 **Syntaxe**

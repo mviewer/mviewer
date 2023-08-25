@@ -19,7 +19,7 @@ En cliquant sur l'icone ( |MapsIcon| ) en bas à droite de la carte, l'utilisate
               :align: center
 
 .. |MapsIcon| image:: ../_images/user/maps/maps_icon.png
-              :alt: Changer fond de plan
+              :alt: Changer fond de carte
 	      :width: 16 pt
 
 Pour modifier la liste des fonds de carte, veuillez consulter la page ":ref:`configbaselayers`".
