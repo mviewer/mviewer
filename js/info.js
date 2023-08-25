@@ -48,6 +48,7 @@ var info = (function () {
   var _clickCoordinates = null;
 
   var _captureCoordinatesOnClick = false;
+  var _typeCoordinates = "";
 
   /**
    * Property: _toolEnabled
@@ -164,12 +165,19 @@ var info = (function () {
     if (!_mvReady) {
       return False;
     }
-    if (_captureCoordinatesOnClick) {
-      var hdms = ol.coordinate.toStringHDMS(
-        ol.proj.transform(evt.coordinate, _projection.getCode(), "EPSG:4326")
+    if (_captureCoordinatesOnClick && _typeCoordinates) {
+      const coordAsText =
+        _typeCoordinates === "dms"
+          ? ol.coordinate.toStringHDMS
+          : ol.coordinate.toStringXY;
+      const coordPrec = _typeCoordinates === "dms" ? 0 : 5;
+      let hdms = coordAsText(
+        ol.proj.transform(evt.coordinate, _projection.getCode(), "EPSG:4326"),
+        coordPrec
       );
-      var hdms2 = hdms.replace(/ /g, "").replace("N", "N - ");
-      $("#coordinates span").text(hdms2);
+      hdms =
+        _typeCoordinates === "xy" ? hdms : hdms.replace(/ /g, "").replace("N", "N - ");
+      $("#coordinates span").text(hdms);
     }
     //Request vector layers
     if (queryType === "map") {
@@ -1069,6 +1077,7 @@ var info = (function () {
     _projection = mviewer.getProjection();
     _overLayers = mviewer.getLayers();
     _captureCoordinatesOnClick = configuration.getCaptureCoordinates();
+    _typeCoordinates = configuration.getTypeCoordinates();
     _tocsortedlayers = $(".mv-nav-item")
       .map(function () {
         return $(this).attr("data-layerid");
