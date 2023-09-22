@@ -141,6 +141,7 @@ var search = (function () {
 
   var _clearSearchResults = function () {
     $("#searchresults .list-group-item").not(".search-header").remove();
+    $("#searchresults .search-header").addClass("hidden");
     $("#searchresults").hide();
   };
 
@@ -172,8 +173,14 @@ var search = (function () {
     $("#searchfield").val("");
   };
 
-  var _showResults = function (results) {
-    $("#searchResultsContent").append(results);
+  var _showResults = function (results, resultsType) {
+    if (resultsType) {
+      var searchHeader = $(`[i18n='search.result.${resultsType}']`);
+      searchHeader.removeClass("hidden");
+      searchHeader.after(results);
+    } else {
+      $("#searchresults").append(results);
+    }
     if (_searchparams.closeafterclick) {
       $("#searchresults .list-group-item").click(function () {
         $(".searchresults-title .close").trigger("click");
@@ -274,9 +281,7 @@ var search = (function () {
             }
             $(".geoportail").remove();
             if (res.length > 0) {
-              _showResults(str);
-              var header = $("[i18n='search.result.locations']");
-              header.removeClass("hidden");
+              _showResults(str, "locations");
             }
           },
         });
@@ -333,9 +338,7 @@ var search = (function () {
                             </a>`;
             }
             $(".geoportail").remove();
-            _showResults(str);
-            var header = $("[i18n='search.result.locations']");
-            header.removeClass("hidden");
+            _showResults(str, "locations");
           },
         });
       }
@@ -675,9 +678,7 @@ var search = (function () {
             }
             $(".elasticsearch").remove();
             if (nb > 0) {
-              _showResults(str);
-              var header = $("[i18n='search.result.entities']");
-              header.removeClass("hidden");
+              _showResults(str, "entities");
             }
           },
           error: function (xhr, ajaxOptions, thrownError) {
