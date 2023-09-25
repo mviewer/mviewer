@@ -4,10 +4,6 @@
     <mapoptions maxzoom="19" projection="EPSG:3857" center="695309,6222570" zoom="12" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
 
     <baselayers style="default"><!-- style="default"||gallery" -->
-        <baselayer  type="fake" id="fake" label="Carroyage" title="Carroyage" thumbgallery="img/basemap/grid.png" visible="false"  />
-        <baselayer  type="OSM" id="darkmatter" label="Dark Matter" title="CartoDb" thumbgallery="img/basemap/darkmatter.png"
-            url="https://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png" maxzoom="20"
-            visible="false" attribution="Map tiles by  &lt;a href='https://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
         <baselayer  type="OSM" id="positron" label="Positron" title="CartoDb" thumbgallery="img/basemap/positron.png"
             url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20"
             visible="true" attribution="Map tiles by  &lt;a href='https://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
@@ -17,7 +13,7 @@
     </baselayers>
     <proxy url=""/>
     <olscompletion url="https://api-adresse.data.gouv.fr/search/" type="ban"/>
-    <searchparameters bbox="false" localities="false" features="true" />
+    <searchparameters bbox="false" localities="false" features="false" />
     <extensions>
         <extension type="component" id="fileimport" path="demo/addons"/>
     </extensions>
@@ -27,7 +23,7 @@
                 queryable="true"
                 vectorlegend="true"
                 geocoder="ban"
-                geocodingfields="adresse,postcode"
+                geocodingfields="adresse,postcode,city"
                 xfield="longitude"
                 yfield="latitude"
                 tooltipcontent="{{nom}}"
