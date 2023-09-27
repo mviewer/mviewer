@@ -128,15 +128,6 @@
       "url_demo": "../?config=demo/exclusivelayer.xml"
     },
     {
-      "id": "14",
-      "title": "Isochrone",
-      "tags": "Isochrone, custom layer, custom control",
-      "description": "Exemple d'utilisation combinée d'une couche personnalisée et d'un contrôle personnalisé. La couche personnalisée permet d'afficher le résultat d'un calcul d'isochrones, service fournit par l'IGN.",
-      "level": "intermédiaire",
-      "url_source": "../demo/isochrones.xml",
-      "url_demo": "../?config=demo/isochrones.xml"
-    },
-    {
       "id": "15",
       "title": "Template",
       "tags": "Template, MST, panneau d'information, datavisualisation",
