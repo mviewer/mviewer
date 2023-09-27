@@ -147,6 +147,32 @@ exemples :
  - http://localhost/?config=apps/default.xml
 
 
+Mettre à jour mon instance de mviewer
+****************************
+
+Lors d'une nouvelle release de mviewer, il est conseillé d'utiliser git pour mettre à jour son instance.
+
+1. Tester la nouvelle version sur une version de test mviewer-dev
+
+.. code-block:: bash
+
+    cd /var/www/mviewer-dev
+    git clone https://github.com/mviewer/mviewer.git
+
+Puis, tester cette instance en pointant sur des applications en production. Exemple : https://localhost/mviewer-dev?config=prod/monappli.xml.
+	
+2. Mise à jour de la version de prod. On peut faire une sauvegarde de notre instance actuelle (ici avec le dossier mviewer-save)
+
+.. code-block:: bash
+
+    cd /var/www/
+    cp -r mviewer mviewer-save
+    cd mviewer
+    git pull origin
+
+Puis, tester cette instance. Exemple : https://localhost/mviewer?config=prod/monappli.xml.
+
+
 Configuration et adaptations
 ****************************
 
