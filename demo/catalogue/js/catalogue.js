@@ -74,7 +74,7 @@ function searchText(e) {
   var input = e.target.value;
   fuseResult = fuse.search(input);
   console.log(inputMin);
-  if (input.length > inputMin) {
+  if (input.length > inputMin && fuseResult.length > 0) {
     var fuseResult = fuse.search(input);
     var toSelect = getResultByAttr(fuseResult, "id");
     $(".searchable").each(function () {
