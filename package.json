@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/geobretagne/mviewer.git"
+    "url": "git+https://github.com/mviewer/mviewer.git"
   },
   "keywords": [
     "mviewer",
@@ -21,7 +21,7 @@
   "author": "PSC Mviewer",
   "license": "GNU General Public License v3.0",
   "bugs": {
-    "url": "https://github.com/geobretagne/mviewer/issues"
+    "url": "https://github.com/mviewer/mviewer/issues"
   },
   "homepage": ".",
   "dependencies": {

@@ -56,7 +56,7 @@ var filter = (function () {
    * Public Method: _initFilterTool exported as init
    *
    */
-  var _initFilterTool = function () {
+  var _initFilterTool = function (isLayerChange) {
     // get config for a specific mviewer
     var mviewerId = configuration.getConfiguration().application.id;
     var options = mviewer.customComponents.filter.config.options;
@@ -92,7 +92,7 @@ var filter = (function () {
 
     // custom from config
     $("#filterTitle").text(options.title);
-    _setStyle(true);
+    _setStyle(isLayerChange == false ? false : true);
   };
 
   /**
@@ -104,8 +104,11 @@ var filter = (function () {
     var options = mviewer.customComponents.filter.config.options;
     // Parse all layers to get params
     for (var [layerId, params] of _layersFiltersParams) {
-      if (mviewer.getLayer(layerId) && mviewer.getLayer(layerId).layer) {
-        var source = mviewer.getLayer(layerId).layer.getSource();
+      const mvLayer = mviewer.getLayer(layerId);
+      const oLayer = mvLayer?.layer;
+      const isVisible = oLayer.getVisible();
+      if (mvLayer && oLayer) {
+        var source = oLayer.getSource();
         var features =
           source instanceof ol.source.Cluster
             ? source.getSource().getFeatures()
@@ -132,11 +135,16 @@ var filter = (function () {
           $('[data-toggle="filter-tooltip"]').tooltip({
             placement: options.tooltipPosition || "bottom-left",
           });
-        } else {
+        } else if (isVisible) {
           setTimeout(_initFilterPanel, 300); // try again in 300 milliseconds
         }
-      } else {
+      } else if (isVisible) {
         setTimeout(_initFilterPanel, 300); // try again in 300 milliseconds
+      }
+      if (!isVisible) {
+        oLayer.on("change:visible", () => {
+          filter.onLayerChange(layerId);
+        });
       }
     }
   };
@@ -180,26 +188,14 @@ var filter = (function () {
       var destinationDivId = "advancedFilter-" + layerId;
 
       // Create div only if not exist
-      if (!$("#" + destinationDivId).length) {
+      if (!$("#" + destinationDivId).length && nbLayers > 1) {
         // add selectBox if needed
-        var content = "";
-        if (nbLayers > 1 && indexLayerId == 0) {
-          contentSelectLayer.push(
-            '<option selected="selected" value="' +
-              layerId +
-              '">' +
-              mviewer.getLayer(layerId).name +
-              "</option>"
-          );
-        } else if (nbLayers > 1) {
-          contentSelectLayer.push(
-            '<option value="' +
-              layerId +
-              '">' +
-              mviewer.getLayer(layerId).name +
-              "</option>"
-          );
-        }
+        const selected = mviewer.getLayer(layerId)?.layer.getVisible() ? "selected" : "";
+        contentSelectLayer.push(
+          `<option selected="${selected}" value="${layerId}">${
+            mviewer.getLayer(layerId).name
+          }</option>`
+        );
         $("#advancedFilter").append('<div id="' + destinationDivId + '" "></div>');
       }
 
@@ -341,6 +337,10 @@ var filter = (function () {
     $("#advancedFilter-" + _currentSelectedLayer).show();
   };
 
+  var _onFirstVisibilityChange = (layerId) => {
+    _updateFeaturesDistinctValues(layerId);
+    _initFilterTool(false);
+  };
   /**
    * Private Method: _updateDistinctValues for a layer
    * @param {string} layerId The layer id to be filter
@@ -1114,6 +1114,7 @@ var filter = (function () {
     filterFeatures: _filterFeatures,
     layersFiltersParams: _layersFiltersParams,
     onValueChange: _onValueChange,
+    onLayerChange: (idLayer) => _onFirstVisibilityChange(idLayer),
     clearFilter: _clearFilter,
     clearAllFilter: _clearAllFilter,
     selectLayer: _selectLayer,

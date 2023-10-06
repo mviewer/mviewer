@@ -25,7 +25,7 @@ L'interface de mviewer peut être décomposée en 8 rubriques :
 Gestion des couches
 -------------------------------------------
 
-Panneau listant l'ensemble des couches pouvant être chargée dans la carte. Pour en savoir plus, consulter la page ":ref:`manager`".
+Panneau listant l'ensemble des couches pouvant être chargées dans la carte. Pour en savoir plus, consulter la page ":ref:`manager`".
 
 Gestion de l'affichage
 -------------------------------------------
@@ -42,21 +42,21 @@ Outils aditionnels
 
 Outils permettant :
 
-* de mesurer des aires ou des distances sur la carte
-* de partager la carte
-* d'exporter la carte sous forme d'image
+* de mesurer des aires ou des distances sur la carte,
+* de partager la carte,
+* d'exporter la carte sous forme d'image.
 
 Pour en savoir plus, consulter la page ":ref:`othertools`".
 
 Barre de recherche
 -------------------------------------------
 
-Moteur de recherche de lieux (ville, département, région, ... ). Pour en savoir plus, consulter la page ":ref:`search`".
+Moteur de recherche de lieux (ville, département, région... ). Pour en savoir plus, consulter la page ":ref:`search`".
 
 Documentation
 -------------------------------------------
 
-Information complémentaires permettant de décrire le contexte de la plateforme, les données diffusées, les points de contact, ... Pour en savoir plus, consulter la page ":ref:`documentation`".
+Informations complémentaires permettant de décrire le contexte de la plateforme, les données diffusées, les points de contact... Pour en savoir plus, consulter la page ":ref:`documentation`".
 
 Fond de carte
 -------------------------------------------

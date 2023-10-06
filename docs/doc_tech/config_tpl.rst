@@ -98,7 +98,7 @@ Les éléments suivants en rouge sont obligatoires.
 - Pour synchroniser le carousel et la sous-sélection sur la carte lors d'un clic, l'injection de la ``feature_ol_uid`` est requise dans l' ``id`` de la balise.
 - Puisque une ``feature id`` n'est pas obligatoire comme attribut pour une feature l' ``ol_uid`` interne d'OpenLayers est utilisée à ce propos.
 - <style> permet d'injecter du code CSS / HTML de personnalisation des styles utilisés dans le template.
-- <script> permet d'injecter du code javascript.
+- <script> permet d'injecter du code JavaScript.
 
 
 Résultat de l'exemple ci-dessus
@@ -113,8 +113,8 @@ Résultat de l'exemple ci-dessus
 Itérer sur un champ de type json
 --------------------------------
 
-Prérequis : disposer d'un champ - exemple ``monchampjson`` -dont le contenu est une liste de valeurs ou d'objets sous la forme ``["item1","item2"]`` ou de la forme ``[{"nom": "item1", "code": 1}, {"nom": "item2", "code": 2}]``
-configurer le layer dans le config.xml avec le paramètre ``jsonfields="monchampjson"``
+Prérequis : disposer d'un champ - exemple ``monchampjson`` - dont le contenu est une liste de valeurs ou d'objets sous la forme ``["item1","item2"]`` ou de la forme ``[{"nom": "item1", "code": 1}, {"nom": "item2", "code": 2}]``,
+configurer le layer dans le config.xml avec le paramètre ``jsonfields="monchampjson"``.
 
 Exemple 1 pour *monchampjson* = ``["item1","item2"]``
 
@@ -164,7 +164,7 @@ Résultat du template ci dessus
 Itérer sur les champs disponibles
 ****************************
 
-En plus d'afficher la valeur d'un champ comme expliqué précédemment, il est aussi possible de lire et parcourir l'ensemble des champs disponibles avec  ``{{#fields_kv}}...{{/fields_kv}}``.
+En plus d'afficher la valeur d'un champ comme expliqué précédemment, il est aussi possible de lire et parcourir l'ensemble des champs disponibles avec ``{{#fields_kv}}...{{/fields_kv}}``.
 
 Pour chaque champ listé, on peut accéder :
 
@@ -215,9 +215,63 @@ Vous pourrez ensuite le désérialiser de façon standard. Par exemple, en javas
 
 Les champs ``{{#fields_kv}}`` et ``{{serialized}}`` sont tous les deux virtuels : ils sont créés grâce à une fonctionnalité de Mustache permettant de `définir des champs comme des fonctions <https://github.com/janl/mustache.js#functions>`_.
 S'ils ne sont pas utilisés, ils ne consomment pas de ressource.
-Ils ont été `ajoutés aux champs simples <https://github.com/geobretagne/mviewer/pull/206/files>`_ afin de faciliter certains flux de traitement des données.
+Ils ont été `ajoutés aux champs simples <https://github.com/mviewer/mviewer/pull/206/files>`_ afin de faciliter certains flux de traitement des données.
+
+Exemples de scripts de reformatage de champs
+--------------------------------
+
+Reformatage d'un champ date
+****************************
+
+::
+
+	{{#features}}
+	<li id="{{feature_ol_uid}}" class="inventaire item" style="width:100%;">
+
+		<!-- ici la div qui contiendra la date à afficher -->
+		<!-- elle doit avoir un ID unique lié à la feature (champ id ou id openLayers peu importe tant que c'est unique)-->
+		<div id="date-area-{{feature_ol_uid}}"></div>
+		<!-- le script de formatage -->
+		<script>
+			let date = "{{date_field}}";
+			let id = "{{feature_ol_uid}}";
+			let divWithDate = document.getElementById("date-area-" + id);
+			// format de la date de la donnée d'entrée
+
+			// voir ici pour les correspondances du code que vous devez modifier / adapter selon le format d'entrée :
+			// https://momentjs.com/
+
+			let inDate = "YYYY-MM-DDT";
+			let outDate = "DD/MM/YYYY";
+
+			// on transforme
+			let dateFormated = moment(date, inDate).format(outDate);
+			// on met le nouveau format à afficher dans la div
+			divWithDate.innerHTML = dateFormated;
+		</script>
+	</li>
+	{{/features}}
+
+Arrondi d'un champ nombre
+****************************
+
+::
+
+	<li id="{{feature_ol_uid}}" class="inventaire item" style="width:100%;">
+		<div id="number"></div>
+		<script>
+			var maDiv = document.getElementById("number");
+
+			// Récupérer la valeur textuelle de la div en utilisant innerText ou textContent
+			var valeurTextuelle = maDiv.innerText; // ou maDiv.textContent
+
+			var pourcentageArrondi = parseInt(valeurTextuelle, 10); // 10 indique la base décimale
+
+			maDiv.innerText = pourcentageArrondi +"%"
+		</script>
+	</li>
 
 Appel depuis le XML
 --------------------------------
 
-Le template sera enregistré au format mst. Pour l'appeler dans la configuration mviewer au niveau de la layer, il faut le bon format ``infoformat="application/vnd.ogc.gml"`` et ajouter un appel au mst via une balise template au sein du layer ``<template url=""/>``.
+Le template sera enregistré avec l'extension .mst. Pour l'appeler dans la configuration mviewer au niveau de la layer, il faut le bon format ``infoformat="application/vnd.ogc.gml"`` et ajouter un appel au mst via une balise template au sein du layer ``<template url=""/>``.

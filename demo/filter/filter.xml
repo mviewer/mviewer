@@ -25,7 +25,7 @@
         <layer id="structures"
             toplayer="true"
             name="Sites pour l'aide économique et l'innovation"
-            visible="true"
+            visible="false"
             url="demo/filter/customlayers/structures.js"
             queryable="true"
             type="customlayer"

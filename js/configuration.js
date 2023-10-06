@@ -8,13 +8,15 @@ var configuration = (function () {
 
   // Mviewer version a saisir manuellement
 
-  var VERSION = "3.9.2";
+  var VERSION = "3.9.3";
 
   var _showhelp_startup = false;
 
   var _defaultBaseLayer = "";
 
   var _captureCoordinates = false;
+
+  var _typecoordinate = "";
 
   var _lang = false;
 
@@ -325,8 +327,8 @@ var configuration = (function () {
    * @returns full templated string decoded
    */
   var _renderEnvPath = (str) => {
-    if (!str) return;
-    return _decodeString(Mustache.render(str, mviewer?.settings));
+    if (!str || !mviewer?.env) return;
+    return _decodeString(Mustache.render(str, mviewer?.env));
   };
 
   var _load = function (conf) {
@@ -382,6 +384,7 @@ var configuration = (function () {
     }
     if (conf.application.coordinates === "true") {
       _captureCoordinates = true;
+      _typecoordinate = conf.application.coordinatestype || "xy";
     }
     if (conf.application.togglealllayersfromtheme === "true") {
       _toggleAllLayersFromTheme = true;
@@ -608,7 +611,7 @@ var configuration = (function () {
           });
         }
         layers.reverse().forEach(function (layerConfig) {
-          const layer = mviewer.settings
+          const layer = mviewer?.env
             ? {
                 ...layerConfig,
                 url: _renderEnvPath(layerConfig.url),
@@ -627,6 +630,11 @@ var configuration = (function () {
                 },
               }
             : layerConfig;
+
+          if (!mviewer?.env) {
+            console.log("Les variables d'environnement ne peuvent être chargées !");
+          }
+
           if (layer) {
             /* to escape group without layer */
             layerRank += 1;
@@ -1211,6 +1219,9 @@ var configuration = (function () {
     },
     getCaptureCoordinates: function () {
       return _captureCoordinates;
+    },
+    getTypeCoordinates: function () {
+      return _typecoordinate;
     },
     getConfiguration: function () {
       return _configuration;

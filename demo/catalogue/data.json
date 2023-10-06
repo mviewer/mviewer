@@ -128,15 +128,6 @@
       "url_demo": "../?config=demo/exclusivelayer.xml"
     },
     {
-      "id": "14",
-      "title": "Isochrone",
-      "tags": "Isochrone, custom layer, custom control",
-      "description": "Exemple d'utilisation combinée d'une couche personnalisée et d'un contrôle personnalisé. La couche personnalisée permet d'afficher le résultat d'un calcul d'isochrones, service fournit par l'IGN.",
-      "level": "intermédiaire",
-      "url_source": "../demo/isochrones.xml",
-      "url_demo": "../?config=demo/isochrones.xml"
-    },
-    {
       "id": "15",
       "title": "Template",
       "tags": "Template, MST, panneau d'information, datavisualisation",
@@ -148,7 +139,7 @@
     {
       "id": "16",
       "title": "Template avec graphique",
-      "tags": "Template, datavisualisation, graphique, chartJs",
+      "tags": "Template, datavisualisation, graphique, chartJs, dataviz",
       "description": "Exemple d'utilisation d'un template personnalisé affichant des graphiques (librairie chartJs) lors de l'interrogation d'une couche",
       "level": "avancé",
       "url_source": "../demo/dataviz.xml",
@@ -157,7 +148,7 @@
     {
       "id": "17",
       "title": "Fichiers géoréférencés",
-      "tags": "Image, datavisualisation, cadastre, géoréférencé",
+      "tags": "Image, datavisualisation, cadastre, géoréférencé, cadastre napoléonien",
       "description": "Exemple d'utilisation de fichiers géoréférencés locaux - Tableaux d'assemblage du cadastre napoléonien",
       "level": "avancé",
       "url_source": "../demo/napoleon.xml",
@@ -357,7 +348,7 @@
       "title": "Utilisation du thème avec identité visuelle de l'état",
       "tags": "thème,CSS,état,design",
       "description": "Exemple d'application utilisant le thème CSS avec l'identité visuelle de l'état français",
-      "level": "intermédiaire",
+      "level": "simple",
       "url_source": "../demo/theme-designfr/theme-designfr.xml",
       "url_demo": "../?config=demo/theme-designfr/theme-designfr.xml"
     },
@@ -367,8 +358,53 @@
       "tags": "Templates, mst, fiche d'information, modèle",
       "description": "Application pour visualiser et télécharger différents modèles de fenêtres d'informations",
       "level": "intermédiaire",
-      "url_source": "../demo//mviewer_templates/config.xml",
+      "url_source": "../demo/mviewer_templates/config.xml",
       "url_demo": "../?config=demo/mviewer_templates/config.xml"
+    },
+    {
+      "id": "42",
+      "title": "Zoomer sur une zone d'interêt (plugin)",
+      "tags": "zoom, plugin",
+      "description": "Exemple d'application mobilisant le plugin ZoomToArea permettant de zoomer sur des zones d'interêt",
+      "level": "intermédiaire",
+      "url_source": "../demo/zoomtoarea.xml",
+      "url_demo": "../?config=demo/zoomtoarea.xml"
+    },
+    {
+      "id": "43",
+      "title": "Ajout d'une couche WMS",
+      "tags": "CSW, WMS, ajout couche",
+      "description": "Ajout depuis le mviewer d'une couche WMS distante à partir d'un flux WMS ou CSW",
+      "level": "simple",
+      "url_source": "../demo/addlayers.xml",
+      "url_demo": "../?config=demo/addlayers.xml"
+    },
+    {
+      "id": "44",
+      "title": "Exmple TMS avec flux IGN",
+      "tags": "TMS, IGN, style JSON",
+      "description": "Exemple de couche type TMS de l'IGN en utilisant un style json prédéfini.",
+      "level": "avancé",
+      "url_source": "../demo/ignvectortms.xml",
+      "url_demo": "../?config=demo/ignvectortms.xml"
+    },
+    {
+      "id": "45",
+      "title": "Filtrer sur les couches",
+      "tags": "filtre, couche, plugin",
+      "description": "Ajout d'une extension pour filtrer les couches",
+      "level": "simple",
+      "url_source": "../demo/layerfilter.xml",
+      "url_demo": "../?config=demo/layerfilter.xml"
+    },
+    {
+      "id": "46",
+      "title": "Infobulle sur couche",
+      "tags": "infobulle, tooltip",
+      "description": "Ajout d'une infobulle sur une couche vectorielle",
+      "level": "intermédiaire",
+      "url_source": "../demo/mustache_tooltip.xml",
+      "url_demo": "../?config=demo/mustache_tooltip.xml"
     }
   ]
 }

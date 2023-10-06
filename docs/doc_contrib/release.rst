@@ -18,23 +18,23 @@ Release Mviewer
 Commencez par vérifiez que toutes les issues et PR "closed" depuis la dernière release sont bien liées à un `milestone <https://help.github.com/en/enterprise/2.15/user/articles/creating-and-editing-milestones-for-issues-and-pull-requests>`_.
 
 Créez ensuite un nouveau milestone pour la future version et déplacez toutes les issues souhaitées et non "closed" à l'intérieur.
-https://github.com/geobretagne/mviewer/milestones
+https://github.com/mviewer/mviewer/milestones
 
 Puis fermez le milestone de la version releasée.
 
 Modifiez la version de l'application sur la branch developp dans le fichier (en supprimant -snapshot) :
-https://github.com/geobretagne/mviewer/blob/develop/js/configuration.js#L11
+https://github.com/mviewer/mviewer/blob/develop/js/configuration.js#L11
 
-Puis faire une pull request entre la branche develop et la master a un moment stabilisé.
+Puis faire une pull request entre la branche develop et la master à un moment stabilisé.
 Testez le fonctionnement de l'application avec la PR et validez cette pull request.
 
 Pour plus d'informations sur les branches, Mviewer suit ce type de modèle : 
 https://nvie.com/posts/a-successful-git-branching-model/
 
 Une fois le merge effectué sur master, il vous faudra suivre `ces indications <https://help.github.com/en/github/administering-a-repository/managing-releases-in-a-repository>`_ pour créer 
-la nouvelle release `sur la page de release Mviewer <https://github.com/geobretagne/mviewer/releases>`_.
+la nouvelle release `sur la page de release Mviewer <https://github.com/mviewer/mviewer/releases>`_.
 
-Après la release,dans la branche develop, retournez modifier le numéro de version pour augmenter d'une version et ajouter -snapshot à la fin.
+Après la release, dans la branche develop, retournez modifier le numéro de version pour augmenter d'une version et ajouter -snapshot à la fin.
 
 Release MviewerStudio
 ---------------------
@@ -43,18 +43,18 @@ La marche à suivre devrait être la même, mais pour l'instant la branche devel
 A ce jour un travail est encore à faire.
 
 Modifiez le numéro de version sur la branch master directement :
-https://github.com/geobretagne/mviewerstudio/blob/master/js/mviewerstudio.js#L3
+https://github.com/mviewer/mviewerstudio/blob/master/js/mviewerstudio.js#L3
 
 Vérifiez que toutes les issues et PR "closed" depuis la dernière release sont bien liées à un `milestone <https://help.github.com/en/enterprise/2.15/user/articles/creating-and-editing-milestones-for-issues-and-pull-requests>`_.
 
 Créez ensuite un nouveau milestone pour la future version et déplacez toutes les issues souhaitées à l'intérieur :
-https://github.com/geobretagne/mviewerstudio/milestones
+https://github.com/mviewer/mviewerstudio/milestones
 
 Puis fermez le milestone de la version releasée.
 
 Il vous faudra ensuite suivre `ces indications <https://help.github.com/en/github/administering-a-repository/managing-releases-in-a-repository>`_ pour créer la nouvelle 
-release `sur la page de release Mviewer Studio <https://github.com/geobretagne/mviewerstudio/releases>`_.
+release `sur la page de release Mviewer Studio <https://github.com/mviewer/mviewerstudio/releases>`_.
 
-Après la release retournez modifier le numéro de version pour augmenter d'une version et ajouter -snapshot à la fin.
+Après la release, retournez modifier le numéro de version pour augmenter d'une version et ajouter -snapshot à la fin.
 
 Il n'y a pas de versionning de la documentation actuellement, c'est un élement dont il faudrait discuter.

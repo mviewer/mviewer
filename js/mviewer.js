@@ -909,7 +909,7 @@ mviewer = (function () {
       if (displayMode) {
         $("#wrapper, #main").addClass("mode-" + displayMode);
         $("#page-content-wrapper").append(`
-                    <a 
+                    <a
                         id="btn-mode-su-menu"
                         class="btn btn-sm btn-default"
                         type="button"

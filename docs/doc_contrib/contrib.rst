@@ -49,11 +49,17 @@ Dans VS Code, si vous n'utilisez pas ce fichier, vous pouvez formatter à la sau
 **2. Prettier**
 
 Mviewer utilise `Prettier <https://prettier.io/>`_.
-Nous conseillons d'utiliser l'éditeur Visual Studio Code et son plugin `Prettier - Code formatter <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>`_.
+
+
+Vous pouvez utiliser Prettier en ligne si vous ne vous voulez pas utiliser node.js en suivant les actions définies `ici <https://github.com/mviewer/mviewer/issues/739>`_
+
+
+Vous pouvez également utiliser l'éditeur Visual Studio Code et son plugin `Prettier - Code formatter <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>`_ (npm obligatoire).
+
 
 * Installation
 
-Via `npm` (voir `ici <https://github.com/geobretagne/mviewer#d%C3%A9ploiement-avec-nodejs>`_ pour installer `npm`):
+Via `npm` (voir `ici <https://github.com/mviewer/mviewer#d%C3%A9ploiement-avec-nodejs>`_ pour installer `npm`):
 
 ::
 
@@ -95,7 +101,7 @@ https://prettier.io/docs/en/ignore.html
 
 **3. Formatter vos fichiers avec Prettier**
 
-Avec VS Code, Le formattage peut être réalisé à la sauvegarde ou à la demande.
+Avec VS Code, le formattage peut être réalisé à la sauvegarde ou à la demande.
 
 - Formattage à la sauvegarde
 
@@ -130,7 +136,7 @@ Le cœur de mviewer
 
 **Qu'est-ce que c'est ?**
 
-C'est l'ensemble des fichiers et dossiers présents nativement sur la page `GitHub mviewer <https://github.com/geobretagne/mviewer>`_.
+C'est l'ensemble des fichiers et dossiers présents nativement sur la page `GitHub mviewer <https://github.com/mviewer/mviewer>`_.
 
 **Quand puis-je le modifier ?**
 
@@ -138,9 +144,9 @@ Vous devez éviter de modifier les fichiers natifs du mviewer. En effet, modifie
 
 Néanmoins, vous pouvez être amené à modifier ces fichiers principalement pour contribuer au développement de l'outil :
 
-- Vous détectez un bogue ou un comportement suspect et vous le corrigez
-- Vous créez une évolution sur le cœur (une nouvelle fonctionnalité)
-- Vous créez une amélioration du code existant
+- Vous détectez un bogue ou un comportement suspect et vous le corrigez.
+- Vous créez une évolution sur le cœur (une nouvelle fonctionnalité).
+- Vous créez une amélioration du code existant.
 
 Dans chacune de ces situations l'intervention sur le cœur de mviewer doit être justifiée par une issue sur GitHub.
 
@@ -158,12 +164,12 @@ Proposer une modification
 
 Pour proposer une correction d'anomalie ou une évolution, vous devez suivre ces étapes :
 
-- Créer une issue sur Github en suivant la page :ref:`issue`
-- Faire un fork du code (si ce n'est pas encore fait) en suivant la page :ref:`fork`
-- Créer une branche portant le numéro de l'issue (ex: issue-2287)
-- Apporter vos modifications sur cette branche
-- Partager cette branche via l'issue pour que les autres puissent tester et obtenir des conseils ou des avis
-- Réaliser une pull request via GitHub en suivant la page :ref:`pr`
+- Créer une issue sur Github en suivant la page :ref:`issue`.
+- Faire un fork du code (si ce n'est pas encore fait) en suivant la page :ref:`fork`.
+- Créer une branche portant le numéro de l'issue (ex: issue-2287).
+- Apporter vos modifications sur cette branche.
+- Partager cette branche via l'issue pour que les autres puissent tester et obtenir des conseils ou des avis.
+- Réaliser une pull request via GitHub en suivant la page :ref:`pr`.
 
 La pull request permettra d'importer votre modification dans le code natif. Vous diposerez alors de votre modification de manière native sans vous en préoccuper ultérieurement.
 

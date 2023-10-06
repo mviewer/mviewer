@@ -16,7 +16,7 @@ C'est là où vous proposerez vos idées, obtiendrez des informations et les der
 
 Grâce à Git vous pourrez réaliser vos contributions ou obtenir le code source dans votre environnement de travail.
 
-Git propose une multitude d'action pour s'interfacer avec GitHub. Ces actions vous seront plus qu'utiles pour contribuer et maintenir votre mviewer à jour.
+Git propose une multitude d'actions pour s'interfacer avec GitHub. Ces actions vous seront plus qu'utiles pour contribuer et maintenir votre mviewer à jour.
 Nous expliquerons ici l'utilité et les manipulations utiles telles qu'un fork, rebase, commit, pull.
 
 
@@ -31,10 +31,10 @@ GitHub fournit des outils de gestion pour la collaboration.
 Présentation Git
 --------------------------
 
-Git est un outil libre de gestion de version décentralisé pour tout type de projet. Il permet de réaliser des développements sur votre propre dépôt (dépôt = répertoire). 
-Git facilite ensuite la mise en commun du code entre les différents dépôt.
+Git est un outil libre de gestion de version décentralisée pour tout type de projet. Il permet de réaliser des développements sur votre propre dépôt (dépôt = répertoire). 
+Git facilite ensuite la mise en commun du code entre les différents dépôts.
 
-Git historise toutes les modifications afin d'identifier les nouveauté et permettre de revenir dans n'importe quel version précédente.
+Git historise toutes les modifications afin d'identifier les nouveautés et permettre de revenir dans n'importe quelle version précédente.
 
 
 Présentation Git Flow
@@ -51,7 +51,7 @@ C'est le workflow qui a été adopté par les contributeurs Mviewer.
 
 Pour simplifier, le fonctionnement est basé sur 2 branches : master et develop.
 
-Si plusieurs personnes travaillent sur ces deux branches, l'historiques des réalisations (commits) peut vite devenir illisible et les modifications risquent de se court-circuiter (conflits).
+Si plusieurs personnes travaillent sur ces deux branches, l'historique des réalisations (commits) peut vite devenir illisible et les modifications risquent de se court-circuiter (conflits).
 
 L'idée est donc de créer des sous-niveaux de branches : 
 
@@ -114,7 +114,7 @@ Vous disposerez donc des nouveaux commits et de vos propres commits.
 
 **Comment faire ?**
 
-- Faites une copie de votre branche (optionnel mais conseillé) en créant une nouvelle branche à partir de votre branche de travail
+- Faites une copie de votre branche (optionnel mais conseillé) en créant une nouvelle branche à partir de votre branche de travail.
 - Si votre branche s'appelle par exemple "RM-work", lancez la commande de rebase de la branche master (fork à jour) vers votre branche à mettre à jour (RM-work) :
 
 ::
@@ -125,9 +125,9 @@ Vous disposerez donc des nouveaux commits et de vos propres commits.
               :alt: git rebase command
               :align: center   
 
-- Vous verrez la liste des commits dérouler les messages des commits un à un
+- Vous verrez la liste des commits dérouler les messages des commits un à un.
 
-- Vous aurez probablement un conflit. Le processus sera donc stoppé mais pas abandonné
+- Vous aurez probablement un conflit. Le processus sera donc stoppé mais pas abandonné.
 
 - Si vous souhaitez abandonner lancer la commande(*) :
 
@@ -227,8 +227,8 @@ Vous disposerez donc des nouveaux commits et de vos propres commits.
 
 Nous devons absolument vérifier que le rebase a pris en compte les commits natifs issus de GéoBretagne et vos commits de travail.
 
-- Aller sur la page GitHub `geobretagne/mviewer <https://github.com/geobretagne/mviewer>`_
-- Ouvrez `la page des commits <https://github.com/geobretagne/mviewer/commits/master>`_
+- Aller sur la page GitHub `mviewer/mviewer <https://github.com/mviewer/mviewer>`_
+- Ouvrez `la page des commits <https://github.com/mviewer/mviewer/commits/master>`_
 - Vérifiez dans la liste déroulante que vous êtes bien sur la branche master
 
 .. image:: ../_images/contrib/newbranch.PNG
@@ -248,13 +248,13 @@ Nous devons absolument vérifier que le rebase a pris en compte les commits nati
             :alt: git logs
             :align: center
 
-- Affichez la liste les commits présente sur `la page des commits <https://github.com/geobretagne/mviewer/commits/master>`_
+- Affichez la liste les commits présente sur `la page des commits <https://github.com/mviewer/mviewer/commits/master>`_.
 
-- Vous devez les retrouver dans la liste des commits de la branche dans laquelle vous venez de réaliser votre rebase
+- Vous devez les retrouver dans la liste des commits de la branche dans laquelle vous venez de réaliser votre rebase.
 
-- En cas de doute sur la gestion de certains conflits, vérifiez les fichiers visuellement et réalisez des tests dans vos applications
+- En cas de doute sur la gestion de certains conflits, vérifiez les fichiers visuellement et réalisez des tests dans vos applications.
 
-- Si tout vous semble correct, vous avez bien récupéré les modifications et votre arbre de commits est à jour (ainsi que votre code)
+- Si tout vous semble correct, vous avez bien récupéré les modifications et votre arbre de commits est à jour (ainsi que votre code).
 
 **Transmettre du local vers la branche**
 
@@ -272,9 +272,9 @@ Vous devez pousser les modifications vers la branche distante.
             :align: center
 
 
-- Ouvrez `la page des commits de votre branche de travail (ex pour la branche dev : <https://github.com/org/mviewer/commits/dev>`_) et vérifiez le succès de l'opération
+- Ouvrez `la page des commits de votre branche de travail (ex pour la branche dev : <https://github.com/org/mviewer/commits/dev>`_) et vérifiez le succès de l'opération.
 
-- Supprimer ensuite la branche de sauvegarde si tout vous semble bon
+- Supprimer ensuite la branche de sauvegarde si tout vous semble bon.
 
 (*) Avec --abort Il faudra tout reprendre tout le rebase depuis le début si vous arrêter et décidez de recommencer.
 
@@ -287,7 +287,7 @@ Pull Request
 ------------------------------
 Une pull request ou "demande de tirage" réalise une demande pour que les modifications d'une branche intègre une autre branche.
 
-Vous devez créer une pull request pour apporter une contribution de votre branche au sein de votre repository mviewer vers le repository `geobretagne/mviewer <https://github.com/geobretagne/mviewer>`_.
+Vous devez créer une pull request pour apporter une contribution de votre branche au sein de votre repository mviewer vers le repository `mviewer/mviewer <https://github.com/mviewer/mviewer>`_.
 
 Pour réaliser une pull request, dirigez-vous sur votre fork GitHub : 
 
@@ -312,7 +312,7 @@ Pour réaliser une pull request, dirigez-vous sur votre fork GitHub :
               :align: center
 
 
-- Vous pourrez accéder à la pull request et discuter via le `volet dédié <https://github.com/geobretagne/mviewer.doc/pulls>`_ du repository `geobretagne/mviewer <https://github.com/geobretagne/mviewer>`_.
+- Vous pourrez accéder à la pull request et discuter via le `volet dédié <https://github.com/mviewer/mviewer.doc/pulls>`_ du repository `mviewer/mviewer <https://github.com/mviewer/mviewer>`_.
 
 Votre pull request sera revue et vous aurez très certainement un retour pour réaliser des ajustements ou bien vous notifier que votre demande est acceptée.
 

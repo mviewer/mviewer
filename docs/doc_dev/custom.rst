@@ -7,7 +7,7 @@
 Développer ses propres composants
 *********************************
 
-Il est possible de développer 3 types de composants dans mviewer en s'appuyant sur la le socle natif de mviewer et sans modification de son coeur
+Il est possible de développer 3 types de composants dans mviewer en s'appuyant sur la le socle natif de mviewer et sans modification de son coeur.
 
 .. list-table:: Title
    :widths: 25 25 25 25

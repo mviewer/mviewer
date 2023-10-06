@@ -12,7 +12,7 @@ Le mécanisme de customControl permet le développement à façon de solution no
 
 .. admonition:: Convention
 
-   Un custom control consiste en deux fichiers - **javascript** et **html**. Ces deux fichiers doivent impérativement respecter la règle de nommage suivante :
+   Un custom control consiste en deux fichiers - **JavaScript** et **HTML**. Ces deux fichiers doivent impérativement respecter la règle de nommage suivante :
 
     - **layerid**.html
     - **layerid**.js
@@ -38,7 +38,7 @@ Le mécanisme de customControl permet le développement à façon de solution no
 Ecrire le code - html
 **************************
 
-Le bloc écrit en HTML s'affichera dans le panneau légende associé à la couche. Il est possible de créer des éléments html qui permettront à l'utilisateur d'interagir avec la couche associée.
+Le bloc écrit en HTML s'affichera dans le panneau légende associé à la couche. Il est possible de créer des éléments HTML qui permettront à l'utilisateur d'interagir avec la couche associée.
 Dans l'exemple suivant, on affiche deux sliders qui vont nous permettre de modifier dynamiquement l'affichage de notre couche.
 
 
@@ -70,7 +70,7 @@ Si vous souhaitez utiliser une infobulle (tooltip), vous pouvez utiliser les par
         "title","Texte affiché","title='Déplacement en voiture'"
 
 
-Ecrire le code - javascript
+Ecrire le code - JavaScript
 ********************************
 
 Ancienne méthode
@@ -200,7 +200,7 @@ Depuis la version **3.2** de mviewer, une classe ``CustomControl`` a été déve
     new CustomControl(layerid, cc.init, cc.destroy);
 
 
-.. WARNING:: Si on souhaite disposer d'un bloc de code publique, il faut remplacer la ligne
+.. WARNING:: Si on souhaite disposer d'un bloc de code public, il faut remplacer la ligne
     ``const cc = (function() {`` par ``var cc = (function() {``
 
 
