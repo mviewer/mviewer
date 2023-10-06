@@ -151,7 +151,7 @@ var info = (function () {
     _firstlayerFeatures = [];
     var showPin = false;
     var queryType = "map"; // default behaviour
-    mviewer.clickedCoordinates = { x:0, y:0};
+    mviewer.clickedCoordinates = { x: 0, y: 0 };
     var coord = ol.proj.transform(evt.coordinate, _projection.getCode(), "EPSG:4326");
     mviewer.clickedCoordinates.x = coord[0];
     mviewer.clickedCoordinates.y = coord[1];
@@ -175,9 +175,7 @@ var info = (function () {
           ? ol.coordinate.toStringHDMS
           : ol.coordinate.toStringXY;
       const coordPrec = _typeCoordinates === "dms" ? 0 : 5;
-      let hdms = coordAsText(
-        coord, coordPrec
-      );
+      let hdms = coordAsText(coord, coordPrec);
       hdms =
         _typeCoordinates === "xy" ? hdms : hdms.replace(/ /g, "").replace("N", "N - ");
       $("#coordinates span").text(hdms);
