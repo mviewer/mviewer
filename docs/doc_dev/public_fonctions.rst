@@ -110,3 +110,7 @@ Il existe déjà les fonctions suivantes :
     .. function:: orderTopLayer()
 
         :return: Ordonne les/la couches avec le paramètre toplayer. Cela n'impacte pas l'affichage dans la légende.
+		
+    .. function:: clickedCoordinates ()
+
+        :return: Les coordonnées latitude / longitude du point cliqué sur la carte.
