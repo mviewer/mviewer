@@ -405,6 +405,15 @@
       "level": "intermédiaire",
       "url_source": "../demo/mustache_tooltip.xml",
       "url_demo": "../?config=demo/mustache_tooltip.xml"
+    },
+    {
+      "id": "47",
+      "title": "Utilisation d'API",
+      "tags": "API,georisques,gpu,cerema",
+      "description": "Utilisation de diverses API (CEREMA, Georisques, GPU...) dans l'interrogation d'une couche",
+      "level": "avancé",
+      "url_source": "../demo/api.xml",
+      "url_demo": "../?config=demo/api.xml"
     }
   ]
 }
