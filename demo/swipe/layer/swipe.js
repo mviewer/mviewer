@@ -1,7 +1,7 @@
 const aerial = new ol.layer.Tile({
   source: new ol.source.TileWMS({
-    url: "https://wxs.ign.fr/orthohisto/geoportail/r/wms",
-    params: { LAYERS: "ORTHOIMAGERY.ORTHOPHOTOS.1950-1965", TILED: true, SRS: "EPSG:3857" },
+    url: "https://wxs.ign.fr/ortho/geoportail/r/wms",
+    params: { LAYERS: "HR.ORTHOIMAGERY.ORTHOPHOTOS", TILED: true, SRS: "EPSG:3857" },
     serverType: "geoserver",
   }),
 });
