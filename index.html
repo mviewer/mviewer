@@ -1,22 +1,73 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr-fr" lang="fr-fr" dir="ltr" >
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xml:lang="fr-fr"
+    lang="fr-fr"
+    dir="ltr"
+>
+
 <head>
     <title>mviewer</title>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="description" content="Visualiseur géographique" />
+    <meta
+        http-equiv="content-type"
+        content="text/html; charset=utf-8"
+    />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta
+        name="apple-mobile-web-app-capable"
+        content="yes"
+    />
+    <meta
+        name="description"
+        content="Visualiseur géographique"
+    />
 
-    <link rel="icon" type="image/png" href="favicon.png" />
-    <link href="lib/flag-icons-4.1.4/css/flag-icons.css" rel="stylesheet">
-    <link href="lib/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <link href="lib/simple-slidebar/simple_slidebar.css" rel="stylesheet">
-    <link href="lib/bootstrap-datepicker-1.6.1/css/bootstrap-datepicker3.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="lib/bootstrap-slider/9.1.3/css/bootstrap-slider.min.css">
-    <link rel="stylesheet" href="lib/bootstrap-tagsinput-0.8.0/bootstrap-tagsinput.css" />
-    <link href="lib/font-awesome-5.13.0/css/all.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="lib/openlayers/7.1.0/ol.css" type="text/css" />
-    <link rel="stylesheet" href="css/mviewer.css" type="text/css" />
+    <link
+        rel="icon"
+        type="image/png"
+        href="favicon.png"
+    />
+    <link
+        href="lib/flag-icons-4.1.4/css/flag-icons.css"
+        rel="stylesheet"
+    >
+    <link
+        href="lib/bootstrap/3.3.6/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+    <link
+        href="lib/simple-slidebar/simple_slidebar.css"
+        rel="stylesheet"
+    >
+    <link
+        href="lib/bootstrap-datepicker-1.6.1/css/bootstrap-datepicker3.min.css"
+        rel="stylesheet"
+    >
+    <link
+        rel="stylesheet"
+        href="lib/bootstrap-slider/9.1.3/css/bootstrap-slider.min.css"
+    >
+    <link
+        rel="stylesheet"
+        href="lib/bootstrap-tagsinput-0.8.0/bootstrap-tagsinput.css"
+    />
+    <link
+        href="lib/font-awesome-5.13.0/css/all.min.css"
+        rel="stylesheet"
+    />
+    <link
+        rel="stylesheet"
+        href="lib/ol8/ol.css"
+        type="text/css"
+    />
+    <link
+        rel="stylesheet"
+        href="css/mviewer.css"
+        type="text/css"
+    />
     <style>
         @import url('https://fonts.googleapis.com/css?family=Roboto');
 
@@ -27,9 +78,11 @@
             text-align: center;
             padding-top: 25%;
         }
-        #loader-title{
+
+        #loader-title {
             margin-top: 20px;
         }
+
         #loader-subtitle {
             margin-top: 5px;
             font-weight: 700;
@@ -37,248 +90,591 @@
         }
 
         .single4 {
-           display: inline-block;
-           width: 50px;
-           height: 50px;
-           border-radius: 50%;
-           border: 6px solid #EEEEEE;
-           border-top-color: #BFBFBF;
-           border-bottom-color: #BFBFBF;
-           -webkit-animation: single4 2.5s infinite ease-in-out;
-           animation: single4 2.5s infinite ease-in-out;
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 6px solid #EEEEEE;
+            border-top-color: #BFBFBF;
+            border-bottom-color: #BFBFBF;
+            -webkit-animation: single4 2.5s infinite ease-in-out;
+            animation: single4 2.5s infinite ease-in-out;
         }
 
         @-webkit-keyframes single4 {
-           0% {
-              -webkit-transform: rotate(0deg);
-              transform: rotate(0deg);
-           }
-           100% {
-              -webkit-transform: rotate(540deg);
-              transform: rotate(540deg);
-           }
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(540deg);
+                transform: rotate(540deg);
+            }
         }
 
         @keyframes single4 {
-           0% {
-              -webkit-transform: rotate(0deg);
-              transform: rotate(0deg);
-           }
-           100% {
-              -webkit-transform: rotate(540deg);
-              transform: rotate(540deg);
-           }
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(540deg);
+                transform: rotate(540deg);
+            }
         }
     </style>
 </head>
+
 <body>
     <div id="loading-page">
         <div class="single4"></div>
-        <div id="loader-title" i18n="loader.text">Chargement de l'application ...</div>
+        <div
+            id="loader-title"
+            i18n="loader.text"
+        >Chargement de l'application ...</div>
         <div id="loader-subtitle"></div>
     </div>
-    <div id="error"><h1></h1></div>
-    <div id="main" style="opacity: 0.01;">
-    <!-- Ajax Loader -->
-    <div id="loading-indicator" style="display:none">
-        <div class="loader">Loading...</div>
+    <div id="error">
+        <h1></h1>
     </div>
-    <!-- NAVBAR -->
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-default no-margin navbar-fixed-top" id="mv-navbar">
-        <div class="navbar-header fixed-brand">
-            <a type="button" class="navbar-brand menu-toggle" href="#" title="Afficher/masquer les thématiques" i18n="navbar.toggle"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
-            <a class="navbar-brand" href="#">
-                 <img alt="Logo" src="img/logo/earth-globe.svg" class="mv-logo">
-            </a>
-            <a class="navbar-brand mv-title" href="#">mViewer</a>
-            <a type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" href="#">
-                <span class="glyphicon glyphicon-menu-hamburger"></span>
-            </a>
+    <div
+        id="main"
+        style="opacity: 0.01;"
+    >
+        <!-- Ajax Loader -->
+        <div
+            id="loading-indicator"
+            style="display:none"
+        >
+            <div class="loader">Loading...</div>
         </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav mv-nav">
-                <li class="hidden-lg hidden-md"><a href="#" data-toggle="modal" data-target="#thematic-modal" i18n="nav.responsive.topics">Thématiques</a></li>
-                <li class="hidden-lg hidden-md"><a href="#" data-toggle="modal" data-target="#legend-modal" i18n="nav.responsive.legend">Légende</a></li>
-                <li class="hidden-lg hidden-md"><a href="#" data-toggle="modal" data-target="#help" i18n="nav.responsive.about">A propos</a></li>
-                <li class="hidden-xs hidden-sm hidden-md">
-                    <div class="navbar-form navbar-left" id="coordinates">
-                        <span class=""></span>
-                    </div>
-                </li>
-                <!--LANG SELECTOR-->
-                <li id="lang-button" class="hidden-lg hidden-md">
-                    <a href="#" data-toggle="modal" data-target="#lang-popup" i18n="nav.down.lang">Langues</a>
-                </li>
-                <li id="lang-selector" class="dropdown hidden-xs hidden-sm">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">
-                        <span i18n="nav.down.lang">Langue</span>
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu mv-translate">
-                    <!--insert languages-->
-                    </ul>
-                </li>
-                <!--//LANG SELECTOR-->
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <div id="login-box" class="navbar-form" style="display:none;">
-                        <span></span>
-                        <a class="btn btn-default btn-raised" type="button" href="?login" id="login" title="Se connecter" tabindex="110" accesskey="10"
-                            i18n="tbar.right.login">
-                            <span class="fas fa-lock-open" aria-hidden="true"></span>
-                        </a>
-                    </div>
-                </li>
-                <li>
-                    <div class="navbar-form" role="search" id="searchtool">
-                        <div class="form-group input-group">
-                            <input type="text" class="form-control" placeholder="Rechercher" i18n="navbar.search.placeholder" id="searchfield">
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-default" aria-label="Help" data-toggle="modal" data-target="#parameterspanel" i18n="search.panel.title" title="Paramètres de recherche">
-                                    <span class="glyphicon glyphicon-option-vertical"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="hidden-xs hidden-sm">
-                    <div class="nav navbar-nav">
-                       <button id="iconhelp" type="button" class="btn btn-default navbar-btn mv-navbar-btn" data-toggle="modal" data-target="#help" i18n="help.modal.doc" title="Lien vers la documentation"><span class="fas fa-question"></span></button>
-                    </div>
-                </li>
-                <!-- SEARCH RESULTS  -->
-                <div id="searchresults" class="list-group" >
-                    <div class="searchresults-title" i18n="search.result.title">Résultats
-                    <button type="button" class="close">&times;</button>
-                    </div>
-                    <a i18n="search.result.locations" class="search-header list-group-item disabled hidden">Localités</a>
-                    <a i18n="search.result.entities" class="search-header list-group-item disabled hidden">Entités</a>
-                </div>
-            </ul>
-        </div>
-    </nav>
-    <div id="wrapper">
-        <!-- LEFT MENU SIDEBAR -->
-        <div id="sidebar-wrapper"></div>
-        <!-- Page Content -->
-        <div id="page-content-wrapper" >
-            <div class="container-fluid xyz" >
-                <!--  MAP  -->
-                <div class="row">
-                    <div id="map"></div>
-                    <div id="layers-container-box" class="">
-                        <div id="legend" class="active">
-                            <div id="layers-container-box-header" >
-                                <a onclick="mviewer.toggleLegend();" title="Afficher/masquer la légende" i18n="legend.title" href="#"> <span class="glyphicon glyphicon-list"></span> </a>
-                                <a id="btn-remove-layers" onclick="mviewer.removeAllLayers();" title="Supprimer toutes les couches" i18n="legend.remove.all" href="#"> <span class="glyphicon glyphicon-trash"></span> </a>
-                            </div>
-                            <ul id="layers-container" class="list-group"></ul>
-                        </div>
-                    </div>
-                    <div id="feature-info"></div>
-                    <!-- BOTTOM PANEL -->
-                    <div id="bottom-panel">
-                        <div id="bottom-panel-btn" ><i class="mv-close fas fa-chevron-down" title="Fermer ce panneau" i18n="bottom.panel.close" onclick="$('#bottom-panel').toggleClass('active')" ></i></div>
-                        <div class="mv-header"><h5 i18n="bottom.panel.title">Informations</h5>
-                        </div>
-                        <div class="popup-content" ></div>
-                    </div>
-                    <!-- RIGHT PANEL -->
-                         <div id="right-panel">
-                            <div class="mv-header"><h5 i18n="right.panel.title">Informations</h5>
-                                <a href="#" class="close" data-dismiss="alert" aria-label="close" onclick="$('#right-panel').toggleClass('active')" title="Fermer" i18n="right.panel.close">×</a>
-                            </div>
-                            <div class="popup-content" ></div>
-                         </div>
-                  </div>
-            </div>
-        <div id="mouse-position" class="container"></div>
-            <!-- MARKER USED BY SEARCH IN FEATURES FUNCTIONNALITY, TO LOCATE SELECTED FEATURE ON THE MAP-->
-            <img id="mv_marker" class="mv_marker_img" style="max-width:50px;" />
-            <svg id="mv_marker" class="mv_marker_svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 297 297" style="enable-background:new 0 0 297 297;" xml:space="preserve" width="30px" height="30px">
-                <path d="M148.5,0C85.646,0,34.511,51.136,34.511,113.989c0,25.11,8.008,48.926,23.157,68.873  c13.604,17.914,32.512,31.588,53.658,38.904l27.464,68.659c1.589,3.971,5.434,6.574,9.71,6.574c4.276,0,8.121-2.603,9.71-6.574  l27.464-68.659c21.146-7.316,40.054-20.99,53.658-38.904c15.149-19.947,23.157-43.763,23.157-68.873  C262.489,51.136,211.354,0,148.5,0z M148.5,72.682c22.777,0,41.308,18.53,41.308,41.308c0,22.777-18.53,41.309-41.308,41.309  c-22.777,0-41.308-18.531-41.308-41.309C107.192,91.212,125.723,72.682,148.5,72.682z" fill="#F31541"/><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g>
-            </svg>
-
-            <!-- SEARCH RESULTS  -->
-            <div id="searchresults" class="list-group" >
-                <div class="searchresults-title">Résultats
-                    <button type="button" class="close">&times;</button>
-                </div>
-                <a i18n="search.result.locations" class="search-header list-group-item disabled hidden">Localités</a>
-                <a i18n="search.result.entities" class="search-header list-group-item disabled hidden">Entités</a>
-            </div>
-            <!-- BACKGROUND LAYERS  -->
-            <div id="backgroundlayerstoolbar-gallery">
-                <div class="" onclick="mviewer.bgtoogle();"></div>
-                <ul id="basemapslist" ></ul>
-            </div>
-            <!-- MVIEWER INFO AND VERSION  -->
-            <div id="mviewerinfosbar" class="hidden-xs">
-                <span id="powered" i18n="infos.powered">Propulsé par </span> <a class="mviewer-link" href="https://mviewer.netlify.app/fr/" target="_blank">mviewer</a>
-            </div>
-            <!-- SECOND VERTICAL RIGHT TOOLBAR -->
-            <div id="toolstoolbar" class="btn-group-vertical btn-group-sm" role="group" aria-label="true">
-                <button data-toggle="modal" data-target="#sharepanel" onclick="mviewer.mapShare();" id="sharebtn" title="Partager cette carte"
-                     i18n="tbar.right.share" tabindex="111" accesskey="11" class="btn btn-default btn-raised">
-                     <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-                </button>
-                <button id="geolocbtn" type="button" class="btn btn-default btn-raised" onclick="mviewer.geoloc();"
-                                        title="Se localiser" i18n="tbar.right.location" tabindex="103" accesskey="3">
-                    <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
-                </button>
-                <button id="northbtn" type="button" class="btn btn-default btn-raised" onclick="mviewer.northRotate();"
-                        title="Orienté au nord" i18n="tbar.right.rotation" tabindex="106" accesskey="6">
-                    <span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
-                </button>
-                <button id="studiolink" type="button" class="btn btn-default btn-raised" onclick="mviewer.openStudio();"
-                        title="Modifier la carte" i18n="tbar.right.studio" tabindex="106" accesskey="6">
-                    <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
-                </button>
-                 <a href="#" id="exportpng" title="Exporter carte au format image" i18n="tbar.right.png" download="carte.png"
-                    class="btn btn-default btn-raised"  tabindex="113" accesskey="13" style="display:none;">
-                     <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
+        <!-- NAVBAR -->
+        <!-- NAVBAR -->
+        <nav
+            class="navbar navbar-default no-margin navbar-fixed-top"
+            id="mv-navbar"
+        >
+            <div class="navbar-header fixed-brand">
+                <a
+                    type="button"
+                    class="navbar-brand menu-toggle"
+                    href="#"
+                    title="Afficher/masquer les thématiques"
+                    i18n="navbar.toggle"
+                ><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+                <a
+                    class="navbar-brand"
+                    href="#"
+                >
+                    <img
+                        alt="Logo"
+                        src="img/logo/earth-globe.svg"
+                        class="mv-logo"
+                    >
+                </a>
+                <a
+                    class="navbar-brand mv-title"
+                    href="#"
+                >mViewer</a>
+                <a
+                    type="button"
+                    class="navbar-toggle"
+                    data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1"
+                    href="#"
+                >
+                    <span class="glyphicon glyphicon-menu-hamburger"></span>
                 </a>
             </div>
-            <div id="backgroundlayerstoolbar-default" class="btn-group-vertical btn-group-sm" role="group" aria-label="true">
-            <button href="#" onclick="mviewer.nextBackgroundLayer();" id="backgroundlayersbtn" title="Changer de fond de carte" i18n="tbar.right.background" tabindex="103" accesskey="3"
-                    class="btn-lg btn-default btn-raised" >
-                     <!--<span class="glyphicon glyphicon-globe" aria-hidden="true"></span>-->
-            </button>
-        </div>
-        </div>
-    </div><!-- END WRAPPER -->
+            <div
+                class="collapse navbar-collapse"
+                id="bs-example-navbar-collapse-1"
+            >
+                <ul class="nav navbar-nav mv-nav">
+                    <li class="hidden-lg hidden-md"><a
+                            href="#"
+                            data-toggle="modal"
+                            data-target="#thematic-modal"
+                            i18n="nav.responsive.topics"
+                        >Thématiques</a></li>
+                    <li class="hidden-lg hidden-md"><a
+                            href="#"
+                            data-toggle="modal"
+                            data-target="#legend-modal"
+                            i18n="nav.responsive.legend"
+                        >Légende</a></li>
+                    <li class="hidden-lg hidden-md"><a
+                            href="#"
+                            data-toggle="modal"
+                            data-target="#help"
+                            i18n="nav.responsive.about"
+                        >A propos</a></li>
+                    <li class="hidden-xs hidden-sm hidden-md">
+                        <div
+                            class="navbar-form navbar-left"
+                            id="coordinates"
+                        >
+                            <span class=""></span>
+                        </div>
+                    </li>
+                    <!--LANG SELECTOR-->
+                    <li
+                        id="lang-button"
+                        class="hidden-lg hidden-md"
+                    >
+                        <a
+                            href="#"
+                            data-toggle="modal"
+                            data-target="#lang-popup"
+                            i18n="nav.down.lang"
+                        >Langues</a>
+                    </li>
+                    <li
+                        id="lang-selector"
+                        class="dropdown hidden-xs hidden-sm"
+                    >
+                        <a
+                            href="#"
+                            class="dropdown-toggle"
+                            data-toggle="dropdown"
+                            role="button"
+                            aria-expanded="true"
+                        >
+                            <span i18n="nav.down.lang">Langue</span>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu mv-translate">
+                            <!--insert languages-->
+                        </ul>
+                    </li>
+                    <!--//LANG SELECTOR-->
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <div
+                            id="login-box"
+                            class="navbar-form"
+                            style="display:none;"
+                        >
+                            <span></span>
+                            <a
+                                class="btn btn-default btn-raised"
+                                type="button"
+                                href="?login"
+                                id="login"
+                                title="Se connecter"
+                                tabindex="110"
+                                accesskey="10"
+                                i18n="tbar.right.login"
+                            >
+                                <span
+                                    class="fas fa-lock-open"
+                                    aria-hidden="true"
+                                ></span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div
+                            class="navbar-form"
+                            role="search"
+                            id="searchtool"
+                        >
+                            <div class="form-group input-group">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Rechercher"
+                                    i18n="navbar.search.placeholder"
+                                    id="searchfield"
+                                >
+                                <div class="input-group-btn">
+                                    <button
+                                        type="button"
+                                        class="btn btn-default"
+                                        aria-label="Help"
+                                        data-toggle="modal"
+                                        data-target="#parameterspanel"
+                                        i18n="search.panel.title"
+                                        title="Paramètres de recherche"
+                                    >
+                                        <span class="glyphicon glyphicon-option-vertical"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="hidden-xs hidden-sm">
+                        <div class="nav navbar-nav">
+                            <button
+                                id="iconhelp"
+                                type="button"
+                                class="btn btn-default navbar-btn mv-navbar-btn"
+                                data-toggle="modal"
+                                data-target="#help"
+                                i18n="help.modal.doc"
+                                title="Lien vers la documentation"
+                            ><span class="fas fa-question"></span></button>
+                        </div>
+                    </li>
+                    <!-- SEARCH RESULTS  -->
+                    <div
+                        id="searchresults"
+                        class="list-group"
+                    >
+                        <div
+                            class="searchresults-title"
+                            i18n="search.result.title"
+                        >Résultats
+                            <button
+                                type="button"
+                                class="close"
+                            >&times;</button>
+                        </div>
+                        <a
+                            i18n="search.result.locations"
+                            class="search-header list-group-item disabled hidden"
+                        >Localités</a>
+                        <a
+                            i18n="search.result.entities"
+                            class="search-header list-group-item disabled hidden"
+                        >Entités</a>
+                    </div>
+                </ul>
+            </div>
+        </nav>
+        <div id="wrapper">
+            <!-- LEFT MENU SIDEBAR -->
+            <div id="sidebar-wrapper"></div>
+            <!-- Page Content -->
+            <div id="page-content-wrapper">
+                <div class="container-fluid xyz">
+                    <!--  MAP  -->
+                    <div class="row">
+                        <div id="map"></div>
+                        <div
+                            id="layers-container-box"
+                            class=""
+                        >
+                            <div
+                                id="legend"
+                                class="active"
+                            >
+                                <div id="layers-container-box-header">
+                                    <a
+                                        onclick="mviewer.toggleLegend();"
+                                        title="Afficher/masquer la légende"
+                                        i18n="legend.title"
+                                        href="#"
+                                    > <span class="glyphicon glyphicon-list"></span> </a>
+                                    <a
+                                        id="btn-remove-layers"
+                                        onclick="mviewer.removeAllLayers();"
+                                        title="Supprimer toutes les couches"
+                                        i18n="legend.remove.all"
+                                        href="#"
+                                    > <span class="glyphicon glyphicon-trash"></span> </a>
+                                </div>
+                                <ul
+                                    id="layers-container"
+                                    class="list-group"
+                                ></ul>
+                            </div>
+                        </div>
+                        <div id="feature-info"></div>
+                        <!-- BOTTOM PANEL -->
+                        <div id="bottom-panel">
+                            <div id="bottom-panel-btn"><i
+                                    class="mv-close fas fa-chevron-down"
+                                    title="Fermer ce panneau"
+                                    i18n="bottom.panel.close"
+                                    onclick="$('#bottom-panel').toggleClass('active')"
+                                ></i></div>
+                            <div class="mv-header">
+                                <h5 i18n="bottom.panel.title">Informations</h5>
+                            </div>
+                            <div class="popup-content"></div>
+                        </div>
+                        <!-- RIGHT PANEL -->
+                        <div id="right-panel">
+                            <div class="mv-header">
+                                <h5 i18n="right.panel.title">Informations</h5>
+                                <a
+                                    href="#"
+                                    class="close"
+                                    data-dismiss="alert"
+                                    aria-label="close"
+                                    onclick="$('#right-panel').toggleClass('active')"
+                                    title="Fermer"
+                                    i18n="right.panel.close"
+                                >×</a>
+                            </div>
+                            <div class="popup-content"></div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    id="mouse-position"
+                    class="container"
+                ></div>
+                <!-- MARKER USED BY SEARCH IN FEATURES FUNCTIONNALITY, TO LOCATE SELECTED FEATURE ON THE MAP-->
+                <img
+                    id="mv_marker"
+                    class="mv_marker_img"
+                    style="max-width:50px;"
+                />
+                <svg
+                    id="mv_marker"
+                    class="mv_marker_svg"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    version="1.1"
+                    x="0px"
+                    y="0px"
+                    viewBox="0 0 297 297"
+                    style="enable-background:new 0 0 297 297;"
+                    xml:space="preserve"
+                    width="30px"
+                    height="30px"
+                >
+                    <path
+                        d="M148.5,0C85.646,0,34.511,51.136,34.511,113.989c0,25.11,8.008,48.926,23.157,68.873  c13.604,17.914,32.512,31.588,53.658,38.904l27.464,68.659c1.589,3.971,5.434,6.574,9.71,6.574c4.276,0,8.121-2.603,9.71-6.574  l27.464-68.659c21.146-7.316,40.054-20.99,53.658-38.904c15.149-19.947,23.157-43.763,23.157-68.873  C262.489,51.136,211.354,0,148.5,0z M148.5,72.682c22.777,0,41.308,18.53,41.308,41.308c0,22.777-18.53,41.309-41.308,41.309  c-22.777,0-41.308-18.531-41.308-41.309C107.192,91.212,125.723,72.682,148.5,72.682z"
+                        fill="#F31541"
+                    />
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                </svg>
+
+                <!-- SEARCH RESULTS  -->
+                <div
+                    id="searchresults"
+                    class="list-group"
+                >
+                    <div class="searchresults-title">Résultats
+                        <button
+                            type="button"
+                            class="close"
+                        >&times;</button>
+                    </div>
+                    <a
+                        i18n="search.result.locations"
+                        class="search-header list-group-item disabled hidden"
+                    >Localités</a>
+                    <a
+                        i18n="search.result.entities"
+                        class="search-header list-group-item disabled hidden"
+                    >Entités</a>
+                </div>
+                <!-- BACKGROUND LAYERS  -->
+                <div id="backgroundlayerstoolbar-gallery">
+                    <div
+                        class=""
+                        onclick="mviewer.bgtoogle();"
+                    ></div>
+                    <ul id="basemapslist"></ul>
+                </div>
+                <!-- MVIEWER INFO AND VERSION  -->
+                <div
+                    id="mviewerinfosbar"
+                    class="hidden-xs"
+                >
+                    <span
+                        id="powered"
+                        i18n="infos.powered"
+                    >Propulsé par </span> <a
+                        class="mviewer-link"
+                        href="https://mviewer.netlify.app/fr/"
+                        target="_blank"
+                    >mviewer</a>
+                </div>
+                <!-- SECOND VERTICAL RIGHT TOOLBAR -->
+                <div
+                    id="toolstoolbar"
+                    class="btn-group-vertical btn-group-sm"
+                    role="group"
+                    aria-label="true"
+                >
+                    <button
+                        data-toggle="modal"
+                        data-target="#sharepanel"
+                        onclick="mviewer.mapShare();"
+                        id="sharebtn"
+                        title="Partager cette carte"
+                        i18n="tbar.right.share"
+                        tabindex="111"
+                        accesskey="11"
+                        class="btn btn-default btn-raised"
+                    >
+                        <span
+                            class="glyphicon glyphicon-share-alt"
+                            aria-hidden="true"
+                        ></span>
+                    </button>
+                    <button
+                        id="geolocbtn"
+                        type="button"
+                        class="btn btn-default btn-raised"
+                        onclick="mviewer.geoloc();"
+                        title="Se localiser"
+                        i18n="tbar.right.location"
+                        tabindex="103"
+                        accesskey="3"
+                    >
+                        <span
+                            class="glyphicon glyphicon-map-marker"
+                            aria-hidden="true"
+                        ></span>
+                    </button>
+                    <button
+                        id="northbtn"
+                        type="button"
+                        class="btn btn-default btn-raised"
+                        onclick="mviewer.northRotate();"
+                        title="Orienté au nord"
+                        i18n="tbar.right.rotation"
+                        tabindex="106"
+                        accesskey="6"
+                    >
+                        <span
+                            class="glyphicon glyphicon-upload"
+                            aria-hidden="true"
+                        ></span>
+                    </button>
+                    <button
+                        id="studiolink"
+                        type="button"
+                        class="btn btn-default btn-raised"
+                        onclick="mviewer.openStudio();"
+                        title="Modifier la carte"
+                        i18n="tbar.right.studio"
+                        tabindex="106"
+                        accesskey="6"
+                    >
+                        <span
+                            class="glyphicon glyphicon-wrench"
+                            aria-hidden="true"
+                        ></span>
+                    </button>
+                    <a
+                        href="#"
+                        id="exportpng"
+                        title="Exporter carte au format image"
+                        i18n="tbar.right.png"
+                        download="carte.png"
+                        class="btn btn-default btn-raised"
+                        tabindex="113"
+                        accesskey="13"
+                        style="display:none;"
+                    >
+                        <span
+                            class="glyphicon glyphicon-picture"
+                            aria-hidden="true"
+                        ></span>
+                    </a>
+                </div>
+                <div
+                    id="backgroundlayerstoolbar-default"
+                    class="btn-group-vertical btn-group-sm"
+                    role="group"
+                    aria-label="true"
+                >
+                    <button
+                        href="#"
+                        onclick="mviewer.nextBackgroundLayer();"
+                        id="backgroundlayersbtn"
+                        title="Changer de fond de carte"
+                        i18n="tbar.right.background"
+                        tabindex="103"
+                        accesskey="3"
+                        class="btn-lg btn-default btn-raised"
+                    >
+                        <!--<span class="glyphicon glyphicon-globe" aria-hidden="true"></span>-->
+                    </button>
+                </div>
+            </div>
+        </div><!-- END WRAPPER -->
 
 
-     <!-- SEARCH PARAMETERS PANEL -->
-        <div id="parameterspanel" class="modal fade" tabindex="-1" role="dialog" >
+        <!-- SEARCH PARAMETERS PANEL -->
+        <div
+            id="parameterspanel"
+            class="modal fade"
+            tabindex="-1"
+            role="dialog"
+        >
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" title="Fermer" i18n="search.panel.close" class="close" data-dismiss="modal">&times;</button>
-                        <h5 class="modal-title" i18n="search.panel.title">Paramètres de recherche</h5>
+                        <button
+                            type="button"
+                            title="Fermer"
+                            i18n="search.panel.close"
+                            class="close"
+                            data-dismiss="modal"
+                        >&times;</button>
+                        <h5
+                            class="modal-title"
+                            i18n="search.panel.title"
+                        >Paramètres de recherche</h5>
                     </div>
-                    <div class="modal-body" >
+                    <div class="modal-body">
                         <ul id="searchparameters">
-                            <li class="mv-param-item" onclick="search.toggleParameter(this)" >
+                            <li
+                                class="mv-param-item"
+                                onclick="search.toggleParameter(this)"
+                            >
                                 <a href="#">
-                                    <span id="param_search_bbox" class="state-icon far mv-unchecked"></span>
-                                    <div style="display:inline;" i18n="search.modal.extent.text">Rechercher dans l'emprise de la carte</div>
-                               </a>
-                            </li>
-                            <li class="mv-param-item" id="param_search_localities" onclick="search.toggleParameter(this)" >
-                                <a href="#">
-                                    <span class="state-icon far mv-unchecked"></span>
-                                    <div style="display:inline;" i18n="search.modal.address.text">Rechercher des adresses</div>
+                                    <span
+                                        id="param_search_bbox"
+                                        class="state-icon far mv-unchecked"
+                                    ></span>
+                                    <div
+                                        style="display:inline;"
+                                        i18n="search.modal.extent.text"
+                                    >Rechercher dans l'emprise de la carte</div>
                                 </a>
                             </li>
-                            <li class="mv-param-item" id="param_search_features" onclick="search.toggleParameter(this)" >
+                            <li
+                                class="mv-param-item"
+                                id="param_search_localities"
+                                onclick="search.toggleParameter(this)"
+                            >
                                 <a href="#">
                                     <span class="state-icon far mv-unchecked"></span>
-                                    <div style="display:inline;" i18n="search.modal.items.text">Rechercher des entités</div>
-                               </a>
-                           </li>
+                                    <div
+                                        style="display:inline;"
+                                        i18n="search.modal.address.text"
+                                    >Rechercher des adresses</div>
+                                </a>
+                            </li>
+                            <li
+                                class="mv-param-item"
+                                id="param_search_features"
+                                onclick="search.toggleParameter(this)"
+                            >
+                                <a href="#">
+                                    <span class="state-icon far mv-unchecked"></span>
+                                    <div
+                                        style="display:inline;"
+                                        i18n="search.modal.items.text"
+                                    >Rechercher des entités</div>
+                                </a>
+                            </li>
                         </ul>
                         <p id="adresse-attribution"></p>
                     </div>
@@ -286,175 +682,383 @@
             </div>
         </div>
         <!-- LAYER AUTHENTIFICATION PANEL -->
-        <div id="loginpanel" class="modal fade" tabindex="-1" role="dialog">
-          <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-              <div class="modal-header">
-                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                 <h5 class="modal-title" id="login-panel-title" i18n="layer.authent.title">Configurer l'accès au service</h5>
-                 <span id="login-panel-service-url"><small><i i18n="layer.authent.title">URL du service</i></small></span>
-              </div>
-              <div class="modal-body" >
-                <div class="loginmodal-container">
-                  <form>
-                    <input type="hidden" id="service-url">
-                    <input type="hidden" id="layer-id">
-                    <input type="text" id="user" placeholder="Login" i18n="layer.authent.login">
-                    <input type="password" id="pass" placeholder="Mot de passe" i18n="layer.authent.password">
-                    <input type="button" id="savelogin" class="btn btn-light" i18n="layer.authent.valid" title="valider" value="Valider">
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-         <!-- ADD LAYER PANEL -->
-         <div id="addLayerpanel" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content" role="document">
+        <div
+            id="loginpanel"
+            class="modal fade"
+            tabindex="-1"
+            role="dialog"
+        >
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title" i18n="addlayers.modal.title">Ajouter des données</h4>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                        >&times;</button>
+                        <h5
+                            class="modal-title"
+                            id="login-panel-title"
+                            i18n="layer.authent.title"
+                        >Configurer l'accès au service</h5>
+                        <span id="login-panel-service-url"><small><i i18n="layer.authent.title">URL du
+                                    service</i></small></span>
                     </div>
-                    <div class="modal-body" >
-                        <ul class="nav nav-tabs" role="tablist">    
-                            <li role="presentation" class="active">
-                                <a href="#add_ogc" aria-controls="profile" role="tab" data-toggle="tab" i18n="addlayers.modal.ogc">OGC</a></li>
-                            <li role="presentation" >
-                                <a href="#add_csw" aria-controls="messages" role="tab" data-toggle="tab" i18n="addlayers.modal.csw">CSW</a></li>
+                    <div class="modal-body">
+                        <div class="loginmodal-container">
+                            <form>
+                                <input
+                                    type="hidden"
+                                    id="service-url"
+                                >
+                                <input
+                                    type="hidden"
+                                    id="layer-id"
+                                >
+                                <input
+                                    type="text"
+                                    id="user"
+                                    placeholder="Login"
+                                    i18n="layer.authent.login"
+                                >
+                                <input
+                                    type="password"
+                                    id="pass"
+                                    placeholder="Mot de passe"
+                                    i18n="layer.authent.password"
+                                >
+                                <input
+                                    type="button"
+                                    id="savelogin"
+                                    class="btn btn-light"
+                                    i18n="layer.authent.valid"
+                                    title="valider"
+                                    value="Valider"
+                                >
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ADD LAYER PANEL -->
+        <div
+            id="addLayerpanel"
+            class="modal fade"
+            tabindex="-1"
+            role="dialog"
+        >
+            <div class="modal-dialog modal-lg">
+                <div
+                    class="modal-content"
+                    role="document"
+                >
+                    <div class="modal-header">
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                        >&times;</button>
+                        <h4
+                            class="modal-title"
+                            i18n="addlayers.modal.title"
+                        >Ajouter des données</h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul
+                            class="nav nav-tabs"
+                            role="tablist"
+                        >
+                            <li
+                                role="presentation"
+                                class="active"
+                            >
+                                <a
+                                    href="#add_ogc"
+                                    aria-controls="profile"
+                                    role="tab"
+                                    data-toggle="tab"
+                                    i18n="addlayers.modal.ogc"
+                                >OGC</a>
+                            </li>
+                            <li role="presentation">
+                                <a
+                                    href="#add_csw"
+                                    aria-controls="messages"
+                                    role="tab"
+                                    data-toggle="tab"
+                                    i18n="addlayers.modal.csw"
+                                >CSW</a>
+                            </li>
                         </ul>
-                         <!-- Tab panes -->
-                        <div class="tab-content" id="addlayers_tabs">
-                            <div role="tabpanel" class="tab-pane active" id="add_ogc">
+                        <!-- Tab panes -->
+                        <div
+                            class="tab-content"
+                            id="addlayers_tabs"
+                        >
+                            <div
+                                role="tabpanel"
+                                class="tab-pane active"
+                                id="add_ogc"
+                            >
                                 <h4 i18n="addlayers.modal.ogc">Ajouter des données issue d'un service OGC</h4>
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col">
-                                            Choisissez un serveur : 
-                                            <select id="addLayers_service_url_select" class="form-control form-control-sm addLayers_service_url_select">
+                                            Choisissez un serveur :
+                                            <select
+                                                id="addLayers_service_url_select"
+                                                class="form-control form-control-sm addLayers_service_url_select"
+                                            >
                                                 <option value=""></option>
                                             </select><br>
-                                            ...ou saisissez l'url du service : 
-                                            <input type="text" id="addLayers_service_url"
-                                            value=""
+                                            ...ou saisissez l'url du service :
+                                            <input
+                                                type="text"
+                                                id="addLayers_service_url"
+                                                value=""
                                             />
-                                            <button onclick="mviewer.tools.addlayers.connect();"
-                                                type="button">
+                                            <button
+                                                onclick="mviewer.tools.addlayers.connect();"
+                                                type="button"
+                                            >
                                                 Connexion&nbsp;<span class="glyphicon glyphicon-chevron-right"></span>
-                                            </button>      
+                                            </button>
                                         </div>
                                     </div>
-                                </div>  
-                                
-                            </div>  
-                            <div role="tabpanel" class="tab-pane" id="add_csw">
+                                </div>
+
+                            </div>
+                            <div
+                                role="tabpanel"
+                                class="tab-pane"
+                                id="add_csw"
+                            >
                                 <h4 i18n="addlayers.modal.csw">Ajouter des données issue d'un service CSW</h4>
-                                Choisissez un serveur : 
-                                            <select id="addLayers_service_url_csw_select" class="form-control form-control-sm addLayers_service_url_select">
-                                                <option value=""></option>
-                                            </select><br>
-                                ...ou saisissez l'url du service : 
-                                <input type="text" id="addLayers_service_url_csw" class="form-control"
+                                Choisissez un serveur :
+                                <select
+                                    id="addLayers_service_url_csw_select"
+                                    class="form-control form-control-sm addLayers_service_url_select"
+                                >
+                                    <option value=""></option>
+                                </select><br>
+                                ...ou saisissez l'url du service :
+                                <input
+                                    type="text"
+                                    id="addLayers_service_url_csw"
+                                    class="form-control"
                                     value=""
                                 /><br>
-                                Filter:<input type="text" id="addLayers_service_filter_csw" class="form-control csw_search" 
-                                placeholder="Rechercher...">
-                               
-                               
-                                <button onclick="mviewer.tools.addlayers.connectCsw();"
-                                    type="button">
+                                Filter:<input
+                                    type="text"
+                                    id="addLayers_service_filter_csw"
+                                    class="form-control csw_search"
+                                    placeholder="Rechercher..."
+                                >
+
+
+                                <button
+                                    onclick="mviewer.tools.addlayers.connectCsw();"
+                                    type="button"
+                                >
                                     Connexion&nbsp;<span class="glyphicon glyphicon-chevron-right"></span>
-                                </button> 
-                            </div>  
+                                </button>
+                            </div>
                         </div>
                         <div class="container-fluid">
-                            <div class="row" id="addlayers_results_loading" style="display:none">
+                            <div
+                                class="row"
+                                id="addlayers_results_loading"
+                                style="display:none"
+                            >
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center center-block">
-                                        <div class="loading_container">
-                                            <div class="single4"></div>
-                                             Chargement...
-                                        </div>
+                                    <div class="loading_container">
+                                        <div class="single4"></div>
+                                        Chargement...
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12 col-sm-12 col-xs-12" id="addlayers_results">
+                                <div
+                                    class="col-md-12 col-sm-12 col-xs-12"
+                                    id="addlayers_results"
+                                >
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12 col-sm-12 col-xs-12 text-center center-block" id="addlayers_results_pager">
+                                <div
+                                    class="col-md-12 col-sm-12 col-xs-12 text-center center-block"
+                                    id="addlayers_results_pager"
+                                >
                                 </div>
                             </div>
                         </div>
-                       
-                        
+
+
                     </div>
                 </div>
             </div>
-          </div>
+        </div>
         <!-- SHARE PANEL -->
-        <div id="sharepanel" class="modal fade" tabindex="-1" role="dialog" >
+        <div
+            id="sharepanel"
+            class="modal fade"
+            tabindex="-1"
+            role="dialog"
+        >
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title"> <center i18n="share.panel.title">Partager cette carte</center></h4>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                        >&times;</button>
+                        <h4 class="modal-title">
+                            <center i18n="share.panel.title">Partager cette carte</center>
+                        </h4>
                     </div>
-                    <div class="modal-body" >
-                        <h6 class="modal-share-title" ><strong i18n="share.modal.title">Mode d'affichage</strong></h6>
+                    <div class="modal-body">
+                        <h6 class="modal-share-title"><strong i18n="share.modal.title">Mode d'affichage</strong></h6>
                         <div class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12" >
-                                <div class="form-group" id="mv-display-mode">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div
+                                    class="form-group"
+                                    id="mv-display-mode"
+                                >
                                     <label class="radio-inline">
-                                        <input type="radio" value="d" name="mv-display-mode" checked i18n="share.radio.normal">
-                                        <div style="display:inline;" i18n="share.radio.normal">Normal</div>
+                                        <input
+                                            type="radio"
+                                            value="d"
+                                            name="mv-display-mode"
+                                            checked
+                                            i18n="share.radio.normal"
+                                        >
+                                        <div
+                                            style="display:inline;"
+                                            i18n="share.radio.normal"
+                                        >Normal</div>
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="mv-display-mode" value="s">
-                                        <div style="display:inline;" i18n="share.radio.simple">Simplifié</div>
+                                        <input
+                                            type="radio"
+                                            name="mv-display-mode"
+                                            value="s"
+                                        >
+                                        <div
+                                            style="display:inline;"
+                                            i18n="share.radio.simple"
+                                        >Simplifié</div>
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="mv-display-mode" value="u">
-                                        <div style="display:inline;" i18n="share.radio.minimal">Ultra simplifié</div>
+                                        <input
+                                            type="radio"
+                                            name="mv-display-mode"
+                                            value="u"
+                                        >
+                                        <div
+                                            style="display:inline;"
+                                            i18n="share.radio.minimal"
+                                        >Ultra simplifié</div>
                                     </label>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 col-sm-6 col-xs-6" >
-                                <a type="button" class="btn btn-default" id="permalinklink" href="#" title="Lien permanent vers la carte" i18n="share.picture.permalink"><img src="img/share/share_link.png" height="100px"></a>
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <a
+                                    type="button"
+                                    class="btn btn-default"
+                                    id="permalinklink"
+                                    href="#"
+                                    title="Lien permanent vers la carte"
+                                    i18n="share.picture.permalink"
+                                ><img
+                                        src="img/share/share_link.png"
+                                        height="100px"
+                                    ></a>
                             </div>
-                            <div id='share' class="col-md-6 col-sm-6 col-xs-6">
-                                <img id="permaqr" src="img/blank.gif" title="QR code vers la carte" i18n="share.picture.qrcode" alt="QR code" />
+                            <div
+                                id='share'
+                                class="col-md-6 col-sm-6 col-xs-6"
+                            >
+                                <img
+                                    id="permaqr"
+                                    src="img/blank.gif"
+                                    title="QR code vers la carte"
+                                    i18n="share.picture.qrcode"
+                                    alt="QR code"
+                                />
                             </div>
-                       </div>
-                       <div class="row" id="shareToMapfish">
+                        </div>
+                        <div
+                            class="row"
+                            id="shareToMapfish"
+                        >
                             <div class="col-sm-10 form-inline">
-                                <button style="display:inline;" id="shareToMapfishButton" type="button" class="btn btn-md btn-default" onclick="mviewer.sendToGeorchestra();">
+                                <button
+                                    style="display:inline;"
+                                    id="shareToMapfishButton"
+                                    type="button"
+                                    class="btn btn-md btn-default"
+                                    onclick="mviewer.sendToGeorchestra();"
+                                >
                                     <span class="fas fa-share-square"></span>
                                     <div i18n="share.btn.mapfishapp">Afficher dans Mapfishapp</div>
                                 </button>
-                                <form id="georchestraForm" target="_blank" method="post" action="#" style="display:none;">
-                                    <input type="hidden" id="georchestraFormData" name="data" value="" />
-                                    <input type="submit" data-role="button" data-mini="true" data-iconpos="right" value="geOrchestra" />
+                                <form
+                                    id="georchestraForm"
+                                    target="_blank"
+                                    method="post"
+                                    action="#"
+                                    style="display:none;"
+                                >
+                                    <input
+                                        type="hidden"
+                                        id="georchestraFormData"
+                                        name="data"
+                                        value=""
+                                    />
+                                    <input
+                                        type="submit"
+                                        data-role="button"
+                                        data-mini="true"
+                                        data-iconpos="right"
+                                        value="geOrchestra"
+                                    />
                                 </form>
                             </div>
-                       </div>
+                        </div>
                     </div>
                 </div>
-           </div>
+            </div>
         </div>
         <!-- IMAGE POPUP -->
-        <div id="imagepopup" class="modal fade" tabindex="-1" role="dialog" >
+        <div
+            id="imagepopup"
+            class="modal fade"
+            tabindex="-1"
+            role="dialog"
+        >
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                        >&times;</button>
                         <h4 class="modal-title"></h4>
                     </div>
-                    <div class="modal-body" >
+                    <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <img class="popphoto center-block" src="img/blank.gif" style="max-height:512px;" alt="image">
+                                <img
+                                    class="popphoto center-block"
+                                    src="img/blank.gif"
+                                    style="max-height:512px;"
+                                    alt="image"
+                                >
                             </div>
                         </div>
                     </div>
@@ -462,14 +1066,32 @@
             </div>
         </div>
         <!-- LANG POPUP -->
-        <div id="lang-popup" class="modal fade" tabindex="-1" role="dialog">
+        <div
+            id="lang-popup"
+            class="modal fade"
+            tabindex="-1"
+            role="dialog"
+        >
             <div class="modal-dialog modal-lg">
-                <div class="modal-content" role="document">
+                <div
+                    class="modal-content"
+                    role="document"
+                >
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title" i18n="lang.modal.title">Langues</h4>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                        >&times;</button>
+                        <h4
+                            class="modal-title"
+                            i18n="lang.modal.title"
+                        >Langues</h4>
                     </div>
-                    <div id="lang-body" class="modal-body">
+                    <div
+                        id="lang-body"
+                        class="modal-body"
+                    >
                         <ul>
                         </ul>
                     </div>
@@ -477,102 +1099,250 @@
             </div>
         </div>
         <!-- HELP POPUP -->
-        <div id="help" class="modal fade" tabindex="-1" role="dialog" >
+        <div
+            id="help"
+            class="modal fade"
+            tabindex="-1"
+            role="dialog"
+        >
             <div class="modal-dialog modal-lg">
-                <div class="modal-content" role="document">
+                <div
+                    class="modal-content"
+                    role="document"
+                >
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title" i18n="help.modal.title">DOCUMENTATION</h4>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                        >&times;</button>
+                        <h4
+                            class="modal-title"
+                            i18n="help.modal.title"
+                        >DOCUMENTATION</h4>
                     </div>
-                    <div class="modal-body" ></div>
+                    <div class="modal-body"></div>
                 </div>
             </div>
         </div>
         <!-- THEMATIC POPUP -->
-        <div id="thematic-modal" class="modal fade" tabindex="-1" role="dialog" >
+        <div
+            id="thematic-modal"
+            class="modal fade"
+            tabindex="-1"
+            role="dialog"
+        >
             <div class="modal-dialog modal-sm">
-                <div class="modal-content" role="document">
+                <div
+                    class="modal-content"
+                    role="document"
+                >
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title" i18n="thematic.modal.title">Thématiques</h4>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                        >&times;</button>
+                        <h4
+                            class="modal-title"
+                            i18n="thematic.modal.title"
+                        >Thématiques</h4>
                     </div>
-                    <div class="modal-body" ></div>
+                    <div class="modal-body"></div>
                 </div>
             </div>
         </div>
         <!-- LEGEND POPUP -->
-        <div id="legend-modal" class="modal fade" tabindex="-1" role="dialog" >
+        <div
+            id="legend-modal"
+            class="modal fade"
+            tabindex="-1"
+            role="dialog"
+        >
             <div class="modal-dialog modal-sm">
-                <div class="modal-content" role="document">
+                <div
+                    class="modal-content"
+                    role="document"
+                >
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title" i18n="legend.modal.title">Options d'affichage</h4>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                        >&times;</button>
+                        <h4
+                            class="modal-title"
+                            i18n="legend.modal.title"
+                        >Options d'affichage</h4>
                     </div>
-                    <div class="modal-body" ></div>
+                    <div class="modal-body"></div>
                 </div>
             </div>
         </div>
         <!-- FEATUREINFO POPUP -->
-        <div id="modal-panel" class="modal fade" tabindex="-1" role="dialog" >
+        <div
+            id="modal-panel"
+            class="modal fade"
+            tabindex="-1"
+            role="dialog"
+        >
             <div class="modal-dialog modal-md">
-                <div class="modal-content" role="document">
+                <div
+                    class="modal-content"
+                    role="document"
+                >
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title" i18n="featureinfo.modal.title">Informations</h4>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                        >&times;</button>
+                        <h4
+                            class="modal-title"
+                            i18n="featureinfo.modal.title"
+                        >Informations</h4>
                     </div>
-                    <div class="modal-body" >
+                    <div class="modal-body">
                         <div class="popup-content"></div>
                     </div>
                 </div>
             </div>
         </div>
         <!--ALERTS AREA -->
-        <div id="alerts-zone" ></div>
-        </div>
-        <script src="lib/mustache-2.3.0/mustache.min.js"></script>
-        <script type="text/javascript" src="lib/proj4js/2.3.6/proj4.js"></script>
-        <script type="text/javascript" src="lib/jquery/base/1.10.2/jquery-1.10.2.min.js"></script>
-        <script type="text/javascript" src="lib/openlayers/7.1.0/ol.js"></script>
-        <script type="text/javascript" src="lib/jquery/base/plugins/xml2json/jquery.xml2json.js"></script>
-        <script type="text/javascript" src="lib/Sortable/1.4.2/Sortable.min.js"></script>
-        <script type="text/javascript" src="lib/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="lib/bootstrap-datepicker-1.6.1/js/bootstrap-datepicker.min.js"></script>
-        <script type="text/javascript" src="lib/bootstrap-datepicker-1.6.1/locales/bootstrap-datepicker.fr.min.js"></script>
-        <script type="text/javascript" src="lib/bootstrap-slider/9.1.3/bootstrap-slider.min.js"></script>
-        <script type="text/javascript" src="lib/typeahead/typeahead.bundle.min.js"></script>
-        <script type="text/javascript" src="lib/bootstrap-typeahead/bootstrap3-typeahead.min.js"></script>
-        <script src="lib/bootstrap-tagsinput-0.8.0/bootstrap-tagsinput.min.js"></script>
-        <script type="text/javascript" src="lib/fuse/fuse.min.js"></script>
-        <script type="text/javascript" src="js/extend.js"></script>
-        <script type="text/javascript" src="js/utils.js"></script>
-        <script type="text/javascript" src="js/ogcutils.js"></script>
-        <script type="text/javascript" src="js/configuration.js"></script>
-        <script type="text/javascript" src="js/zoom.js"></script>
-        <script type="text/javascript" src="js/measure.js"></script>
-        <script type="text/javascript" src="js/addlayers.js"></script>
-        <script type="text/javascript" src="js/info.js"></script>
-        <script type="text/javascript" src="js/search.js"></script>
-        <script type="text/javascript" src="js/mviewer.js"></script>
-        <script type="text/javascript" src="js/templates.js"></script>
-        <script type="text/javascript" src="js/featurestyles.js"></script>
-        <script type="text/javascript" src="js/custom.js" ></script>
-        <script type="text/javascript" src="lib/i18njs/i18n.js" ></script>
-        <script type="text/javascript" src="lib/moment/moment.js" ></script>
-        <script type="text/javascript" src="lib/lodash-4.17.21/lodash.min.js" ></script>
-        <script>
-        if (typeof(mviewer) == 'undefined' || typeof(configuration) == 'undefined' ||  typeof(info) == 'undefined' ) {
-            document.location.href="pages/error_incompatibility.html";
+        <div id="alerts-zone"></div>
+    </div>
+    <script src="lib/mustache-2.3.0/mustache.min.js"></script>
+    <script
+        type="text/javascript"
+        src="lib/proj4js/2.3.6/proj4.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="lib/jquery/base/1.10.2/jquery-1.10.2.min.js"
+    ></script>
+    <script src="/lib/geotiff/geotiff.js"></script>
+    <script
+        type="text/javascript"
+        src="lib/ol8/ol.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="lib/jquery/base/plugins/xml2json/jquery.xml2json.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="lib/Sortable/1.4.2/Sortable.min.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="lib/bootstrap/3.3.6/js/bootstrap.min.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="lib/bootstrap-datepicker-1.6.1/js/bootstrap-datepicker.min.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="lib/bootstrap-datepicker-1.6.1/locales/bootstrap-datepicker.fr.min.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="lib/bootstrap-slider/9.1.3/bootstrap-slider.min.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="lib/typeahead/typeahead.bundle.min.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="lib/bootstrap-typeahead/bootstrap3-typeahead.min.js"
+    ></script>
+    <script src="lib/bootstrap-tagsinput-0.8.0/bootstrap-tagsinput.min.js"></script>
+    <script
+        type="text/javascript"
+        src="lib/fuse/fuse.min.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="js/extend.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="js/utils.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="js/ogcutils.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="js/configuration.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="js/zoom.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="js/measure.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="js/addlayers.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="js/info.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="js/search.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="js/mviewer.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="js/templates.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="js/featurestyles.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="js/custom.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="lib/i18njs/i18n.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="lib/moment/moment.js"
+    ></script>
+    <script
+        type="text/javascript"
+        src="lib/lodash-4.17.21/lodash.min.js"
+    ></script>
+    <script>
+        if (typeof (mviewer) == 'undefined' || typeof (configuration) == 'undefined' || typeof (info) == 'undefined') {
+            document.location.href = "pages/error_incompatibility.html";
         }
-        </script>
-        <script type="text/javascript" src="lib/olms/8.2.1/olms.js" ></script>
+    </script>
+    <script
+        type="text/javascript"
+        src="lib/olms/8.2.1/olms.js"
+    ></script>
 
-        <script type="text/javascript">
+    <script type="text/javascript">
         var API = {};
         $(document).ready(function () {
             "use strict";
             if (window.location.search) {
                 $.extend(API, $.parseJSON('{"' + decodeURIComponent(window.location.search.substring(1)
-                    .replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}'));
+                    .replace(/&/g, "\",\"").replace(/=/g, "\":\"")) + '"}'));
             }
 
             // Search for a config param
@@ -610,19 +1380,19 @@
                 url: configFile + '?_dc=' + (new Date()).getTime(),
                 dataType: "xml",
                 success: function (xml) {
-                    $( document ).on( "layersLoaded", function (e) {
+                    $(document).on("layersLoaded", function (e) {
                         mviewer.overLayersReady();
                         mviewer.showLayersByAttrOrder(mviewer.getLayersAttribute('rank'));
                         mviewer.orderLayerByIndex();
                     });
                     //load conf
-                    $( document ).on( "configurationCompleted", function (e, eData) {
+                    $(document).on("configurationCompleted", function (e, eData) {
                         // load env var
                         configuration.getEnvData(configFile.replace(".xml", ".json"), defaultEnvFile);
                         // load config on env var available
                         document.addEventListener("environementInfosAvailable", r => {
                             // set mviewer en from environment file
-                            mviewer.env = {...r.detail};
+                            mviewer.env = { ...r.detail };
                             //get JSON conf from xml;
                             var _conf = configuration.parseXML(eData.xml);
                             var style = "css/themes/default.css";
@@ -653,19 +1423,19 @@
                                 mviewer.initToolTip();
                             }, 2000);
                         });
-                    $( "#map" ).focus();
+                        $("#map").focus();
                     });
-                    $( document ).on( "applicationExtended", function (e, eData) {
+                    $(document).on("applicationExtended", function (e, eData) {
                         configuration.complete(eData.xml);
                     });
                     configuration.getExtensions(xml);
                 }, // fin success config
                 error: function (request, status, error) {
                     if (request.statusCode().status === 404) {
-                        $("#error h1").text(`Erreur ${request.statusCode().status} : ${error}`);
-                        document.location.href="pages/error_404.html?xml=" + configFile;
+                        $("#error h1").text(`Erreur ${ request.statusCode().status } : ${ error }`);
+                        document.location.href = "pages/error_404.html?xml=" + configFile;
                     } else if (status === 'parsererror') {
-                        document.location.href="pages/error_400.html?xml=" + configFile;
+                        document.location.href = "pages/error_400.html?xml=" + configFile;
                     }
                     $("#error").show();
                     $("#loading-page").hide();
@@ -680,26 +1450,31 @@
                     var actionMove = {
                         layerName: $(evt.item).attr("data-layerid"),
                         layerRef: "",
-                        action: ""};
+                        action: ""
+                    };
                     var itemsList = $(evt.from).find(".list-group-item");
                     //New position in the list
                     var newPos = evt.newIndex;
-                    if (newPos < itemsList.length -1) {
+                    if (newPos < itemsList.length - 1) {
                         //Get the under layer name
-                        actionMove.layerRef = $(itemsList[newPos +1]).attr("data-layerid");
+                        actionMove.layerRef = $(itemsList[newPos + 1]).attr("data-layerid");
                         actionMove.action = "up"
                     } else {
                         //Get the over layer name
-                        actionMove.layerRef = $(itemsList[newPos -1]).attr("data-layerid");
+                        actionMove.layerRef = $(itemsList[newPos - 1]).attr("data-layerid");
                         actionMove.action = "down";
                     }
                     mviewer.orderLayer(actionMove);
-                  }
+                }
             });
-            $("#right-panel .close,#bottom-panel .mv-close").click(function () {mviewer.hideLocation()});
+            $("#right-panel .close,#bottom-panel .mv-close").click(function () { mviewer.hideLocation() });
 
         });
-        </script>
-        <script type="text/javascript" src="lib/simple-slidebar/slidebar_menu.js"></script>
+    </script>
+    <script
+        type="text/javascript"
+        src="lib/simple-slidebar/slidebar_menu.js"
+    ></script>
 </body>
+
 </html>

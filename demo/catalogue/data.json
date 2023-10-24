@@ -3,7 +3,9 @@
     "logo": "",
     "searchable": true,
     "template": "./catalogue/template/catalogue.mst",
-    "searchKeys": ["tags"],
+    "searchKeys": [
+      "tags"
+    ],
     "placeholder": "Exemple: SLD",
     "inputMin": 2
   },
@@ -414,6 +416,15 @@
       "level": "avancé",
       "url_source": "../demo/api.xml",
       "url_demo": "../?config=demo/api.xml"
+    },
+    {
+      "id": "47",
+      "title": "Affichage COG / TIFF",
+      "tags": "cog,tiff,raster,custom,ndvi,reprojection",
+      "description": "Affichage d'un COG, d'un COG NDVI+NDWI (style avec classes OpenLayers) et d'un fichier TIFF reprojeté à la volée avec interrogation du pixel",
+      "level": "intermédiaire",
+      "url_source": "../demo/cog-geotiff/cog.xml",
+      "url_demo": "../?config=demo/cog-geotiff/cog.xml"
     }
   ]
 }
