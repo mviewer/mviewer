@@ -1,0 +1,108 @@
+{{#features}}
+	<li class="item" id="{{feature_ol_uid}}">
+		<h2 class="rb-title-feature">{{nom_com}}</h2>
+			<h3>API Services publics</h3>
+			<a href="https://etablissements-publics.api.gouv.fr/v3/communes/{{insee_com}}/mairie" target="_blank" title="Document" class="rb-but-link"><span class="fa fa-file" aria-hidden="true"></span> Info mairie</a>    
+			<div>
+				<span style="font-weight:bold"> Nom :</span> <span id="nom_mairie_{{insee_com}}" /><br/>
+				<span style="font-weight:bold"> Adresse :</span> <span id="adresse_{{insee_com}}" /><br/>
+				<span style="font-weight:bold"> Email :</span> <span id="email_{{insee_com}}" /><br/>
+			</div>
+			<h3>API GPU</h3>
+			<a id="url_gpu" target="_blank" title="Document" class="rb-but-link"><span class="fa fa-file" aria-hidden="true"></span> Doc GPU</a>    
+			<div>
+				<span style="font-weight:bold"> Zonage :</span> <span id="lib_gpu" /><br/>
+			</div>
+			<h3>API Georisques</h3>
+			<a id="url_risque" target="_blank" title="Document" class="rb-but-link"><span class="fa fa-file" aria-hidden="true"></span> Info risques</a>    
+			<h3>API CEREMA</h3>
+			<div>
+				<span style="font-weight:bold"> Conso NAF en <span id="millesime" /> :</span> <span id="naf_arti" /> m²<br/>
+			</div>
+
+
+	</li>
+{{/features}}
+
+<script>
+	var communes = [];
+	{{#features}}
+		communes.push('{{insee_com}}');
+	{{/features}}
+
+//Géorisques et GPU
+	var url_risque = '';
+	var url_gpu = '';
+
+	if (mviewer.clickedCoordinates) {
+		var urladdr ="https://api-adresse.data.gouv.fr/reverse/?lon="+mviewer.clickedCoordinates.x+"&lat="+mviewer.clickedCoordinates.y;
+		url_gpu = "https://apicarto.ign.fr/api/gpu/zone-urba?geom=%7B%22type%22%3A%20%22Point%22%2C%22coordinates%22%3A%5B"+mviewer.clickedCoordinates.x+"%2C"+mviewer.clickedCoordinates.y+"%5D%7D";
+		console.log(url_gpu);
+		
+		$.ajax({
+			url:urladdr,
+			dataType: "json",
+			success (data) {
+				var adresse = data.features[0].properties.label;
+				url_risque = "https://www.georisques.gouv.fr/mes-risques/connaitre-les-risques-pres-de-chez-moi/rapport2?form-adresse=true&isCadastre=false&type=housenumber&typeForm=adresse&lon="+mviewer.clickedCoordinates.x+"&lat="+mviewer.clickedCoordinates.y+"&go_back=%2F&propertiesType=street&adresse="+adresse;
+				document.getElementById("url_risque").setAttribute("href",url_risque);
+		}});
+		$.ajax({
+			url:url_gpu,
+			dataType: "json",
+			success (data) {
+				var libelong = data.features[0].properties.libelong;
+				var urlfic = data.features[0].properties.urlfic;
+				$("#lib_gpu").text(libelong);
+				document.getElementById("url_gpu").setAttribute("href",urlfic);
+		}});
+	}
+//Info communes
+	communes.forEach(function (code_insee, id) {
+		var url="https://etablissements-publics.api.gouv.fr/v3/communes/"+code_insee+"/mairie";
+		$.ajax({
+			url,
+			dataType: "json",
+			success (data) {
+				var properties = data.features[0].properties;
+				var code_insee = properties.codeInsee;
+				var nom_mairie = properties.nom;
+				var email = properties.email;
+				$("#email_" + code_insee).text(email);
+				$("#nom_mairie_" + code_insee).text(nom_mairie);
+				var adresse = (properties.adresses[0].lignes[0]) + " " + (properties.adresses[0].codePostal) + " " + (properties.adresses[0].commune)
+				$("#adresse_" + code_insee).text(adresse);
+		}});
+		
+		var url_cerema="https://apidf-preprod.cerema.fr/indicateurs/conso_espace/communes/"+code_insee;
+		console.log(url_cerema);
+		$.ajax({
+			url:url_cerema,
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader("accept", "application/json")
+			},
+			dataType: "json",
+			success (data) {
+				var lastyear = data.count - 1;
+				var millesime = data.results[lastyear].annee;
+				var naf_arti = data.results[lastyear].naf_arti;
+				$("#millesime").text(millesime);
+				$("#naf_arti").text(naf_arti);
+		}});
+
+		/*var url_insee="https://api.insee.fr/donnees-locales/V0.1/donnees/geo-IND_POPLEGALES@POPLEG2020/COM-"+code_insee+"35031.ALL";
+		$.ajax({
+			url:url_insee,
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader("Authorization" , "Bearer my_token"),
+				xhr.setRequestHeader("accept", "application/xml")
+			},
+			dataType: "xml",
+			contentType: 'application/xml',
+			success (data) {
+				console.log(data);
+		}});*/
+
+	});
+
+</script>
