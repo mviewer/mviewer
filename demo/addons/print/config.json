@@ -1,0 +1,13 @@
+{
+    "js": ["print.js"],
+    "css": "style.css",
+    "html": "print.html",
+    "target": "page-content-wrapper",
+    "options": {
+      "mviewer": {
+        "print": {
+        }
+      }
+    }
+  }
+  

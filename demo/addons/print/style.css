@@ -1,0 +1,23 @@
+/*
+    * Plugin Print
+    * Propriétés de style
+*/
+
+/* Non affichage du btn d'accès au plugin en mode mobile */
+.xs #printBtn {
+    display: none;
+}
+
+/* Modification de la taille de modale - modal-lg non disponible avec bootstrap 3 */
+
+#printModal .modal-dialog {
+    width: 70%!important;
+}
+
+#printModal .modal-header {
+    padding: 2em 2em 0em 2em;
+}
+
+#printModal .modal-body, #printModal .modal-footer {
+    padding: 1em 2em;
+}
