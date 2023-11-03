@@ -5,19 +5,168 @@
 
 /* Non affichage du btn d'accès au plugin en mode mobile */
 .xs #printBtn {
-    display: none;
+	display: none;
 }
 
-/* Modification de la taille de modale - modal-lg non disponible avec bootstrap 3 */
+/* 
+* Propriétés de la modale 
+*/
 
+/* Modification de la taille de modale - modal-lg non disponible avec bootstrap 3 */
 #printModal .modal-dialog {
-    width: 70%!important;
+	width: 65% !important;
 }
 
 #printModal .modal-header {
-    padding: 2em 2em 0em 2em;
+	padding: 2em 2em 0em 2em;
 }
 
-#printModal .modal-body, #printModal .modal-footer {
-    padding: 1em 2em;
+#printModal .modal-body {
+	padding: 1em 2em 2em;
+}
+
+#printModal .modal-footer {
+	padding: 1em 2em;
+}
+
+#printModal .modal-title {
+	font-weight: bold;
+}
+
+/* Structure de la modale */
+.bodyFlex {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: stretch;
+}
+
+/* 
+* Propriétés globales des blocs 
+*/
+
+.templateImpress {
+	border: 1px solid grey;
+	padding: 15px;
+}
+
+.blockImpress {
+	border: 1px solid #8080804f;
+	background-color: #a9a9a912;
+}
+
+.blockImpress .badge {
+	background-color: #7788995c;
+	color: #4c5660;
+	font-size: 10px;
+	font-weight: 700;
+	text-transform: uppercase;
+	width: fit-content;
+	padding: 2px;
+	letter-spacing: .05rem;
+	position: absolute;
+	border-radius: 0;
+	z-index: 1;
+}
+
+.blockImpress textarea {
+	border: none;
+	background-color: #822e2e00;
+	overflow: hidden;
+	resize: none;
+	width: 100%;
+	height: 100%;
+}
+
+.title .inputText {
+	font-size: large;
+	font-weight: 700;
+	padding: 20px 10px 0px;
+}
+
+.infos .inputText {
+	font-size: 8px;
+	padding: 20px 5px 5px;
+	font-style: italic;
+}
+
+.description .inputText {
+	padding: 20px 10px 5px;
+}
+
+#mapBlock {
+	width: 100%;
+	height: 100%;
+}
+
+#scaleline-mapPrint {
+	position: relative;
+	width: fit-content;
+	left: 30px;
+}
+
+#northArrow-mapPrint {
+	position: relative;
+	bottom: 45px;
+	left: 5px;
+}
+
+#northArrow-mapPrint img {
+	width: 25px;
+}
+
+/* 
+* myLandscapeA4
+* Spécifications du gabarit initial
+*/
+
+/* Taille du gabarit A4*/
+#myLandscapeA4 {
+	width: 842px;
+	height: 596px;
+}
+
+/* Grille */
+#myLandscapeA4 .containerBlockImpress {
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	grid-template-rows: repeat(6, 1fr);
+	gap: 10px;
+	height: 100%;
+	width: 100%;
+}
+
+#myLandscapeA4 .title {
+	grid-column: 1 / 7;
+}
+
+#myLandscapeA4 .mapP {
+	grid-row: 2 / 6;
+	grid-column: 1 / 5;
+}
+
+#myLandscapeA4 .legend {
+	grid-row: 2 / 6;
+	grid-column: 5 / 7;
+}
+
+#myLandscapeA4 .infos {
+	grid-column: 1 / 2;
+}
+
+#myLandscapeA4 .description {
+	grid-column: 2 / 7;
+}
+
+/* Propriété lors de l'impression PDF */
+
+#myLandscapeA4.print {
+	width: 297mm;
+	height: 210mm;
+	border: none;
+}
+
+.print .badge {
+	display: none;
 }

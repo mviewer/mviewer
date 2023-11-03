@@ -1,5 +1,5 @@
 {
-    "js": ["print.js"],
+    "js": ["js/print.js","js/html2pdf.bundle.min.js"],
     "css": "style.css",
     "html": "print.html",
     "target": "page-content-wrapper",
