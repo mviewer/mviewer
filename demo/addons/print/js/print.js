@@ -50,7 +50,7 @@ var print = (function () {
       var b = mviewer.getActiveBaseLayer();
       var i = mviewer.getMap().getLayers().getArray();
       i.forEach((function(layer) {
-        // Filter only the visible layers
+        // Filter only the visible basemap
         if(layer.get('blid') === b) {
           map.addLayer(layer);
         }
