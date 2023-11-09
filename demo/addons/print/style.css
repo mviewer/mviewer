@@ -46,7 +46,7 @@
 * Propriétés globales des blocs 
 */
 
-.templateImpress {
+#blockViewImpress {
 	border: 1px solid grey;
 	padding: 15px;
 }
@@ -91,7 +91,7 @@
 	font-style: italic;
 }
 
-.description .inputText {
+.comments .inputText {
 	padding: 20px 10px 5px;
 }
 
@@ -121,14 +121,8 @@
 * Spécifications du gabarit initial
 */
 
-/* Taille du gabarit A4*/
-#myLandscapeA4 {
-	width: 842px;
-	height: 596px;
-}
-
 /* Grille */
-#myLandscapeA4 .containerBlockImpress {
+.containerBlockImpress {
 	display: grid;
 	grid-template-columns: repeat(6, 1fr);
 	grid-template-rows: repeat(6, 1fr);
@@ -155,7 +149,7 @@
 	grid-column: 1 / 2;
 }
 
-#myLandscapeA4 .description {
+#myLandscapeA4 .comments {
 	grid-column: 2 / 7;
 }
 
@@ -164,6 +158,7 @@
 #myLandscapeA4.print {
 	width: 297mm;
 	height: 210mm;
+	padding: 2px;
 	border: none;
 }
 

@@ -1,48 +1,79 @@
 <!-- Modal -->
-<div id="printModal" class="modal fade" role="dialog">
+<div
+  id="printModal"
+  class="modal fade"
+  role="dialog"
+>
   <div class="modal-dialog modal-lg">
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+        >&times;</button>
         <h3 class="modal-title">Imprimer la carte</h3>
       </div>
       <div class="modal-body bodyFlex">
         <div id="blockOptionsImpress">
           <h4>Les options de la carte</h4>
         </div>
-        <div id="blockViewImpress" class="">
-          <div id="myLandscapeA4" class="templateImpress">
-            <div class="containerBlockImpress">
-              <div class="blockImpress title">
-                <div class="badge">Titre</div>
-                <div class="inputText">
-                  <textarea rows="2">Mon titre</textarea>
-                </div>
+        <div
+          id="blockViewImpress"
+          class=""
+        >
+          <!-- This part will be selected by user -->
+          <div
+            id="myLandscapeA4"
+            class="containerBlockImpress"
+          >
+            <div class="blockImpress title">
+              <div class="badge">Titre</div>
+              <div class="inputText">
+                <textarea rows="2">Mon titre</textarea>
               </div>
-              <div class="blockImpress mapP" id="containMap">
-                <div class="badge">Carte</div>
-              </div>
-              <div class="blockImpress legend">
-                <div class="badge">Légende</div>
-              </div>
-              <div class="blockImpress infos">
-                <div class="badge">Informations</div>
-                <div class="inputText">Carte réalisée à l'aide de la solution mviewer</div>
-              </div>
-              <div class="blockImpress description">
-                <div class="badge">Commentaire</div>
-                <div class="inputText">
-                  <textarea rows="3">Mon commentaire</textarea>
-                </div>
+            </div>
+            <div
+              class="blockImpress mapP"
+              id="containMap"
+            >
+              <div class="badge">Carte</div>
+            </div>
+            <div class="blockImpress legend">
+              <div class="badge">Légende</div>
+            </div>
+            <!-- logo and carte area -->
+            <div class="blockImpress infos">
+              <div class="badge">Informations</div>
+              <div class="inputText">Carte réalisée à l'aide de la solution mviewer</div>
+            </div>
+            <div class="blockImpress comments">
+              <div class="badge">Commentaire</div>
+              <div class="inputText">
+                <textarea rows="3">Mon commentaire</textarea>
               </div>
             </div>
           </div>
+          <!-- end -->
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-        <button type="button" class="btn btn-primary" id="printMapBtn" onclick="print.templatePrint();">Imprimer</button>
+        <button
+          type="button"
+          class="btn btn-default"
+          data-dismiss="modal"
+        >Fermer</button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="previewPrintMapBtn"
+        >Voir</button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="printMapBtn"
+        >Imprimer</button>
       </div>
     </div>
   </div>

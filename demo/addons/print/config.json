@@ -1,13 +1,15 @@
 {
-    "js": ["js/print.js","js/html2pdf.bundle.min.js"],
-    "css": "style.css",
-    "html": "print.html",
-    "target": "page-content-wrapper",
-    "options": {
-      "mviewer": {
-        "print": {
-        }
-      }
+  "js": [
+    "js/print.js",
+    "lib/html2pdf/html2pdf.bundle.min.js"
+  ],
+  "css": "style.css",
+  "type": "module",
+  "html": "print.html",
+  "target": "page-content-wrapper",
+  "options": {
+    "mviewer": {
+      "print": {}
     }
   }
-  
+}
