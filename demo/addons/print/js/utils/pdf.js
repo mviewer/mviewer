@@ -12,7 +12,7 @@ const defaultOptions = {
   // See official doc for more type and quality options :
   // https://ekoopmans.github.io/html2pdf.js/#image-type-and-quality
   image: { type: "jpeg", quality: 0.95 },
-  html2canvas: { scale: 3 },
+  html2canvas: { scale: 3, useCORS: true },
   // format could be string as "A4"
   // or an array with custom values [595.28, 841.89] in unit specified
   jsPDF: { unit: "mm", format: "A4", orientation: "landscape" },

@@ -25,7 +25,7 @@
             "legend": {
                 "row": "2/6",
                 "col": "5/7",
-                "type": "text"
+                "type": "legend"
             },
             "title": {
                 "row": "1/2",

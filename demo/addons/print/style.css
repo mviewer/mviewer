@@ -174,3 +174,11 @@
 	margin-top: 15%;
 	margin-right: 20px;
 }
+
+.print-legend-img {
+	margin: 5px;
+	margin-bottom: 5px;
+	background-color: white;
+	border: 1px solid grey;
+	padding: 5px;
+}

@@ -1,6 +1,8 @@
 import { defaultBlocksInfos } from "../const";
 import { getQrCodeImg } from "../utils/controls";
 
+import { Legend } from "./Legend";
+
 const defaultTemplate = ({
   id,
   title,
@@ -22,8 +24,10 @@ const defaultTemplate = ({
     case "qrcode":
       divByType = getQrCodeImg();
       break;
+    case "legend":
+      divByType = Legend();
     default:
-      divByType = placeHolder || "";
+      null;
   }
 
   const titleDiv = title ? `<div class="badge">${title || ""}</div>` : "";
