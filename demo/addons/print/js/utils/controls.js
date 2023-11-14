@@ -16,20 +16,20 @@ export const filterCheckBox = (layoutToUse = {}) => {
   if (!layoutToUse.hasOwnProperty("northUrl")) {
     northParent.classList.add("hide");
     document.querySelector(ID_NORTH_CHECKBOX).checked = false;
-    displayNorth(false);
+    displayNorth();
   } else {
     northParent.classList.remove("hide");
     document.querySelector(ID_NORTH_CHECKBOX).checked = true;
-    displayNorth(true);
+    displayNorth();
   }
   if (!layoutToUse?.items?.qrcode) {
     qrParent.classList.add("hide");
     document.querySelector(ID_QRCODE_CHECKBOX).checked = false;
-    displayQrCode(false);
+    displayQrCode();
   } else {
     qrParent.classList.remove("hide");
     document.querySelector(ID_QRCODE_CHECKBOX).checked = true;
-    displayQrCode(true);
+    displayQrCode();
   }
 };
 
@@ -39,25 +39,22 @@ export const iniCheckBox = () => {
   document.querySelector(ID_QRCODE_CHECKBOX).addEventListener("change", displayQrCode);
 };
 
-export const displayScale = (value = undefined) => {
-  const checked =
-    value != undefined ? value : document.querySelector(ID_SCALE_CHECKBOX).checked;
+export const displayScale = () => {
+  const checked = document.querySelector(ID_SCALE_CHECKBOX).checked;
   const mapPrint = mviewer.customComponents.print.printmap;
   const scale = mapPrint.getScale();
   checked ? mapPrint.addControl(scale) : mapPrint.removeControl(scale);
 };
 
-export const displayNorth = (value = undefined) => {
-  const checked =
-    value != undefined ? value : document.querySelector(ID_NORTH_CHECKBOX).checked;
+export const displayNorth = () => {
+  const checked = document.querySelector(ID_NORTH_CHECKBOX).checked;
   const northArrowDiv = document.querySelector(NORTH_DIV_SELECTOR);
   const classList = northArrowDiv.classList;
   checked ? classList.remove("hide") : classList.add("hide");
 };
 
-export const displayQrCode = (value = undefined) => {
-  const checked =
-    value != undefined ? value : document.querySelector(ID_QRCODE_CHECKBOX).checked;
+export const displayQrCode = () => {
+  const checked = document.querySelector(ID_QRCODE_CHECKBOX).checked;
   const qrCodeDiv = document.querySelector(QRCODE_DIV_SELECTOR);
   if (!qrCodeDiv) return;
   const classList = qrCodeDiv.classList;

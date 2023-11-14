@@ -28,7 +28,7 @@ const defaultTemplate = ({
 
   const titleDiv = title ? `<div class="badge">${title || ""}</div>` : "";
   const typeDiv = type
-    ? `<div class="${type} ${classNames}" style="${style}">${divByType}</div>`
+    ? `<div class="${type} ${classNames || ""}" style="${style || ""}">${divByType}</div>`
     : "";
 
   const html = `<div class="blockImpress" id="print-${id}" style="${rowGrid} ${

@@ -23,10 +23,10 @@ const initWithLayout = (layout) => {
     layoutToBlocks(layoutToUse);
     // init map
     Map(layout.northUrl);
-    // init checbox check event
-    iniCheckBox();
     // manage checkbox display
     filterCheckBox(layoutToUse);
+    // init checbox check event
+    iniCheckBox();
   });
   printMapBtn.addEventListener("click", downloadPDF);
   previewPrintMapBtn.addEventListener("click", displayPDF);
