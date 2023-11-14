@@ -8,7 +8,7 @@ const defaultLayers = [
 
 const defaultScale = new ol.control.ScaleLine({
   units: ["metric"],
-  target: document.getElementById("scaleline-mapPrint"),
+  target: "scaleline-mapPrint",
 });
 
 const defaultControls = {
@@ -17,12 +17,17 @@ const defaultControls = {
   rotate: false,
 };
 
-const template = (northImgUrl) => `
-<div id="mapBlock">
-  <div id="mapPrint" class="map" style="width: 100%;height: 100%;"></div>
-  <div id="scaleline-mapPrint" class="scaleline-external"></div> 
-  <div id="northArrow-mapPrint"><img src="${northImgUrl}" alt="North arrow"/></div>     
-</div>`;
+const template = (northImgUrl) => {
+  const northImg =
+    northImgUrl &&
+    `<div id="northArrow-mapPrint"><img src="${northImgUrl}" alt="North arrow"/></div>`;
+  return `
+    <div id="mapBlock">
+      <div id="mapPrint" class="map" style="width: 100%;height: 100%;"></div>
+      <div id="scaleline-mapPrint" class="scaleline-external"></div> 
+      ${northImg}
+    </div>`;
+};
 
 const createMap = (layers, controls) => {
   const view = mviewer.getMap().getView();
@@ -55,14 +60,15 @@ const getMviewerMapLayers = () => {
   return layers;
 };
 
-export default function (northImgUrl, customControls) {
-  $("#containMap").append(template(northImgUrl || defaultNorthImgUrl));
+export default function (northImgUrl) {
+  $("#print-mapPrint").append(template(northImgUrl || defaultNorthImgUrl));
 
-  const controls = { ...defaultControls, ...customControls };
   const mvMapLayers = getMviewerMapLayers();
   const layers = [...defaultLayers, ...mvMapLayers];
 
-  const map = createMap(layers, controls);
+  const map = createMap(layers, defaultControls);
   // Create the scalelines within the two div elements
   map.addControl(defaultScale);
+  map.getScale = () => defaultScale;
+  mviewer.customComponents.print.printmap = map;
 }

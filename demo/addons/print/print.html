@@ -17,7 +17,64 @@
       </div>
       <div class="modal-body bodyFlex">
         <div id="blockOptionsImpress">
-          <h4>Les options de la carte</h4>
+          <h4><strong>Options de mise en page</strong></h4>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Orientation</h3>
+            </div>
+            <div class="panel-body">
+              <select
+                id="print-select-orientation"
+                class="form-control"
+              >
+                <option
+                  value=""
+                  selected
+                  i18n="print.select.landscape"
+                >Paysage</option>
+                <option
+                  value=""
+                  i18n="print.select.landscape"
+                >Portrait</option>
+              </select>
+            </div>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Options de la carte</h3>
+            </div>
+            <div class="panel-body">
+              <div class="input-group">
+                <input
+                  type="checkbox"
+                  id="print-scale-checkbox"
+                  class="print-option-checkbox"
+                  checked
+                  aria-label="..."
+                >
+                <label>Barre d'échelle</label>
+              </div>
+              <div class="input-group">
+                <input
+                  type="checkbox"
+                  id="print-north-checkbox"
+                  class="print-option-checkbox"
+                  checked
+                  aria-label="..."
+                >
+                <label>Orientation (Nord)</label>
+              </div>
+              <div class="input-group">
+                <input
+                  type="checkbox"
+                  id="print-qrcode-checkbox"
+                  class="print-option-checkbox"
+                  aria-label="..."
+                >
+                <label>QR Code (partage de la carte)</label>
+              </div>
+            </div>
+          </div>
         </div>
         <div
           id="blockViewImpress"
@@ -25,35 +82,13 @@
         >
           <!-- This part will be selected by user -->
           <div
-            id="myLandscapeA4"
+            id="printGridContainer"
             class="containerBlockImpress"
           >
-            <div class="blockImpress title">
-              <div class="badge">Titre</div>
-              <div class="inputText">
-                <textarea rows="2">Mon titre</textarea>
-              </div>
-            </div>
             <div
-              class="blockImpress mapP"
-              id="containMap"
-            >
-              <div class="badge">Carte</div>
-            </div>
-            <div class="blockImpress legend">
-              <div class="badge">Légende</div>
-            </div>
-            <!-- logo and carte area -->
-            <div class="blockImpress infos">
-              <div class="badge">Informations</div>
-              <div class="inputText">Carte réalisée à l'aide de la solution mviewer</div>
-            </div>
-            <div class="blockImpress comments">
-              <div class="badge">Commentaire</div>
-              <div class="inputText">
-                <textarea rows="3">Mon commentaire</textarea>
-              </div>
-            </div>
+              id="anchor"
+              style="display:none;"
+            ></div>
           </div>
           <!-- end -->
         </div>

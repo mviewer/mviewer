@@ -14,7 +14,7 @@
 
 /* Modification de la taille de modale - modal-lg non disponible avec bootstrap 3 */
 #printModal .modal-dialog {
-	width: 65% !important;
+	width: 80% !important;
 }
 
 #printModal .modal-header {
@@ -38,7 +38,7 @@
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
-	justify-content: space-between;
+	justify-content: flex-start;
 	align-items: stretch;
 }
 
@@ -79,19 +79,19 @@
 	height: 100%;
 }
 
-.title .inputText {
+#print-title .text {
 	font-size: large;
 	font-weight: 700;
 	padding: 20px 10px 0px;
 }
 
-.infos .inputText {
+#print-informations .text {
 	font-size: 8px;
 	padding: 20px 5px 5px;
 	font-style: italic;
 }
 
-.comments .inputText {
+#print-comments .text {
 	padding: 20px 10px 5px;
 }
 
@@ -117,7 +117,7 @@
 }
 
 /* 
-* myLandscapeA4
+* printGridContainer
 * Spécifications du gabarit initial
 */
 
@@ -131,31 +131,31 @@
 	width: 100%;
 }
 
-#myLandscapeA4 .title {
+#printGridContainer .title {
 	grid-column: 1 / 7;
 }
 
-#myLandscapeA4 .mapP {
+#printGridContainer .mapP {
 	grid-row: 2 / 6;
 	grid-column: 1 / 5;
 }
 
-#myLandscapeA4 .legend {
+#printGridContainer .legend {
 	grid-row: 2 / 6;
 	grid-column: 5 / 7;
 }
 
-#myLandscapeA4 .infos {
+#printGridContainer .infos {
 	grid-column: 1 / 2;
 }
 
-#myLandscapeA4 .comments {
+#printGridContainer .comments {
 	grid-column: 2 / 7;
 }
 
 /* Propriété lors de l'impression PDF */
 
-#myLandscapeA4.print {
+#printGridContainer.print {
 	width: 297mm;
 	height: 210mm;
 	padding: 2px;
@@ -164,4 +164,13 @@
 
 .print .badge {
 	display: none;
+}
+
+.print-option-checkbox {
+	margin-right: 10px !important;
+}
+
+#blockOptionsImpress .panel {
+	margin-top: 15%;
+	margin-right: 20px;
 }
