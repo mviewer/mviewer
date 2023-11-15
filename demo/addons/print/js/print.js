@@ -10,7 +10,7 @@ import { downloadLayouts, getSelectedLayout } from "./utils/layout.js";
 import { defaultLayout } from "./utils/defaultLayout.js";
 import ModalContent from "./components/ModalContent.js";
 
-const thisMviewerConfig = mviewer.customComponents.print.config.options.mviewer["print"];
+import { getOptions } from "./components/Block.js";
 
 const initWithLayout = (layout) => {
   $(window).on("shown.bs.modal", function () {
@@ -38,7 +38,7 @@ const initWithLayout = (layout) => {
 };
 
 const init = () => {
-  downloadLayouts(thisMviewerConfig.printLayouts)
+  downloadLayouts(getOptions().printLayouts)
     .then((jsonLayout) => initWithLayout(jsonLayout))
     .catch((err) => {
       initWithLayout(defaultLayout);

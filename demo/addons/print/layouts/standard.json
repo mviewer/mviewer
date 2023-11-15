@@ -15,7 +15,8 @@
             "informations": {
                 "title": "Informations",
                 "row": "6/7",
-                "col": "1/2"
+                "col": "1/2",
+                "type": "informations"
             },
             "comments": {
                 "row": "6/7",

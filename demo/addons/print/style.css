@@ -91,7 +91,7 @@
 	font-style: italic;
 }
 
-#print-comments .text {
+#print-comments .text, #print-informations .informations {
 	padding: 20px 10px 5px;
 }
 
@@ -100,10 +100,8 @@
 	height: 100%;
 }
 
-#scaleline-mapPrint {
-	position: relative;
-	width: fit-content;
-	left: 30px;
+#mapPrint .ol-scale-line {
+	left: 40px;
 }
 
 #northArrow-mapPrint {
@@ -181,4 +179,8 @@
 	background-color: white;
 	border: 1px solid grey;
 	padding: 5px;
+}
+
+#print-informations img {
+	max-width: 50px;
 }

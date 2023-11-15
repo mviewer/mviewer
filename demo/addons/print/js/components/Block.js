@@ -16,6 +16,15 @@ const defaultTemplate = ({
   const rowGrid = row ? `grid-row:${row}` : "";
   const colGrid = row ? `grid-column:${col}` : "";
 
+  const pluginsOption = getOptions();
+
+  const ownerInfos = `
+    <div>
+    <p class="small">${pluginsOption?.ownerInfos || ""}</p>
+    <img src=${pluginsOption?.ownerLogo || ""}/>
+    <div/>
+  `;
+
   let divByType = "";
   switch (type) {
     case "text":
@@ -26,6 +35,10 @@ const defaultTemplate = ({
       break;
     case "legend":
       divByType = Legend();
+      break;
+    case "informations":
+      divByType = ownerInfos;
+      break;
     default:
       null;
   }
@@ -69,4 +82,10 @@ export const deleteUselessBlocks = (itemsToDisplay) => {
 export const createBlock = (customInfos) => {
   let infos = defaultBlocksInfos[customInfos.id] || {};
   return defaultTemplate({ ...infos, ...customInfos, classNames: customInfos.class });
+};
+
+export const getOptions = () => {
+  const mviewerId = configuration.getConfiguration().application.id;
+  const options = mviewer.customComponents.print.config.options;
+  return options.mviewer[mviewerId];
 };
