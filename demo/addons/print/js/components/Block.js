@@ -1,7 +1,7 @@
 import { defaultBlocksInfos } from "../const.js";
 import { getQrCodeImg } from "../utils/controls.js";
 
-import { Legend } from "./Legend";
+import { Legend } from "./Legend.js";
 
 const defaultTemplate = ({
   id,
