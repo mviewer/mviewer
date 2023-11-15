@@ -1,13 +1,14 @@
-import ToolbarButton from "./components/ToolbarButton";
-import Map from "./components/Map";
+import ToolbarButton from "./components/ToolbarButton.js";
+import Map from "./components/Map.js";
 
-import { initOptions } from "./utils/printOptions";
+import { initOptions } from "./utils/printOptions.js";
 
-import { filterCheckBox, iniCheckBox } from "./utils/controls";
+import { filterCheckBox, iniCheckBox } from "./utils/controls.js";
 
-import { downloadPDF, displayPDF } from "./utils/pdf";
-import { downloadLayouts, layoutToBlocks, getSelectedLayout } from "./utils/layout";
-import { defaultLayout } from "./utils/defaultLayout";
+import { downloadPDF, displayPDF } from "./utils/pdf.js";
+import { downloadLayouts, getSelectedLayout } from "./utils/layout.js";
+import { defaultLayout } from "./utils/defaultLayout.js";
+import ModalContent from "./components/ModalContent.js";
 
 const thisMviewerConfig = mviewer.customComponents.print.config.options.mviewer["print"];
 
@@ -20,7 +21,7 @@ const initWithLayout = (layout) => {
     initOptions(layout);
     // init modal
     const layoutToUse = getSelectedLayout(layout);
-    layoutToBlocks(layoutToUse);
+    ModalContent(layoutToUse);
     // init map
     Map(layout.northUrl);
     // manage checkbox display
@@ -28,8 +29,12 @@ const initWithLayout = (layout) => {
     // init checbox check event
     iniCheckBox();
   });
-  printMapBtn.addEventListener("click", downloadPDF);
-  previewPrintMapBtn.addEventListener("click", displayPDF);
+  document
+    .querySelectorAll(".print-preview-btn")
+    .forEach((z) => z.addEventListener("click", displayPDF));
+  document
+    .querySelectorAll(".print-download-btn")
+    .forEach((z) => z.addEventListener("click", downloadPDF));
 };
 
 const init = () => {

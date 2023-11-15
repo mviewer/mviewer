@@ -4,7 +4,7 @@
 
 // Add button to toolstoolbar
 
-const tooltip = mviewer.tr("Imprimer la carte");
+const tooltip = "Imprimer la carte";
 
 const template = `
 <button id="printBtn" class="btn btn-default btn-raised"

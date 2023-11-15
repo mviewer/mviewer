@@ -1,12 +1,13 @@
-import { filterCheckBox } from "./controls";
-import { layoutToBlocks, getSelectedLayout } from "./layout";
+import ModalContent from "../components/ModalContent.js";
+import { filterCheckBox } from "./controls.js";
+import { getSelectedLayout } from "./layout.js";
 
 const activeOrientationChangeAction = (layoutJson) => {
   const selectOrientation = document.getElementById("print-select-orientation");
   if (!selectOrientation) return;
   selectOrientation.addEventListener("change", () => {
     const layoutToUse = getSelectedLayout(layoutJson);
-    layoutToBlocks(layoutToUse);
+    ModalContent(layoutToUse);
     filterCheckBox(layoutToUse);
   });
 };

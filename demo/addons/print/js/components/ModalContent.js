@@ -1,10 +1,15 @@
-import { createBlock, deleteBlocksById, updateBlock, deleteUselessBlocks } from "./Block";
+import {
+  createBlock,
+  deleteBlocksById,
+  updateBlock,
+  deleteUselessBlocks,
+} from "./Block.js";
 
 import { initOptions } from "../utils/printOptions";
 
 const parentModalId = "blockViewImpress";
 
-const createAndAddBlocs = (items) => {
+const createAndAddBlocs = (items, refresh = false) => {
   const modalGridContainer = document.getElementById("anchor");
 
   // start by delete if necessary
@@ -13,7 +18,7 @@ const createAndAddBlocs = (items) => {
   // update size or create block for each layout item
   Object.keys(items).forEach((item) => {
     const divId = `print-${item}`;
-    if (document.getElementById(divId)) {
+    if (document.getElementById(divId) && !refresh) {
       // update
       updateBlock({ ...items[item], id: item });
     } else {
@@ -38,6 +43,7 @@ const setSize = (format = "A4", landscape) => {
 };
 
 export default (layoutJson) => {
+  console.log("modalContent");
   if (!document.getElementById(parentModalId)) return;
   // create blocks
 

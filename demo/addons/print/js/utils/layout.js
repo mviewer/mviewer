@@ -1,5 +1,3 @@
-import ModalContent from "../components/ModalContent";
-
 export const downloadLayouts = (url) => {
   return fetch(url)
     .then((r) => r.json())
@@ -26,8 +24,4 @@ export const getSelectedLayout = (jsonLayout, format = "A4") => {
 
   const isLandscape = document.getElementById("print-select-orientation").value == "true";
   return selectedFormats.filter((x) => (isLandscape ? x.landscape : !x.landscape))[0];
-};
-
-export const layoutToBlocks = (layoutToUse) => {
-  ModalContent(layoutToUse);
 };

@@ -1,5 +1,5 @@
-import { defaultBlocksInfos } from "../const";
-import { getQrCodeImg } from "../utils/controls";
+import { defaultBlocksInfos } from "../const.js";
+import { getQrCodeImg } from "../utils/controls.js";
 
 import { Legend } from "./Legend";
 
