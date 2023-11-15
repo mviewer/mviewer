@@ -1,11 +1,4 @@
-import {
-  createBlock,
-  deleteBlocksById,
-  updateBlock,
-  deleteUselessBlocks,
-} from "./Block.js";
-
-import { initOptions } from "../utils/printOptions";
+import { createBlock, updateBlock, deleteUselessBlocks } from "./Block.js";
 
 const parentModalId = "blockViewImpress";
 
