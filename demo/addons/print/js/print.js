@@ -22,19 +22,40 @@ const initWithLayout = (layout) => {
     // init modal
     const layoutToUse = getSelectedLayout(layout);
     ModalContent(layoutToUse);
-    // init map
-    Map(layout.northUrl);
     // manage checkbox display
     filterCheckBox(layoutToUse);
     // init checbox check event
     iniCheckBox();
+    document.querySelector(".print-reset-btn").addEventListener("click", () => {
+      // init modal
+      const layoutSelected = getSelectedLayout(layout);
+      ModalContent(layoutSelected);
+    });
   });
-  document
-    .querySelectorAll(".print-preview-btn")
-    .forEach((z) => z.addEventListener("click", displayPDF));
-  document
-    .querySelectorAll(".print-download-btn")
-    .forEach((z) => z.addEventListener("click", downloadPDF));
+  document.querySelectorAll(".print-preview-btn").forEach((z) =>
+    z.addEventListener("click", (evt) => {
+      const isLandscape =
+        document.getElementById("print-select-orientation").value == "true";
+      displayPDF({
+        jsPDF: {
+          unit: "mm",
+          format: "A4",
+          orientation: isLandscape ? "landscape" : "portrait",
+        },
+      });
+    })
+  );
+  document.querySelectorAll(".print-download-btn").forEach((z) =>
+    z.addEventListener("click", (evt) => {
+      downloadPDF({
+        jsPDF: {
+          unit: "mm",
+          format: "A4",
+          orientation: isLandscape ? "landscape" : "portrait",
+        },
+      });
+    })
+  );
 };
 
 const init = () => {

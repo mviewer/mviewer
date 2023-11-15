@@ -32,5 +32,4 @@ export const readOrientationOptions = (json) => {
 export const initOptions = (jsonLayout) => {
   readOrientationOptions(jsonLayout);
   activeOrientationChangeAction(jsonLayout);
-  console.log(jsonLayout);
 };

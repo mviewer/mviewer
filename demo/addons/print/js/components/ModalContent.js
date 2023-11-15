@@ -1,8 +1,14 @@
-import { createBlock, updateBlock, deleteUselessBlocks } from "./Block.js";
+import {
+  createBlock,
+  updateBlock,
+  deleteUselessBlocks,
+  deleteBlocksById,
+} from "./Block.js";
+import Map from "./Map.js";
 
 const parentModalId = "blockViewImpress";
 
-const createAndAddBlocs = (items, refresh = false) => {
+const createAndAddBlocs = (items) => {
   const modalGridContainer = document.getElementById("anchor");
 
   // start by delete if necessary
@@ -10,15 +16,10 @@ const createAndAddBlocs = (items, refresh = false) => {
 
   // update size or create block for each layout item
   Object.keys(items).forEach((item) => {
-    const divId = `print-${item}`;
-    if (document.getElementById(divId) && !refresh) {
-      // update
-      updateBlock({ ...items[item], id: item });
-    } else {
-      // create
-      const block = createBlock({ ...items[item], id: item });
-      modalGridContainer.insertAdjacentHTML("afterend", block);
-    }
+    deleteBlocksById(item);
+    // create
+    const block = createBlock({ ...items[item], id: item });
+    modalGridContainer.insertAdjacentHTML("afterend", block);
   });
 };
 
@@ -35,14 +36,39 @@ const setSize = (format = "A4", landscape) => {
   }
 };
 
-export default (layoutJson) => {
-  console.log("modalContent");
+export default (layoutJson, reset) => {
+  printGridContainer.style.display = "grid";
   if (!document.getElementById(parentModalId)) return;
   // create blocks
 
-  createAndAddBlocs(layoutJson.items);
+  createAndAddBlocs(layoutJson.items, reset);
   setSize(layoutJson.format, layoutJson.landscape);
   if (mviewer.customComponents.print.printmap) {
     mviewer.customComponents.print.printmap.updateSize();
   }
+
+  // init drag action
+  $(".blockImpress").easyDrag({ container: $("#printGridContainer"), handle: ".badge" });
+
+  // init close action
+  [...document.querySelectorAll(".print-panel-close")].forEach((x) => {
+    x.addEventListener("click", (x) => {
+      x.target.closest(".blockImpress ").remove();
+    });
+  });
+
+  const positionsHtml = [...document.querySelectorAll(".blockImpress")].map((x) => ({
+    position: x.getClientRects()[0],
+    id: x.id,
+  }));
+  printGridContainer.style.display = "block";
+  positionsHtml.forEach((x) => {
+    const el = document.getElementById(x.id);
+    el.style.position = "relative";
+    el.style.width = `${x.position.width}px`;
+    el.style.height = `${x.position.height}px`;
+    $(el).offset(x.position);
+  });
+  // init map
+  Map(layoutJson.northUrl);
 };

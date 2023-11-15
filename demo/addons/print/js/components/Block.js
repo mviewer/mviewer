@@ -43,7 +43,7 @@ const defaultTemplate = ({
       null;
   }
 
-  const titleDiv = title ? `<div class="badge">${title || ""}</div>` : "";
+  const titleDiv = `<div class="badge">${title || ""}</div>`;
   const typeDiv = type
     ? `<div class="${type} ${classNames || ""}" style="${style || ""}">${divByType}</div>`
     : "";
@@ -52,6 +52,7 @@ const defaultTemplate = ({
     (rowGrid ? "; " : "") + colGrid
   }">
         ${titleDiv}
+        <button type="button" class="close print-panel-close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         ${typeDiv}
     </div>`;
   return html;

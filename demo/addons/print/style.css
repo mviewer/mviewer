@@ -51,9 +51,21 @@
 	padding: 15px;
 }
 
+.print .print-panel-close {
+	display: none;
+}
+
+
 .blockImpress {
 	border: 1px solid #8080804f;
 	background-color: #a9a9a912;
+	resize: both;
+	overflow: hidden;
+	min-height: fit-content;
+    /* min-width: fit-content; */
+	max-width: 100%;
+    max-height: 100%;
+
 }
 
 .blockImpress .badge {
@@ -129,39 +141,42 @@
 	width: 100%;
 }
 
-#printGridContainer .title {
-	grid-column: 1 / 7;
-}
-
-#printGridContainer .mapP {
-	grid-row: 2 / 6;
-	grid-column: 1 / 5;
-}
-
 #printGridContainer .legend {
-	grid-row: 2 / 6;
-	grid-column: 5 / 7;
-}
-
-#printGridContainer .infos {
-	grid-column: 1 / 2;
-}
-
-#printGridContainer .comments {
-	grid-column: 2 / 7;
+	margin-top: 20px;
 }
 
 /* Propriété lors de l'impression PDF */
 
 #printGridContainer.print {
-	width: 297mm;
-	height: 210mm;
 	padding: 2px;
 	border: none;
 }
 
+#printGridContainer.a4-landscape {
+	width: 297mm;
+	height: 210mm;
+}
+
+#printGridContainer.a4-portrait {
+	width: 210mm;
+	height: 297mm;
+}
+
 .print .badge {
 	display: none;
+}
+
+.print .blockImpress {
+	background-color: transparent;
+}
+
+.print .legend {
+	margin-top:0px !important;
+}
+
+.print #print-qrcode, .print #print-legend, .print #print-title, .print #print-informations{
+	border: none;
+
 }
 
 .print-option-checkbox {
@@ -183,4 +198,13 @@
 
 #print-informations img {
 	max-width: 50px;
+}
+
+.print-panel-close {
+	position: absolute;
+	right: 5px;
+	z-index: 1;
+	margin: 2px;
+	opacity: .6;
+	background-color: white;
 }
