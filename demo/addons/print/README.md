@@ -8,7 +8,9 @@ Only A4 (portrail/landscape) are available for this version.
 
 Here, you can find a simple PDF rendered with this mviewer Print extension :
 
-[mviewerMap.pdf](https://github.com/jdev-org/mviewer/files/13376227/mviewerMap.pdf)
+[mviewer-print-example.pdf](https://github.com/jdev-org/mviewer/files/13376242/mviewer-print-example.pdf)
+
+
 
 ## Installation
 
