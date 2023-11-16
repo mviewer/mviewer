@@ -142,9 +142,9 @@ Here, a draw to understand row / col values :
 ![image](https://github.com/jdev-org/mviewer/assets/16317988/9c0bc7d7-323a-45bc-b118-eecad06033ff)
 
 > Here, find some documentation and playground to understand :
-> https://developer.mozilla.org/fr/docs/Web/CSS/grid
-> https://blog.hubspot.fr/website/css-grid
-> https://codepen.io/HubSpot-France/pen/WNJvamo
+> - https://developer.mozilla.org/fr/docs/Web/CSS/grid
+> - https://blog.hubspot.fr/website/css-grid
+> - https://codepen.io/HubSpot-France/pen/WNJvamo
 
 So, in the layout JSON file, change default values to custom items positions.
 
