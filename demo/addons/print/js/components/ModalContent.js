@@ -31,12 +31,12 @@ const setSize = (format = "A4", landscape) => {
   }
 };
 
-export default (layoutJson, reset) => {
+export default (layoutJson) => {
   printGridContainer.style.display = "grid";
   if (!document.getElementById(parentModalId)) return;
   // create blocks
 
-  createAndAddBlocs(layoutJson.items, reset);
+  createAndAddBlocs(layoutJson.items);
   setSize(layoutJson.format, layoutJson.landscape);
   if (mviewer.customComponents.print.printmap) {
     mviewer.customComponents.print.printmap.updateSize();
@@ -59,7 +59,7 @@ export default (layoutJson, reset) => {
   printGridContainer.style.display = "block";
   positionsHtml.forEach((x) => {
     const el = document.getElementById(x.id);
-    el.style.position = "relative";
+    el.style.position = "absolute";
     el.style.width = `${x.position.width}px`;
     el.style.height = `${x.position.height}px`;
     $(el).offset(x.position);
