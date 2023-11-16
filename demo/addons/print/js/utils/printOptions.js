@@ -32,4 +32,9 @@ export const readOrientationOptions = (json) => {
 export const initOptions = (jsonLayout) => {
   readOrientationOptions(jsonLayout);
   activeOrientationChangeAction(jsonLayout);
+
+  document.querySelectorAll("#blockOptionsImpress .panel-heading").forEach((x) => {
+    x.style.backgroundColor = $("#mv-navbar").css("background-color");
+    x.style.color = $(".mv-title").css("color");
+  });
 };

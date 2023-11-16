@@ -4,7 +4,7 @@ export const defaultBlocksInfos = {
     title: "Titre",
     row: "1 / 2",
     col: "1 / 7",
-    placeHolder: "",
+    placeHolder: document.querySelector(".mv-title").innerHTML,
     type: "text",
     zindex: 6,
   },
