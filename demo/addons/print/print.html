@@ -96,16 +96,43 @@
               ></span>
               Voir
             </button>
-            <button
-              type="button"
-              class="btn btn-primary print-download-btn"
-            >
-              <span
-                class="glyphicon glyphicon-print"
-                aria-hidden="true"
-              ></span>
-              Imprimer
-            </button>
+            <!-- Split button -->
+            <div class="btn-group">
+              <button
+                type="button"
+                class="btn btn-primary print-download-btn"
+              > <span
+                  class="glyphicon glyphicon-print"
+                  aria-hidden="true"
+                ></span>
+                Imprimer</button>
+              <button
+                type="button"
+                class="btn btn-primary dropdown-toggle"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a
+                    class="print-download-btn"
+                    href="#"
+                  ><span
+                      class="glyphicon glyphicon-file"
+                      aria-hidden="true"
+                    ></span> PDF</a></li>
+                <li><a
+                    class="print-png-btn"
+                    href="#"
+                  ><span
+                      class="glyphicon glyphicon-picture"
+                      aria-hidden="true"
+                    ></span> PNG</a></li>
+              </ul>
+            </div>
           </div>
         </div>
         <div

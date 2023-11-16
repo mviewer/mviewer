@@ -60,3 +60,24 @@ export const displayPDF = (options) => {
       element.classList.remove("a4-landscape");
     });
 };
+
+export const displayAsPng = (options) => {
+  const finalOptions = { ...defaultOptions, ...options };
+  const element = preparePrintElement(finalOptions);
+  html2pdf()
+    .set(finalOptions)
+    .from(element)
+    .toImg()
+    .outputImg()
+    .then(function (img) {
+      console.log(img);
+      // window.open(pdf.output("bloburl"), "_blank");
+      var download = document.createElement("a");
+      download.href = img.src;
+      download.download = "mviewer-print.png";
+      download.click();
+      element.classList.remove("print");
+      element.classList.remove("a4-portrait");
+      element.classList.remove("a4-landscape");
+    });
+};

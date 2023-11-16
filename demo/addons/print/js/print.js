@@ -4,7 +4,7 @@ import { initOptions } from "./utils/printOptions.js";
 
 import { filterCheckBox, iniCheckBox } from "./utils/controls.js";
 
-import { downloadPDF, displayPDF } from "./utils/pdf.js";
+import { downloadPDF, displayPDF, displayAsPng } from "./utils/pdf.js";
 import { downloadLayouts, getSelectedLayout } from "./utils/layout.js";
 import { defaultLayout } from "./utils/defaultLayout.js";
 import ModalContent from "./components/ModalContent.js";
@@ -44,6 +44,17 @@ const initWithLayout = (layout) => {
       });
     })
   );
+  document.querySelector(".print-png-btn").addEventListener("click", (evt) => {
+    const isLandscape =
+      document.getElementById("print-select-orientation").value == "true";
+    displayAsPng({
+      jsPDF: {
+        unit: "mm",
+        format: "A4",
+        orientation: isLandscape ? "landscape" : "portrait",
+      },
+    });
+  });
   document.querySelectorAll(".print-download-btn").forEach((z) =>
     z.addEventListener("click", (evt) => {
       const isLandscape =
