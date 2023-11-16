@@ -1,5 +1,4 @@
 import ToolbarButton from "./components/ToolbarButton.js";
-import Map from "./components/Map.js";
 
 import { initOptions } from "./utils/printOptions.js";
 
@@ -47,6 +46,8 @@ const initWithLayout = (layout) => {
   );
   document.querySelectorAll(".print-download-btn").forEach((z) =>
     z.addEventListener("click", (evt) => {
+      const isLandscape =
+        document.getElementById("print-select-orientation").value == "true";
       downloadPDF({
         jsPDF: {
           unit: "mm",

@@ -1,9 +1,4 @@
-import {
-  createBlock,
-  updateBlock,
-  deleteUselessBlocks,
-  deleteBlocksById,
-} from "./Block.js";
+import { createBlock, deleteUselessBlocks, deleteBlocksById } from "./Block.js";
 import Map from "./Map.js";
 
 const parentModalId = "blockViewImpress";
