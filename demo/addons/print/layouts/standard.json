@@ -15,8 +15,7 @@
             "informations": {
                 "title": "Informations",
                 "row": "6/7",
-                "col": "1/2",
-                "type": "informations"
+                "col": "1/2"
             },
             "comments": {
                 "row": "6/7",
@@ -28,18 +27,9 @@
                 "col": "5/7",
                 "type": "legend"
             },
-            "title": {
-                "row": "1/2",
-                "col": "1/6",
-                "type": "text"
-            },
+            "title": {},
             "qrcode": {
-                "col": "6/6",
-                "row": "1/2",
-                "type": "qrcode",
-                "title": "Partage",
-                "placeholder": "",
-                "style": "background-color: white",
+                "style": "background-color: white !important",
                 "class": "text-center"
             }
         }
