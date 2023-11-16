@@ -6,6 +6,10 @@ Only A4 (portrail/landscape) are available for this version.
 
 ![image](https://github.com/jdev-org/mviewer/assets/16317988/e84fd308-e08d-4314-812c-1f1403beba92)
 
+Here, you can find a simple PDF rendered with this mviewer Print extension :
+
+[mviewerMap.pdf](https://github.com/jdev-org/mviewer/files/13376227/mviewerMap.pdf)
+
 ## Installation
 
 By default, Print extension is already available in the `/demo/addons` directory.
