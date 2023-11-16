@@ -208,3 +208,7 @@
 	opacity: .6;
 	background-color: white;
 }
+
+#print-qrcode {
+	background-color: white
+}

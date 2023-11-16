@@ -66,4 +66,15 @@ export default (layoutJson, reset) => {
   });
   // init map
   Map(layoutJson.northUrl);
+
+  let timer;
+
+  let observer = new ResizeObserver(function (mutations) {
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      mviewer.customComponents.print.printmap.updateSize();
+    }, 110);
+  });
+  let child = document.querySelector("#print-mapPrint");
+  observer.observe(child);
 };

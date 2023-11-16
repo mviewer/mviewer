@@ -12,6 +12,7 @@ const defaultTemplate = ({
   col,
   style,
   classNames,
+  zindex,
 }) => {
   const rowGrid = row ? `grid-row:${row}` : "";
   const colGrid = row ? `grid-column:${col}` : "";
@@ -50,7 +51,7 @@ const defaultTemplate = ({
 
   const html = `<div class="blockImpress" id="print-${id}" style="${rowGrid} ${
     (rowGrid ? "; " : "") + colGrid
-  }">
+  }; z-index:${zindex}">
         ${titleDiv}
         <button type="button" class="close print-panel-close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         ${typeDiv}
