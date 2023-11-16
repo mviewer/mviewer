@@ -68,3 +68,34 @@ Only 3 application properties are possible in the config.json file :
 ```
 
 **That's all ! Now, learn how to manage and use a custom layout with a simple JSON file.**
+
+## Create you own template
+
+According to the previous configuration, you can use a custom layout template by mviewer application.
+
+### What is a layout template ?
+
+A template represents the configuration of the elements to be printed in a JSON file.
+
+The default template is available in `demo/addons/print/layouts/standard.json`.
+
+We will describe it to understand how to create you own template.
+
+### Template items
+
+By default, the print extension contains this items : 
+- map
+- legend
+- title
+- QR code picture
+- information area
+- comments area
+
+![image](https://github.com/jdev-org/mviewer/assets/16317988/77b466d7-40cf-4245-b3f6-c140948ba0e9)
+
+
+Each items are resizable and draggable (catch item by click hover grey badge) :
+
+![resize](https://github.com/jdev-org/mviewer/assets/16317988/ced61ebd-fae4-4f40-b5df-514e728d7cb2)
+
+
