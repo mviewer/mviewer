@@ -224,7 +224,9 @@ Also, you can display an item for landscape and remove it for portrait :
 
 ### Item properties
 
-Default elements already have default values.
+Default elements already have default values : 
+
+https://github.com/jdev-org/mviewer/blob/c857f6d839cf028756e4a7f6a86035dbe89cbb94/demo/addons/print/js/const.js#L2-L10
 
 **You can also use these properties to override default values.**
 
