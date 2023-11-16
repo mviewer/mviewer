@@ -142,9 +142,9 @@ Here, a draw to understand row / col values :
 ![image](https://github.com/jdev-org/mviewer/assets/16317988/9c0bc7d7-323a-45bc-b118-eecad06033ff)
 
 > Here, find some documentation and playground to understand :
-> https://developer.mozilla.org/fr/docs/Web/CSS/grid
-> https://blog.hubspot.fr/website/css-grid
-> https://codepen.io/HubSpot-France/pen/WNJvamo
+> - https://developer.mozilla.org/fr/docs/Web/CSS/grid
+> - https://blog.hubspot.fr/website/css-grid
+> - https://codepen.io/HubSpot-France/pen/WNJvamo
 
 So, in the layout JSON file, change default values to custom items positions.
 
@@ -224,7 +224,9 @@ Also, you can display an item for landscape and remove it for portrait :
 
 ### Item properties
 
-Default elements already have default values.
+Default elements already have default values : 
+
+https://github.com/jdev-org/mviewer/blob/c857f6d839cf028756e4a7f6a86035dbe89cbb94/demo/addons/print/js/const.js#L2-L10
 
 **You can also use these properties to override default values.**
 
