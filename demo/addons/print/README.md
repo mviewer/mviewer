@@ -37,4 +37,28 @@ In options (create this key if not available), insert `options.mviewer.applicati
 ```
 **Now, read the next chapter to set up your app configuration.**
 
+## Configuration
 
+You just have to know that the layout template administration is not required and offer default layout (see next chapter).
+
+Only 3 application properties are possible in the config.json file : 
+
+- `printLayouts` : **required** *string* - layout template (JSON) URL to use
+- `ownerLogo` : *string* - default logo to use in informations area
+- `ownerInfos` : *string* - default text to use in informations area
+
+  Here a simple example : 
+
+```
+  "options": {
+    "mviewer": {
+      "print": {
+        "printLayouts": "demo/addons/print/layouts/standard.json",
+        "ownerLogo": "https://avatars.githubusercontent.com/u/114171481?s=400&u=7fcf63ac01887ece3f5f2d5527e92c10527c7a91&v=4",
+        "ownerInfos": "This is default text to present mviewer map."
+      }
+    }
+  }
+```
+
+**That's all ! Now, learn how to manage and use a custom layout with a simple JSON file.**
