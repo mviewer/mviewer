@@ -1,22 +1,36 @@
+/**
+ *
+ * This file is dedicated to print map creation
+ * settings key => mapPrint
+ * items: {mapPrint: {}}
+ *
+ */
+
+// north arrow
 const defaultNorthImgUrl = "demo/addons/print/img/NorthArrow.png";
 
+// default basemap layers
+// Required !
 const defaultLayers = [
   new ol.layer.Tile({
     source: new ol.source.OSM(),
   }),
 ];
 
+// scale
 const defaultScale = new ol.control.ScaleLine({
   units: ["metric"],
   target: "scaleline-mapPrint",
 });
 
+// controls settings
 const defaultControls = {
   zoom: false,
   attribution: false,
   rotate: false,
 };
 
+// HTML string to render
 const template = (northImgUrl) => {
   const northImg =
     northImgUrl &&
@@ -29,6 +43,12 @@ const template = (northImgUrl) => {
     </div>`;
 };
 
+/**
+ * Create OpenLayers map for print Layout
+ * @param {array} layers from mviewer
+ * @param {object} controls object
+ * @returns ol.map
+ */
 const createMap = (layers, controls) => {
   const view = mviewer.getMap().getView();
   return new ol.Map({
@@ -39,6 +59,10 @@ const createMap = (layers, controls) => {
   });
 };
 
+/**
+ * Get mviewer map layers list
+ * @returns array
+ */
 const getMviewerMapLayers = () => {
   const layers = [];
   var baseLayer = mviewer.getActiveBaseLayer();

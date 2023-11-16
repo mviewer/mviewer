@@ -2,6 +2,12 @@ import ModalContent from "../components/ModalContent.js";
 import { filterCheckBox } from "./controls.js";
 import { getSelectedLayout } from "./layout.js";
 
+/**
+ * Will create event on combobox orientation change.
+ * On change, will create modal content according to selected layout and config.
+ * @param {object} layoutJson from config
+ * @returns
+ */
 const activeOrientationChangeAction = (layoutJson) => {
   const selectOrientation = document.getElementById("print-select-orientation");
   if (!selectOrientation) return;
@@ -12,6 +18,10 @@ const activeOrientationChangeAction = (layoutJson) => {
   });
 };
 
+/**
+ * Read available orientations from config file.
+ * @param {layout} json config from file
+ */
 export const readOrientationOptions = (json) => {
   let formats = Object.keys(json);
   let available = [];
@@ -29,6 +39,10 @@ export const readOrientationOptions = (json) => {
   list.innerHTML = available.join("");
 };
 
+/**
+ * Will create or populate options panels and use current theme style.
+ * @param {object} jsonLayout from config file
+ */
 export const initOptions = (jsonLayout) => {
   readOrientationOptions(jsonLayout);
   activeOrientationChangeAction(jsonLayout);

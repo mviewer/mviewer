@@ -3,7 +3,6 @@
  */
 
 // Add button to toolstoolbar
-
 const tooltip = "Imprimer la carte";
 
 const template = `

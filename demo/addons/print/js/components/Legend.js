@@ -1,3 +1,7 @@
+/**
+ * Create legend according to visible mviewer map layers
+ * @returns string HTML
+ */
 export const Legend = () => {
   const layerDetails = [...document.querySelectorAll(".mv-layer-details")];
   const TitleAndLegend = layerDetails.map((detail) => {

@@ -1,3 +1,8 @@
+/**
+ * Will request layout JSON file from URL
+ * @param {string} url
+ * @returns
+ */
 export const downloadLayouts = (url) => {
   return fetch(url)
     .then((r) => r.json())
@@ -12,6 +17,13 @@ export const downloadLayouts = (url) => {
     });
 };
 
+/**
+ * Will get layout Portrait or Landscape according to selected format (only A4 for this version).
+ *
+ * @param {object} jsonLayout
+ * @param {string} format always A4 for this first version
+ * @returns
+ */
 export const getSelectedLayout = (jsonLayout, format = "A4") => {
   let formats = _.keys(jsonLayout).map((k) => jsonLayout[k]);
   let selectedFormats = formats.filter((f) => {

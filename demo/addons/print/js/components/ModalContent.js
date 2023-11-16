@@ -3,6 +3,10 @@ import Map from "./Map.js";
 
 const parentModalId = "blockViewImpress";
 
+/**
+ * Will create blocks for each items keys
+ * @param {object} items from json layout file items key
+ */
 const createAndAddBlocs = (items) => {
   const modalGridContainer = document.getElementById("anchor");
 
@@ -18,6 +22,11 @@ const createAndAddBlocs = (items) => {
   });
 };
 
+/**
+ * To force correct format size
+ * @param {string} format
+ * @param {boolean} landscape
+ */
 const setSize = (format = "A4", landscape) => {
   const viewDiv = document.getElementById(parentModalId);
   if (format == "A4" && landscape) {
@@ -52,6 +61,12 @@ export default (layoutJson) => {
     });
   });
 
+  /**
+   * Some trouble exists with default grid system.
+   * To avoid them, we change from grid to simple absolute position.
+   * This modification requires to get each block position to change CSS "position" rule and
+   * set position calculated.
+   */
   const positionsHtml = [...document.querySelectorAll(".blockImpress")].map((x) => ({
     position: x.getClientRects()[0],
     id: x.id,
@@ -64,11 +79,12 @@ export default (layoutJson) => {
     el.style.height = `${x.position.height}px`;
     $(el).offset(x.position);
   });
+
   // init map
   Map(layoutJson.northUrl);
 
+  // Will update map on each resize map event
   let timer;
-
   let observer = new ResizeObserver(function (mutations) {
     clearTimeout(timer);
     timer = setTimeout(function () {

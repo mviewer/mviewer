@@ -18,6 +18,12 @@ const defaultOptions = {
   jsPDF: { unit: "mm", format: "A4", orientation: "landscape" },
 };
 
+/**
+ * Prepare divs and block to create a clean print document.
+ * Required steps to hide badge, force size, update map etc...
+ * @param {object} options
+ * @returns
+ */
 const preparePrintElement = (options) => {
   var element = document.getElementById("printGridContainer");
   element.classList.add("print");
@@ -32,6 +38,10 @@ const preparePrintElement = (options) => {
   return element;
 };
 
+/**
+ * Download print as PDF
+ * @param {object} options to override default options
+ */
 export const downloadPDF = (options) => {
   const finalOptions = { ...defaultOptions, ...options };
   const element = preparePrintElement(finalOptions);
@@ -45,6 +55,10 @@ export const downloadPDF = (options) => {
     });
 };
 
+/**
+ * Display print as PDF in new tab
+ * @param {object} options to override default options
+ */
 export const displayPDF = (options) => {
   const finalOptions = { ...defaultOptions, ...options };
   const element = preparePrintElement(finalOptions);
@@ -61,6 +75,10 @@ export const displayPDF = (options) => {
     });
 };
 
+/**
+ * Download print as PNG
+ * @param {object} options to override default options
+ */
 export const displayAsPng = (options) => {
   const finalOptions = { ...defaultOptions, ...options };
   const element = preparePrintElement(finalOptions);
