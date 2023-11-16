@@ -82,12 +82,7 @@
 	z-index: 1;
 }
 
-.blockImpress textarea {
-	border: none;
-	background-color: #822e2e00;
-	overflow: hidden;
-	resize: none;
-	width: 100%;
+.blockImpress .text {
 	height: 100%;
 }
 
@@ -106,6 +101,8 @@
 #print-comments .text, #print-informations .informations {
 	padding: 20px 10px 5px;
 }
+
+
 
 #mapBlock {
 	width: 100%;

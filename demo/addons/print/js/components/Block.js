@@ -29,7 +29,7 @@ const defaultTemplate = ({
   let divByType = "";
   switch (type) {
     case "text":
-      divByType = `<textarea>${placeHolder || ""}</textarea>`;
+      divByType = placeHolder;
       break;
     case "qrcode":
       divByType = getQrCodeImg();
@@ -41,12 +41,14 @@ const defaultTemplate = ({
       divByType = ownerInfos;
       break;
     default:
-      null;
+      `<div>${placeHolder}</div>`;
   }
 
   const titleDiv = `<div class="badge">${title || ""}</div>`;
   const typeDiv = type
-    ? `<div class="${type} ${classNames || ""}" style="${style || ""}">${divByType}</div>`
+    ? `<div ${type === "text" ? "contentEditable" : ""} class="${type} ${
+        classNames || ""
+      }" style="${style || ""}">${divByType}</div>`
     : "";
 
   const html = `<div class="blockImpress" id="print-${id}" style="${rowGrid} ${
