@@ -69,19 +69,17 @@ Only 3 application properties are possible in the config.json file :
 
 **That's all ! Now, learn how to manage and use a custom layout with a simple JSON file.**
 
-## Create you own template
-
-According to the previous configuration, you can use a custom layout template by mviewer application.
-
-### What is a layout template ?
+## Layout with a JSON template
 
 A template represents the configuration of the elements to be printed in a JSON file.
 
+According to the previous configuration, you can use a custom layout template by mviewer application.
+
 The default template is available in `demo/addons/print/layouts/standard.json`.
 
-We will describe it to understand how to create you own template.
+We will describe it in next chapters to understand how to create you own template (*open standard.json template beside for a better understanding*) .
 
-### Formats & Orientations
+## Formats & Orientations
 
 A template will contains only one A4 format with 2 available orientation : landscape / portrait.
 
@@ -103,7 +101,7 @@ In each object (here A4_LANDSCAPE or A4_PORTRAIT), you will find `landscape <boo
 
 If you remove one of this, only one will be available in print UI.
 
-### Template items
+## Template items
 
 By default, the print extension contains this items : 
 - map
@@ -135,7 +133,7 @@ You can find here the corresponding key for each item :
 | title        | title        |
 | qrcode       | qrcode       |
 
-### Grid system
+## Grid system
 
 The Grid system allow to set an item position by columns and row values (6 row and 6 columns by default).
 
@@ -158,4 +156,6 @@ Here, mapPrint position in standard layout JSON file :
     "col": "1/5"
 },
 ```
+
+## Global layout settings
 
