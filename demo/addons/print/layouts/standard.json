@@ -15,7 +15,8 @@
             "informations": {
                 "title": "Informations",
                 "row": "6/7",
-                "col": "1/2"
+                "col": "1/2",
+                "type": "informations"
             },
             "comments": {
                 "row": "6/7",
@@ -27,9 +28,18 @@
                 "col": "5/7",
                 "type": "legend"
             },
-            "title": {},
+            "title": {
+                "row": "1/2",
+                "col": "1/6",
+                "type": "text"
+            },
             "qrcode": {
-                "style": "background-color: white !important",
+                "col": "6/6",
+                "row": "1/2",
+                "type": "qrcode",
+                "title": "Partage",
+                "placeholder": "",
+                "style": "background-color: white",
                 "class": "text-center"
             }
         }
@@ -43,24 +53,38 @@
         },
         "items": {
             "mapPrint": {
-                "row": "2/7",
+                "row": "2/6",
                 "col": "1/5"
             },
             "informations": {
                 "title": "Informations",
-                "col": "1/2"
+                "row": "6/7",
+                "col": "1/2",
+                "type": "informations"
             },
             "comments": {
-                "col": "2/7"
+                "row": "6/7",
+                "col": "2/7",
+                "type": "text"
             },
             "legend": {
-                "row": "2/7",
-                "col": "5/7"
+                "row": "2/6",
+                "col": "5/7",
+                "type": "legend"
             },
             "title": {
                 "row": "1/2",
-                "col": "1/7",
+                "col": "1/6",
                 "type": "text"
+            },
+            "qrcode": {
+                "col": "6/6",
+                "row": "1/2",
+                "type": "qrcode",
+                "title": "Partage",
+                "placeholder": "",
+                "style": "background-color: white",
+                "class": "text-center"
             }
         }
     }
