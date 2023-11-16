@@ -93,7 +93,7 @@ So, in a JSON template file, you have to keep 2 entry by orientations :
 }
 ```
 
-> You can rename each of this entries but it's not required and have no impact.
+> You can rename each of these entries but it's not required and have no impact.
 
 In each object (here A4_LANDSCAPE or A4_PORTRAIT), you will find `landscape <boolean>` option to indicate which config is landscape or portrait.
 
@@ -103,7 +103,7 @@ If you remove one of this, only one will be available in print UI.
 
 ## Template items
 
-By default, the print extension contains this items : 
+By default, the print extension contains these items : 
 - map
 - legend
 - title
@@ -159,3 +159,116 @@ Here, mapPrint position in standard layout JSON file :
 
 ## Global layout settings
 
+These settings are available in root format orientation object : 
+```
+{
+  "A4_PORTRAIT": {
+    "format": "A4",
+    "landscape": false,
+    "grid": {
+        "rows": "6",
+        "col": "6"
+    },
+    "items": {...}
+  },
+  "A4_LANDSCAPE": {...}
+}
+```
+
+Here, read each settings details :
+
+- **format** : *string* - always "A4" value
+- **landscape** : *boolean* - true for landscape
+- **grid** : *object* - allow to change default grid row and cols number
+- **items** : *oject* - contains each items settings -> **See items settings section**
+
+## Items settings
+
+### Default settings
+
+As explained before, some default items are available and have default settings. So, it's not required to set all settings for each default items. Just add item's key and empty settings object to display it with default parameters.
+
+An example to display title and just use default title settings :
+
+```
+"items": {
+  "title": {},
+  "legend": {
+    "row": "1/2",
+    "col": "5/7"
+  }
+}
+```
+
+### Remove an item
+
+If you don't want title, just remove title entry from JSON.
+Also, you can display an item for landscape and remove it for portrait :
+```
+{
+    "A4_LANDSCAPE": {
+        ...
+        "items": {
+            "legend": {...},
+            "title": {}
+        }
+    }
+    "A4_LANDSCAPE": {
+        ...
+        "items": {
+            "legend": {...}
+        }
+    }
+}
+```
+
+### Item properties
+
+Default elements already have default values.
+
+**You can also use these properties to override default values.**
+
+Here, a list of available item properties : 
+
+- **type** : *string* - Don't use for default items. Use "text" to display textarea or empty to display frozen text
+- **row** : *string* - grid row value (e.g "5/7"). Not required with default items.
+- **col** : *string* - grid col value (e.g "1/7"). Not required with default items.
+- **zindex** : *integer* - item z-index (not required). Not required with default items.
+- **placeholder** : *string* - Text to display by default with empty values. Not required with default items.
+- **style** : *string* - Allow to add or override default style properties (e.g `background-color: red`). Not required.
+- **class** : *string* - Allow to add CSS class (e.g `text-right`). Not required.
+
+**Example :**
+
+```
+"qrcode": {
+    "col": "6/6",
+    "row": "1/2",
+    "type": "qrcode",
+    "title": "Partage",
+    "placeholder": "",
+    "style": "background-color: white",
+    "class": "text-center"
+}
+```
+
+### Insert new item
+
+> This system is experimental and may have some bugs
+
+If you need to insert new item (not in default list), you can insert a new unique key and appropriate settings (use type text for textarea or empty type value to just insert a given fixed text).
+Don't forget to adapt `row` and `row` properties to set your custom item position according to others (see grid system section).
+
+```
+**Example**
+  "historyText": {
+      "col": "6/6",
+      "row": "1/2",
+      "type": "text",
+      "title": "History",
+      "style": "background-color: rgba(213,234,216,0.2)",
+      "class": "text-center"
+  }
+```
+
+![image](https://github.com/jdev-org/mviewer/assets/16317988/9dc5ef01-5751-43fc-8165-5f9a241209a7)
