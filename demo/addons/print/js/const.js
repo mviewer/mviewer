@@ -31,6 +31,13 @@ export const defaultBlocksInfos = {
     type: "text",
     zindex: 3,
   },
-  legend: { title: "Légende", row: "2 / 6", col: "5 / 7", placeHolder: "", zindex: 2 },
+  legend: {
+    type: "legend",
+    title: "Légende",
+    row: "2 / 6",
+    col: "5 / 7",
+    placeHolder: "",
+    zindex: 2,
+  },
   mapPrint: { row: "2 / 6", col: "1 / 2", placeHolder: "", title: "Carte", zindex: 1 },
 };
