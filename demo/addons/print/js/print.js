@@ -31,6 +31,7 @@ const initWithLayout = (layout) => {
       ModalContent(layoutSelected);
     });
   });
+  // preview PDF button listener
   document.querySelectorAll(".print-preview-btn").forEach((z) =>
     z.addEventListener("click", (evt) => {
       const isLandscape =
@@ -44,6 +45,7 @@ const initWithLayout = (layout) => {
       });
     })
   );
+  // download PNG button listener
   document.querySelector(".print-png-btn").addEventListener("click", (evt) => {
     const isLandscape =
       document.getElementById("print-select-orientation").value == "true";
@@ -55,6 +57,7 @@ const initWithLayout = (layout) => {
       },
     });
   });
+  // download PDF button listener
   document.querySelectorAll(".print-download-btn").forEach((z) =>
     z.addEventListener("click", (evt) => {
       const isLandscape =
@@ -71,6 +74,7 @@ const initWithLayout = (layout) => {
 };
 
 const init = () => {
+  // call json template file to render layout
   downloadLayouts(getOptions().printLayouts)
     .then((jsonLayout) => initWithLayout(jsonLayout))
     .catch((err) => {
