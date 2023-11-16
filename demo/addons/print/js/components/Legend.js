@@ -1,4 +1,4 @@
-export const Legend = (map) => {
+export const Legend = () => {
   const layerDetails = [...document.querySelectorAll(".mv-layer-details")];
   const TitleAndLegend = layerDetails.map((detail) => {
     let legend = detail.querySelector(".mv-legend");

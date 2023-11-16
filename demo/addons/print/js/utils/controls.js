@@ -2,7 +2,7 @@ const ID_SCALE_CHECKBOX = "#print-scale-checkbox";
 const ID_NORTH_CHECKBOX = "#print-north-checkbox";
 const ID_QRCODE_CHECKBOX = "#print-qrcode-checkbox";
 const NORTH_DIV_SELECTOR = "#northArrow-mapPrint img";
-const QRCODE_DIV_SELECTOR = ".qrcode";
+const QRCODE_DIV_SELECTOR = "#print-qrcode";
 
 export const getQrCodeImg = () => {
   mviewer.setPermalink();
