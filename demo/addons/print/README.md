@@ -1,10 +1,10 @@
-![image](https://github.com/jdev-org/mviewer/assets/16317988/bc4b75d3-92a1-42bb-b83b-77df1319bfa2)# Print
+# Mviewer Print extension
 
 This extension provides a map layout interface to create and print a personalised PDF file.
 
-Only A4 (portrail/landscape) are available for this version.
-
 ![image](https://github.com/jdev-org/mviewer/assets/16317988/e84fd308-e08d-4314-812c-1f1403beba92)
+
+Only A4 (portrail/landscape) are available for this version.
 
 Here, you can find a simple PDF rendered with this mviewer Print extension :
 
