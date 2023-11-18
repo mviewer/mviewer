@@ -811,18 +811,24 @@ var info = (function () {
           title = feature.getProperties()[tooltipcontent];
         } else {
           // a Mustache template
-          const data = {
+          title = Mustache.render(tooltipcontent, {
             ...feature.getProperties(),
-            round: function () {
+            formatTime: function () {
               return function (text, render) {
-                console.log(text);
-                console.log(render(text));
-                return parseFloat(render(text)).toFixed(2);
+                const time = new Date(render(text));
+                var today = new Date();
+                const h = today.getHours();
+                const m = today.getMinutes();
+                return h + "h" + m;
               };
             },
-          };
-          console.log(data);
-          title = Mustache.render(tooltipcontent, data);
+            rounded: function () {
+              return function (text, render) {
+                const result = Math.round(render(text) * 100) / 100;
+                return result;
+              };
+            },
+          });
         }
       } else {
         title =

@@ -1010,6 +1010,8 @@
                 );
 
                 if (response.ok) {
+                  const tooltipTemplate =
+                    "<p style='font-size:15px;text-align:left'><span style='font-size:20px;font-weight:bold'>Informations</span><br/>Date : <b>{{Date}}</b> <br/>  Heure : <b>{{#formatTime}}{{Datetime}}{{/formatTime}}</b> <br/> Température : <b>{{#rounded}}{{Temp_mean}}{{/rounded}}°C</b> <br/> Conductivité : <b>{{#rounded}}{{Ec_mean}}{{/rounded}}psu</b> <br/> Salinité : <b>{{#rounded}}{{Salinity}}{{/rounded}}<b/></p>";
                   // if HTTP-status is 200-299
                   // obtenir le corps de réponse (la méthode expliquée ci-dessous)
                   let json = await response.json();
@@ -1031,7 +1033,7 @@
                           visible: "true",
                           tooltip: "true",
                           tooltipenabled: "true",
-                          tooltipcontent: "Parcelle n° {{#round}}{{Temp_mean}}{{/round}}",
+                          tooltipcontent: tooltipTemplate,
                           searchable: "true",
                           searchengine: "fuse",
                           fusesearchkeys: "Date",
@@ -1039,9 +1041,7 @@
                         });
                       }
                     }
-                    console.log(theme);
                   }
-                  console.log(json);
                 } else {
                   alert("HTTP-Error: " + response.status);
                 }
