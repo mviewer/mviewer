@@ -1,16 +1,18 @@
-const layer = new ol.layer.Heatmap({
+console.log(window);
+
+const layer = new ol.layer.Vector({
   source: new ol.source.Vector({
-    url: "demo/heatmap/data/2012_Earthquakes_Mag5.kml",
-    format: new ol.format.KML({
-      extractStyles: false,
-    }),
+    format: new ol.format.GeoJSON(),
+    url: "../../data/2021-08-northabout-clean.geojson",
   }),
-  blur: 10,
-  radius: 10,
-  weight: function (feature) {
-    var name = feature.get("name");
-    var magnitude = parseFloat(name.substr(2));
-    return magnitude - 5;
-  },
 });
+
+console.log(mviewer);
+
+//new CustomLayer("geoLayer", geoLayer);
+
+/*
+
+*/
+
 new CustomLayer("heatmap", layer);
