@@ -11,6 +11,15 @@
     <olscompletion url="https://api-adresse.data.gouv.fr/search/" type="ban" attribution="La recherche d'adresse est un service proposé par la BAN"/>
     <searchparameters bbox="false" localities="false" features="true" />
     <themes>
-        <theme name="SensOcean" />
+        <theme name="SensOcean" expanded="true">
+            <layer
+                id="la-louise"
+                name="La Louise"
+                type="customlayer"
+                url="customlayers/la-louise"
+                visible="true"
+                />
+
+        </theme>
     </themes>
 </config>
