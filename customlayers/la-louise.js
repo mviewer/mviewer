@@ -17,7 +17,7 @@ const styleFunction = function (feature) {
 
 const geoJson = new ol.source.Vector({
   format: new ol.format.GeoJSON(),
-  url: "../../data/2021-10-la-louise-clean.geojson",
+  url: "data/2021-10-la-louise-clean.geojson",
 });
 
 console.log("geoJson", geoJson);

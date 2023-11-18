@@ -16,7 +16,7 @@
                 id="la-louise"
                 name="La Louise"
                 type="customlayer"
-                url="customlayers/la-louise"
+                url="customlayers/la-louise.js"
                 visible="true"
                 />
 
