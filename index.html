@@ -1020,6 +1020,37 @@
                       type: "geojson",
                       url: "data/commune_simple.geojson",
                       visible: "true",
+                      tooltip: "true",
+                      tooltipenabled: "true",
+                      tooltipcontent: "Parcelle n° {{label}}",
+                    });
+                    theme.layer.push({
+                      attribution: "",
+                      id: "heatmap2",
+                      legendurl: "demo/heatmap/legend.png",
+                      metadata: "",
+                      metadata_csw: "",
+                      name: "Bateau n°2",
+                      opacity: "1",
+                      type: "geojson",
+                      url: "data/2021-08-northabout-clean.geojson",
+                      visible: "true",
+                      tooltip: "true",
+                      tooltipenabled: "true",
+                      tooltipcontent: "Datetime n° {{Datetime}}",
+                      fields: "Datetime",
+                    });
+                    theme.layer.push({
+                      attribution: "",
+                      id: "heatmap3",
+                      legendurl: "demo/heatmap/legend.png",
+                      metadata: "",
+                      metadata_csw: "",
+                      name: "Bateau n°2",
+                      opacity: "1",
+                      type: "geojson",
+                      url: "https://mocki.io/v1/08171171-dcb7-45a6-ac11-9bf75420cdaf",
+                      visible: "true",
                     });
                   }
                   console.log(theme);
