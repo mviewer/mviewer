@@ -816,9 +816,8 @@ var info = (function () {
             formatTime: function () {
               return function (text, render) {
                 const time = new Date(render(text));
-                var today = new Date();
-                const h = today.getHours();
-                const m = today.getMinutes();
+                const h = time.getHours();
+                const m = time.getMinutes();
                 return h + "h" + m;
               };
             },
