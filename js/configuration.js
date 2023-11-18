@@ -635,6 +635,8 @@ var configuration = (function () {
             console.log("Les variables d'environnement ne peuvent être chargées !");
           }
 
+          console.log("layer", layer);
+
           if (layer) {
             /* to escape group without layer */
             layerRank += 1;
@@ -970,15 +972,19 @@ var configuration = (function () {
               mviewer.processLayer(oLayer, l);
             } // end import
 
+            console.log("oLayer", oLayer);
+
             if (oLayer.type === "customlayer") {
               var hook_url = "customLayers/" + oLayer.id + ".js";
               if (oLayer.url && oLayer.url.slice(-3) === ".js") {
                 hook_url = oLayer.url;
               }
+              console.log("hook_url", hook_url);
               $.ajax({
                 url: mviewer.ajaxURL(hook_url),
                 dataType: "script",
                 success: function (customLayer, textStatus, request) {
+                  console.log("customLayers", mviewer.customLayers);
                   if (mviewer.customLayers[oLayer.id].layer) {
                     var l = mviewer.customLayers[oLayer.id].layer;
                     if (oLayer.style && mviewer.featureStyles[oLayer.style]) {
