@@ -391,11 +391,14 @@ var search = (function () {
    *
    */
   var _sendFuseRequest = function (val) {
+    console.log(val);
     $(".fuse").remove();
 
     var searchableLayers = _searchableFuseLayers.filter(
       (e) => e.getVisible() && _fuseSearchData[e.get("mviewerid")]
     );
+
+    console.log(searchableLayers);
 
     for (var i = 0; i < searchableLayers.length; i++) {
       var layername = searchableLayers[i].get("name");
@@ -714,6 +717,7 @@ var search = (function () {
 
   var _processSearchableLayer = function (oLayer) {
     var l = oLayer.layer;
+    console.log("oLayer", oLayer);
     switch (oLayer.searchengine) {
       case "fuse":
         if (_searchableFuseLayers.indexOf(l) === -1) {

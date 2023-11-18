@@ -974,7 +974,7 @@
                 defaultEnvFile
               );
               // load config on env var available
-              document.addEventListener("environementInfosAvailable", (r) => {
+              document.addEventListener("environementInfosAvailable", async (r) => {
                 // set mviewer en from environment file
                 mviewer.env = { ...r.detail };
                 //get JSON conf from xml;
@@ -1005,56 +1005,50 @@
                   favicon.attributes.href.value = ico;
                 }
 
+                let response = await fetch(
+                  "https://mocki.io/v1/88334df8-a3f4-408c-91d7-e352150fded6"
+                );
+
+                if (response.ok) {
+                  // if HTTP-status is 200-299
+                  // obtenir le corps de réponse (la méthode expliquée ci-dessous)
+                  let json = await response.json();
+                  for (let theme of _conf.themes.theme) {
+                    console.log(theme);
+                    if (theme.name === "SensOcean") {
+                      for (let station of json.data) {
+                        if (!theme.layer) theme.layer = [];
+                        theme.layer.push({
+                          attribution: "",
+                          id: station.id,
+                          legendurl: "demo/heatmap/legend.png",
+                          metadata: "",
+                          metadata_csw: "",
+                          name: station.name,
+                          opacity: "1",
+                          type: "geojson",
+                          url: "data/2021-08-northabout-clean.geojson",
+                          visible: "true",
+                          tooltip: "true",
+                          tooltipenabled: "true",
+                          tooltipcontent: "Parcelle n° {{#round}}{{Temp_mean}}{{/round}}",
+                          searchable: "true",
+                          searchengine: "fuse",
+                          fusesearchkeys: "Date",
+                          fusesearchresult: "{{ Date }}",
+                        });
+                      }
+                    }
+                    console.log(theme);
+                  }
+                  console.log(json);
+                } else {
+                  alert("HTTP-Error: " + response.status);
+                }
+
                 /** Custom code to add multiple layers at once */
                 console.log(_conf.themes);
-                for (let theme of _conf.themes.theme) {
-                  if (theme.name === "SensOcean") {
-                    theme.layer.push({
-                      attribution: "",
-                      id: "heatmap2",
-                      legendurl: "demo/heatmap/legend.png",
-                      metadata: "",
-                      metadata_csw: "",
-                      name: "Bateau n°2",
-                      opacity: "1",
-                      type: "geojson",
-                      url: "data/commune_simple.geojson",
-                      visible: "true",
-                      tooltip: "true",
-                      tooltipenabled: "true",
-                      tooltipcontent: "Parcelle n° {{label}}",
-                    });
-                    theme.layer.push({
-                      attribution: "",
-                      id: "heatmap2",
-                      legendurl: "demo/heatmap/legend.png",
-                      metadata: "",
-                      metadata_csw: "",
-                      name: "Bateau n°2",
-                      opacity: "1",
-                      type: "geojson",
-                      url: "data/2021-08-northabout-clean.geojson",
-                      visible: "true",
-                      tooltip: "true",
-                      tooltipenabled: "true",
-                      tooltipcontent: "Datetime n° {{Datetime}}",
-                      fields: "Datetime",
-                    });
-                    theme.layer.push({
-                      attribution: "",
-                      id: "heatmap3",
-                      legendurl: "demo/heatmap/legend.png",
-                      metadata: "",
-                      metadata_csw: "",
-                      name: "Bateau n°2",
-                      opacity: "1",
-                      type: "geojson",
-                      url: "https://mocki.io/v1/08171171-dcb7-45a6-ac11-9bf75420cdaf",
-                      visible: "true",
-                    });
-                  }
-                  console.log(theme);
-                }
+
                 configuration.load(_conf);
                 $(document).trigger("ready-for-component");
                 setTimeout(function () {

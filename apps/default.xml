@@ -9,20 +9,8 @@
     </baselayers>
     <proxy url=""/>
     <olscompletion url="https://api-adresse.data.gouv.fr/search/" type="ban" attribution="La recherche d'adresse est un service proposé par la BAN"/>
-    <searchparameters bbox="false" localities="true" features="false" />
+    <searchparameters bbox="false" localities="false" features="true" />
     <themes>
-        <theme name="SensOcean">
-            <layer id="heatmap"
-                name="Earthquakes Heatmap"
-                visible="true"
-                type="customlayer"
-                legendurl="demo/heatmap/legend.png"
-                opacity="1"
-                url="demo/heatmap/customlayer.js"
-                attribution=""
-                metadata=""
-                metadata-csw="">
-            </layer>
-        </theme>
+        <theme name="SensOcean" />
     </themes>
 </config>

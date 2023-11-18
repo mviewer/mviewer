@@ -811,7 +811,18 @@ var info = (function () {
           title = feature.getProperties()[tooltipcontent];
         } else {
           // a Mustache template
-          title = Mustache.render(tooltipcontent, feature.getProperties());
+          const data = {
+            ...feature.getProperties(),
+            round: function () {
+              return function (text, render) {
+                console.log(text);
+                console.log(render(text));
+                return parseFloat(render(text)).toFixed(2);
+              };
+            },
+          };
+          console.log(data);
+          title = Mustache.render(tooltipcontent, data);
         }
       } else {
         title =
