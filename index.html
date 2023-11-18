@@ -1007,23 +1007,14 @@
 
                 /** Custom code to add multiple layers at once */
                 console.log(_conf.themes);
+                function roundDecimals(decimals) {
+                  console.log("round decimals");
+                  return decimals.toFixed(2);
+                }
+                const tooltipTemplate =
+                  "<p style='font-size:15px;text-align:left'><span style='font-size:20px;font-weight:bold'>Informations</span><br/>Date : <b>{{Date}}</b> <br/>  Heure : <b>{{#formatTime}}{{Datetime}}{{/formatTime}}</b> <br/> Température : <b>{{#rounded}}{{Temp_mean}}{{/rounded}}°C</b> <br/> Conductivité : <b>{{#rounded}}{{Ec_mean}}{{/rounded}}psu</b> <br/> Salinité : <b>{{#rounded}}{{Salinity}}{{/rounded}}<b/></p>";
                 for (let theme of _conf.themes.theme) {
                   if (theme.name === "SensOcean") {
-                    theme.layer.push({
-                      attribution: "",
-                      id: "heatmap2",
-                      legendurl: "demo/heatmap/legend.png",
-                      metadata: "",
-                      metadata_csw: "",
-                      name: "Bateau n°2",
-                      opacity: "1",
-                      type: "geojson",
-                      url: "data/commune_simple.geojson",
-                      visible: "true",
-                      tooltip: "true",
-                      tooltipenabled: "true",
-                      tooltipcontent: "Parcelle n° {{label}}",
-                    });
                     theme.layer.push({
                       attribution: "",
                       id: "heatmap2",
@@ -1037,21 +1028,21 @@
                       visible: "true",
                       tooltip: "true",
                       tooltipenabled: "true",
-                      tooltipcontent: "Datetime n° {{Datetime}}",
-                      fields: "Datetime",
+                      tooltipcontent: tooltipTemplate,
+                      fields: "Datetime, Date, Time, Temp_mean, Ec_mean, Salinity",
                     });
-                    theme.layer.push({
-                      attribution: "",
-                      id: "heatmap3",
-                      legendurl: "demo/heatmap/legend.png",
-                      metadata: "",
-                      metadata_csw: "",
-                      name: "Bateau n°2",
-                      opacity: "1",
-                      type: "geojson",
-                      url: "https://mocki.io/v1/08171171-dcb7-45a6-ac11-9bf75420cdaf",
-                      visible: "true",
-                    });
+                    // theme.layer.push({
+                    //   attribution: "",
+                    //   id: "heatmap3",
+                    //   legendurl: "demo/heatmap/legend.png",
+                    //   metadata: "",
+                    //   metadata_csw: "",
+                    //   name: "Bateau n°2",
+                    //   opacity: "1",
+                    //   type: "geojson",
+                    //   url: "https://mocki.io/v1/08171171-dcb7-45a6-ac11-9bf75420cdaf",
+                    //   visible: "true",
+                    // });
                   }
                   console.log(theme);
                 }

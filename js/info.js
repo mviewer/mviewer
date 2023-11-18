@@ -811,7 +811,25 @@ var info = (function () {
           title = feature.getProperties()[tooltipcontent];
         } else {
           // a Mustache template
-          title = Mustache.render(tooltipcontent, feature.getProperties());
+          title = Mustache.render(tooltipcontent, {
+            ...feature.getProperties(),
+            formatTime: function () {
+              return function (text, render) {
+                const time = new Date(render(text));
+                var today = new Date();
+                const h = today.getHours();
+                const m = today.getMinutes();
+                return h + "h" + m;
+              };
+            },
+            rounded: function () {
+              return function (text, render) {
+                const result = Math.round(render(text) * 100) / 100;
+                return result;
+              };
+            },
+          });
+          //title = Mustache.render(tooltipcontent, feature.getProperties());
         }
       } else {
         title =
