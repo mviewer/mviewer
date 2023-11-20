@@ -1,0 +1,91 @@
+{
+  "A4_LANDSCAPE": {
+    "format": "A4",
+    "northUrl": "demo/addons/print/img/NorthArrow.png",
+    "landscape": true,
+    "grid": {
+      "rows": "6",
+      "col": "6"
+    },
+    "items": {
+      "mapPrint": {
+        "row": "2/6",
+        "col": "1/5"
+      },
+      "informations": {
+        "title": "Informations",
+        "row": "6/7",
+        "col": "1/2",
+        "type": "informations"
+      },
+      "comments": {
+        "row": "6/7",
+        "col": "2/7",
+        "type": "text"
+      },
+      "legend": {
+        "row": "2/6",
+        "col": "5/7",
+        "type": "legend"
+      },
+      "title": {
+        "row": "1/2",
+        "col": "1/6",
+        "type": "text"
+      },
+      "qrcode": {
+        "col": "6/6",
+        "row": "1/2",
+        "type": "qrcode",
+        "title": "Partage",
+        "placeholder": "",
+        "style": "background-color: white",
+        "class": "text-center"
+      }
+    }
+  },
+  "A4_PORTRAIT": {
+    "format": "A4",
+    "landscape": false,
+    "grid": {
+      "rows": "6",
+      "col": "6"
+    },
+    "items": {
+      "mapPrint": {
+        "row": "2/6",
+        "col": "1/5"
+      },
+      "informations": {
+        "title": "Informations",
+        "row": "6/7",
+        "col": "1/2",
+        "type": "informations"
+      },
+      "comments": {
+        "row": "6/7",
+        "col": "2/7",
+        "type": "text"
+      },
+      "legend": {
+        "row": "2/6",
+        "col": "5/7",
+        "type": "legend"
+      },
+      "title": {
+        "row": "1/2",
+        "col": "1/6",
+        "type": "text"
+      },
+      "qrcode": {
+        "col": "6/6",
+        "row": "1/2",
+        "type": "qrcode",
+        "title": "Partage",
+        "placeholder": "",
+        "style": "background-color: white",
+        "class": "text-center"
+      }
+    }
+  }
+}

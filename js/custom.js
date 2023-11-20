@@ -95,16 +95,18 @@ class Component {
 
     const getScripts = function (config) {
       if (config) {
-        const requests = config.js.map((url) => loadScript(that.path + url));
+        const requests = config.js.map((url) =>
+          loadScript(that.path + url, config?.type)
+        );
         return Promise.all(requests);
       }
     };
 
-    const loadScript = function (src) {
+    const loadScript = function (src, type = "text/javascript") {
       const scriptPromise = new Promise((resolve, reject) => {
         const script = document.createElement("script");
         document.body.appendChild(script);
-        script.type = "text/javascript";
+        script.type = type;
         script.onload = resolve;
         script.onerror = reject;
         script.async = true;

@@ -1,0 +1,215 @@
+/*
+    * Plugin Print
+    * Propriétés de style
+*/
+
+/* Non affichage du btn d'accès au plugin en mode mobile */
+.xs #printBtn {
+	display: none;
+}
+
+/* 
+* Propriétés de la modale 
+*/
+
+/* Modification de la taille de modale - modal-lg non disponible avec bootstrap 3 */
+#printModal .modal-dialog {
+	width: 80% !important;
+}
+
+#printModal .modal-header {
+	padding: 2em 2em 0em 2em;
+}
+
+#printModal .modal-body {
+	padding: 1em 2em 2em;
+}
+
+#printModal .modal-footer {
+	padding: 1em 2em;
+}
+
+#printModal .modal-title {
+	font-weight: bold;
+}
+
+/* Structure de la modale */
+.bodyFlex {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: stretch;
+}
+
+/* 
+* Propriétés globales des blocs 
+*/
+
+#blockViewImpress {
+	border: 1px solid grey;
+	padding: 15px;
+}
+
+.print .print-panel-close {
+	display: none;
+}
+
+
+.blockImpress {
+	border: 1px solid #8080804f;
+	background-color: #a9a9a912;
+	resize: both;
+	overflow: hidden;
+	min-height: fit-content;
+    /* min-width: fit-content; */
+	max-width: 100%;
+    max-height: 100%;
+
+}
+
+.blockImpress .badge {
+	background-color: #7788995c;
+	color: #4c5660;
+	font-size: 10px;
+	font-weight: 700;
+	text-transform: uppercase;
+	width: fit-content;
+	padding: 2px;
+	letter-spacing: .05rem;
+	position: absolute;
+	border-radius: 0;
+	z-index: 1;
+}
+
+.blockImpress .text {
+	height: 100%;
+}
+
+#print-title .text {
+	font-size: large;
+	font-weight: 700;
+	padding: 20px 10px 0px;
+}
+
+#print-informations .text {
+	font-size: 8px;
+	padding: 20px 5px 5px;
+	font-style: italic;
+}
+
+#print-comments .text, #print-informations .informations {
+	padding: 20px 10px 5px;
+}
+
+
+
+#mapBlock {
+	width: 100%;
+	height: 100%;
+}
+
+#mapPrint .ol-scale-line {
+	left: 40px;
+}
+
+#northArrow-mapPrint {
+	position: relative;
+	bottom: 45px;
+	left: 5px;
+}
+
+#northArrow-mapPrint img {
+	width: 25px;
+}
+
+/* 
+* printGridContainer
+* Spécifications du gabarit initial
+*/
+
+#printGridContainer {
+	position: relative;
+}
+
+/* Grille */
+.containerBlockImpress {
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	grid-template-rows: repeat(6, 1fr);
+	gap: 10px;
+	height: 100%;
+	width: 100%;
+}
+
+#printGridContainer .legend {
+	margin-top: 20px;
+}
+
+/* Propriété lors de l'impression PDF */
+
+#printGridContainer.print {
+	padding: 2px;
+	border: none;
+}
+
+#printGridContainer.a4-landscape {
+	width: 297mm;
+	height: 210mm;
+}
+
+#printGridContainer.a4-portrait {
+	width: 210mm;
+	height: 297mm;
+}
+
+.print .badge {
+	display: none;
+}
+
+.print .blockImpress {
+	background-color: transparent;
+}
+
+.print .legend {
+	margin-top:0px !important;
+}
+
+.print #print-qrcode, .print #print-legend, .print #print-title, .print #print-informations{
+	border: none;
+
+}
+
+.print-option-checkbox {
+	margin-right: 10px !important;
+}
+
+#blockOptionsImpress .panel {
+	margin-top: 15%;
+	margin-right: 20px;
+}
+
+.print-legend-img {
+	margin: 5px;
+	margin-bottom: 5px;
+	background-color: white;
+	border: 1px solid grey;
+	padding: 5px;
+}
+
+#print-informations img {
+	max-width: 50px;
+}
+
+.print-panel-close {
+	position: absolute;
+	right: 5px;
+	z-index: 1;
+	margin: 2px;
+	opacity: .6;
+	background-color: white;
+}
+
+#print-qrcode {
+	background-color: white
+}
