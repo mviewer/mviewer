@@ -8,6 +8,7 @@
  * https://rawgit.com/MrRio/jsPDF/master/docs/jsPDF.html
  * */
 const defaultOptions = {
+  margin: [0, 4],
   filename: "mviewerMap.pdf",
   // See official doc for more type and quality options :
   // https://ekoopmans.github.io/html2pdf.js/#image-type-and-quality
