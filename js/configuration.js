@@ -988,7 +988,7 @@ var configuration = (function () {
                   }
                 },
                 error: function (request, textStatus, error) {
-                  console.log("error custom Layer : " + error);
+                  console.log(`error with custom Layer ${oLayer.id} : ${error}`);
                 },
               });
             }
