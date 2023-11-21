@@ -27,7 +27,7 @@ const defaultTemplate = ({
   const ownerInfos = `
     <div>
     <p class="small">${pluginsOption?.ownerInfos || ""}</p>
-    <img src=${pluginsOption?.ownerLogo || ""}/>
+    <img src="${pluginsOption?.ownerLogo || ""}"/>
     <div/>
   `;
 
