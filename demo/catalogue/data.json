@@ -423,6 +423,15 @@
       "level": "intermédiaire",
       "url_source": "../demo/cog-geotiff/cog.xml",
       "url_demo": "../?config=demo/cog-geotiff/cog.xml"
+    },
+    {
+      "id": "48",
+      "title": "Mise en page personnalisée",
+      "tags": "print,impression,layout",
+      "description": "Mise en page d'une carte avec le module externe (addon) d'impression.",
+      "level": "intermédiaire",
+      "url_source": "../demo/print.xml",
+      "url_demo": "../?config=demo/print.xml"
     }
   ]
 }
