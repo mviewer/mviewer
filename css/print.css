@@ -10,6 +10,8 @@
 #zoomtoolbar,
 #toolstoolbar,
 .ol-attribution,
+.tooltip-inner,
+.tooltip-arrow,
 #backgroundlayerstoolbar-default,
 #backgroundlayerstoolbar-gallery {
 	display: none;
@@ -17,8 +19,9 @@
 
 /* Gestion de la carte */
 #map {
-	top: 0;
-	left: 0;
+	top: 0px;
+	left: 0px;
+	zoom: 110%;
 }
 
 #mviewerinfosbar {
