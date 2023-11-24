@@ -68,6 +68,12 @@
         href="css/mviewer.css"
         type="text/css"
     />
+    <link
+        rel="stylesheet"
+        href="css/print.css"
+        type="text/css"
+        media="print"
+    />
     <style>
         @import url('https://fonts.googleapis.com/css?family=Roboto');
 
@@ -586,6 +592,21 @@
                             aria-hidden="true"
                         ></span>
                     </a>
+                    <button
+                        id="mapprint"
+                        type="button"
+                        class="btn btn-default btn-raised"
+                        onclick="window.print();"
+                        title="Imprimer la vue courante"
+                        i18n="tbar.right.mapprint"
+                        tabindex="106"
+                        accesskey="6"
+                    >
+                        <span
+                            class="glyphicon glyphicon-print"
+                            aria-hidden="true"
+                        ></span>
+                    </button>
                 </div>
                 <div
                     id="backgroundlayerstoolbar-default"
@@ -1220,7 +1241,10 @@
         type="text/javascript"
         src="lib/jquery/base/1.10.2/jquery-1.10.2.min.js"
     ></script>
-    <script type="text/javascript" src="lib/geotiff/geotiff.js"></script>
+    <script
+        type="text/javascript"
+        src="lib/geotiff/geotiff.js"
+    ></script>
     <script
         type="text/javascript"
         src="lib/ol8/ol.js"

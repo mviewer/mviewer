@@ -404,6 +404,9 @@ var configuration = (function () {
     if (!conf.application.studio || conf.application.studio === "false") {
       $("#studiolink").remove();
     }
+    if (!conf.application.mapprint || conf.application.mapprint === "false") {
+      $("#mapprint").remove();
+    }
     if (conf.application.home) {
       $(".mv-logo").parent().attr("href", conf.application.home);
     }

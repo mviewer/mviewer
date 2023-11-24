@@ -27,6 +27,7 @@ Syntaxe
 		iconhelp=""
 		style=""
 		exportpng=""
+		mapprint=""
 		measuretools=""
 		zoomtools=""
 		initialextenttool=""
@@ -58,6 +59,7 @@ Paramètres principaux
 * ``showhelp`` :guilabel:`studio` : paramètre optionnel de type booléen (true/false) précisant si l'aide est affichée en popup au démarrage de l'application. Valeur par défaut **false**.
 * ``style`` :guilabel:`studio` : paramètre optionnel de type url précisant la feuille de style à utiliser afin de modifier l'apparence de l'application (couleurs, polices...). Valeur par défaut **css/themes/default.css**. Voir : ":ref:`configcss`".
 * ``exportpng`` :guilabel:`studio` : paramètre optionnel de type booléen (true/false) activant l'export de la carte en png. Valeur par défaut **false**. Attention l'export ne fonctionne qu'avec des couches locales (même origine) ou avec des couches servies avec  `CORS <https://enable-cors.org/>`_ activé.
+* ``mapprint`` : paramètre optionnel de type booléen (true/false) activant l'impression de la vue courante depuis le navigateur. Valeur par défaut **false**.
 * ``measuretools`` :guilabel:`studio` : paramètre optionnel de type booléen (true/false) activant les outils de mesure. Valeur par défaut **false**.
 * ``zoomtools`` :guilabel:`studio` : paramètre optionnel de type booléen (true/false) activant les outils de zoom +/-. Valeur par défaut **true**.
 * ``initialextenttool`` :guilabel:`studio` : paramètre optionnel de type booléen (true/false) activant le bouton de retour à l'étendue initiale. Valeur par défaut **true**.
