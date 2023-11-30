@@ -26,11 +26,11 @@
             url="https://geobretagne.fr/geoserver/gwc/service/wmts"   layers="photo:ir-composite" format="image/jpeg" style="_null" matrixset="EPSG:3857"
             fromcapacity="false"   attribution="&lt;a href='https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=434b82a8-8d3c-4d9f-9eb3-0485f1a63eb6' target='_blank' >Partenaires GéoBretagne - IGN &lt;/a>" />
         <baselayer  type="WMTS" id="ortho2" label="Photo aérienne IGN" title="GéoPortail" maxscale="1000" thumbgallery="img/basemap/ortho.jpg"
-            url="https://wxs.ign.fr/essentiels/geoportail/wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" format="image/jpeg" visible="false" fromcapacity="false"
-            attribution="&lt;a href='https://geoservices.ign.fr/services-web-decouverte' target='_blank'>&lt;img src='img/basemap/geoservices.png'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
+            url="https://data.geopf.fr/wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" format="image/jpeg" visible="false" fromcapacity="false"
+            attribution="&lt;a href='https://geoservices.ign.fr/services-geoplateforme-diffusion' target='_blank'>&lt;img src='img/basemap/geoservices.png'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
         <baselayer  type="WMTS" id="plan" label="Plan IGN" title="GéoPortail" maxscale="2000" thumbgallery="img/basemap/plan_ign.png" opacity="0.8"
-            url="https://wxs.ign.fr/decouverte/geoportail/wmts" layers="GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2" format="image/png" visible="false" fromcapacity="false"
-            attribution="&lt;a href='https://geoservices.ign.fr/services-web-decouverte' target='_blank'>&lt;img src='img/basemap/geoservices.png'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
+            url="https://data.geopf.fr/wmts" layers="GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2" format="image/png" visible="false" fromcapacity="false"
+            attribution="&lt;a href='https://geoservices.ign.fr/services-geoplateforme-diffusion' target='_blank'>&lt;img src='img/basemap/geoservices.png'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
         <baselayer  type="fake" id="fake" label="Carroyage" title="Carroyage" thumbgallery="img/basemap/grid.png" visible="false"  />
     </baselayers>     
     <proxy url=""/>
@@ -62,7 +62,7 @@
                 metadata="https://geoservices.ign.fr/services-web-essentiels"
                 attribution="Source: IGN"
                 style="pci"
-                url="https://wxs.ign.fr/parcellaire/geoportail/tms/1.0.0/PCI/{z}/{x}/{y}.pbf">
+                url="https://data.geopf.fr/tms/1.0.0/PCI/{z}/{x}/{y}.pbf">
             </layer>
             <layer
                 id="bdtopo"
@@ -81,7 +81,7 @@
                 metadata="https://geoservices.ign.fr/services-web-essentiels"
                 attribution="Source: IGN"
                 style="bdtopo"
-                url="https://wxs.ign.fr/topographie/geoportail/tms/1.0.0/BDTOPO/{z}/{x}/{y}.pbf">
+                url="https://data.geopf.fr/tms/1.0.0/BDTOPO/{z}/{x}/{y}.pbf">
             </layer>
 		</theme>
     </themes>

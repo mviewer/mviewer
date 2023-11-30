@@ -4,8 +4,8 @@
     <mapoptions maxzoom="20" projection="EPSG:3857" center="-190879,6125293" zoom="19" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
 	<baselayers style="default">
         <baselayer  type="WMTS" id="ortho" label="Photo aérienne IGN" title="GéoPortail" maxscale="1000" thumbgallery="img/basemap/ortho.jpg"
-            url="https://wxs.ign.fr/essentiels/geoportail/wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" format="image/jpeg" visible="true" fromcapacity="false"
-            attribution="&lt;a href='https://geoservices.ign.fr/services-web-decouverte' target='_blank'>&lt;img src='img/basemap/geoservices.png'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
+            url="https://data.geopf.fr/wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" format="image/jpeg" visible="true" fromcapacity="false"
+            attribution="&lt;a href='https://geoservices.ign.fr/services-geoplateforme-diffusion' target='_blank'>&lt;img src='img/basemap/geoservices.png'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
         <baselayer  type="OSM" id="positron" label="Positron" title="CartoDb" thumbgallery="img/basemap/positron.png" 
 			url="http://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20" 
 			visible="false" attribution="Map tiles by  &lt;a href='https://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />

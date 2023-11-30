@@ -27,7 +27,7 @@
 			label="Orthophoto 2021"
 			title="Orthophoto 2021"
 			thumbgallery="img/basemap/ortho.jpg"
-			url="https://wxs.ign.fr/ortho/geoportail/r/wms"
+			url="https://data.geopf.fr/wms-r/wms"
 			maxzoom="19"
 			visible="false"
 			format="image/png"
