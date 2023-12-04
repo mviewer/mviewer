@@ -14,8 +14,10 @@ export const Legend = () => {
       // vector legend
       let newId = detail.getAttribute("data-layerid");
       let canvas = detail.querySelector(".vector-legend");
-      let canvasToImg = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-      legend = `<img class="mv-legend" id="legend-${ newId }" src="${ canvasToImg }" alt="Légende non disponible" onload="mviewer &amp;&amp;" onerror="this.onerror=null;this.src='img/nolegend.png';">`;
+      let canvasToImg = canvas
+        .toDataURL("image/png")
+        .replace("image/png", "image/octet-stream");
+      legend = `<img class="mv-legend" id="legend-${newId}" src="${canvasToImg}" alt="Légende non disponible" onload="mviewer &amp;&amp;" onerror="this.onerror=null;this.src='img/nolegend.png';">`;
     }
     return `
         <div class="print-legend-img">
