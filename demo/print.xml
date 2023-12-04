@@ -19,7 +19,25 @@
 		<extension type="component" id="print" path="demo/addons"/>
 	</extensions>
 
-    <themes mini="true" legendmini="false">          
+    <themes mini="true" legendmini="false">        
+        <theme id="lycee" name="Education" collapsed="false" icon="fas fa-book">
+            <layer id="lycee"
+                name="Lycées en Bretagne"
+                type="customlayer"
+                vectorlegend="true"
+                url="customlayers/lycee.js"
+                metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25"
+                metadata-csw="https://geobretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID&amp;ID=99e78163-ce9a-4eee-9ea0-36afc2a53d25"
+                queryable="true"
+                fields="nom,adresse,photo"
+                aliases="Nom,Adresse,Photo"
+                visible="true"
+                searchable="true"
+                searchengine="fuse"
+                fusesearchkeys="nom,adresse"
+                fusesearchresult="{{nom}} ({{type_etabl}})"
+                attribution="Région Bretagne" />
+        </theme>  
         <theme name="Environnement"  collapsed="false" id="environnement" icon="fas fa-leaf">
             <layer id="reserve_naturelle_regionale" name="Réserves naturelles régionales"  visible="true" tiled="false"
 				searchable="false" queryable="true" fields="axe" aliases="axe"   
