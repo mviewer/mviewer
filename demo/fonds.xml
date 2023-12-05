@@ -18,13 +18,10 @@
 		<baselayer  type="OSM" id="darkmatter" label="Dark Matter" title="CartoDb" thumbgallery="img/basemap/darkmatter.png" 
             url="http://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png" maxzoom="20" 
             visible="false" attribution="Map tiles by  &lt;a href='https://cartodb.com/attributions' target='_blank'>CartoDb &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/' target='_blank'>CC BY 3.0 &lt;/a>" />
-		<baselayer visible="false" id="photo_actuelle" thumbgallery="img/basemap/ortho.jpg" title="Ortho actuelle IGN" label="Ortho actuelle IGN" type="WMTS" 
-			url="https://tile.geobretagne.fr/photo/service" layers="HR.ORTHOIMAGERY.ORTHOPHOTO" format="image/png" 
-            attribution="IGN" matrixset="PM" fromcapacity="false" style="default"/>
 		<baselayer visible="false" id="photo_ancienne" thumbgallery="img/basemap/ortho-ancien.jpg" title="Ortho ancienne" label="Ortho ancienne" type="WMTS" 
 			url="https://tile.geobretagne.fr/photo/service" layers="ORTHOIMAGERY.ORTHOPHOTOS.1950-1965" format="image/png" 
             attribution="IGN" matrixset="PM" fromcapacity="false" style="default"/>
-		<baselayer visible="false" id="photo_ir" thumbgallery="img/basemap/ortho-ir.png" title="Ortho actuelle IGN IR" label="Ortho actuelle IGN IR" type="WMTS" 
+		<baselayer visible="false" id="photo_ir" thumbgallery="img/basemap/ir.jpg" title="Ortho actuelle IGN IR" label="Ortho actuelle IGN IR" type="WMTS" 
 			url="https://tile.geobretagne.fr/photo/service" layers="ORTHOIMAGERY.ORTHOPHOTOS.IRC" format="image/png" 
             attribution="IGN" matrixset="PM" fromcapacity="false" style="default"/>
         <baselayer  type="WMTS" id="ortho2" label="Photo aérienne IGN" title="GéoPortail" maxscale="1000" thumbgallery="img/basemap/ortho.jpg"
@@ -54,11 +51,9 @@
                 type="vector-tms"
                 opacity="0.9"
                 queryable="true"
-
                 filterstyle="borne_limite_propriete"
                 maxzoom="15"
                 styleurl="https://wxs.ign.fr/static/vectorTiles/styles/PCI/pci.json"
-
                 infopanel="right-panel"
                 legendurl="demo/lycee.png"
                 metadata="https://geoservices.ign.fr/services-web-essentiels"
@@ -73,11 +68,9 @@
                 type="vector-tms"
                 opacity="0.9"
                 queryable="true"
-
                 tilesize="1"
                 filterstyle=""
                 styleurl="https://wxs.ign.fr/static/vectorTiles/styles/BDTOPO/bati.json"
-
                 infopanel="right-panel"
                 legendurl="demo/lycee.png"
                 metadata="https://geoservices.ign.fr/services-web-essentiels"
