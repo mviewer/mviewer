@@ -29,6 +29,7 @@
 				queryable="true" 
                 infoformat="text/html" featurecount="5"                
 				url="https://data.geopf.fr/wms-v/ows" 
+				legendurl="https://data.geopf.fr/wms-v/ows?service=WMS&amp;version=1.1.1&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=BDGEODESIQUE-RN_BDD-POI_WLD"
 				attribution="IGN" 
 				metadata="https://geoservices.ign.fr/sites/default/files/2021-07/IGNF_DONNEES_GEODESIQUES.html"
 				metadata-csw="" />	
