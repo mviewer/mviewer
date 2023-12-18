@@ -12,7 +12,7 @@ import ModalContent from "./components/ModalContent.js";
 import { getOptions } from "./components/Block.js";
 
 const initWithLayout = (layout) => {
-  $(window).on("shown.bs.modal", function () {
+  $("#printModal").on("shown.bs.modal", function () {
     // supprime et recréer la carte seulement et non toute la modal
     $("#mapBlock").remove();
     $("#printModal").modal("show");
