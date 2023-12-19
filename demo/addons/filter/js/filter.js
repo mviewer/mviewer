@@ -188,7 +188,7 @@ var filter = (function () {
       var destinationDivId = "advancedFilter-" + layerId;
 
       // Create div only if not exist
-      if (!$("#" + destinationDivId).length && nbLayers > 1) {
+      if (!$("#" + destinationDivId).length) {
         // add selectBox if needed
         const selected = mviewer.getLayer(layerId)?.layer.getVisible() ? "selected" : "";
         contentSelectLayer.push(
