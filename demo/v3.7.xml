@@ -8,12 +8,11 @@
             url="http://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20"
             visible="false" attribution="Map tiles by  &lt;a href='https://cartodb.com/attributions' target='_blank'>CartoDb &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/' target='_blank'>CC BY 3.0 &lt;/a>" />
         <baselayer  type="WMTS" id="ortho1" label="Photo aérienne actuelle" title="GéoPortail" maxscale="1000" thumbgallery="img/basemap/ortho.jpg"
-            url="https://wxs.ign.fr/essentiels/geoportail/wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" format="image/jpeg" visible="true" fromcapacity="false" opacity="0.5"
-            attribution="&lt;a href='https://www.geoportail.gouv.fr/' target='_blank'>&lt;img src='https://www.geoportail.gouv.fr/assets/images/logo-geoportail.svg'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
+            url="https://data.geopf.fr/wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" format="image/jpeg" visible="true" fromcapacity="false" opacity="0.5"
+            attribution="&lt;a href='https://geoservices.ign.fr/services-geoplateforme-diffusion' target='_blank'>&lt;img src='img/basemap/geoservices.png'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
     </baselayers>
     <proxy url=""/>
-	<olscompletion url="https://wxs.ign.fr/essentiels/ols/apis/completion" type="geoportail" attribution="IGN"/>
-	<searchparameters bbox="true" localities="true" features="false" static="false" querymaponclick="true" closeafterclick="true" inputlabel="Saisir votre adresse"/>
+	<searchparameters bbox="false" localities="false" features="false" static="false" querymaponclick="true" closeafterclick="true" inputlabel="Saisir votre adresse"/>
     <themes>
         <theme name="Lycée"  collapsed="true" id="lycee" icon="caret-right">
             <layer
