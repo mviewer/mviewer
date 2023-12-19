@@ -647,7 +647,7 @@ mviewer = (function () {
     if (!configuration.getConfiguration().mobile) {
       $("[title]").each((i, el) => {
         [placement, trigger, html, container, template] = [
-          "left",
+          "auto",
           "hover",
           true,
           "body",
