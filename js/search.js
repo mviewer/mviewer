@@ -230,9 +230,9 @@ var search = (function () {
           $("#searchresults .list-group-item").not(".search-header").remove();
           $("#searchresults .search-header").addClass("hidden");
         } else {
-          _search($(this).val())
+          _search($(this).val());
         }
-      }, timeoutToWait)
+      }, timeoutToWait);
     });
 
     mviewer.zoomToFeature = search.zoomToFeature;
@@ -241,8 +241,8 @@ var search = (function () {
 
   /**
    * Display geoportail or IGN search services
-   * @param {string} url 
-   * @param {string} type 
+   * @param {string} url
+   * @param {string} type
    */
   const displayIgnSearchList = async (url, type = "ign") => {
     // request
@@ -251,19 +251,19 @@ var search = (function () {
     // display response
     let res = data.results;
     let str = "";
-    const searchType = `.${ type }-location`;
+    const searchType = `.${type}-location`;
     for (let i = 0, len = res.length; i < len && i < 5; i++) {
       const zoomByType = {
         2: 13,
         4: 14,
         5: 15,
         6: 16,
-        7: 17
-      }
+        7: 17,
+      };
       const zoom = zoomByType[res[i].classification] || 12;
       str += `<a class="${type}-location list-group-item" href="#" onclick="
           mviewer.zoomToLocation(${res[i].x}, ${res[i].y}, ${zoom}, ${_searchparams.querymaponclick});
-          mviewer.showLocation('EPSG:4326',${res[i].x }, ${ res[i].y }, ${ _searchparams.banmarker});">
+          mviewer.showLocation('EPSG:4326',${res[i].x}, ${res[i].y}, ${_searchparams.banmarker});">
           ${res[i].fulltext}
       </a>`;
     }
@@ -271,11 +271,11 @@ var search = (function () {
     if (res.length > 0) {
       _showResults(str, "locations");
     }
-  }
+  };
 
   /**
    * Request BAN search service
-   * @param {string} url 
+   * @param {string} url
    */
   const displayBanSearchList = async (url) => {
     // request
@@ -292,8 +292,8 @@ var search = (function () {
         town: 15,
         village: 16,
         street: 17,
-        housenumber: 18
-      }
+        housenumber: 18,
+      };
       const zoom = zoomByType[props.type] || 14;
       str += `<a class="geoportail list-group-item" href="#" title="${props.context} - ${props.type}"
           onclick="mviewer.zoomToLocation(
@@ -308,7 +308,7 @@ var search = (function () {
     }
     $(".geoportail").remove();
     _showResults(str, "locations");
-  }
+  };
 
   /**
    * Will search according to configured search service and input search field
@@ -318,7 +318,10 @@ var search = (function () {
     // OpenLS or BAN search
     if (_searchparams.localities) {
       if (["ign", "geoportail"].includes(_olsCompletionType)) {
-          displayIgnSearchList(`${ _olsCompletionUrl }?text=${ value }&type=StreetAddress,PositionOfInterest&ter=5`, _olsCompletionType);
+        displayIgnSearchList(
+          `${_olsCompletionUrl}?text=${value}&type=StreetAddress,PositionOfInterest&ter=5`,
+          _olsCompletionType
+        );
       } else if (_olsCompletionType === "ban") {
         // BAN search
         var parameters = { q: value, limit: 5 };
@@ -331,7 +334,7 @@ var search = (function () {
         // create URL
         const banUrl = new URL(_olsCompletionUrl);
         banUrl.searchParams.append("q", parameters.q);
-        banUrl.searchParams.append("limit", parameters.limit)
+        banUrl.searchParams.append("limit", parameters.limit);
         const banUrlStr = banUrl.toString();
         // display resulr
         displayBanSearchList(banUrlStr);
