@@ -17,8 +17,8 @@
             url="https://data.geopf.fr/wmts" layers="ELEVATION.SLOPES" format="image/jpeg" visible="false" fromcapacity="false"
             attribution="&lt;a href='https://geoservices.ign.fr/services-geoplateforme-diffusion' target='_blank'>&lt;img src='img/basemap/geoservices.png'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
     </baselayers> 
-    <olscompletion url="https://data.geopf.fr/geocodage/completion" type="IGN" attribution="IGN"/>
-    <searchparameters bbox="false" localities="false" features="false"/>
+    <olscompletion url="https://data.geopf.fr/geocodage/completion" type="ign" attribution="IGN"/>
+    <searchparameters bbox="false" localities="true" features="false"/>
 
     <extensions>    
         <extension type="component" id="isochroneAddon" path="demo/addons"/>

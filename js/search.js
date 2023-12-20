@@ -65,7 +65,7 @@ var search = (function () {
 
   /**
    * Property: _olsCompletionType
-   * String. The service type used by the geocode control (geoportail or ban)
+   * String. The service type used by the geocode control (ign or ban)
    */
 
   var _olsCompletionType = null;
@@ -786,7 +786,7 @@ var search = (function () {
     if (configuration.olscompletion) {
       _olsCompletionUrl = configuration.olscompletion.url;
       $("#adresse-attribution").text(configuration.olscompletion.attribution);
-      _olsCompletionType = configuration.olscompletion.type || "geoportail";
+      _olsCompletionType = configuration.olscompletion.type || "ign";
     }
     if (configuration.elasticsearch) {
       _elasticSearchUrl = configuration.elasticsearch.url;
