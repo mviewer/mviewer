@@ -20,8 +20,8 @@ Liens vers service d'autocomplétion et de géocodage d'adresses.
 
 **Attributs**
 
-* ``url``: URL du service d'autocomplétion d'adresse : BAN https://api-adresse.data.gouv.fr/search/ ou IGN  https://wxs.ign.fr/essentiels/ols/apis/completion
-* ``type``: Optional - Type de service utilisé geoportail ou ban - defaut = geoportail
+* ``url``: URL du service d'autocomplétion d'adresse : BAN https://api-adresse.data.gouv.fr/search/ ou IGN  https://data.geopf.fr/geocodage/completion
+* ``type``: Optional - Type de service utilisé ign ou ban - defaut = ign
 * ``attribution``: Attribution du service de geocodage.
 
 **Exemple**
