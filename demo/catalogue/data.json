@@ -65,15 +65,6 @@
       "url_demo": "../?config=demo/cad/cad.xml"
     },
     {
-      "id": "7",
-      "title": "Contexte de carte WMC",
-      "tags": "Flux WMC, contexte",
-      "description": "Exemple illustrant l'utilisation d'un contexte de carte servant de source au panel des thématiques. Il est possible d'appeler plusieurs WMC en utilisant la virgule comme séparateur.",
-      "level": "simple",
-      "url_source": "../demo/base.wmc",
-      "url_demo": "../?config=demo/base.xml&amp;wmc=https://geobretagne.fr/mapfishapp/ws/wmc/geodoc6ba6c7938ce46f2a06eea53e49919671.wmc"
-    },
-    {
       "id": "8",
       "title": "Base SIRENE",
       "tags": "SIRENE",

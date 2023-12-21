@@ -21,7 +21,7 @@
 
     <themes mini="false">
         <theme name="Tuiles vectorielles"  collapsed="false" id="maptiler" icon="fas fa-globe">
-                <layer id="maptiler" name="maptiler" visible="false" queryable="true"
+                <layer id="maptiler" name="maptiler" visible="true" queryable="true"
                     type="customlayer" opacity="0.9" legendurl="https://www.maptiler.com/img/logos/maptiler-logo.svg"
                     url="demo/tile/maptiler.js"
                     expanded="true" exclusive="true"
@@ -29,14 +29,14 @@
                     metadata=""
                     >
                 </layer>
-                <layer id="geograndest" name="geograndest" visible="true" queryable="true"
+                <!--<layer id="geograndest" name="geograndest" visible="false" queryable="true"
                     type="customlayer" opacity="0.9" legendurl="https://pbs.twimg.com/profile_images/1103603966804410370/Z9jR66Lv_400x400.png"
                     url="demo/tile/geograndest.js"
                     expanded="true" exclusive="true"
                     attribution="&lt;a href=&quot;https://osm.geograndest.fr/&quot; target=&quot;_blank&quot;&gt;&amp;copy; Geograndest&lt;/a&gt; &lt;a href=&quot;https://www.openstreetmap.org/copyright&quot; target=&quot;_blank&quot;&gt;&amp;copy; OpenStreetMap contributors&lt;/a&gt;"
                     metadata=""
                     >
-                </layer>
+                </layer>-->
                  <layer id="mapbox" name="mapbox" visible="false" queryable="true"
                     type="customlayer" opacity="0.9" legendurl="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Mapbox_logo_2017.svg/512px-Mapbox_logo_2017.svg.png"
                     url="demo/tile/mapbox.js"

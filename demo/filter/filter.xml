@@ -25,9 +25,8 @@
 <themes mini="true" legendmini="true">
     <theme name="Structures"  collapsed="true" id="demo" icon="fas fa-laptop-house">
         <layer id="structures"
-            toplayer="true"
             name="Sites pour l'aide économique et l'innovation"
-            visible="false"
+            visible="true"
             url="demo/filter/customlayers/structures.js"
             queryable="true"
             type="customlayer"

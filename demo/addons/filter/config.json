@@ -63,6 +63,17 @@
         },
         "layers": [
           {
+            "layerId": "commune",
+            "filter": [
+              {
+                "attribut": "nom",
+                "type": "textbox",
+                "label": "Commune",
+                "updateOnChange": true
+              }
+            ]
+          },
+          {
             "layerId": "structures",
             "filter": [
               {
@@ -92,18 +103,8 @@
                 "updateOnChange": true
               }
             ]
-          },
-          {
-            "layerId": "commune",
-            "filter": [
-              {
-                "attribut": "nom",
-                "type": "textbox",
-                "label": "Commune",
-                "updateOnChange": true
-              }
-            ]
           }
+
         ]
       }
     }
