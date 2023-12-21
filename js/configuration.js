@@ -8,7 +8,7 @@ var configuration = (function () {
 
   // Mviewer version a saisir manuellement
 
-  var VERSION = "3.9.3.1";
+  var VERSION = "3.10";
 
   var _showhelp_startup = false;
 
@@ -403,6 +403,9 @@ var configuration = (function () {
     }
     if (!conf.application.studio || conf.application.studio === "false") {
       $("#studiolink").remove();
+    }
+    if (!conf.application.mapprint || conf.application.mapprint === "false") {
+      $("#mapprint").remove();
     }
     if (conf.application.home) {
       $(".mv-logo").parent().attr("href", conf.application.home);
@@ -988,7 +991,7 @@ var configuration = (function () {
                   }
                 },
                 error: function (request, textStatus, error) {
-                  console.log("error custom Layer : " + error);
+                  console.log(`error with custom Layer ${oLayer.id} : ${error}`);
                 },
               });
             }

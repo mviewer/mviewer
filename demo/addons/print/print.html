@@ -1,0 +1,157 @@
+<!-- Modal -->
+<div
+  id="printModal"
+  class="modal fade"
+  role="dialog"
+>
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+        >&times;</button>
+        <h3 class="modal-title">Imprimer la carte</h3>
+      </div>
+      <div class="modal-body bodyFlex">
+        <div id="blockOptionsImpress">
+          <h4><strong>Options de mise en page</strong></h4>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Orientation</h3>
+            </div>
+            <div class="panel-body">
+              <select
+                id="print-select-orientation"
+                class="form-control"
+              >
+                <option
+                  value=""
+                  selected
+                  i18n="print.select.landscape"
+                >Paysage</option>
+                <option
+                  value=""
+                  i18n="print.select.landscape"
+                >Portrait</option>
+              </select>
+            </div>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Options de la carte</h3>
+            </div>
+            <div class="panel-body">
+              <div class="input-group">
+                <input
+                  type="checkbox"
+                  id="print-scale-checkbox"
+                  class="print-option-checkbox"
+                  checked
+                  aria-label="..."
+                >
+                <label>Barre d'échelle</label>
+              </div>
+              <div class="input-group">
+                <input
+                  type="checkbox"
+                  id="print-north-checkbox"
+                  class="print-option-checkbox"
+                  checked
+                  aria-label="..."
+                >
+                <label>Orientation (Nord)</label>
+              </div>
+              <div class="input-group">
+                <input
+                  type="checkbox"
+                  id="print-qrcode-checkbox"
+                  class="print-option-checkbox"
+                  aria-label="..."
+                >
+                <label>QR Code (partage de la carte)</label>
+              </div>
+            </div>
+          </div>
+          <!-- Single button -->
+          <div class="print-actions">
+            <button
+              type="button"
+              class="btn btn-danger print-reset-btn"
+            >
+              <span
+                class="glyphicon glyphicon-refresh"
+                aria-hidden="true"
+              ></span>
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary print-preview-btn"
+            >
+              <span
+                class="glyphicon glyphicon-eye-open"
+                aria-hidden="true"
+              ></span>
+              Voir
+            </button>
+            <!-- Split button -->
+            <div class="btn-group">
+              <button
+                type="button"
+                class="btn btn-primary print-download-btn"
+              > <span
+                  class="glyphicon glyphicon-print"
+                  aria-hidden="true"
+                ></span>
+                Imprimer</button>
+              <button
+                type="button"
+                class="btn btn-primary dropdown-toggle"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a
+                    class="print-download-btn"
+                    href="#"
+                  ><span
+                      class="glyphicon glyphicon-file"
+                      aria-hidden="true"
+                    ></span> PDF</a></li>
+                <li><a
+                    class="print-png-btn"
+                    href="#"
+                  ><span
+                      class="glyphicon glyphicon-picture"
+                      aria-hidden="true"
+                    ></span> PNG</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div
+          id="blockViewImpress"
+          class=""
+        >
+          <!-- This part will be selected by user -->
+          <div
+            id="printGridContainer"
+            class="containerBlockImpress"
+          >
+            <div
+              id="anchor"
+              style="display:none;"
+            ></div>
+          </div>
+          <!-- end -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

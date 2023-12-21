@@ -1,4 +1,4 @@
-var filter = (function () {
+const filter = (function () {
   /**
    * Property: _id
    * @type {String}
@@ -188,7 +188,7 @@ var filter = (function () {
       var destinationDivId = "advancedFilter-" + layerId;
 
       // Create div only if not exist
-      if (!$("#" + destinationDivId).length && nbLayers > 1) {
+      if (!$("#" + destinationDivId).length) {
         // add selectBox if needed
         const selected = mviewer.getLayer(layerId)?.layer.getVisible() ? "selected" : "";
         contentSelectLayer.push(
@@ -310,19 +310,19 @@ var filter = (function () {
    **/
   var _getFilter = function (layerId) {
     let filterTxt;
-    filter.layersFiltersParams.get(layerId).forEach(function (filter, index, array) {
+    filter.layersFiltersParams.get(layerId).forEach((layerFilter) => {
       // Only if there is a filter
-      if (filter.currentValues.length > 0) {
-        let newFilter = filter.attribut + "='" + filter.currentValues[0] + "'";
-        if (filterTxt && filterTxt.length > 0) {
+      if (layerFilter.currentValues.length) {
+        const newFilter = `${layerFilter.attribut} LIKE '%${layerFilter.currentValues[0]}%'`;
+        if (filterTxt && filterTxt.length) {
           filterTxt += " AND " + newFilter;
         } else {
           filterTxt = newFilter;
         }
       }
     });
-    if (filterTxt && filterTxt.length > 0) {
-      return "&CQL_FILTER=" + filterTxt;
+    if (filterTxt && filterTxt.length) {
+      return "&CQL_FILTER=" + encodeURIComponent(filterTxt);
     } else {
       return "";
     }

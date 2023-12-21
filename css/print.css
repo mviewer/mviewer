@@ -1,0 +1,90 @@
+/*
+    * 
+    * Mviewer - print.css
+    * Propriétés de style pour impression depuis un navigateur
+    *
+*/
+
+/* Suppression des blocs inutiles */
+#sidebar-wrapper,
+#zoomtoolbar,
+#toolstoolbar,
+.ol-attribution,
+.tooltip-inner,
+.tooltip-arrow,
+#backgroundlayerstoolbar-default,
+#backgroundlayerstoolbar-gallery {
+	display: none;
+}
+
+/* Gestion de la carte */
+#map {
+	top: 0px;
+	left: 0px;
+}
+
+#mviewerinfosbar {
+	z-index: 1000 !important;
+}
+
+/* Gestion de la légende */
+#legend {
+	top: 10pt;
+	left: 10pt;
+	position: fixed;
+}
+
+#layers-container-box-header {
+	display: none;
+}
+
+#layers-container .glyphicon {
+	display: none;
+}
+
+#layers-container {
+	background-color: white !important;
+	border: none;
+}
+
+#layers-container .mv-layer-details {
+	border: none;
+	max-width: 300px;
+}
+
+/* Gestion de l'interrogation */
+
+#right-panel,
+#bottom-panel {
+	background-color: white !important;
+}
+
+#right-panel .active {
+	padding-bottom: 0 !important;
+}
+
+#right-panel .mv-header,
+#right-panel .nav-tabs,
+#bottom-panel .mv-header,
+#bottom-panel .nav-tabs {
+	display: none;
+}
+
+#right-panel .carousel-control,
+#right-panel .counter-slide,
+#bottom-panel .carousel-control,
+#bottom-panel .counter-slide {
+	display: none;
+}
+
+#bottom-panel {
+	bottom: 0;
+	left: 0;
+	position: fixed;
+	width: 100%;
+	padding: 10pt 0 !important;
+}
+
+#bottom-panel .mv-close {
+	display: none;
+}

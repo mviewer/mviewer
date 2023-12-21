@@ -13,14 +13,27 @@
 </application>
 <mapoptions maxzoom="18" projection="EPSG:3857" center="-230072,6204699" zoom="14" />
 <baselayers style="default">
-    <baselayer  type="WMS" id="ortho_50" label="Photo aérienne 1950" title="GéoBretagne" thumbgallery="img/basemap/ortho-ancien.jpg"
-			url="https://tile.geobretagne.fr/gwc02/service/wms" layers="satellite-ancien" format="image/jpeg" visible="true"
-			attribution="&lt;a href='https://applications.region-bretagne.fr/geosource/apps/search/?uuid=048622c5-b333-4c2b-94ec-40a41608dc06' target='_blank' >Partenaires GéoBretagne - IGN&lt;/a>"/>
+	<baselayer  type="WMS" id="ortho_50" label="Photo aérienne 1950" title="IGN" thumbgallery="img/basemap/ortho-ancien.jpg"
+            url="https://wxs.ign.fr/orthohisto/geoportail/r/wms" layers="ORTHOIMAGERY.ORTHOPHOTOS.1950-1965" format="image/png" visible="true" fromcapacity="false"
+            attribution="&lt;a href='https://geoservices.ign.fr/services-geoplateforme-diffusion' target='_blank'>&lt;img src='img/basemap/geoservices.png'>&lt;/a>" style="BDORTHOHISTORIQUE" maxzoom="22"/> 
+	<baselayer  type="WMS" id="ortho_2000" label="Photo aérienne 2000 - 2005" title="IGN" thumbgallery="img/basemap/ortho-ancien.jpg"
+            url="https://wxs.ign.fr/orthohisto/geoportail/r/wms" layers="ORTHOIMAGERY.ORTHOPHOTOS2000-2005" format="image/png" visible="false" fromcapacity="false"
+            attribution="&lt;a href='https://geoservices.ign.fr/services-geoplateforme-diffusion' target='_blank'>&lt;img src='img/basemap/geoservices.png'>&lt;/a>" style="BDORTHOHISTORIQUE" maxzoom="22"/> 
+	<baselayer  type="WMS" id="ortho_2006" label="Photo aérienne 2006 - 2010" title="IGN" thumbgallery="img/basemap/ortho-ancien.jpg"
+            url="https://wxs.ign.fr/orthohisto/geoportail/r/wms" layers="ORTHOIMAGERY.ORTHOPHOTOS2006-2010" format="image/png" visible="false" fromcapacity="false"
+            attribution="&lt;a href='https://geoservices.ign.fr/services-geoplateforme-diffusion' target='_blank'>&lt;img src='img/basemap/geoservices.png'>&lt;/a>" style="BDORTHOHISTORIQUE" maxzoom="22"/> 
+	<baselayer  type="WMS" id="ortho_2011" label="Photo aérienne 2011 - 2015" title="IGN" thumbgallery="img/basemap/ortho-ancien.jpg"
+            url="https://wxs.ign.fr/orthohisto/geoportail/r/wms" layers="ORTHOIMAGERY.ORTHOPHOTOS2011-2015" format="image/png" visible="false" fromcapacity="false"
+            attribution="&lt;a href='https://geoservices.ign.fr/services-geoplateforme-diffusion' target='_blank'>&lt;img src='img/basemap/geoservices.png'>&lt;/a>" style="BDORTHOHISTORIQUE" maxzoom="22"/> 
+	<baselayer  type="WMS" id="ortho_actuelle" label="Photo aérienne actuelle" title="IGN" thumbgallery="img/basemap/ortho-ancien.jpg"
+            url="https://data.geopf.fr/wms-r/wms" layers="HR.ORTHOIMAGERY.ORTHOPHOTOS" format="image/png" visible="false" fromcapacity="false"
+            attribution="&lt;a href='https://geoservices.ign.fr/services-geoplateforme-diffusion' target='_blank'>&lt;img src='img/basemap/geoservices.png'>&lt;/a>" style="BDORTHOHISTORIQUE" maxzoom="22"/> 
+
     <baselayer  visible="false" type="WMTS" id="ortho_ir" label="Photo aérienne infra rouge"   title="GéoBretagne" thumbgallery="img/basemap/ir.jpg"
             url="https://geobretagne.fr/geoserver/gwc/service/wmts"   layers="photo:ir-composite" format="image/jpeg" style="_null" matrixset="EPSG:3857"
             fromcapacity="false"   attribution="&lt;a href='https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=434b82a8-8d3c-4d9f-9eb3-0485f1a63eb6' target='_blank' >partenaires GéoBretagne - IGN RGE BD ORTHO - PlanetObserver&lt;/a>" />
 </baselayers>
-<themes mini="true" legendmini="true">
+<themes mini="true" legendmini="false">
     <theme name="Outils"  collapsed="true" id="demo" icon="fas fa-cog">
         <layer id="swipe" name="[SWIPE] image satellite" visible="true" queryable="false"
             type="customlayer"

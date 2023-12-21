@@ -65,15 +65,6 @@
       "url_demo": "../?config=demo/cad/cad.xml"
     },
     {
-      "id": "7",
-      "title": "Contexte de carte WMC",
-      "tags": "Flux WMC, contexte",
-      "description": "Exemple illustrant l'utilisation d'un contexte de carte servant de source au panel des thématiques. Il est possible d'appeler plusieurs WMC en utilisant la virgule comme séparateur.",
-      "level": "simple",
-      "url_source": "../demo/base.wmc",
-      "url_demo": "../?config=demo/base.xml&amp;wmc=https://geobretagne.fr/mapfishapp/ws/wmc/geodoc6ba6c7938ce46f2a06eea53e49919671.wmc"
-    },
-    {
       "id": "8",
       "title": "Base SIRENE",
       "tags": "SIRENE",
@@ -405,6 +396,33 @@
       "level": "intermédiaire",
       "url_source": "../demo/mustache_tooltip.xml",
       "url_demo": "../?config=demo/mustache_tooltip.xml"
+    },
+    {
+      "id": "47",
+      "title": "Utilisation d'API",
+      "tags": "API,georisques,gpu,cerema",
+      "description": "Utilisation de diverses API (CEREMA, Georisques, GPU...) dans l'interrogation d'une couche",
+      "level": "avancé",
+      "url_source": "../demo/api.xml",
+      "url_demo": "../?config=demo/api.xml"
+    },
+    {
+      "id": "47",
+      "title": "Affichage COG / TIFF",
+      "tags": "cog,tiff,raster,custom,ndvi,reprojection",
+      "description": "Affichage d'un COG, d'un COG NDVI+NDWI (style avec classes OpenLayers) et d'un fichier TIFF reprojeté à la volée avec interrogation du pixel",
+      "level": "intermédiaire",
+      "url_source": "../demo/cog-geotiff/cog.xml",
+      "url_demo": "../?config=demo/cog-geotiff/cog.xml"
+    },
+    {
+      "id": "48",
+      "title": "Mise en page personnalisée",
+      "tags": "print,impression,layout",
+      "description": "Mise en page d'une carte avec le module externe (addon) d'impression.",
+      "level": "intermédiaire",
+      "url_source": "../demo/print.xml",
+      "url_demo": "../?config=demo/print.xml"
     }
   ]
 }

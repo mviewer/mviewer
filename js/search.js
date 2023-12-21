@@ -65,7 +65,7 @@ var search = (function () {
 
   /**
    * Property: _olsCompletionType
-   * String. The service type used by the geocode control (geoportail or ban)
+   * String. The service type used by the geocode control (ign or ban)
    */
 
   var _olsCompletionType = null;
@@ -193,8 +193,9 @@ var search = (function () {
    * Private Method: _initSearch
    *
    */
-
   var _initSearch = function () {
+    let timeoutId;
+    const timeoutToWait = 500;
     $("#searchtool a").attr("title", "Effacer");
     if (_searchparams.features || _searchparams.static) {
       _sourceEls = new ol.source.Vector();
@@ -214,77 +215,113 @@ var search = (function () {
     });
 
     $(document).on("keyup", "#searchfield", function (e) {
-      if (e.keyCode == 13 && $("#searchresults a").length > 1) {
-        var firstitem = $("#searchresults").find("a")[1];
-        $(firstitem).trigger("click");
-        return;
-      }
-      var chars = $(this).val().length;
-      if (chars === 0) {
-      } else if (chars > 0 && chars < 3) {
-        $("#searchresults .list-group-item").not(".search-header").remove();
-        $("#searchresults .search-header").addClass("hidden");
-      } else {
-        _search($(this).val());
-      }
+      // TIMEOUT will avoid one request by keyup
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        if (e.keyCode == 13 && $("#searchresults a").length > 1) {
+          let firstitem = $("#searchresults").find("a")[1];
+          $(firstitem).trigger("click");
+          return;
+        }
+        let chars = $(this).val().trim().length;
+        if (!chars) {
+          return;
+        } else if (chars < 3) {
+          $("#searchresults .list-group-item").not(".search-header").remove();
+          $("#searchresults .search-header").addClass("hidden");
+        } else {
+          _search($(this).val());
+        }
+      }, timeoutToWait);
     });
 
     mviewer.zoomToFeature = search.zoomToFeature;
     mviewer.showFeature = search.showFeature;
   };
 
+  /**
+   * Display geoportail or IGN search services
+   * @param {string} url
+   * @param {string} type
+   */
+  const displayIgnSearchList = async (url, type = "ign") => {
+    // request
+    let response = await fetch(url);
+    let data = await response.json();
+    // display response
+    let res = data.results;
+    let str = "";
+    const searchType = `.${type}-location`;
+    for (let i = 0, len = res.length; i < len && i < 5; i++) {
+      const zoomByType = {
+        2: 13,
+        4: 14,
+        5: 15,
+        6: 16,
+        7: 17,
+      };
+      const zoom = zoomByType[res[i].classification] || 12;
+      str += `<a class="${type}-location list-group-item" href="#" onclick="
+          mviewer.zoomToLocation(${res[i].x}, ${res[i].y}, ${zoom}, ${_searchparams.querymaponclick});
+          mviewer.showLocation('EPSG:4326',${res[i].x}, ${res[i].y}, ${_searchparams.banmarker});">
+          ${res[i].fulltext}
+      </a>`;
+    }
+    $(searchType).remove();
+    if (res.length > 0) {
+      _showResults(str, "locations");
+    }
+  };
+
+  /**
+   * Request BAN search service
+   * @param {string} url
+   */
+  const displayBanSearchList = async (url) => {
+    // request
+    const response = await fetch(url);
+    const data = await response.json();
+    // display response
+    var res = data.features;
+    var str = "";
+    for (var i = 0, len = res.length; i < len && i < 5; i++) {
+      var props = res[i].properties;
+      var geom = res[i].geometry;
+      const zoomByType = {
+        city: 13,
+        town: 15,
+        village: 16,
+        street: 17,
+        housenumber: 18,
+      };
+      const zoom = zoomByType[props.type] || 14;
+      str += `<a class="geoportail list-group-item" href="#" title="${props.context} - ${props.type}"
+          onclick="mviewer.zoomToLocation(
+              ${geom.coordinates[0]},
+              ${geom.coordinates[1]},
+              ${zoom},
+              ${_searchparams.querymaponclick}
+          );
+          mviewer.showLocation('EPSG:4326', ${geom.coordinates[0]}, ${geom.coordinates[1]}, ${_searchparams.banmarker});">
+          ${props.label}
+      </a>`;
+    }
+    $(".geoportail").remove();
+    _showResults(str, "locations");
+  };
+
+  /**
+   * Will search according to configured search service and input search field
+   * @param {string} value input from text field
+   */
   var _search = function (value) {
     // OpenLS or BAN search
     if (_searchparams.localities) {
-      if (_olsCompletionType === "geoportail") {
-        // Open LS search
-        $.ajax({
-          type: "GET",
-          url: _olsCompletionUrl,
-          crossDomain: true,
-          data: {
-            text: value,
-            type: "StreetAddress,PositionOfInterest",
-            ter: "5",
-          },
-          dataType: "jsonp",
-          success: function (data) {
-            var zoom = 12;
-            var res = data.results;
-            var str = "";
-            //var str = '';
-            for (var i = 0, len = res.length; i < len && i < 5; i++) {
-              switch (res[i].classification) {
-                case 1:
-                case 2:
-                  zoom = 13;
-                  break;
-                case 3:
-                case 4:
-                  zoom = 14;
-                  break;
-                case 5:
-                  zoom = 15;
-                  break;
-                case 6:
-                  zoom = 16;
-                  break;
-                case 7:
-                  zoom = 17;
-                  break;
-              }
-              str += `<a class="geoportail list-group-item" href="#" onclick="
-                                mviewer.zoomToLocation(${res[i].x}, ${res[i].y}, ${zoom}, ${_searchparams.querymaponclick});
-                                mviewer.showLocation('EPSG:4326',${res[i].x}, ${res[i].y}, ${_searchparams.banmarker})">
-                                ${res[i].fulltext}
-                            </a>`;
-            }
-            $(".geoportail").remove();
-            if (res.length > 0) {
-              _showResults(str, "locations");
-            }
-          },
-        });
+      if (["ign", "geoportail"].includes(_olsCompletionType)) {
+        displayIgnSearchList(
+          `${_olsCompletionUrl}?text=${value}&type=StreetAddress,PositionOfInterest&ter=5`,
+          _olsCompletionType
+        );
       } else if (_olsCompletionType === "ban") {
         // BAN search
         var parameters = { q: value, limit: 5 };
@@ -294,53 +331,13 @@ var search = (function () {
           parameters.lon = center[0];
           parameters.lat = center[1];
         }
-        $.ajax({
-          type: "GET",
-          url: _olsCompletionUrl,
-          crossDomain: true,
-          data: parameters,
-          dataType: "json",
-          success: function (data) {
-            var zoom = 0;
-            var res = data.features;
-            var str = "";
-            for (var i = 0, len = res.length; i < len && i < 5; i++) {
-              var props = res[i].properties;
-              var geom = res[i].geometry;
-              switch (props.type) {
-                case "city":
-                  zoom = 13;
-                  break;
-                case "town":
-                  zoom = 15;
-                  break;
-                case "village":
-                  zoom = 16;
-                  break;
-                case "street":
-                  zoom = 17;
-                  break;
-                case "housenumber":
-                  zoom = 18;
-                  break;
-                default:
-                  zoom = 14;
-              }
-              str += `<a class="geoportail list-group-item" href="#" title="${props.context} - ${props.type}"
-                                onclick="mviewer.zoomToLocation(
-                                    ${geom.coordinates[0]},
-                                    ${geom.coordinates[1]},
-                                    ${zoom},
-                                    ${_searchparams.querymaponclick}
-                                );
-                                mviewer.showLocation('EPSG:4326', ${geom.coordinates[0]}, ${geom.coordinates[1]}, ${_searchparams.banmarker});">
-                                ${props.label}
-                            </a>`;
-            }
-            $(".geoportail").remove();
-            _showResults(str, "locations");
-          },
-        });
+        // create URL
+        const banUrl = new URL(_olsCompletionUrl);
+        banUrl.searchParams.append("q", parameters.q);
+        banUrl.searchParams.append("limit", parameters.limit);
+        const banUrlStr = banUrl.toString();
+        // display resulr
+        displayBanSearchList(banUrlStr);
       }
     }
 
@@ -789,7 +786,7 @@ var search = (function () {
     if (configuration.olscompletion) {
       _olsCompletionUrl = configuration.olscompletion.url;
       $("#adresse-attribution").text(configuration.olscompletion.attribution);
-      _olsCompletionType = configuration.olscompletion.type || "geoportail";
+      _olsCompletionType = configuration.olscompletion.type || "ign";
     }
     if (configuration.elasticsearch) {
       _elasticSearchUrl = configuration.elasticsearch.url;
