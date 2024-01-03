@@ -2371,7 +2371,20 @@ mviewer = (function () {
         "http://chart.apis.google.com/chart?cht=qr&chs=140x140&chl=" +
           encodeURIComponent(url)
       );
+      var urlIframe = `<iframe width="800" height="500" style="border:none;" src="${url}"></iframe>`
+        document.getElementById('urlIframeShare').value = urlIframe;
       return url;
+    },
+
+    /**
+     * Public Method: copyToClipBoard
+     *
+     */
+
+    copyToClipboard: function (divContent) {
+      let textContent = document.getElementById(divContent);
+      textContent.select();
+      navigator.clipboard.writeText(textContent.value);
     },
 
     /**

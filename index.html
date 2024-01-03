@@ -696,13 +696,13 @@
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
               <h4 class="modal-title">
-                <center i18n="share.panel.title">Partager cette carte</center>
+                <span i18n="share.panel.title">Partager cette carte</span>
               </h4>
             </div>
             <div class="modal-body">
-              <h6 class="modal-share-title">
+              <h5 class="modal-share-title">
                 <strong i18n="share.modal.title">Mode d'affichage</strong>
-              </h6>
+              </h5>
               <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group" id="mv-display-mode">
@@ -730,6 +730,9 @@
                   </div>
                 </div>
               </div>
+              <h5 class="modal-share-title">
+                <strong i18n="share.modal.type">Mode de partage</strong>
+              </h5>
               <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-6">
                   <a
@@ -777,6 +780,17 @@
                       value="geOrchestra" />
                   </form>
                 </div>
+              </div>
+              <div id="IframeShare">
+                <h5 class="modal-share-title">
+                  <strong i18n="share.title.iframe">Code d'intégration de la carte en iframe</strong>
+                  <button onclick="mviewer.copyToClipboard('urlIframeShare');" title="Copier le lien" i18n="share.btn.iframe">
+                    <i class="far fa-copy"></i>
+                  </button>
+                </h5>
+                <div>
+                  <textarea type="text" value="" id="urlIframeShare" spellcheck="false"></textarea>
+                </div>                
               </div>
             </div>
           </div>
