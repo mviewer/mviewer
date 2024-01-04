@@ -2372,7 +2372,7 @@ mviewer = (function () {
           encodeURIComponent(url)
       );
       var urlIframe = `<iframe width="800" height="500" style="border:none;" src="${url}"></iframe>`;
-      document.getElementById("urlIframeShare").value = urlIframe;
+      document.getElementById("urlIframeShare").innerText = urlIframe;
       return url;
     },
 
@@ -2381,10 +2381,9 @@ mviewer = (function () {
      *
      */
 
-    copyToClipboard: function (divContent) {
-      let textContent = document.getElementById(divContent);
-      textContent.select();
-      navigator.clipboard.writeText(textContent.value);
+    copyToClipboard: function (divID) {
+      let textContent = document.getElementById(divID).innerText;
+      navigator.clipboard.writeText(textContent);
     },
 
     /**
