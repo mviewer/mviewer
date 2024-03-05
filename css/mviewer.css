@@ -442,28 +442,6 @@ p.bjqs-caption{
   margin: 0;
 }
 
-/* CSS scroll bar style for chrome */
-
-::-webkit-scrollbar {
-	width: 8px;
-}
-::-webkit-scrollbar-button {
-	width: 8px;
-	height:5px;
-}
-::-webkit-scrollbar-track {
-	border: skinny plain red;
-	box-shadow: 0px 0px 3px #blue inset;
-	border-radius: 10px;
-}
-::-webkit-scrollbar-thumb {
-	border: skinny plain black;
-	border-radius:10px;
-}
-::-webkit-scrollbar-thumb:hover {
-	background: #5393c5;
-}
-
 img.mv-logo {
   max-height: 35px;
   padding-top: 0px;
@@ -2019,3 +1997,34 @@ div#login-box {
 .caret-toggle.collapsed h4 .state-icon.notFirstLayer:after {
 	content: "\2b";/*plus*/
 }
+
+/* Sharepanel Iframe */
+
+#urlIframeShare {
+  font-family: monospace;
+    width: 100%;
+    height: 15vh;
+    background-color: #eaeaea;
+    border: none;
+    resize: none;
+    word-break: break-all;
+}
+
+#IframeShare>div {
+  background-color: #8080802b;
+  padding: 0.5em;
+  border-radius: 3px;
+}
+
+#IframeShare h5 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#IframeShare h5 button{
+  background: none;
+  border: none;
+}
+
+
