@@ -2028,3 +2028,8 @@ div#login-box {
 }
 
 
+.datepicker table tbody tr td.disabled {
+  color: rgba(119,119,119,0.2);
+  pointer-events: none;
+}
+
