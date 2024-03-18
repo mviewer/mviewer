@@ -934,30 +934,21 @@
       }
     </script>
     <script type="text/javascript" src="lib/olms/8.2.1/olms.js"></script>
+    
+    <script type="module" src="js/init/init.js"></script>
 
     <script type="text/javascript">
-      var API = {};
+      console.log("OK 2");
+      let API = {};
+      let urlParams = window.location.search;
       $(document).ready(function () {
-        "use strict";
-        if (window.location.search) {
-          $.extend(
-            API,
-            $.parseJSON(
-              '{"' +
-                decodeURIComponent(
-                  window.location.search
-                    .substring(1)
-                    .replace(/&/g, '","')
-                    .replace(/=/g, '":"')
-                ) +
-                '"}'
-            )
-          );
+        if (urlParams) {
+          API = { ...Object.fromEntries(new URLSearchParams(urlParams)) };
         }
 
         // Search for a config param
-        var configFile = API.config;
-        var defaultEnvFile = API.env || "apps/settings.json";
+        var configFile = API?.config;
+        var defaultEnvFile = API?.env || "apps/settings.json";
 
         // If no config param, search for a fragment (#)
         if (!API.config) {
@@ -1092,5 +1083,7 @@
       });
     </script>
     <script type="text/javascript" src="lib/simple-slidebar/slidebar_menu.js"></script>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/Viglino/ol-ext/master/dist/ol-ext.min.css" />
+    <script type="text/javascript" src="https://cdn.rawgit.com/Viglino/ol-ext/master/dist/ol-ext.min.js"></script>
   </body>
 </html>

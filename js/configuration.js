@@ -236,9 +236,9 @@ var configuration = (function () {
                   .remove();
                 console.log(
                   "La thématique " +
-                    this.themeId +
-                    " n'a pu être trouvée dans " +
-                    this.url
+                  this.themeId +
+                  " n'a pu être trouvée dans " +
+                  this.url
                 );
               }
             },
@@ -256,9 +256,12 @@ var configuration = (function () {
       });
     };
 
+    console.log(requests);
+
     $.when
       .apply(new ajaxFunction(), requests)
       .done(function (result) {
+        console.log(result);
         //Lorsque toutes les thématiques externes sont récupérées,
         // on initialise le chargement de l'application avec le trigger configurationCompleted
         $(document).trigger("configurationCompleted", { xml: conf });
@@ -295,18 +298,18 @@ var configuration = (function () {
   const _getEnvData = (appsEnvfile, defaultFile) => {
     _callJsonFile(defaultFile)
       .then((defaultEnv) =>
-        // if apps env file exists wi overload default apps/settings.json file with .json file with same xml name
-        // ex: demo.xml => demo.json
-        {
-          return (
-            _callJsonFile(appsEnvfile)
-              .then((appsEnv) => {
-                return _dispatchCustomEvent({ ...defaultEnv, ...appsEnv });
-              })
-              // else finally load only apps/settings.json file is loaded
-              .catch((e) => _dispatchCustomEvent(defaultEnv))
-          );
-        }
+      // if apps env file exists wi overload default apps/settings.json file with .json file with same xml name
+      // ex: demo.xml => demo.json
+      {
+        return (
+          _callJsonFile(appsEnvfile)
+            .then((appsEnv) => {
+              return _dispatchCustomEvent({ ...defaultEnv, ...appsEnv });
+            })
+            // else finally load only apps/settings.json file is loaded
+            .catch((e) => _dispatchCustomEvent(defaultEnv))
+        );
+      }
       )
       .catch((e) => {
         console.log("Error with default file");
@@ -332,6 +335,7 @@ var configuration = (function () {
   };
 
   var _load = function (conf) {
+    console.log("load");
     console.log("Mviewer version " + VERSION);
 
     // set infos bar text
@@ -352,6 +356,7 @@ var configuration = (function () {
       // apply lang set in URL as param
       _lang = API.lang;
     }
+
     if (conf.application.title || API.title) {
       var title = API.title || conf.application.title;
       document.title = title;
@@ -359,9 +364,11 @@ var configuration = (function () {
       $(".mv-title").text("");
       $(".mv-title").append(title);
     }
+
     if (conf.application.stats === "true" && conf.application.statsurl) {
       $.get(conf.application.statsurl + "?app=" + document.title);
     }
+
     if (conf.application.logo) {
       $(".mv-logo").attr("src", conf.application.logo);
     }
@@ -462,6 +469,7 @@ var configuration = (function () {
       });
     }
 
+    //----------------------------------------------------FINISH FROM HERE
     //baselayertoolbar
     var baselayerControlStyle = conf.baselayers.style;
     if (baselayerControlStyle === "gallery") {
@@ -616,22 +624,22 @@ var configuration = (function () {
         layers.reverse().forEach(function (layerConfig) {
           const layer = mviewer?.env
             ? {
-                ...layerConfig,
-                url: _renderEnvPath(layerConfig.url),
-                legendurl: _renderEnvPath(layerConfig.legendurl),
-                metadata_csw: _renderEnvPath(layerConfig.metadata_csw),
-                metadata: _renderEnvPath(layerConfig.metadata),
-                sld:
-                  layerConfig.sld &&
-                  layerConfig.sld
-                    .split(",")
-                    .map((sld) => _renderEnvPath(sld))
-                    .join(","),
-                template: layerConfig.template && {
-                  ...layerConfig.template,
-                  url: _renderEnvPath(layerConfig.template.url),
-                },
-              }
+              ...layerConfig,
+              url: _renderEnvPath(layerConfig.url),
+              legendurl: _renderEnvPath(layerConfig.legendurl),
+              metadata_csw: _renderEnvPath(layerConfig.metadata_csw),
+              metadata: _renderEnvPath(layerConfig.metadata),
+              sld:
+                layerConfig.sld &&
+                layerConfig.sld
+                  .split(",")
+                  .map((sld) => _renderEnvPath(sld))
+                  .join(","),
+              template: layerConfig.template && {
+                ...layerConfig.template,
+                url: _renderEnvPath(layerConfig.template.url),
+              },
+            }
             : layerConfig;
 
           if (!mviewer?.env) {
@@ -973,27 +981,48 @@ var configuration = (function () {
               mviewer.processLayer(oLayer, l);
             } // end import
 
+            console.log("ADD CUSTOM LAYER " + oLayer.id);
             if (oLayer.type === "customlayer") {
               var hook_url = "customLayers/" + oLayer.id + ".js";
               if (oLayer.url && oLayer.url.slice(-3) === ".js") {
                 hook_url = oLayer.url;
               }
-              $.ajax({
-                url: mviewer.ajaxURL(hook_url),
-                dataType: "script",
-                success: function (customLayer, textStatus, request) {
-                  if (mviewer.customLayers[oLayer.id].layer) {
-                    var l = mviewer.customLayers[oLayer.id].layer;
-                    if (oLayer.style && mviewer.featureStyles[oLayer.style]) {
-                      l.setStyle(mviewer.featureStyles[oLayer.style]);
+              fetch(mviewer.ajaxURL(hook_url))
+                .then(response => response.blob())
+                .then(myBlob => {
+                  var objectURL = URL.createObjectURL(myBlob);
+                  var sc = document.createElement("script");
+                  sc.setAttribute("src", objectURL);
+                  sc.setAttribute("type", "text/javascript");
+                  sc.onload = () => {
+                    console.log("REQUEST RETURN " + oLayer.id);
+                    if (mviewer.customLayers[oLayer.id].layer) {
+                      var l = mviewer.customLayers[oLayer.id].layer;
+                      if (oLayer.style && mviewer.featureStyles[oLayer.style]) {
+                        l.setStyle(mviewer.featureStyles[oLayer.style]);
+                      }
+                      mviewer.processLayer(oLayer, l);
                     }
-                    mviewer.processLayer(oLayer, l);
-                  }
-                },
-                error: function (request, textStatus, error) {
-                  console.log(`error with custom Layer ${oLayer.id} : ${error}`);
-                },
-              });
+                  };
+                  document.head.appendChild(sc);
+                })
+              // $.ajax({
+              //   url: mviewer.ajaxURL(hook_url),
+              //   dataType: "script",
+              //   success: function (customLayer, textStatus, request) {
+              // console.log("REQUEST RETURN " + oLayer.id);
+              // if (mviewer.customLayers[oLayer.id].layer) {
+              //   var l = mviewer.customLayers[oLayer.id].layer;
+              //   if (oLayer.style && mviewer.featureStyles[oLayer.style]) {
+              //     l.setStyle(mviewer.featureStyles[oLayer.style]);
+              //   }
+              //   mviewer.processLayer(oLayer, l);
+              // }
+              //   },
+              //   error: function (request, textStatus, error) {
+              //     console.log(`error with custom Layer ${ oLayer.id } : ${ error }`);
+              //   },
+              // });
             }
             if (layer.group) {
               _themes[themeid].groups[layer.group].layers[oLayer.id] = oLayer;
@@ -1074,7 +1103,7 @@ var configuration = (function () {
 
     //mviewer.init();
     if (!API.wmc && nbOverLayers === 0) {
-      mviewer.init();
+      // mviewer.init();
       mviewer.setBaseLayer(_defaultBaseLayer);
     }
 

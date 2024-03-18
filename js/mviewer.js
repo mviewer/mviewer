@@ -19,7 +19,7 @@ mviewer = (function () {
   proj4.defs(
     "EPSG:2154",
     "+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 " +
-      "+units=m +no_defs"
+    "+units=m +no_defs"
   );
 
   ol.proj.proj4.register(proj4);
@@ -44,7 +44,7 @@ mviewer = (function () {
     _confLoaded: false,
     _overLayersLoaded: 0,
     _overLayersTotal: 0,
-    overLayersLoadedListener: function (val) {},
+    overLayersLoadedListener: function (val) { },
     set overLayersLoaded(val) {
       this._overLayersLoaded = val;
       this.overLayersLoadedListener(val);
@@ -58,7 +58,7 @@ mviewer = (function () {
     get overLayersTotal() {
       return this._overLayersTotal;
     },
-    confLoadedListener: function (val) {},
+    confLoadedListener: function (val) { },
     set confLoaded(val) {
       this._confLoaded = val;
       this.confLoadedListener(val);
@@ -341,8 +341,8 @@ mviewer = (function () {
         zoom: _zoom,
         extent: mapoptions.maxextent
           ? mapoptions.maxextent.split(",").map(function (item) {
-              return parseFloat(item);
-            })
+            return parseFloat(item);
+          })
           : undefined,
       }),
     });
@@ -855,13 +855,13 @@ mviewer = (function () {
           //use source from metadata as attribution if conf is set to "metadata"
           if (_overLayers[this.layer].attribution === "metadata") {
             var source = $(result).find("dc\\:source, source").text();
-            _overLayers[this.layer].attribution = `Source : ${source}`;
-            $(`#${this.layer}-attribution`).text(`Source : ${source}`);
+            _overLayers[this.layer].attribution = `Source : ${ source }`;
+            $(`#${ this.layer }-attribution`).text(`Source : ${ source }`);
           }
 
           //update visible layers on the map
-          $(`#${this.layer}-layer-summary`).attr("data-content", summary);
-          $(`#${this.layer}-date`).text(modifiedDate);
+          $(`#${ this.layer }-layer-summary`).attr("data-content", summary);
+          $(`#${ this.layer }-date`).text(modifiedDate);
         },
       });
     }
@@ -971,10 +971,11 @@ mviewer = (function () {
         } else if (w >= 1200) {
           s = "lg";
         }
-        if (s !== _bsize) {
-          _bsize = s;
-          _updateMedia(_bsize);
-        }
+        // if (s !== _bsize) {
+        //   _bsize = s;
+        //   _updateMedia(_bsize);
+        // }
+        _updateMedia(s)
       });
     }
     if (configuration.getConfiguration().mobile) {
@@ -1129,7 +1130,7 @@ mviewer = (function () {
     } else {
       panel.addClass("hidden");
       if (!panel.parents().find("." + cl).length) {
-        var img = `<img class="${cl} img-responsive" src="img/invisible.png" style="max-width:30%">`;
+        var img = `<img class="${ cl } img-responsive" src="img/invisible.png" style="max-width:30%">`;
         $("#vector-legend-" + layer.id)
           .parent()
           .append(img);
@@ -1795,14 +1796,14 @@ mviewer = (function () {
         }
         langitems.push(
           '<li style="padding-left:' +
-            p +
-            '" type="button" class="btn mv-translate""><a href="#" idlang="' +
-            language +
-            '"><span style="margin-right: 5px;" class="flag-icon flag-icon-squared flag-icon-' +
-            icon +
-            '"></span><span>' +
-            language +
-            "</span></a></li>"
+          p +
+          '" type="button" class="btn mv-translate""><a href="#" idlang="' +
+          language +
+          '"><span style="margin-right: 5px;" class="flag-icon flag-icon-squared flag-icon-' +
+          icon +
+          '"></span><span>' +
+          language +
+          "</span></a></li>"
         );
       });
 
@@ -2188,7 +2189,7 @@ mviewer = (function () {
      */
     setLegendLayerPos: function (layerId, position) {
       if (layerId) {
-        var legendItem = $(`#layers-container>li[data-layerid="${layerId}"]`);
+        var legendItem = $(`#layers-container>li[data-layerid="${ layerId }"]`);
         // change layer position into legend
         switch (position) {
           case 0:
@@ -2197,7 +2198,7 @@ mviewer = (function () {
             break;
           default:
             // others
-            legendItem.insertBefore($(`#layers-container li:eq(${position})`));
+            legendItem.insertBefore($(`#layers-container li:eq(${ position })`));
             break;
         }
       }
@@ -2359,7 +2360,7 @@ mviewer = (function () {
 
       function params(data) {
         return Object.keys(data)
-          .map((key) => `${key}=${data[key]}`)
+          .map((key) => `${ key }=${ data[key] }`)
           .join("&");
       }
 
@@ -2369,9 +2370,9 @@ mviewer = (function () {
       $("#permaqr").attr(
         "src",
         "http://chart.apis.google.com/chart?cht=qr&chs=140x140&chl=" +
-          encodeURIComponent(url)
+        encodeURIComponent(url)
       );
-      var urlIframe = `<iframe width="800" height="500" style="border:none;" src="${url}"></iframe>`;
+      var urlIframe = `<iframe width="800" height="500" style="border:none;" src="${ url }"></iframe>`;
       document.getElementById("urlIframeShare").innerText = urlIframe;
       return url;
     },
@@ -2516,7 +2517,7 @@ mviewer = (function () {
      *
      */
 
-    print: function () {},
+    print: function () { },
 
     /**
      * Public Method: geoloc
@@ -2956,15 +2957,15 @@ mviewer = (function () {
           .trim();
         $(
           "#" +
-            layer.layerid +
-            "-attributes-selector option[value='" +
-            activeAttributeValue +
-            "']"
+          layer.layerid +
+          "-attributes-selector option[value='" +
+          activeAttributeValue +
+          "']"
         ).prop("selected", true);
         $(
           '.mv-layer-details[data-layerid="' +
-            layer.layerid +
-            '"] .layerdisplay-subtitle .selected-attribute span'
+          layer.layerid +
+          '"] .layerdisplay-subtitle .selected-attribute span'
         ).text(activeAttributeValue);
       }
 
@@ -2986,30 +2987,30 @@ mviewer = (function () {
         if (activeStyle) {
           var selectedStyle = $(
             "#" +
-              layer.layerid +
-              "-styles-selector option[value*='" +
-              activeStyle.split("@")[0] +
-              "']"
+            layer.layerid +
+            "-styles-selector option[value*='" +
+            activeStyle.split("@")[0] +
+            "']"
           ).prop("selected", true);
         }
         $(
           '.mv-layer-details[data-layerid="' +
-            layer.layerid +
-            '"] .layerdisplay-subtitle .selected-sld span'
+          layer.layerid +
+          '"] .layerdisplay-subtitle .selected-sld span'
         ).text(selectCtrl.options[selectCtrl.selectedIndex].label);
       } else {
         $(
           '.mv-layer-details[data-layerid="' +
-            layer.layerid +
-            '"] .layerdisplay-subtitle .selected-sld'
+          layer.layerid +
+          '"] .layerdisplay-subtitle .selected-sld'
         ).remove();
       }
 
       if (!oLayer.attributefilter) {
         $(
           '.mv-layer-details[data-layerid="' +
-            layer.layerid +
-            '"] .layerdisplay-subtitle .selected-attribute'
+          layer.layerid +
+          '"] .layerdisplay-subtitle .selected-attribute'
         ).remove();
       }
       if (!oLayer.attributefilter && !oLayer.styles) {
@@ -3186,8 +3187,8 @@ mviewer = (function () {
         .attr("label");
       $(
         '.mv-layer-details[data-layerid="' +
-          layerid +
-          '"] .layerdisplay-subtitle .selected-sld span'
+        layerid +
+        '"] .layerdisplay-subtitle .selected-sld span'
       ).text(styleLabel);
       var legendUrl = _getlegendurl(_layerDefinition);
       $("#legend-" + layerid).fadeOut("slow", function () {
@@ -3206,7 +3207,7 @@ mviewer = (function () {
       if (operator == "=") {
         cql_filter = fld + " = " + "'" + value.replaceAll("'", "''") + "'";
       } else if (operator == "like") {
-        cql_filter = `${fld} like '%${value.replaceAll("'", "''")}%'`;
+        cql_filter = `${ fld } like '%${ value.replaceAll("'", "''") }%'`;
       }
       return cql_filter;
     },
@@ -3267,8 +3268,8 @@ mviewer = (function () {
       _source.changed();
       $(
         '.mv-layer-details[data-layerid="' +
-          layerid +
-          '"] .layerdisplay-subtitle .selected-attribute span'
+        layerid +
+        '"] .layerdisplay-subtitle .selected-attribute span'
       ).text(selectCtrl.options[selectCtrl.selectedIndex].label);
     },
 
@@ -3432,9 +3433,9 @@ mviewer = (function () {
           .parent()
           .append(
             '<span onclick="mviewer.popupPhoto(' +
-              "this.parentElement.getElementsByTagName('img')[0].src)\" " +
-              'class="text-big-legend"><span><span class="glyphicon glyphicon-resize-full" aria-hidden="true">' +
-              "</span> Agrandir la légende</span></span>"
+            "this.parentElement.getElementsByTagName('img')[0].src)\" " +
+            'class="text-big-legend"><span><span class="glyphicon glyphicon-resize-full" aria-hidden="true">' +
+            "</span> Agrandir la légende</span></span>"
           );
       }
     },
@@ -3524,6 +3525,8 @@ mviewer = (function () {
     drawVectorLegend: _drawVectorLegend,
 
     overLayersReady: _overLayersReady,
+
+    overLayers: _overLayers,
 
     renderHTMLFromTemplate: _renderHTMLFromTemplate,
 

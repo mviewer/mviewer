@@ -138,7 +138,7 @@
             <layer id="epci" name="Intercommunalité" visible="true" queryable="false" 
                 fields="nom_geo" aliases="Nom" toplayer="true"
                 type="customlayer" style="" opacity="1" legendurl="https://kartenn.region-bretagne.fr/kartoviz/apps/region/territoire/img/epci.png" 
-                url="https://kartenn.region-bretagne.fr/kartoviz/apps/region/territoire/customlayers/epci.js" 
+                url="/apps/customlayers/epci.js" 
                 tooltip="true" tooltipenabled="true"
                 attribution="Source: GéoBretagne" 
                 metadata="https://geobretagne.fr/geonetwork/srv/eng/catalog.search?node=srv#/metadata/2298d744-49cb-4fcb-9487-26f916fecdff" 

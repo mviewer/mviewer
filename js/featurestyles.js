@@ -56,26 +56,26 @@ var getSelectStyle = function (options, feature) {
       image: new ol.style.Circle({
         radius: parseFloat(options.point.radius),
         fill: new ol.style.Fill({
-          color: `rgba(${options.point.fillcolor}, ${options.point.opacity})`,
+          color: `rgba(${ options.point.fillcolor }, ${ options.point.opacity })`,
         }),
         stroke: new ol.style.Stroke({
-          color: `rgba(${options.point.strokecolor}, 1)`,
+          color: `rgba(${ options.point.strokecolor }, 1)`,
           width: parseFloat(options.point.strokewidth),
         }),
       }),
     }),
     LineString: new ol.style.Style({
       stroke: new ol.style.Stroke({
-        color: `rgba(${options.line.strokecolor}, ${options.line.opacity})`,
+        color: `rgba(${ options.line.strokecolor }, ${ options.line.opacity })`,
         width: parseFloat(options.line.strokewidth),
       }),
     }),
     Polygon: new ol.style.Style({
       fill: new ol.style.Fill({
-        color: `rgba(${options.polygon.fillcolor}, ${options.polygon.opacity})`,
+        color: `rgba(${ options.polygon.fillcolor }, ${ options.polygon.opacity })`,
       }),
       stroke: new ol.style.Stroke({
-        color: `rgba(${options.polygon.strokecolor}, 1)`,
+        color: `rgba(${ options.polygon.strokecolor }, 1)`,
         width: parseFloat(options.polygon.strokewidth),
       }),
     }),
