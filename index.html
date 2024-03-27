@@ -1050,14 +1050,17 @@
             configuration.getExtensions(xml);
           }, // fin success config
           error: function (request, status, error) {
-            if (request.statusCode().status === 404) {
-              $("#error h1").text(`Erreur ${request.statusCode().status} : ${error}`);
-              document.location.href = "pages/error_404.html?xml=" + configFile;
-            } else if (status === "parsererror") {
-              document.location.href = "pages/error_400.html?xml=" + configFile;
+            const is404 = request.statusCode().status === 404 ? "404" : "";
+            const is400 = status === "parsererror" ? "400" : "";
+
+            if (API.debug === "true") {
+              document.querySelector(
+                "#loader-title"
+              ).innerHTML = `<i class="fa fa-code" aria-hidden="true"></i> code ${
+                is404 || is400
+              }`;
+              return;
             }
-            $("#error").show();
-            $("#loading-page").hide();
           },
         });
 
