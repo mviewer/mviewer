@@ -818,7 +818,6 @@ var configuration = (function () {
             oLayer.multidatastreamsfilter = layer.multidatastreamsfilter;
             oLayer.sensorserviceurl = layer.sensorserviceurl;
             oLayer.sensorthingsfield = layer.sensorthingsfield;
-            oLayer.sensorserviceurl = layer.sensorserviceurl;
             oLayer.sensorthingsid = layer.sensorthingsid;
             // -X- sensorthings params
             oLayer.checked = layer.visible === "true" ? true : false;
