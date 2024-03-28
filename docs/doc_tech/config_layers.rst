@@ -183,7 +183,7 @@ Paramètre pour le type de couche hybride WMS / sensorthings
 Ce type de couche permet d'utiliser un WMS comme couche principale.
 La différence étant qu'au clique sur une entité, le comportement sera similaire au comportement d'une couche Sensorthings.
 
-Pour fonctionner, le WMS doit contenir 2 champs dont les nom sont à renseigner dans la configuration de la couche :
+Pour fonctionner, le WMS doit contenir 2 champs dont les noms sont à renseigner dans la configuration de la couche :
 
 * ``sensorthingsid``: Champ du WMS qui contient l'ID du Thing.
 * ``sensorserviceurl``: Champ du WMS qui contient l'URL du service Sensorthings.
