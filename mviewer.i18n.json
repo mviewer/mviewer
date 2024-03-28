@@ -81,6 +81,7 @@
     "measure.button.line": "Mesure linéaire",
     "measure.button.surface": "Mesure surfacique",
     "legend.label.opacity": "Opacité",
+    "legend.label.sensorthings": "SensorThings",
     "legend.radio.tooltips": "Afficher les infobulles",
     "style.control.analyses": "Analyses",
     "attribute.control.filter": "Filtrer",

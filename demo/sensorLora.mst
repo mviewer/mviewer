@@ -1,0 +1,95 @@
+{{#features}}
+	<li id="{{feature_ol_uid}}" class="inventaire item" style="height: 300px;" id="{{feature_ol_uid}}-nodata">
+        <p>
+            <b>Feature ol uid : </b> {{feature_ol_uid}}
+        </p>
+        
+        <div class="chart-container" style="position: relative; margin: auto; height: 250px; width:80vh">
+            <canvas id="chart-lora-{{feature_ol_uid}}"></canvas>
+        </div>
+    </li>
+    <script>
+
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF'.split('');
+        var color = '#';
+        for (var i = 0; i < 6; i++ ) {
+            color += letters[Math.round(Math.random() * 15)];
+        }
+        return color;
+    }
+
+    const mvLayerId = "lora";
+    const mvLayer = mviewer.getLayer(mvLayerId).layer;
+    const sensorthingsClass = mvLayer.sensorthings;
+    let featureWithObservations = mvLayer.getSource().getFeatures().filter(x => x.ol_uid == {{feature_ol_uid}});
+    const props = featureWithObservations[0].getProperties();
+    
+    let streamsObs = sensorthingsClass.selectedStreams;
+    if(!streamsObs.length) {
+        streamsObs = props.sensorthings.observations.map(o => o.id);
+    }
+    const observations = props.sensorthings.observations
+    if(observations.length) {
+        let datesValues = observations[0].result.map(o => new Date(o.resultTime).toLocaleDateString());
+        let datasets = [];
+        // DATASTREAM
+        let datastreams = props.sensorthings.datastreams;
+        let multidatastreams = props.sensorthings.multidatastreams;
+        // DATASTREAM
+        if(datastreams && datastreams.length) {
+            let datastreamDataset = streamsObs.map(data => {
+                let result = _.find(observations, {name: data})?.result;
+                if(!data && !result) return;
+                let yValues = result.map(o => o.result);
+                let randomColor = getRandomColor();
+                return {
+                    label: datastreams.filter(x => x.id === data)[0]?.name,
+                    data: yValues,
+                    borderWidth: 1.5,
+                    borderColor: randomColor,
+                    backgroundColor: randomColor,
+                    fill: false
+                }
+            });
+            datasets = [...datasets, ...datastreamDataset];
+        }
+        // MULTIDATASTREAM
+        if(multidatastreams && multidatastreams.length) {
+            streamsObs.map(data => {
+                let dataObservations = _.find(observations, {name: data})?.result || [];
+                let yValues = dataObservations.map(o => o.result);
+                let unitOfMeasures = multidatastreams[0].unitOfMeasurements.map(x => x.name);
+                let unitOfMeasurementsDataset = unitOfMeasures.map(unit => {
+                    let randomColor = getRandomColor();
+                    return {
+                        data: dataObservations.map(o => o.result[unit]),
+                        label: unit,
+                        borderWidth: 1.5,
+                        borderColor: randomColor,
+                        backgroundColor: randomColor,
+                        fill: false
+                    }
+                });
+                datasets = [...datasets, ... unitOfMeasurementsDataset]
+            })
+        }
+
+        var config = {
+            type: 'line',
+            data: {
+                labels: datesValues,
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        }
+        var ctx = document.getElementById('chart-lora-{{feature_ol_uid}}').getContext('2d');
+        new Chart(ctx, config);
+    }  else {
+        console.log(document.querySelector('#{{feature_ol_uid}}-nodata'));
+    }
+    </script>
+{{/features}}
