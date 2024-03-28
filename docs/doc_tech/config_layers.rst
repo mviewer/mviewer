@@ -196,6 +196,7 @@ Paramètres pour gérer la dimension temporelle des couches WMS
 * ``timevalues``: Valeurs temporelles séparées par des virgules. À utiliser avec le controle slider pour des valeurs non régulières ex (1950, 1976, 1980, 2004).
 * ``timemin``: Date mini format : "yyyy-mm-dd".
 * ``timemax``: Date maxi format : "yyyy-mm-dd".
+* ``timeshowavailable``: Booléen pour n'afficher dans le calendrier que les dates disponibles fournies par le getCapabilities (à utiliser avec le type `calendar` uniquement)
 
 Paramètres pour gérer le filtre attributaire (liste déroulante) des couches WMS
 ===================================================================================
