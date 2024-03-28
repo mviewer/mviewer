@@ -92,6 +92,15 @@
     }
   }
 
+  .actions-div button{
+   background-color: white; 
+   border-radius: 20px;
+   border: 1px solid #455a64;
+   width: 35%;
+   height: 50px;
+   margin-top: 20px;
+   padding: 5px;
+  }
 
   </style>
 </head>
@@ -105,17 +114,31 @@
 		<div class="title">Oops !</div>
     <div class="sub text">Il semble y avoir un problème avec le mviewer.</div>
     <div id="message" class="text">Le fichier de configuration de l'application est incorrect.</div>
+    <div class="actions-div">
+      <button id="reload" type="button" class="btn btn-default" aria-label="Left Align">
+        <i class="fas fa-sync-alt"></i> Recharger la carte
+      </button>
+      <button id="goxml" type="button" class="btn btn-default" aria-label="Left Align">
+        <i class="far fa-eye"></i> Voir le XML
+      </button>
+    </div>
   </div>
   <script>
+    const url = new URL(window.location.href);
+    const xml = url.searchParams.get("xml");
     var message = "Le fichier de configuration de l'application";
-    var url_params = JSON.parse('{"' + decodeURIComponent(window.location.search.substring(1).replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}');
-    if (url_params.xml) {
-      message += ` - ${url_params.xml} - est incorrect.`;
-
-    } else {
-      message += ' est incorrect.';
-    }
+    message += xml ? ` - ${xml} - est incorrect.` : ' est incorrect.';
+    
     document.getElementById("message").textContent = message;
+
+    document.querySelector("#reload").addEventListener("click", x => {
+      const newUrl = window.location.protocol + "//" + window.location.host + "?config=" + xml;
+      window.location.href = newUrl;
+    })
+    document.querySelector("#goxml").addEventListener("click", x => {
+      const newUrl = `${window.location.protocol}//${window.location.host}/${xml}`;
+      window.location.href = newUrl;
+    })
   </script>
 </body>
 </html>
