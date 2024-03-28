@@ -81,6 +81,9 @@ Configurer - Les couches
                 top=""
                 defaultSensor=""
                 selector=""
+                customstyle=""
+                sensorthingsid=""
+                sensorserviceurl=""
                 datastreamsfilter=""
                 multidatastreamsfilter="">
                 <template url=""></template>
@@ -152,7 +155,7 @@ Paramètre pour le type de couche sensorthings
 
 * ``url``: URI du service sensorthing.
 * ``srs``: Code SRS (e.g EPSG:2154) de la donnée pour conversion vers EPSG:3857.
-* ``customstyle``: style (saisir un json en string) simple de type point ou polygon (radius, stroke, fill).
+* ``customstyle``: style (JSON en String) simple de type point ou polygon (voir exemple plus bas).
 * ``style``: Style à utiliser (sensorPolygon|sensorPoint) disponible dans le fichier ``js/featurestyles.js``.
 * ``top``: Nombre d'observations à retourner. La limite est par défaut définie par les capacités du serveur publiant le service.
 * ``defaultSensor``: Stream par défaut à afficher au clic. Valeur ``null`` par défaut.
@@ -173,6 +176,17 @@ Plus d'informations sur le type de couche OGC SensorThings :
         Documentation utile :
         `Spécifications OGC <https://www.ogc.org/standards/sensorthings>`_
         `Schéma SensorThings API <https://developers.sensorup.com/docs/#sensorthingsAPISensing>`_
+
+Paramètre pour le type de couche hybride WMS / sensorthings
+===========================================================
+
+Ce type de couche permet d'utiliser un WMS comme couche principale.
+La différence étant qu'au clique sur une entité, le comportement sera similaire au comportement d'une couche Sensorthings.
+
+Pour fonctionner, le WMS doit contenir 2 champs dont les nom sont à renseigner dans la configuration de la couche :
+
+* ``sensorthingsid``: Champ du WMS qui contient l'ID du Thing.
+* ``sensorserviceurl``: Champ du WMS qui contient l'URL du service Sensorthings.
 
 
 Paramètres pour les couches non WMS
