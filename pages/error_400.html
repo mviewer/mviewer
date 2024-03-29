@@ -131,12 +131,21 @@
     
     document.getElementById("message").textContent = message;
 
+    const pathName = window.location.pathname.replace('/pages/error_400.html', "");
     document.querySelector("#reload").addEventListener("click", x => {
-      const newUrl = window.location.protocol + "//" + window.location.host + "?config=" + xml;
+      let newUrl = `${window.location.protocol}//${window.location.host}`;
+      if(pathName) {
+        newUrl += `/${pathName}`;
+      }
+      newUrl += `/?config=${xml}`;
       window.location.href = newUrl;
     })
     document.querySelector("#goxml").addEventListener("click", x => {
-      const newUrl = `${window.location.protocol}//${window.location.host}/${xml}`;
+      let newUrl = `${window.location.protocol}//${window.location.host}`;
+      if(pathName) {
+        newUrl += `/${pathName}`;
+      }
+      newUrl += `/${xml}`;
       window.location.href = newUrl;
     })
   </script>

@@ -120,9 +120,6 @@
       <button id="reload" type="button" class="btn btn-default" aria-label="Left Align">
         <i class="fas fa-sync-alt"></i> Recharger la carte
       </button>
-      <button id="goxml" type="button" class="btn btn-default" aria-label="Left Align">
-        <i class="far fa-eye"></i> Voir le XML
-      </button>
     </div>
   </div>
   <script>
@@ -134,11 +131,12 @@
     document.getElementById("message").textContent = message;
 
     document.querySelector("#reload").addEventListener("click", x => {
-      const newUrl = window.location.protocol + "//" + window.location.host + "?config=" + xml;
-      window.location.href = newUrl;
-    })
-    document.querySelector("#goxml").addEventListener("click", x => {
-      const newUrl = `${window.location.protocol}//${window.location.host}/${xml}`;
+      let newUrl = `${window.location.protocol}//${window.location.host}`;
+      const pathName = window.location.pathname.replace('/pages/error_404.html', "");
+      if(pathName) {
+        newUrl += `/${pathName}`;
+      }
+      newUrl += `/?config=${xml}`;
       window.location.href = newUrl;
     })
   </script>

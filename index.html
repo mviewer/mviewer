@@ -1063,6 +1063,14 @@
               }`;
               return;
             }
+            if (request.statusCode().status === 404) {
+              $("#error h1").text(`Erreur ${request.statusCode().status} : ${error}`);
+              document.location.href = "pages/error_404.html?xml=" + configFile;
+            } else if (status === "parsererror") {
+              document.location.href = "pages/error_400.html?xml=" + configFile;
+            }
+            $("#error").show();
+            $("#loading-page").hide();
           },
         });
 
