@@ -19,7 +19,7 @@
 
   mviewer.customLayers.pnr.layer = new ol.layer.Vector({
     source: new ol.source.Vector({
-      url: "https://wxs.ign.fr/environnement/geoportail/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GETFEATURE&TYPENAME=	PROTECTEDAREAS.PNR:pnr&outputFormat=application/json&srsName=EPSG:4326",
+      url: "https://data.geopf.fr/wfs?SERVICE=WFS&VERSION=2.0.0&REQUEST=GETFEATURE&TYPENAME=PROTECTEDAREAS.PNR:pnr&outputFormat=application/json&srsName=EPSG:4326",
       format: new ol.format.GeoJSON(),
     }),
     style: function (feature, resolution) {

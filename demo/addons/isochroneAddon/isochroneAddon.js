@@ -128,7 +128,7 @@ const isochroneAddon = (function () {
     var url = mviewer.customComponents["isochroneAddon"].config.options.isochroneUrl;
 
     var dataParameters = {
-      resource: "bdtopo-iso",
+      resource: "bdtopo-valhalla",
       point: _xy.join(","),
       profile: mode,
     };
