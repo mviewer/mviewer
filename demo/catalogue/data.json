@@ -407,7 +407,7 @@
       "url_demo": "../?config=demo/api.xml"
     },
     {
-      "id": "47",
+      "id": "48",
       "title": "Affichage COG / TIFF",
       "tags": "cog,tiff,raster,custom,ndvi,reprojection",
       "description": "Affichage d'un COG, d'un COG NDVI+NDWI (style avec classes OpenLayers) et d'un fichier TIFF reprojeté à la volée avec interrogation du pixel",
@@ -416,7 +416,7 @@
       "url_demo": "../?config=demo/cog-geotiff/cog.xml"
     },
     {
-      "id": "48",
+      "id": "49",
       "title": "Mise en page personnalisée",
       "tags": "print,impression,layout",
       "description": "Mise en page d'une carte avec le module externe (addon) d'impression.",
