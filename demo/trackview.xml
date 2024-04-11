@@ -1,6 +1,6 @@
 <config>
-    <application title="TrackView" style="css/themes/green.css" logo="img/logo/jdev.jpeg" exportpng="false" measuretools="false" mapprint="true"/>
-    <mapoptions maxzoom="20" projection="EPSG:3857" center="-140491.257988154,6374714.394184201" zoom="4" />
+    <application title="TrackView" style="css/themes/blue.css" logo="img/logo/tatihouguev2.png" exportpng="false" measuretools="false" mapprint="true"/>
+    <mapoptions maxzoom="20" projection="EPSG:3857" center="266612.35465869476, 5921729.455309178" zoom="6" />
     <searchparameters localities="false"
         features="true" 
         bbox="true" 
@@ -24,15 +24,8 @@
     </baselayers>
 
     <themes mini="true">
-        <theme id="theme-1" name="Les différents parcours" collapsed="false" icon="fas fa-book">
-            <layer id="test" name="Couche sans group">
-            </layer>
-        </theme>
-        <theme>
-            <group>
-                <layer id="test2" name="Couche avec group">
-                </layer>
-            </group>
+        <theme id="theme-1" name="Les différents parcours" collapsed="true" icon="fas fa-book">
+            <layer id="test" name="Test"/>
         </theme>
     </themes>
 </config>
