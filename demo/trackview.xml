@@ -9,8 +9,7 @@
         inputlabel="Une recherche ?"
         closeafterclick="true"
         animate="true"
-        duration="2000"
-        />
+        duration="2000"/>
     <olscompletion url="https://api-adresse.data.gouv.fr/search/"
         type="ban" 
         attribution="La recherche d'adresse est un service proposé par l'API adresse.data.gouv.fr"/>
