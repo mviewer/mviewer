@@ -1,5 +1,5 @@
 <config>
-    <application title="Test" style="css/themes/blue.css" logo="img/logo/tatihouguev2.png" exportpng="false" measuretools="false" mapprint="true"/>
+    <application title="TrackView" style="css/themes/blue.css" logo="img/logo/tatihouguev2.png" exportpng="false" measuretools="false" mapprint="false"/>
     <mapoptions maxzoom="20" projection="EPSG:3857" center="266612.35465869476, 5921729.455309178" zoom="6" />
     <searchparameters localities="false"
         features="true" 
