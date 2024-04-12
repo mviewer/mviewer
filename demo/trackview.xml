@@ -23,6 +23,7 @@
     </baselayers>
     <extensions>
         <extension type="component" id="isochroneAddon" path="demo/addons"/>
+        <extension type="component" id="fullscreen" path="demo/addons"/>
     </extensions>
 
     <themes mini="true">
