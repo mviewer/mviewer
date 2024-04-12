@@ -1,0 +1,108 @@
+/**
+ * This file contains the style definitions for the admin area
+ *
+ * Content:
+ * --------
+ * 1. Admin Body
+ * 2. Over The Tabs
+ * 3. Tab: Tracks
+ * 3. Tab: Settings
+ * 4. Tab: Help
+ *
+ */
+
+/**
+ * 1.0 Admin Body
+ */
+
+/**
+ * 2.0 Over The Tabs
+ */
+
+h1.header-title {
+	padding-top:15px;
+	padding-left: 10px;
+}
+
+/**
+ * 3.0 Tab: Tracks
+ */
+
+.tablenav-top {
+	clear: both;
+	height: 30px;
+	margin-top: 10px;
+	margin-bottom: 4px;
+	margin-left: 10px;
+	padding-bottom: 10px;
+}
+
+#table tbody tr:hover {
+	background: #eee;
+}
+
+/**
+ * 4.0 Tab: Settings
+ */
+.wpgpxmaps-container-tab-settings {
+	display: block;
+	padding: 5px 10px 1px 10px;
+}
+
+.wpgpxmaps-container-tab-settings table.form-table input[type="checkbox"] {
+	margin-top: -4px;
+	margin-right: 4px;
+}
+
+.wpgpxmaps-container-tab-settings table.form-table input[type="radio"] {
+	margin-right: 4px;
+}
+
+.wpgpxmaps-container-tab-settings table.form-table input[type="text"] {
+	margin-right: 4px;
+}
+
+/**
+ * 5.0 Tab: Administration
+ */
+
+/**
+ * 6.0 Tab: Help
+ */
+.wpgpxmaps-container-tab-faq {
+	display: block;
+	padding: 5px 10px 1px 10px;
+}
+
+.wpgpxmaps-tab-faq {
+	display: block;
+	padding: 5px 10px 10px 10px;
+}
+
+.wpgpxmaps-container-tab-faq table.widefat {
+	margin-bottom: 10px;
+	border-bottom: none;
+	border-radius: 6px;
+}
+
+.wpgpxmaps-container-tab-faq table.widefat thead th.title {
+	font-weight: 650;
+}
+
+.wpgpxmaps-container-tab-faq table.widefat td {
+	width: 200px;
+}
+
+.wpgpxmaps-container-tab-faq table.widefat th,
+.wpgpxmaps-container-tab-faq table.widefat td {
+	padding: 4px 10px;
+}
+
+.wpgpxmaps-container-tab-faq table.widefat tbody tr:hover {
+	background: #eee;
+}
+
+
+.wpgpxmaps-container-tab-faq table.widefat thead th {
+	font-size: 14px;
+}

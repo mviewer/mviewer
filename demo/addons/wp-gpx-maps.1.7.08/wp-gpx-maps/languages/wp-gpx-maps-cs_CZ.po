@@ -1,0 +1,95 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wp-gpx-maps\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-21 11:14+0100\n"
+"PO-Revision-Date: 2015-11-21 11:18+0100\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.8.6\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Language: cs_CZ\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../wp-gpx-maps.php:467
+msgid "Altitude"
+msgstr "Nadmořská výška"
+
+#: ../wp-gpx-maps.php:468
+msgid "Current Position"
+msgstr "Aktuální pozice"
+
+#: ../wp-gpx-maps.php:469
+msgid "Speed"
+msgstr "Rychlost"
+
+#: ../wp-gpx-maps.php:470
+msgid "Heart rate"
+msgstr "Srdeční tep"
+
+#: ../wp-gpx-maps.php:471
+msgid "Cadence"
+msgstr "Kadence"
+
+#: ../wp-gpx-maps.php:472
+msgid "Go Full Screen"
+msgstr "Zvětšit"
+
+#: ../wp-gpx-maps.php:473
+msgid "Exit Full Screen"
+msgstr "Zmenšit"
+
+#: ../wp-gpx-maps.php:474
+msgid "Hide Images"
+msgstr "Skrýt obrázky"
+
+#: ../wp-gpx-maps.php:475
+msgid "Show Images"
+msgstr "Zobrazit obrázky"
+
+#: ../wp-gpx-maps.php:476
+msgid "Back to center"
+msgstr "Vycentrovat"
+
+#: ../wp-gpx-maps.php:489
+msgid "Total distance"
+msgstr "Celková vzdálenost"
+
+#: ../wp-gpx-maps.php:494
+msgid "Max elevation"
+msgstr "Max. výška"
+
+#: ../wp-gpx-maps.php:496
+msgid "Min elevation"
+msgstr "Min. výška"
+
+#: ../wp-gpx-maps.php:498
+msgid "Total climbing"
+msgstr "Celkem nastoupáno"
+
+#: ../wp-gpx-maps.php:500
+msgid "Total descent"
+msgstr "Celkem naklesáno"
+
+#: ../wp-gpx-maps.php:504
+msgid "Average speed"
+msgstr "Průměrná rychlost"
+
+#: ../wp-gpx-maps.php:509
+msgid "Total Time"
+msgstr "Celkový čas"
+
+#: ../wp-gpx-maps.php:525
+msgid "Download"
+msgstr "Stáhnout"
+
+#: ../wp-gpx-maps_admin_settings.php:83 ../wp-gpx-maps_admin_settings.php:151
+#: ../wp-gpx-maps_admin_settings.php:229 ../wp-gpx-maps_admin_settings.php:333
+#: ../wp-gpx-maps_admin_settings.php:364
+msgid "Save Changes"
+msgstr "Uložit změny"

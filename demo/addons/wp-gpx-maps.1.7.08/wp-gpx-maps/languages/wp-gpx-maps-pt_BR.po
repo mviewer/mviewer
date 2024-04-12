@@ -1,0 +1,93 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wp-gpx-maps\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-10-30 14:42+0100\n"
+"PO-Revision-Date: 2013-04-23 18:36-0300\n"
+"Last-Translator: André Ramos <kurukuru@ig.com.br>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../wp-gpx-maps.php:467
+msgid "Altitude"
+msgstr "Altitude"
+
+#: ../wp-gpx-maps.php:468
+msgid "Current Position"
+msgstr "Posição atual"
+
+#: ../wp-gpx-maps.php:469
+msgid "Speed"
+msgstr "Velocidade"
+
+#: ../wp-gpx-maps.php:470
+msgid "Heart rate"
+msgstr "Ritmo cardíaco"
+
+#: ../wp-gpx-maps.php:471
+msgid "Cadence"
+msgstr "Cadência"
+
+#: ../wp-gpx-maps.php:472
+msgid "Go Full Screen"
+msgstr "Tela cheia"
+
+#: ../wp-gpx-maps.php:473
+msgid "Exit Full Screen"
+msgstr "Restaura janela"
+
+#: ../wp-gpx-maps.php:474
+msgid "Hide Images"
+msgstr "Ocultar imagens"
+
+#: ../wp-gpx-maps.php:475
+msgid "Show Images"
+msgstr ""
+
+#: ../wp-gpx-maps.php:476
+msgid "Back to center"
+msgstr "Centralizar"
+
+#: ../wp-gpx-maps.php:489
+msgid "Total distance"
+msgstr "Distância total"
+
+#: ../wp-gpx-maps.php:494
+msgid "Max elevation"
+msgstr "Elevação máxima"
+
+#: ../wp-gpx-maps.php:496
+msgid "Min elevation"
+msgstr "Elevação mínima"
+
+#: ../wp-gpx-maps.php:498
+msgid "Total climbing"
+msgstr "Total subida"
+
+#: ../wp-gpx-maps.php:500
+msgid "Total descent"
+msgstr "Total descida"
+
+#: ../wp-gpx-maps.php:504
+msgid "Average speed"
+msgstr "Velocidade média"
+
+#: ../wp-gpx-maps.php:509
+msgid "Total Time"
+msgstr "Tempo total"
+
+#: ../wp-gpx-maps.php:525
+msgid "Download"
+msgstr "Baixar arquivo"
+
+#: ../wp-gpx-maps_admin_settings.php:83 ../wp-gpx-maps_admin_settings.php:151
+#: ../wp-gpx-maps_admin_settings.php:229 ../wp-gpx-maps_admin_settings.php:333
+#: ../wp-gpx-maps_admin_settings.php:364
+msgid "Save Changes"
+msgstr "Salvar alterações"

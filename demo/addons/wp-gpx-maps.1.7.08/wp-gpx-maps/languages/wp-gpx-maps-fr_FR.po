@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wp-gpx-maps\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-08-01 13:41+0100\n"
+"PO-Revision-Date: 2012-11-01 22:02+0100\n"
+"Last-Translator: Hervé <herve.rieu@free.fr>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../wp-gpx-maps.php:473
+msgid "Altitude"
+msgstr "Altitude"
+
+#: ../wp-gpx-maps.php:474
+msgid "Current Position"
+msgstr "Position actuelle"
+
+#: ../wp-gpx-maps.php:475
+msgid "Speed"
+msgstr "Vitesse"
+
+#: ../wp-gpx-maps.php:476
+msgid "Heart rate"
+msgstr "Fréquence cardiaque"
+
+#: ../wp-gpx-maps.php:477
+msgid "Cadence"
+msgstr "Cadence"
+
+#: ../wp-gpx-maps.php:478
+msgid "Go Full Screen"
+msgstr "Plein écran"
+
+#: ../wp-gpx-maps.php:479
+msgid "Exit Full Screen"
+msgstr "Sortir du plein écran"
+
+#: ../wp-gpx-maps.php:492
+msgid "Total distance"
+msgstr "Distance totale"
+
+#: ../wp-gpx-maps.php:497
+msgid "Max elevation"
+msgstr "Altitude maximum"
+
+#: ../wp-gpx-maps.php:499
+msgid "Min elevation"
+msgstr "Altitude minimum"
+
+#: ../wp-gpx-maps.php:501
+msgid "Total climbing"
+msgstr "Denivelé total positif "
+
+#: ../wp-gpx-maps.php:503
+msgid "Total descent"
+msgstr "Denivelé total négatif"
+
+#: ../wp-gpx-maps.php:507
+msgid "Average speed"
+msgstr "Vitesse moyenne"
+
+#: ../wp-gpx-maps.php:512
+msgid "Total Time"
+msgstr "Durée totale"
+
+#: ../wp-gpx-maps.php:528
+msgid "Download"
+msgstr "Télécharger"
+
+#: ../wp-gpx-maps_admin_settings.php:83 ../wp-gpx-maps_admin_settings.php:151
+#: ../wp-gpx-maps_admin_settings.php:229 ../wp-gpx-maps_admin_settings.php:333
+#: ../wp-gpx-maps_admin_settings.php:364
+msgid "Save Changes"
+msgstr "Enregistrer"

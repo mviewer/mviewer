@@ -1,0 +1,93 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wp-gpx-maps\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-10-30 14:42+0100\n"
+"PO-Revision-Date: 2013-12-14 21:43+0100\n"
+"Last-Translator: edgar <forced_to_confess@yahoo.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.5.5\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../wp-gpx-maps.php:467
+msgid "Altitude"
+msgstr "Altitud"
+
+#: ../wp-gpx-maps.php:468
+msgid "Current Position"
+msgstr "Posición actual"
+
+#: ../wp-gpx-maps.php:469
+msgid "Speed"
+msgstr "Velocidad"
+
+#: ../wp-gpx-maps.php:470
+msgid "Heart rate"
+msgstr "Ritmo cardíaco"
+
+#: ../wp-gpx-maps.php:471
+msgid "Cadence"
+msgstr "Cadencia"
+
+#: ../wp-gpx-maps.php:472
+msgid "Go Full Screen"
+msgstr "Ir a pantalla completa"
+
+#: ../wp-gpx-maps.php:473
+msgid "Exit Full Screen"
+msgstr "Salir de pantalla completa"
+
+#: ../wp-gpx-maps.php:474
+msgid "Hide Images"
+msgstr "Ocultar Imágenes"
+
+#: ../wp-gpx-maps.php:475
+msgid "Show Images"
+msgstr "Mostrar Imágenes"
+
+#: ../wp-gpx-maps.php:476
+msgid "Back to center"
+msgstr "Centrar"
+
+#: ../wp-gpx-maps.php:489
+msgid "Total distance"
+msgstr "Distancia total"
+
+#: ../wp-gpx-maps.php:494
+msgid "Max elevation"
+msgstr "Elevación máxima"
+
+#: ../wp-gpx-maps.php:496
+msgid "Min elevation"
+msgstr "Elevación mínima"
+
+#: ../wp-gpx-maps.php:498
+msgid "Total climbing"
+msgstr "Total ascendido"
+
+#: ../wp-gpx-maps.php:500
+msgid "Total descent"
+msgstr "Total descendido"
+
+#: ../wp-gpx-maps.php:504
+msgid "Average speed"
+msgstr "Velocidad media"
+
+#: ../wp-gpx-maps.php:509
+msgid "Total Time"
+msgstr "Tiempo total"
+
+#: ../wp-gpx-maps.php:525
+msgid "Download"
+msgstr "Descargar"
+
+#: ../wp-gpx-maps_admin_settings.php:83 ../wp-gpx-maps_admin_settings.php:151
+#: ../wp-gpx-maps_admin_settings.php:229 ../wp-gpx-maps_admin_settings.php:333
+#: ../wp-gpx-maps_admin_settings.php:364
+msgid "Save Changes"
+msgstr "Salvar cambios"
