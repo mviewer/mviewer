@@ -25,7 +25,7 @@
         <extension type="component" id="fullscreen" path="demo/addons"/>
         <extension type="component" id="layerfilter" path="demo/addons"/>
         <extension type="javascript" src="demo/addons/wp-gpx-maps.1.7.08/js/WP-GPX-Maps.js"/>
-        <extension type="customlayer" id="wp-gpx-maps.1.7.08" path="demo/addons"/>
+        <extension type="component" id="wp-gpx-maps.1.7.08" path="demo/addons"/>
     </extensions>
 
     <themes mini="true">
