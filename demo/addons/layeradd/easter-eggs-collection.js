@@ -18,7 +18,7 @@
 
   mviewer.customLayers.parcours.layer = new ol.layer.Vector({
     source: new ol.source.Vector({
-      url: "apps/swimrun/data/swimrun_lineaire.geojson", // On spécifie le fichier de données qu'on souhaite utiliser
+      url: "demo/data/swimrun_lineaire.geojson", // On spécifie le fichier de données qu'on souhaite utiliser
       format: new ol.format.GeoJSON(),
     }),
     // C'est ici que l'on va gérer le style
