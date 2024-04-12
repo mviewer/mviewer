@@ -1,6 +1,6 @@
 {
     "js": [
-        "./easter-eggs-collection.js"
+        "./layeradd.js"
     ],
     "html": "./empty.html",
     "target": "main",
