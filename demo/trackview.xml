@@ -29,7 +29,7 @@
 
     <themes mini="true">
         <theme id="theme-1" name="Les différents parcours" collapsed="true" icon="fas fa-book">
-            <layer id="test" name="Test"/>
+            <layer id="parcours" name="Parcours - Test"/>
         </theme>
     </themes>
 </config>
