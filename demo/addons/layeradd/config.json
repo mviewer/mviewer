@@ -1,0 +1,8 @@
+{
+    "js": [
+        "./easter-eggs-collection.js"
+    ],
+    "html": "./empty.html",
+    "target": "main",
+    "options" : {}
+}
