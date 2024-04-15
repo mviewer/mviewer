@@ -1,8 +1,0 @@
-{
-    "js": [
-        "./layeradd.js"
-    ],
-    "html": "./empty.html",
-    "target": "main",
-    "options" : {}
-}
