@@ -1,0 +1,30 @@
+var parcours = {}
+
+parcours.legend = {
+  items: [
+    {
+      label: "Circuit",
+      geometry: "LineString",
+      styles: [
+        new ol.style.Style({
+          stroke: new ol.style.Stroke({ color: "#FF0000", width: 4 }),
+        }),
+      ],
+    },
+  ],
+};
+
+const ID = "trackview";
+const init = async () => {
+  const layer = new ol.layer.Vector({
+    source: new ol.source.Vector({
+      url: "demo/data/swimrun_lineaire.geojson", // On spécifie le fichier de données qu'on souhaite utiliser
+      format: new ol.format.GeoJSON(),
+    }),
+    // C'est ici que l'on va gérer le style
+    style: parcours.legend.items[0].styles,
+  });
+  console.log(layer)
+};
+
+new CustomComponent(ID, init);

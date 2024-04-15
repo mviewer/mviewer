@@ -1,5 +1,5 @@
 <config>
-    <application title="TrackView" style="css/themes/blue.css" logo="img/logo/tatihouguev2.png" exportpng="false" measuretools="false" mapprint="true"/>
+    <application id="parcours" title="TrackView" style="css/themes/blue.css" logo="img/logo/tatihouguev2.png" exportpng="false" measuretools="false" mapprint="true"/>
     <mapoptions maxzoom="20" projection="EPSG:3857" center="266612.35465869476, 5921729.455309178" zoom="6" />
     <searchparameters localities="false"
         features="true" 
@@ -24,19 +24,12 @@
     <extensions>
         <extension type="component" id="fullscreen" path="demo/addons"/>
         <extension type="component" id="layerfilter" path="demo/addons"/>
-        <extension type="customlayer" id="layeradd" path="demo/addons"/>
+        <extension type="component" id="trackview" path="demo/addons"/>
     </extensions>
 
     <themes mini="true">
         <theme id="theme-1" name="Les différents parcours" collapsed="true" icon="fas fa-book">
-            <layer id="parcours" 
-                name="Parcours - Test"
-                type="customlayer"
-                vectorlegend="true"
-                queryable="true"
-                visible="false"
-                opacity="0.8"
-                searchable="true"/>
+        <!-- Empty -->
         </theme>
     </themes>
 </config>

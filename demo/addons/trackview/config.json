@@ -1,0 +1,12 @@
+{
+    "type": "module",
+    "js": [
+        "./trackview.js"
+    ],
+    "css": [],
+    "html": "./empty.html",
+    "target": "page-content-wrapper",
+    "options" : {
+        "parcours": {}
+    }
+}
