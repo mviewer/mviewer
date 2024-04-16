@@ -36,7 +36,7 @@ var trackview = (function () {
     }),
   });
 
-  var newlayer = mviewer.processLayer(parcoursLayer, l);
+  mviewer.processLayer(parcoursLayer, l);
   mviewer.addLayer(parcoursLayer);
 
   // Variables globales
