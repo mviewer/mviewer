@@ -1,5 +1,12 @@
 var trackview = (function () {
 
+  // Creation du layer
+  var parcoursLayer= {
+    type:"customlayer",
+  }
+
+  mviewer.addLayer(parcoursLayer);
+
   // Variables globales
   var layerID = mviewer.customComponents.trackview.config.options.mviewer.parcours.stats[0].layerId;
   console.log(layerID);  // Affichage dans les logs
@@ -39,7 +46,7 @@ var trackview = (function () {
   };
 
 return {
-  init: _initTool, 
+  init: _initTool,
 };
 })();
 

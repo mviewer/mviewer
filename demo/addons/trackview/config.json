@@ -17,7 +17,7 @@
                 },
                 "stats": [
                     {
-                      "type": "stat",
+                      "type": "customlayer",
                       "layerId": "parcours_1"
                     }
                 ]

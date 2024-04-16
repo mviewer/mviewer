@@ -28,7 +28,5 @@
     </extensions>
 
     <themes mini="true">
-        <theme id="theme-1" name="Les différents parcours" collapsed="true" icon="fas fa-book">
-        </theme>
     </themes>
 </config>
