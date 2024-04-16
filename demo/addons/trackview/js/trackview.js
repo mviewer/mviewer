@@ -40,8 +40,8 @@ var trackview = (function () {
 
   
   mviewer.processLayer(parcoursLayer, l);
-  l.setVisible(true); // Pas assez optimisé => la ligne du dessous fait la même chose mais avec des options supplémentaires
-  //mviewer.addLayer(parcoursLayer);
+  //l.setVisible(true); // Pas assez optimisé => la ligne du dessous fait la même chose mais avec des options supplémentaires (legend)
+  mviewer.addLayer(parcoursLayer);
 
   // Variables globales
   /*
