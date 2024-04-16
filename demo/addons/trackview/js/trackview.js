@@ -18,11 +18,17 @@ var trackview = (function () {
       console.log(feature[0].getGeometry().getExtent()[0]);
       //mviewer.zoomToLocation(feature[0].getGeometry().getExtent()[0], feature[0].getGeometry().getExtent()[1], 12, null, "EPSG:3857");
       mviewer.getMap().getView().fit(feature[0].getGeometry().getExtent(), {
-        duration: 4000,
+        duration: 4000, // Permet de définir le temps de l'animation en ms
       });
+      _setStyle();
     })
-  }
+  };
 
+  var _setStyle= function () {
+    console.log("Initialisation du style");
+    var style = mviewer.customComponents.trackview.config.options.mviewer.parcours.style;
+    console.log(style);
+  };
 
 return {
   init: _initTool, 
