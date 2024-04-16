@@ -12,7 +12,6 @@
                 "title": "Circuit",
                 "style" : {
                     "geometry": "LineString",
-                    "border": "block",
                     "color": "#FF0000",
                     "width": 4
                 },

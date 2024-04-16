@@ -10,12 +10,12 @@ var trackview = (function () {
     console.log(mvLayer);  // Affichage dans les logs
 
     mviewer.getMap().once("rendercomplete", function (e) {
-      var source = mvLayer.getSource();  // Affichage dans les logs
-      console.log(source);
-      var feature = source.getFeatures();  // Affichage dans les logs
-      console.log(feature);
-      console.log(feature[0].getGeometry().getExtent());
-      console.log(feature[0].getGeometry().getExtent()[0]);
+      var source = mvLayer.getSource(); 
+      console.log(source); // Affichage dans les logs
+      var feature = source.getFeatures();
+      console.log(feature); // Affichage dans les logs
+      //console.log(feature[0].getGeometry().getExtent()); // Affichage dans les logs
+      //console.log(feature[0].getGeometry().getExtent()[0]); // Affichage dans les logs
       //mviewer.zoomToLocation(feature[0].getGeometry().getExtent()[0], feature[0].getGeometry().getExtent()[1], 12, null, "EPSG:3857");
       mviewer.getMap().getView().fit(feature[0].getGeometry().getExtent(), {
         duration: 4000, // Permet de définir le temps de l'animation en ms
@@ -26,8 +26,14 @@ var trackview = (function () {
 
   var _setStyle= function () {
     console.log("Initialisation du style");
+
     var style = mviewer.customComponents.trackview.config.options.mviewer.parcours.style;
     console.log(style);
+    mvLayer.vectorLayer.setStyle({
+      "geometry": style.geometry,
+      "stroke-color": style.color,
+      "stroke-width": style.width,
+    });
   };
 
 return {
