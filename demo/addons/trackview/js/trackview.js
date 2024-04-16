@@ -1,13 +1,13 @@
 var trackview = (function () {
 
+  var mvLayer = mviewer.getLayer(layerID).layer;
+  console.log(mvLayer);  // Affichage dans les logs
+
   var _initTool= function () {
     console.log("Initialisation de l'outil"); // Affichage dans les logs
 
     var layerID = mviewer.customComponents.trackview.config.options.mviewer.parcours.stats[0].layerId;
     console.log(layerID);  // Affichage dans les logs
-    
-    var mvLayer = mviewer.getLayer(layerID).layer;
-    console.log(mvLayer);  // Affichage dans les logs
 
     mviewer.getMap().once("rendercomplete", function (e) {
       var source = mvLayer.getSource(); 
