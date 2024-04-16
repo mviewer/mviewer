@@ -2,23 +2,35 @@ var trackview = (function () {
 
   // Creation du layer
   var parcoursLayer= {
-    type:"customlayer",
-  }
+    showintoc: true,
+    type: "customlayer",
+    layerid: "parcours_1",
+    title: "Parcours GeoJson",
+    legendurl: "demo/trackview/customlayers/parcours.js",
+    vectorlegend: true,
+    visible: true,
+    opacity: "0.8",
+    tooltip: true,
+    tooltipcontent: "Nom {{name}}"
+  };
 
   mviewer.addLayer(parcoursLayer);
 
   // Variables globales
+  /*
+  
   var layerID = mviewer.customComponents.trackview.config.options.mviewer.parcours.stats[0].layerId;
   console.log(layerID);  // Affichage dans les logs
 
   var mvLayer = mviewer.getLayer(layerID).layer;
   console.log(mvLayer);  // Affichage dans les logs
+  */
 
   var _initTool= function () {
     console.log("Initialisation de l'outil"); // Affichage dans les logs
 
     mviewer.getMap().once("rendercomplete", function (e) {
-      var source = mvLayer.getSource(); 
+      var source = parcoursLayer.getSource();
       console.log(source); // Affichage dans les logs
       var feature = source.getFeatures();
       console.log(feature); // Affichage dans les logs
