@@ -1,17 +1,19 @@
 var trackview = (function () {
 
+  var global = mviewer.customComponents.trackview.config.options.mviewer.parcours.parc;
+
   // Creation du layer
   var parcoursLayer= {
     showintoc: true,
-    type: "customlayer",
-    layerid: "parcours_1",
-    id: "parcours_1",
-    title: "Parcours GeoJson",
+    type: global.stats.type,
+    layerid: global.stats.layerId,
+    id: global.stats.layerId,
+    title: global.title,
     vectorlegend: true,
     visible: true,
-    opacity: 0.8,
+    opacity: global.stats.opacity,
     tooltip: true,
-    urlData: "demo/trackview/data/swimrun_lineaire.geojson"
+    urlData: global.data.url
   };
   
   parcoursLayer.legend = {
@@ -70,7 +72,7 @@ var trackview = (function () {
   var _setStyle= function () {
     console.log("Initialisation du style");
 
-    let style = mviewer.customComponents.trackview.config.options.mviewer.parcours.style; // On récupère le tableau contenant les différents styles
+    let style = global.style; // On récupère le tableau contenant les différents styles
     console.log(style);
 
     l.setStyle({

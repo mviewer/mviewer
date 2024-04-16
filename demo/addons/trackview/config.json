@@ -9,18 +9,22 @@
     "options" : {
         "mviewer": {
             "parcours": {
-                "title": "Circuit",
-                "style" : {
-                    "geometry": "LineString",
-                    "color": "#FF0000",
-                    "width": 4
-                },
-                "stats": [
-                    {
+                "parc": {
+                    "title": "Circuit",
+                    "style" : {
+                        "geometry": "LineString",
+                        "color": "#FF0000",
+                        "width": 4
+                    },
+                    "stats": {
                         "type": "customlayer",
-                        "layerId": "parcours_1"
+                        "layerId": "parcours_1",
+                        "opacity": 0.8
+                    },  
+                    "data": {
+                        "url": "demo/trackview/data/swimrun_lineaire.geojson"
                     }
-                ]
+                }
             }
         }
     }
