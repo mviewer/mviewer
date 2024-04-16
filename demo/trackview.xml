@@ -30,7 +30,6 @@
     </baselayers>
     <extensions>
         <extension type="component" id="fullscreen" path="demo/addons"/>
-        <extension type="component" id="layerfilter" path="demo/addons"/>
         <extension type="component" id="trackview" path="demo/addons"/>
     </extensions>
 

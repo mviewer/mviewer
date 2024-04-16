@@ -1,20 +1,42 @@
 var trackview = (function () {
 
-  var legend = mviewer.customComponents.trackview.config.options.mviewer.parcours;
-
   // Creation du layer
   var parcoursLayer= {
     showintoc: true,
     type: "customlayer",
     layerid: "parcours_1",
+    id: "parcours_1",
     title: "Parcours GeoJson",
-    legendurl: legend,
     vectorlegend: true,
     visible: true,
-    opacity: "0.8",
+    opacity: 0.8,
     tooltip: true,
+    urlData: "demo/trackview/data/swimrun_lineaire.geojson"
   };
+  
+  parcoursLayer.legend = {
+    items: [
+      {
+        label: "Circuit",
+        geometry: "LineString",
+        styles: [
+          new ol.style.Style({
+            stroke: new ol.style.Stroke({ color: "#FF0000", width: 4 }),
+          }),
+        ],
+      },
+    ],
+  };
+  
+  // Creation du openLayer
+  var l = new ol.layer.Vector({
+    source: new ol.source.Vector({
+      url: parcoursLayer.urlData,
+      format: new ol.format.GeoJSON(),
+    }),
+  });
 
+  var newlayer = mviewer.processLayer(parcoursLayer, l);
   mviewer.addLayer(parcoursLayer);
 
   // Variables globales
@@ -31,7 +53,7 @@ var trackview = (function () {
     console.log("Initialisation de l'outil"); // Affichage dans les logs
 
     mviewer.getMap().once("rendercomplete", function (e) {
-      var source = parcoursLayer.getSource();
+      var source = l.getSource();
       console.log(source); // Affichage dans les logs
       var feature = source.getFeatures();
       console.log(feature); // Affichage dans les logs
@@ -51,7 +73,7 @@ var trackview = (function () {
     let style = mviewer.customComponents.trackview.config.options.mviewer.parcours.style; // On récupère le tableau contenant les différents styles
     console.log(style);
 
-    parcoursLayer.setStyle({
+    l.setStyle({
       "geometry": style.geometry,
       "stroke-color": style.color,
       "stroke-width": style.width,
