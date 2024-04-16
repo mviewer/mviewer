@@ -38,8 +38,10 @@ var trackview = (function () {
     }),
   });
 
+  
   mviewer.processLayer(parcoursLayer, l);
-  mviewer.addLayer(parcoursLayer);
+  l.setVisible(true); // Pas assez optimisé => la ligne du dessous fait la même chose mais avec des options supplémentaires
+  //mviewer.addLayer(parcoursLayer);
 
   // Variables globales
   /*
