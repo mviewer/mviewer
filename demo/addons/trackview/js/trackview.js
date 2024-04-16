@@ -2,7 +2,7 @@ var trackview = (function () {
 
   var global = mviewer.customComponents.trackview.config.options.mviewer.parcours.parc;
 
-  // Creation du layer
+  // Creation du layer mviewer
   var parcoursLayer= {
     showintoc: true,
     type: global.stats.type,
@@ -30,7 +30,7 @@ var trackview = (function () {
     ],
   };
   
-  // Creation du openLayer
+  // Creation du layer openLayer
   var l = new ol.layer.Vector({
     source: new ol.source.Vector({
       url: parcoursLayer.urlData,
