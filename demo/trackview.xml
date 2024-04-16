@@ -28,8 +28,18 @@
     </extensions>
 
     <themes mini="true">
-        <theme id="theme-1" name="Les différents parcours" collapsed="true" icon="fad fa-walking">
-        <!-- Empty -->
+        <theme id="theme-1" name="Les différents parcours" collapsed="true" icon="fas fa-book">
+            <layer id="parcours_1"
+            name="Premier parcours"
+            type="customlayer"
+            vectorlegend="true"
+            url="demo/trackview/customlayers/parcours.js"
+            queryable="true"
+            visible="true"
+            opacity="0.8"
+            searchable="true"
+            tooltip="true"
+            tooltipcontent="Nom : {{name}}"/>
         </theme>
     </themes>
 </config>

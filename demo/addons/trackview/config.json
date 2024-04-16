@@ -1,12 +1,27 @@
 {
     "type": "module",
     "js": [
-        "./trackview.js"
+        "js/trackview.js"
     ],
     "css": [],
     "html": "./empty.html",
     "target": "page-content-wrapper",
     "options" : {
-        "parcours": {}
+        "mviewer": {
+            "parcours": {
+                "title": "Circuit",
+                "style" : {
+                    "border": "block",
+                    "color": "#FF0000",
+                    "width": 4
+                },
+                "stats": [
+                    {
+                      "type": "stat",
+                      "layerId": "parcours_1"
+                    }
+                ]
+            }
+        }
     }
 }
