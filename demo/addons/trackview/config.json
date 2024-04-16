@@ -17,6 +17,7 @@
                         "width": 4
                     },
                     "stats": {
+                        "name": "Parcours GeoJson",
                         "type": "customlayer",
                         "layerId": "parcours_1",
                         "opacity": 0.8

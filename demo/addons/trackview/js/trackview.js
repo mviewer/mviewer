@@ -8,7 +8,7 @@ var trackview = (function () {
     type: global.stats.type,
     layerid: global.stats.layerId,
     id: global.stats.layerId,
-    title: global.title,
+    title: global.stats.name,
     vectorlegend: true,
     visible: true,
     opacity: global.stats.opacity,
@@ -19,11 +19,11 @@ var trackview = (function () {
   parcoursLayer.legend = {
     items: [
       {
-        label: "Circuit",
-        geometry: "LineString",
+        label: global.title,
+        geometry: global.style.geometry,
         styles: [
           new ol.style.Style({
-            stroke: new ol.style.Stroke({ color: "#FF0000", width: 4 }),
+            stroke: new ol.style.Stroke({ color: global.style.color, width: global.style.width }),
           }),
         ],
       },
