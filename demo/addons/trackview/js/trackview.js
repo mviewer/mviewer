@@ -1,17 +1,18 @@
 var trackview = (function () {
 
+  var legend = mviewer.customComponents.trackview.config.options.mviewer.parcours;
+
   // Creation du layer
   var parcoursLayer= {
     showintoc: true,
     type: "customlayer",
     layerid: "parcours_1",
     title: "Parcours GeoJson",
-    legendurl: "demo/trackview/customlayers/parcours.js",
+    legendurl: legend,
     vectorlegend: true,
     visible: true,
     opacity: "0.8",
     tooltip: true,
-    tooltipcontent: "Nom {{name}}"
   };
 
   mviewer.addLayer(parcoursLayer);
@@ -50,7 +51,7 @@ var trackview = (function () {
     let style = mviewer.customComponents.trackview.config.options.mviewer.parcours.style; // On récupère le tableau contenant les différents styles
     console.log(style);
 
-    mvLayer.setStyle({
+    parcoursLayer.setStyle({
       "geometry": style.geometry,
       "stroke-color": style.color,
       "stroke-width": style.width,
