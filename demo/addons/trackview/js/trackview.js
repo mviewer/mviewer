@@ -34,7 +34,7 @@ var trackview = (function () {
   var l = new ol.layer.Vector({
     source: new ol.source.Vector({
       url: parcoursLayer.urlData,
-      format: new ol.format.GeoJSON(),
+      format: new ol.format.readProjection(url),
     }),
   });
 
