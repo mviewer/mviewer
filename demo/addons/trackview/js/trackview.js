@@ -26,13 +26,34 @@ var trackview = (function () {
     }),
   };
 
+  const vectorSource = new ol.source.Vector({
+    url: parcoursLayer.urlData,
+    format: new ol.format.GPX(),
+  });
+
+  vectorSource.on("featuresloadend", function (a) {
+    console.log(a);
+  });
+  
   var vector = new ol.layer.Vector({
-    source: new ol.source.Vector({
-      url: parcoursLayer.urlData,
-      format: new ol.format.GPX(),
-    }),
+    source: vectorSource,
     style: function(feature) {
-      console.log(feature);
+      var features = feature.getGeometry().getCoordinates()[0];
+      console.log(features);
+      
+      for (let i = 0; i < features.length; i++) {
+        let featureId = i;
+        let featureX = features[i][0] ;
+        let featureY = features[i][1] ;
+        let featureZ = features[i][2] ;
+
+        let featureTab = [];
+
+        featureTab.push("Id :",featureId, "x :",featureX, "y :",featureY, "z :",featureZ);
+
+        console.log(featureTab);
+      }
+
       return style["styleCircuit"];
     },
   });
@@ -66,12 +87,6 @@ var trackview = (function () {
         duration: 4000, // Permet de définir le temps de l'animation en ms
       });
     })
-    _returnFeaturesInfo();
-  };
-
-  var _returnFeaturesInfo = function () {
-    let features = [];
-    
   };
 
 return {
