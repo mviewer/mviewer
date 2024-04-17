@@ -23,7 +23,7 @@
                         "opacity": 0.8
                     },  
                     "data": {
-                        "url": "demo/trackview/data/swimrun_lineaire.geojson"
+                        "url": "demo/trackview/data/gpx/parcours_125kmdef-18686465-1712606571-884.gpx"
                     }
                 }
             }
