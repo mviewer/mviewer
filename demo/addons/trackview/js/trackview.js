@@ -66,11 +66,12 @@ var trackview = (function () {
         duration: 4000, // Permet de définir le temps de l'animation en ms
       });
     })
+    _returnFeaturesInfo();
   };
 
-  const _returnFeaturesInfo = function (pixel) {
+  var _returnFeaturesInfo = function () {
     let features = [];
-
+    
   };
 
 return {
