@@ -18,56 +18,32 @@ var trackview = (function () {
   
   // Permet de définir la légende
   const style = {
-    'Point': new ol.style.Style({
-      image: new ol.style.Circle({
-        fill: new ol.style.Fill({
-          color: "#0000FF",
-        }),
-        radius: 5,
-        stroke: new ol.style.Stroke({
-          color: "#00FF00",
-          width: 1,
-        }),
-      }),
-    }),
-    'LineString': new ol.style.Style({
+    'styleCircuit': new ol.style.Style({
       stroke: new ol.style.Stroke({
         color: "#FF0000",
         width: 3,
       }),
     }),
-    'MultiLineString': new ol.style.Style({
-      stroke: new ol.style.Stroke({
-        color: "#FFFF00",
-        width: 3,
-      }),
-    }),
   };
 
-  const vector = new ol.layer.Vector({
+  var vector = new ol.layer.Vector({
     source: new ol.source.Vector({
       url: parcoursLayer.urlData,
       format: new ol.format.GPX(),
     }),
     style: function(feature) {
-      return style[feature.getGeometry().getType()];
+      console.log(feature);
+      return style["styleCircuit"];
     },
   });
-  
+
   parcoursLayer.legend = {
     items: [
       {
         label: "Circuit",
         geometry: "LineString",
         styles: [
-          style["LineString"],
-        ],
-      },
-      {
-        label: "Point",
-        geometry: "Point",
-        styles: [
-          style["Point"],
+          style["styleCircuit"],
         ],
       },
     ],
@@ -90,6 +66,11 @@ var trackview = (function () {
         duration: 4000, // Permet de définir le temps de l'animation en ms
       });
     })
+  };
+
+  const _returnFeaturesInfo = function (pixel) {
+    let features = [];
+
   };
 
 return {
