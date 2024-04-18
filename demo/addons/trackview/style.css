@@ -1,11 +1,16 @@
-#graph {
-    background-color: red;
+#box-style {
+    height: 200px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    background-color: lightgray;
+    border-color: blue;
+    border-style: dashed;
+    filter: opacity(40%);
 }
 
-#p {
-    background-color: green;
-    width: 100%;
-    position: absolute;
-    padding: 10px;
+.graph {
     text-align: center;
+    padding: 60px 200px;
+    font-size: 2em;
 }

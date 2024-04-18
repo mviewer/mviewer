@@ -38,22 +38,25 @@ var trackview = (function () {
     },
   });
 
-  vectorSource.on("featuresloadend", function (event) {
-    let features = vectorSource.getFeatures();
-    let coordinates = features[0].getGeometry().getCoordinates()[0];
-      
-    for (let i = 0; i < coordinates.length; i++) {
-      let featureId = i ;
-      let featureX = coordinates[i][0] ;
-      let featureY = coordinates[i][1] ;
-      let featureZ = coordinates[i][2] ;
-
-      let featureTab = [];
-
-      featureTab.push("Id :",featureId, "x :",featureX, "y :",featureY, "z :",featureZ);
-
-      console.log(featureTab);
-    }
+  vectorSource.on("featuresloadend", function (a) {
+    // lecture de la lineString
+    const lineStringCoords = a.features[0].getGeometry().getLineStrings()[0].getCoordinates();
+    // on lit les points et on récupère un objet qui détient une feature par point et le temps associé
+    const pointsFeatureAndTime = lineStringCoords.map(coordinates => {
+        // création de la feature pour chaque coordonnées de la linestring
+        const feature = new ol.Feature(new ol.geom.Point(coordinates));
+        // on récupère la valeur de temps
+        const timeBrut = coordinates[3];
+        // on la formate (ca permettra de lire le temps avec new Date(time))
+        const time = timeBrut * 1000;
+        return {
+            feature,
+            time
+        };
+    });
+    // on trie par date 
+    const orderPointsByTime = _.sortBy(pointsFeatureAndTime, ["time"]);
+    console.log(orderPointsByTime);
   });
 
   parcoursLayer.legend = {

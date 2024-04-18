@@ -33,6 +33,5 @@
         <extension type="component" id="trackview" path="demo/addons"/>
     </extensions>
 
-    <themes mini="false">
-    </themes>
+    <themes mini="false" legendmini="false"></themes>
 </config>

@@ -5,7 +5,7 @@
     ],
     "css": "./style.css",
     "html": "./trackview.html",
-    "target": "modal-panel",
+    "target": "page-content-wrapper",
     "options" : {
         "mviewer": {
             "parcours": {
