@@ -30,32 +30,30 @@ var trackview = (function () {
     url: parcoursLayer.urlData,
     format: new ol.format.GPX(),
   });
-
-  vectorSource.on("featuresloadend", function (a) {
-    console.log(a);
-  });
   
   var vector = new ol.layer.Vector({
     source: vectorSource,
     style: function(feature) {
-      var features = feature.getGeometry().getCoordinates()[0];
-      console.log(features);
-      
-      for (let i = 0; i < features.length; i++) {
-        let featureId = i ;
-        let featureX = features[i][0] ;
-        let featureY = features[i][1] ;
-        let featureZ = features[i][2] ;
-
-        let featureTab = [];
-
-        featureTab.push("Id :",featureId, "x :",featureX, "y :",featureY, "z :",featureZ);
-
-        console.log(featureTab);
-      }
-
       return style["styleCircuit"];
     },
+  });
+
+  vectorSource.on("featuresloadend", function (event) {
+    let features = vectorSource.getFeatures();
+    let coordinates = features[0].getGeometry().getCoordinates()[0];
+      
+    for (let i = 0; i < coordinates.length; i++) {
+      let featureId = i ;
+      let featureX = coordinates[i][0] ;
+      let featureY = coordinates[i][1] ;
+      let featureZ = coordinates[i][2] ;
+
+      let featureTab = [];
+
+      featureTab.push("Id :",featureId, "x :",featureX, "y :",featureY, "z :",featureZ);
+
+      console.log(featureTab);
+    }
   });
 
   parcoursLayer.legend = {
