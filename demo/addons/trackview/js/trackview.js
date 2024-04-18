@@ -42,7 +42,7 @@ var trackview = (function () {
       console.log(features);
       
       for (let i = 0; i < features.length; i++) {
-        let featureId = i;
+        let featureId = i ;
         let featureX = features[i][0] ;
         let featureY = features[i][1] ;
         let featureZ = features[i][2] ;

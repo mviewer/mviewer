@@ -1,6 +1,6 @@
 <config>
     <application id="parcours" 
-        title="TrackView" 
+        title="TrackView"
         style="css/themes/blue.css" 
         logo="img/logo/tatihouguev2.png" 
         exportpng="false" 
