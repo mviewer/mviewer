@@ -1,0 +1,11 @@
+#graph {
+    background-color: red;
+}
+
+#p {
+    background-color: green;
+    width: 100%;
+    position: absolute;
+    padding: 10px;
+    text-align: center;
+}
