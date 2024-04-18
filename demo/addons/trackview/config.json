@@ -3,8 +3,8 @@
     "js": [
         "js/trackview.js"
     ],
-    "css": [],
-    "html": "./empty.html",
+    "css": "./style.css",
+    "html": "./trackview.html",
     "target": "page-content-wrapper",
     "options" : {
         "mviewer": {

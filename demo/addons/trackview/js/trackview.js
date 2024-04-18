@@ -20,8 +20,8 @@ var trackview = (function () {
   const style = {
     'styleCircuit': new ol.style.Style({
       stroke: new ol.style.Stroke({
-        color: "#FF0000",
-        width: 3,
+        color: global.style.color,
+        width: global.style.width,
       }),
     }),
   };
@@ -59,8 +59,8 @@ var trackview = (function () {
   parcoursLayer.legend = {
     items: [
       {
-        label: "Circuit",
-        geometry: "LineString",
+        label: global.title,
+        geometry: global.style.geometry,
         styles: [
           style["styleCircuit"],
         ],
