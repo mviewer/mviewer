@@ -54,20 +54,31 @@ var trackview = (function () {
   var _addGraph = function () {
     let features = vectorSource.getFeatures();
     let coordinates = features[0].getGeometry().getCoordinates()[0];
-    let featureTab = [];
-    let featureListId = []
-    let featureListNiv = []
+    //let feature = [] ; // Optionnel
+    let featureListId = [] ;
+    let featureListNiv = [] ;
+    var TabFeature = [] ;
 
     for (let i = 0; i < coordinates.length; i++) {
-      var featureId = i ;
-      let featureX = coordinates[i][0] ;
-      let featureY = coordinates[i][1] ;
-      let featureZ = coordinates[i][2] ;
-      let featureT = coordinates[i][3] ;
+      // Initialisation du tableau contenant les données du point actuel
+      var DataCoord = [] ;
 
-      featureListId.push(featureId) ; // Liste des id de chaque poitn
-      featureListNiv.push(featureZ) ;
-      featureTab.push("Id :",featureId, "x :",featureX, "y :",featureY, "z :",featureZ, "Time :",featureT) ; // Optionnel
+      // Récupération des données du point actuel
+      var featureId = i ;
+      var featureX = coordinates[i][0] ;
+      var featureY = coordinates[i][1] ;
+      var featureZ = coordinates[i][2] ;
+      var featureT = coordinates[i][3] ;
+
+      // On stock les données du point actuel
+      DataCoord.push(featureX, featureY, featureZ, featureT);
+
+      // On ajoute chaque point dans le tableau permettant de le réutiliser plus tard
+      TabFeature.push(DataCoord);
+
+      featureListId.push(featureId) ; // Liste des id de chaque point
+      featureListNiv.push(featureZ) ; // Liste des 'z' soit du niveau de dénivelé
+      //feature.push("Id :",featureId, "x :",featureX, "y :",featureY, "z :",featureZ, "Time :",featureT) ; // Optionnel
     };
     new Chart(document.getElementById("trackview-panel"), {
       type: 'line',
@@ -88,11 +99,33 @@ var trackview = (function () {
         },
       },
     });
+    return TabFeature ;
+  };
+
+  var _creaFeature = function (data) {
+    // On récupère la liste de tableaux créée dans la fonction '_addGraph' + initialisation d'un tableau qui contiendra les features
+    var FeaturesData = data;
+    var PointData = [];
+    // On va maintenant créer une nouvelle feature pour chaque 'point' / coordonnées
+    FeaturesData.forEach(coord => {
+      var point = new ol.Feature(
+        new ol.geom.Point(coord)
+      );
+      /*
+      // On récupère le time
+      const time = coord[3];
+      // On formate le time ( il est divisé par 1000 dans un fichier js )
+      const timeFormate = time * 1000;
+      */
+      // On stock nos features (points) dans un tableau
+      PointData.push(point);
+    });
+
+    return PointData;
   };
   
   mviewer.processLayer(parcoursLayer, vector);
   mviewer.addLayer(parcoursLayer); // setVisible(true) => n'ajoute pas la légende
-
 
   var _initTool= function () {
     console.log("Initialisation de l'outil"); // Affichage dans les logs
@@ -105,7 +138,9 @@ var trackview = (function () {
       mviewer.getMap().getView().fit(feature[0].getGeometry().getExtent(), {
         duration: 3000, // Permet de définir le temps de l'animation en ms
       });
-      _addGraph();
+      // Permet d'éviter un double appel de fonction
+      var data = _addGraph();
+      _creaFeature(data);
     });
   };
 
