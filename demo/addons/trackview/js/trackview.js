@@ -65,7 +65,7 @@ var trackview = (function () {
       let featureZ = coordinates[i][2] ;
       let featureT = coordinates[i][3] ;
 
-      featureListId.push(featureId) ;
+      featureListId.push(featureId) ; // Liste des id de chaque poitn
       featureListNiv.push(featureZ) ;
       featureTab.push("Id :",featureId, "x :",featureX, "y :",featureY, "z :",featureZ, "Time :",featureT) ; // Optionnel
     };
