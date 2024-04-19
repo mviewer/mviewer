@@ -77,16 +77,16 @@ var trackview = (function () {
             data: featureListNiv,
             label: "Dénivelé du " + global.stats.name,
             borderColor: global.style.color,
-            fill: false
+            fill: true
           }
         ]
       },
       options: {
         title: {
           display: true,
-          text: 'World population per region (in millions)'
-        }
-      }
+          text: "Ne fonctionne pas :("
+        },
+      },
     });
   };
   
