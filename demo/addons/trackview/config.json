@@ -13,7 +13,7 @@
                     "title": "Circuit",
                     "style" : {
                         "geometry": "LineString",
-                        "color": "#FF0000",
+                        "color": "#f00",
                         "width": 4
                     },
                     "stats": {

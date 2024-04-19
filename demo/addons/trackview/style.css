@@ -1,12 +1,12 @@
 #trackview-panel {
-    height: 200px;
+    max-height: 200px;
     width: 100%;
     position: fixed;
     bottom: 0;
     background-color: lightgray;
-    border-color: blue;
+    border-color: lightblue;
     border-style: dashed;
-    filter: opacity(40%);
+    filter: opacity(60%);
 }
 
 p {

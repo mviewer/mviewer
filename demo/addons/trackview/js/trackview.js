@@ -55,25 +55,28 @@ var trackview = (function () {
     let features = vectorSource.getFeatures();
     let coordinates = features[0].getGeometry().getCoordinates()[0];
     let featureTab = [];
-  
+    let featureListId = []
+    let featureListNiv = []
 
     for (let i = 0; i < coordinates.length; i++) {
-      let featureId = i ;
+      var featureId = i ;
       let featureX = coordinates[i][0] ;
       let featureY = coordinates[i][1] ;
       let featureZ = coordinates[i][2] ;
       let featureT = coordinates[i][3] ;
 
-      featureTab.push("Id :",featureId, "x :",featureX, "y :",featureY, "z :",featureZ, "Time :",featureT);
+      featureListId.push(featureId) ;
+      featureListNiv.push(featureZ) ;
+      featureTab.push("Id :",featureId, "x :",featureX, "y :",featureY, "z :",featureZ, "Time :",featureT) ; // Optionnel
     };
     new Chart(document.getElementById("trackview-panel"), {
       type: 'line',
       data: {
-        labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
+        labels: featureListId,
         datasets: [{ 
-            data: [86,114,106,106,107,111,133,221,783,2478],
-            label: "Africa",
-            borderColor: "#3e95cd",
+            data: featureListNiv,
+            label: "Dénivelé du " + global.stats.name,
+            borderColor: global.style.color,
             fill: false
           }
         ]
