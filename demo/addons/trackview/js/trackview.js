@@ -120,8 +120,35 @@ var trackview = (function () {
       // On stock nos features (points) dans un tableau
       PointData.push(point);
     });
-
     return PointData;
+  };
+
+  var _distanceBtwPoint = function (Points) {
+    var listePoints = Points;
+    var distanceBtwPoint = [];
+
+    for (let elt = 0; elt < ((listePoints.length) -1); elt++) {
+      let point_1 = listePoints[elt].getGeometry().getCoordinates();
+      let point_2 = listePoints[elt +1].getGeometry().getCoordinates();
+
+      let location_pt1 = [point_1[0], point_1[1]];
+      let location_pt2 = [point_2[0], point_2[1]];
+
+      var line = new ol.geom.LineString([location_pt2 , location_pt1]);
+
+      var distance = Math.round(line.getLength() * 100) / 100;
+
+      distanceBtwPoint.push(distance);
+    };
+    let distanceBtwPointTotal = 0;
+
+    for (let i = 0; i < distanceBtwPoint.length; i++) {
+      distanceBtwPointTotal += distanceBtwPoint[i];
+    }
+
+    console.log(distanceBtwPoint);
+    console.log("Distance total : " + distanceBtwPointTotal + " km");
+    return distanceBtwPoint;
   };
   
   mviewer.processLayer(parcoursLayer, vector);
@@ -140,7 +167,8 @@ var trackview = (function () {
       });
       // Permet d'éviter un double appel de fonction
       var data = _addGraph();
-      _creaFeature(data);
+      var points =_creaFeature(data);
+      _distanceBtwPoint(points)
     });
   };
 
