@@ -128,15 +128,29 @@ var trackview = (function () {
     var distanceBtwPoint = [];
 
     for (let elt = 0; elt < ((listePoints.length) -1); elt++) {
-      let point_1 = listePoints[elt].getGeometry().getCoordinates();
-      let point_2 = listePoints[elt +1].getGeometry().getCoordinates();
+      // On comment par définir la projection EPSG:32632 ( UTM )
+      const epsg32632 = '+proj=utm +zone=32 +datum=WGS84 +units=m +no_defs';
 
-      let location_pt1 = [point_1[0], point_1[1]];
-      let location_pt2 = [point_2[0], point_2[1]];
+      // Ensuite, on charge la projection
+      proj4.defs(epsg32632);
+
+      // On récupère les coordonnées d'un premier point et du point suivant
+      let point_1 = listePoints[elt].getGeometry().getCoordinates();
+      let point_2 = listePoints[elt + 1].getGeometry().getCoordinates();
+
+      // On convertit les coordonnées EPSG:3857 en UTM
+      let point1_utm = proj4('EPSG:3857', epsg32632, point_1);
+      let point2_utm = proj4('EPSG:3857', epsg32632, point_2);
+
+      // On créer une localisation pour les deux points
+      let location_pt1 = [point1_utm[0], point1_utm[1]];
+      let location_pt2 = [point2_utm[0], point2_utm[1]];
 
       var line = new ol.geom.LineString([location_pt2 , location_pt1]);
 
-      var distance = Math.round(line.getLength() * 100) / 100;
+      var distance = Math.round(line.getLength());
+
+      //var distance = point_1.distanceTo(point_2);
 
       distanceBtwPoint.push(distance);
     };
@@ -147,7 +161,7 @@ var trackview = (function () {
     }
 
     console.log(distanceBtwPoint);
-    console.log("Distance total : " + distanceBtwPointTotal + " km");
+    console.log("Distance total : " + distanceBtwPointTotal + " m");
     return distanceBtwPoint;
   };
   
