@@ -1,6 +1,7 @@
 var trackview = (function () {
 
   var global = mviewer.customComponents.trackview.config.options.mviewer.parcours.parc;
+  var distanceBtwPoint = []; // Initialisation du tableau pour les distances entre chaque point
 
   // Creation du layer mviewer
   var parcoursLayer= {
@@ -83,7 +84,7 @@ var trackview = (function () {
     new Chart(document.getElementById("trackview-panel"), {
       type: 'line',
       data: {
-        labels: featureListId,
+        labels: distanceBtwPoint,
         datasets: [{ 
             data: featureListNiv,
             label: "Dénivelé du " + global.stats.name,
@@ -125,10 +126,9 @@ var trackview = (function () {
 
   var _distanceBtwPoint = function (Points) {
     var listePoints = Points;
-    var distanceBtwPoint = [];
 
     for (let elt = 0; elt < ((listePoints.length) -1); elt++) {
-      // On comment par définir la projection EPSG:32632 ( UTM )
+      // On commence par définir la projection EPSG:32632 ( UTM )
       const epsg32632 = '+proj=utm +zone=32 +datum=WGS84 +units=m +no_defs';
 
       // Ensuite, on charge la projection
@@ -146,22 +146,28 @@ var trackview = (function () {
       let location_pt1 = [point1_utm[0], point1_utm[1]];
       let location_pt2 = [point2_utm[0], point2_utm[1]];
 
+      // On créer une ligne utilisant les deux localisations précédentes afin de calculer la distance de celle-ci
       var line = new ol.geom.LineString([location_pt2 , location_pt1]);
 
+      // Calcul de la distance de la ligne
       var distance = Math.round(line.getLength());
 
-      //var distance = point_1.distanceTo(point_2);
-
+      // On ajoute chaque distance calculée dans un tableau
       distanceBtwPoint.push(distance);
     };
+    // Initialisation de la variable de la distance totale
     let distanceBtwPointTotal = 0;
 
+    // On parcourt l'ensemble des distances du tableau
     for (let i = 0; i < distanceBtwPoint.length; i++) {
+      // On additionne chaque distance dans une variable
       distanceBtwPointTotal += distanceBtwPoint[i];
     }
 
-    console.log(distanceBtwPoint);
-    console.log("Distance total : " + distanceBtwPointTotal + " m");
+    console.log(distanceBtwPoint); // Affichage de la liste des distances (tableau)
+    console.log("Distance total : " + distanceBtwPointTotal + " m"); // Distance totale en mètre
+    console.log("Distance total : " + (distanceBtwPointTotal / 1000).toFixed(1) + " km"); // Distance totale en kilomètre
+    
     return distanceBtwPoint;
   };
   
