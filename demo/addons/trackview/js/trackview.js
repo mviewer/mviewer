@@ -90,7 +90,6 @@ var trackview = (function () {
         var distanceCalc = _distanceBtwPoint(listePoint[i], listePoint[i - 1]);
         distance += distanceCalc;
         finalData[i] = [distance, DataCoord[2]];
-        console.log(finalData[i]);
       }
 
       /*
@@ -104,7 +103,6 @@ var trackview = (function () {
       */
 
     };
-    console.log(finalData);   
     _addGraph(finalData);
   };
 
@@ -176,7 +174,6 @@ var trackview = (function () {
         duration: 3000, // Permet de définir le temps de l'animation en ms
       });
       _creaFeature();
-      _addGraph();
     });
   };
 
