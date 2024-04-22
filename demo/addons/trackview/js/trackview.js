@@ -90,13 +90,13 @@ var trackview = (function () {
             label: "Dénivelé du " + global.stats.name,
             borderColor: global.style.color,
             fill: true
-          }
-        ]
+          },
+        ],
       },
       options: {
         title: {
           display: true,
-          text: "Ne fonctionne pas :("
+          text: 'Ne fonctionne pas :('
         },
       },
     });
