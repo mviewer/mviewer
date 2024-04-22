@@ -103,6 +103,7 @@ var trackview = (function () {
       */
 
     };
+    console.log(finalData);
     _addGraph(finalData);
   };
 
@@ -149,6 +150,20 @@ var trackview = (function () {
         ],
       },
       options: {
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: "Distance (km)"
+            },
+          },
+          y: {
+            title: {
+              display: true,
+              text: "Dénivelé (m)"
+            },
+          },
+        },
         plugins: {
           title: {
             display: true,
