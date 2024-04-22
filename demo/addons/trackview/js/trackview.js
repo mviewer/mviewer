@@ -1,7 +1,9 @@
 var trackview = (function () {
 
   var global = mviewer.customComponents.trackview.config.options.mviewer.parcours.parc;
-  var distanceBtwPoint = []; // Initialisation du tableau pour les distances entre chaque point
+  var d = [];
+  var z = [];
+  var featureListNiv = [] ;
 
   // Creation du layer mviewer
   var parcoursLayer= {
@@ -52,20 +54,18 @@ var trackview = (function () {
     ],
   };
 
-  var _addGraph = function () {
+  var _creaFeature = function () {
     let features = vectorSource.getFeatures();
     let coordinates = features[0].getGeometry().getCoordinates()[0];
-    //let feature = [] ; // Optionnel
-    let featureListId = [] ;
-    let featureListNiv = [] ;
-    var TabFeature = [] ;
+    var finalData = [];
+    var listePoint = [];
+    var distance = 0;
 
     for (let i = 0; i < coordinates.length; i++) {
       // Initialisation du tableau contenant les données du point actuel
       var DataCoord = [] ;
 
       // Récupération des données du point actuel
-      var featureId = i ;
       var featureX = coordinates[i][0] ;
       var featureY = coordinates[i][1] ;
       var featureZ = coordinates[i][2] ;
@@ -73,102 +73,92 @@ var trackview = (function () {
 
       // On stock les données du point actuel
       DataCoord.push(featureX, featureY, featureZ, featureT);
+      featureListNiv.push(featureZ); // Liste des 'z' soit du niveau de dénivelé
 
-      // On ajoute chaque point dans le tableau permettant de le réutiliser plus tard
-      TabFeature.push(DataCoord);
+      listePoint.push(DataCoord); // Liste de tous les points
 
-      featureListId.push(featureId) ; // Liste des id de chaque point
-      featureListNiv.push(featureZ) ; // Liste des 'z' soit du niveau de dénivelé
-      //feature.push("Id :",featureId, "x :",featureX, "y :",featureY, "z :",featureZ, "Time :",featureT) ; // Optionnel
+      /*
+      // Création d'une feature par point
+      const point = new ol.Feature(
+        new ol.geom.Point(DataCoord)
+      );
+      */
+
+      if (i === 0) {
+        finalData[i] = [distance, DataCoord[2]];
+      } else {
+        var distanceCalc = _distanceBtwPoint(listePoint[i], listePoint[i - 1]);
+        distance += distanceCalc;
+        finalData[i] = [distance, DataCoord[2]];
+        console.log(finalData[i]);
+      }
+
+      /*
+      Object.defineProperties(point, 'distance', {
+        value: distance,
+        writeable: false,
+      });
+      
+      // On stock nos features (points) dans un tableau
+      PointData.push(point);
+      */
+
     };
+    console.log(finalData);   
+    _addGraph(finalData);
+  };
+
+  var _distanceBtwPoint = function (p1, p2) {
+    // On commence par définir la projection EPSG:32632 ( UTM )
+    const epsg32632 = '+proj=utm +zone=32 +datum=WGS84 +units=m +no_defs';
+
+    // Ensuite, on charge la projection
+    proj4.defs(epsg32632);
+
+    // On convertit les coordonnées EPSG:3857 en UTM
+    let point1_utm = proj4('EPSG:3857', epsg32632, p1);
+    let point2_utm = proj4('EPSG:3857', epsg32632, p2);
+
+    // On créer une localisation pour les deux points
+    let location_pt1 = [point1_utm[0], point1_utm[1]];
+    let location_pt2 = [point2_utm[0], point2_utm[1]];
+
+    // On créer une ligne utilisant les deux localisations précédentes afin de calculer la distance de celle-ci
+    var line = new ol.geom.LineString([location_pt2 , location_pt1]);
+
+    // Calcul de la distance de la ligne
+    var distance = Math.round(line.getLength());
+    
+    return distance;
+  };
+
+  var _addGraph = function (data) {
+    data.forEach(function (tab) {
+      d.push(tab[0]);
+      z.push(tab[1]);
+    });
+
     new Chart(document.getElementById("trackview-panel"), {
       type: 'line',
       data: {
-        labels: distanceBtwPoint,
+        labels: d,
         datasets: [{ 
-            data: featureListNiv,
-            label: "Dénivelé du " + global.stats.name,
+            data: z,
+            label: global.stats.name,
             borderColor: global.style.color,
             fill: true
           },
         ],
       },
       options: {
-        title: {
-          display: true,
-          text: 'Ne fonctionne pas :('
+        plugins: {
+          title: {
+            display: true,
+            text: 'Dénivelé du parcours en fonction de la distance parcourue'
+          },
         },
       },
     });
-    return TabFeature ;
-  };
-
-  var _creaFeature = function (data) {
-    // On récupère la liste de tableaux créée dans la fonction '_addGraph' + initialisation d'un tableau qui contiendra les features
-    var FeaturesData = data;
-    var PointData = [];
-    // On va maintenant créer une nouvelle feature pour chaque 'point' / coordonnées
-    FeaturesData.forEach(coord => {
-      var point = new ol.Feature(
-        new ol.geom.Point(coord)
-      );
-      /*
-      // On récupère le time
-      const time = coord[3];
-      // On formate le time ( il est divisé par 1000 dans un fichier js )
-      const timeFormate = time * 1000;
-      */
-      // On stock nos features (points) dans un tableau
-      PointData.push(point);
-    });
-    return PointData;
-  };
-
-  var _distanceBtwPoint = function (Points) {
-    var listePoints = Points;
-
-    for (let elt = 0; elt < ((listePoints.length) -1); elt++) {
-      // On commence par définir la projection EPSG:32632 ( UTM )
-      const epsg32632 = '+proj=utm +zone=32 +datum=WGS84 +units=m +no_defs';
-
-      // Ensuite, on charge la projection
-      proj4.defs(epsg32632);
-
-      // On récupère les coordonnées d'un premier point et du point suivant
-      let point_1 = listePoints[elt].getGeometry().getCoordinates();
-      let point_2 = listePoints[elt + 1].getGeometry().getCoordinates();
-
-      // On convertit les coordonnées EPSG:3857 en UTM
-      let point1_utm = proj4('EPSG:3857', epsg32632, point_1);
-      let point2_utm = proj4('EPSG:3857', epsg32632, point_2);
-
-      // On créer une localisation pour les deux points
-      let location_pt1 = [point1_utm[0], point1_utm[1]];
-      let location_pt2 = [point2_utm[0], point2_utm[1]];
-
-      // On créer une ligne utilisant les deux localisations précédentes afin de calculer la distance de celle-ci
-      var line = new ol.geom.LineString([location_pt2 , location_pt1]);
-
-      // Calcul de la distance de la ligne
-      var distance = Math.round(line.getLength());
-
-      // On ajoute chaque distance calculée dans un tableau
-      distanceBtwPoint.push(distance);
-    };
-    // Initialisation de la variable de la distance totale
-    let distanceBtwPointTotal = 0;
-
-    // On parcourt l'ensemble des distances du tableau
-    for (let i = 0; i < distanceBtwPoint.length; i++) {
-      // On additionne chaque distance dans une variable
-      distanceBtwPointTotal += distanceBtwPoint[i];
-    }
-
-    console.log(distanceBtwPoint); // Affichage de la liste des distances (tableau)
-    console.log("Distance total : " + distanceBtwPointTotal + " m"); // Distance totale en mètre
-    console.log("Distance total : " + (distanceBtwPointTotal / 1000).toFixed(1) + " km"); // Distance totale en kilomètre
-    
-    return distanceBtwPoint;
   };
   
   mviewer.processLayer(parcoursLayer, vector);
@@ -185,10 +175,8 @@ var trackview = (function () {
       mviewer.getMap().getView().fit(feature[0].getGeometry().getExtent(), {
         duration: 3000, // Permet de définir le temps de l'animation en ms
       });
-      // Permet d'éviter un double appel de fonction
-      var data = _addGraph();
-      var points =_creaFeature(data);
-      _distanceBtwPoint(points)
+      _creaFeature();
+      _addGraph();
     });
   };
 
