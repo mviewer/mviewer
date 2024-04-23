@@ -14,7 +14,18 @@
                     "style" : {
                         "geometry": "LineString",
                         "color": "#f00",
-                        "width": 4
+                        "width": 4,
+                        "graph": {
+                            "title": "Dénivelé du parcours en fonction de la distance parcourue",
+                            "name": {
+                                "xAxis": {
+                                    "text": "Distance (km)"
+                                },
+                                "yAxis": {
+                                    "text": "Dénivelé (m)"
+                                }
+                            }
+                        }
                     },
                     "stats": {
                         "name": "Parcours GPX",

@@ -89,6 +89,7 @@ var trackview = (function () {
     _addGraph(finalData);
   };
 
+  // Fonction qui calcule une distance (en mètre) entre deux points
   var _distanceBtwPoint = function (p1, p2) {
     // On commence par définir la projection EPSG:32632 ( UTM )
     const epsg32632 = '+proj=utm +zone=32 +datum=WGS84 +units=m +no_defs';
@@ -113,6 +114,7 @@ var trackview = (function () {
     return distance;
   };
 
+  // Fonction permettant d'ajouter le graph sur la map
   var _addGraph = function (data) {
     data.forEach(function (tab) {
       d.push(tab[0]);
@@ -136,20 +138,20 @@ var trackview = (function () {
           x: {
             title: {
               display: true,
-              text: "Distance (km)"
+              text: global.style.graph.name.xAxis.text
             },
           },
           y: {
             title: {
               display: true,
-              text: "Dénivelé (m)"
+              text: global.style.graph.name.yAxis.text
             },
           },
         },
         plugins: {
           title: {
             display: true,
-            text: 'Dénivelé du parcours en fonction de la distance parcourue'
+            text: global.style.graph.title
           },
         },
       },
@@ -159,7 +161,7 @@ var trackview = (function () {
   mviewer.processLayer(parcoursLayer, vector);
   mviewer.addLayer(parcoursLayer); // setVisible(true) => n'ajoute pas la légende
 
-  var _initTool= function () {
+  var _initTool = function () {
     console.log("Initialisation de l'outil"); // Affichage dans les logs
 
     mviewer.getMap().once("rendercomplete", function (e) {
