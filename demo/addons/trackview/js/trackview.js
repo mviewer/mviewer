@@ -82,17 +82,11 @@ var trackview = (function () {
   
   var vector = new ol.layer.Vector({
     source: vectorSource,
-    style: function(feature) {
-      return style["styleCircuit"];
-    },
+    style: style["styleCircuit"]
   });
 
-  const pointSource = new ol.source.Vector({
-    features: new ol.Collection(PointData),
-  });
-
-  var point = new ol.layer.Vector({
-    source: pointSource
+  const vectorPoint = new ol.layer.Vector({
+    style: style["stylePoint"]
   });
 
   var _creaFeature = function () {
@@ -121,9 +115,6 @@ var trackview = (function () {
       // Création d'une feature par point
       var point = new ol.Feature({
         geometry: new ol.geom.Point([DataCoord[0],DataCoord[1]]),
-        style: function (feature) {
-          return style["stylePoint"];
-        },
       });
 
       // On stock nos features (points) dans un tableau
@@ -138,6 +129,14 @@ var trackview = (function () {
         finalData[i] = [distance, DataCoord[2]]; // Ajout de la distance calculée et du dénivelé dans le tableau finalData
       }
     };
+
+    const sourceP = new ol.source.Vector({
+      features: PointData
+    });
+
+    vectorPoint.setSource(sourceP);
+    mviewer.getMap().addLayer(vectorPoint);
+
     _addGraph(finalData);
   };
 
@@ -219,8 +218,6 @@ var trackview = (function () {
   
   mviewer.processLayer(parcoursLayer, vector);
   mviewer.addLayer(parcoursLayer); // setVisible(true) => n'ajoute pas la légende
-  mviewer.processLayer(pointLayer, point);
-  mviewer.addLayer(point);
 
   var _initTool = function () {
     console.log("Initialisation de l'outil"); // Affichage dans les logs
@@ -234,7 +231,6 @@ var trackview = (function () {
         duration: 3000, // Permet de définir le temps de l'animation en ms
       });
       _creaFeature();
-      pointSource.refresh();
     });
   };
 
