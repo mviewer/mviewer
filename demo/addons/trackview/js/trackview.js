@@ -228,7 +228,7 @@ var trackview = (function () {
       var feature = source.getFeatures();
 
       mviewer.getMap().getView().fit(feature[0].getGeometry().getExtent(), {
-        duration: 3000, // Permet de définir le temps de l'animation en ms
+        duration: 4000, // Permet de définir le temps de l'animation en ms
       });
       _creaFeature();
     });
