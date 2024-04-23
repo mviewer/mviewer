@@ -3,10 +3,10 @@ var trackview = (function () {
   var global = mviewer.customComponents.trackview.config.options.mviewer.parcours.parc;
   var d = [];
   var z = [];
-  var featureListNiv = [] ;
+  var featureListNiv = [];
 
   // Creation du layer mviewer
-  var parcoursLayer= {
+  var parcoursLayer = {
     showintoc: true,
     type: global.stats.type,
     layerid: global.stats.layerId,
@@ -63,13 +63,13 @@ var trackview = (function () {
 
     for (let i = 0; i < coordinates.length; i++) {
       // Initialisation du tableau contenant les données du point actuel
-      var DataCoord = [] ;
+      var DataCoord = [];
 
       // Récupération des données du point actuel
-      var featureX = coordinates[i][0] ;
-      var featureY = coordinates[i][1] ;
-      var featureZ = coordinates[i][2] ;
-      var featureT = coordinates[i][3] ;
+      var featureX = coordinates[i][0];
+      var featureY = coordinates[i][1];
+      var featureZ = coordinates[i][2];
+      var featureT = coordinates[i][3];
 
       // On stock les données du point actuel
       DataCoord.push(featureX, featureY, featureZ, featureT);
@@ -77,12 +77,13 @@ var trackview = (function () {
 
       listePoint.push(DataCoord); // Liste de tous les points
 
+      // On test si c'est le premier nombre
       if (i === 0) {
-        finalData[i] = [distance, DataCoord[2]];
-      } else {
-        var distanceCalc = _distanceBtwPoint(listePoint[i], listePoint[i - 1]);
-        distance += distanceCalc;
-        finalData[i] = [distance, DataCoord[2]];
+        finalData[i] = [distance, DataCoord[2]]; // Si oui, on lui ajoute la distance par défaut (0) et son dénivelé dans le tableau finalData
+      } else { // Sinon
+        var distanceCalc = _distanceBtwPoint(listePoint[i], listePoint[i - 1]); // Calcul de la distance entre le point actuel et le précédent
+        distance += distanceCalc; // Ajout de la distance calculée à une variable totale
+        finalData[i] = [distance, DataCoord[2]]; // Ajout de la distance calculée et du dénivelé dans le tableau finalData
       }
     };
     console.log(finalData);
@@ -122,7 +123,7 @@ var trackview = (function () {
     });
 
     new Chart(document.getElementById("trackview-panel"), {
-      type: 'line',
+      type: global.style.graph.type,
       data: {
         labels: d,
         datasets: [{ 

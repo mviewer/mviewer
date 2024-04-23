@@ -7,7 +7,7 @@
         measuretools="false" 
         mapprint="true"
         addlayerstools="true"/>
-    <mapoptions maxzoom="20" projection="EPSG:3857" center="266612.35465869476, 5921729.455309178" zoom="6" />
+    <mapoptions maxzoom="20" projection="EPSG:3857" center="266612.35465869476, 5921729.455309178" zoom="4"/>
     <searchparameters localities="false"
         features="true" 
         bbox="true" 
