@@ -4,6 +4,7 @@ var trackview = (function () {
   var d = [];
   var z = [];
   var featureListNiv = [];
+  var PointData = [];
 
   // Creation du layer mviewer
   var parcoursLayer = {
@@ -18,8 +19,19 @@ var trackview = (function () {
     tooltip: true,
     urlData: global.data.url
   };
+
+  var pointLayer = {
+    showintoc: true,
+    type: "Point",
+    layerid: "point1",
+    id: "point1",
+    vectorlegend: true,
+    visible: true,
+    opacity: 0.8,
+    tooltip: true,
+  };
   
-  // Permet de définir la légende
+  // Permet de définir les différents styles
   const style = {
     'styleCircuit': new ol.style.Style({
       stroke: new ol.style.Stroke({
@@ -27,6 +39,39 @@ var trackview = (function () {
         width: global.style.width,
       }),
     }),
+
+    'stylePoint': new ol.style.Style({
+      image: new ol.style.Circle({
+        radius: 5,
+        fill: new ol.style.Fill({
+          color: "#000",
+        }),
+        stroke: new ol.style.Stroke({
+          color: "#fff",
+          width: 2,
+        }),
+      }),
+    }),
+  };
+
+  // Permet de définir les différentes légendes
+  parcoursLayer.legend = {
+    items: [
+      {
+        label: global.title,
+        geometry: global.style.geometry,
+        styles: [
+          style["styleCircuit"],
+        ],
+      },
+      {
+        label: "Point du circuit",
+        geometry: "Point",
+        styles: [
+          style["stylePoint"],
+        ],
+      },
+    ],
   };
 
   // Permet de réutiliser les features plus tard
@@ -42,17 +87,13 @@ var trackview = (function () {
     },
   });
 
-  parcoursLayer.legend = {
-    items: [
-      {
-        label: global.title,
-        geometry: global.style.geometry,
-        styles: [
-          style["styleCircuit"],
-        ],
-      },
-    ],
-  };
+  const pointSource = new ol.source.Vector({
+    features: new ol.Collection(PointData),
+  });
+
+  var point = new ol.layer.Vector({
+    source: pointSource
+  });
 
   var _creaFeature = function () {
     let features = vectorSource.getFeatures();
@@ -77,6 +118,17 @@ var trackview = (function () {
 
       listePoint.push(DataCoord); // Liste de tous les points
 
+      // Création d'une feature par point
+      var point = new ol.Feature({
+        geometry: new ol.geom.Point([DataCoord[0],DataCoord[1]]),
+        style: function (feature) {
+          return style["stylePoint"];
+        },
+      });
+
+      // On stock nos features (points) dans un tableau
+      PointData.push(point);
+
       // On test si c'est le premier nombre
       if (i === 0) {
         finalData[i] = [distance, DataCoord[2]]; // Si oui, on lui ajoute la distance par défaut (0) et son dénivelé dans le tableau finalData
@@ -86,7 +138,6 @@ var trackview = (function () {
         finalData[i] = [distance, DataCoord[2]]; // Ajout de la distance calculée et du dénivelé dans le tableau finalData
       }
     };
-    console.log(finalData);
     _addGraph(finalData);
   };
 
@@ -118,9 +169,12 @@ var trackview = (function () {
   // Fonction permettant d'ajouter le graph sur la map
   var _addGraph = function (data) {
     data.forEach(function (tab) {
-      d.push(tab[0]);
+      d.push(tab[0]/1000);
       z.push(tab[1]);
     });
+
+    // On définit une valeur maximum pour que les données du graphique prennent toutes la place
+    const maxValeur = d[d.length - 1];
 
     new Chart(document.getElementById("trackview-panel"), {
       type: global.style.graph.type,
@@ -135,8 +189,12 @@ var trackview = (function () {
         ],
       },
       options: {
+        responsive: true,
         scales: {
           x: {
+            type: "linear",
+            beginAtZero: true,
+            max: maxValeur,
             title: {
               display: true,
               text: global.style.graph.name.xAxis.text
@@ -161,19 +219,22 @@ var trackview = (function () {
   
   mviewer.processLayer(parcoursLayer, vector);
   mviewer.addLayer(parcoursLayer); // setVisible(true) => n'ajoute pas la légende
+  mviewer.processLayer(pointLayer, point);
+  mviewer.addLayer(point);
 
   var _initTool = function () {
     console.log("Initialisation de l'outil"); // Affichage dans les logs
 
     mviewer.getMap().once("rendercomplete", function (e) {
       var source = vector.getSource();
-      console.log(source); // Affichage dans les logs
+      
       var feature = source.getFeatures();
-      console.log(feature); // Affichage dans les logs
+
       mviewer.getMap().getView().fit(feature[0].getGeometry().getExtent(), {
         duration: 3000, // Permet de définir le temps de l'animation en ms
       });
       _creaFeature();
+      pointSource.refresh();
     });
   };
 
