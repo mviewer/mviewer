@@ -1,0 +1,12 @@
+// Création d'une feature par point
+const point = new ol.Feature(
+	new ol.geom.Point(DataCoord)
+);
+
+Object.defineProperties(point, 'distance', {
+	value: distance,
+	writeable: false,
+});
+      
+// On stock nos features (points) dans un tableau
+PointData.push(point);

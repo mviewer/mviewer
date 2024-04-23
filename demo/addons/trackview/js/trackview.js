@@ -77,13 +77,6 @@ var trackview = (function () {
 
       listePoint.push(DataCoord); // Liste de tous les points
 
-      /*
-      // Création d'une feature par point
-      const point = new ol.Feature(
-        new ol.geom.Point(DataCoord)
-      );
-      */
-
       if (i === 0) {
         finalData[i] = [distance, DataCoord[2]];
       } else {
@@ -91,17 +84,6 @@ var trackview = (function () {
         distance += distanceCalc;
         finalData[i] = [distance, DataCoord[2]];
       }
-
-      /*
-      Object.defineProperties(point, 'distance', {
-        value: distance,
-        writeable: false,
-      });
-      
-      // On stock nos features (points) dans un tableau
-      PointData.push(point);
-      */
-
     };
     console.log(finalData);
     _addGraph(finalData);
