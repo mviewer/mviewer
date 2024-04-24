@@ -19,17 +19,6 @@ var trackview = (function () {
     tooltip: true,
     urlData: global.data.url
   };
-
-  var pointLayer = {
-    showintoc: true,
-    type: "Point",
-    layerid: "point1",
-    id: "point1",
-    vectorlegend: true,
-    visible: true,
-    opacity: 0.8,
-    tooltip: true,
-  };
   
   // Permet de définir les différents styles
   const style = {
@@ -49,6 +38,19 @@ var trackview = (function () {
         stroke: new ol.style.Stroke({
           color: "#fff",
           width: 2,
+        }),
+      }),
+    }),
+
+    'selected': new ol.style.Style({
+      image: new ol.style.Circle({
+        radius: 10,
+        fill: new ol.style.Fill({
+          color: "#f00",
+        }),
+        stroke: new ol.style.Stroke({
+          color: "#000",
+          width: 10,
         }),
       }),
     }),
@@ -101,20 +103,21 @@ var trackview = (function () {
       var DataCoord = [];
 
       // Récupération des données du point actuel
+      var featureId = i;
       var featureX = coordinates[i][0];
       var featureY = coordinates[i][1];
       var featureZ = coordinates[i][2];
       var featureT = coordinates[i][3];
 
       // On stock les données du point actuel
-      DataCoord.push(featureX, featureY, featureZ, featureT);
+      DataCoord.push(featureId, featureX, featureY, featureZ, featureT);
       featureListNiv.push(featureZ); // Liste des 'z' soit du niveau de dénivelé
 
       listePoint.push(DataCoord); // Liste de tous les points
 
       // Création d'une feature par point
       var point = new ol.Feature({
-        geometry: new ol.geom.Point([DataCoord[0],DataCoord[1]]),
+        geometry: new ol.geom.Point([DataCoord[1],DataCoord[2]]),
       });
 
       // On stock nos features (points) dans un tableau
@@ -122,11 +125,11 @@ var trackview = (function () {
 
       // On test si c'est le premier nombre
       if (i === 0) {
-        finalData[i] = [distance, DataCoord[2]]; // Si oui, on lui ajoute la distance par défaut (0) et son dénivelé dans le tableau finalData
+        finalData[i] = [distance, DataCoord[3]]; // Si oui, on lui ajoute la distance par défaut (0) et son dénivelé dans le tableau finalData
       } else { // Sinon
         var distanceCalc = _distanceBtwPoint(listePoint[i], listePoint[i - 1]); // Calcul de la distance entre le point actuel et le précédent
         distance += distanceCalc; // Ajout de la distance calculée à une variable totale
-        finalData[i] = [distance, DataCoord[2]]; // Ajout de la distance calculée et du dénivelé dans le tableau finalData
+        finalData[i] = [distance, DataCoord[3]]; // Ajout de la distance calculée et du dénivelé dans le tableau finalData
       }
     };
 
@@ -136,6 +139,14 @@ var trackview = (function () {
 
     vectorPoint.setSource(sourceP);
     mviewer.getMap().addLayer(vectorPoint);
+
+    const featuresP = vectorPoint.getSource().getFeatures();
+
+    for (let i = 0; i < featuresP.length; i++) {
+      featuresP[i].setProperties({
+        "id": i
+      });
+    };
 
     _addGraph(finalData);
   };
@@ -175,7 +186,7 @@ var trackview = (function () {
     // On définit une valeur maximum pour que les données du graphique prennent toutes la place
     const maxValeur = d[d.length - 1];
 
-    new Chart(document.getElementById("trackview-panel"), {
+    var monGraph = new Chart(document.getElementById("trackview-panel"), {
       type: global.style.graph.type,
       data: {
         labels: d,
@@ -188,6 +199,15 @@ var trackview = (function () {
         ],
       },
       options: {
+        onHover: (event) => {
+          var points = monGraph.getElementsAtEventForMode(event, 'point', { intersect: true }, true);
+          //var pointId = vectorPoint.getSource().getFeatures().getProperties();
+          if (points.length) {
+            vectorPoint.getSource().getFeatures()[0].setStyle(style["selected"]);
+          } else {
+            vectorPoint.getSource().getFeatures()[0].setStyle(style["stylePoint"]);
+          }
+        },
         responsive: true,
         scales: {
           x: {
