@@ -245,9 +245,23 @@ var trackview = (function () {
 
       mviewer.getMap().getView().fit(feature[0].getGeometry().getExtent(), {
         duration: 4000, // Permet de définir le temps de l'animation en ms
-        maxZoom: 14
+        maxZoom: 13.75
       });
       _creaFeature();
+
+      /*********** Détecter les features sur la map ***********/
+      var map = mviewer.getMap();
+
+      map.on("pointermove", function(event) {
+        var pixel = event.pixel;
+
+        map.forEachFeatureAtPixel(pixel, function(feature, layer) {
+          if (layer === vectorPoint) {
+            var propertiesId = feature.getProperties().properties.id; // On récupère l'id de la feature pointée
+            console.log(propertiesId);
+          }
+        });
+      });
     });
   };
 
