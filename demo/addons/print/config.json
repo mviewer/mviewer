@@ -11,6 +11,9 @@
   "options": {
     "mviewer": {
       "parcours": {
+        "printLayouts": "demo/addons/print/layouts/trackview.json",
+        "ownerLogo": "../../img/logo/tatihouguev2.png",
+        "ownerInfos": "Cette carte a été réalisée pour TatiHougue !"
       },
       "print": {
         "printLayouts": "demo/addons/print/layouts/standard.json",

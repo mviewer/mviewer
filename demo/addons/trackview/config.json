@@ -29,7 +29,7 @@
                         }
                     },
                     "stats": {
-                        "name": "Parcours GPX",
+                        "name": "Parcours 13km",
                         "type": "customlayer",
                         "layerId": "parcours_1",
                         "opacity": 0.8

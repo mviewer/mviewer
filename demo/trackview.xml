@@ -1,16 +1,13 @@
 <config>
     <application id="parcours" 
-        title="TrackView"
+        title="TatiHougue"
         style="css/themes/blue.css" 
-        logo="img/logo/tatihouguev2.png" 
+        logo="img/logo/tatihouguev2.png"
         exportpng="false" 
         measuretools="false" 
         mapprint="false"
         addlayerstools="false"/>
     <mapoptions maxzoom="20" projection="EPSG:3857" center="266612.35465869476, 5921729.455309178" zoom="4"/>
-    <olscompletion url="https://api-adresse.data.gouv.fr/search/"
-        type="ban" 
-        attribution="La recherche d'adresse est un service proposé par l'API adresse.data.gouv.fr"/>
     <baselayers style="default">
         <baselayer  type="WMTS" id="ortho" label="Photo aérienne IGN" title="GéoPortail" maxscale="1000" thumbgallery="img/basemap/ortho.jpg"
             url="https://data.geopf.fr/wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" format="image/jpeg" visible="false" fromcapacity="false"
