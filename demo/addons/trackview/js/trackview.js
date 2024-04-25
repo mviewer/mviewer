@@ -32,7 +32,7 @@ var trackview = (function () {
       image: new ol.style.Circle({
         radius: 5,
         fill: new ol.style.Fill({
-          color: "#000",
+          color: "#03224c",
         }),
         stroke: new ol.style.Stroke({
           color: "#fff",
@@ -45,7 +45,7 @@ var trackview = (function () {
       image: new ol.style.Circle({
         radius: 7,
         fill: new ol.style.Fill({
-          color: "#000",
+          color: "#03224c",
         }),
         stroke: new ol.style.Stroke({
           color: "#fff",
