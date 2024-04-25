@@ -3,6 +3,7 @@ var trackview = (function () {
   var global = mviewer.customComponents.trackview.config.options.mviewer.parcours.parc;
   var d = [];
   var z = [];
+  var dataGraph;
 
   // Creation du layer mviewer
   var parcoursLayer = {
@@ -137,7 +138,7 @@ var trackview = (function () {
     vectorPoint.setSource(sourceP);
     mviewer.getMap().addLayer(vectorPoint);
 
-    _addGraph(finalData);
+    dataGraph = _addGraph(finalData);
   };
 
   // Fonction qui calcule une distance (en mètre) entre deux points
@@ -230,6 +231,7 @@ var trackview = (function () {
         },
       },
     });
+    return monGraph;
   };
   
   mviewer.processLayer(parcoursLayer, vector);
@@ -259,6 +261,15 @@ var trackview = (function () {
           if (layer === vectorPoint) {
             var propertiesId = feature.getProperties().properties.id; // On récupère l'id de la feature pointée
             console.log(propertiesId);
+            
+            var colorGraph = dataGraph.data.datasets[0];
+            console.log(colorGraph);
+            
+            for (let i = 0; i < colorGraph.data.length; i++) {
+              colorGraph.pointBackgroundColor = "black";
+            };
+
+            dataGraph.update();
           }
         });
       });
