@@ -3,7 +3,6 @@ var trackview = (function () {
   var global = mviewer.customComponents.trackview.config.options.mviewer.parcours.parc;
   var d = [];
   var z = [];
-  var allFeature = [];
 
   // Creation du layer mviewer
   var parcoursLayer = {
@@ -43,13 +42,13 @@ var trackview = (function () {
 
     'selected': new ol.style.Style({
       image: new ol.style.Circle({
-        radius: 10,
+        radius: 7,
         fill: new ol.style.Fill({
-          color: "#f00",
+          color: "#000",
         }),
         stroke: new ol.style.Stroke({
-          color: "#000",
-          width: 10,
+          color: "#fff",
+          width: 2,
         }),
       }),
     }),
@@ -66,7 +65,7 @@ var trackview = (function () {
         ],
       },
       {
-        label: "Point du circuit",
+        label: "Points du circuit",
         geometry: "Point",
         styles: [
           style["stylePoint"],
@@ -173,7 +172,6 @@ var trackview = (function () {
       d.push(tab[0]/1000); // Permet d'avoir en km
       z.push(tab[1].getGeometry().getCoordinates()[2]);
     });
-    console.log(allFeature);
 
     // On définit une valeur maximum pour que les données du graphique prennent toutes la place
     const maxValeur = d[d.length - 1];
@@ -247,6 +245,7 @@ var trackview = (function () {
 
       mviewer.getMap().getView().fit(feature[0].getGeometry().getExtent(), {
         duration: 4000, // Permet de définir le temps de l'animation en ms
+        maxZoom: 14
       });
       _creaFeature();
     });
