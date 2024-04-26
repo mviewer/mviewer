@@ -4,6 +4,8 @@ var trackview = (function () {
   var d = [];
   var z = [];
   var dataGraph;
+  var propertiesId = [];
+  var color = [];
 
   // Creation du layer mviewer
   var parcoursLayer = {
@@ -177,15 +179,27 @@ var trackview = (function () {
     // On définit une valeur maximum pour que les données du graphique prennent toutes la place
     const maxValeur = d[d.length - 1];
 
+    // Création de la couleur pour chaque point
+    for (let i = 0; i < d.length; i++) {
+      color.push(global.style.color);
+    }
+
     var monGraph = new Chart(document.getElementById("trackview-panel"), {
       type: global.style.graph.type,
       data: {
         labels: d,
-        datasets: [{ 
+        datasets: [{
             data: z,
             label: global.stats.name,
+            pointBackgroundColor: color,
             borderColor: global.style.color,
-            fill: true
+            fill: true,
+            /*
+            pointStyle: function(ctx) {
+              switch(ctx.dataIndex) {
+              }
+              //console.log(ctx.dataIndex);
+            },*/
           },
         ],
       },
@@ -259,15 +273,17 @@ var trackview = (function () {
 
         map.forEachFeatureAtPixel(pixel, function(feature, layer) {
           if (layer === vectorPoint) {
-            var propertiesId = feature.getProperties().properties.id; // On récupère l'id de la feature pointée
+            propertiesId = feature.getProperties().properties.id; // On récupère l'id de la feature pointée
             console.log(propertiesId);
             
             var colorGraph = dataGraph.data.datasets[0];
             console.log(colorGraph);
-            
-            for (let i = 0; i < colorGraph.data.length; i++) {
-              colorGraph.pointBackgroundColor = "black";
-            };
+
+            if (pixel.length) {
+              dataGraph.config.data.datasets[0]["pointBackgroundColor"][propertiesId] = "black";
+            } else {
+              dataGraph.config.data.datasets[0]["pointBackgroundColor"][propertiesId] = "red";
+            }
 
             dataGraph.update();
           }
