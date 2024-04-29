@@ -182,6 +182,29 @@ var trackview = (function () {
     return distance;
   };
 
+  // verticalLine plugin 
+  const verticalLine = {
+    id: "verticalLine",
+    afterDatasetsDraw(chart, args, plugins) {
+      const { ctx, tooltip, chartArea: { top, bottom, left, right, width, heigth }, scales: {x, y}} = chart;
+
+      if (tooltip._active.length > 0) {
+        const xCoord = x.getPixelForValue(tooltip.dataPoints[0].parsed.x);
+        
+        ctx.save();
+        ctx.beginPath();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#03224c";
+        ctx.setLineDash([6, 6]);
+        ctx.moveTo(xCoord, top);
+        ctx.lineTo(xCoord, bottom);
+        ctx.stroke();
+        ctx.closePath();
+        ctx.setLineDash([]);
+      }
+    }
+  }
+
   // Fonction permettant d'ajouter le graph sur la map
   var _addGraph = function (data) {
     data.forEach(function (tab) {
@@ -257,6 +280,7 @@ var trackview = (function () {
           },
         },
       },
+      plugins: [verticalLine]
     });
     return monGraph;
   };

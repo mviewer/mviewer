@@ -20,7 +20,7 @@
         },
         "comments": {
           "row": "6/7",
-          "col": "2/7",
+          "col": "1/7",
           "type": "text"
         },
         "legend": {
@@ -32,15 +32,6 @@
           "row": "1/2",
           "col": "1/6",
           "type": "text"
-        },
-        "qrcode": {
-          "col": "1/2",
-          "row": "6/7",
-          "type": "qrcode",
-          "title": "Partage",
-          "placeholder": "",
-          "style": "background-color: white",
-          "class": "text-center"
         }
       }
     },
@@ -64,7 +55,7 @@
         },
         "comments": {
           "row": "6/7",
-          "col": "2/7",
+          "col": "1/7",
           "type": "text"
         },
         "legend": {
@@ -76,15 +67,6 @@
           "row": "1/2",
           "col": "1/6",
           "type": "text"
-        },
-        "qrcode": {
-          "col": "1/2",
-          "row": "6/7",
-          "type": "qrcode",
-          "title": "Partage",
-          "placeholder": "",
-          "style": "background-color: white",
-          "class": "text-center"
         }
       }
     }
