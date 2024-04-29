@@ -188,7 +188,7 @@ var trackview = (function () {
     afterDatasetsDraw(chart, args, plugins) {
       const { ctx, tooltip, chartArea: { top, bottom, left, right, width, heigth }, scales: {x, y}} = chart;
 
-      if (tooltip._active.length > 0) {
+      if (chart.tooltip?._active?.length) {
         const xCoord = x.getPixelForValue(tooltip.dataPoints[0].parsed.x);
         
         ctx.save();
@@ -279,6 +279,10 @@ var trackview = (function () {
             text: global.style.graph.title
           },
         },
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
       },
       plugins: [verticalLine]
     });
@@ -311,15 +315,13 @@ var trackview = (function () {
         map.forEachFeatureAtPixel(pixel, function(feature, layer) {
           if (layer === vectorPoint) {
             propertiesId = feature.getProperties().properties.id; // On récupère l'id de la feature pointée
-            console.log(propertiesId);
             
-            var colorGraph = dataGraph.data.datasets[0];
-            console.log(colorGraph);
+            var colorGraph = dataGraph.config.data.datasets[0];
 
             if (pixel.length) {
-              dataGraph.config.data.datasets[0]["pointBackgroundColor"][propertiesId] = "black";
+              colorGraph["pointBackgroundColor"][propertiesId] = "black";
             } else {
-              dataGraph.config.data.datasets[0]["pointBackgroundColor"][propertiesId] = "red";
+              colorGraph["pointBackgroundColor"][propertiesId] = "red";
             }
 
             dataGraph.update();
