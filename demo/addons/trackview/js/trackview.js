@@ -55,6 +55,19 @@ var trackview = (function () {
         }),
       }),
     }),
+
+    'invisible': new ol.style.Style({
+      image: new ol.style.Circle({
+        radius: 5,
+        fill: new ol.style.Fill({
+          color: "#0000",
+        }),
+        stroke: new ol.style.Stroke({
+          color: "#0000",
+          width: 0,
+        }),
+      }),
+    }),
   };
 
   // Permet de définir les différentes légendes
@@ -89,7 +102,7 @@ var trackview = (function () {
   });
 
   const vectorPoint = new ol.layer.Vector({
-    style: style["stylePoint"]
+    style: style["invisible"]
   });
 
   const sourceP = new ol.source.Vector();
@@ -211,10 +224,10 @@ var trackview = (function () {
             var pointId = points[0].index;
             vectorPoint.getSource().getFeatures().forEach(function (elt) {
               var carteId = elt.getProperties().properties.id;
-              if (pointId >= carteId) {
+              if (pointId == carteId) {
                 elt.setStyle(style["selected"]);
               } else {
-                elt.setStyle(style["stylePoint"]);
+                elt.setStyle(style["invisible"]);
               }
             })
           }
