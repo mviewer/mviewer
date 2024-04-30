@@ -122,7 +122,6 @@ var trackview = (function () {
       var DataCoord = [];
 
       // Récupération des données du point actuel
-      var featureId = i;
       var featureX = coordinates[i][0];
       var featureY = coordinates[i][1];
       var featureZ = coordinates[i][2];
@@ -208,6 +207,13 @@ var trackview = (function () {
 
   // Fonction permettant d'ajouter le graph sur la map
   var _addGraph = function (data) {
+    // constants
+    const defaultPointColor = "red";
+    const defaultRadiusValue = 2.5;
+    const hoverPointColor = "black";
+    const hoverPointRadius = 8;
+
+
     data.forEach(function (tab) {
       d.push(tab[0]/1000); // Permet d'avoir en km
       z.push(tab[1].getGeometry().getCoordinates()[2]);
@@ -219,10 +225,11 @@ var trackview = (function () {
     // Création de la couleur et de la taille pour chaque point
     for (let i = 0; i < d.length; i++) {
       color.push(global.style.color);
-      radius.push(2.5);
+      radius.push(defaultRadiusValue);
     }
 
-    var monGraph = new Chart(document.getElementById("trackview-panel"), {
+     var trackLineChart = null;
+    trackLineChart = new Chart(document.getElementById("trackview-panel"), {
       type: global.style.graph.type,
       data: {
         labels: d,
@@ -233,18 +240,30 @@ var trackview = (function () {
             pointRadius: radius,
             borderColor: global.style.color,
             fill: true,
-            /*
             pointStyle: function(ctx) {
-              switch(ctx.dataIndex) {
+              // si pas de graph alors on ne passe pas dans le bloc
+              if(!trackLineChart) return;
+
+              // sinon on execute le reste;
+              if(ctx.dataIndex === mviewer.pointHover) {
+                trackLineChart.data.datasets[0].pointBackgroundColor[ctx.dataIndex] = hoverPointColor;
+                trackLineChart.data.datasets[0].pointRadius[ctx.dataIndex] = hoverPointRadius;
+              } else {
+                trackLineChart.data.datasets[0].pointBackgroundColor[ctx.dataIndex] = defaultPointColor;
+                trackLineChart.data.datasets[0].pointRadius[ctx.dataIndex] = defaultRadiusValue;
               }
-              //console.log(ctx.dataIndex);
-            },*/
+              // si on veut mettre tout le bloc en une ligne : 
+              // trackLineChart.data.datasets[0]["pointBackgroundColor"][ctx.dataIndex] = trackLineChart && (ctx.dataIndex === mviewer.pointHover) ? "black" : "red"
+            },
           },
         ],
       },
       options: {
+        animation: {
+          duration: 500
+        },
         onHover: (event) => {
-          var points = monGraph.getElementsAtEventForMode(event, 'index', { intersect: false });
+          var points = trackLineChart.getElementsAtEventForMode(event, 'index', { intersect: false });
 
           if (points.length) {
             var pointId = points[0].index;
@@ -289,8 +308,9 @@ var trackview = (function () {
       },
       plugins: [verticalLine]
     });
-    return monGraph;
+    return trackLineChart;
   };
+  
   
   mviewer.processLayer(parcoursLayer, vector);
   mviewer.addLayer(parcoursLayer); // setVisible(true) => n'ajoute pas la légende
@@ -304,41 +324,22 @@ var trackview = (function () {
       var feature = source.getFeatures();
 
       mviewer.getMap().getView().fit(feature[0].getGeometry().getExtent(), {
-        duration: 4000, // Permet de définir le temps de l'animation en ms
+        duration: 3000, // Permet de définir le temps de l'animation en ms
         maxZoom: 13.75
       });
       _creaFeature();
 
       /*********** Détecter les features sur la map ***********/
       var map = mviewer.getMap();
-      var isHovering = false;
-
       map.on("pointermove", function(event) {
         var pixel = event.pixel;
-
         map.forEachFeatureAtPixel(pixel, function(feature, layer) {
           if (layer === vectorPoint) {
-            //let typeColor = feature.getStyle().getImage().getFill().getColor();
             propertiesId = feature.getProperties().properties.id; // On récupère l'id de la feature pointée
-            
-            var colorGraph = dataGraph.config.data.datasets[0];
-
-            colorGraph["pointBackgroundColor"][propertiesId] = "black";
-            colorGraph.pointRadius[propertiesId] = 8;
-
-            isHovering = true;
-
+            mviewer.pointHover = propertiesId;
             dataGraph.update();
           }
         });
-        if (!isHovering) {
-          var colorGraph = dataGraph.config.data.datasets[0];
-          colorGraph["pointBackgroundColor"][propertiesId] = "red";
-          colorGraph.pointRadius[propertiesId] = 3;
-          dataGraph.update();
-        }
-
-        isHovering = false;
       });
     });
   };
