@@ -81,13 +81,13 @@ var trackview = (function () {
           style["styleCircuit"],
         ],
       },
-      {
+      /*{
         label: "Points du circuit",
         geometry: "Point",
         styles: [
           style["stylePoint"],
         ],
-      },
+      },*/
     ],
   };
 
@@ -208,11 +208,10 @@ var trackview = (function () {
   // Fonction permettant d'ajouter le graph sur la map
   var _addGraph = function (data) {
     // constants
-    const defaultPointColor = "red";
+    const defaultPointColor = global.style.color;
     const defaultRadiusValue = 2.5;
-    const hoverPointColor = "black";
-    const hoverPointRadius = 8;
-
+    const hoverPointColor = "black"; // à rendre global
+    const hoverPointRadius = 8; // à rendre global
 
     data.forEach(function (tab) {
       d.push(tab[0]/1000); // Permet d'avoir en km
@@ -228,7 +227,7 @@ var trackview = (function () {
       radius.push(defaultRadiusValue);
     }
 
-     var trackLineChart = null;
+    var trackLineChart = null;
     trackLineChart = new Chart(document.getElementById("trackview-panel"), {
       type: global.style.graph.type,
       data: {
@@ -244,7 +243,7 @@ var trackview = (function () {
               // si pas de graph alors on ne passe pas dans le bloc
               if(!trackLineChart) return;
 
-              // sinon on execute le reste;
+              // sinon on execute le reste
               if(ctx.dataIndex === mviewer.pointHover) {
                 trackLineChart.data.datasets[0].pointBackgroundColor[ctx.dataIndex] = hoverPointColor;
                 trackLineChart.data.datasets[0].pointRadius[ctx.dataIndex] = hoverPointRadius;
@@ -311,7 +310,6 @@ var trackview = (function () {
     return trackLineChart;
   };
   
-  
   mviewer.processLayer(parcoursLayer, vector);
   mviewer.addLayer(parcoursLayer); // setVisible(true) => n'ajoute pas la légende
 
@@ -337,6 +335,7 @@ var trackview = (function () {
           if (layer === vectorPoint) {
             propertiesId = feature.getProperties().properties.id; // On récupère l'id de la feature pointée
             mviewer.pointHover = propertiesId;
+
             dataGraph.update();
           }
         });
