@@ -318,20 +318,17 @@ var trackview = (function () {
 
         map.forEachFeatureAtPixel(pixel, function(feature, layer) {
           if (layer === vectorPoint) {
-            let typeColor = feature.getStyle().getImage().getFill().color_;
-            if (typeColor === "#03224c") {
-              propertiesId = feature.getProperties().properties.id; // On récupère l'id de la feature pointée
-              console.log(propertiesId);
-              
-              var colorGraph = dataGraph.config.data.datasets[0];
+            //let typeColor = feature.getStyle().getImage().getFill().getColor();
+            propertiesId = feature.getProperties().properties.id; // On récupère l'id de la feature pointée
+            
+            var colorGraph = dataGraph.config.data.datasets[0];
 
-              colorGraph["pointBackgroundColor"][propertiesId] = "black";
-              colorGraph.pointRadius[propertiesId] = 8;
+            colorGraph["pointBackgroundColor"][propertiesId] = "black";
+            colorGraph.pointRadius[propertiesId] = 8;
 
-              isHovering = true;
+            isHovering = true;
 
-              dataGraph.update();
-            }
+            dataGraph.update();
           }
         });
         if (!isHovering) {
