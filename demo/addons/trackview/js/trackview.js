@@ -6,6 +6,7 @@ var trackview = (function () {
   var dataGraph;
   var propertiesId = [];
   var color = [];
+  var radius = [];
 
   // Creation du layer mviewer
   var parcoursLayer = {
@@ -218,6 +219,7 @@ var trackview = (function () {
     // Création de la couleur pour chaque point
     for (let i = 0; i < d.length; i++) {
       color.push(global.style.color);
+      radius.push(3);
     }
 
     var monGraph = new Chart(document.getElementById("trackview-panel"), {
@@ -228,6 +230,7 @@ var trackview = (function () {
             data: z,
             label: global.stats.name,
             pointBackgroundColor: color,
+            pointRadius: radius,
             borderColor: global.style.color,
             fill: true,
             /*
@@ -241,7 +244,7 @@ var trackview = (function () {
       },
       options: {
         onHover: (event) => {
-          var points = monGraph.getElementsAtEventForMode(event, 'nearest', { intersect: false });
+          var points = monGraph.getElementsAtEventForMode(event, 'index', { intersect: false });
 
           if (points.length) {
             var pointId = points[0].index;
@@ -308,25 +311,37 @@ var trackview = (function () {
 
       /*********** Détecter les features sur la map ***********/
       var map = mviewer.getMap();
+      var isHovering = false;
 
       map.on("pointermove", function(event) {
         var pixel = event.pixel;
 
         map.forEachFeatureAtPixel(pixel, function(feature, layer) {
           if (layer === vectorPoint) {
-            propertiesId = feature.getProperties().properties.id; // On récupère l'id de la feature pointée
-            
-            var colorGraph = dataGraph.config.data.datasets[0];
+            let typeColor = feature.getStyle().getImage().getFill().color_;
+            if (typeColor === "#03224c") {
+              propertiesId = feature.getProperties().properties.id; // On récupère l'id de la feature pointée
+              console.log(propertiesId);
+              
+              var colorGraph = dataGraph.config.data.datasets[0];
 
-            if (pixel.length) {
               colorGraph["pointBackgroundColor"][propertiesId] = "black";
-            } else {
-              colorGraph["pointBackgroundColor"][propertiesId] = "red";
-            }
+              colorGraph.pointRadius[propertiesId] = 8;
 
-            dataGraph.update();
+              isHovering = true;
+
+              dataGraph.update();
+            }
           }
         });
+        if (!isHovering) {
+          var colorGraph = dataGraph.config.data.datasets[0];
+          colorGraph["pointBackgroundColor"][propertiesId] = "red";
+          colorGraph.pointRadius[propertiesId] = 3;
+          dataGraph.update();
+        }
+
+        isHovering = false;
       });
     });
   };
