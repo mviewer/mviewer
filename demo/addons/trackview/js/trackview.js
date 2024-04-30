@@ -216,10 +216,10 @@ var trackview = (function () {
     // On définit une valeur maximum pour que les données du graphique prennent toutes la place
     const maxValeur = d[d.length - 1];
 
-    // Création de la couleur pour chaque point
+    // Création de la couleur et de la taille pour chaque point
     for (let i = 0; i < d.length; i++) {
       color.push(global.style.color);
-      radius.push(3);
+      radius.push(2.5);
     }
 
     var monGraph = new Chart(document.getElementById("trackview-panel"), {
