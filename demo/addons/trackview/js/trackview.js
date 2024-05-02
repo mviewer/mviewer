@@ -31,16 +31,10 @@ var trackview = (function () {
       }),
     }),
 
-    'stylePoint': new ol.style.Style({
-      image: new ol.style.Circle({
-        radius: 5,
-        fill: new ol.style.Fill({
-          color: "#03224c",
-        }),
-        stroke: new ol.style.Stroke({
-          color: "#fff",
-          width: 2,
-        }),
+    'styleSegment': new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: "black",
+        width: 10,
       }),
     }),
 
@@ -81,13 +75,6 @@ var trackview = (function () {
           style["styleCircuit"],
         ],
       },
-      /*{
-        label: "Points du circuit",
-        geometry: "Point",
-        styles: [
-          style["stylePoint"],
-        ],
-      },*/
     ],
   };
 
@@ -108,6 +95,21 @@ var trackview = (function () {
 
   const sourceP = new ol.source.Vector();
 
+  /*
+  const vectorPointKilometre = new ol.layer.Vector({
+    style: style["invisible"]
+  });
+
+  var sourcePointKilometre = new ol.source.Vector();
+  */
+
+  const vectorSegment = new ol.layer.Vector({
+    style: style["styleSegment"]
+  });
+
+  var sourceSegment = new ol.source.Vector();
+
+  // Fonction permettant de créer des features
   var _creaFeature = function () {
     let features = vectorSource.getFeatures();
     let coordinates = features[0].getGeometry().getCoordinates()[0];
@@ -139,19 +141,45 @@ var trackview = (function () {
 
       sourceP.addFeature(point);
 
+      /*
+      var pointKilometre = new ol.Feature({
+        geometry: new ol.geom.Point([featureX,featureY,featureZ,featureT]),
+        properties: {
+          id: i
+        }
+      });
+      
+      sourcePointKilometre.addFeature(pointKilometre);*/
+
       // On test si c'est le premier nombre
       if (i === 0) {
         finalData[i] = [distance, point]; // Si oui, on lui ajoute la distance par défaut (0) et son dénivelé dans le tableau finalData
       } else { // Sinon
-        var distanceCalc = _distanceBtwPoint(point, previousPoint); // Calcul de la distance entre le point actuel et le précédent
+        var distanceCalc = _distanceBtwPoint(point, previousPoint)[0]; // Calcul de la distance entre le point actuel et le précédent
         distance += distanceCalc; // Ajout de la distance calculée à une variable totale
         finalData[i] = [distance, point]; // Ajout de la distance calculée et du dénivelé dans le tableau finalData
+        // Création du segment
+        var segment = _distanceBtwPoint(previousPoint, point)[1];
+
+        var segmentFeature = new ol.Feature({
+          geometry: segment
+        })
+
+        sourceSegment.addFeature(segmentFeature);
       }
       previousPoint = point;
     };
 
     vectorPoint.setSource(sourceP);
     mviewer.getMap().addLayer(vectorPoint);
+
+    vectorSegment.setSource(sourceSegment);
+    mviewer.getMap().addLayer(vectorSegment);
+
+    /*
+    vectorPointKilometre.setSource(sourcePointKilometre);
+    mviewer.getMap().addLayer(vectorPointKilometre);
+    */
 
     dataGraph = _addGraph(finalData);
   };
@@ -179,7 +207,7 @@ var trackview = (function () {
     // Calcul de la distance de la ligne
     var distance = Math.round(line.getLength());
     
-    return distance;
+    return [distance, line];
   };
 
   // verticalLine plugin 
@@ -263,13 +291,24 @@ var trackview = (function () {
         },
         onHover: (event) => {
           var points = trackLineChart.getElementsAtEventForMode(event, 'index', { intersect: false });
+          var valueFeature = null;
 
           if (points.length) {
             var pointId = points[0].index;
             vectorPoint.getSource().getFeatures().forEach(function (elt) {
               var carteId = elt.getProperties().properties.id;
+
+              //valueFeature = points[0].element.getProps().$context.parsed.x;
+
               if (pointId == carteId) {
                 elt.setStyle(style["selected"]);
+                /*if (valueFeature == 5.919) {
+                  vectorPointKilometre.getSource().getFeatures().forEach(function (elt) {
+                    if (pointId == elt.getProperties().properties.id) {
+                      elt.setStyle(style["pointKilometre"]);
+                    }
+                  });
+                }*/
               } else {
                 elt.setStyle(style["invisible"]);
               }
