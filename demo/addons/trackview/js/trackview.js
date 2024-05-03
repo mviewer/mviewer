@@ -31,10 +31,38 @@ var trackview = (function () {
       }),
     }),
 
-    'styleSegment': new ol.style.Style({
+    'default': new ol.style.Style({
       stroke: new ol.style.Stroke({
-        color: "black",
-        width: 10,
+        color: "#f00",
+        width: 3,
+      }),
+    }),
+
+    'styleSegmentBleu': new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: "#77b5fE",
+        width: 4,
+      }),
+    }),
+
+    'styleSegmentVert': new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: "#0f0",
+        width: 4,
+      }),
+    }),
+
+    'styleSegmentOrange': new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: "#ff8000",
+        width: 4,
+      }),
+    }),
+
+    'styleSegmentRouge': new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: "#f00",
+        width: 4,
       }),
     }),
 
@@ -68,11 +96,39 @@ var trackview = (function () {
   // Permet de définir les différentes légendes
   parcoursLayer.legend = {
     items: [
-      {
+      /*{
         label: global.title,
         geometry: global.style.geometry,
         styles: [
           style["styleCircuit"],
+        ],
+      },*/
+      {
+        label: "Dénivelé de la pente entre 0% et 1%",
+        geometry: global.style.geometry,
+        styles: [
+          style["styleSegmentBleu"],
+        ],
+      },
+      {
+        label: "Dénivelé de la pente entre 1% et 2%",
+        geometry: global.style.geometry,
+        styles: [
+          style["styleSegmentVert"],
+        ],
+      },
+      {
+        label: "Dénivelé de la pente entre 2% et 3%",
+        geometry: global.style.geometry,
+        styles: [
+          style["styleSegmentOrange"],
+        ],
+      },
+      {
+        label: "Dénivelé de la pente supérieur à 3%",
+        geometry: global.style.geometry,
+        styles: [
+          style["styleSegmentRouge"],
         ],
       },
     ],
@@ -104,7 +160,6 @@ var trackview = (function () {
   */
 
   const vectorSegment = new ol.layer.Vector({
-    style: style["styleSegment"]
   });
 
   var sourceSegment = new ol.source.Vector();
@@ -155,17 +210,9 @@ var trackview = (function () {
       if (i === 0) {
         finalData[i] = [distance, point]; // Si oui, on lui ajoute la distance par défaut (0) et son dénivelé dans le tableau finalData
       } else { // Sinon
-        var distanceCalc = _distanceBtwPoint(point, previousPoint)[0]; // Calcul de la distance entre le point actuel et le précédent
+        var distanceCalc = _distanceBtwPoint(previousPoint, point); // Calcul de la distance entre le point actuel et le précédent
         distance += distanceCalc; // Ajout de la distance calculée à une variable totale
         finalData[i] = [distance, point]; // Ajout de la distance calculée et du dénivelé dans le tableau finalData
-        // Création du segment
-        var segment = _distanceBtwPoint(previousPoint, point)[1];
-
-        var segmentFeature = new ol.Feature({
-          geometry: segment
-        })
-
-        sourceSegment.addFeature(segmentFeature);
       }
       previousPoint = point;
     };
@@ -204,11 +251,75 @@ var trackview = (function () {
     // On créer une ligne utilisant les deux localisations précédentes afin de calculer la distance de celle-ci
     var line = new ol.geom.LineString([location_pt1 , location_pt2]);
 
+    var coordPoint1 = p1.getGeometry().getCoordinates();
+    var coordPoint2 = p2.getGeometry().getCoordinates();
+
+    var XYcoordPoint1 = [coordPoint1[0], coordPoint1[1]];
+    var XYcoordPoint2 = [coordPoint2[0], coordPoint2[1]];
+
+    var segment = new ol.geom.LineString([XYcoordPoint1, XYcoordPoint2]);
+
     // Calcul de la distance de la ligne
     var distance = Math.round(line.getLength());
+
+    // Calcul du dénivelé d'un segment
+    //var nivDenivele = (_calculDenivele(coordPoint1, coordPoint2, distance)).toFixed(1);
+
+    var segmentFeature;
+
+    /*
+    if(0 < nivDenivele && nivDenivele < 1) {
+      segmentFeature = new ol.Feature({
+        geometry: segment
+      });
+      segmentFeature.setStyle(style["styleSegmentBleu"]);
+    } else if (1 < nivDenivele && nivDenivele < 2) {
+      segmentFeature = new ol.Feature({
+        geometry: segment
+      });
+      segmentFeature.setStyle(style["styleSegmentVert"]);
+    } else if (2 < nivDenivele && nivDenivele < 3) {
+      segmentFeature = new ol.Feature({
+        geometry: segment
+      });
+      segmentFeature.setStyle(style["styleSegmentOrange"]);
+    } else {
+      segmentFeature = new ol.Feature({
+        geometry: segment
+      });
+      segmentFeature.setStyle(style["styleSegmentRouge"]);
+    }
+
+    console.log(segmentFeature);
+    */
+
+    segmentFeature = new ol.Feature({
+      geometry: segment
+    });
+
+    segmentFeature.setStyle(style["default"]);
+
+    sourceSegment.addFeature(segmentFeature);
     
-    return [distance, line];
+    return distance;
   };
+
+  var _calculDenivele = (coordPoint1, coordPoint2, distance) => {
+    var zPoint1 = coordPoint1[2];
+    var zPoint2 = coordPoint2[2];
+    var denivele = null;
+    var pente = null;
+
+    if (zPoint2 > zPoint1) {
+      denivele = zPoint2 - zPoint1;
+    } else {
+      denivele = zPoint1 - zPoint2;
+    }
+
+    pente = ( denivele / distance ) * 100;
+
+    return pente;
+  }
 
   // verticalLine plugin 
   const verticalLine = {
