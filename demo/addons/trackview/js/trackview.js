@@ -7,6 +7,7 @@ var trackview = (function () {
   var propertiesId = [];
   var color = [];
   var radius = [];
+  var valueId = 0;
 
   // Creation du layer mviewer
   var parcoursLayer = {
@@ -35,6 +36,13 @@ var trackview = (function () {
       stroke: new ol.style.Stroke({
         color: "#f00",
         width: 3,
+      }),
+    }),
+
+    'selectedSegment': new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: "#03224c",
+        width: 4,
       }),
     }),
 
@@ -294,8 +302,13 @@ var trackview = (function () {
     */
 
     segmentFeature = new ol.Feature({
-      geometry: segment
+      geometry: segment,
+      properties: {
+        id: valueId
+      }
     });
+
+    valueId += 1;
 
     segmentFeature.setStyle(style["default"]);
 
@@ -402,7 +415,8 @@ var trackview = (function () {
         },
         onHover: (event) => {
           var points = trackLineChart.getElementsAtEventForMode(event, 'index', { intersect: false });
-          var valueFeature = null;
+          //var valueFeature = null;
+          var segment = vectorSegment.getSource().getFeatures();
 
           if (points.length) {
             var pointId = points[0].index;
@@ -413,6 +427,15 @@ var trackview = (function () {
 
               if (pointId == carteId) {
                 elt.setStyle(style["selected"]);
+                segment.forEach(function(seg) {
+                  var segmentId = seg.getProperties().properties.id;
+
+                  if (segmentId < pointId) {
+                    seg.setStyle(style["selectedSegment"]);
+                  } else {
+                    seg.setStyle(style["default"]);
+                  }
+                });
                 /*if (valueFeature == 5.919) {
                   vectorPointKilometre.getSource().getFeatures().forEach(function (elt) {
                     if (pointId == elt.getProperties().properties.id) {
