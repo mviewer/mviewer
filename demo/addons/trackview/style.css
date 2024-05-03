@@ -8,3 +8,7 @@
     border-style: dashed;
     filter: opacity(60%);
 }
+
+#backgroundlayerstoolbar-default, #mviewerinfosbar {
+    z-index: 1;
+}

@@ -4,7 +4,7 @@ var trackview = (function () {
   var d = [];
   var z = [];
   var dataGraph;
-  var propertiesId = [];
+  var propsDistance = [];
   var color = [];
   var radius = [];
   var valueId = 0;
@@ -42,7 +42,7 @@ var trackview = (function () {
     'selectedSegment': new ol.style.Style({
       stroke: new ol.style.Stroke({
         color: "#03224c",
-        width: 4,
+        width: 5,
       }),
     }),
 
@@ -104,14 +104,14 @@ var trackview = (function () {
   // Permet de définir les différentes légendes
   parcoursLayer.legend = {
     items: [
-      /*{
+      {
         label: global.title,
         geometry: global.style.geometry,
         styles: [
           style["styleCircuit"],
         ],
-      },*/
-      {
+      },
+      /*{
         label: "Dénivelé de la pente entre 0% et 1%",
         geometry: global.style.geometry,
         styles: [
@@ -138,7 +138,7 @@ var trackview = (function () {
         styles: [
           style["styleSegmentRouge"],
         ],
-      },
+      },*/
     ],
   };
 
@@ -179,6 +179,7 @@ var trackview = (function () {
     var finalData = [];
     var listePoint = [];
     var distance = 0;
+    var properties = null;
 
     var previousPoint;
 
@@ -198,7 +199,8 @@ var trackview = (function () {
       var point = new ol.Feature({
         geometry: new ol.geom.Point([featureX,featureY,featureZ,featureT]),
         properties: {
-          id: i
+          id: i,
+          distance: distance
         }
       });
 
@@ -339,21 +341,25 @@ var trackview = (function () {
     id: "verticalLine",
     afterDatasetsDraw(chart, args, plugins) {
       const { ctx, tooltip, chartArea: { top, bottom, left, right, width, heigth }, scales: {x, y}} = chart;
+      var xCoord = null;
 
       if (chart.tooltip?._active?.length) {
-        const xCoord = x.getPixelForValue(tooltip.dataPoints[0].parsed.x);
-        
-        ctx.save();
-        ctx.beginPath();
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = "#03224c";
-        ctx.setLineDash([6, 6]);
-        ctx.moveTo(xCoord, top);
-        ctx.lineTo(xCoord, bottom);
-        ctx.stroke();
-        ctx.closePath();
-        ctx.setLineDash([]);
+        xCoord = x.getPixelForValue(tooltip.dataPoints[0].parsed.x);
+        //console.log(xCoord);
+      } else {
+        xCoord = x.getPixelForValue(mviewer.pointHover / 1000);
+        //console.log(xCoord);
       }
+      ctx.save();
+      ctx.beginPath();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = "#03224c";
+      ctx.setLineDash([6, 6]);
+      ctx.moveTo(xCoord, top);
+      ctx.lineTo(xCoord, bottom);
+      ctx.stroke();
+      ctx.closePath();
+      ctx.setLineDash([]);
     }
   }
 
@@ -385,29 +391,28 @@ var trackview = (function () {
       data: {
         labels: d,
         datasets: [{
-            data: z,
-            label: global.stats.name,
-            pointBackgroundColor: color,
-            pointRadius: radius,
-            borderColor: global.style.color,
-            fill: true,
-            pointStyle: function(ctx) {
-              // si pas de graph alors on ne passe pas dans le bloc
-              if(!trackLineChart) return;
+          data: z,
+          label: global.stats.name,
+          pointBackgroundColor: color,
+          pointRadius: radius,
+          borderColor: global.style.color,
+          fill: true,
+          pointStyle: function(ctx) {
+            // si pas de graph alors on ne passe pas dans le bloc
+            if(!trackLineChart) return;
 
-              // sinon on execute le reste
-              if(ctx.dataIndex === mviewer.pointHover) {
-                trackLineChart.data.datasets[0].pointBackgroundColor[ctx.dataIndex] = hoverPointColor;
-                trackLineChart.data.datasets[0].pointRadius[ctx.dataIndex] = hoverPointRadius;
-              } else {
-                trackLineChart.data.datasets[0].pointBackgroundColor[ctx.dataIndex] = defaultPointColor;
-                trackLineChart.data.datasets[0].pointRadius[ctx.dataIndex] = defaultRadiusValue;
-              }
-              // si on veut mettre tout le bloc en une ligne : 
-              // trackLineChart.data.datasets[0]["pointBackgroundColor"][ctx.dataIndex] = trackLineChart && (ctx.dataIndex === mviewer.pointHover) ? "black" : "red"
-            },
+            // sinon on execute le reste
+            if(ctx.dataIndex === mviewer.pointHover) {
+              trackLineChart.data.datasets[0].pointBackgroundColor[ctx.dataIndex] = hoverPointColor;
+              trackLineChart.data.datasets[0].pointRadius[ctx.dataIndex] = hoverPointRadius;
+            } else {
+              trackLineChart.data.datasets[0].pointBackgroundColor[ctx.dataIndex] = defaultPointColor;
+              trackLineChart.data.datasets[0].pointRadius[ctx.dataIndex] = defaultRadiusValue;
+            }
+            // si on veut mettre tout le bloc en une ligne : 
+            // trackLineChart.data.datasets[0]["pointBackgroundColor"][ctx.dataIndex] = trackLineChart && (ctx.dataIndex === mviewer.pointHover) ? "black" : "red"
           },
-        ],
+        }],
       },
       options: {
         animation: {
@@ -506,8 +511,9 @@ var trackview = (function () {
         var pixel = event.pixel;
         map.forEachFeatureAtPixel(pixel, function(feature, layer) {
           if (layer === vectorPoint) {
-            propertiesId = feature.getProperties().properties.id; // On récupère l'id de la feature pointée
-            mviewer.pointHover = propertiesId;
+            propsDistance = feature.getProperties().properties.distance; // On récupère l'id de la feature pointée
+            mviewer.pointHover = propsDistance;
+            console.log(propsDistance);
 
             dataGraph.update();
           }
