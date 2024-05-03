@@ -347,7 +347,7 @@ var trackview = (function () {
         xCoord = x.getPixelForValue(tooltip.dataPoints[0].parsed.x);
         //console.log(xCoord);
       } else {
-        xCoord = x.getPixelForValue(mviewer.pointHover / 1000);
+        xCoord = x.getPixelForValue(mviewer.pointHover / 1000); // Petite correction à effectuer !
         //console.log(xCoord);
       }
       ctx.save();
