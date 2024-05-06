@@ -199,7 +199,6 @@ var trackview = (function () {
         geometry: new ol.geom.Point([featureX,featureY,featureZ,featureT]),
         properties: {
           id: i
-          //distance: distance
         }
       });
   
@@ -230,6 +229,7 @@ var trackview = (function () {
     */
 
     dataGraph = _addGraph(finalData);
+    _addPointKilometre(finalData);
   };
 
   // Fonction qui calcule une distance (en mètre) entre deux points
@@ -309,6 +309,23 @@ var trackview = (function () {
     
     return distance;
   };
+
+  var _addPointKilometre = (pointData) => {
+    var maxDistance = 1000;
+    var distanceManquante = null;
+
+    for(let i = 0; i < (pointData.length - 1); i++) {
+      var distancePoint = pointData[i][0];
+      var distancePointAfter = pointData[i + 1][0];
+
+      if(distancePointAfter > maxDistance) {
+        distanceManquante = maxDistance - distancePoint;
+        console.log(distanceManquante);
+        maxDistance += 1000;
+      }
+    }
+    
+  }
 
   var _calculDenivele = (coordPoint1, coordPoint2, distance) => {
     var zPoint1 = coordPoint1[2];
@@ -482,7 +499,7 @@ var trackview = (function () {
 
       mviewer.getMap().getView().fit(feature[0].getGeometry().getExtent(), {
         duration: 3000, // Permet de définir le temps de l'animation en ms
-        maxZoom: 13.75
+        maxZoom: 13.75 // Permet de définir le zoom quand on charge la page
       });
       _creaFeature();
 
