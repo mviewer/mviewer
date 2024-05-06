@@ -411,15 +411,12 @@ var trackview = (function () {
         },
         onHover: (event) => {
           var points = trackLineChart.getElementsAtEventForMode(event, 'index', { intersect: false });
-          //var valueFeature = null;
           var segment = vectorSegment.getSource().getFeatures();
 
           if (points.length) {
             var pointId = points[0].index;
             vectorPoint.getSource().getFeatures().forEach(function (elt) {
               var carteId = elt.getProperties().properties.id;
-
-              //valueFeature = points[0].element.getProps().$context.parsed.x;
 
               if (pointId == carteId) {
                 elt.setStyle(style["selected"]);
@@ -432,13 +429,6 @@ var trackview = (function () {
                     seg.setStyle(style["default"]);
                   }
                 });
-                /*if (valueFeature == 5.919) {
-                  vectorPointKilometre.getSource().getFeatures().forEach(function (elt) {
-                    if (pointId == elt.getProperties().properties.id) {
-                      elt.setStyle(style["pointKilometre"]);
-                    }
-                  });
-                }*/
               } else {
                 elt.setStyle(style["invisible"]);
               }
@@ -501,11 +491,27 @@ var trackview = (function () {
       map.on("pointermove", function(event) {
         var pixel = event.pixel;
         map.forEachFeatureAtPixel(pixel, function(feature, layer) {
-          if (layer === vectorPoint) {
-            propsDistance = feature.getProperties().distance; // On récupère l'id de la feature pointée
-            mviewer.pointHover = propsDistance;
-            console.log(propsDistance);
+          var propsId = null;
 
+          if(!feature) return;
+
+          if (layer === vectorPoint) {
+            propsDistance = feature.getProperties().distance;
+            propsId = feature.getProperties().properties.id;
+            var segment = vectorSegment.getSource().getFeatures();
+            mviewer.pointHover = propsDistance;
+
+            segment.forEach(function(seg) {
+              var segmentId = seg.getProperties().properties.id;
+
+              if(propsId > segmentId) {
+                feature.setStyle(style["selected"]);
+                seg.setStyle(style["selectedSegment"]);
+              } else {
+                feature.setStyle(style["invisible"]);
+                seg.setStyle(style["default"]);
+              }
+            });
             dataGraph.update();
           }
         });

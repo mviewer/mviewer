@@ -12,3 +12,7 @@
 #backgroundlayerstoolbar-default, #mviewerinfosbar {
     z-index: 1;
 }
+
+.ol-attribution.ol-unselectable.ol-control.ol-collapsed {
+    z-index: 1;
+}
