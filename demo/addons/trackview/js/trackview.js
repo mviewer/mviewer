@@ -311,20 +311,19 @@ var trackview = (function () {
   };
 
   var _addPointKilometre = (pointData) => {
-    var maxDistance = 1000;
-    var distanceManquante = null;
+    var maxDistance = 1000; // Première distance maximum ( 1km )
+    var distanceManquante = null; // Permet de stocker la distance manquante
 
     for(let i = 0; i < (pointData.length - 1); i++) {
-      var distancePoint = pointData[i][0];
-      var distancePointAfter = pointData[i + 1][0];
+      var distancePoint = pointData[i][0]; // On récupère la distance d'un premier point par rapport à l'origine
+      var distancePointAfter = pointData[i + 1][0]; // On récupère la distance du point suivant
 
-      if(distancePointAfter > maxDistance) {
+      if(distancePointAfter > maxDistance) { // Si la distance du point suivant dépasse les 1000 mètres
         distanceManquante = maxDistance - distancePoint;
         console.log(distanceManquante);
-        maxDistance += 1000;
+        maxDistance += 1000; // On ajoute 1000 à chaque fois ( 1km, 2km, 3km... )
       }
     }
-    
   }
 
   var _calculDenivele = (coordPoint1, coordPoint2, distance) => {
