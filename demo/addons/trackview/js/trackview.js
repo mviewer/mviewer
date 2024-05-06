@@ -319,7 +319,7 @@ var trackview = (function () {
       var distancePointAfter = pointData[i + 1][0]; // On récupère la distance du point suivant
 
       if(distancePointAfter > maxDistance) { // Si la distance du point suivant dépasse les 1000 mètres
-        distanceManquante = maxDistance - distancePoint;
+        distanceManquante = maxDistance - distancePoint; // Calcul de la distance manquante
         console.log(distanceManquante);
         maxDistance += 1000; // On ajoute 1000 à chaque fois ( 1km, 2km, 3km... )
       }
