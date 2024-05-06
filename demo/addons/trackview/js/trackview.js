@@ -179,7 +179,6 @@ var trackview = (function () {
     var finalData = [];
     var listePoint = [];
     var distance = 0;
-    var properties = null;
 
     var previousPoint;
 
@@ -199,30 +198,22 @@ var trackview = (function () {
       var point = new ol.Feature({
         geometry: new ol.geom.Point([featureX,featureY,featureZ,featureT]),
         properties: {
-          id: i,
-          distance: distance
-        }
-      });
-
-      sourceP.addFeature(point);
-
-      /*
-      var pointKilometre = new ol.Feature({
-        geometry: new ol.geom.Point([featureX,featureY,featureZ,featureT]),
-        properties: {
           id: i
+          //distance: distance
         }
       });
-      
-      sourcePointKilometre.addFeature(pointKilometre);*/
+  
+      sourceP.addFeature(point);
 
       // On test si c'est le premier nombre
       if (i === 0) {
         finalData[i] = [distance, point]; // Si oui, on lui ajoute la distance par défaut (0) et son dénivelé dans le tableau finalData
+        point.set('distance', distance);
       } else { // Sinon
         var distanceCalc = _distanceBtwPoint(previousPoint, point); // Calcul de la distance entre le point actuel et le précédent
         distance += distanceCalc; // Ajout de la distance calculée à une variable totale
         finalData[i] = [distance, point]; // Ajout de la distance calculée et du dénivelé dans le tableau finalData
+        point.set('distance', distance);
       }
       previousPoint = point;
     };
@@ -397,7 +388,7 @@ var trackview = (function () {
           pointRadius: radius,
           borderColor: global.style.color,
           fill: true,
-          pointStyle: function(ctx) {
+          /*pointStyle: function(ctx) {
             // si pas de graph alors on ne passe pas dans le bloc
             if(!trackLineChart) return;
 
@@ -411,7 +402,7 @@ var trackview = (function () {
             }
             // si on veut mettre tout le bloc en une ligne : 
             // trackLineChart.data.datasets[0]["pointBackgroundColor"][ctx.dataIndex] = trackLineChart && (ctx.dataIndex === mviewer.pointHover) ? "black" : "red"
-          },
+          },*/
         }],
       },
       options: {
@@ -511,7 +502,7 @@ var trackview = (function () {
         var pixel = event.pixel;
         map.forEachFeatureAtPixel(pixel, function(feature, layer) {
           if (layer === vectorPoint) {
-            propsDistance = feature.getProperties().properties.distance; // On récupère l'id de la feature pointée
+            propsDistance = feature.getProperties().distance; // On récupère l'id de la feature pointée
             mviewer.pointHover = propsDistance;
             console.log(propsDistance);
 
