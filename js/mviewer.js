@@ -2371,7 +2371,7 @@ mviewer = (function () {
       $("#permalinklink").attr("href", url).attr("target", "_blank");
       $("#permaqr").attr(
         "src",
-        "http://chart.apis.google.com/chart?cht=qr&chs=140x140&chl=" +
+        "https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=" +
           encodeURIComponent(url)
       );
       var urlIframe = `<iframe width="800" height="500" style="border:none;" src="${url}"></iframe>`;
