@@ -25,17 +25,10 @@ var trackview = (function () {
   
   // Permet de définir les différents styles
   const style = {
-    'styleCircuit': new ol.style.Style({
+    'defaultSegment': new ol.style.Style({
       stroke: new ol.style.Stroke({
         color: global.style.color,
         width: global.style.width,
-      }),
-    }),
-
-    'defaultSegment': new ol.style.Style({
-      stroke: new ol.style.Stroke({
-        color: "#f00",
-        width: 3,
       }),
     }),
 
@@ -43,27 +36,6 @@ var trackview = (function () {
       stroke: new ol.style.Stroke({
         color: "#03224c",
         width: 5,
-      }),
-    }),
-
-    'styleSegmentBleu': new ol.style.Style({
-      stroke: new ol.style.Stroke({
-        color: "#77b5fE",
-        width: 4,
-      }),
-    }),
-
-    'styleSegmentVert': new ol.style.Style({
-      stroke: new ol.style.Stroke({
-        color: "#0f0",
-        width: 4,
-      }),
-    }),
-
-    'styleSegmentOrange': new ol.style.Style({
-      stroke: new ol.style.Stroke({
-        color: "#ff8000",
-        width: 4,
       }),
     }),
 
@@ -101,37 +73,9 @@ var trackview = (function () {
         label: global.title,
         geometry: global.style.geometry,
         styles: [
-          style["styleCircuit"],
+          style["defaultSegment"],
         ],
       },
-      /*{
-        label: "Dénivelé de la pente entre 0% et 1%",
-        geometry: global.style.geometry,
-        styles: [
-          style["styleSegmentBleu"],
-        ],
-      },
-      {
-        label: "Dénivelé de la pente entre 1% et 2%",
-        geometry: global.style.geometry,
-        styles: [
-          style["styleSegmentVert"],
-        ],
-      },
-      {
-        label: "Dénivelé de la pente entre 2% et 3%",
-        geometry: global.style.geometry,
-        styles: [
-          style["styleSegmentOrange"],
-        ],
-      },
-      {
-        label: "Dénivelé de la pente supérieur à 3%",
-        geometry: global.style.geometry,
-        styles: [
-          style["styleSegmentRouge"],
-        ],
-      },*/
     ],
   };
 
@@ -143,7 +87,7 @@ var trackview = (function () {
   
   var vector = new ol.layer.Vector({
     source: vectorSource,
-    style: style["styleCircuit"]
+    style: style["defaultSegment"]
   });
 
   const vectorPoint = new ol.layer.Vector({
@@ -202,16 +146,11 @@ var trackview = (function () {
       previousPoint = point;
     };
 
-    vectorPoint.setSource(sourceP);
-    mviewer.getMap().addLayer(vectorPoint);
-
     vectorSegment.setSource(sourceSegment);
     mviewer.getMap().addLayer(vectorSegment);
 
-    /*
-    vectorPointKilometre.setSource(sourcePointKilometre);
-    mviewer.getMap().addLayer(vectorPointKilometre);
-    */
+    vectorPoint.setSource(sourceP);
+    mviewer.getMap().addLayer(vectorPoint);
 
     dataGraph = _addGraph(finalData);
     _addPointKilometre(finalData);
@@ -248,36 +187,7 @@ var trackview = (function () {
     // Calcul de la distance de la ligne
     var distance = Math.round(line.getLength());
 
-    // Calcul du dénivelé d'un segment
-    //var nivDenivele = (_calculDenivele(coordPoint1, coordPoint2, distance)).toFixed(1);
-
     var segmentFeature;
-
-    /*
-    if(0 < nivDenivele && nivDenivele < 1) {
-      segmentFeature = new ol.Feature({
-        geometry: segment
-      });
-      segmentFeature.setStyle(style["styleSegmentBleu"]);
-    } else if (1 < nivDenivele && nivDenivele < 2) {
-      segmentFeature = new ol.Feature({
-        geometry: segment
-      });
-      segmentFeature.setStyle(style["styleSegmentVert"]);
-    } else if (2 < nivDenivele && nivDenivele < 3) {
-      segmentFeature = new ol.Feature({
-        geometry: segment
-      });
-      segmentFeature.setStyle(style["styleSegmentOrange"]);
-    } else {
-      segmentFeature = new ol.Feature({
-        geometry: segment
-      });
-      segmentFeature.setStyle(style["styleSegmentRouge"]);
-    }
-
-    console.log(segmentFeature);
-    */ 
 
     segmentFeature = new ol.Feature({
       geometry: segment,
@@ -309,23 +219,6 @@ var trackview = (function () {
         maxDistance += 1000; // On ajoute 1000 à chaque fois ( 2km, 3km, 4km... ) 
       }
     }
-  }
-
-  var _calculDenivele = (coordPoint1, coordPoint2, distance) => {
-    var zPoint1 = coordPoint1[2];
-    var zPoint2 = coordPoint2[2];
-    var denivele = null;
-    var pente = null;
-
-    if (zPoint2 > zPoint1) {
-      denivele = zPoint2 - zPoint1;
-    } else {
-      denivele = zPoint1 - zPoint2;
-    }
-
-    pente = ( denivele / distance ) * 100;
-
-    return pente;
   }
 
   // verticalLine plugin 
@@ -534,21 +427,33 @@ var trackview = (function () {
 
           if(layer === vectorSegment) {
             console.log("Vecteur segment");
-            let idSgmtOn = feature.getProperties().properties.id;
+            let idSgmtOnFeature = feature.getProperties().properties.id;
             let sgmtLastCoordinate = null;
             sgmtLastCoordinate = feature.getGeometry().getLastCoordinate();
 
-
-
             segmentVector.forEach(function(segment) {
               let idSgmt = segment.getProperties().properties.id;
+              let pointOnSgmt = null;
               
-              if(idSgmt < idSgmtOn) {
+              if(idSgmt < idSgmtOnFeature) {
+                if(!pointOnSgmt) {
+                  pointOnSgmt = new ol.Feature({
+                    geometry: new ol.geom.Point(sgmtLastCoordinate)
+                  });
+                } else {
+                  sourceP.removeFeature(pointOnSgmt);
+                  pointOnSgmt.setGeometry(new ol.geom.Point(sgmtLastCoordinate));
+                }
+                sourceP.addFeature(pointOnSgmt);
+                pointOnSgmt.setStyle(style["selected"]);
                 segment.setStyle(style["selectedSegment"]);
               } else {
                 segment.setStyle(style["defaultSegment"]);
               }
             });
+
+            vectorPoint.setSource(sourceP);
+            mviewer.getMap().addLayer(vectorPoint);
             
             console.log(sgmtLastCoordinate);
           }
