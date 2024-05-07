@@ -277,7 +277,7 @@ var trackview = (function () {
     }
 
     console.log(segmentFeature);
-    */
+    */ 
 
     segmentFeature = new ol.Feature({
       geometry: segment,
@@ -454,24 +454,6 @@ var trackview = (function () {
     });
     return trackLineChart;
   };
-
-  var _extractSegmentInfo = () => {
-    let segments = vectorSegment.getSource().getFeatures();
-    let firstPointSgmt = null;
-    let secondPointSgmt = null;
-    let finalSgmtList = [];
-
-    console.log(segments);
-
-    for(let i = 0; i < segments.length; i++) {
-      firstPointSgmt = segments[i].getGeometry().getFirstCoordinate();
-      secondPointSgmt = segments[i].getGeometry().getLastCoordinate();
-
-      finalSgmtList[i] = [firstPointSgmt, secondPointSgmt, segments[i]];
-    };
-
-    return finalSgmtList;
-  };
   
   mviewer.processLayer(parcoursLayer, vector);
   mviewer.addLayer(parcoursLayer); // setVisible(true) => n'ajoute pas la légende
@@ -496,10 +478,9 @@ var trackview = (function () {
       let typeGeoFeature = null
       let idFeature = null;
       let segmentFeat = null;
-      let listSegmentPoint = _extractSegmentInfo();
       map.on("pointermove", function(event) {
         var pixel = event.pixel;
-        // Pourquoi un point et pas un segment => feature ?
+
         map.forEachFeatureAtPixel(pixel, function(feature, layer) {
           var segmentVector = vectorSegment.getSource().getFeatures();
 
@@ -556,7 +537,8 @@ var trackview = (function () {
             let idSgmtOn = feature.getProperties().properties.id;
             let sgmtLastCoordinate = null;
             sgmtLastCoordinate = feature.getGeometry().getLastCoordinate();
-            let segmentLength = feature.getGeometry().getLength();
+
+
 
             segmentVector.forEach(function(segment) {
               let idSgmt = segment.getProperties().properties.id;
