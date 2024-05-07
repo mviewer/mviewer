@@ -159,14 +159,6 @@ var trackview = (function () {
 
   const sourceP = new ol.source.Vector();
 
-  /*
-  const vectorPointKilometre = new ol.layer.Vector({
-    style: style["invisible"]
-  });
-
-  var sourcePointKilometre = new ol.source.Vector();
-  */
-
   const vectorSegment = new ol.layer.Vector({
   });
 
@@ -306,7 +298,7 @@ var trackview = (function () {
     segmentFeature.setStyle(style["default"]);
 
     sourceSegment.addFeature(segmentFeature);
-    
+
     return distance;
   };
 
@@ -321,7 +313,7 @@ var trackview = (function () {
       if(distancePointAfter > maxDistance) { // Si la distance du point suivant dépasse les 1000 mètres
         distanceManquante = maxDistance - distancePoint; // Calcul de la distance manquante
         console.log(distanceManquante);
-        maxDistance += 1000; // On ajoute 1000 à chaque fois ( 1km, 2km, 3km... )
+        maxDistance += 1000; // On ajoute 1000 à chaque fois ( 2km, 3km, 4km... ) 
       }
     }
   }
@@ -403,22 +395,7 @@ var trackview = (function () {
           pointBackgroundColor: color,
           pointRadius: radius,
           borderColor: global.style.color,
-          fill: true,
-          /*pointStyle: function(ctx) {
-            // si pas de graph alors on ne passe pas dans le bloc
-            if(!trackLineChart) return;
-
-            // sinon on execute le reste
-            if(ctx.dataIndex === mviewer.pointHover) {
-              trackLineChart.data.datasets[0].pointBackgroundColor[ctx.dataIndex] = hoverPointColor;
-              trackLineChart.data.datasets[0].pointRadius[ctx.dataIndex] = hoverPointRadius;
-            } else {
-              trackLineChart.data.datasets[0].pointBackgroundColor[ctx.dataIndex] = defaultPointColor;
-              trackLineChart.data.datasets[0].pointRadius[ctx.dataIndex] = defaultRadiusValue;
-            }
-            // si on veut mettre tout le bloc en une ligne : 
-            // trackLineChart.data.datasets[0]["pointBackgroundColor"][ctx.dataIndex] = trackLineChart && (ctx.dataIndex === mviewer.pointHover) ? "black" : "red"
-          },*/
+          fill: true
         }],
       },
       options: {
@@ -484,6 +461,24 @@ var trackview = (function () {
     });
     return trackLineChart;
   };
+
+  var _extractSegmentInfo = () => {
+    let segments = vectorSegment.getSource().getFeatures();
+    let firstPointSgmt = null;
+    let secondPointSgmt = null;
+    let finalSgmtList = [];
+
+    console.log(segments);
+
+    for(let i = 0; i < segments.length; i++) {
+      firstPointSgmt = segments[i].getGeometry().getFirstCoordinate();
+      secondPointSgmt = segments[i].getGeometry().getLastCoordinate();
+
+      finalSgmtList[i] = [firstPointSgmt, secondPointSgmt, segments[i]];
+    };
+
+    return finalSgmtList;
+  };
   
   mviewer.processLayer(parcoursLayer, vector);
   mviewer.addLayer(parcoursLayer); // setVisible(true) => n'ajoute pas la légende
@@ -504,30 +499,50 @@ var trackview = (function () {
 
       /*********** Détecter les features sur la map ***********/
       var map = mviewer.getMap();
+      var segmentId = null;
+      let typeGeoFeature = null
+      let idFeature = null;
+      let segmentFeat = null;
+      let listSegmentPoint = _extractSegmentInfo();
       map.on("pointermove", function(event) {
         var pixel = event.pixel;
         map.forEachFeatureAtPixel(pixel, function(feature, layer) {
           var propsId = null;
+          var segmentVector = vectorSegment.getSource().getFeatures();
 
           if(!feature) return;
 
           if (layer === vectorPoint) {
             propsDistance = feature.getProperties().distance;
-            propsId = feature.getProperties().properties.id;
-            var segment = vectorSegment.getSource().getFeatures();
             mviewer.pointHover = propsDistance;
+            propsId = feature.getProperties().properties.id;
+            typeGeoFeature = feature.getGeometry().getType();
+            
+            if(typeGeoFeature === "Point") {
+              idFeature = feature.getProperties().properties.id;
+              segmentFeat = listSegmentPoint[idFeature];
 
-            segment.forEach(function(seg) {
-              var segmentId = seg.getProperties().properties.id;
+              console.log(idFeature);
+              console.log(feature);
+              console.log(segmentFeat);
+            }
 
+            /*
+            segmentVector.forEach(function(seg) {
+              segmentId = seg.getProperties().properties.id;
+
+              console.log(propsId, segmentId);
+            
               if(propsId > segmentId) {
                 feature.setStyle(style["selected"]);
                 seg.setStyle(style["selectedSegment"]);
+                lastFeature = feature;
+                //lastSegment = seg;
               } else {
-                feature.setStyle(style["invisible"]);
                 seg.setStyle(style["default"]);
               }
             });
+            */
             dataGraph.update();
           }
         });
