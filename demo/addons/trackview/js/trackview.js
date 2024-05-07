@@ -32,7 +32,7 @@ var trackview = (function () {
       }),
     }),
 
-    'default': new ol.style.Style({
+    'defaultSegment': new ol.style.Style({
       stroke: new ol.style.Stroke({
         color: "#f00",
         width: 3,
@@ -63,13 +63,6 @@ var trackview = (function () {
     'styleSegmentOrange': new ol.style.Style({
       stroke: new ol.style.Stroke({
         color: "#ff8000",
-        width: 4,
-      }),
-    }),
-
-    'styleSegmentRouge': new ol.style.Style({
-      stroke: new ol.style.Stroke({
-        color: "#f00",
         width: 4,
       }),
     }),
@@ -295,7 +288,7 @@ var trackview = (function () {
 
     valueId += 1;
 
-    segmentFeature.setStyle(style["default"]);
+    segmentFeature.setStyle(style["defaultSegment"]);
 
     sourceSegment.addFeature(segmentFeature);
 
@@ -419,7 +412,7 @@ var trackview = (function () {
                   if (segmentId < pointId) {
                     seg.setStyle(style["selectedSegment"]);
                   } else {
-                    seg.setStyle(style["default"]);
+                    seg.setStyle(style["defaultSegment"]);
                   }
                 });
               } else {
@@ -506,27 +499,39 @@ var trackview = (function () {
       let listSegmentPoint = _extractSegmentInfo();
       map.on("pointermove", function(event) {
         var pixel = event.pixel;
+        // Pourquoi un point et pas un segment => feature ?
         map.forEachFeatureAtPixel(pixel, function(feature, layer) {
-          var propsId = null;
           var segmentVector = vectorSegment.getSource().getFeatures();
 
-          if(!feature) return;
+          // Nothing to do if no feature
+          if(!feature) {
+            return;
+          }
 
+          // 
           if (layer === vectorPoint) {
             propsDistance = feature.getProperties().distance;
             mviewer.pointHover = propsDistance;
-            propsId = feature.getProperties().properties.id;
+            /*
             typeGeoFeature = feature.getGeometry().getType();
             
-            if(typeGeoFeature === "Point") {
-              idFeature = feature.getProperties().properties.id;
-              segmentFeat = listSegmentPoint[idFeature];
+            if(typeGeoFeature !== "Point") return;
 
-              console.log(idFeature);
-              console.log(feature);
-              console.log(segmentFeat);
-            }
+            idFeature = feature.getProperties().properties.id;
+            let saveSegment = null;
 
+            segmentVector.forEach(function(sgmt) {
+              let idSgmt = null;
+              idSgmt = sgmt.getProperties().properties.id;
+              if((idSgmt + 1) === idFeature) {
+                saveSegment = sgmt;
+              }
+            });
+
+            console.log(idFeature);
+            console.log(feature);
+            console.log(saveSegment);
+            */
             /*
             segmentVector.forEach(function(seg) {
               segmentId = seg.getProperties().properties.id;
@@ -544,6 +549,26 @@ var trackview = (function () {
             });
             */
             dataGraph.update();
+          }
+
+          if(layer === vectorSegment) {
+            console.log("Vecteur segment");
+            let idSgmtOn = feature.getProperties().properties.id;
+            let sgmtLastCoordinate = null;
+            sgmtLastCoordinate = feature.getGeometry().getLastCoordinate();
+            let segmentLength = feature.getGeometry().getLength();
+
+            segmentVector.forEach(function(segment) {
+              let idSgmt = segment.getProperties().properties.id;
+              
+              if(idSgmt < idSgmtOn) {
+                segment.setStyle(style["selectedSegment"]);
+              } else {
+                segment.setStyle(style["defaultSegment"]);
+              }
+            });
+            
+            console.log(sgmtLastCoordinate);
           }
         });
       });
