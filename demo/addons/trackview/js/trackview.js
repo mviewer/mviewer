@@ -101,6 +101,14 @@ var trackview = (function () {
 
   var sourceSegment = new ol.source.Vector();
 
+  const vectorNewPoint = new ol.layer.Vector({
+  });
+
+  var sourceNewPoint = new ol.source.Vector();
+
+  vectorNewPoint.setSource(sourceNewPoint);
+  mviewer.getMap().addLayer(vectorNewPoint);
+
   // Fonction permettant de créer des features
   var _creaFeature = function () {
     let features = vectorSource.getFeatures();
@@ -365,7 +373,7 @@ var trackview = (function () {
       });
       _creaFeature();
 
-      /*********** Détecter les features sur la map ***********/
+      /*********** Detect feature on the map ***********/
       var map = mviewer.getMap();
       var segmentId = null;
       let typeGeoFeature = null
@@ -424,36 +432,33 @@ var trackview = (function () {
             */
             dataGraph.update();
           }
-
+          
+          let pointOnSgmt = null;
           if(layer === vectorSegment) {
             console.log("Vecteur segment");
             let idSgmtOnFeature = feature.getProperties().properties.id;
             let sgmtLastCoordinate = null;
             sgmtLastCoordinate = feature.getGeometry().getLastCoordinate();
 
+            sourceNewPoint.clear()
+            
+            pointOnSgmt = new ol.Feature({
+              geometry: new ol.geom.Point(sgmtLastCoordinate)
+            });
+
+            pointOnSgmt.setStyle(style["selected"]);
+            
+            sourceNewPoint.addFeature(pointOnSgmt);
+
             segmentVector.forEach(function(segment) {
               let idSgmt = segment.getProperties().properties.id;
-              let pointOnSgmt = null;
               
-              if(idSgmt < idSgmtOnFeature) {
-                if(!pointOnSgmt) {
-                  pointOnSgmt = new ol.Feature({
-                    geometry: new ol.geom.Point(sgmtLastCoordinate)
-                  });
-                } else {
-                  sourceP.removeFeature(pointOnSgmt);
-                  pointOnSgmt.setGeometry(new ol.geom.Point(sgmtLastCoordinate));
-                }
-                sourceP.addFeature(pointOnSgmt);
-                pointOnSgmt.setStyle(style["selected"]);
+              if(idSgmt <= idSgmtOnFeature) {
                 segment.setStyle(style["selectedSegment"]);
               } else {
                 segment.setStyle(style["defaultSegment"]);
               }
             });
-
-            vectorPoint.setSource(sourceP);
-            mviewer.getMap().addLayer(vectorPoint);
             
             console.log(sgmtLastCoordinate);
           }
