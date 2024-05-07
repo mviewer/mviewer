@@ -4,7 +4,7 @@
         style="css/themes/blue.css" 
         logo="img/logo/tatihouguev2.png"
         exportpng="false" 
-        measuretools="false" 
+        measuretools="true" 
         mapprint="false"
         addlayerstools="false"/>
     <mapoptions maxzoom="20" projection="EPSG:3857" center="266612.35465869476, 5921729.455309178" zoom="4"/>
