@@ -9,10 +9,10 @@ var trackview = (function () {
   var color = [];
   var radius = [];
   var valueId = 0;
-  var onMap = false;
+  let vector, vectorSource, vectorPoint, sourceP, vectorSegment, sourceSegment, vectorNewPoint, sourceNewPoint = null;
+  let distanceTotalForSegment = null;
 
-  // TODO Comments in english in all files would be better
-  // Creation du layer mviewer
+  // Mviewer layer creation
   var parcoursLayer = {
     showintoc: true,
     type: global.stats.type,
@@ -26,53 +26,37 @@ var trackview = (function () {
     urlData: global.data.url
   };
   
-  // Permet de définir les différents styles
+  // Defines the different styles
   const style = {
     'defaultSegment': new ol.style.Style({
       stroke: new ol.style.Stroke({
-        color: global.style.color,
-        width: global.style.width,
+        color: global.style.segment.color.default,
+        width: global.style.segment.width.default,
       }),
     }),
 
-    // TODO add style params to config.json
     'selectedSegment': new ol.style.Style({
       stroke: new ol.style.Stroke({
-        color: "#03224c",
-        width: 5,
+        color: global.style.segment.color.selected,
+        width: global.style.segment.width.selected,
       }),
     }),
 
-    // TODO add style params to config.json
     'selected': new ol.style.Style({
       image: new ol.style.Circle({
-        radius: 7,
+        radius: global.style.point.radius,
         fill: new ol.style.Fill({
-          color: "#03224c",
+          color: global.style.point.color.image,
         }),
         stroke: new ol.style.Stroke({
-          color: "#fff",
-          width: 2,
-        }),
-      }),
-    }),
-
-    // TODO see why using invisible and not just null style
-    'invisible': new ol.style.Style({
-      image: new ol.style.Circle({
-        radius: 5,
-        fill: new ol.style.Fill({
-          color: "#0000",
-        }),
-        stroke: new ol.style.Stroke({
-          color: "#0000",
-          width: 0,
+          color: global.style.point.color.stroke,
+          width: global.style.point.width,
         }),
       }),
     }),
   };
 
-  // Permet de définir les différentes légendes
+  // Define the different legends
   parcoursLayer.legend = {
     items: [
       {
@@ -85,45 +69,58 @@ var trackview = (function () {
     ],
   };
 
-  // TODO create an initLayer function to put all layers creation ( be carreful with scope )
-  // Permet de réutiliser les features plus tard
-  const vectorSource = new ol.source.Vector({
-    url: parcoursLayer.urlData,
-    format: new ol.format.GPX(),
-  });
+  var _initLayer = () => {
+    // Source layer
+    vectorSource = new ol.source.Vector({
+      url: parcoursLayer.urlData,
+      format: new ol.format.GPX(),
+    });
+
+    vector = new ol.layer.Vector({
+      source: vectorSource,
+      style: style["defaultSegment"]
+    });
+  
+    // Point layer
+    vectorPoint = new ol.layer.Vector({
+      style: null
+    });
+  
+    sourceP = new ol.source.Vector();
+  
+    // Segment layer
+    vectorSegment = new ol.layer.Vector({
+    });
+  
+    sourceSegment = new ol.source.Vector();
+  
+    // Other point layer
+    vectorNewPoint = new ol.layer.Vector({
+    });
+  
+    sourceNewPoint = new ol.source.Vector();
+
+    // Add each layer in mviewer
+    mviewer.processLayer(parcoursLayer, vector);
+    mviewer.addLayer(parcoursLayer);
+  
+    vectorNewPoint.setSource(sourceNewPoint);
+    mviewer.getMap().addLayer(vectorNewPoint);
+
+    vectorSegment.setSource(sourceSegment);
+    mviewer.getMap().addLayer(vectorSegment);
+
+    vectorPoint.setSource(sourceP);
+    mviewer.getMap().addLayer(vectorPoint);
+  }
   
   // TODO remove all var for let or const declaration in variables see https://www.freecodecamp.org/news/var-let-and-const-whats-the-difference/
-  var vector = new ol.layer.Vector({
-    source: vectorSource,
-    style: style["defaultSegment"]
-  });
-
-  const vectorPoint = new ol.layer.Vector({
-    style: style["invisible"]
-  });
-
-  const sourceP = new ol.source.Vector();
-
-  const vectorSegment = new ol.layer.Vector({
-  });
-
-  var sourceSegment = new ol.source.Vector();
-
-  const vectorNewPoint = new ol.layer.Vector({
-  });
-
-  var sourceNewPoint = new ol.source.Vector();
-
-  vectorNewPoint.setSource(sourceNewPoint);
-  mviewer.getMap().addLayer(vectorNewPoint);
-
 
   // TODO give detail in comment on what exactly do the function
   // separate multistring in point and create segement 
   // add distance etc....
   // features list could be in parameter of the function
-  // Fonction permettant de créer des features
-  // why _ here in function name and not in other function
+  // why _ here in function name and not in other function :)
   var _creaFeature = function () {
 
     let features = vectorSource.getFeatures();
@@ -135,13 +132,13 @@ var trackview = (function () {
 
     for (let i = 0; i < coordinates.length; i++) {
 
-      // Récupération des données du point actuel
+      // Collect coordinates of all points
       var featureX = coordinates[i][0];
       var featureY = coordinates[i][1];
       var featureZ = coordinates[i][2];
       var featureT = coordinates[i][3];
 
-      // Création d'une feature par point
+      // Creation of feature with coordinates
       var point = new ol.Feature({
         geometry: new ol.geom.Point([featureX,featureY,featureZ,featureT]),
         properties: {
@@ -151,96 +148,111 @@ var trackview = (function () {
   
       sourceP.addFeature(point);
 
-      // On test si c'est le premier nombre
+      // If its the first point
       if (i === 0) {
-        finalData[i] = [distance, point]; // Si oui, on lui ajoute la distance par défaut (0) et son dénivelé dans le tableau finalData
+        finalData[i] = [distance, point]; // We add the default distance (0) and point in the finalData array
         point.set('distance', distance);
-      } else { // Sinon
-        var distanceCalc = _distanceBtwPoint(previousPoint, point); // Calcul de la distance entre le point actuel et le précédent
-        distance += distanceCalc; // Ajout de la distance calculée à une variable totale
-        finalData[i] = [distance, point]; // Ajout de la distance calculée et du dénivelé dans le tableau finalData
+      } else {
+        var distanceCalc = _distanceBtwPoint(previousPoint, point); // Distance between the current point and the previous one
+        distance += distanceCalc; // Add distance in variable
+        finalData[i] = [distance, point]; // Add distance and point in finalData array
         point.set('distance', distance);
       }
       previousPoint = point;
     };
 
-    // TODO could it be done in intlayer function
-    vectorSegment.setSource(sourceSegment);
-    mviewer.getMap().addLayer(vectorSegment);
-
-    vectorPoint.setSource(sourceP);
-    mviewer.getMap().addLayer(vectorPoint);
-
     dataGraph = _addGraph(finalData);
     _addPointKilometre(finalData);
   };
 
-  // Fonction qui calcule une distance (en mètre) entre deux points
+  /**
+   * This function calculates the distance in metres between two points
+   * @param {point} p1 - First point.
+   * @param {point} p2 - Second point.
+   * @returns {float} The distance between the two points.
+   */
   var _distanceBtwPoint = function (p1, p2) {
     
-    // On commence par définir la projection EPSG:32632 ( UTM )
+    // We begin by defining the EPSG:32632 ( UTM ) projection
     const epsg32632 = '+proj=utm +zone=32 +datum=WGS84 +units=m +no_defs';
 
-    // Ensuite, on charge la projection
+    // Then, we load the projection
     proj4.defs(epsg32632);
 
-    // On convertit les coordonnées EPSG:3857 en UTM
+    // We convert the EPSG:3857 date in UTM 
     let point1_utm = proj4('EPSG:3857', epsg32632, p1.getGeometry().getCoordinates());
     let point2_utm = proj4('EPSG:3857', epsg32632, p2.getGeometry().getCoordinates());
 
-    // On créer une localisation pour les deux points
+    // We create a localisation for each point
     let location_pt1 = [point1_utm[0], point1_utm[1]];
     let location_pt2 = [point2_utm[0], point2_utm[1]];
 
-    // On créer une ligne utilisant les deux localisations précédentes afin de calculer la distance de celle-ci
+    // We create a line that use the two previous location to calculate after the distance between them
     var line = new ol.geom.LineString([location_pt1 , location_pt2]);
 
+    // We get the coordinates of two points
     var coordPoint1 = p1.getGeometry().getCoordinates();
     var coordPoint2 = p2.getGeometry().getCoordinates();
 
+    // Coordinates x and y of two points
     var XYcoordPoint1 = [coordPoint1[0], coordPoint1[1]];
     var XYcoordPoint2 = [coordPoint2[0], coordPoint2[1]];
 
     var segment = new ol.geom.LineString([XYcoordPoint1, XYcoordPoint2]);
 
-    // Calcul de la distance de la ligne
+    // Calculate the distance of the line
     var distance = Math.round(line.getLength());
+
+    distanceTotalForSegment += distance;
 
     var segmentFeature;
 
+    // Creation of segment
     segmentFeature = new ol.Feature({
       geometry: segment,
       properties: {
-        id: valueId
+        id: valueId,
+        distance: distanceTotalForSegment
       }
     });
 
     valueId += 1;
 
+    // We set default style of each segment
     segmentFeature.setStyle(style["defaultSegment"]);
 
+    // Finally, we add each segment feature to the segment source
     sourceSegment.addFeature(segmentFeature);
 
     return distance;
   };
 
   var _addPointKilometre = (pointData) => {
-    var maxDistance = 1000; // Première distance maximum ( 1km )
-    var distanceManquante = null; // Permet de stocker la distance manquante
+    var maxDistance = 1000; // First maximum distance ( 1km )
+    var distanceManquante = null; // Store the missing distance
 
     for(let i = 0; i < (pointData.length - 1); i++) {
-      var distancePoint = pointData[i][0]; // On récupère la distance d'un premier point par rapport à l'origine
-      var distancePointAfter = pointData[i + 1][0]; // On récupère la distance du point suivant
+      var distancePoint = pointData[i][0]; // We get the distance of a first point since origine
+      var distancePointAfter = pointData[i + 1][0]; // Here we get the distance of the next point
 
-      if(distancePointAfter > maxDistance) { // Si la distance du point suivant dépasse les 1000 mètres
-        distanceManquante = maxDistance - distancePoint; // Calcul de la distance manquante
-        console.log(distanceManquante);
-        maxDistance += 1000; // On ajoute 1000 à chaque fois ( 2km, 3km, 4km... ) 
+      if(distancePointAfter > maxDistance) { // If the distance of the next point is greater than the max distance => 1000 metres
+        distanceManquante = maxDistance - distancePoint; // We calculate de missing distance
+        maxDistance += 1000; // When its done, we add one thousand each time ( 2km, 3km, 4km... )
+
+        /*let pointDataX = pointData[i][1].getGeometry().getCoordinates()[0];
+        let pointDataY = pointData[i][1].getGeometry().getCoordinates()[1];
+
+        let lineTurf = turf.LineString([[pointDataX,pointDataY]]);
+        let options = {units: 'miles'};
+
+        let along = turf.along(lineTurf, distanceManquante, options);*/
       }
     }
+    
+    return distanceManquante;
   }
 
-  // verticalLine plugin 
+  // VerticalLine plugin 
   const verticalLine = {
     id: "verticalLine",
     afterDatasetsDraw(chart, args, plugins) {
@@ -265,25 +277,24 @@ var trackview = (function () {
     }
   }
 
-  // Fonction permettant d'ajouter le graph sur la map
+  // Function that add graph on map
   var _addGraph = function (data) {
-    // constants
-    const defaultPointColor = global.style.color;
+    // Constants
+    const defaultPointColor = global.style.segment.color.default;
     const defaultRadiusValue = 2.5;
-    const hoverPointColor = "black"; // à rendre global
-    const hoverPointRadius = 8; // à rendre global
+
 
     data.forEach(function (tab) {
       d.push(tab[0]/1000); // Permet d'avoir en km
       z.push(tab[1].getGeometry().getCoordinates()[2]);
     });
 
-    // On définit une valeur maximum pour que les données du graphique prennent toutes la place
+    // Define a max value for the graph that the data fill all the available space
     const maxValeur = d[d.length - 1];
 
-    // Création de la couleur et de la taille pour chaque point
+    // Creation of the width and the color for each point of the graph
     for (let i = 0; i < d.length; i++) {
-      color.push(global.style.color);
+      color.push(defaultPointColor);
       radius.push(defaultRadiusValue);
     }
 
@@ -297,7 +308,7 @@ var trackview = (function () {
           label: global.stats.name,
           pointBackgroundColor: color,
           pointRadius: radius,
-          borderColor: global.style.color,
+          borderColor: global.style.segment.color.default,
           fill: true
         }],
       },
@@ -313,7 +324,7 @@ var trackview = (function () {
             var pointId = points[0].index;
             vectorPoint.getSource().getFeatures().forEach(function (elt) {
             var carteId = elt.getProperties().properties.id;
-            elt.setStyle(style["invisible"]);
+            elt.setStyle(null);
 
               if (pointId == carteId) {
                 elt.setStyle(style["selected"]);
@@ -363,12 +374,11 @@ var trackview = (function () {
     });
     return trackLineChart;
   };
-  
-  mviewer.processLayer(parcoursLayer, vector);
-  mviewer.addLayer(parcoursLayer); // setVisible(true) => n'ajoute pas la légende
 
   var _initTool = function () {
-    console.log("Initialisation de l'outil"); // Affichage dans les logs
+    console.log("Initialisation de l'outil"); // Display in logs
+    // Calling function do init all layer
+    _initLayer();
 
     mviewer.getMap().once("rendercomplete", function (e) {
       var source = vector.getSource();
@@ -376,19 +386,16 @@ var trackview = (function () {
       var feature = source.getFeatures();
 
       mviewer.getMap().getView().fit(feature[0].getGeometry().getExtent(), {
-        duration: 3000, // Permet de définir le temps de l'animation en ms
-        maxZoom: 13.75 // Permet de définir le zoom quand on charge la page
+        duration: 3000, // Define the animation time in ms
+        maxZoom: 13.75 // Define the zoom max when the page is load
       });
       _creaFeature();
 
       /*********** Detect feature on the map ***********/
       var map = mviewer.getMap();
-      var segmentId = null;
-      let typeGeoFeature = null
-      let idFeature = null;
-      let segmentFeat = null;
       map.on("pointermove", function(event) {
         var pixel = event.pixel;
+        var tolerance = 5; // In pixel
 
         map.forEachFeatureAtPixel(pixel, function(feature, layer) {
           var segmentVector = vectorSegment.getSource().getFeatures();
@@ -398,26 +405,22 @@ var trackview = (function () {
             return;
           }
  
-          if (layer === vectorPoint) {
-            propsDistance = feature.getProperties().distance;
-            mviewer.pointHover = propsDistance;
-
-            dataGraph.update();
-          }
-          
           let pointOnSgmt = null;
+          // Check if the layer pointed is equal to the layer of interest
           if(layer === vectorSegment) {
-            console.log("Vecteur segment");
             let idSgmtOnFeature = feature.getProperties().properties.id;
+            mviewer.pointHover = feature.getProperties().properties.distance;
             let sgmtLastCoordinate = null;
             sgmtLastCoordinate = feature.getGeometry().getLastCoordinate();
 
-            sourceNewPoint.clear()
+            sourceNewPoint.clear();
             
+            // Create a new point feature
             pointOnSgmt = new ol.Feature({
               geometry: new ol.geom.Point(sgmtLastCoordinate)
             });
 
+            // Add style to the feature
             pointOnSgmt.setStyle(style["selected"]);
             
             sourceNewPoint.addFeature(pointOnSgmt);
@@ -431,8 +434,9 @@ var trackview = (function () {
                 segment.setStyle(style["defaultSegment"]);
               }
             });
+            dataGraph.update();
           }
-        });
+        }, {hitTolerance: tolerance});
       });
     });
   };

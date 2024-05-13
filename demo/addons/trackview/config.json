@@ -13,8 +13,24 @@
                     "title": "Circuit",
                     "style" : {
                         "geometry": "LineString",
-                        "color": "#f00",
-                        "width": 3,
+                        "segment": {
+                            "color": {
+                                "default": "#f00",
+                                "selected": "#03224c"
+                            },
+                            "width": {
+                                "default": 3,
+                                "selected": 5
+                            }
+                        },
+                        "point": {
+                            "color": {
+                                "image": "#03224c",
+                                "stroke": "#fff"
+                            },
+                            "radius": 7,
+                            "width": 2
+                        },
                         "graph": {
                             "type": "line",
                             "title": "Dénivelé du parcours en fonction de la distance parcourue",
