@@ -1,5 +1,6 @@
 var trackview = (function () {
 
+  // TODO why parcours.parc ?
   var global = mviewer.customComponents.trackview.config.options.mviewer.parcours.parc;
   var d = [];
   var z = [];
@@ -9,6 +10,7 @@ var trackview = (function () {
   var radius = [];
   var valueId = 0;
 
+  // TODO Comments in english in all files would be better
   // Creation du layer mviewer
   var parcoursLayer = {
     showintoc: true,
@@ -32,6 +34,7 @@ var trackview = (function () {
       }),
     }),
 
+    // TODO add style params to config.json
     'selectedSegment': new ol.style.Style({
       stroke: new ol.style.Stroke({
         color: "#03224c",
@@ -39,6 +42,7 @@ var trackview = (function () {
       }),
     }),
 
+    // TODO add style params to config.json
     'selected': new ol.style.Style({
       image: new ol.style.Circle({
         radius: 7,
@@ -52,6 +56,7 @@ var trackview = (function () {
       }),
     }),
 
+    // TODO see why using invisible and not just null style
     'invisible': new ol.style.Style({
       image: new ol.style.Circle({
         radius: 5,
@@ -79,12 +84,14 @@ var trackview = (function () {
     ],
   };
 
+  // TODO create an initLayer function to put all layers creation ( be carreful with scope )
   // Permet de réutiliser les features plus tard
   const vectorSource = new ol.source.Vector({
     url: parcoursLayer.urlData,
     format: new ol.format.GPX(),
   });
   
+  // TODO remove all var for let or const declaration in variables see https://www.freecodecamp.org/news/var-let-and-const-whats-the-difference/
   var vector = new ol.layer.Vector({
     source: vectorSource,
     style: style["defaultSegment"]
@@ -109,12 +116,19 @@ var trackview = (function () {
   vectorNewPoint.setSource(sourceNewPoint);
   mviewer.getMap().addLayer(vectorNewPoint);
 
+
+  // TODO give detail in comment on what exactly do the function
+  // separate multistring in point and create segement 
+  // add distance etc....
+  // features list could be in parameter of the function
   // Fonction permettant de créer des features
+  // why _ here in function name and not in other function
   var _creaFeature = function () {
+
     let features = vectorSource.getFeatures();
     let coordinates = features[0].getGeometry().getCoordinates()[0];
     var finalData = [];
-    var listePoint = [];
+    var listePoint = []; // not needed I think
     var distance = 0;
 
     var previousPoint;
@@ -129,7 +143,8 @@ var trackview = (function () {
       var featureZ = coordinates[i][2];
       var featureT = coordinates[i][3];
 
-      listePoint.push(DataCoord); // Liste de tous les points
+      // not sure if needed
+      listePoint.push(DataCoord); // Liste de tous les coordonnees
 
       // Création d'une feature par point
       var point = new ol.Feature({
@@ -154,6 +169,7 @@ var trackview = (function () {
       previousPoint = point;
     };
 
+    // TODO could it be done in intlayer function
     vectorSegment.setSource(sourceSegment);
     mviewer.getMap().addLayer(vectorSegment);
 
