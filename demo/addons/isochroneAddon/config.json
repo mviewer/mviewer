@@ -5,7 +5,7 @@
   "target": "page-content-wrapper",
   "options": {
     "title": "Calcul d'isochrone",
-    "isochroneUrl": "https://wxs.ign.fr/essentiels/geoportail/isochrone/rest/1.0.0/isochrone?",
+    "isochroneUrl": "https://data.geopf.fr/navigation/isochrone?",
     "isohroneColor": "#b45793"
   }
 }

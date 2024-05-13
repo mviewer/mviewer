@@ -924,6 +924,8 @@
     <script type="text/javascript" src="lib/i18njs/i18n.js"></script>
     <script type="text/javascript" src="lib/moment/moment.js"></script>
     <script type="text/javascript" src="lib/lodash-4.17.21/lodash.min.js"></script>
+    <script type="text/javascript" src="js/sensorthings.js"></script>
+    <script type="text/javascript" src="js/sensorFeature.js"></script>
     <script>
       if (
         typeof mviewer == "undefined" ||
@@ -1050,6 +1052,17 @@
             configuration.getExtensions(xml);
           }, // fin success config
           error: function (request, status, error) {
+            const is404 = request.statusCode().status === 404 ? "404" : "";
+            const is400 = status === "parsererror" ? "400" : "";
+
+            if (API.debug === "true") {
+              document.querySelector(
+                "#loader-title"
+              ).innerHTML = `<i class="fa fa-code" aria-hidden="true"></i> code ${
+                is404 || is400
+              }`;
+              return;
+            }
             if (request.statusCode().status === 404) {
               $("#error h1").text(`Erreur ${request.statusCode().status} : ${error}`);
               document.location.href = "pages/error_404.html?xml=" + configFile;

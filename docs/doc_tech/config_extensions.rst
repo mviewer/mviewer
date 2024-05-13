@@ -345,3 +345,67 @@ A l'heure actuelle, il n'est pas possible de filtrer les entités sur lesquelles
 
 Il est ensuite nécessaire de pointer le plugin vers cette couche comme présenté auparavant.
 	    
+Extension print
+--------------------
+Ce plugin permet d'ajouter un module d'impression dans mviewer pour générer des cartes aux formats PDF ou PNG. Seul le format A4 est disponible.
+
+.. image:: ../_images/dev/config_extension/print.png
+              :alt: module d'impression
+              :align: center
+
+**Installation**
+
+Par défaut, print extension est disponible dans le dossier ``/demo/addons``. Il est conseillé de déplacer les addons que vous utiliser dans un dossier séparé.
+
+1. Ajout de l'extension dans votre conf XML :
+
+.. code-block:: xml
+
+	<extensions>
+	  <extension type="component" id="print" path="demo/addons"/>
+	</extensions>
+
+2. Ajout d'un id mviewer dans le bloc application de votre conf XML :
+
+.. code-block:: xml
+
+	<application id="mon_app" title="A super title" />
+
+3. Ajout de votre application dans le fichier de conf ``demo/addons/print/config.json`` :
+
+.. code-block:: json
+
+	"options": {
+	  "mviewer": {
+		"mon_app": {
+		}
+	  }
+	}
+
+**Configuration**
+
+La configuration du modèle n'est pas requise, vous pouvez utiliser le modèle par défaut.
+
+3 paramètres sont possibles dans le config.json :
+
+* ``printLayouts`` : lien vers le modèle
+* ``ownerlogo`` : logo à afficher dans le modèle
+* ``ownerInfos`` : texte par défaut de la zone d'information
+
+Voici un exemple : 
+
+.. code-block:: json
+
+	"options": {
+	  "mviewer": {
+		"mon_app": {
+			"printLayouts": "demo/addons/print/layouts/standard.json",
+			"ownerLogo": "https://avatars.githubusercontent.com/u/114171481?s=400&u=7fcf63ac01887ece3f5f2d5527e92c10527c7a91&v=4",
+			"ownerInfos": "Voici la carte"
+		}
+	  }
+	}
+
+**Personnalisation du modèle**
+
+Pour la personnalisation du modèle, se référer à la documentation ici https://github.com/mviewer/mviewer/tree/master/demo/addons/print#layout-with-a-json-template
