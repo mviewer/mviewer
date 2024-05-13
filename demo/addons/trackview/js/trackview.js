@@ -9,6 +9,7 @@ var trackview = (function () {
   var color = [];
   var radius = [];
   var valueId = 0;
+  var onMap = false;
 
   // TODO Comments in english in all files would be better
   // Creation du layer mviewer
@@ -128,23 +129,17 @@ var trackview = (function () {
     let features = vectorSource.getFeatures();
     let coordinates = features[0].getGeometry().getCoordinates()[0];
     var finalData = [];
-    var listePoint = []; // not needed I think
     var distance = 0;
 
     var previousPoint;
 
     for (let i = 0; i < coordinates.length; i++) {
-      // Initialisation du tableau contenant les données du point actuel
-      var DataCoord = [];
 
       // Récupération des données du point actuel
       var featureX = coordinates[i][0];
       var featureY = coordinates[i][1];
       var featureZ = coordinates[i][2];
       var featureT = coordinates[i][3];
-
-      // not sure if needed
-      listePoint.push(DataCoord); // Liste de tous les coordonnees
 
       // Création d'une feature par point
       var point = new ol.Feature({
@@ -254,10 +249,8 @@ var trackview = (function () {
 
       if (chart.tooltip?._active?.length) {
         xCoord = x.getPixelForValue(tooltip.dataPoints[0].parsed.x);
-        //console.log(xCoord);
       } else {
-        xCoord = x.getPixelForValue(mviewer.pointHover / 1000); // Petite correction à effectuer !
-        //console.log(xCoord);
+        xCoord = x.getPixelForValue(mviewer.pointHover / 1000);
       }
       ctx.save();
       ctx.beginPath();
@@ -319,7 +312,8 @@ var trackview = (function () {
           if (points.length) {
             var pointId = points[0].index;
             vectorPoint.getSource().getFeatures().forEach(function (elt) {
-              var carteId = elt.getProperties().properties.id;
+            var carteId = elt.getProperties().properties.id;
+            elt.setStyle(style["invisible"]);
 
               if (pointId == carteId) {
                 elt.setStyle(style["selected"]);
@@ -332,8 +326,6 @@ var trackview = (function () {
                     seg.setStyle(style["defaultSegment"]);
                   }
                 });
-              } else {
-                elt.setStyle(style["invisible"]);
               }
             })
           }
@@ -405,47 +397,11 @@ var trackview = (function () {
           if(!feature) {
             return;
           }
-
-          // 
+ 
           if (layer === vectorPoint) {
             propsDistance = feature.getProperties().distance;
             mviewer.pointHover = propsDistance;
-            /*
-            typeGeoFeature = feature.getGeometry().getType();
-            
-            if(typeGeoFeature !== "Point") return;
 
-            idFeature = feature.getProperties().properties.id;
-            let saveSegment = null;
-
-            segmentVector.forEach(function(sgmt) {
-              let idSgmt = null;
-              idSgmt = sgmt.getProperties().properties.id;
-              if((idSgmt + 1) === idFeature) {
-                saveSegment = sgmt;
-              }
-            });
-
-            console.log(idFeature);
-            console.log(feature);
-            console.log(saveSegment);
-            */
-            /*
-            segmentVector.forEach(function(seg) {
-              segmentId = seg.getProperties().properties.id;
-
-              console.log(propsId, segmentId);
-            
-              if(propsId > segmentId) {
-                feature.setStyle(style["selected"]);
-                seg.setStyle(style["selectedSegment"]);
-                lastFeature = feature;
-                //lastSegment = seg;
-              } else {
-                seg.setStyle(style["default"]);
-              }
-            });
-            */
             dataGraph.update();
           }
           
@@ -475,8 +431,6 @@ var trackview = (function () {
                 segment.setStyle(style["defaultSegment"]);
               }
             });
-            
-            console.log(sgmtLastCoordinate);
           }
         });
       });
