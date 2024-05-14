@@ -5,7 +5,6 @@ var trackview = (function () {
   var d = [];
   var z = [];
   var dataGraph;
-  var propsDistance = [];
   var color = [];
   var radius = [];
   var valueId = 0;
@@ -69,6 +68,9 @@ var trackview = (function () {
     ],
   };
 
+  /**
+   * This function 
+   */
   var _initLayer = () => {
     // Source layer
     vectorSource = new ol.source.Vector({
@@ -121,7 +123,7 @@ var trackview = (function () {
   // add distance etc....
   // features list could be in parameter of the function
   // why _ here in function name and not in other function :)
-  var _creaFeature = function () {
+  var _createFeature = function () {
 
     let features = vectorSource.getFeatures();
     let coordinates = features[0].getGeometry().getCoordinates()[0];
@@ -389,13 +391,13 @@ var trackview = (function () {
         duration: 3000, // Define the animation time in ms
         maxZoom: 13.75 // Define the zoom max when the page is load
       });
-      _creaFeature();
+      _createFeature(); 
 
       /*********** Detect feature on the map ***********/
       var map = mviewer.getMap();
       map.on("pointermove", function(event) {
         var pixel = event.pixel;
-        var tolerance = 5; // In pixel
+        var tolerance = 4; // In pixel
 
         map.forEachFeatureAtPixel(pixel, function(feature, layer) {
           var segmentVector = vectorSegment.getSource().getFeatures();
