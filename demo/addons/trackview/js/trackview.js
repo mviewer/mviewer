@@ -82,7 +82,7 @@ var trackview = (function () {
   };
 
   /**
-   * This function 
+   * This function allow you to initialize all of the layers presents on the map
    */
   var _initLayer = () => {
     // Source layer
@@ -137,11 +137,12 @@ var trackview = (function () {
   
   // TODO remove all var for let or const declaration in variables see https://www.freecodecamp.org/news/var-let-and-const-whats-the-difference/
 
-  // TODO give detail in comment on what exactly do the function
-  // separate multistring in point and create segement 
-  // add distance etc....
   // features list could be in parameter of the function
   // why _ here in function name and not in other function :)
+  /**
+   * Description
+   * @returns {point[]} - Array of points
+   */
   var _createFeature = function () {
 
     let features = vectorSource.getFeatures();
@@ -262,59 +263,49 @@ var trackview = (function () {
   var _addPointWithDistance = (pointData) => {
     var maxDistance = 1000; // First maximum distance ( 1km )
     var distanceManquante = null; // Store the missing distance
-
-    vectorSource.clear();
-    sourceSegment.clear();
+    var j = 1;
 
     for(let i = 0; i < (pointData.length - 1); i++) {
       var distancePoint = pointData[i][0]; // We get the distance of a first point since origine
-      var distancePointAfter = pointData[i + 1][0]; // Here we get the distance of the next point
+      var distancePointAfter = pointData[i+1][0]; // Here we get the distance of the next point
 
       if(distancePointAfter > maxDistance) { // If the distance of the next point is greater than the max distance => 1000 metres
-        console.log(maxDistance);
-        distanceManquante = maxDistance - distancePoint; // We calculate the missing distance
+        distanceManquante = (maxDistance - distancePoint) / 1000; // We calculate the missing distance
         maxDistance += 1000; // When its done, we add one thousand each time ( 2km, 3km, 4km... )
-
-        console.log(distanceManquante);
 
         // We get the coordinates of the current and next point
         let firstPointData = pointData[i][1].getGeometry().getCoordinates();
-        let secondPointData = pointData[i + 1][1].getGeometry().getCoordinates();
+        let secondPointData = pointData[i+1][1].getGeometry().getCoordinates();
 
-        
+        // Conversion of the projection used
+        let firstConvert = ol.proj.transform(firstPointData, 'EPSG:3857', 'EPSG:4326');
+        let secondConvert = ol.proj.transform(secondPointData, 'EPSG:3857', 'EPSG:4326');
+
         // Creation of the lineString using 'turf' with the two previous coordinates
-        let lineTurf = turf.lineString([[firstPointData[0], firstPointData[1]], [secondPointData[0], secondPointData[1]]]);
-        
-        console.log(lineTurf);
-
-        var format = new ol.format.GeoJSON();
-
-        var feature = format.readFeature(lineTurf);
-
-        sourceSegment.addFeature(feature);
-
-        let options = {units: 'kilometers'}; // The unit
+        let lineTurf = turf.lineString([[firstConvert[0], firstConvert[1]], [secondConvert[0], secondConvert[1]]]);
 
         // We define a point from the begin of the line with the specify distance
-        let along = turf.along(lineTurf, 0.05, 'kilometers');
+        let along = turf.along(lineTurf, distanceManquante);
 
-        var alongPoint = format.readFeature(along);
+        const pointCoords = along.geometry.coordinates;
 
-        alongPoint.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+        // Then, we create a new point with the coordinates of along
+        const olPoint = new ol.geom.Point(ol.proj.fromLonLat(pointCoords));
 
-        console.log(firstPointData, secondPointData);
-        console.log(along);
-
-        // Then, we create a new feature with the point define previously
-        /*let alongPoint = new ol.Feature({
-          geometry: new ol.geom.Point([along.geometry.coordinates[0], along.geometry.coordinates[1]])
+        const feature = new ol.Feature({
+          geometry: olPoint,
+          properties : {
+            id : j
+          }
         });
-        */
+
+        j++;
+  
         // Set style to each feature would be create
-        alongPoint.setStyle(style["each_kilometers"]);
+        feature.setStyle(style["each_kilometers"]);
 
         // We add each feature to the source
-        sourcePointKilometers.addFeature(alongPoint);
+        sourcePointKilometers.addFeature(feature);
       }
     }
   }
@@ -446,6 +437,11 @@ var trackview = (function () {
     return trackLineChart;
   };
 
+  /**
+   * This function allow you to initialize the trackview addon
+   * @param {null} - Nothing
+   * @returns {null} - Nothing
+   */
   var _initTool = function () {
     console.log("Initialisation de l'outil"); // Display in logs
     // Calling function do init all layer
