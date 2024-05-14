@@ -1,7 +1,7 @@
 {
     "type": "module",
     "js": [
-        "../../../lib/chartjs-3.7.1/Chart.min.js", "../../../js/measure.js", "js/trackview.js"
+        "../../../lib/chartjs-3.7.1/Chart.min.js", "../../../js/measure.js", "lib/turf.min.js","js/trackview.js"
     ],
     "css": "./style.css",
     "html": "./trackview.html",

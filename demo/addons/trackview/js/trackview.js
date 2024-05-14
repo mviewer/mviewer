@@ -8,7 +8,7 @@ var trackview = (function () {
   var color = [];
   var radius = [];
   var valueId = 0;
-  let vector, vectorSource, vectorPoint, sourceP, vectorSegment, sourceSegment, vectorNewPoint, sourceNewPoint = null;
+  let vector, vectorSource, vectorPoint, sourceP, vectorSegment, sourceSegment, vectorNewPoint, sourceNewPoint, vectorPointKilometers, sourcePointKilometers = null;
   let distanceTotalForSegment = null;
 
   // Mviewer layer creation
@@ -53,6 +53,19 @@ var trackview = (function () {
         }),
       }),
     }),
+
+    'each_kilometers': new ol.style.Style({
+      image: new ol.style.Circle({
+        radius: 6,
+        fill: new ol.style.Fill({
+          color: "#00f",
+        }),
+        stroke: new ol.style.Stroke({
+          color: "#000",
+          width: 3,
+        }),
+      }),
+    }),
   };
 
   // Define the different legends
@@ -91,16 +104,19 @@ var trackview = (function () {
     sourceP = new ol.source.Vector();
   
     // Segment layer
-    vectorSegment = new ol.layer.Vector({
-    });
+    vectorSegment = new ol.layer.Vector();
   
     sourceSegment = new ol.source.Vector();
   
-    // Other point layer
-    vectorNewPoint = new ol.layer.Vector({
-    });
+    // Point layer in front of each segment
+    vectorNewPoint = new ol.layer.Vector();
   
     sourceNewPoint = new ol.source.Vector();
+
+    // Point layer each kilometers
+    vectorPointKilometers = new ol.layer.Vector();
+
+    sourcePointKilometers = new ol.source.Vector();
 
     // Add each layer in mviewer
     mviewer.processLayer(parcoursLayer, vector);
@@ -114,6 +130,9 @@ var trackview = (function () {
 
     vectorPoint.setSource(sourceP);
     mviewer.getMap().addLayer(vectorPoint);
+
+    vectorPointKilometers.setSource(sourcePointKilometers);
+    mviewer.getMap().addLayer(vectorPointKilometers);
   }
   
   // TODO remove all var for let or const declaration in variables see https://www.freecodecamp.org/news/var-let-and-const-whats-the-difference/
@@ -126,6 +145,12 @@ var trackview = (function () {
   var _createFeature = function () {
 
     let features = vectorSource.getFeatures();
+
+    // If no feature nothing to do
+    if(!features) {
+      return;
+    }
+
     let coordinates = features[0].getGeometry().getCoordinates()[0];
     var finalData = [];
     var distance = 0;
@@ -164,7 +189,7 @@ var trackview = (function () {
     };
 
     dataGraph = _addGraph(finalData);
-    _addPointKilometre(finalData);
+    _addPointWithDistance(finalData);
   };
 
   /**
@@ -174,7 +199,7 @@ var trackview = (function () {
    * @returns {float} The distance between the two points.
    */
   var _distanceBtwPoint = function (p1, p2) {
-    
+
     // We begin by defining the EPSG:32632 ( UTM ) projection
     const epsg32632 = '+proj=utm +zone=32 +datum=WGS84 +units=m +no_defs';
 
@@ -229,29 +254,69 @@ var trackview = (function () {
     return distance;
   };
 
-  var _addPointKilometre = (pointData) => {
+  /**
+   * This function allow you to add a point every x distance, for example, every one kilometers, or every five hundred kilometers, etc...
+   * @param {point[]} pointData - Array of points
+   * @returns {null} - Nothing
+   */
+  var _addPointWithDistance = (pointData) => {
     var maxDistance = 1000; // First maximum distance ( 1km )
     var distanceManquante = null; // Store the missing distance
+
+    vectorSource.clear();
+    sourceSegment.clear();
 
     for(let i = 0; i < (pointData.length - 1); i++) {
       var distancePoint = pointData[i][0]; // We get the distance of a first point since origine
       var distancePointAfter = pointData[i + 1][0]; // Here we get the distance of the next point
 
       if(distancePointAfter > maxDistance) { // If the distance of the next point is greater than the max distance => 1000 metres
-        distanceManquante = maxDistance - distancePoint; // We calculate de missing distance
+        console.log(maxDistance);
+        distanceManquante = maxDistance - distancePoint; // We calculate the missing distance
         maxDistance += 1000; // When its done, we add one thousand each time ( 2km, 3km, 4km... )
 
-        /*let pointDataX = pointData[i][1].getGeometry().getCoordinates()[0];
-        let pointDataY = pointData[i][1].getGeometry().getCoordinates()[1];
+        console.log(distanceManquante);
 
-        let lineTurf = turf.LineString([[pointDataX,pointDataY]]);
-        let options = {units: 'miles'};
+        // We get the coordinates of the current and next point
+        let firstPointData = pointData[i][1].getGeometry().getCoordinates();
+        let secondPointData = pointData[i + 1][1].getGeometry().getCoordinates();
 
-        let along = turf.along(lineTurf, distanceManquante, options);*/
+        
+        // Creation of the lineString using 'turf' with the two previous coordinates
+        let lineTurf = turf.lineString([[firstPointData[0], firstPointData[1]], [secondPointData[0], secondPointData[1]]]);
+        
+        console.log(lineTurf);
+
+        var format = new ol.format.GeoJSON();
+
+        var feature = format.readFeature(lineTurf);
+
+        sourceSegment.addFeature(feature);
+
+        let options = {units: 'kilometers'}; // The unit
+
+        // We define a point from the begin of the line with the specify distance
+        let along = turf.along(lineTurf, 0.05, 'kilometers');
+
+        var alongPoint = format.readFeature(along);
+
+        alongPoint.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+
+        console.log(firstPointData, secondPointData);
+        console.log(along);
+
+        // Then, we create a new feature with the point define previously
+        /*let alongPoint = new ol.Feature({
+          geometry: new ol.geom.Point([along.geometry.coordinates[0], along.geometry.coordinates[1]])
+        });
+        */
+        // Set style to each feature would be create
+        alongPoint.setStyle(style["each_kilometers"]);
+
+        // We add each feature to the source
+        sourcePointKilometers.addFeature(alongPoint);
       }
     }
-    
-    return distanceManquante;
   }
 
   // VerticalLine plugin 
@@ -279,7 +344,11 @@ var trackview = (function () {
     }
   }
 
-  // Function that add graph on map
+  /**
+   * This function allow you to add a graph on the map to show the altitude of each parcours
+   * @param {point} data - Array of points
+   * @returns {chart} - The graph who has create
+   */
   var _addGraph = function (data) {
     // Constants
     const defaultPointColor = global.style.segment.color.default;
