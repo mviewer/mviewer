@@ -231,10 +231,10 @@ var trackview = (function () {
     var segment = new ol.geom.LineString([pointDebut, pointFin]);
 
     if((distanceTotalForSegment + distanceTurf) > maxDistance) {
-      var distanceManquante = maxDistance - distanceTotalForSegment; // We calculate the missing distance
+      var distanceManquante = (maxDistance - distanceTotalForSegment) / 1000; // We calculate the missing distance
       maxDistance += 1000;
 
-      var lineTurf = turf.lineString([pointDebut, pointFin]);
+      var lineTurf = turf.lineString([pointDebutConvert, pointFinConvert]);
 
       var along = turf.along(lineTurf, distanceManquante);
 
@@ -251,6 +251,8 @@ var trackview = (function () {
       });
 
       j++;
+
+      feature.setStyle(style["each_kilometers"]);
 
       // We add each feature to the source
       sourcePointKilometers.addFeature(feature);
