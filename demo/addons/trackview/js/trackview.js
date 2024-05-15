@@ -56,13 +56,19 @@ var trackview = (function () {
 
     'each_kilometers': new ol.style.Style({
       image: new ol.style.Circle({
-        radius: 6,
+        radius: 9,
         fill: new ol.style.Fill({
           color: "#00f",
         }),
         stroke: new ol.style.Stroke({
           color: "#000",
           width: 3,
+        }),
+      }),
+      text: new ol.style.Text({
+        text: null,
+        fill: new ol.style.Fill({
+          color: "#fff"
         }),
       }),
     }),
@@ -114,7 +120,9 @@ var trackview = (function () {
     sourceNewPoint = new ol.source.Vector();
 
     // Point layer each kilometers
-    vectorPointKilometers = new ol.layer.Vector();
+    vectorPointKilometers = new ol.layer.Vector({
+      style: null
+    });
 
     sourcePointKilometers = new ol.source.Vector();
 
@@ -140,7 +148,7 @@ var trackview = (function () {
   // features list could be in parameter of the function
   // why _ here in function name and not in other function :)
   /**
-   * Description
+   * Description TODO
    * @returns {point[]} - Array of points
    */
   var _createFeature = function () {
@@ -190,48 +198,65 @@ var trackview = (function () {
     };
 
     dataGraph = _addGraph(finalData);
-    _addPointWithDistance(finalData);
   };
 
   /**
-   * This function calculates the distance in metres between two points
+   * Description TODO again
    * @param {point} p1 - First point.
    * @param {point} p2 - Second point.
    * @returns {float} The distance between the two points.
    */
+
+  var maxDistance = 1000;
+  var j = 1;
+
   var _distanceBtwPoint = function (p1, p2) {
 
-    // We begin by defining the EPSG:32632 ( UTM ) projection
-    const epsg32632 = '+proj=utm +zone=32 +datum=WGS84 +units=m +no_defs';
+    // Variables
+    var sgmtKilometers = {};
 
-    // Then, we load the projection
-    proj4.defs(epsg32632);
-
-    // We convert the EPSG:3857 date in UTM 
-    let point1_utm = proj4('EPSG:3857', epsg32632, p1.getGeometry().getCoordinates());
-    let point2_utm = proj4('EPSG:3857', epsg32632, p2.getGeometry().getCoordinates());
-
-    // We create a localisation for each point
-    let location_pt1 = [point1_utm[0], point1_utm[1]];
-    let location_pt2 = [point2_utm[0], point2_utm[1]];
-
-    // We create a line that use the two previous location to calculate after the distance between them
-    var line = new ol.geom.LineString([location_pt1 , location_pt2]);
-
-    // We get the coordinates of two points
+    // First, we get the coordinates of two points
     var coordPoint1 = p1.getGeometry().getCoordinates();
     var coordPoint2 = p2.getGeometry().getCoordinates();
 
-    // Coordinates x and y of two points
-    var XYcoordPoint1 = [coordPoint1[0], coordPoint1[1]];
-    var XYcoordPoint2 = [coordPoint2[0], coordPoint2[1]];
+    // Then, we get just the x and y coordinates of the two points
+    var pointDebut = [coordPoint1[0], coordPoint1[1]];
+    var pointFin = [coordPoint2[0], coordPoint2[1]];
 
-    var segment = new ol.geom.LineString([XYcoordPoint1, XYcoordPoint2]);
+    var pointDebutConvert = ol.proj.transform(pointDebut, 'EPSG:3857', 'EPSG:4326');
+    var pointFinConvert = ol.proj.transform(pointFin, 'EPSG:3857', 'EPSG:4326');
 
-    // Calculate the distance of the line
-    var distance = Math.round(line.getLength());
+    var distanceTurf = parseInt((turf.distance(pointDebutConvert, pointFinConvert) * 1000).toFixed(0));
 
-    distanceTotalForSegment += distance;
+    var segment = new ol.geom.LineString([pointDebut, pointFin]);
+
+    if((distanceTotalForSegment + distanceTurf) > maxDistance) {
+      var distanceManquante = maxDistance - distanceTotalForSegment; // We calculate the missing distance
+      maxDistance += 1000;
+
+      var lineTurf = turf.lineString([pointDebut, pointFin]);
+
+      var along = turf.along(lineTurf, distanceManquante);
+
+      const pointCoords = along.geometry.coordinates;
+
+      // Then, we create a new point with the coordinates of along
+      const olPoint = new ol.geom.Point(ol.proj.fromLonLat(pointCoords));
+
+      const feature = new ol.Feature({
+        geometry: olPoint,
+        properties : {
+          id : j
+        }
+      });
+
+      j++;
+
+      // We add each feature to the source
+      sourcePointKilometers.addFeature(feature);
+    }
+
+    distanceTotalForSegment += distanceTurf;
 
     var segmentFeature;
 
@@ -252,63 +277,8 @@ var trackview = (function () {
     // Finally, we add each segment feature to the segment source
     sourceSegment.addFeature(segmentFeature);
 
-    return distance;
+    return distanceTurf;
   };
-
-  /**
-   * This function allow you to add a point every x distance, for example, every one kilometers, or every five hundred kilometers, etc...
-   * @param {point[]} pointData - Array of points
-   * @returns {null} - Nothing
-   */
-  var _addPointWithDistance = (pointData) => {
-    var maxDistance = 1000; // First maximum distance ( 1km )
-    var distanceManquante = null; // Store the missing distance
-    var j = 1;
-
-    for(let i = 0; i < (pointData.length - 1); i++) {
-      var distancePoint = pointData[i][0]; // We get the distance of a first point since origine
-      var distancePointAfter = pointData[i+1][0]; // Here we get the distance of the next point
-
-      if(distancePointAfter > maxDistance) { // If the distance of the next point is greater than the max distance => 1000 metres
-        distanceManquante = (maxDistance - distancePoint) / 1000; // We calculate the missing distance
-        maxDistance += 1000; // When its done, we add one thousand each time ( 2km, 3km, 4km... )
-
-        // We get the coordinates of the current and next point
-        let firstPointData = pointData[i][1].getGeometry().getCoordinates();
-        let secondPointData = pointData[i+1][1].getGeometry().getCoordinates();
-
-        // Conversion of the projection used
-        let firstConvert = ol.proj.transform(firstPointData, 'EPSG:3857', 'EPSG:4326');
-        let secondConvert = ol.proj.transform(secondPointData, 'EPSG:3857', 'EPSG:4326');
-
-        // Creation of the lineString using 'turf' with the two previous coordinates
-        let lineTurf = turf.lineString([[firstConvert[0], firstConvert[1]], [secondConvert[0], secondConvert[1]]]);
-
-        // We define a point from the begin of the line with the specify distance
-        let along = turf.along(lineTurf, distanceManquante);
-
-        const pointCoords = along.geometry.coordinates;
-
-        // Then, we create a new point with the coordinates of along
-        const olPoint = new ol.geom.Point(ol.proj.fromLonLat(pointCoords));
-
-        const feature = new ol.Feature({
-          geometry: olPoint,
-          properties : {
-            id : j
-          }
-        });
-
-        j++;
-  
-        // Set style to each feature would be create
-        feature.setStyle(style["each_kilometers"]);
-
-        // We add each feature to the source
-        sourcePointKilometers.addFeature(feature);
-      }
-    }
-  }
 
   // VerticalLine plugin 
   const verticalLine = {
@@ -385,8 +355,9 @@ var trackview = (function () {
           if (points.length) {
             var pointId = points[0].index;
             vectorPoint.getSource().getFeatures().forEach(function (elt) {
-            var carteId = elt.getProperties().properties.id;
-            elt.setStyle(null);
+
+              var carteId = elt.getProperties().properties.id;
+              elt.setStyle(null);
 
               if (pointId == carteId) {
                 elt.setStyle(style["selected"]);
