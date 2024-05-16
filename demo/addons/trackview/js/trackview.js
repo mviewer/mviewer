@@ -53,8 +53,13 @@ var trackview = (function () {
         }),
       }),
     }),
+  };
 
-    'each_kilometers': new ol.style.Style({
+  var _styleKilo = function(feature) {
+
+    let valueKilo = String(feature.getProperties().properties.id);
+
+    return new ol.style.Style({
       image: new ol.style.Circle({
         radius: 9,
         fill: new ol.style.Fill({
@@ -66,13 +71,13 @@ var trackview = (function () {
         }),
       }),
       text: new ol.style.Text({
-        text: null,
+        text: valueKilo,
         fill: new ol.style.Fill({
           color: "#fff"
         }),
       }),
-    }),
-  };
+    })
+  }
 
   // Define the different legends
   parcoursLayer.legend = {
@@ -121,7 +126,7 @@ var trackview = (function () {
 
     // Point layer each kilometers
     vectorPointKilometers = new ol.layer.Vector({
-      style: null
+      style: _styleKilo
     });
 
     sourcePointKilometers = new ol.source.Vector();
@@ -212,7 +217,7 @@ var trackview = (function () {
 
   var _distanceBtwPoint = function (p1, p2) {
 
-    // Variables
+    // hmap
     var sgmtKilometers = {};
 
     // First, we get the coordinates of two points
@@ -243,19 +248,22 @@ var trackview = (function () {
       // Then, we create a new point with the coordinates of along
       const olPoint = new ol.geom.Point(ol.proj.fromLonLat(pointCoords));
 
-      const feature = new ol.Feature({
+      var feature = null;
+
+      feature = new ol.Feature({
         geometry: olPoint,
         properties : {
           id : j
         }
       });
 
-      j++;
-
-      feature.setStyle(style["each_kilometers"]);
-
       // We add each feature to the source
       sourcePointKilometers.addFeature(feature);
+
+      // Add pair [id, feature] in hmap
+      sgmtKilometers[valueId] = feature;
+
+      j++;
     }
 
     distanceTotalForSegment += distanceTurf;

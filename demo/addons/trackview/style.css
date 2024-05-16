@@ -3,12 +3,12 @@
     width: 100%;
     position: fixed;
     bottom: 0;
-    background-color: lightgray;
+    background-color: white;
     border-color: lightblue;
-    border-style: dashed;
     filter: opacity(80%);
 }
 
 #backgroundlayerstoolbar-default, #mviewerinfosbar {
     z-index: 1;
+    margin-bottom: 232px;
 }
