@@ -1,7 +1,6 @@
 var trackview = (function () {
-
-  // TODO why parcours.parc ?
-  var global = mviewer.customComponents.trackview.config.options.mviewer.parcours.parc;
+  
+  var global = mviewer.customComponents.trackview.config.options.mviewer.parcours.one;
   var d = [];
   var z = [];
   var dataGraph;
@@ -10,6 +9,8 @@ var trackview = (function () {
   var valueId = 0;
   let vector, vectorSource, vectorPoint, sourceP, vectorSegment, sourceSegment, vectorNewPoint, sourceNewPoint, vectorPointKilometers, sourcePointKilometers = null;
   let distanceTotalForSegment = null;
+  // hmap
+  var sgmtKilometers = {};
 
   // Mviewer layer creation
   var parcoursLayer = {
@@ -59,27 +60,33 @@ var trackview = (function () {
 
     let valueKilo = String(feature.getProperties().properties.id);
 
-    return new ol.style.Style({
+    let styleKilo = new ol.style.Style({
       image: new ol.style.Circle({
-        radius: 9,
+        radius: global.style.pointKilometers.radius,
         fill: new ol.style.Fill({
-          color: "#00f",
+          color: global.style.pointKilometers.color.image,
         }),
         stroke: new ol.style.Stroke({
-          color: "#000",
-          width: 3,
+          color: global.style.pointKilometers.color.stroke,
+          width: global.style.pointKilometers.width,
         }),
       }),
       text: new ol.style.Text({
         text: valueKilo,
         fill: new ol.style.Fill({
-          color: "#fff"
+          color: global.style.pointKilometers.color.text
         }),
       }),
     })
+
+    if(global.param.pointKilometers.display === "false") {
+      styleKilo = null;
+    }
+
+    return styleKilo;
   }
 
-  // Define the different legends
+  // Define the different legends => TODO modify the layer used to set the legend
   parcoursLayer.legend = {
     items: [
       {
@@ -216,9 +223,6 @@ var trackview = (function () {
   var j = 1;
 
   var _distanceBtwPoint = function (p1, p2) {
-
-    // hmap
-    var sgmtKilometers = {};
 
     // First, we get the coordinates of two points
     var coordPoint1 = p1.getGeometry().getCoordinates();
@@ -478,6 +482,15 @@ var trackview = (function () {
               
               if(idSgmt <= idSgmtOnFeature) {
                 segment.setStyle(style["selectedSegment"]);
+                for(var key in sgmtKilometers) {
+                  if(sgmtKilometers.hasOwnProperty(key)) {
+                    var id = key
+                    if(id >= idSgmt) {
+                      sgmtKilometers[id].setStyle(_styleKilo(sgmtKilometers[id]));
+                      //console.log(sgmtKilometers[id]);
+                    }
+                  }
+                }
               } else {
                 segment.setStyle(style["defaultSegment"]);
               }

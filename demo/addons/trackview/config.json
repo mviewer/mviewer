@@ -9,8 +9,13 @@
     "options" : {
         "mviewer": {
             "parcours": {
-                "parc": {
+                "one": {
                     "title": "Circuit",
+                    "param": {
+                        "pointKilometers": {
+                            "display": "false"
+                        }
+                    },
                     "style" : {
                         "geometry": "LineString",
                         "segment": {
@@ -30,6 +35,15 @@
                             },
                             "radius": 7,
                             "width": 2
+                        },
+                        "pointKilometers": {
+                            "color": {
+                                "image": "#00f",
+                                "stroke": "000",
+                                "text": "#fff"
+                            },
+                            "radius": 9,
+                            "width": 3
                         },
                         "graph": {
                             "type": "line",
