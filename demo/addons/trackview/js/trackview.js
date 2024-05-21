@@ -1,6 +1,7 @@
 var trackview = (function () {
 
   var listeParcours = null;
+  var currentParcours = null;
   var d = [];
   var z = [];
   var dataGraph;
@@ -20,24 +21,24 @@ var trackview = (function () {
 
     let styleKilo = new ol.style.Style({
       image: new ol.style.Circle({
-        radius: listeParcours.style.pointKilometers.radius,
+        radius: currentParcours.style.pointKilometers.radius,
         fill: new ol.style.Fill({
-          color: listeParcours.style.pointKilometers.color.image,
+          color: currentParcours.style.pointKilometers.color.image,
         }),
         stroke: new ol.style.Stroke({
-          color: listeParcours.style.pointKilometers.color.stroke,
-          width: listeParcours.style.pointKilometers.width,
+          color: currentParcours.style.pointKilometers.color.stroke,
+          width: currentParcours.style.pointKilometers.width,
         }),
       }),
       text: new ol.style.Text({
         text: valueKilo,
         fill: new ol.style.Fill({
-          color: listeParcours.style.pointKilometers.color.text
+          color: currentParcours.style.pointKilometers.color.text
         }),
       }),
     })
 
-    if(listeParcours.param.pointKilometers.display === "false") {
+    if(currentParcours.param.pointKilometers.display === "false") {
       styleKilo = null;
     }
 
@@ -157,7 +158,7 @@ var trackview = (function () {
     vectorPointKilometers.setSource(sourcePointKilometers);
     mviewer.getMap().addLayer(vectorPointKilometers);
 
-    listeParcours = listeParcours[index];
+    currentParcours = listeParcours[index];
   }
   
   // TODO remove all var for let or const declaration in variables see https://www.freecodecamp.org/news/var-let-and-const-whats-the-difference/
@@ -331,7 +332,7 @@ var trackview = (function () {
    */
   var _addGraph = function (data) {
     // Constants
-    const defaultPointColor = listeParcours.style.segment.color.default;
+    const defaultPointColor = currentParcours.style.segment.color.default;
     const defaultRadiusValue = 2.5;
 
 
@@ -351,15 +352,15 @@ var trackview = (function () {
 
     var trackLineChart = null;
     trackLineChart = new Chart(document.getElementById("trackview-panel"), {
-      type: listeParcours.style.graph.type,
+      type: currentParcours.style.graph.type,
       data: {
         labels: d,
         datasets: [{
           data: z,
-          label: listeParcours.stats.name,
+          label: currentParcours.stats.name,
           pointBackgroundColor: color,
           pointRadius: radius,
-          borderColor: listeParcours.style.segment.color.default,
+          borderColor: currentParcours.style.segment.color.default,
           fill: true
         }],
       },
@@ -402,20 +403,20 @@ var trackview = (function () {
             max: maxValeur,
             title: {
               display: true,
-              text: listeParcours.style.graph.name.xAxis.text
+              text: currentParcours.style.graph.name.xAxis.text
             },
           },
           y: {
             title: {
               display: true,
-              text: listeParcours.style.graph.name.yAxis.text
+              text: currentParcours.style.graph.name.yAxis.text
             },
           },
         },
         plugins: {
           title: {
             display: true,
-            text: listeParcours.style.graph.title
+            text: currentParcours.style.graph.title
           },
         },
         interaction: {
@@ -450,6 +451,8 @@ var trackview = (function () {
           map.removeLayer(layer);
         });
 
+        index = parcoursValue;
+
         _initLayer(parcoursValue);
       }
     });
@@ -461,7 +464,7 @@ var trackview = (function () {
     // Here we create de drop-down list
     for(let i = 0; i < listeParcours.length; i++) {
       const option = document.createElement("option");
-      option.value = listeParcours[i].id;
+      option.value = i;
       option.label = listeParcours[i].label;
       
       element.appendChild(option);
@@ -481,7 +484,7 @@ var trackview = (function () {
         duration: 3000, // Define the animation time in ms
         maxZoom: 13.75 // Define the zoom max when the page is load
       });
-      _createFeature(); 
+      _createFeature();
 
       /*********** Detect feature on the map ***********/
       map.on("pointermove", function(event) {
