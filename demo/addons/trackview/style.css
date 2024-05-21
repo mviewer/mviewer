@@ -12,3 +12,13 @@
     z-index: 1;
     margin-bottom: 232px;
 }
+
+#liste-deroulante {
+    margin-top: 200px;
+    margin: 60px 0 0 270px;
+    position: fixed;
+    border-style: solid;
+    border-radius: 10px;
+    border-color: #03224c;
+    padding: 2px 3px 0px 3px;
+}

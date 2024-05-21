@@ -8,8 +8,71 @@
     "target": "page-content-wrapper",
     "options" : {
         "mviewer": {
-            "parcours": {
-                "one": {
+            "parcours": [
+                {   
+                    "id": 0,
+                    "label": "Parcours 13 km",
+                    "title": "Circuit",
+                    "param": {
+                        "pointKilometers": {
+                            "display": "false"
+                        }
+                    },
+                    "style": {
+                        "geometry": "LineString",
+                        "segment": {
+                            "color": {
+                                "default": "#f00",
+                                "selected": "#03224c"
+                            },
+                            "width": {
+                                "default": 3,
+                                "selected": 5
+                            }
+                        },
+                        "point": {
+                            "color": {
+                                "image": "#03224c",
+                                "stroke": "#fff"
+                            },
+                            "radius": 7,
+                            "width": 2
+                        },
+                        "pointKilometers": {
+                            "color": {
+                                "image": "#00f",
+                                "stroke": "000",
+                                "text": "#fff"
+                            },
+                            "radius": 9,
+                            "width": 3
+                        },
+                        "graph": {
+                            "type": "line",
+                            "title": "Dénivelé du parcours en fonction de la distance parcourue",
+                            "name": {
+                                "xAxis": {
+                                    "text": "Distance (km)"
+                                },
+                                "yAxis": {
+                                    "text": "Dénivelé (m)"
+                                }
+                            }
+                        }
+                    },
+                    "stats": {
+                        "name": "Parcours 13km",
+                        "type": "customlayer",
+                        "layerId": "parcours_1",
+                        "opacity": 0.8
+                    },  
+                    "data": {
+                        "url": "demo/trackview/data/gpx/parcours_13km.gpx"
+                    }
+                },
+                {   
+                    "id": 1,
+                    "label": "Parcours 5 km",
                     "title": "Circuit",
                     "param": {
                         "pointKilometers": {
@@ -59,16 +122,16 @@
                         }
                     },
                     "stats": {
-                        "name": "Parcours 13km",
+                        "name": "Parcours 5km",
                         "type": "customlayer",
                         "layerId": "parcours_1",
                         "opacity": 0.8
                     },  
                     "data": {
-                        "url": "demo/trackview/data/gpx/parcours_125kmdef-18686465-1712606571-884.gpx"
+                        "url": "demo/trackview/data/gpx/parcours_5km.gpx"
                     }
                 }
-            }
+            ]
         }
     }
 }

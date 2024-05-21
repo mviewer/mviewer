@@ -1,6 +1,6 @@
 var trackview = (function () {
-  
-  var global = mviewer.customComponents.trackview.config.options.mviewer.parcours.one;
+
+  var listeParcours = null;
   var d = [];
   var z = [];
   var dataGraph;
@@ -11,50 +11,8 @@ var trackview = (function () {
   let distanceTotalForSegment = null;
   // hmap
   var sgmtKilometers = {};
-
-  // Mviewer layer creation
-  var parcoursLayer = {
-    showintoc: true,
-    type: global.stats.type,
-    layerid: global.stats.layerId,
-    id: global.stats.layerId,
-    title: global.stats.name,
-    vectorlegend: true,
-    visible: true,
-    opacity: global.stats.opacity,
-    tooltip: true,
-    urlData: global.data.url
-  };
-  
-  // Defines the different styles
-  const style = {
-    'defaultSegment': new ol.style.Style({
-      stroke: new ol.style.Stroke({
-        color: global.style.segment.color.default,
-        width: global.style.segment.width.default,
-      }),
-    }),
-
-    'selectedSegment': new ol.style.Style({
-      stroke: new ol.style.Stroke({
-        color: global.style.segment.color.selected,
-        width: global.style.segment.width.selected,
-      }),
-    }),
-
-    'selected': new ol.style.Style({
-      image: new ol.style.Circle({
-        radius: global.style.point.radius,
-        fill: new ol.style.Fill({
-          color: global.style.point.color.image,
-        }),
-        stroke: new ol.style.Stroke({
-          color: global.style.point.color.stroke,
-          width: global.style.point.width,
-        }),
-      }),
-    }),
-  };
+  var style = null;
+  var parcoursLayer = null;
 
   var _styleKilo = function(feature) {
 
@@ -62,47 +20,92 @@ var trackview = (function () {
 
     let styleKilo = new ol.style.Style({
       image: new ol.style.Circle({
-        radius: global.style.pointKilometers.radius,
+        radius: listeParcours.style.pointKilometers.radius,
         fill: new ol.style.Fill({
-          color: global.style.pointKilometers.color.image,
+          color: listeParcours.style.pointKilometers.color.image,
         }),
         stroke: new ol.style.Stroke({
-          color: global.style.pointKilometers.color.stroke,
-          width: global.style.pointKilometers.width,
+          color: listeParcours.style.pointKilometers.color.stroke,
+          width: listeParcours.style.pointKilometers.width,
         }),
       }),
       text: new ol.style.Text({
         text: valueKilo,
         fill: new ol.style.Fill({
-          color: global.style.pointKilometers.color.text
+          color: listeParcours.style.pointKilometers.color.text
         }),
       }),
     })
 
-    if(global.param.pointKilometers.display === "false") {
+    if(listeParcours.param.pointKilometers.display === "false") {
       styleKilo = null;
     }
 
     return styleKilo;
   }
 
-  // Define the different legends => TODO modify the layer used to set the legend
-  parcoursLayer.legend = {
-    items: [
-      {
-        label: global.title,
-        geometry: global.style.geometry,
-        styles: [
-          style["defaultSegment"],
-        ],
-      },
-    ],
-  };
-
   /**
    * This function allow you to initialize all of the layers presents on the map
    */
-  var _initLayer = () => {
+  var _initLayer = (index) => {
+
+    // Mviewer layer creation
+    parcoursLayer = {
+      showintoc: true,
+      type: listeParcours[index].stats.type,
+      layerid: listeParcours[index].stats.layerId,
+      id: listeParcours[index].stats.layerId,
+      title: listeParcours[index].stats.name,
+      vectorlegend: true,
+      visible: true,
+      opacity: listeParcours[index].stats.opacity,
+      tooltip: true,
+      urlData: listeParcours[index].data.url
+    };
+
+    // Defines the different styles
+    style = {
+      'defaultSegment': new ol.style.Style({
+        stroke: new ol.style.Stroke({
+          color: listeParcours[index].style.segment.color.default,
+          width: listeParcours[index].style.segment.width.default,
+        }),
+      }),
+
+      'selectedSegment': new ol.style.Style({
+        stroke: new ol.style.Stroke({
+          color: listeParcours[index].style.segment.color.selected,
+          width: listeParcours[index].style.segment.width.selected,
+        }),
+      }),
+
+      'selected': new ol.style.Style({
+        image: new ol.style.Circle({
+          radius: listeParcours[index].style.point.radius,
+          fill: new ol.style.Fill({
+            color: listeParcours[index].style.point.color.image,
+          }),
+          stroke: new ol.style.Stroke({
+            color: listeParcours[index].style.point.color.stroke,
+            width: listeParcours[index].style.point.width,
+          }),
+        }),
+      }),
+    };
+
+    // Define the different legends => TODO modify the layer used to set the legend
+    parcoursLayer.legend = {
+      items: [
+        {
+          label: listeParcours[index].title,
+          geometry: listeParcours[index].style.geometry,
+          styles: [
+            style["defaultSegment"],
+          ],
+        },
+      ],
+    };
+
     // Source layer
     vectorSource = new ol.source.Vector({
       url: parcoursLayer.urlData,
@@ -153,6 +156,8 @@ var trackview = (function () {
 
     vectorPointKilometers.setSource(sourcePointKilometers);
     mviewer.getMap().addLayer(vectorPointKilometers);
+
+    listeParcours = listeParcours[index];
   }
   
   // TODO remove all var for let or const declaration in variables see https://www.freecodecamp.org/news/var-let-and-const-whats-the-difference/
@@ -326,7 +331,7 @@ var trackview = (function () {
    */
   var _addGraph = function (data) {
     // Constants
-    const defaultPointColor = global.style.segment.color.default;
+    const defaultPointColor = listeParcours.style.segment.color.default;
     const defaultRadiusValue = 2.5;
 
 
@@ -346,15 +351,15 @@ var trackview = (function () {
 
     var trackLineChart = null;
     trackLineChart = new Chart(document.getElementById("trackview-panel"), {
-      type: global.style.graph.type,
+      type: listeParcours.style.graph.type,
       data: {
         labels: d,
         datasets: [{
           data: z,
-          label: global.stats.name,
+          label: listeParcours.stats.name,
           pointBackgroundColor: color,
           pointRadius: radius,
-          borderColor: global.style.segment.color.default,
+          borderColor: listeParcours.style.segment.color.default,
           fill: true
         }],
       },
@@ -367,6 +372,7 @@ var trackview = (function () {
           var segment = vectorSegment.getSource().getFeatures();
 
           if (points.length) {
+            sourceNewPoint.clear();
             var pointId = points[0].index;
             vectorPoint.getSource().getFeatures().forEach(function (elt) {
 
@@ -396,20 +402,20 @@ var trackview = (function () {
             max: maxValeur,
             title: {
               display: true,
-              text: global.style.graph.name.xAxis.text
+              text: listeParcours.style.graph.name.xAxis.text
             },
           },
           y: {
             title: {
               display: true,
-              text: global.style.graph.name.yAxis.text
+              text: listeParcours.style.graph.name.yAxis.text
             },
           },
         },
         plugins: {
           title: {
             display: true,
-            text: global.style.graph.title
+            text: listeParcours.style.graph.title
           },
         },
         interaction: {
@@ -428,23 +434,56 @@ var trackview = (function () {
    * @returns {null} - Nothing
    */
   var _initTool = function () {
+    var map = mviewer.getMap();
+    let index = null;
     console.log("Initialisation de l'outil"); // Display in logs
-    // Calling function do init all layer
-    _initLayer();
 
-    mviewer.getMap().once("rendercomplete", function (e) {
+    document.getElementById("liste_parcours").addEventListener("change", function() {
+      var parcoursValue = this.value;
+
+      console.log(parcoursValue);
+
+      if(parcoursValue) {
+        var layerOnMap = map.getLayers();
+
+        layerOnMap.forEach(function(layer) {
+          map.removeLayer(layer);
+        });
+
+        _initLayer(parcoursValue);
+      }
+    });
+
+    listeParcours = mviewer.customComponents.trackview.config.options.mviewer.parcours;
+
+    let element = document.getElementById("liste_parcours");
+
+    // Here we create de drop-down list
+    for(let i = 0; i < listeParcours.length; i++) {
+      const option = document.createElement("option");
+      option.value = listeParcours[i].id;
+      option.label = listeParcours[i].label;
+      
+      element.appendChild(option);
+    }
+
+    // Calling function do init all layer
+    if(!index) {
+      _initLayer(0);
+    }
+
+    map.once("rendercomplete", function (e) {
       var source = vector.getSource();
       
       var feature = source.getFeatures();
 
-      mviewer.getMap().getView().fit(feature[0].getGeometry().getExtent(), {
+      map.getView().fit(feature[0].getGeometry().getExtent(), {
         duration: 3000, // Define the animation time in ms
         maxZoom: 13.75 // Define the zoom max when the page is load
       });
       _createFeature(); 
 
       /*********** Detect feature on the map ***********/
-      var map = mviewer.getMap();
       map.on("pointermove", function(event) {
         var pixel = event.pixel;
         var tolerance = 4; // In pixel
@@ -484,10 +523,9 @@ var trackview = (function () {
                 segment.setStyle(style["selectedSegment"]);
                 for(var key in sgmtKilometers) {
                   if(sgmtKilometers.hasOwnProperty(key)) {
-                    var id = key
-                    if(id >= idSgmt) {
+                    var id = key;
+                    if(id <= idSgmt) {
                       sgmtKilometers[id].setStyle(_styleKilo(sgmtKilometers[id]));
-                      //console.log(sgmtKilometers[id]);
                     }
                   }
                 }
