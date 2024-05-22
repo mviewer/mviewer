@@ -57,6 +57,10 @@
                                 "yAxis": {
                                     "text": "Dénivelé (m)"
                                 }
+                            },
+                            "color": {
+                                "segment": "#f00",
+                                "point": "#f00"
                             }
                         }
                     },
@@ -118,6 +122,10 @@
                                 "yAxis": {
                                     "text": "Dénivelé (m)"
                                 }
+                            },
+                            "color": {
+                                "segment": "#f00",
+                                "point": "#f00"
                             }
                         }
                     },

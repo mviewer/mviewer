@@ -18,7 +18,7 @@ var trackview = (function () {
   var _styleKilo = function(feature) {
 
     let valueKilo = String(feature.getProperties().properties.id);
-
+    
     let styleKilo = new ol.style.Style({
       image: new ol.style.Circle({
         radius: currentParcours.style.pointKilometers.radius,
@@ -174,7 +174,8 @@ var trackview = (function () {
     let features = vectorSource.getFeatures();
 
     // If no feature nothing to do
-    if(!features) {
+    if(features.length === 0) {
+      console.error("There is no features !")
       return;
     }
 
@@ -331,24 +332,14 @@ var trackview = (function () {
    * @returns {chart} - The graph who has create
    */
   var _addGraph = function (data) {
-    // Constants
-    const defaultPointColor = currentParcours.style.segment.color.default;
-    const defaultRadiusValue = 2.5;
-
 
     data.forEach(function (tab) {
-      d.push(tab[0]/1000); // Permet d'avoir en km
+      d.push(tab[0]/1000); // In kilometers
       z.push(tab[1].getGeometry().getCoordinates()[2]);
     });
 
     // Define a max value for the graph that the data fill all the available space
     const maxValeur = d[d.length - 1];
-
-    // Creation of the width and the color for each point of the graph
-    for (let i = 0; i < d.length; i++) {
-      color.push(defaultPointColor);
-      radius.push(defaultRadiusValue);
-    }
 
     var trackLineChart = null;
     trackLineChart = new Chart(document.getElementById("trackview-panel"), {
@@ -358,16 +349,12 @@ var trackview = (function () {
         datasets: [{
           data: z,
           label: currentParcours.stats.name,
-          pointBackgroundColor: color,
-          pointRadius: radius,
-          borderColor: currentParcours.style.segment.color.default,
+          pointBackgroundColor: currentParcours.style.graph.color.point,
+          borderColor: currentParcours.style.graph.color.segment,
           fill: true
         }],
       },
       options: {
-        animation: {
-          duration: 500
-        },
         onHover: (event) => {
           var points = trackLineChart.getElementsAtEventForMode(event, 'index', { intersect: false });
           var segment = vectorSegment.getSource().getFeatures();
@@ -436,30 +423,47 @@ var trackview = (function () {
    */
   var _initTool = function () {
     var map = mviewer.getMap();
-    let index = null;
+    let isInit = null;
     console.log("Initialisation de l'outil"); // Display in logs
 
-    document.getElementById("liste_parcours").addEventListener("change", function() {
+    document.getElementById("parcours").addEventListener("change", function() {
       var parcoursValue = this.value;
-
-      console.log(parcoursValue);
 
       if(parcoursValue) {
         var layerOnMap = map.getLayers();
+
+        if(!layerOnMap) {
+          return;
+        }
 
         layerOnMap.forEach(function(layer) {
           map.removeLayer(layer);
         });
 
-        index = parcoursValue;
+        if(dataGraph) {
+          dataGraph.data.datasets.forEach(function (dataset) {
+            dataset.data = null;
+          });
+          dataGraph.destroy();
+        }
+
+        isInit = true;
 
         _initLayer(parcoursValue);
+
+        vector.getSource().once('change', function(e) {
+          if(vector.getSource().getState() === "ready") {
+            console.log("Features are loaded");
+            _createFeature();
+            dataGraph.update();
+          }
+        });
       }
     });
 
     listeParcours = mviewer.customComponents.trackview.config.options.mviewer.parcours;
 
-    let element = document.getElementById("liste_parcours");
+    let element = document.getElementById("parcours");
 
     // Here we create de drop-down list
     for(let i = 0; i < listeParcours.length; i++) {
@@ -471,7 +475,7 @@ var trackview = (function () {
     }
 
     // Calling function do init all layer
-    if(!index) {
+    if(!isInit) {
       _initLayer(0);
     }
 
