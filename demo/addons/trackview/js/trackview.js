@@ -6,6 +6,7 @@ var trackview = (function () {
   var z = [];
   var dataGraph;
   var valueId = 0;
+  var j = 1;
   let vector, vectorSource, vectorPoint, sourceP, vectorSegment, sourceSegment, vectorNewPoint, sourceNewPoint, vectorPointKilometers, sourcePointKilometers = null;
   let distanceTotalForSegment = null;
   // hmap
@@ -13,6 +14,8 @@ var trackview = (function () {
   var style = null;
   var parcoursLayer = null;
   var firstGraph = false;
+  var firstFeature = false;
+  var map = mviewer.getMap();
 
   var _styleKilo = function(feature) {
 
@@ -72,6 +75,13 @@ var trackview = (function () {
         }),
       }),
 
+      'invisible': new ol.style.Style({
+        stroke: new ol.style.Stroke({
+          color: "#0000",
+          width: "#0000",
+        }),
+      }),
+
       'selectedSegment': new ol.style.Style({
         stroke: new ol.style.Stroke({
           color: listeParcours[index].style.segment.color.selected,
@@ -114,7 +124,7 @@ var trackview = (function () {
 
     vector = new ol.layer.Vector({
       source: vectorSource,
-      style: style["defaultSegment"]
+      style: style["invisible"]
     });
   
     // Point layer
@@ -125,7 +135,9 @@ var trackview = (function () {
     sourceP = new ol.source.Vector();
   
     // Segment layer
-    vectorSegment = new ol.layer.Vector();
+    vectorSegment = new ol.layer.Vector({
+      id: "segmentLayer"
+    });
   
     sourceSegment = new ol.source.Vector();
   
@@ -169,6 +181,11 @@ var trackview = (function () {
    * @returns {point[]} - Array of points
    */
   var _createFeature = function () {
+
+    if(firstFeature === true) {
+      j = 1;
+      valueId = 0;
+    };
 
     let features = vectorSource.getFeatures();
 
@@ -216,6 +233,8 @@ var trackview = (function () {
     };
 
     dataGraph = _addGraph(finalData);
+
+    firstFeature = true;
   };
 
   /**
@@ -226,7 +245,6 @@ var trackview = (function () {
    */
 
   var maxDistance = 1000;
-  var j = 1;
 
   var _distanceBtwPoint = function (p1, p2) {
 
@@ -274,6 +292,10 @@ var trackview = (function () {
       sgmtKilometers[valueId] = feature;
 
       j++;
+    }
+
+    if(firstGraph) {
+      sourcePointKilometers.clear();
     }
 
     distanceTotalForSegment += distanceTurf;
@@ -333,7 +355,8 @@ var trackview = (function () {
   var _addGraph = function (data) {
 
     if(firstGraph === true) {
-      d,z = []
+      z = [];
+      d = [];
     }
 
     data.forEach(function (tab) {
@@ -342,7 +365,7 @@ var trackview = (function () {
     });
 
     // Define a max value for the graph that the data fill all the available space
-    const maxValeur = d[d.length - 1];
+    let maxValeur = d[d.length - 1];
 
     var trackLineChart = null;
     trackLineChart = new Chart(document.getElementById("trackview-panel"), {
@@ -422,13 +445,33 @@ var trackview = (function () {
     return trackLineChart;
   };
 
+  var _clearTool = () => {
+    var layerOnMap = map.getLayers();
+
+      layerOnMap.forEach(function(layer) {
+        if(!layer) {
+          return;
+        }
+
+        if(layer.getPropertiesInternal().id === "segmentLayer") {
+          map.removeLayer(layer);
+        }
+      });
+
+      if(dataGraph) {
+        dataGraph.data.datasets.forEach(function (dataset) {
+          dataset.data = null;
+        });
+        dataGraph.destroy();
+      }
+  }
+
   /**
    * This function allow you to initialize the trackview addon
    * @param {null} - Nothing
    * @returns {null} - Nothing
    */
   var _initTool = function () {
-    var map = mviewer.getMap();
     let isInit = null;
     console.log("Initialisation de l'outil"); // Display in logs
 
@@ -436,29 +479,10 @@ var trackview = (function () {
       var parcoursValue = this.value;
 
       if(parcoursValue) {
-        var layerOnMap = map.getLayers();
+
+        _clearTool();
+
         isInit = true;
-
-        if(!layerOnMap) {
-          return;
-        }
-
-        layerOnMap.forEach(function(layer) {
-          if(!layer) {
-            return;
-          }
-          if(layer.getPropertiesInternal().mviewerid === parcoursLayer.layerid) {
-            console.log(layer);
-            map.removeLayer(layer);
-          }
-        });
-
-        if(dataGraph) {
-          dataGraph.data.datasets.forEach(function (dataset) {
-            dataset.data = null;
-          });
-          dataGraph.destroy();
-        }
 
         _initLayer(parcoursValue);
 
