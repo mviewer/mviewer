@@ -5,8 +5,6 @@ var trackview = (function () {
   var d = [];
   var z = [];
   var dataGraph;
-  var color = [];
-  var radius = [];
   var valueId = 0;
   let vector, vectorSource, vectorPoint, sourceP, vectorSegment, sourceSegment, vectorNewPoint, sourceNewPoint, vectorPointKilometers, sourcePointKilometers = null;
   let distanceTotalForSegment = null;
@@ -14,6 +12,7 @@ var trackview = (function () {
   var sgmtKilometers = {};
   var style = null;
   var parcoursLayer = null;
+  var firstGraph = false;
 
   var _styleKilo = function(feature) {
 
@@ -333,6 +332,10 @@ var trackview = (function () {
    */
   var _addGraph = function (data) {
 
+    if(firstGraph === true) {
+      d,z = []
+    }
+
     data.forEach(function (tab) {
       d.push(tab[0]/1000); // In kilometers
       z.push(tab[1].getGeometry().getCoordinates()[2]);
@@ -413,6 +416,9 @@ var trackview = (function () {
       },
       plugins: [verticalLine]
     });
+
+    firstGraph = true;
+
     return trackLineChart;
   };
 
@@ -431,13 +437,20 @@ var trackview = (function () {
 
       if(parcoursValue) {
         var layerOnMap = map.getLayers();
+        isInit = true;
 
         if(!layerOnMap) {
           return;
         }
 
         layerOnMap.forEach(function(layer) {
-          map.removeLayer(layer);
+          if(!layer) {
+            return;
+          }
+          if(layer.getPropertiesInternal().mviewerid === parcoursLayer.layerid) {
+            console.log(layer);
+            map.removeLayer(layer);
+          }
         });
 
         if(dataGraph) {
@@ -446,8 +459,6 @@ var trackview = (function () {
           });
           dataGraph.destroy();
         }
-
-        isInit = true;
 
         _initLayer(parcoursValue);
 
