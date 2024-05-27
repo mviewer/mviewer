@@ -8,7 +8,7 @@
     filter: opacity(80%);
 }
 
-#backgroundlayerstoolbar-default, #mviewerinfosbar {
+#backgroundlayerstoolbar-default, #mviewerinfosbar, .ol-attribution.ol-unselectable.ol-control, .ol-scale-line.ol-unselectable {
     z-index: 1;
     margin-bottom: 232px;
 }

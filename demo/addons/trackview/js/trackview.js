@@ -16,32 +16,35 @@ var trackview = (function () {
   var firstGraph = false;
   var firstFeature = false;
   var map = mviewer.getMap();
+  var maxDistance = 1000;
 
   var _styleKilo = function(feature) {
 
+    var styleKilo;
+
     let valueKilo = String(feature.getProperties().properties.id);
     
-    let styleKilo = new ol.style.Style({
-      image: new ol.style.Circle({
-        radius: currentParcours.style.pointKilometers.radius,
-        fill: new ol.style.Fill({
-          color: currentParcours.style.pointKilometers.color.image,
-        }),
-        stroke: new ol.style.Stroke({
-          color: currentParcours.style.pointKilometers.color.stroke,
-          width: currentParcours.style.pointKilometers.width,
-        }),
-      }),
-      text: new ol.style.Text({
-        text: valueKilo,
-        fill: new ol.style.Fill({
-          color: currentParcours.style.pointKilometers.color.text
-        }),
-      }),
-    })
-
     if(currentParcours.param.pointKilometers.display === "false") {
       styleKilo = null;
+    } else {
+      styleKilo = new ol.style.Style({
+        image: new ol.style.Circle({
+          radius: currentParcours.style.pointKilometers.radius,
+          fill: new ol.style.Fill({
+            color: currentParcours.style.pointKilometers.color.image,
+          }),
+          stroke: new ol.style.Stroke({
+            color: currentParcours.style.pointKilometers.color.stroke,
+            width: currentParcours.style.pointKilometers.width,
+          }),
+        }),
+        text: new ol.style.Text({
+          text: valueKilo,
+          fill: new ol.style.Fill({
+            color: currentParcours.style.pointKilometers.color.text
+          }),
+        }),
+      })
     }
 
     return styleKilo;
@@ -154,14 +157,15 @@ var trackview = (function () {
     sourcePointKilometers = new ol.source.Vector();
 
     // Add each layer in mviewer
-    mviewer.processLayer(parcoursLayer, vector);
+    mviewer.getMap().addLayer(vector);
+
+    vectorSegment.setSource(sourceSegment);
+
+    mviewer.processLayer(parcoursLayer, vectorSegment);
     mviewer.addLayer(parcoursLayer);
   
     vectorNewPoint.setSource(sourceNewPoint);
     mviewer.getMap().addLayer(vectorNewPoint);
-
-    vectorSegment.setSource(sourceSegment);
-    mviewer.getMap().addLayer(vectorSegment);
 
     vectorPoint.setSource(sourceP);
     mviewer.getMap().addLayer(vectorPoint);
@@ -182,9 +186,10 @@ var trackview = (function () {
    */
   var _createFeature = function () {
 
-    if(firstFeature === true) {
+    if(firstFeature) {
       j = 1;
       valueId = 0;
+      distanceTotalForSegment = null;
     };
 
     let features = vectorSource.getFeatures();
@@ -243,9 +248,6 @@ var trackview = (function () {
    * @param {point} p2 - Second point.
    * @returns {float} The distance between the two points.
    */
-
-  var maxDistance = 1000;
-
   var _distanceBtwPoint = function (p1, p2) {
 
     // First, we get the coordinates of two points
@@ -292,10 +294,6 @@ var trackview = (function () {
       sgmtKilometers[valueId] = feature;
 
       j++;
-    }
-
-    if(firstGraph) {
-      sourcePointKilometers.clear();
     }
 
     distanceTotalForSegment += distanceTurf;
@@ -447,23 +445,32 @@ var trackview = (function () {
 
   var _clearTool = () => {
     var layerOnMap = map.getLayers();
+    maxDistance = 1000;
+    var legend = document.querySelector('[data-layerid="parcours_1"]');
 
-      layerOnMap.forEach(function(layer) {
-        if(!layer) {
-          return;
-        }
+    if(legend) {
+      legend.remove();
+    }
 
-        if(layer.getPropertiesInternal().id === "segmentLayer") {
-          map.removeLayer(layer);
-        }
-      });
-
-      if(dataGraph) {
-        dataGraph.data.datasets.forEach(function (dataset) {
-          dataset.data = null;
-        });
-        dataGraph.destroy();
+    layerOnMap.forEach(function(layer) {
+      if(!layer) {
+        return;
       }
+
+      if(layer.getPropertiesInternal().id === "segmentLayer") {
+        map.removeLayer(layer);
+      }
+    });
+
+    if(dataGraph) {
+      dataGraph.data.datasets.forEach(function (dataset) {
+        dataset.data = null;
+      });
+      dataGraph.destroy();
+    }
+
+    sourcePointKilometers.clear();
+    sourceNewPoint.clear();
   }
 
   /**

@@ -80,7 +80,7 @@
                     "title": "Circuit",
                     "param": {
                         "pointKilometers": {
-                            "display": "false"
+                            "display": "true"
                         }
                     },
                     "style" : {
