@@ -163,6 +163,10 @@ var trackview = (function () {
 
     mviewer.processLayer(parcoursLayer, vectorSegment);
     mviewer.addLayer(parcoursLayer);
+
+    vectorSegment.on('change:visible', function(event) {
+      vectorPointKilometers.setVisible(false);
+    });
   
     vectorNewPoint.setSource(sourceNewPoint);
     mviewer.getMap().addLayer(vectorNewPoint);
