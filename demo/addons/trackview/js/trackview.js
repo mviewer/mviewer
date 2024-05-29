@@ -18,6 +18,11 @@ var trackview = (function () {
   var map = mviewer.getMap();
   var maxDistance = 1000;
 
+  /**
+   * This function is used to create the style of each kilometers points ( or other depending on the config file ).
+   * @param {*} feature Feature of the layer
+   * @returns {style} The style of each kilometers points ( or other... ) styleKilo
+   */
   var _styleKilo = function(feature) {
 
     var styleKilo;
@@ -51,7 +56,9 @@ var trackview = (function () {
   }
 
   /**
-   * This function allow you to initialize all of the layers presents on the map
+   * This function allow you to initialize all of the layers and the styles presents on the map
+   * @params Nothing
+   * @returns Nothing
    */
   var _initLayer = (index) => {
 
@@ -165,7 +172,12 @@ var trackview = (function () {
     mviewer.addLayer(parcoursLayer);
 
     vectorSegment.on('change:visible', function(event) {
-      vectorPointKilometers.setVisible(false);
+      const isVisible = vectorSegment.getVisible();
+      vectorPointKilometers.setVisible(isVisible);
+      vectorNewPoint.setVisible(isVisible);
+      vectorPoint.setVisible(isVisible);
+      vectorSegment.setVisible(isVisible);
+      vector.setVisible(isVisible);
     });
   
     vectorNewPoint.setSource(sourceNewPoint);
@@ -185,8 +197,9 @@ var trackview = (function () {
   // features list could be in parameter of the function
   // why _ here in function name and not in other function :)
   /**
-   * Description TODO
-   * @returns {point[]} - Array of points
+   * This function is used to create feature with coordinates, and then, create an array to store, one feature and it distance.
+   * @params Nothing
+   * @returns {point[]} Array of points
    */
   var _createFeature = function () {
 
@@ -247,9 +260,9 @@ var trackview = (function () {
   };
 
   /**
-   * Description TODO again
-   * @param {point} p1 - First point.
-   * @param {point} p2 - Second point.
+   * This function is used for two part. The first, to calculate the distance between two points. The second, to create a point each kilometers ( or other depending on the config file ) and also to create segment to display on the map.
+   * @param {point} p1 First point.
+   * @param {point} p2 Second point.
    * @returns {float} The distance between the two points.
    */
   var _distanceBtwPoint = function (p1, p2) {
@@ -350,9 +363,9 @@ var trackview = (function () {
   }
 
   /**
-   * This function allow you to add a graph on the map to show the altitude of each parcours
-   * @param {point} data - Array of points
-   * @returns {chart} - The graph who has create
+   * This function allow you to add a graph on the map to show the altitude of each parcours.
+   * @param {point} data Array of points
+   * @returns {chart} The graph who has create
    */
   var _addGraph = function (data) {
 
@@ -447,25 +460,38 @@ var trackview = (function () {
     return trackLineChart;
   };
 
-  var _clearTool = () => {
-    var layerOnMap = map.getLayers();
-    maxDistance = 1000;
-    var legend = document.querySelector('[data-layerid="parcours_1"]');
+  /**
+   * This function is used to do a zoom on the features loaded.
+   * @params Nothing
+   * @returns Nothing
+   */
+  var _zoomOnFeature = () => {
 
+    var source = vector.getSource();
+
+    var feature = source.getFeatures();
+
+    map.getView().fit(feature[0].getGeometry().getExtent(), {
+      duration: 3000, // Define the animation time in ms
+      maxZoom: 13.75 // Define the zoom max when the page is load
+    });
+  }
+  
+  /**
+   * This function is used to clear all of the items we need when the parcours is changing.
+   * @params Nothing
+   * @returns Nothing
+   */
+  var _clearTool = () => {
+    maxDistance = 1000;
+    var legend = document.querySelector('[data-layerid="parcours_1"].mv-layer-details');
+
+    // If legend, we remove it
     if(legend) {
       legend.remove();
     }
 
-    layerOnMap.forEach(function(layer) {
-      if(!layer) {
-        return;
-      }
-
-      if(layer.getPropertiesInternal().id === "segmentLayer") {
-        map.removeLayer(layer);
-      }
-    });
-
+    // If graph, delete all data and destroy him
     if(dataGraph) {
       dataGraph.data.datasets.forEach(function (dataset) {
         dataset.data = null;
@@ -473,14 +499,17 @@ var trackview = (function () {
       dataGraph.destroy();
     }
 
+    // Clear all source that we need
+    sourceSegment.clear();
     sourcePointKilometers.clear();
     sourceNewPoint.clear();
+    sourceP.clear();
   }
 
   /**
-   * This function allow you to initialize the trackview addon
-   * @param {null} - Nothing
-   * @returns {null} - Nothing
+   * This function allow you to initialize the trackview addon.
+   * @params Nothing
+   * @returns Nothing
    */
   var _initTool = function () {
     let isInit = null;
@@ -502,6 +531,8 @@ var trackview = (function () {
             console.log("Features are loaded");
             _createFeature();
             dataGraph.update();
+
+            _zoomOnFeature();
           }
         });
       }
@@ -526,14 +557,7 @@ var trackview = (function () {
     }
 
     map.once("rendercomplete", function (e) {
-      var source = vector.getSource();
-      
-      var feature = source.getFeatures();
-
-      map.getView().fit(feature[0].getGeometry().getExtent(), {
-        duration: 3000, // Define the animation time in ms
-        maxZoom: 13.75 // Define the zoom max when the page is load
-      });
+      _zoomOnFeature();
       _createFeature();
 
       /*********** Detect feature on the map ***********/
@@ -574,14 +598,14 @@ var trackview = (function () {
               
               if(idSgmt <= idSgmtOnFeature) {
                 segment.setStyle(style["selectedSegment"]);
-                for(var key in sgmtKilometers) {
+                /*for(var key in sgmtKilometers) {
                   if(sgmtKilometers.hasOwnProperty(key)) {
                     var id = key;
                     if(id <= idSgmt) {
                       sgmtKilometers[id].setStyle(_styleKilo(sgmtKilometers[id]));
                     }
                   }
-                }
+                }*/
               } else {
                 segment.setStyle(style["defaultSegment"]);
               }

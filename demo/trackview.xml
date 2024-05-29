@@ -21,6 +21,9 @@
         <extension type="component" id="trackview" path="demo/addons"/>
     </extensions>
 
-    <themes mini="true">
+    <themes mini="true" legendmini="false">
+        <theme id="theme_1" name="Les différents parcours" collapsed="true" icon="fas fa-book">
+            <layer id="parcours_1" name="Parcours"/>
+        </theme>
     </themes>
 </config>
