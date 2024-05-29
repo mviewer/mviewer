@@ -176,8 +176,6 @@ var trackview = (function () {
       vectorPointKilometers.setVisible(isVisible);
       vectorNewPoint.setVisible(isVisible);
       vectorPoint.setVisible(isVisible);
-      vectorSegment.setVisible(isVisible);
-      vector.setVisible(isVisible);
     });
   
     vectorNewPoint.setSource(sourceNewPoint);
@@ -383,7 +381,7 @@ var trackview = (function () {
     let maxValeur = d[d.length - 1];
 
     var trackLineChart = null;
-    trackLineChart = new Chart(document.getElementById("trackview-panel"), {
+    trackLineChart = new Chart(document.getElementById("trackview-graph"), {
       type: currentParcours.style.graph.type,
       data: {
         labels: d,
@@ -541,6 +539,7 @@ var trackview = (function () {
     listeParcours = mviewer.customComponents.trackview.config.options.mviewer.parcours;
 
     let element = document.getElementById("parcours");
+    let element2 = document.getElementById("trackview-dropdown");
 
     // Here we create de drop-down list
     for(let i = 0; i < listeParcours.length; i++) {
@@ -549,6 +548,13 @@ var trackview = (function () {
       option.label = listeParcours[i].label;
       
       element.appendChild(option);
+
+      const a = document.createElement("a");
+      a.value = i;
+      a.label = listeParcours[i].label;
+      a.class = "dropdown-item";
+
+      element2.appendChild(a);
     }
 
     // Calling function do init all layer

@@ -1,4 +1,4 @@
-#trackview-panel {
+#trackview-graph {
     max-height: 230px;
     width: 100%;
     position: fixed;
@@ -21,4 +21,10 @@
     border-radius: 10px;
     border-color: #03224c;
     padding: 2px 3px 0px 3px;
+}
+
+#dropdown-parcours {
+    margin-top: 200px;
+    margin: 60px 0 0 600px;
+    position: fixed;
 }
