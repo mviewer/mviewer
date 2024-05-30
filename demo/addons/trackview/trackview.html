@@ -1,26 +1,19 @@
-<html>
-    <head>
-        <link rel="stylesheet" href="../../../bootstrap/css/bootstrap.min.css">
-    </head>
+<div id="trackview-panel">
+    <canvas id="trackview-graph" class="graph"></canvas>
+</div>
+<div id="liste-deroulante" class="dropdown">
+    <form>
+        <label for="parcours">Changer de parcours</label>
+        <select id="parcours" name="parcours">
+        </select>
+    </form>
+</div>
 
-    <div id="trackview-panel">
-        <canvas id="trackview-graph" class="graph"></canvas>
-    </div>
-    <div id="liste-deroulante" class="dropdown">
-        <form>
-            <label for="parcours">Changer de parcours</label>
-            <select id="parcours" name="parcours">
-            </select>
-        </form>
-    </div>
-
-    <div id="dropdown-parcours" class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Changer de parcours
-        </button>
-        <div id="trackview-dropdown" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        </div>
-    </div>
-
-    <script src="../../../bootstrap/js/dropdown.js"></script>
-</html>
+<div id="dropdown-parcours" class="btn-group">
+    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+        Changer de parcours
+        <span class="caret"></span>
+    </a>
+    <ul id="trackview-dropdown" class="dropdown-menu">
+    </ul>
+</div>

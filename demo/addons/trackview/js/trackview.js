@@ -549,12 +549,11 @@ var trackview = (function () {
       
       element.appendChild(option);
 
-      const a = document.createElement("a");
-      a.value = i;
-      a.label = listeParcours[i].label;
-      a.class = "dropdown-item";
+      const option2 = document.createElement("option");
+      option2.value = i;
+      option2.label = listeParcours[i].label;
 
-      element2.appendChild(a);
+      element2.appendChild(option2);
     }
 
     // Calling function do init all layer
