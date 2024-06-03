@@ -482,7 +482,7 @@ var trackview = (function () {
    */
   var _clearTool = () => {
     maxDistance = 1000;
-    var legend = document.querySelector('[data-layerid="${currentParcours.stats.layerId}"].mv-layer-details');
+    var legend = document.querySelector(`[data-layerid="${currentParcours.stats.layerId}"].mv-layer-details`);
 
     // If legend, we remove it
     if(legend) {
@@ -515,8 +515,6 @@ var trackview = (function () {
 
     document.getElementById("parcours").addEventListener("change", function() {
       var parcoursValue = this.value;
-
-      console.log(parcoursValue);
 
       if(parcoursValue) {
 

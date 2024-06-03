@@ -39,3 +39,13 @@
 .xs #trackview-panel {
     width: 100%;
 }
+
+#wrapper.toggled-2 #trackview-panel {
+    width: calc(100% - 50px)!important;
+    transition: all 0.5s ease;
+}
+
+#wrapper #trackview-panel {
+    width: calc(100% - 250px)!important;
+    transition: all 0.5s ease;
+}
