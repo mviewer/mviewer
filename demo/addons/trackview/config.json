@@ -40,12 +40,12 @@
                         },
                         "pointKilometers": {
                             "color": {
-                                "image": "#00f",
-                                "stroke": "000",
-                                "text": "#fff"
+                                "image": "#fff",
+                                "stroke": "f00",
+                                "text": "#333"
                             },
                             "radius": 9,
-                            "width": 3
+                            "width": 0.8
                         },
                         "graph": {
                             "type": "line",
@@ -105,13 +105,13 @@
                         },
                         "pointKilometers": {
                             "color": {
-                                "image": "#00f",
-                                "stroke": "000",
-                                "text": "#fff"
+                                "image": "#fff",
+                                "stroke": "f00",
+                                "text": "#333"
                             },
                             "radius": 9,
-                            "width": 3
-                        },
+                            "width": 0.8
+                        },  
                         "graph": {
                             "type": "line",
                             "title": "Dénivelé du parcours en fonction de la distance parcourue",

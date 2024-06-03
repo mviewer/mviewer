@@ -1,11 +1,17 @@
-#trackview-graph {
-    max-height: 230px;
+#trackview-panel {
     width: 100%;
+    height: auto;
     position: fixed;
     bottom: 0;
+    left: 0;
     background-color: white;
     border-color: lightblue;
     filter: opacity(80%);
+}
+
+#trackview-graph {
+    max-height: 230px;
+    width: 100%;
 }
 
 #backgroundlayerstoolbar-default, #mviewerinfosbar, .ol-attribution.ol-unselectable.ol-control, .ol-scale-line.ol-unselectable {
@@ -14,17 +20,18 @@
 }
 
 #liste-deroulante {
+    text-align: center;
     margin-top: 200px;
     margin: 60px 0 0 270px;
     position: fixed;
-    border-style: solid;
     border-radius: 10px;
+    background-color: white;
     border-color: #03224c;
-    padding: 2px 3px 0px 3px;
+    padding: 1.2rem 1rem;
+    font-family: 'roboto_regular', Sans-serif;
+    filter: opacity(80%);
 }
 
-#dropdown-parcours {
-    margin-top: 200px;
-    margin: 60px 0 0 600px;
-    position: fixed;
+.xs #liste-deroulante {
+    margin: 60px 0 0 210px;
 }

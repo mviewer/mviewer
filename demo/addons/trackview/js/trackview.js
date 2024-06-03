@@ -482,7 +482,7 @@ var trackview = (function () {
    */
   var _clearTool = () => {
     maxDistance = 1000;
-    var legend = document.querySelector('[data-layerid="parcours_1"].mv-layer-details');
+    var legend = document.querySelector('[data-layerid="{global.stats.layerid}"].mv-layer-details');
 
     // If legend, we remove it
     if(legend) {
@@ -516,6 +516,8 @@ var trackview = (function () {
     document.getElementById("parcours").addEventListener("change", function() {
       var parcoursValue = this.value;
 
+      console.log(parcoursValue);
+
       if(parcoursValue) {
 
         _clearTool();
@@ -548,12 +550,6 @@ var trackview = (function () {
       option.label = listeParcours[i].label;
       
       element.appendChild(option);
-
-      const option2 = document.createElement("option");
-      option2.value = i;
-      option2.label = listeParcours[i].label;
-
-      element2.appendChild(option2);
     }
 
     // Calling function do init all layer
