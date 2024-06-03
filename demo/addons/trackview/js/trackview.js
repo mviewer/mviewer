@@ -482,7 +482,7 @@ var trackview = (function () {
    */
   var _clearTool = () => {
     maxDistance = 1000;
-    var legend = document.querySelector('[data-layerid="{global.stats.layerid}"].mv-layer-details');
+    var legend = document.querySelector('[data-layerid="${currentParcours.stats.layerId}"].mv-layer-details');
 
     // If legend, we remove it
     if(legend) {
@@ -599,14 +599,6 @@ var trackview = (function () {
               
               if(idSgmt <= idSgmtOnFeature) {
                 segment.setStyle(style["selectedSegment"]);
-                /*for(var key in sgmtKilometers) {
-                  if(sgmtKilometers.hasOwnProperty(key)) {
-                    var id = key;
-                    if(id <= idSgmt) {
-                      sgmtKilometers[id].setStyle(_styleKilo(sgmtKilometers[id]));
-                    }
-                  }
-                }*/
               } else {
                 segment.setStyle(style["defaultSegment"]);
               }

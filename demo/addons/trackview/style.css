@@ -1,9 +1,9 @@
 #trackview-panel {
-    width: 100%;
+    width: calc(100% - 50px);
     height: auto;
     position: fixed;
     bottom: 0;
-    left: 0;
+    right: 0;
     background-color: white;
     border-color: lightblue;
     filter: opacity(80%);
@@ -34,4 +34,8 @@
 
 .xs #liste-deroulante {
     margin: 60px 0 0 210px;
+}
+
+.xs #trackview-panel {
+    width: 100%;
 }
