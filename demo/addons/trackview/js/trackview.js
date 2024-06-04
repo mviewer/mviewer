@@ -176,6 +176,10 @@ var trackview = (function () {
       vectorPointKilometers.setVisible(isVisible);
       vectorNewPoint.setVisible(isVisible);
       vectorPoint.setVisible(isVisible);
+
+      if(!isVisible) {
+        document.getElementById("trackview-panel").classList.add("hidden");
+      }
     });
   
     vectorNewPoint.setSource(sourceNewPoint);
@@ -530,6 +534,8 @@ var trackview = (function () {
             _createFeature();
             dataGraph.update();
 
+            document.getElementById("trackview-panel").classList.remove("hidden");
+
             _zoomOnFeature();
           }
         });
@@ -539,7 +545,6 @@ var trackview = (function () {
     listeParcours = mviewer.customComponents.trackview.config.options.mviewer.parcours;
 
     let element = document.getElementById("parcours");
-    let element2 = document.getElementById("trackview-dropdown");
 
     // Here we create de drop-down list
     for(let i = 0; i < listeParcours.length; i++) {

@@ -9,6 +9,10 @@
     filter: opacity(80%);
 }
 
+.hidden {
+    display: none;
+}
+
 #trackview-graph {
     max-height: 230px;
     width: 100%;
@@ -19,7 +23,9 @@
     margin-bottom: 232px;
 }
 
-#liste-deroulante {
+/* Parameters of the dropdown */
+
+#trackview-select {
     text-align: center;
     margin-top: 200px;
     margin: 60px 0 0 270px;
@@ -32,13 +38,32 @@
     filter: opacity(80%);
 }
 
+select option {
+    background-color: white;
+    color: black;
+    padding: 10px;
+    font-size: 16px;
+}
+
+select option:hover {
+    background-color: red;
+}
+
+/* The phone version */
+
+.xs #backgroundlayerstoolbar-default, .xs #mviewerinfosbar, .xs .ol-attribution.ol-unselectable.ol-control, .xs .ol-scale-line.ol-unselectable {
+    margin-bottom: 210px;
+}
+
 .xs #liste-deroulante {
     margin: 60px 0 0 210px;
 }
 
-.xs #trackview-panel {
-    width: 100%;
+.xs #wrapper.toggled-2 #trackview-panel {
+    width: 100%!important;
 }
+
+/* The thematic menu */
 
 #wrapper.toggled-2 #trackview-panel {
     width: calc(100% - 50px)!important;
