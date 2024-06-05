@@ -535,9 +535,6 @@ var trackview = (function () {
       const li = document.createElement("li");
       li.value = i;
       li.textContent = listeParcours[i].label;
-      if(i === 0) {
-        li.className = "active"
-      }
       
       dropdown.appendChild(li);
     }
