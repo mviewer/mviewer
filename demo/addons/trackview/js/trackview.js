@@ -2,21 +2,25 @@ import { initDropdown } from "./custom-dropdown.js";
 
 var trackview = (function () {
 
-  var listeParcours = null;
+  // Mviewer main layer with current track
+  var parcoursLayer = null;
+
+  const listeParcours = mviewer.customComponents.trackview.config.options.mviewer.parcours;
+
   var currentParcours = null;
   var d = [];
   var z = [];
   var dataGraph;
   var valueId = 0;
-  var j = 1;
+  var idKilometre = 1;
+  // Define global layer and source used for this add-on
   let vector, vectorSource, vectorPoint, sourceP, vectorSegment, sourceSegment, vectorNewPoint, sourceNewPoint, vectorPointKilometers, sourcePointKilometers = null;
-  let distanceTotalForSegment = null;
+  let distanceTotalForSegment = 0;
   // hmap
   var sgmtKilometers = {};
   var style = null;
-  var parcoursLayer = null;
+ 
   var firstGraph = false;
-  var firstFeature = false;
   var map = mviewer.getMap();
   var maxDistance = 1000;
 
@@ -31,6 +35,7 @@ var trackview = (function () {
 
     let valueKilo = String(feature.getProperties().properties.id);
     
+    // TODO Try to put it in condition on layer creation
     if(currentParcours.param.pointKilometers.display === "false") {
       styleKilo = null;
     } else {
@@ -80,6 +85,7 @@ var trackview = (function () {
 
     // Defines the different styles
     style = {
+      // TODO rename segment
       'defaultSegment': new ol.style.Style({
         stroke: new ol.style.Stroke({
           color: listeParcours[index].style.segment.color.default,
@@ -87,13 +93,14 @@ var trackview = (function () {
         }),
       }),
 
+      // TODO check why null style make thin blue line
       'invisible': new ol.style.Style({
         stroke: new ol.style.Stroke({
           color: "#0000",
           width: "#0000",
         }),
       }),
-
+      
       'selectedSegment': new ol.style.Style({
         stroke: new ol.style.Stroke({
           color: listeParcours[index].style.segment.color.selected,
@@ -101,6 +108,7 @@ var trackview = (function () {
         }),
       }),
 
+      // TODO selectedPoint
       'selected': new ol.style.Style({
         image: new ol.style.Circle({
           radius: listeParcours[index].style.point.radius,
@@ -115,7 +123,7 @@ var trackview = (function () {
       }),
     };
 
-    // Define the different legends => TODO modify the layer used to set the legend
+    // Define the different legends
     parcoursLayer.legend = {
       items: [
         {
@@ -128,7 +136,8 @@ var trackview = (function () {
       ],
     };
 
-    // Source layer
+    // Source layer with GPX data
+    // TODO rename GPX source
     vectorSource = new ol.source.Vector({
       url: parcoursLayer.urlData,
       format: new ol.format.GPX(),
@@ -138,6 +147,9 @@ var trackview = (function () {
       source: vectorSource,
       style: style["invisible"]
     });
+    
+    // Add each layer in mviewer
+    mviewer.getMap().addLayer(vector);
   
     // Point layer
     vectorPoint = new ol.layer.Vector({
@@ -165,9 +177,6 @@ var trackview = (function () {
 
     sourcePointKilometers = new ol.source.Vector();
 
-    // Add each layer in mviewer
-    mviewer.getMap().addLayer(vector);
-
     vectorSegment.setSource(sourceSegment);
 
     mviewer.processLayer(parcoursLayer, vectorSegment);
@@ -180,6 +189,7 @@ var trackview = (function () {
       vectorPoint.setVisible(isVisible);
 
       if(!isVisible) {
+        // hide graph
         document.getElementById("trackview-panel").classList.add("hidden");
       }
     });
@@ -207,12 +217,11 @@ var trackview = (function () {
    */
   var _createFeature = function () {
 
-    if(firstFeature) {
-      j = 1;
-      valueId = 0;
-      distanceTotalForSegment = null;
-    };
-
+    // TODO pass a parameter not as global id kilometre
+    idKilometre = 1;
+    valueId = 0;
+    distanceTotalForSegment = null;
+    
     let features = vectorSource.getFeatures();
 
     // If no feature nothing to do
@@ -251,6 +260,7 @@ var trackview = (function () {
         point.set('distance', distance);
       } else {
         var distanceCalc = _distanceBtwPoint(previousPoint, point); // Distance between the current point and the previous one
+        
         distance += distanceCalc; // Add distance in variable
         finalData[i] = [distance, point]; // Add distance and point in finalData array
         point.set('distance', distance);
@@ -259,8 +269,6 @@ var trackview = (function () {
     };
 
     dataGraph = _addGraph(finalData);
-
-    firstFeature = true;
   };
 
   /**
@@ -286,6 +294,7 @@ var trackview = (function () {
 
     var segment = new ol.geom.LineString([pointDebut, pointFin]);
 
+    // TODO call function 
     if((distanceTotalForSegment + distanceTurf) > maxDistance) {
       var distanceManquante = (maxDistance - distanceTotalForSegment) / 1000; // We calculate the missing distance
       maxDistance += 1000;
@@ -299,12 +308,10 @@ var trackview = (function () {
       // Then, we create a new point with the coordinates of along
       const olPoint = new ol.geom.Point(ol.proj.fromLonLat(pointCoords));
 
-      var feature = null;
-
-      feature = new ol.Feature({
+      let feature = new ol.Feature({
         geometry: olPoint,
         properties : {
-          id : j
+          id : idKilometre
         }
       });
 
@@ -314,7 +321,7 @@ var trackview = (function () {
       // Add pair [id, feature] in hmap
       sgmtKilometers[valueId] = feature;
 
-      j++;
+      idKilometre++;
     }
 
     distanceTotalForSegment += distanceTurf;
@@ -516,18 +523,16 @@ var trackview = (function () {
    * @returns Nothing
    */
   var _initTool = function () {
-    let isInit = null;
+
     console.log("Initialisation de l'outil"); // Display in logs
 
+    // TODO put after parcours init
     document.getElementById("parcours").addEventListener("change", function() {
       var parcoursValue = this.value;
 
       if(parcoursValue) {
 
         _clearTool();
-
-        isInit = true;
-
         _initLayer(parcoursValue);
 
         vector.getSource().once('change', function(e) {
@@ -535,17 +540,16 @@ var trackview = (function () {
             console.log("Features are loaded");
             _createFeature();
             dataGraph.update();
-
             _zoomOnFeature();
-
+            // Display graph
             document.getElementById("trackview-panel").classList.remove("hidden");
           }
         });
       }
     });
 
-    listeParcours = mviewer.customComponents.trackview.config.options.mviewer.parcours;
-
+    // TODO put id with addonid first
+    // trackview-parcours
     let element = document.getElementById("parcours");
 
     // Here we create de drop-down list
@@ -558,55 +562,60 @@ var trackview = (function () {
     }
 
     // Calling function do init all layer
-    if(!isInit) {
-      _initLayer(0);
-    }
+    _initLayer(0);
 
     document.getElementById("trackview-dropdown-custom").addEventListener("click", () => {
       console.log("Je suis la !")
     });
 
     document.addEventListener("DOMContentLoaded", () => {
-      initDropdown();
+      
     });
 
     map.once("rendercomplete", function (e) {
+
+      //TODO check if all event can be added here
+      console.log("render");
       _zoomOnFeature();
       _createFeature();
+      initDropdown();
 
       /*********** Detect feature on the map ***********/
       map.on("pointermove", function(event) {
         var pixel = event.pixel;
         var tolerance = 4; // In pixel
 
+        //TODO rename segmentFeatures
+        var segmentVector = sourceSegment.getFeatures();
         map.forEachFeatureAtPixel(pixel, function(feature, layer) {
-          var segmentVector = vectorSegment.getSource().getFeatures();
-
+          
           // Nothing to do if no feature
           if(!feature) {
             return;
           }
- 
-          let pointOnSgmt = null;
+
           // Check if the layer pointed is equal to the layer of interest
           if(layer === vectorSegment) {
+            console.log("mouse");
             let idSgmtOnFeature = feature.getProperties().properties.id;
+            //TODO explain pointHover
             mviewer.pointHover = feature.getProperties().properties.distance;
-            let sgmtLastCoordinate = null;
-            sgmtLastCoordinate = feature.getGeometry().getLastCoordinate();
+            let sgmtLastCoordinate = feature.getGeometry().getLastCoordinate();
 
             sourceNewPoint.clear();
             
             // Create a new point feature
-            pointOnSgmt = new ol.Feature({
+            let pointOnSgmt = new ol.Feature({
               geometry: new ol.geom.Point(sgmtLastCoordinate)
             });
 
-            // Add style to the feature
+            // TODO check why style params in Feature is not working
+            //Add style to the feature
             pointOnSgmt.setStyle(style["selected"]);
             
             sourceNewPoint.addFeature(pointOnSgmt);
 
+            //TODO check if we can use a function style with segment id and current selected id segment
             segmentVector.forEach(function(segment) {
               let idSgmt = segment.getProperties().properties.id;
               
