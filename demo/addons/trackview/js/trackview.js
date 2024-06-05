@@ -85,8 +85,7 @@ var trackview = (function () {
 
     // Defines the different styles
     style = {
-      // TODO rename segment
-      'defaultSegment': new ol.style.Style({
+      'defaultColorSegment': new ol.style.Style({
         stroke: new ol.style.Stroke({
           color: listeParcours[index].style.segment.color.default,
           width: listeParcours[index].style.segment.width.default,
@@ -101,7 +100,7 @@ var trackview = (function () {
         }),
       }),
       
-      'selectedSegment': new ol.style.Style({
+      'selectedColorSegment': new ol.style.Style({
         stroke: new ol.style.Stroke({
           color: listeParcours[index].style.segment.color.selected,
           width: listeParcours[index].style.segment.width.selected,
@@ -109,7 +108,7 @@ var trackview = (function () {
       }),
 
       // TODO selectedPoint
-      'selected': new ol.style.Style({
+      'selectedPoint': new ol.style.Style({
         image: new ol.style.Circle({
           radius: listeParcours[index].style.point.radius,
           fill: new ol.style.Fill({
@@ -130,7 +129,7 @@ var trackview = (function () {
           label: listeParcours[index].title,
           geometry: listeParcours[index].style.geometry,
           styles: [
-            style["defaultSegment"],
+            style["defaultColorSegment"],
           ],
         },
       ],
@@ -340,7 +339,7 @@ var trackview = (function () {
     valueId += 1;
 
     // We set default style of each segment
-    segmentFeature.setStyle(style["defaultSegment"]);
+    segmentFeature.setStyle(style["defaultColorSegment"]);
 
     // Finally, we add each segment feature to the segment source
     sourceSegment.addFeature(segmentFeature);
@@ -420,14 +419,14 @@ var trackview = (function () {
               elt.setStyle(null);
 
               if (pointId == carteId) {
-                elt.setStyle(style["selected"]);
+                elt.setStyle(style["selectedPoint"]);
                 segment.forEach(function(seg) {
                   var segmentId = seg.getProperties().properties.id;
 
                   if (segmentId < pointId) {
-                    seg.setStyle(style["selectedSegment"]);
+                    seg.setStyle(style["selectedColorSegment"]);
                   } else {
-                    seg.setStyle(style["defaultSegment"]);
+                    seg.setStyle(style["defaultColorSegment"]);
                   }
                 });
               }
@@ -589,7 +588,6 @@ var trackview = (function () {
 
           // Check if the layer pointed is equal to the layer of interest
           if(layer === vectorSegment) {
-            console.log("mouse");
             let idSgmtOnFeature = feature.getProperties().properties.id;
             //TODO explain pointHover
             mviewer.pointHover = feature.getProperties().properties.distance;
@@ -604,7 +602,7 @@ var trackview = (function () {
 
             // TODO check why style params in Feature is not working
             //Add style to the feature
-            pointOnSgmt.setStyle(style["selected"]);
+            pointOnSgmt.setStyle(style["selectedPoint"]);
             
             sourceNewPoint.addFeature(pointOnSgmt);
 
@@ -613,9 +611,9 @@ var trackview = (function () {
               let idSgmt = segment.getProperties().properties.id;
               
               if(idSgmt <= idSgmtOnFeature) {
-                segment.setStyle(style["selectedSegment"]);
+                segment.setStyle(style["selectedColorSegment"]);
               } else {
-                segment.setStyle(style["defaultSegment"]);
+                segment.setStyle(style["defaultColorSegment"]);
               }
             });
             dataGraph.update();
