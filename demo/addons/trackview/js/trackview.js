@@ -526,14 +526,31 @@ var trackview = (function () {
 
     console.log("Initialisation de l'outil"); // Display in logs
 
-    // TODO put after parcours init
-    document.getElementById("parcours").addEventListener("change", function() {
-      var parcoursValue = this.value;
+    // TODO put id with addonid first
+    // trackview-parcours
+    let dropdown = document.getElementById("trackview-parcours");
 
-      if(parcoursValue) {
+    // Here we create de drop-down list
+    for(let i = 0; i < listeParcours.length; i++) {
+      const li = document.createElement("li");
+      li.value = i;
+      li.textContent = listeParcours[i].label;
+      if(i === 0) {
+        li.className = "active"
+      }
+      
+      dropdown.appendChild(li);
+    }
+
+    // TODO put after parcours init
+    document.querySelector("#trackview-parcours").addEventListener("click", (e) => {
+      let itemSelected = e.target;
+      let itemValue = itemSelected.getAttribute("value");
+
+      if(itemValue) {
 
         _clearTool();
-        _initLayer(parcoursValue);
+        _initLayer(itemValue);
 
         vector.getSource().once('change', function(e) {
           if(vector.getSource().getState() === "ready") {
@@ -548,29 +565,8 @@ var trackview = (function () {
       }
     });
 
-    // TODO put id with addonid first
-    // trackview-parcours
-    let element = document.getElementById("parcours");
-
-    // Here we create de drop-down list
-    for(let i = 0; i < listeParcours.length; i++) {
-      const option = document.createElement("option");
-      option.value = i;
-      option.label = listeParcours[i].label;
-      
-      element.appendChild(option);
-    }
-
     // Calling function do init all layer
     _initLayer(0);
-
-    document.getElementById("trackview-dropdown-custom").addEventListener("click", () => {
-      console.log("Je suis la !")
-    });
-
-    document.addEventListener("DOMContentLoaded", () => {
-      
-    });
 
     map.once("rendercomplete", function (e) {
 

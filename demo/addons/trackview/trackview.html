@@ -1,22 +1,12 @@
 <div id="trackview-panel">
     <canvas id="trackview-graph" class="graph"></canvas>
 </div>
-<div id="trackview-select" class="dropdown">
-    <form id="trackview-form">
-        <label for="parcours">Changer de parcours</label>
-        <select id="parcours" name="parcours" class="form-control">
-        </select>
-    </form>
-</div>
 
 <div id="trackview-dropdown-custom" class="dropdown">
     <div class="select">
-        <span class="selected">Parcours 13 km</span>
+        <span id="trackview-parcours-selected" class="selected">Changer de parcours</span>
         <div class="caret"></div>
     </div>
-    <ul class="menu">
-        <li class="active">Parcours 13 km</li>
-        <li>Parcours 5 km</li>
-        <li>Parcours de Pierre</li>
+    <ul id="trackview-parcours" class="menu">
     </ul>
 </div>

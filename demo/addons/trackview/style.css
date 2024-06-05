@@ -25,67 +25,9 @@
 
 /* Parameters of the dropdown */
 
-#trackview-select {
-    text-align: center;
-    margin-top: 200px;
-    margin: 60px 0 0 270px;
-    position: fixed;
-    border-radius: 10px;
-    background-color: white;
-    border-color: #03224c;
-    padding: 1.2rem 1rem;
-    font-family: 'roboto_regular', Sans-serif;
-    filter: opacity(80%);
-}
-
-select option {
-    margin: 100px;
-    text-align: center;
-    background-color: lightgray;
-    color: black;
-    border-radius: 10px;
-}
-
-select option:hover {
-    padding: 10px;
-}
-
-select:hover {
-    background-color: lightgray;
-}
-
-/* The phone version */
-
-.xs #backgroundlayerstoolbar-default, .xs #mviewerinfosbar, .xs .ol-attribution.ol-unselectable.ol-control, .xs .ol-scale-line.ol-unselectable {
-    margin-bottom: 210px;
-}
-
-.xs #liste-deroulante {
-    margin: 60px 0 0 210px;
-}
-
-.xs #wrapper.toggled-2 #trackview-panel {
-    width: 100%!important;
-}
-
-/* The thematic menu */
-
-#wrapper.toggled-2 #trackview-panel {
-    width: calc(100% - 50px)!important;
-    transition: all 0.5s ease;
-}
-
-#wrapper #trackview-panel {
-    width: calc(100% - 250px)!important;
-    transition: all 0.5s ease;
-}
-
-/* Test for another dropdown */
-
 #trackview-dropdown-custom {
     position: fixed;
-    top: 35px;
-    left: 500px;
+    margin: 60px 0 0 270px;
     font-family: Helvetica, sans-serif;
     background: #23232a;
     display: flex;
@@ -178,4 +120,30 @@ select:hover {
 .menu-open {
     display: block;
     opacity: 1;
+}
+
+/* The phone version */
+
+.xs #backgroundlayerstoolbar-default, .xs #mviewerinfosbar, .xs .ol-attribution.ol-unselectable.ol-control, .xs .ol-scale-line.ol-unselectable {
+    margin-bottom: 210px;
+}
+
+.xs #trackview-dropdown-custom {
+    margin: 60px 0 0 210px;
+}
+
+.xs #wrapper.toggled-2 #trackview-panel {
+    width: 100%!important;
+}
+
+/* The thematic menu */
+
+#wrapper.toggled-2 #trackview-panel {
+    width: calc(100% - 50px)!important;
+    transition: all 0.5s ease;
+}
+
+#wrapper #trackview-panel {
+    width: calc(100% - 250px)!important;
+    transition: all 0.5s ease;
 }
