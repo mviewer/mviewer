@@ -9,13 +9,13 @@
     filter: opacity(80%);
 }
 
-.hidden {
-    display: none;
-}
-
 #trackview-graph {
     max-height: 230px;
     width: 100%;
+}
+
+.hidden {
+    display: none;
 }
 
 #backgroundlayerstoolbar-default, #mviewerinfosbar, .ol-attribution.ol-unselectable.ol-control, .ol-scale-line.ol-unselectable {
@@ -39,14 +39,14 @@
 }
 
 select option {
-    background-color: white;
+    margin: 100px;
+    text-align: center;
+    background-color: lightgray;
     color: black;
-    padding: 10px;
-    font-size: 16px;
 }
 
-select option:hover {
-    background-color: red;
+select:hover {
+    background-color: lightgray;
 }
 
 /* The phone version */

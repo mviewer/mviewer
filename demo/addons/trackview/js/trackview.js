@@ -534,9 +534,9 @@ var trackview = (function () {
             _createFeature();
             dataGraph.update();
 
-            document.getElementById("trackview-panel").classList.remove("hidden");
-
             _zoomOnFeature();
+
+            document.getElementById("trackview-panel").classList.remove("hidden");
           }
         });
       }
