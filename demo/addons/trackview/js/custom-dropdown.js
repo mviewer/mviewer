@@ -1,4 +1,4 @@
-export var initDropdown = () => {
+export function initDropdown() {
     const dropdowns = document.querySelectorAll(".dropdown");
 
     dropdowns.forEach(dropdown => {
