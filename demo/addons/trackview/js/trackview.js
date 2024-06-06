@@ -8,8 +8,8 @@ var trackview = (function () {
   const listeParcours = mviewer.customComponents.trackview.config.options.mviewer.parcours;
 
   var currentParcours = null;
-  var d = [];
-  var z = [];
+  var xAxisGraphData = [];
+  var yAxisGraphData = [];
   var dataGraph;
   var valueId = 0;
   var idKilometre = 1;
@@ -57,7 +57,7 @@ var trackview = (function () {
           }),
         }),
       })
-    }
+    };
 
     return styleKilo;
   }
@@ -75,7 +75,7 @@ var trackview = (function () {
       type: listeParcours[index].stats.type,
       layerid: listeParcours[index].stats.layerId,
       id: listeParcours[index].stats.layerId,
-      title: listeParcours[index].stats.name,
+      title: listeParcours[index].label,
       vectorlegend: true,
       visible: true,
       opacity: listeParcours[index].stats.opacity,
@@ -380,26 +380,26 @@ var trackview = (function () {
   var _addGraph = function (data) {
 
     if(firstGraph === true) {
-      z = [];
-      d = [];
+      xAxisGraphData = [];
+      yAxisGraphData = [];
     }
 
     data.forEach(function (tab) {
-      d.push(tab[0]/1000); // In kilometers
-      z.push(tab[1].getGeometry().getCoordinates()[2]);
+      xAxisGraphData.push(tab[0]/1000); // In kilometers
+      yAxisGraphData.push(tab[1].getGeometry().getCoordinates()[2]);
     });
 
     // Define a max value for the graph that the data fill all the available space
-    let maxValeur = d[d.length - 1];
+    let maxValeur = xAxisGraphData[xAxisGraphData.length - 1];
 
     var trackLineChart = null;
     trackLineChart = new Chart(document.getElementById("trackview-graph"), {
       type: currentParcours.style.graph.type,
       data: {
-        labels: d,
+        labels: xAxisGraphData,
         datasets: [{
-          data: z,
-          label: currentParcours.stats.name,
+          data: yAxisGraphData,
+          label: currentParcours.label,
           pointBackgroundColor: currentParcours.style.graph.color.point,
           borderColor: currentParcours.style.graph.color.segment,
           fill: true
