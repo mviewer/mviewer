@@ -4,7 +4,7 @@ Visualiseur géographique [Kartenn](https://kartenn.region-bretagne.fr/demo/) ba
 
 Liens utiles :
 
-- [Site officiel](https://mviewer.netlify.com/)
+- [Site officiel](https://mviewer.github.io/fr/)
 - [Versions](https://github.com/geobretagne/mviewer/releases/)
 - [Démos](http://kartenn.region-bretagne.fr/kartoviz/demo/)
 - [Documentation](http://mviewerdoc.readthedocs.io/fr/stable/)
