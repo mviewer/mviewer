@@ -3,6 +3,5 @@ node*
 panels/*
 apps/*
 !apps/default.xml
-!apps/settings.json
 node*
 package-*
