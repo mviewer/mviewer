@@ -7,23 +7,14 @@ mviewer.templates.tooltip =
     <div class="mv-tooltip tooltip-inner popover-content"></div>
 </div>`;
 
-if (location.hash){
-mviewer.templates.themeLayer = `
-<li class="mv-nav-item" onclick="mviewer.toggleLayer(this);" data-layerid="{{layerid}}"">
-    <a href=${location.hash} >
-        <span class="state-icon far mv-unchecked"></span> {{title}}
-        <input type="checkbox" class="hidden" value="false" >
-    </a>
-</li>`;
-} else {
+let locationHref = location.hash || "#";
 mviewer.templates.themeLayer = 
 `<li class="mv-nav-item" onclick="mviewer.toggleLayer(this);" data-layerid="{{layerid}}"">
-    <a href="#" >
+    <a href="${locationHref}" >
         <span class="state-icon far mv-unchecked"></span> {{title}}
         <input type="checkbox" class="hidden" value="false" >
     </a>
 </li>`;
-}
 
 mviewer.templates.theme = `
 <li class="{{cls}}" id="theme-layers-{{id}}" >
