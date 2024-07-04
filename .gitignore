@@ -1,6 +1,8 @@
 dist/*
 node*
 panels/*
-apps/*.json
+apps/*
+!apps/default.xml
+!apps/settings.json
 node*
 package-*
