@@ -368,7 +368,7 @@ var configuration = (function () {
     if (location.hash && !location.search) {
       $(".mv-title").attr("href", location.hash);
       $(".navbar-brand").attr("href", location.hash);
-    }   
+    }
     if (conf.application.showhelp === "true") {
       _showhelp_startup = true;
     }
