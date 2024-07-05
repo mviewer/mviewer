@@ -365,6 +365,10 @@ var configuration = (function () {
     if (conf.application.logo) {
       $(".mv-logo").attr("src", conf.application.logo);
     }
+    if (location.hash && !location.search) {
+      $(".mv-title").attr("href", location.hash);
+      $(".navbar-brand").attr("href", location.hash);
+    }    
     if (conf.application.showhelp === "true") {
       _showhelp_startup = true;
     }
