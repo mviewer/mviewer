@@ -60,7 +60,7 @@ mviewer.templates.layerControl = `
             <span class="lock-icon glyphicon glyphicon-lock" aria-hidden="true"></span>
         </button>
         {{/secure_layer}}
-        <a href="#" class="mv-layer-remove" aria-label="close" onclick="mviewer.removeLayer(this)" title="Supprimer" i18n="theme.layers.remove">
+        <a href="${locationHref}" class="mv-layer-remove" aria-label="close" onclick="mviewer.removeLayer(this)" title="Supprimer" i18n="theme.layers.remove">
             <span class="glyphicon glyphicon-remove"></span>
         </a>
     </div>
