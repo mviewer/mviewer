@@ -8,8 +8,7 @@ mviewer.templates.tooltip =
 </div>`;
 
 let locationHref = location.hash || "#";
-mviewer.templates.themeLayer = 
-`<li class="mv-nav-item" onclick="mviewer.toggleLayer(this);" data-layerid="{{layerid}}"">
+mviewer.templates.themeLayer = `<li class="mv-nav-item" onclick="mviewer.toggleLayer(this);" data-layerid="{{layerid}}"">
     <a href="${locationHref}" >
         <span class="state-icon far mv-unchecked"></span> {{title}}
         <input type="checkbox" class="hidden" value="false" >
