@@ -1,8 +1,7 @@
 var mviewer = mviewer || {};
 mviewer.templates = {};
 
-mviewer.templates.tooltip =
-`<div class="tooltip mv-tooltip" role="tooltip">
+mviewer.templates.tooltip = `<div class="tooltip mv-tooltip" role="tooltip">
     <div class="mv-tooltip tooltip-arrow"></div>
     <div class="mv-tooltip tooltip-inner popover-content"></div>
 </div>`;
@@ -193,7 +192,7 @@ mviewer.templates.layerControl = `
         <a href="#" aria-label="Options" onclick="mviewer.toggleLayerOptions(this);" title="Options" i18n="theme.layers.options" class="icon-options">
             <span class="state-icon glyphicon glyphicon-chevron-down"></span>
         </a>
-</li>`
+</li>`;
 
 mviewer.templates.backgroundLayerControlGallery = `
 <li data-original-title="{{label}}"
@@ -307,84 +306,84 @@ mviewer.templates.featureInfo.accordion = `
             </div>
         </div>
     </div>
-</div>;`
+</div>;`;
 
 mviewer.templates.featureInfo.accordion = [
-    '<div id="{{panel}}-selector">',
-        '<div class="row">',
-            '<div class="col-md-12">',
-                '<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="list-style: none;">',
-                '{{#layers}}',
-                  '<div class="panel">',
-                    '<div class="panel-heading mv-theme caret-toggle {{^firstlayer}}collapsed{{/firstlayer}}" id="dataToggleDiv" data-toggle="collapse" data-parent="#accordion" href="#accordion-{{panel}}-{{id}}" role="tab" id="heading-{{panel}}-{{id}}" data-layerid="{{layerid}}">',
-                      '<h4 class="panel-title text-right">',
-                        '<a role="button" class="pull-left" aria-expanded="{{#firstlayer}}true{{/firstlayer}}{{^firstlayer}}false{{/firstlayer}}" aria-controls="accordion-{{panel}}-{{id}}">',
-                          '{{name}}',
-                         '</a>',
-                        '{{#firstlayer}}<span class="state-icon glyphicon firstLayer"></span>{{/firstlayer}}',
-                        '{{^firstlayer}}<span class="state-icon glyphicon notFirstLayer"></span>{{/firstlayer}}',
-                      '</h4>',
-                    '</div>',
-                    '<div id="accordion-{{panel}}-{{id}}" class="panel-collapse collapse {{#firstlayer}}in{{/firstlayer}}" role="tabpanel" aria-labelledby="heading-{{panel}}-{{id}}">',
-                      '<div class="panel-body">',
-                                '<div id="carousel-{{panel}}-{{id}}" div class="carousel slide" data-interval="false">',
-                            '<ul class="carousel-inner" role="listbox">',
-                            '{{{html}}}',
-                            '</ul>',
-                            '{{#manyfeatures}}',
-                                '<a class="left carousel-control" href="#carousel-{{panel}}-{{id}}" ',
-                                'role="button" data-slide="prev">',
-                                '<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>',
-                                '<span class="sr-only" i18n="carousel.control.previous">Previous</span>',
-                                '</a>',
-                                '<a class="right carousel-control" href="#carousel-{{panel}}-{{id}}" ',
-                                'role="button" data-slide="next">',
-                                '<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>',
-                                '<span class="sr-only" i18n="carousel.control.next">Next</span>',
-                                '</a>',
-                                '<span class="badge counter-slide">1/{{nbfeatures}}</span>',
-                            '{{/manyfeatures}}',
-                            '</div>',
-                      '</div>',
-                    '</div>',
-                  '</div>',
-                '{{/layers}}',
-                '</div>',
-            '</div>',
-        '</div>',
-    '</div>'
+  '<div id="{{panel}}-selector">',
+  '<div class="row">',
+  '<div class="col-md-12">',
+  '<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="list-style: none;">',
+  "{{#layers}}",
+  '<div class="panel">',
+  '<div class="panel-heading mv-theme caret-toggle {{^firstlayer}}collapsed{{/firstlayer}}" id="dataToggleDiv" data-toggle="collapse" data-parent="#accordion" href="#accordion-{{panel}}-{{id}}" role="tab" id="heading-{{panel}}-{{id}}" data-layerid="{{layerid}}">',
+  '<h4 class="panel-title text-right">',
+  '<a role="button" class="pull-left" aria-expanded="{{#firstlayer}}true{{/firstlayer}}{{^firstlayer}}false{{/firstlayer}}" aria-controls="accordion-{{panel}}-{{id}}">',
+  "{{name}}",
+  "</a>",
+  '{{#firstlayer}}<span class="state-icon glyphicon firstLayer"></span>{{/firstlayer}}',
+  '{{^firstlayer}}<span class="state-icon glyphicon notFirstLayer"></span>{{/firstlayer}}',
+  "</h4>",
+  "</div>",
+  '<div id="accordion-{{panel}}-{{id}}" class="panel-collapse collapse {{#firstlayer}}in{{/firstlayer}}" role="tabpanel" aria-labelledby="heading-{{panel}}-{{id}}">',
+  '<div class="panel-body">',
+  '<div id="carousel-{{panel}}-{{id}}" div class="carousel slide" data-interval="false">',
+  '<ul class="carousel-inner" role="listbox">',
+  "{{{html}}}",
+  "</ul>",
+  "{{#manyfeatures}}",
+  '<a class="left carousel-control" href="#carousel-{{panel}}-{{id}}" ',
+  'role="button" data-slide="prev">',
+  '<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>',
+  '<span class="sr-only" i18n="carousel.control.previous">Previous</span>',
+  "</a>",
+  '<a class="right carousel-control" href="#carousel-{{panel}}-{{id}}" ',
+  'role="button" data-slide="next">',
+  '<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>',
+  '<span class="sr-only" i18n="carousel.control.next">Next</span>',
+  "</a>",
+  '<span class="badge counter-slide">1/{{nbfeatures}}</span>',
+  "{{/manyfeatures}}",
+  "</div>",
+  "</div>",
+  "</div>",
+  "</div>",
+  "{{/layers}}",
+  "</div>",
+  "</div>",
+  "</div>",
+  "</div>",
 ].join("");
 
 mviewer.templates.featureInfo.allintabs = [
-    '<div id="{{panel}}-selector">',
-        '<div class="row">',
-            '<div class="col-md-12">',
-                '<div class="tabs-left">',
-                    '<ul class="nav nav-tabs">',
-                    '{{#layers}}',
-                        '<li title="{{name}}" class="{{#firstlayer}}active{{/firstlayer}}" data-layerid="{{layerid}}" {{#initiallayerid}}initiallayerid="{{initiallayerid}}" {{/initiallayerid}}>',
-                            '<a onclick="mviewer.setInfoPanelTitle(this,\'{{panel}}\');" title="{{name}}" href="#slide-{{panel}}-{{id}}" data-toggle="tab">',
-                                '<span class="fa {{theme_icon}}"></span>',
-                                '{{#multiple}}<span class="item-number">{{index}}</spanclass>{{/multiple}}',
-                            '</a>',
-                        '</li>',
-                    '{{/layers}}',
-                    '</ul>',
-                    '<div class="tab-content">',
-                    '{{#layers}}',
-                        '<div  role="tabpanel" class="{{#firstlayer}}active in {{/firstlayer}}tab-pane" id="slide-{{panel}}-{{id}}" >',
-                            '<div id="carousel-{{panel}}-{{id}}" div class="carousel slide" data-interval="false">',
-                                '<ul class="carousel-inner" role="listbox">',
-                                '{{{html}}}',
-                                '</ul>',
-                            '</div>',
-                        '</div>',
-                    '{{/layers}}',
-                    '</div>',
-                 '</div>',
-            '</div>',
-        '</div>',
-    '</div>'
+  '<div id="{{panel}}-selector">',
+  '<div class="row">',
+  '<div class="col-md-12">',
+  '<div class="tabs-left">',
+  '<ul class="nav nav-tabs">',
+  "{{#layers}}",
+  '<li title="{{name}}" class="{{#firstlayer}}active{{/firstlayer}}" data-layerid="{{layerid}}" {{#initiallayerid}}initiallayerid="{{initiallayerid}}" {{/initiallayerid}}>',
+  '<a onclick="mviewer.setInfoPanelTitle(this,\'{{panel}}\');" title="{{name}}" href="#slide-{{panel}}-{{id}}" data-toggle="tab">',
+  '<span class="fa {{theme_icon}}"></span>',
+  '{{#multiple}}<span class="item-number">{{index}}</spanclass>{{/multiple}}',
+  "</a>",
+  "</li>",
+  "{{/layers}}",
+  "</ul>",
+  '<div class="tab-content">',
+  "{{#layers}}",
+  '<div  role="tabpanel" class="{{#firstlayer}}active in {{/firstlayer}}tab-pane" id="slide-{{panel}}-{{id}}" >',
+  '<div id="carousel-{{panel}}-{{id}}" div class="carousel slide" data-interval="false">',
+  '<ul class="carousel-inner" role="listbox">',
+  "{{{html}}}",
+  "</ul>",
+  "</div>",
+  "</div>",
+  "{{/layers}}",
+  "</div>",
+  "</div>",
+  "</div>",
+  "</div>",
+  "</div>",
 ].join("");
 
 mviewer.templates.ctrlSensor = `
