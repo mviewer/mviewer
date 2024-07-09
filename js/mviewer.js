@@ -2905,7 +2905,12 @@ mviewer = (function () {
       //Time Filter calendar
       if (layer.timefilter && layer.timecontrol === "calendar") {
         let getCapRequestUrl = getCapUrl(layer.url);
+        // get dates values
         let datesToDisplay = [];
+        let monthToDisplay = [];
+        // format to compare dates steps
+        let monthFormat = "MM/YYYY";
+        let dayFormat = "DD/MM/YYYY";
         var options = {
           format: "yyyy-mm-dd",
           language: "fr",
@@ -2913,12 +2918,18 @@ mviewer = (function () {
           minViewMode: 0,
           autoclose: true,
         };
+
+        // will only display available month and dates
         if (layer.timeshowavailable) {
-          const dateFormat = "DD/MM/YYYY";
-          options.beforeShowDay = (day) => {
-            const isEnabled = datesToDisplay.includes(moment(day).format(dateFormat));
-            return { enabled: isEnabled };
+          options.beforeShowDay = (v) => {
+            const isDayEnabled = datesToDisplay.includes(moment(v).format(dayFormat));
+            return { enabled: isDayEnabled };
           };
+          options.beforeShowMonth = (d) => {
+            const isMonthEnabled = monthToDisplay.includes(moment(d).format(monthFormat));
+            return { enabled: isMonthEnabled };
+          };
+          const lyrToFind = layer.layername;
           fetch(getCapRequestUrl)
             .then((x) => x.text())
             .then((z) => {
@@ -2926,13 +2937,18 @@ mviewer = (function () {
               const capa = reader.read(z);
               const layer = _.find(_.get(capa, "Capability.Layer.Layer"), [
                 "Name",
-                "humidite_bzh",
+                lyrToFind,
               ]);
               const timeValues = _.find(layer.Dimension, [
                 "name",
                 "time",
               ])?.values?.split?.(",");
-              datesToDisplay = timeValues.map((time) => moment(time).format(dateFormat));
+              datesToDisplay = _.uniq(
+                timeValues.map((time) => moment(time).format(dayFormat))
+              );
+              monthToDisplay = _.uniq(
+                timeValues.map((time) => moment(time).format(monthFormat))
+              );
             });
         }
         if (layer.timemin && layer.timemax) {
