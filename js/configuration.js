@@ -817,8 +817,12 @@ var configuration = (function () {
             oLayer.top = layer?.top;
             oLayer.defaultSensor = layer?.defaultSensor;
             oLayer.selector = layer.selector;
+            oLayer.customstyle = layer.customstyle;
             oLayer.datastreamsfilter = layer.datastreamsfilter;
             oLayer.multidatastreamsfilter = layer.multidatastreamsfilter;
+            oLayer.sensorserviceurl = layer.sensorserviceurl;
+            oLayer.sensorthingsfield = layer.sensorthingsfield;
+            oLayer.sensorthingsid = layer.sensorthingsid;
             // -X- sensorthings params
             oLayer.checked = layer.visible === "true" ? true : false;
             oLayer.visiblebydefault = oLayer.checked ? true : false;
@@ -960,7 +964,8 @@ var configuration = (function () {
             } // end geojson
             // ->- sensortings layer
             if (oLayer.type === "sensorthings") {
-              l = new Sensorthings(oLayer);
+              l = new SensorLayer(oLayer);
+              l.initLayer();
             }
             // -X- sensortings layer
             if (oLayer.type === "kml") {
@@ -1218,6 +1223,9 @@ var configuration = (function () {
     source.on("tileloaderror", function (event) {
       $("#loading-" + event.target.get("layerid")).hide();
     });
+    if (oLayer.sensorserviceurl) {
+      l.sensorthings = new Sensorthings(oLayer);
+    }
     mviewer.processLayer(oLayer, l);
   };
 

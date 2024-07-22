@@ -139,6 +139,35 @@ var info = (function () {
   };
 
   /**
+   * sensor behavior : vector layer
+   */
+  async function waitAllSensorFeatures(features, layer) {
+    return new Promise((resolve) => {
+      let sensorFeatures = features.map((f) => {
+        let sensorFeature = new SensorFeature(f, layer);
+        return sensorFeature.startSensorProcess();
+      });
+      Promise.all(sensorFeatures).then((responses) => resolve(responses));
+    });
+  }
+
+  /**
+   * sensor behavior : wms layer
+   */
+  async function waitAllSensorWmsFeatures(features, layer) {
+    const response = new Promise((resolve) => {
+      let sensorWmsFeatures = features.map((f) => {
+        const thingUrl =
+          layer.sensorserviceurl + "/Things(" + f.get(layer.sensorthingsid) + ")";
+        let sensorWmsFeature = new SensorWmsFeature(f, layer, thingUrl);
+        return sensorWmsFeature.startSensorProcess();
+      });
+      Promise.all(sensorWmsFeatures).then((responses) => resolve(responses));
+    });
+    return await response;
+  }
+
+  /**
    * Private Method: _queryMap()
    * @param evt {ol.MapBrowserEvent}
    * @param options {type: 'feature' || 'map', layer: {ol.layer.Layer}, featureid:'featureid'}
@@ -148,7 +177,6 @@ var info = (function () {
   async function _queryMap(evt, options) {
     var isClick = evt.type === "singleclick";
     var requests = [];
-    var sensorPromises = [];
     $(".popup-content").html("");
     _queriedFeatures = [];
     _firstlayerFeatures = [];
@@ -248,16 +276,7 @@ var info = (function () {
             );
             l.layer.sensorthings.setLastQuery(evt);
             //call features information
-            async function waitAllSensorFeatures(features) {
-              return new Promise((resolve) => {
-                let sensorFeatures = features.map((f) => {
-                  let sensorFeature = new SensorFeature(f, l.layer);
-                  return sensorFeature.startSensorProcess();
-                });
-                Promise.all(sensorFeatures).then((responses) => resolve(responses));
-              });
-            }
-            features = await waitAllSensorFeatures(features);
+            features = await waitAllSensorFeatures(features, l.layer);
             if (parentDomEl.querySelector(".mv-layer-options").style.display === "none") {
               parentDomEl.querySelector(`.icon-options`).click();
             }
@@ -415,80 +434,86 @@ var info = (function () {
       return orderedlayers;
     };
 
-    /**
-     * Return infos according to map click event behavior.
-     * This callback is return when all request are resolved (like promiseAll behavior)
-     * @param {object} result
-     */
-    var callback = function () {
-      $.each(featureInfoByLayer, function (index, response) {
-        var layerinfos = response.layerinfos;
-        var panel = layerinfos.infospanel;
-        if (configuration.getConfiguration().mobile) {
-          panel = "modal-panel";
+    readHtmlResponse = (features, layerResponse) => {
+      const result = [];
+      if (features.length == 0) {
+        result.push('<li class="item active">' + layerResponse + "</li>");
+      } else {
+        if (sensorUrl) {
+          console.log("SENSOR");
         }
-        var contentType = response.contenttype;
-        var layerResponse = response.response;
-        var mimeType = _checkMimeType(layerResponse, contentType);
-        var name = layerinfos.name;
-        var theme = layerinfos.theme;
-        var layerid = layerinfos.layerid;
-        var theme_icon = layerinfos.icon;
-        var infohighlight = layerinfos.infohighlight;
-        var id = views[panel].layers.length + 1;
-        var manyfeatures = false;
-        var html_result = [];
+        $(features).each(function (i, feature) {
+          result.push(feature);
+        });
+        result = _customizeHTML(result, features.length);
+      }
+      return result;
+    };
 
-        var xml = null;
-        var html = null;
-
-        switch (mimeType) {
-          case "text/html":
-            if (
-              typeof layerResponse === "string" &&
-              layerResponse.search("<!--nodatadetect--><!--nodatadetect-->") < 0 &&
-              layerResponse.search("<!--nodatadetect-->\n<!--nodatadetect-->") < 0
-            ) {
-              html = layerResponse;
-              // no geometry in html
-              showPin = true;
-            }
-            break;
-          case "application/vnd.ogc.gml":
-            if ($.isXMLDoc(layerResponse)) {
-              xml = layerResponse;
-            } else {
-              xml = $.parseXML(layerResponse);
-            }
-            break;
-          case "application/vnd.esri.wms_raw_xml":
-          case "application/vnd.esri.wms_featureinfo_xml":
-            if ($.isXMLDoc(layerResponse)) {
-              xml = layerResponse;
-            } else {
-              xml = $.parseXML(layerResponse);
-            }
-            break;
-          default:
-            mviewer.alert(
-              "Ce format de réponse : " + contentType + " n'est pas pris en charge",
-              "alert-warning"
-            );
-        }
-        if (html) {
-          //test si présence d'une classe .feature eg template geoserver.
-          //Chaque élément trouvé est une feature avec ses propriétés
-          // Be carefull .carrousel renamed to mv-features
-          var features = $(layerResponse).find(".mv-features li").addClass("item");
-          if (features.length == 0) {
-            html_result.push('<li class="item active">' + layerResponse + "</li>");
-          } else {
-            $(features).each(function (i, feature) {
-              html_result.push(feature);
-            });
-            html_result = _customizeHTML(html_result, features.length);
+    function readResponse(featureInfoByLayer = []) {
+      const responsePorcessedPromises = featureInfoByLayer.map((response) => {
+        return new Promise(async (resolve, reject) => {
+          var layerinfos = response.layerinfos;
+          var panel = layerinfos.infospanel;
+          if (configuration.getConfiguration().mobile) {
+            panel = "modal-panel";
           }
-        } else {
+          const sensorUrl = response?.sensorRequestUrl;
+          var contentType = response.contenttype;
+          var layerResponse = response.response;
+          var mimeType = _checkMimeType(layerResponse, contentType);
+          var name = layerinfos.name;
+          var theme = layerinfos.theme;
+          var layerid = layerinfos.layerid;
+          var theme_icon = layerinfos.icon;
+          var infohighlight = layerinfos.infohighlight;
+          var id = views[panel].layers.length + 1;
+          var manyfeatures = false;
+          var html_result = [];
+
+          var xml = null;
+          var html = null;
+
+          switch (mimeType) {
+            case "text/html":
+              if (
+                typeof layerResponse === "string" &&
+                layerResponse.search("<!--nodatadetect--><!--nodatadetect-->") < 0 &&
+                layerResponse.search("<!--nodatadetect-->\n<!--nodatadetect-->") < 0
+              ) {
+                html = layerResponse;
+                // no geometry in html
+                showPin = true;
+              }
+              break;
+            case "application/vnd.ogc.gml":
+              if ($.isXMLDoc(layerResponse)) {
+                xml = layerResponse;
+              } else {
+                xml = $.parseXML(layerResponse);
+              }
+              break;
+            case "application/vnd.esri.wms_raw_xml":
+            case "application/vnd.esri.wms_featureinfo_xml":
+              if ($.isXMLDoc(layerResponse)) {
+                xml = layerResponse;
+              } else {
+                xml = $.parseXML(layerResponse);
+              }
+              break;
+            default:
+              mviewer.alert(
+                "Ce format de réponse : " + contentType + " n'est pas pris en charge",
+                "alert-warning"
+              );
+          }
+          if (html) {
+            //test si présence d'une classe .feature eg template geoserver.
+            //Chaque élément trouvé est une feature avec ses propriétés
+            // Be carefull .carrousel renamed to mv-features
+            var features = $(layerResponse).find(".mv-features li").addClass("item");
+            html_result = readHtmlResponse(features, layerResponse);
+          }
           if (xml) {
             var getFeatureInfo = _parseWMSGetFeatureInfo(xml, layerid);
             if (
@@ -504,6 +529,19 @@ var info = (function () {
             }
             var features = getFeatureInfo.features;
             if (features.length > 0) {
+              if (sensorUrl) {
+                let parentDomEl = document.querySelector(
+                  `#layers-container [data-layerid='${layerid}']`
+                );
+                response.layerinfos.layer.sensorthings.setLastQuery(response.evt);
+                features = await waitAllSensorWmsFeatures(features, response.layerinfos);
+                response.layerinfos.layer.sensorthings.features = features;
+                if (
+                  parentDomEl.querySelector(".mv-layer-options").style.display === "none"
+                ) {
+                  parentDomEl.querySelector(`.icon-options`).click();
+                }
+              }
               if (_panelsTemplate[panel] == "allintabs") {
                 features.forEach(function (feature, index) {
                   if (layerinfos.template) {
@@ -521,84 +559,97 @@ var info = (function () {
               }
             }
           }
-        }
-        //If many results, append panels views
-        if (html_result.length > 0) {
-          //Set view with layer info & html formated features
-          if (_panelsTemplate[panel] == "allintabs") {
-            for (var i = 0; i < html_result.length; i++) {
+          //If many results, append panels views
+          if (html_result.length > 0) {
+            //Set view with layer info & html formated features
+            if (_panelsTemplate[panel] == "allintabs") {
+              for (var i = 0; i < html_result.length; i++) {
+                views[panel].layers.push({
+                  panel: panel,
+                  id: views[panel].layers.length + 1,
+                  firstlayer: false,
+                  manyfeatures: false,
+                  nbfeatures: 1,
+                  name: name,
+                  layerid: layerid + "_" + i,
+                  initiallayerid: layerid,
+                  theme_icon: theme_icon,
+                  html: html_result[i],
+                  pin: showPin,
+                });
+              }
+            } else {
               views[panel].layers.push({
                 panel: panel,
                 id: views[panel].layers.length + 1,
                 firstlayer: false,
-                manyfeatures: false,
-                nbfeatures: 1,
+                manyfeatures: features.length > 1,
+                nbfeatures: features.length,
                 name: name,
-                layerid: layerid + "_" + i,
-                initiallayerid: layerid,
+                layerid: layerid,
                 theme_icon: theme_icon,
-                html: html_result[i],
+                html: html_result.join(""),
                 pin: showPin,
               });
             }
-          } else {
-            views[panel].layers.push({
-              panel: panel,
-              id: views[panel].layers.length + 1,
-              firstlayer: false,
-              manyfeatures: features.length > 1,
-              nbfeatures: features.length,
-              name: name,
-              layerid: layerid,
-              theme_icon: theme_icon,
-              html: html_result.join(""),
-              pin: showPin,
-            });
           }
-        }
+          resolve();
+        });
       });
-      var infoLayers = [];
-      for (var panel in views) {
-        infoLayers = infoLayers.concat(views[panel].layers);
-      }
-      mviewer.setInfoLayers(infoLayers);
+      return responsePorcessedPromises;
+    }
 
-      $.each(views, function (panel, view) {
-        if (view.layers.length > 0) {
-          view.layers = orderViewsLayersByMap(views[panel].layers);
-          view.layers[0].firstlayer = true;
-          var template = "";
-          if (configuration.getConfiguration().mobile) {
-            template = Mustache.render(mviewer.templates.featureInfo.accordion, view);
-          } else {
-            template = Mustache.render(
-              mviewer.templates.featureInfo[_panelsTemplate[panel]],
-              view
-            );
-          }
-          $("#" + panel + " .popup-content").append(template);
-          var title = $(`a[href*='slide-${panel}-']`).closest("li").attr("title");
-          $("#" + panel + " .mv-header h5").text(title);
+    /**
+     * Return infos according to map click event behavior.
+     * This callback is return when all request are resolved (like promiseAll behavior)
+     * @param {object} result
+     */
+    function callback() {
+      // Need promises if click behavior response call async requests
+      Promise.all(readResponse(featureInfoByLayer)).then(() => {
+        var infoLayers = [];
+        for (var panel in views) {
+          infoLayers = infoLayers.concat(views[panel].layers);
+        }
+        mviewer.setInfoLayers(infoLayers);
 
-          const infoPanelReadyEvent = new CustomEvent("infopanel-ready", {
-            detail: {
-              panel: panel,
-            },
-          });
-          document.dispatchEvent(infoPanelReadyEvent);
-
-          if (configuration.getConfiguration().mobile) {
-            $("#modal-panel").modal("show");
-            if (_featureTooltip && _featureTooltip.getElement().children.length) {
-              $(_featureTooltip.getElement()).popover("hide");
+        $.each(views, function (panel, view) {
+          if (view.layers.length > 0) {
+            view.layers = orderViewsLayersByMap(views[panel].layers);
+            view.layers[0].firstlayer = true;
+            var template = "";
+            if (configuration.getConfiguration().mobile) {
+              template = Mustache.render(mviewer.templates.featureInfo.accordion, view);
+            } else {
+              template = Mustache.render(
+                mviewer.templates.featureInfo[_panelsTemplate[panel]],
+                view
+              );
             }
-          } else {
-            if (!$("#" + panel).hasClass("active")) {
-              $("#" + panel).toggleClass("active");
+            $("#" + panel + " .popup-content").append(template);
+            var title = $(`a[href*='slide-${panel}-']`).closest("li").attr("title");
+            $("#" + panel + " .mv-header h5").text(title);
+
+            const infoPanelReadyEvent = new CustomEvent("infopanel-ready", {
+              detail: {
+                panel: panel,
+              },
+            });
+            document.dispatchEvent(infoPanelReadyEvent);
+
+            if (configuration.getConfiguration().mobile) {
+              $("#modal-panel").modal("show");
+              if (_featureTooltip && _featureTooltip.getElement().children.length) {
+                $(_featureTooltip.getElement()).popover("hide");
+              }
+            } else {
+              if (!$("#" + panel).hasClass("active")) {
+                $("#" + panel).toggleClass("active");
+              }
             }
-          }
-          $("#" + panel + " .popup-content iframe[class!='chartjs-hidden-iframe']").each(
-            function (index) {
+            $(
+              "#" + panel + " .popup-content iframe[class!='chartjs-hidden-iframe']"
+            ).each(function (index) {
               $(this).on("load", function () {
                 $(this).closest("li").find(".mv-iframe-indicator").hide();
               });
@@ -611,80 +662,80 @@ var info = (function () {
                     "</div>",
                   ].join("")
                 );
-            }
-          );
-          $("#" + panel + " .popup-content img").click(function () {
-            mviewer.popupPhoto($(this).attr("src"));
-          });
-          $("#" + panel + " .popup-content img")
-            .on("vmouseover", function () {
-              $(this).css("cursor", "pointer");
-            })
-            .attr("title", "Cliquez pour agrandir cette image");
-          $(".popup-content .nav-tabs li>a").tooltip("destroy").tooltip({
-            animation: false,
-            trigger: "hover",
-            container: "body",
-            placement: "right",
-            html: true,
-            template: mviewer.templates.tooltip,
-          });
-          // init sub selection
-          _firstlayerFeatures = _queriedFeatures.filter((feature) => {
-            return feature.get("mviewerid") == view.layers[0].layerid;
-          });
-          // change feature of sub selection
-          $(".carousel.slide").on("slide.bs.carousel", function (e) {
-            $(e.currentTarget)
-              .find(".counter-slide")
-              .text($(e.relatedTarget).attr("data-counter"));
-            var selectedFeature = _queriedFeatures.filter((feature) => {
-              return feature.ol_uid == e.relatedTarget.id;
             });
-            if (!_.isEmpty(_queriedFeatures) && _queriedFeatures[0].get("features")) {
-              mviewer.highlightSubFeature(selectedFeature[0]);
-            }
-          });
-          // change layer of sub selection
-          if (configuration.getConfiguration().mobile) {
-            $(".panel-heading").on("click", function (e) {
-              changeSubFeatureLayer(e);
+            $("#" + panel + " .popup-content img").click(function () {
+              mviewer.popupPhoto($(this).attr("src"));
             });
+            $("#" + panel + " .popup-content img")
+              .on("vmouseover", function () {
+                $(this).css("cursor", "pointer");
+              })
+              .attr("title", "Cliquez pour agrandir cette image");
+            $(".popup-content .nav-tabs li>a").tooltip("destroy").tooltip({
+              animation: false,
+              trigger: "hover",
+              container: "body",
+              placement: "right",
+              html: true,
+              template: mviewer.templates.tooltip,
+            });
+            // init sub selection
+            _firstlayerFeatures = _queriedFeatures.filter((feature) => {
+              return feature.get("mviewerid") == view.layers[0].layerid;
+            });
+            // change feature of sub selection
+            $(".carousel.slide").on("slide.bs.carousel", function (e) {
+              $(e.currentTarget)
+                .find(".counter-slide")
+                .text($(e.relatedTarget).attr("data-counter"));
+              var selectedFeature = _queriedFeatures.filter((feature) => {
+                return feature.ol_uid == e.relatedTarget.id;
+              });
+              if (!_.isEmpty(_queriedFeatures) && _queriedFeatures[0].get("features")) {
+                mviewer.highlightSubFeature(selectedFeature[0]);
+              }
+            });
+            // change layer of sub selection
+            if (configuration.getConfiguration().mobile) {
+              $(".panel-heading").on("click", function (e) {
+                changeSubFeatureLayer(e);
+              });
+            } else {
+              $(".nav-tabs li").on("click", function (e) {
+                changeSubFeatureLayer(e);
+              });
+            }
           } else {
-            $(".nav-tabs li").on("click", function (e) {
-              changeSubFeatureLayer(e);
-            });
+            $("#" + panel).removeClass("active");
           }
-        } else {
-          $("#" + panel).removeClass("active");
-        }
-        // highlight features and sub feature
-        if (_queriedFeatures[0] && _queriedFeatures[0].get("features")) {
-          // cluster
-          mviewer.highlightSubFeature(_queriedFeatures[0]);
-        } else {
-          mviewer.highlightFeatures(_queriedFeatures);
-          mviewer.highlightSubFeature(_firstlayerFeatures[0]);
-        }
-        // show pin as fallback if no geometry for wms layer
-        if (
-          showPin ||
-          (!_queriedFeatures.length && !_firstlayerFeatures.length && !isClick)
-        ) {
-          mviewer.showLocation(
-            _projection.getCode(),
-            _clickCoordinates[0],
-            _clickCoordinates[1],
-            !showPin ? search.options.banmarker : showPin
-          );
-        } else {
-          $("#mv_marker").hide();
-        }
+          // highlight features and sub feature
+          if (_queriedFeatures[0] && _queriedFeatures[0].get("features")) {
+            // cluster
+            mviewer.highlightSubFeature(_queriedFeatures[0]);
+          } else {
+            mviewer.highlightFeatures(_queriedFeatures);
+            mviewer.highlightSubFeature(_firstlayerFeatures[0]);
+          }
+          // show pin as fallback if no geometry for wms layer
+          if (
+            showPin ||
+            (!_queriedFeatures.length && !_firstlayerFeatures.length && !isClick)
+          ) {
+            mviewer.showLocation(
+              _projection.getCode(),
+              _clickCoordinates[0],
+              _clickCoordinates[1],
+              !showPin ? search.options.banmarker : showPin
+            );
+          } else {
+            $("#mv_marker").hide();
+          }
+        });
+        $("#loading-indicator").hide();
+        search.clearSearchField();
+        _mvReady = true;
       });
-      $("#loading-indicator").hide();
-      search.clearSearchField();
-      _mvReady = true;
-    };
+    }
 
     var changeSubFeatureLayer = function (e) {
       _firstlayerFeatures = _queriedFeatures.filter((feature) => {
@@ -708,6 +759,8 @@ var info = (function () {
               response: response,
               layerinfos: this.layer,
               contenttype: request.getResponseHeader("Content-Type"),
+              sensorRequestUrl: this.layer.sensorserviceurl,
+              evt: evt,
             });
           },
         })

@@ -2668,7 +2668,7 @@ mviewer = (function () {
         styleControl: false,
         attributeControl: false,
         timeControl: false,
-        sensorthings: layer.type === "sensorthings",
+        sensorthings: layer.type === "sensorthings" || layer?.sensorserviceurl,
       };
 
       if (layer.type === "customlayer" && layer.tooltip) {
