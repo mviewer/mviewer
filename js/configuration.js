@@ -749,6 +749,7 @@ var configuration = (function () {
               oLayer.timeinterval = layer.timeinterval || "day";
             }
             oLayer.timecontrol = layer.timecontrol || "calendar";
+            oLayer.timeshowavailable = layer.timeshowavailable === "true";
             if (layer.timevalues && layer.timevalues.search(",")) {
               oLayer.timevalues = layer.timevalues.split(",");
             }

@@ -2629,6 +2629,20 @@ mviewer = (function () {
       if (sessionStorage.getItem(_service_url))
         $("#user").val(sessionStorage.getItem(_service_url).split(":")[0]);
     },
+
+    /**
+     *
+     * @param {object} layer mviewer layer
+     * @returns
+     */
+    activeCalendar: (layerid, options) => {
+      $("#" + layerid + "-layer-timefilter")
+        .closest("div")
+        .append(
+          '<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>'
+        )
+        .datepicker(options);
+    },
     /**
      * Public Method: add Layer in legend
      *
@@ -2894,6 +2908,13 @@ mviewer = (function () {
 
       //Time Filter calendar
       if (layer.timefilter && layer.timecontrol === "calendar") {
+        let getCapRequestUrl = getCapUrl(layer.url);
+        // get dates values
+        let datesToDisplay = [];
+        let monthToDisplay = [];
+        // format to compare dates steps
+        let monthFormat = "MM/YYYY";
+        let dayFormat = "DD/MM/YYYY";
         var options = {
           format: "yyyy-mm-dd",
           language: "fr",
@@ -2901,6 +2922,39 @@ mviewer = (function () {
           minViewMode: 0,
           autoclose: true,
         };
+
+        // will only display available month and dates
+        if (layer.timeshowavailable) {
+          options.beforeShowDay = (v) => {
+            const isDayEnabled = datesToDisplay.includes(moment(v).format(dayFormat));
+            return { enabled: isDayEnabled };
+          };
+          options.beforeShowMonth = (d) => {
+            const isMonthEnabled = monthToDisplay.includes(moment(d).format(monthFormat));
+            return { enabled: isMonthEnabled };
+          };
+          const lyrToFind = layer.layername;
+          fetch(getCapRequestUrl)
+            .then((x) => x.text())
+            .then((z) => {
+              const reader = new ol.format.WMSCapabilities();
+              const capa = reader.read(z);
+              const layer = _.find(_.get(capa, "Capability.Layer.Layer"), [
+                "Name",
+                lyrToFind,
+              ]);
+              const timeValues = _.find(layer.Dimension, [
+                "name",
+                "time",
+              ])?.values?.split?.(",");
+              datesToDisplay = _.uniq(
+                timeValues.map((time) => moment(time).format(dayFormat))
+              );
+              monthToDisplay = _.uniq(
+                timeValues.map((time) => moment(time).format(monthFormat))
+              );
+            });
+        }
         if (layer.timemin && layer.timemax) {
           options.startDate = new Date(layer.timemin);
           options.endDate = new Date(layer.timemax);
@@ -2929,7 +2983,6 @@ mviewer = (function () {
             '<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>'
           )
           .datepicker(options);
-
         $("#" + layer.layerid + "-layer-timefilter").on("change", function (data, cc) {
           mviewer.setLayerTime(layer.layerid, data.currentTarget.value);
         });
