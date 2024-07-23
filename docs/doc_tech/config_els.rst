@@ -14,31 +14,30 @@ Prérequis
 
 Installer une instance Elasticsearch `<https://www.elastic.co/fr/downloads/elasticsearch>`_.
 
-Création d'un index
+Création des indexs
 --------------------
 
-créer un index nommé **mviewer** avec un champ de type **geo_shape nommé** geometry et un champ de type **keyword** nommé id.
+Depuis la version 7, il faut un index par couche mviewer
+
+Commencé par créer un index nommé comme votre **layerid** avec un champ de type **geo_shape** nommé geometry et un champ de type **keyword** nommé id.
 
 Pour celà, depuis le serveur hôte hébergeant l'instance Elasticsearch, lancer la commande **CURL** suivante :
 
 .. code-block:: bash
 
-   $ curl -XPUT 'localhost:9200/mviewer?pretty' -d '{
-        "template": "mviewer",
+   $ curl -XPUT 'localhost:9200/layerid?pretty' -d '{
         "settings": {
         "number_of_shards": 1
         },
           "mappings": {
-            "_default_": {
-              "properties": {
-                "geometry": {
-                    "type": "geo_shape",
-                    "tree": "quadtree",
-                    "precision": "10m"
-                },
-                "id": {
-                    "type":  "keyword"
-                }
+            "properties": {
+              "geometry": {
+                  "type": "geo_shape",
+                  "tree": "quadtree",
+                  "precision": "10m"
+              },
+              "id": {
+                  "type":  "keyword"
               }
             }
           }
@@ -67,13 +66,57 @@ Si tout s'est bien déroulé, la commande suivante doit renvoyer deux lycées :
 
 .. code-block:: bash
 
-   $ curl -XGET 'localhost:9200/mviewer?q=zola&pretty'
+   $ curl -XGET 'localhost:9200/layerid?q=zola&pretty'
 
+Pour logstash et une récupération des données directement depuis une base de données, il faut créer un fichier de configuration dans /etc/logstash/conf.d, par exemple layerid.conf
+
+exemple
+
+.. code-block:: bash
+
+input {
+  jdbc {
+     jdbc_connection_string =>"jdbc:postgresql://hostname:port/bddname"
+     jdbc_user =>"user"
+     jdbc_password => "paswword"
+     jdbc_driver_class => "org.postgresql.Driver"
+     statement => "SELECT **(champ_souhaitées dont clé primaire au mina)**, ST_AsEWKT(ST_TRANSFORM(geom, 4326)) as geometry from schemaname.tablename WHERE geom IS NOT NULL"
+     jdbc_paging_enabled => "true"
+     jdbc_page_size => "50000"
+     jdbc_fetch_size => "10000"
+     #schedule => "* * * * *"
+ }
+}
+
+filter {
+ mutate {
+   split => { "geometry" => ";" }
+   add_field => { "location" => "%{[geometry][1]}" }
+   remove_field => [ "geometry" ]
+ }
+}
+
+output {
+  elasticsearch {
+    hosts => ["http://localhost"]
+    index => "LAYERID"
+    document_id => "%{cle_primaire_jointure}"  
+
+ }
+}
+
+Attention les données indexées dans elasticsearch sont toujours en 4326
+
+Puis lancer l'indexation : 
+
+.. code-block:: bash
+
+/usr/share/logstash/bin/logstash -f /etc/logstash/conf.d/LAYERNAME.conf
 
 Connecter mviewer à cet index Elasticsearch
 --------------------------------------------
 
-Il est conseillé de n'exposer que l'API de recherche (_search) sur le web. Imaginons qu'une configuration serveur expose sur le web 'localhost:9200/mviewer/_search' en 'http://monserveur/els/_search'
+Il est conseillé de n'exposer que l'API de recherche (_search) sur le web. Imaginons qu'une configuration serveur expose sur le web 'localhost:9200/layerid/_search' en 'http://monserveur/els/layerid/_search'
 
 En partant de la démo Elasticsearch : http://kartenn.region-bretagne.fr/kartoviz/demo/els.xml, modifier le fichier de configuration pour que l'application pointe sur l'index Elasticsearch précédemment créé.
 
@@ -82,7 +125,9 @@ En partant de la démo Elasticsearch : http://kartenn.region-bretagne.fr/kartovi
 .. code-block:: xml
        :linenos:
 
-	   <elasticsearch url="http://monserveur/els/_search" geometryfield="geometry" linkid="search_id" querymode="match"/>
+  <elasticsearchs>
+	   <elasticsearch url="http://monserveur/els/_search" geometryfield="geometry" linkid="search_id" querymode="match" mouseoverfields="id, name" displayfields="id, name" layer="layerid"/>
+  </elasticsearchs>
 
 **Attributs**
 
@@ -90,7 +135,13 @@ En partant de la démo Elasticsearch : http://kartenn.region-bretagne.fr/kartovi
 * ``geometryfield``: nom du champ utilisé par l'instance elasticsearch pour stocker la géométrie
 * ``linkid``: nom du champ à  utiliser côté serveur wms/wfs pour faire le lien avec la propriété _id des documents elasticsearch
 * ``querymode`` *(optionnel)* : query mode used by elasticsearch to find results : match ou term ou phrase - default = match. Le mode match convient pour la recherche libre et naturelle. Le mode phrase permet de faire des recherches sur une phrase et le mode terme permet de faire une recherche sur un terme exact. Il est à noter que l'utilisateur peut activer le mode terme en préfixant sa recherche de # et activer le mode phrase en encadrant sa recherche de "".
-* ``doctypes`` *(optionnel)* : types des documents elasticsearch à  requêter systématiquement, indépendamment des couches affichées
 * ``version`` *(optionnel)* : version de l'instance elasticsearch (exemple = 5.3)
+* ``geometryformat`` *(optionnel)* : defaut GeoJson, valeur possible GeoJson ou WKT en fonction du format
+* ``mouseoverfields`` *(optionnel)* : liste d'attribut a afficher au survol de l'entité dans le résultat recherche ( les champs doivent être disponible dans l'indexation )
+* ``displayfields`` *(optionnel)* : liste d'attribut a afficher sur la liste des entités dans le résultat de recherche ( les champs doivent être disponible dans l'indexation )
+* ``layer`` *(optionnel)* : layerid de la couche côte mviewer
+
+@Deprecated
+* ``doctypes`` *(optionnel)* : types des documents elasticsearch à  requêter systématiquement, indépendamment des couches affichées
 
 Tester en lançant  http://monserveur/mviewer/?config=demo/els.xml et saisir zola dans la barre de recherche.

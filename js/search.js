@@ -1,5 +1,4 @@
 var search = (function () {
-  /* Penser à supprimer toutes les références à iconsearch, propriété plus utilisée.*/
 
   /* COMMON WITH MVIEWER */
 
@@ -7,7 +6,7 @@ var search = (function () {
    * Property: _map
    *  @type {ol.Map}
    */
-
+  
   var _map;
 
   /**
@@ -87,9 +86,10 @@ var search = (function () {
   /**
    * Property: _elasticSearchDocTypes
    * String. The Elasticsearch document types to use in all search requests
+   * @Deprecated not available after ElasticSearch 7
    */
 
-  var _elasticSearchDocTypes = null;
+  var _elasticSearchDocTypes = "";
 
   /**
    * Property: _elasticSearchVersion
@@ -104,7 +104,7 @@ var search = (function () {
    *
    */
 
-  var _elasticSearchLinkid = "search_id";
+  var _elasticSearchLinkid = null;
 
   /**
    * Property: _elasticSearchQuerymode
@@ -113,13 +113,25 @@ var search = (function () {
 
   var _elasticSearchQuerymode = null;
 
+  var _elasticSearchmouseoverfields = null;
+
+  var _elasticSearchdisplayfields = null;
+
+  var _elasticSearchGeomtype = null;
+
+  /**
+   * ElasticSearch use only 4326 projection
+   * Transformation in Mviewer projection is needed
+   */
+  const _elasticSearchProj = "EPSG:4326"
+
   /**
    * Property: _fuseSearchData
    * String. data from GeoJSON layers for which the fuse search is activated
    */
 
   var _fuseSearchData = [];
-
+  
   /**
    * Property: _searchparams
    * Enables properties the search
@@ -165,7 +177,7 @@ var search = (function () {
 
   /**
    * Private Method: _clearSearchField
-   *
+   * 
    */
 
   var _clearSearchField = function () {
@@ -173,6 +185,12 @@ var search = (function () {
     $("#searchfield").val("");
   };
 
+  /**
+   * Private Method: _showResults
+   * 
+   * @param {*} results 
+   * @param {*} resultsType 
+   */
   var _showResults = function (results, resultsType) {
     if (resultsType) {
       var searchHeader = $(`[i18n='search.result.${resultsType}']`);
@@ -214,10 +232,28 @@ var search = (function () {
       }
     });
 
+    // isPasting and keydown are here to avoid Ctrl+V to trigger the keyup function TWICE
+    let isPasting = false;
+
+    $(document).on('keydown', (event) => {
+        if (event.ctrlKey && event.key === 'v') {
+            isPasting = true;
+        }
+    });
+
     $(document).on("keyup", "#searchfield", function (e) {
+
       // TIMEOUT will avoid one request by keyup
       clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
+
+        // Avoid double trigger
+        if (isPasting && e.key.toLowerCase() === 'v') {
+          isPasting = false;
+          return;
+        }
+
+        // Detect entrer key 
         if (e.keyCode == 13 && $("#searchresults a").length > 1) {
           let firstitem = $("#searchresults").find("a")[1];
           $(firstitem).trigger("click");
@@ -226,10 +262,13 @@ var search = (function () {
         let chars = $(this).val().trim().length;
         if (!chars) {
           return;
-        } else if (chars < 3) {
+        // Do not launch search if less than x chars
+        }else if (chars < 3) {
           $("#searchresults .list-group-item").not(".search-header").remove();
           $("#searchresults .search-header").addClass("hidden");
-        } else {
+        } 
+        // Launch search
+        else {
           _search($(this).val());
         }
       }, timeoutToWait);
@@ -272,45 +311,43 @@ var search = (function () {
       _showResults(str, "locations");
     }
   };
-
-  /**
-   * Request BAN search service
-   * @param {string} url
-   */
-  const displayBanSearchList = async (url) => {
-    // request
-    const response = await fetch(url);
-    const data = await response.json();
-    // display response
-    var res = data.features;
-    var str = "";
-    for (var i = 0, len = res.length; i < len && i < 5; i++) {
-      var props = res[i].properties;
-      var geom = res[i].geometry;
-      const zoomByType = {
-        city: 13,
-        town: 15,
-        village: 16,
-        street: 17,
-        housenumber: 18,
+      /**
+       * Request BAN search service
+       * @param {string} url
+       */
+      const displayBanSearchList = async (url) => {
+        // request
+        const response = await fetch(url);
+        const data = await response.json();
+        // display response
+        var res = data.features;
+        var str = "";
+        for (var i = 0, len = res.length; i < len && i < 5; i++) {
+          var props = res[i].properties;
+          var geom = res[i].geometry;
+          const zoomByType = {
+            city: 13,
+            town: 15,
+            village: 16,
+            street: 17,
+            housenumber: 18,
+          };
+          const zoom = zoomByType[props.type] || 14;
+          str += `<a class="geoportail list-group-item" href="#" title="${props.context} - ${props.type}"
+              onclick="mviewer.zoomToLocation(
+                  ${geom.coordinates[0]},
+                  ${geom.coordinates[1]},
+                  ${zoom},
+                  ${_searchparams.querymaponclick}
+              );
+              mviewer.showLocation('EPSG:4326', ${geom.coordinates[0]}, ${geom.coordinates[1]}, ${_searchparams.banmarker});">
+              ${props.label}
+          </a>`;
+        }
+        $(".geoportail").remove();
+        _showResults(str, "locations");
       };
-      const zoom = zoomByType[props.type] || 14;
-      str += `<a class="geoportail list-group-item" href="#" title="${props.context} - ${props.type}"
-          onclick="mviewer.zoomToLocation(
-              ${geom.coordinates[0]},
-              ${geom.coordinates[1]},
-              ${zoom},
-              ${_searchparams.querymaponclick}
-          );
-          mviewer.showLocation('EPSG:4326', ${geom.coordinates[0]}, ${geom.coordinates[1]}, ${_searchparams.banmarker});">
-          ${props.label}
-      </a>`;
-    }
-    $(".geoportail").remove();
-    _showResults(str, "locations");
-  };
-
-  /**
+        /**
    * Will search according to configured search service and input search field
    * @param {string} value input from text field
    */
@@ -429,7 +466,7 @@ var search = (function () {
             result_label = Mustache.render(_fuseSearchResult, element);
           }
           var geom = new ol.format.GeoJSON().readGeometry(element.geometry);
-          var xyz = mviewer.getLonLatZfromGeometry(geom, "EPSG:4326", zoom);
+          var xyz = mviewer.getLonLatZfromGeometry(geom, _elasticSearchProj, zoom);
           str +=
             '<a class="fuse list-group-item" title="' +
             result_label +
@@ -442,12 +479,12 @@ var search = (function () {
             xyz.zoom +
             "," +
             _searchparams.querymaponclick +
-            ");mviewer.showLocation('EPSG:4326'," +
+            ");mviewer.showLocation('_elasticSearchProj'," +
             xyz.lon +
             "," +
             xyz.lat +
             ', false);" ' +
-            "onmouseover=\"mviewer.flash('EPSG:4326'," +
+            "onmouseover=\"mviewer.flash('_elasticSearchProj'," +
             xyz.lon +
             "," +
             xyz.lat +
@@ -461,11 +498,137 @@ var search = (function () {
   };
 
   /**
-   * Private Method: _sendElasticsearchRequest
-   *
+   * Build query for elastic search depending on wanted version and params
+   * @param {*} version 
+   * @param {*} mode 
+   * @param {*} val 
+   * @param {*} queryLayers - not used after ElasticSearch 7 version
    */
+  var buildQuery = function (version, mode, val, queryLayers) {
+    if (version === 1.4) {
+      switch (mode) {
+        case "term":
+          query = { match: { _all: val } };
+          break;
+        case "phrase":
+          query = { match_phrase: { _all: val } };
+          break;
+        case "match":
+          query = {
+            fuzzy_like_this: {
+              like_text: val,
+              max_query_terms: 12,
+              fuzziness: 0.7,
+            },
+          };
+          break;
+        default:
+          query = {
+            fuzzy_like_this: {
+              like_text: val,
+              max_query_terms: 12,
+              fuzziness: 0.7,
+            },
+          };
+      }
 
-  var _sendElasticsearchRequest = function (val) {
+      queryFilter = {
+        query: {
+          filtered: {
+            query: query,
+            filter: {
+              and: {
+                filters: [{ or: { filters: queryLayers } }],
+              },
+            },
+          },
+        },
+      };
+    } else if(version < 7){
+      switch (mode) {
+        case "term":
+          query = { term: { id: val } };
+          break;
+        case "phrase":
+          query = { match_phrase: { _all: val } };
+          break;
+        case "match":
+          query = { match: { _all: { query: val, fuzziness: "AUTO" } } };
+          break;
+        default:
+          query = { match: { _all: { query: val, fuzziness: "AUTO" } } };
+      }
+      queryFilter = {
+        query: {
+          bool: {
+            must: [
+              query,
+              {
+                bool: {
+                  should: queryLayers,
+                },
+              },
+            ],
+          },
+        },
+      }
+    }else {
+      // Search for special char
+      const specialChars = /[+\-=&|><!(){}[\]^"~*?:\\/]/g;
+      const reWhiteSpace = new RegExp("/^\s+$/");
+
+      switch (mode) {
+        case "term":
+          query = { term: { id: val } };
+          break;
+        case "phrase":
+          query = { match_phrase: { message: val } };
+          break;
+        case "match":
+          if(specialChars.test(val)){
+            // escape special elasitc char with \\
+            var escapeChar = val.replace(specialChars, '\\$&');
+
+            query = { query_string: { query: escapeChar, fields: []} } ;
+          }else{
+            query = { query_string: { query: val, fields: []} } ;
+          }
+          break;
+        default:
+          query = { query_string: { query: val, fields: []} } ;
+      }
+      // if val contains space, call should be made in multimatch
+      if(reWhiteSpace.test(val)){
+        queryFilter = {
+          query: {
+            multi_match: {
+                query, fields: []
+            },
+          },
+         }
+      }else{
+        queryFilter = {
+          query: {
+            bool: {
+              must: [
+                query,
+              ],
+            },
+          },
+        }
+      }
+    }
+    return queryFilter;
+  };
+
+  /**
+    * Private Method: _sendPrevious6ElasticsearchRequest
+    * 
+    * request on elasticsearche version previous to 7
+    * @deprecated
+    */
+  var _sendPrevious6ElasticsearchRequest = function (val, versionELS) {
+
     var sendQuery = true;
     var searchableLayers = $.grep(_searchableElasticsearchLayers, function (l, i) {
       return l.getVisible();
@@ -614,7 +777,6 @@ var search = (function () {
               var geomtype = geom.getType();
               var action_click = "";
               var action_over = "";
-              var icon = "img/star.svg";
               var title = data.hits.hits[i]._source.title;
               if (geomtype !== "Point") {
                 var feature = new ol.Feature({
@@ -638,7 +800,6 @@ var search = (function () {
                   "mviewer.flash(" + "'EPSG:4326'," + point[0] + "," + point[1] + ");";
               }
               if (_overLayers[data.hits.hits[i]._type]) {
-                //icon = _overLayers[data.hits.hits[i]._type].iconsearch;
                 action_click +=
                   "mviewer.tools.info.queryLayer(" +
                   point[0] +
@@ -692,6 +853,209 @@ var search = (function () {
               .addClass("mv-unchecked");
           },
         });
+      }
+    }
+  };
+
+  /**
+   * Private Method: _sendElasticsearchRequest
+   * 
+   * val represent search value given 
+   */
+  var _sendElasticsearchRequest = function (val) {
+    
+    // Keep previous elasticsearch call version
+    // when only one elasticsearch 
+    if(typeof _elasticSearchVersion === 'string' || _elasticSearchVersion instanceof String){
+      _sendPrevious6ElasticsearchRequest(val);
+    }
+    // New version configuration in <elasticsearchs>
+    // Since ElasticSearch 7 DocType can not be used to search several layers data in same index
+    else{
+      
+      let sendQuery = true;
+      // We can have several layers with one elk index each
+      let searchableLayers = $.grep(_searchableElasticsearchLayers, function (l, i) {
+        return l.getVisible();
+      });
+
+      // send request only if at least one layer is searcheable or elastic search in standalone mode
+      if (searchableLayers.length > 0 || _searchparams.static) {
+        
+         // clean previous search and feature
+        $(".elasticsearch").remove(); 
+        _sourceEls.clear();
+        
+        // for each layer searcheable and visible layer launch elk search
+        for(callIndex=0; callIndex<searchableLayers.length; callIndex++){
+
+          let layerId = searchableLayers[callIndex].values_.mviewerid
+          let mode = _elasticSearchQuerymode.get(layerId);
+          let versionELS = parseFloat(_elasticSearchVersion.get(layerId));  
+               
+          // # for term query https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-term-query.html
+          if (val.substring(0, 1) === "#") {
+            mode = "term";
+            val = val.substring(1, val.length);
+          }
+          if (val.slice(0, 1) === '"') {
+            sendQuery = false;
+          }
+          // value around " " means Phrase mode https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query-phrase.html
+          if (val.slice(0, 1) === '"' && val.slice(-1) === '"') {
+            mode = "phrase";
+            val = val.substring(1, val.length - 1);
+            sendQuery = true;
+          }
+        
+          let queryFilter = buildQuery(versionELS, mode, val, null);
+        
+          // Only add geofilter if required in search params
+          if (_searchparams.bbox) {
+            var currentExtent = _map.getView().calculateExtent(_map.getSize());
+            var projectedMapExtent = ol.proj.transformExtent(currentExtent, _projection.getCode(), _elasticSearchProj);
+            var geometryfield = _elasticSearchGeometryfield.get(layerId) || "location";
+            var geofilter = { geo_shape: {} };
+            geofilter.geo_shape[geometryfield] = {
+              shape: {
+                type: "envelope",
+                coordinates: [
+                  [projectedMapExtent[0], projectedMapExtent[3]],
+                  [projectedMapExtent[2], projectedMapExtent[1]],
+                ],
+              },
+            };
+
+            queryFilter.query.bool.filter = geofilter;
+          }
+          contentType = "application/json; charset=utf-8";
+          if (sendQuery) {
+            // Fix IE9 "No transport error" with cors
+            jQuery.support.cors = true;
+            $.ajax({
+              type: "POST",
+              url: _elasticSearchUrl.get(layerId),
+              crossDomain: true,
+              data: JSON.stringify(queryFilter),
+              dataType: "json",
+              contentType: contentType,
+              success: function (data) {
+
+                let str = "";
+                let indexId = "";
+                let mouseOverField = "";
+                let titleDisplayKey = "id";
+                var nb = data.hits.hits.length;              
+                let formatELS = new ol.format.GeoJSON(); 
+
+                if (nb > 0){
+                  indexId = data.hits.hits[0]._index;              
+                  mouseOverField = _elasticSearchmouseoverfields.get(indexId).split(',');
+                  titleDisplayKey = _elasticSearchdisplayfields.get(indexId).split(',');
+
+                  // get format from conf but defaut GeoJSON
+                  if (_elasticSearchGeomtype.get(indexId) === "WKT") {
+                    formatELS = new ol.format.WKT();
+                  }
+                }
+                            
+                for (var j = 0, nb; j < nb && j < 10; j++) {
+
+                  let currentFeature = data.hits.hits[j];
+
+                  let geom = formatELS.readGeometry(
+                    currentFeature._source.location
+                  );
+                  
+                  let xyz = mviewer.getLonLatZfromGeometry(geom, _elasticSearchProj, zoom);
+
+                  var title ="";
+                  title +=  $.map(currentFeature._source, function (value, key) {
+                      
+                      if(!mouseOverField.length ||mouseOverField.includes(key) ){
+                          if (typeof value === "string") {
+                            return value;
+                          }
+                        }
+                    }).join(" - ") 
+
+                  
+                  let action_click = "";
+
+                  // always zoom on feature
+                  let feature = new ol.Feature({
+                    geometry: geom.transform(_elasticSearchProj, _map.getView().getProjection()),
+                    title: title,
+                  });
+                  feature.setId("feature." + indexId + "." +j);
+                  _sourceEls.addFeature(feature);
+
+                  action_click += "mviewer.zoomToFeature('feature." + indexId + "." +j + "', 16);";
+
+                  //If index has the same name than a mviewer layer make the query on layer
+                  if (_overLayers[indexId]) {
+                    _overLayers[indexId].searchid = _elasticSearchLinkid.get(indexId);
+                    action_click +=
+                      "mviewer.tools.info.queryLayer(" +
+                      xyz.lon +
+                      "," +
+                      xyz.lat +
+                      ",'"+_elasticSearchProj+"','" +  
+                      indexId +
+                      "','" + 
+                      currentFeature._source[_elasticSearchLinkid.get(indexId)] +
+                      "');";
+                  }
+                                 
+                  let action_over = "";
+                  
+                  // if search not filter by current bbox
+                  if (!_searchparams.bbox) {
+                    //action_over = "mviewer.zoomToInitialExtent();";
+                  }
+
+                  action_over += "mviewer.flash(" + "'"+_elasticSearchProj+"'," + xyz.lon + "," + xyz.lat + ");";
+                  str +=
+                    '<a class="elasticsearch list-group-item" href="#" ' +
+                    'onclick="' +
+                    action_click +
+                    '" ' +
+                    'onmouseover="' +
+                    action_over +
+                    '" ' +
+                    'title="' + 
+                    $.map(currentFeature._source, function (value, key) {               
+                      if(!titleDisplayKey.length ||titleDisplayKey.includes(key) ){
+                          if (typeof value === "string") {
+                            return value;
+                          }
+                        }
+                    }).join(" \n") +
+                    '">' +
+                    title +
+                    "</a>";
+                }
+                
+                if (nb > 0) {
+                  _showResults(str, "entities");    
+                }
+              },
+              error: function (xhr, ajaxOptions, thrownError) {
+                mviewer.alert(
+                  "Problème avec l'instance Elasticsearch.\n" +
+                    thrownError +
+                    "\n Désactivation du service.",
+                  "alert-warning"
+                );
+                _searchparams.features = false;
+                _searchparams.static = false;
+                $("#param_search_features span")
+                  .removeClass("mv-checked")
+                  .addClass("mv-unchecked");
+              },
+            });
+          }
+        }
       }
     }
   };
@@ -786,17 +1150,45 @@ var search = (function () {
     if (configuration.olscompletion) {
       _olsCompletionUrl = configuration.olscompletion.url;
       $("#adresse-attribution").text(configuration.olscompletion.attribution);
-      _olsCompletionType = configuration.olscompletion.type || "ign";
+      _olsCompletionType = configuration.olscompletion.type || "geoportail";
     }
+    // only one elastic index to stay compatible with older version
     if (configuration.elasticsearch) {
       _elasticSearchUrl = configuration.elasticsearch.url;
       _elasticSearchQuerymode = configuration.elasticsearch.querymode;
       _elasticSearchGeometryfield = configuration.elasticsearch.geometryfield;
+      // @Deprecated not available after elastic search 7 version 
       _elasticSearchDocTypes = configuration.elasticsearch.doctypes;
       _elasticSearchVersion = configuration.elasticsearch.version || "1.4";
       // common id between elasticsearch document types (_id)  and geoserver featureTypes
       _elasticSearchLinkid = configuration.elasticsearch.linkid || "featureid";
+      _elasticSearchGeomtype= configuration.elasticsearch.geometryformat || "GeoJSON";
+      _elasticSearchdisplayfields = configuration.elasticsearch.displayfields || "";
+      _elasticSearchmouseoverfields = configuration.elasticsearch.mouseoverfields || "";
     }
+    // multiple index only with elasticsearch > 7
+    else if(configuration.elasticsearchs){
+      _elasticSearchUrl = new Map();
+      _elasticSearchQuerymode = new Map();
+      _elasticSearchGeometryfield = new Map();
+      _elasticSearchVersion = new Map();
+      _elasticSearchLinkid = new Map();
+      _elasticSearchGeomtype = new Map();
+      _elasticSearchdisplayfields = new Map();
+      _elasticSearchmouseoverfields = new Map();
+      configuration.elasticsearchs.elasticsearch.forEach((elasticsearch, index) => {
+          _elasticSearchUrl.set(elasticsearch.layer, elasticsearch.url);
+          _elasticSearchQuerymode.set(elasticsearch.layer, elasticsearch.querymode);
+          _elasticSearchGeometryfield.set(elasticsearch.layer, elasticsearch.geometryfield);
+          _elasticSearchVersion.set(elasticsearch.layer, elasticsearch.version ?? "7");
+          // common id between elasticsearch document types (_id)  and geoserver featureTypes
+          _elasticSearchLinkid.set(elasticsearch.layer, elasticsearch.linkid ?? "featureid");
+          _elasticSearchGeomtype.set(elasticsearch.layer, elasticsearch.geometryformat ?? "GeoJSON");
+          _elasticSearchdisplayfields.set(elasticsearch.layer, elasticsearch.displayfields ?? "");
+          _elasticSearchmouseoverfields.set(elasticsearch.layer, elasticsearch.mouseoverfields ?? "");
+      });
+    }
+    
 
     if (!_olsCompletionUrl) {
       _searchparams.localities = false;
@@ -842,6 +1234,10 @@ var search = (function () {
     _initSearch();
   };
 
+  /**
+   * 
+   * @param {*} li 
+   */
   var _toggleParameter = function (li) {
     var span = $(li).find("span");
     var parameter = false;
@@ -864,12 +1260,19 @@ var search = (function () {
     }
   };
 
+  /**
+   * 
+   * @param {*} featureid 
+   */
   var _showFeature = function (featureid) {
     var feature = _sourceEls.getFeatureById(featureid).clone();
     _sourceOverlay.clear();
     _sourceOverlay.addFeature(feature);
   };
 
+  /**
+   * 
+   */
   var _clear = function () {
     if (_sourceEls && _sourceOverlay) {
       _sourceEls.clear();
@@ -878,22 +1281,23 @@ var search = (function () {
   };
 
   /**
-   * Public Method: zoomToFeature
+   * Private Method: zoomToFeature
    *
    */
-
-  var _zoomToFeature = function (featureid) {
+  var _zoomToFeature = function (featureid, zoom) {
     var feature = _sourceEls.getFeatureById(featureid).clone();
     _sourceEls.clear();
     _sourceOverlay.clear();
     _sourceOverlay.addFeature(feature);
     var boundingExtent = feature.getGeometry().getExtent();
     var duration = 2000;
+
     _map.getView().fit(boundingExtent, {
       size: _map.getSize(),
       padding: [0, $("#sidebar-wrapper").width(), 0, 0],
       duration: duration,
     });
+
 
     function clear() {
       _sourceOverlay.clear();
