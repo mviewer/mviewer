@@ -11,10 +11,18 @@ import ModalContent from "./components/ModalContent.js";
 
 import { getOptions } from "./components/Block.js";
 
+const onCloseModal = () => {
+  const btnClose = document.getElementById("print-panel-close");
+  btnClose.onclick = () => {
+    document.querySelector("#mapBlock").remove();
+    document.querySelector("#print-mapPrint").remove();
+    btnClose.removeAttribute("onclick");
+  };
+};
+
 const initWithLayout = (layout) => {
   $("#printModal").on("shown.bs.modal", function () {
     // supprime et recréer la carte seulement et non toute la modal
-    $("#mapBlock").remove();
     $("#printModal").modal("show");
     // init options
     initOptions(layout);
@@ -71,6 +79,9 @@ const initWithLayout = (layout) => {
       });
     })
   );
+
+  // on modal close
+  onCloseModal();
 };
 
 const init = () => {
