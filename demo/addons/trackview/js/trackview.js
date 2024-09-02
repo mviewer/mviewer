@@ -59,7 +59,7 @@ var trackview = (function () {
       }),
     });
 
-    // if current segmeent is the last selected add point on segment
+    // if current segment is the last selected add point on segment
     if (currentSelectedSegmentId == feature.getProperties().properties.id) {
       console.log("entré style");
       const geometry = feature.getGeometry();
@@ -207,7 +207,10 @@ var trackview = (function () {
       let featureZ = coordinates[i][2];
       // Not used for the moment Time -- let featureT = coordinates[i][3];
 
+      // Get coordinates of each points to be used after
       let currentPoint = [featureX, featureY];
+
+      // Conversion of the current point in other projection for a better manipulation
       let currentPointConvert = ol.proj.transform(currentPoint, 'EPSG:3857', 'EPSG:4326');
 
       // only after first point
@@ -260,7 +263,7 @@ var trackview = (function () {
 
       }
       finalData[i] = [distanceTotalForSegment, featureZ]; // Add distance and point in finalData array
-      //currentPoint.set('distance', distance);
+      // currentPoint.set('distance', distance);
 
       previousPoint = currentPoint;
       previousPointConvert = currentPointConvert;
