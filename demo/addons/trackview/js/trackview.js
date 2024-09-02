@@ -462,9 +462,9 @@ var trackview = (function () {
 
     mviewer.getMap().once("rendercomplete", function (e) {
 
-      _zoomOnFeature();
-      _createFeatures();
-      initDropdown();
+      _zoomOnFeature(); // Calling fonction for zoom on the features
+      _createFeatures(); // Calling fonction for create all of the features 
+      initDropdown(); // Calling the init of the dropdown
 
       /*********** Detect feature on the map ***********/
       mviewer.getMap().on("pointermove", function (event) {
