@@ -213,7 +213,7 @@ var trackview = (function () {
       // Conversion of the current point in other projection for a better manipulation
       let currentPointConvert = ol.proj.transform(currentPoint, 'EPSG:3857', 'EPSG:4326');
 
-      // only after first point
+      // Only after first point
       if (i > 0) {
 
         const distanceCalc = (turf.distance(previousPointConvert, currentPointConvert) * 1000); // Distance between the current point and the previous one
@@ -224,7 +224,7 @@ var trackview = (function () {
           const distanceManquante = (markerDistance - distanceTotalForSegment) / 1000; // We calculate the missing distance
           markerDistance += 1000;
 
-          // get coords for the wanted distance
+          // Get coords for the wanted distance
           const segmentTurf = turf.lineString([previousPointConvert, currentPointConvert]);
           const along = turf.along(segmentTurf, distanceManquante);
           const pointCoords = along.geometry.coordinates;
@@ -244,7 +244,7 @@ var trackview = (function () {
           idKilometre++;
         }
 
-        // create segment with point
+        // Create segment with point
         var segment = new ol.geom.LineString([previousPoint, currentPoint]);
         // Set high with pointEnd Z
         distanceTotalForSegment += distanceCalc;
@@ -263,7 +263,7 @@ var trackview = (function () {
 
       }
       finalData[i] = [distanceTotalForSegment, featureZ]; // Add distance and point in finalData array
-      // currentPoint.set('distance', distance);
+      // CurrentPoint.set('distance', distance);
 
       previousPoint = currentPoint;
       previousPointConvert = currentPointConvert;
@@ -421,10 +421,10 @@ var trackview = (function () {
    */
   var _initTool = function () {
 
-    // trackview-parcours
+    // Trackview-parcours dropdown
     let dropdown = document.getElementById("trackview-parcours");
 
-    // Here we create the drop-down list
+    // Here we create the dropdown list
     for (let i = 0; i < tracksList.length; i++) {
       const li = document.createElement("li");
       li.value = i;
@@ -433,7 +433,7 @@ var trackview = (function () {
       dropdown.appendChild(li);
     }
 
-    // TODO put after parcours init
+    // Here we check if the dropdown is clicked
     document.querySelector("#trackview-parcours").addEventListener("click", (e) => {
       let itemSelected = e.target;
       let itemValue = itemSelected.getAttribute("value");
@@ -478,7 +478,7 @@ var trackview = (function () {
             //console.log("dans le if");
             //console.log(currentSelectedSegmentId);
           }
-        }, { hitTolerance: currentTracks.param.tolerance.value });
+        }, { hitTolerance: currentTracks.param.tolerance.value }); // Value in pixel
       });
     });
   };
