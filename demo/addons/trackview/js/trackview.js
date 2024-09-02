@@ -433,7 +433,7 @@ var trackview = (function () {
       dropdown.appendChild(li);
     }
 
-    // Here we check if the dropdown is clicked
+    // Here we check if the dropdown is clicked ( used )
     document.querySelector("#trackview-parcours").addEventListener("click", (e) => {
       let itemSelected = e.target;
       let itemValue = itemSelected.getAttribute("value");
@@ -475,8 +475,6 @@ var trackview = (function () {
             currentSelectedSegmentId = feature.getProperties().properties.id;
             dataGraph.update();
             vectorLayerSegment.changed();
-            //console.log("dans le if");
-            //console.log(currentSelectedSegmentId);
           }
         }, { hitTolerance: currentTracks.param.tolerance.value }); // Value in pixel
       });
