@@ -16,6 +16,9 @@
                     "param": {
                         "pointKilometers": {
                             "display": "true"
+                        },
+                        "tolerance": {
+                            "value": 4
                         }
                     },
                     "style": {

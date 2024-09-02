@@ -464,7 +464,7 @@ var trackview = (function () {
       /*********** Detect feature on the map ***********/
       mviewer.getMap().on("pointermove", function (event) {
 
-        let tolerance = 4; // In pixel
+        let tolerance = tracksList.param.tolerance.value; // In pixel
 
         mviewer.getMap().forEachFeatureAtPixel(event.pixel, function (feature, layer) {
           // Check if the layer pointed is equal to the layer of interest
