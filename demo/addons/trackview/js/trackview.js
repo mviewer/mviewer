@@ -438,6 +438,7 @@ var trackview = (function () {
       let itemSelected = e.target;
       let itemValue = itemSelected.getAttribute("value");
 
+      // If an element is selected in the list
       if (itemValue) {
 
         _clearTool();
