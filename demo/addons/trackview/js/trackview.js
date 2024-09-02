@@ -61,6 +61,7 @@ var trackview = (function () {
 
     // if current segmeent is the last selected add point on segment
     if (currentSelectedSegmentId == feature.getProperties().properties.id) {
+      console.log("entré style");
       const geometry = feature.getGeometry();
       const coordinates = geometry.getCoordinates();
       const endCoordinate = coordinates[coordinates.length - 1];
@@ -464,16 +465,17 @@ var trackview = (function () {
       /*********** Detect feature on the map ***********/
       mviewer.getMap().on("pointermove", function (event) {
 
-        let tolerance = tracksList.param.tolerance.value; // In pixel
-
         mviewer.getMap().forEachFeatureAtPixel(event.pixel, function (feature, layer) {
           // Check if the layer pointed is equal to the layer of interest
           if (feature && layer === vectorLayerSegment) {
             mviewer.pointHover = feature.getProperties().properties.distance;
             currentSelectedSegmentId = feature.getProperties().properties.id;
             dataGraph.update();
+            vectorLayerSegment.changed();
+            //console.log("dans le if");
+            //console.log(currentSelectedSegmentId);
           }
-        }, { hitTolerance: tolerance });
+        }, { hitTolerance: currentTracks.param.tolerance.value });
       });
     });
   };

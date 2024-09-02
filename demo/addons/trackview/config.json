@@ -18,7 +18,7 @@
                             "display": "true"
                         },
                         "tolerance": {
-                            "value": 4
+                            "value": 2
                         }
                     },
                     "style": {
@@ -83,6 +83,9 @@
                     "param": {
                         "pointKilometers": {
                             "display": "false"
+                        },
+                        "tolerance": {
+                            "value": 2
                         }
                     },
                     "style" : {
