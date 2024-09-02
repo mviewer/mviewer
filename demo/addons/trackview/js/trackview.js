@@ -420,7 +420,7 @@ var trackview = (function () {
     // trackview-parcours
     let dropdown = document.getElementById("trackview-parcours");
 
-    // Here we create de drop-down list
+    // Here we create the drop-down list
     for (let i = 0; i < tracksList.length; i++) {
       const li = document.createElement("li");
       li.value = i;
