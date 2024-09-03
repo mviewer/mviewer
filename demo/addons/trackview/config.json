@@ -3,7 +3,7 @@
     "js": [
         "../../../lib/chartjs-3.7.1/Chart.min.js", "lib/turf.min.js", "js/custom-dropdown.js", "js/trackview.js"
     ],
-    "css": "./style.css",
+    "css": "/css/style.css",
     "html": "./trackview.html",
     "target": "page-content-wrapper",
     "options" : {
