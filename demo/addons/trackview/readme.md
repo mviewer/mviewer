@@ -102,3 +102,116 @@ Le fichier `config.json` permet d'ajouter plusieurs couches chacune étant perso
 
 En effet, dans notre cas, il est possible de renseigner un seul parcours, ou bien d'en ajouter un 2ème, un 3ème et ainsi de suite.
 
+Nous allons donc voir par la suite comment ajouter un parcours qui servira d'exemple en cas d'ajout d'un second.
+
+Pour commencer, nous pouvons voir ci-dessous la structure permettant l'ajout d'un ou de plusieurs parcours.
+
+```json
+{
+    "type": "module",
+    "js": [
+        "../../../lib/chartjs-3.7.1/Chart.min.js", "lib/turf.min.js", "js/custom-dropdown.js", "js/trackview.js"
+    ],
+    "css": "/css/style.css",
+    "html": "./trackview.html",
+    "target": "page-content-wrapper",
+    "options" : {
+        "mviewer": {
+            "parcours": [
+                {
+                    "Premier parcours"
+                },
+                {
+                    "Seconds parcours"
+                },
+                {
+                    "Troisième parcours"
+                }
+                ...
+            ]
+        }
+    }  
+}
+```
+
+Les données de chaque parcours doivent être comprises entre les `{}`  pour le bon fonctionnement du plugin.
+
+Pour une meilleure lisibilité, nous allons voir en plusieurs étapes les différentes données à renseigner dans le fichier `config.json`.
+
+**1.1 Les paramètres de base**
+
+Ci-dessous les paramètres nécessaires à l'ajout des données sur Mviewer.
+
+```json
+{
+    "type": "module",
+    "js": [
+        "../../../lib/chartjs-3.7.1/Chart.min.js", "lib/turf.min.js", "js/custom-dropdown.js", "js/trackview.js"
+    ],
+    "css": "/css/style.css",
+    "html": "./trackview.html",
+    "target": "page-content-wrapper",
+    "options" : {
+        "mviewer": {
+            "parcours": [
+                {
+                    "id": 0,
+                    "label": "Parcours 13 km",
+                    "title": "Circuit",
+                    "stats": {
+                        "type": "customlayer",
+                        "layerId": "parcours_1",
+                        "opacity": 0.8
+                    },  
+                    "data": {
+                        "url": "demo/trackview/data/gpx/parcours_13km.gpx"
+                    }
+                }
+                ...
+            ]
+        }
+    }  
+}
+```
+
+- `id` sert d'identifiant pour un parcours, le premier avec l'identifiant 0, le second avec l'identifiant 1, le troisième avec le 2 et ainsi de suite.
+
+- `label` sert à donner un titre à la légende.
+
+- `title` permet de donner une description de ce que représente la légende.
+
+Pour une meilleure compréhension, voici une illustration ci-dessous :
+
+![legend.png](img/legend.png)
+
+- `stats`
+
+    - `type` permet de définir le type de la couche, ici "*customlayer*"
+    - `layerId` c'est grâce à cette ID que Mviewer fait le lien entre la légende et les thèmes (pour plus d'informations sur les thèmes : [les thèmes avec Mviewer](https://mviewerdoc.readthedocs.io/fr/latest/doc_tech/config_topics.html)).
+
+    En effet, afin que cet ID soit utile, il ne faut pas oublier de rajouter dans la configuration de l'application (**fichier XML**) le code suivant :
+
+    ```xml
+    <themes mini="true" legendmini="false">
+        <theme id="theme_1" name="Les différents parcours" collapsed="true" icon="fas fa-book">
+            <layer id="parcours_1" name="Parcours"/>
+        </theme>
+    </themes>
+    ```
+
+    L'ID se situe donc dans la balise `layer` qui permettra de faire le lien avec la légende.
+
+    Concernant les autres paramètres, merci de se rendre vers la documentation sur le lien ci-dessus.
+
+    Pour une meilleure compréhension, voici une illustration ci-dessous.
+
+    ![theme.png](img/theme.png)
+
+    - `opacity` permet de définir l'opacité par défaut du parcours lors du chargement de la page.
+
+- `data`
+    - `url` permet de renseigner le chemin vers les données à charger.
+    
+    ***Remarque:*** Les données doivent impérativement être au format **GPX**.
+
+**1.2 Le style**
