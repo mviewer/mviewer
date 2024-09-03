@@ -37,9 +37,9 @@ Une fois arrivé à ce stade de la configuration, le plugin est désormais impor
 
 ## 2. Configuration du plugin
 
-Comme nous avons déjà pu le voir précédemment, l'extension est entièrement configurable. Nous allons donc voir dans cette partie les différentes configuration disponibles.
+Comme nous avons déjà pu le voir précédemment, l'extension est entièrement configurable. Nous allons donc voir dans cette partie les différentes configurations disponibles.
 
-Le fichier de configuration `config.json` est disponible dans le répertoire `addons/trackview`. L'emplacement de celui-ci peut être modifier en fonction de vos besoins. 
+Le fichier de configuration `config.json` est disponible dans le répertoire `addons/trackview`. L'emplacement de celui-ci peut être modifié en fonction de vos besoins. 
 
 ### **2.1. Une structure à respecter**
 
@@ -64,13 +64,13 @@ Afin que l'extension puisse fonctionner correctement, il est très important de 
 
 - `css` c'est ici que l'on renseigne le chemin vers le fichier de style
 
-- `html` c'est ici que l'on renseigne le chemin vers le fichier html pouvant contenir d'avantages d'éléments en fonction des besoins
+- `html` c'est ici que l'on renseigne le chemin vers le fichier html pouvant contenir davantage d'éléments en fonction des besoins
 
 - `target` indique l'élément de la page dans lequel le contenu sera inséré.
 
 ### **2.2. Une configuration par Mviewer**
 
-Il est très important de reprendre l'ID de votre Mviewer (voir **partie 1.1**), afin de le renseigner dans sous la propriété `"mviewer"`, comme nous pouvons le voir ci-dessous :
+Il est très important de reprendre l'ID de votre Mviewer (voir **partie 1.1**), afin de le renseigner sous la propriété `"mviewer"`, comme nous pouvons le voir ci-dessous :
 
 ```json
 {
@@ -98,9 +98,9 @@ Dans notre exemple, nous avons utilisé l'ID `"parcours"`.
 
 ### **2.3. Ajouter une couche**
 
-Le fichier `config.json` permet d'ajouter plusieurs couches chacune étant personnalisable comme on le souahite.
+Le fichier `config.json` permet d'ajouter plusieurs couches chacune étant personnalisable comme on le souhaite.
 
-En effet, dans notre cas, il est possible de renseigner un seul parcours, ou bien d'en ajouter un 2ème, un 3ème et ainsi de suite.
+En effet, dans notre cas, il est possible de renseigner un seul parcours, ou bien d'en ajouter un 2e, un 3ème et ainsi de suite.
 
 Nous allons donc voir par la suite comment ajouter un parcours qui servira d'exemple en cas d'ajout d'un second.
 
@@ -192,7 +192,7 @@ Pour une meilleure compréhension, voici une illustration ci-dessous :
 
 ![legend.png](img/legend.png)
 
-- `param` permet de stocker différents paramètres propre au parcours
+- `param` permet de stocker différents paramètres propres au parcours
     - `pointKilometers` paramètre concernant les points kilométriques
         - `display` prend la valeur **true** ou **false** pour savoir si on souhaite afficher les points tous les kilomètres ou non.
     
@@ -293,10 +293,10 @@ Pour commencer, on va voir plus en détails la configuration du style pour les *
     - `segment` concerne le style des segments (du parcours).
         - `color` couleur
             - `default` couleur par défaut d'un segment (ou couleur du parcours).
-            - `selected` on renseigne la couleur d'un segment selectionné / survolé par la souris.
+            - `selected` on renseigne la couleur d'un segment selectionné/survolé par la souris.
         - `width` taille (épaisseur)
             - `default` largeur par défaut d'un segment (ou largeur du parcours).
-            - `selected` on renseigne la taille d'un segment selectionné / survolé par la souris.
+            - `selected` on renseigne la taille d'un segment selectionné/survolé par la souris.
 
 ***Remarque:*** La couleur peut être renseignée de plusieurs manières, que ce soit en **hexa** (**#f00** ou encore **#ff0000** pour du rouge par exemple), par leur **simple nom** en **anglais** (**red** ou **green**) ou enfin, en **RGB** (**rgb(255, 0, 0)** pour le **rouge**).
 
@@ -315,7 +315,7 @@ Concernant les **points kilométriques**, le principe est presque le même comme
     - `color` couleur
         - `image` c'est ici que l'on renseigne la couleur du point.
         - `stroke` c'est ici que l'on renseigne la couleur des contours du point.
-        - `text` c'est ici que l'on renseigne la couleur du text sur le point.
+        - `text` c'est ici que l'on renseigne la couleur du texte sur le point.
     - `radius` c'est ici que l'on renseigne le rayon du point.
     - `width` c'est ici que l'on renseigne la largeur du point.
 
@@ -331,7 +331,7 @@ Enfin, nous allons maintenant voir la configuration du **graphique altimétrique
             - `text` c'est ici que l'on renseigne le nom de l'axe concerné.
     - `color` couleur
         - `segment` c'est ici que l'on renseigne la couleur des segments qui sont sur le graphique.
-        - `point` c'est ici que l'on renseigne la couleurs des points qui sont présent sur le graphique.
+        - `point` c'est ici que l'on renseigne la couleur des points qui sont présent sur le graphique.
 
 Une fois arrivé à ce stade de la configuration, vous êtes désormais capable de configurer entièrement le plugin, que ce soit d'un point de vue style, taille, texte ou encore concernant l'emplacement des données à charger.
 
