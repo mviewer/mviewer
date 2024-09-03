@@ -319,7 +319,7 @@ Concernant les **points kilométriques**, le principe est presque le même comme
     - `radius` c'est ici que l'on renseigne le rayon du point.
     - `width` c'est ici que l'on renseigne la largeur du point.
 
-Enfin, nous allons maintenant voir la configuration du **graphique altimétrique** qui, comme son nom l'indique, permet de voir l'altitude à un instant précis du parcours. Celui-ci est également paramétrable afin de le rendre le plus personnalisable possible.
+Enfin, nous allons maintenant voir la configuration du **graphique altimétrique** qui, comme son nom l'indique, permet de voir l'altimétrie (ou altitude) à un instant précis du parcours. Celui-ci est également paramétrable afin de le rendre le plus personnalisable possible.
 
 - `graph` contient tous les paramètres du graphique altimétrique.
     - `type` c'est ici que l'on va renseigner le type du graphique, soit ici "**line**".
@@ -332,3 +332,7 @@ Enfin, nous allons maintenant voir la configuration du **graphique altimétrique
     - `color` couleur
         - `segment` c'est ici que l'on renseigne la couleur des segments qui sont sur le graphique.
         - `point` c'est ici que l'on renseigne la couleurs des points qui sont présent sur le graphique.
+
+Une fois arrivé à ce stade de la configuration, vous êtes désormais capable de configurer entièrement le plugin, que ce soit d'un point de vue style, taille, texte ou encore concernant l'emplacement des données à charger.
+
+Enfin, si le plugin est utilisé pour visualiser qu'un seul parcours, le bouton qui est présent peut être soit déplacé, soit modifier ou soit supprimé en fonction des besoins.
