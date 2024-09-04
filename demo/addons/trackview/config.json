@@ -145,7 +145,7 @@
                 },
                 {   
                     "id": 2,
-                    "label": "Parcours de Pierre",
+                    "label": "Parcours VTT",
                     "title": "Circuit",
                     "param": {
                         "pointKilometers": {
