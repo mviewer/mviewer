@@ -28,8 +28,7 @@
 #trackview-dropdown-custom {
     position: fixed;
     margin: 60px 0 0 270px; /* For the position of the dropdown on the addon || Change this line if needed*/ 
-    font-family: Helvetica, sans-serif;
-    background: #23232a;
+    font-family: sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -49,12 +48,12 @@
 }
 
 .select {
-    background: #2a2f3b;
-    color: #fff;
+    background: whitesmoke;
+    color: black;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 2px #2a2f3b solid;
+    border: 2px rgb(182, 178, 178) solid;
     border-radius: 0.5em;
     padding: 1em;
     cursor: pointer;
@@ -62,12 +61,13 @@
 }
 
 .select-clicked {
-    border: 2px #26489a solid;
-    box-shadow: 0 0 0.8em #26489a;
+    border: 2px gray solid;
+    box-shadow: 0 0 0.8em black;
 }
 
 .select:hover {
-    background: #323741;
+    background: rgb(230, 229, 229);
+    transform: scale(1.01);
 }
 
 .caret {
@@ -75,7 +75,7 @@
     height: 0;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
-    border-top: 6px solid #fff;
+    border-top: 6px solid black;
     transition: 0.3s;
 }
 
@@ -86,11 +86,11 @@
 .menu {
     list-style: none;
     padding: 0.2em 0.5em;
-    background: #323741;
+    background: white;
     border: 1px #363a43 solid;
     box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
     border-radius: 0.5em;
-    color: #9fa5b5;
+    color: black;
     position: absolute;
     top: 4em;
     left: 50%;
@@ -110,11 +110,11 @@
 }
 
 .menu li:hover {
-    background: #2a2d35;
+    background: lightgray;
 }
 
 .menu .active {
-    background: #23242a;
+    background: lightgray;
 }
 
 .menu-open {
