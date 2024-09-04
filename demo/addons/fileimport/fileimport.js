@@ -221,7 +221,6 @@ const fileimport = (function () {
    * used for csv and shp (without .prj)
    * @param {Object} oLayer
    */
-  
   var _registerSRS = function (oLayer) {
     if (oLayer.projections && oLayer.projections.projection) {
       oLayer.projections.projection.forEach(function (p) {
