@@ -98,6 +98,20 @@ Cette partie est dédiée aux personnes qui souhaite développer des fonctionnal
    doc_dev/customlayer_dev.rst
    doc_dev/customcontrol_dev.rst
    doc_dev/customlayer_template.rst
+   
+Nouvelle Partie
+-------------------------------------------------
+
+Nouvelle partie pour tester.
+
+.. toctree::
+:hidden:
+:maxdepth: 1
+:caption: Comment jouer à First Encounters
+
+doc_test/introduction
+doc_test/sous_partie1
+doc_test/sous_partie2
 
 Documentation contribution
 -------------------------------------------------
