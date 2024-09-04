@@ -811,6 +811,13 @@ ul#layers-container {
   top: 160px;
 }
 
+#drawoptions {
+  position: fixed;
+  right: 70px;
+  float: right;
+  top: 270px;
+}
+
 .layerdisplay-title span {
   padding-right: 5px;
 }
@@ -2033,4 +2040,61 @@ div#login-box {
   border: none;
 }
 
+/***********************************
+------------- WINDOW INFO DRAW TOOLS
+***********************************/
 
+#myWindowInfo {
+  background-color: lightgray;
+  width: 260px;
+  height: 52px;
+  position: fixed;
+  margin: 60px 0 0 100px;
+  padding: 3.5px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.window {
+  border-radius: 30px;
+  padding: 2px;
+  margin: 2px;
+  text-align: center;
+}
+
+.window-header {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: lightgray;
+}
+
+.icon-draw {
+  font-size: 18px;
+  padding-top: 1px;
+  margin: 3px
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.forward {
+  border: 1px #26489a solid;
+  box-shadow: 0 0 0.4em #26489a;
+}
+
+#input-button{
+  margin: 0 1px 0 1px;
+  padding: 8px 5px;
+  border: 1px solid lightgray;
+  background-color: lightgray;
+  outline-color: #1a72b2;
+  border-radius: 5px;
+}
+
+#input-button:hover {
+  border-color: black;
+}
