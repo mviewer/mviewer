@@ -29,10 +29,10 @@ var draw = (function () {
 
     let _modify;
 
-    let medianPointStyle = [ 
-        new ol.style.Style({
+    let medianPointStyle = {
+        "Polygon": [ new ol.style.Style({
             stroke: new ol.style.Stroke({
-                color: 'blue',
+                color: '#2e5367',
                 width: 3,
             }),
             fill: new ol.style.Fill({
@@ -43,7 +43,11 @@ var draw = (function () {
             image: new ol.style.Circle({
                 radius: 5,
                 fill: new ol.style.Fill({
-                    color: 'orange',
+                    color: 'white',
+                }),
+                stroke: new ol.style.Stroke({
+                    color: '#2e5367',
+                    width: 3,
                 }),
             }),
             geometry: function (feature) {
@@ -51,24 +55,26 @@ var draw = (function () {
                 const coordinates = feature.getGeometry().getCoordinates()[0];
                 return new ol.geom.MultiPoint(coordinates);
             },
-        }),
-    ];
-
-    var _styleDraw = new ol.style.Style({
-        fill: new ol.style.Fill({
-            color: "#f00",
-        }),
-        stroke: new ol.style.Stroke({
-            color: "#000",
-            width: 2,
-        }),
-        image: new ol.style.Circle({
-            radius: 7,
-            fill: new ol.style.Fill({
-                color: "#2fc2c3",
+        })],
+        "LineString": new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                color: '#2e5367',
+                width: 3,
             }),
         }),
-    });
+        "Point": new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: 6,
+                fill: new ol.style.Fill({
+                    color: 'rgba(128, 128, 128, 0.1)',
+                }),
+                stroke: new ol.style.Stroke({
+                    color: '#2e5367',
+                    width: 2,
+                }),
+            }),
+        }),
+    };
 
     var isDrawing = false;
 
@@ -108,7 +114,7 @@ var draw = (function () {
     var _enableDrawTool = function () {
         $("#drawoptions").show();
         $("#drawBtn").addClass("active");
-        // _createWindowInfo("Polygon");
+        document.body.style.cursor = "crosshair";
 
         _modDrawEnabled = true;
     }
@@ -147,17 +153,17 @@ var draw = (function () {
         return Math.sqrt(distanceX * distanceX + distanceY * distanceY);
     };
 
-    var _resetInteraction = function () {
-        _map.removeInteraction(_drawInt);
-        _map.removeInteraction(_snap);
-    };
+    // var _resetInteraction = function () {
+    //     _map.removeInteraction(_drawInt);
+    //     _map.removeInteraction(_snap);
+    // };
 
     var _addDrawInteraction = function (type) {
 
-        if(isDrawing) {
-            console.log("_resetInteraction");
-            _resetInteraction();
-        };
+        // if(isDrawing) {
+        //     console.log("_resetInteraction");
+        //     _resetInteraction();
+        // };
 
         _createWindowInfo(type);
 
@@ -166,15 +172,11 @@ var draw = (function () {
         if(!isDrawing) {
             _drawInt = new ol.interaction.Draw({
                 source: _sourceDraw,
-                type: type
-            });
-
-            _snap = new ol.interaction.Snap ({
-                source: _sourceDraw,
+                type: type,
+                style: medianPointStyle[type],
             });
 
             _map.addInteraction(_drawInt);
-            _map.addInteraction(_snap);
         
             isDrawing = true;
         };
@@ -215,7 +217,7 @@ var draw = (function () {
                 let firstPoint = coordinates[0];
                 let lastPoint = coordinates[coordinates.length - 1];
 
-                let tolerance = 3000;
+                let tolerance = 10000;
 
                 if(_calculateDistanceBtwPoint(firstPoint, lastPoint) <= tolerance){
                     console.log("Same point");
@@ -226,7 +228,7 @@ var draw = (function () {
                 let line = feature.getGeometry();
                 let coordinatesLine = line.getType() === "LineString" ? line.getCoordinates() : line.getCoordinates()[0];
                 // Create new empty array
-                let newCoord = []; 
+                let newCoord = [];
                 let start;
                 let end;
                 // calculate median coordinates for each segment
@@ -251,7 +253,7 @@ var draw = (function () {
                 newCoord.push(end); 
 
                 // Set new coordinates to the feature
-                feature.getGeometry().setCoordinates(line.getType() === "LineString" ? newCoord : [newCoord]); 
+                feature.getGeometry().setCoordinates(line.getType() === "LineString" ? newCoord : [newCoord]);
             };
 
             let delai;
@@ -304,6 +306,7 @@ var draw = (function () {
         if(inputButton) {
             inputButton.value = "";
         }
+        document.body.style.cursor = "default";
     };
 
     // Clear all element add on the map
@@ -345,8 +348,13 @@ var draw = (function () {
         _sourceDraw = new ol.source.Vector(); // New source
         vectorDraw = new ol.layer.Vector({ // New vector
             source: _sourceDraw,
-            style: medianPointStyle,
+            style: function (feature) {
+                let geomType = feature.getGeometry().getType();
+                return medianPointStyle[geomType];
+            },
         });
+
+        _map.addLayer(vectorDraw);
 
         _modify = new ol.interaction.Modify ({
             source: _sourceDraw,
@@ -378,8 +386,6 @@ var draw = (function () {
 
         $("#toolstoolbar").append(button);
         $(buttonoptions).insertAfter("#toolstoolbar");
-
-        _map.addLayer(vectorDraw);
     };
 
     return {
