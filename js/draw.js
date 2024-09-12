@@ -2,6 +2,8 @@ var draw = (function () {
 
     var _map;
 
+    var _wgs84Sphere = ol.sphere;
+
     var vectorDraw;
 
     var _projection;
@@ -134,6 +136,9 @@ var draw = (function () {
                     '<i id="window-trash" class="icon-draw clickable fas fa-trash" onclick="draw.clearFeature()";></i>',
                     '<i id="window-close" class="icon-draw clickable far fa-times-circle" onclick="draw.disable();"></i>',
                 '</div>',
+                '<div id="value-measure-draw" class="">',
+                    '<p></p>',
+                '</div>',
             '</div>',
         ].join("");
 
@@ -157,6 +162,8 @@ var draw = (function () {
     //     _map.removeInteraction(_drawInt);
     //     _map.removeInteraction(_snap);
     // };
+    
+    var listener;
 
     var _addDrawInteraction = function (type) {
 
@@ -200,7 +207,20 @@ var draw = (function () {
 
             $(_drawTooltipComponent).removeClass("hidden");
 
-            lastFeature = feature;
+            let outputMeasureDraw;
+
+            listener = feature.getGeometry().on("change", function (event) {
+
+                if(geomFeature.getType() === "LineString") {
+                    outputMeasureDraw = _measureDrawFormatLength(feature);
+                } else if (geomFeature.getType() === "Polygon") {
+                    outputMeasureDraw = _measureDrawFormatArea(feature);
+                } else {
+                    outputMeasureDraw = geomFeature.getCoordinates();
+                };
+
+                document.getElementById("value-measure-draw").innerHTML = outputMeasureDraw;
+            });
 
         },this);
 
@@ -268,7 +288,6 @@ var draw = (function () {
                 if(!inputUser) {
                     return;
                 };
-                
 
                 feature.getGeometry().set(feature.getGeometry().getType() === "Point" ? "Nom du repère" : "Nom du polygone", inputUser);
 
@@ -288,6 +307,54 @@ var draw = (function () {
             isDrawing = false;
 
         },this);
+    };
+
+    /**
+     * measure format length output
+     * @param {ol.geom.LineString} line
+     * @return {string}
+     */
+
+    var _measureDrawFormatLength = function (line) {
+        var length = 0;
+        var coordinates = line.getGeometry().getCoordinates();
+        console.log(coordinates.length);
+        for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
+            var c1 = ol.proj.transform(coordinates[i], _projection, "EPSG:4326");
+            var c2 = ol.proj.transform(coordinates[i + 1], _projection, "EPSG:4326");
+            length += _wgs84Sphere.getDistance(c1, c2);
+        }
+        var output;
+        if (length > 100) {
+            output = Math.round((length / 1000) * 100) / 100 + " " + "km";
+        } else {
+            output = Math.round(length * 100) / 100 + " " + "m";
+        }
+
+        console.log(output);
+        return output;
+    };
+    
+    /**
+     * measure format Area output
+     * @param {ol.geom.Polygon} polygon
+     * @return {string}
+     */
+    
+    var _measureDrawFormatArea = function (polygon) {
+        var area = Math.abs(_wgs84Sphere.getArea(polygon));
+        var output;
+        if (area < 0.0001) {
+            output = 0;
+        } else if (area < 10000) {
+            output = Math.round(area * 100) / 100 + " " + "m<sup>2</sup>";
+        } else if (area < 1000000) {
+            output = Math.round((area / 10000) * 100) / 100 + " " + "ha";
+        } else if (area >= 1000000) {
+            output = Math.round((area / 1000000) * 100) / 100 + " " + "km<sup>2</sup>";
+        };
+    
+        return output;
     };
 
     var _deleteFeatureDraw = function () {
