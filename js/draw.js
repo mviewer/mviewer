@@ -139,6 +139,9 @@ var draw = (function () {
                 '<div id="value-measure-draw" class="">',
                     '<p></p>',
                 '</div>',
+                '<div id="save-feature" class="">',
+                    '<button id="save-button" onclick="draw.export();" download="features.json">Enregister le projet</button>',
+                '</div>',
             '</div>',
         ].join("");
 
@@ -309,6 +312,17 @@ var draw = (function () {
         },this);
     };
 
+    var _saveFeature = function () {
+        const format = new ol.format.GeoJSON({featureProjection: 'EPSG:3857'});
+        const download = document.getElementById('save-button');
+        _sourceDraw.on('change', function () {
+        const features = _sourceDraw.getFeatures();
+        const json = format.writeFeatures(features);
+        download.href =
+            'data:application/json;charset=utf-8,' + encodeURIComponent(json);
+        });
+    };
+
     /**
      * measure format length output
      * @param {ol.geom.LineString} line
@@ -318,7 +332,7 @@ var draw = (function () {
     var _measureDrawFormatLength = function (line) {
         var length = 0;
         var coordinates = line.getGeometry().getCoordinates();
-        console.log(coordinates.length);
+
         for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
             var c1 = ol.proj.transform(coordinates[i], _projection, "EPSG:4326");
             var c2 = ol.proj.transform(coordinates[i + 1], _projection, "EPSG:4326");
@@ -331,7 +345,6 @@ var draw = (function () {
             output = Math.round(length * 100) / 100 + " " + "m";
         }
 
-        console.log(output);
         return output;
     };
     
@@ -462,5 +475,6 @@ var draw = (function () {
         disable: _resetToolDraw,
         addDrawInteraction: _addDrawInteraction,
         clearFeature: _deleteFeatureDraw,
+        export: _saveFeature,
     };
 })();
