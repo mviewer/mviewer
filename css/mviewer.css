@@ -2044,74 +2044,49 @@ div#login-box {
 ------------- WINDOW INFO DRAW TOOLS
 ***********************************/
 
-#myWindowInfo {
-  background-color: lightgray;
+#drawingPanelInfo {
   width: 260px;
-  height: 100px; /*52 px before change*/
+  height: 100px; 
   position: fixed;
-  margin: 60px 0 0 100px;
-  padding: 3.5px;
-  border-radius: 20px;
+  top: 65px;
+  right: 55px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-color: #fff;
 }
 
-#value-measure-draw {
-  display: block;
-  text-align: center;
+#drawingPanelInfo .header{
+  background-color: #2e5367;
+  display: flex;
+  justify-content: space-between;
 }
 
-#save-feature {
+#drawingPanelInfo .icon-draw{
+  color: #fff;
+  padding: 10px;
+}
+
+#drawingPanelInfo .content{
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
-#save-button {
-  border: 1px solid black;
-  border-radius: 10px;
-  margin: 2px;
-}
-
-.window {
-  border-radius: 30px;
-  padding: 2px;
-  margin: 2px;
-  text-align: center;
-}
-
-.window-header {
+#drawingPanelInfo .footer{
+  background-color: #2e5367;
   display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  background-color: lightgray;
+  justify-content: center;
 }
 
-.icon-draw {
-  font-size: 18px;
-  padding-top: 1px;
-  margin: 3px
-}
-
-.clickable {
-  cursor: pointer;
-}
-
-.forward {
-  border: 1px #26489a solid;
-  box-shadow: 0 0 0.4em #26489a;
-}
-
-#input-button{
-  margin: 0 1px 0 1px;
-  padding: 8px 5px;
-  border: 1px solid lightgray;
-  background-color: lightgray;
-  outline-color: #1a72b2;
-  border-radius: 5px;
-}
-
-#input-button:hover {
+.drawTooltip{
+  background-color:#fff;
+  border: 1px solid;
   border-color: black;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: black;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+  white-space: nowrap; 
 }
+
