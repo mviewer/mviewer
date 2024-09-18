@@ -22,6 +22,8 @@ var draw = (function () {
 
   var _currentFeature;
 
+  var _snappingLayer;
+
   /**
    * draw tool enabled.
    * @type {boolean}
@@ -247,10 +249,9 @@ var draw = (function () {
       _map.removeInteraction(_drawInt);
       _currentDrawType = null;
       _map.removeInteraction(_snapInter);
-      // _map.removeLayer(_snappingLayer);
-
-      // TODO ? =>>  delete features on stop draw use
-      // _deleteFeatureDraw();
+      if (_config.snapLayerUrl) {
+        _map.removeLayer(_snappingLayer);
+      }
     } else {
       if (_currentDrawType) {
         document.getElementById("draw" + _currentDrawType).classList.remove("active");
@@ -265,10 +266,15 @@ var draw = (function () {
         style: _drawStyle[type],
       });
 
-      if (_config.snapLayerId && mviewer.getLayer(_config.snapLayerId)?.layer) {
-        const snapSrc = mviewer.getLayer(_config.snapLayerId).layer.getSource();
+      const snapZoomValid = _config?.snapLimitZoom
+        ? _map.getView().getZoom() >= parseInt(_config.snapLimitZoom)
+        : true;
+      if (_snappingLayer && snapZoomValid) {
+        if (_config.snapLayerUrl) {
+          _map.addLayer(_snappingLayer);
+        }
         _snapInter = new ol.interaction.Snap({
-          source: snapSrc,
+          source: _snappingLayer.getSource(),
         });
         _map.addInteraction(_drawInt);
         _map.addInteraction(_snapInter);
@@ -539,6 +545,32 @@ var draw = (function () {
   };
 
   /**
+   * Create snapping layer from snapLayerUrl or snapLayerId
+   */
+  var _initSnappingLayer = () => {
+    if (_config.snapLayerUrl) {
+      _snappingLayer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+          url: (extent) => `${_config.snapLayerUrl}&bbox=${extent}`,
+          format: new ol.format.GeoJSON(),
+          strategy: ol.loadingstrategy.bbox,
+        }),
+        style: new ol.style.Style({
+          stroke: new ol.style.Stroke({
+            color: "rgba(46,83,103,0.6)",
+            width: 1,
+          }),
+          fill: new ol.style.Fill({
+            color: "rgba(0, 0, 0, 0)",
+          }),
+        }),
+      });
+    } else if (_config.snapLayerId) {
+      _snappingLayer = mviewer.getLayer(_config.snapLayerId);
+    }
+  };
+
+  /**
    * Several type of drawing are possible Polygon, LineString or Point
    * If no geometry type given, all drawing type are available
    * geometryTypes should be a String with types separeted with coma ,
@@ -666,7 +698,8 @@ var draw = (function () {
       document.getElementById("drawingPanelTrash").disabled = false;
       document.getElementById("dpExportBtn").disabled = false;
     });
-
+    // init snap layer
+    _initSnappingLayer();
     // initialize buttons
     _initButtons();
   };

@@ -2,7 +2,7 @@
 <config>
     <application title="Mviewer" mouseposition="false" logo="" help="mviewer_help.html" drawtools="true" measuretools="true" mapprint="true" exportpng="true" style="css/themes/wet_asphalt.css" togglealllayersfromtheme="true"/>
     <tools>
-		<draw geometryTypes="Polygon" help="false" geometryStroke="#2e5367" snapLayerId="parcelles"/>
+		<draw geometryTypes="Polygon" help="false" geometryStroke="#2e5367" snapLimitZoom="18" snapLayerUrl="https://www.geo2france.fr/geoserver/pci/ows?service=WFS&amp;version=1.0.0&amp;request=GetFeature&amp;typeName=pci%3Ageo_parcelle_2023&amp;outputFormat=application%2Fjson"/>
 	</tools>
 	<mapoptions maxzoom="19" projection="EPSG:3857" center="255919,6427622" zoom="16" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
   
@@ -26,18 +26,12 @@
 
     <themes> 
         <theme name="Cadastre"  collapsed="false" id="habitant" icon="fas fa-users">
-			<layer 
-                id="parcelles" 
-                name="geo_parcelle_2023"
-                visible="true"
+		    <layer id="geo_parcelle_2023" name="geo_parcelle_2023"  visible="true" tiled="true"
                 queryable="false" 
-                aliases="Nom" 
-                type="customlayer"
-                style=""
-                opacity="1"
-                url="demo/draw/customlayers/parcelles.js" 
-                tooltip="false"
-                attribution="Source: Géo2France">
+                infoformat="application/vnd.ogc.gml" featurecount="20"
+                url="https://www.geo2france.fr/geoserver/pci/wms"
+                attribution="PCI Géo2France"
+            >
 			</layer>
 		</theme>         
     </themes>
