@@ -1,5 +1,4 @@
 var search = (function () {
-
   /* COMMON WITH MVIEWER */
 
   /**
@@ -123,7 +122,7 @@ var search = (function () {
    * ElasticSearch use only 4326 projection
    * Transformation in Mviewer projection is needed
    */
-  const _elasticSearchProj = "EPSG:4326"
+  const _elasticSearchProj = "EPSG:4326";
 
   /**
    * Property: _fuseSearchData
@@ -177,7 +176,7 @@ var search = (function () {
 
   /**
    * Private Method: _clearSearchField
-   * 
+   *
    */
 
   var _clearSearchField = function () {
@@ -187,9 +186,9 @@ var search = (function () {
 
   /**
    * Private Method: _showResults
-   * 
-   * @param {*} results 
-   * @param {*} resultsType 
+   *
+   * @param {*} results
+   * @param {*} resultsType
    */
   var _showResults = function (results, resultsType) {
     if (resultsType) {
@@ -235,25 +234,23 @@ var search = (function () {
     // isPasting and keydown are here to avoid Ctrl+V to trigger the keyup function TWICE
     let isPasting = false;
 
-    $(document).on('keydown', (event) => {
-      if (event.ctrlKey && event.key === 'v') {
+    $(document).on("keydown", (event) => {
+      if (event.ctrlKey && event.key === "v") {
         isPasting = true;
       }
     });
 
     $(document).on("keyup", "#searchfield", function (e) {
-
       // TIMEOUT will avoid one request by keyup
       clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
-
         // Avoid double trigger
-        if (isPasting && e.key.toLowerCase() === 'v') {
+        if (isPasting && e.key.toLowerCase() === "v") {
           isPasting = false;
           return;
         }
 
-        // Detect entrer key 
+        // Detect entrer key
         if (e.keyCode == 13 && $("#searchresults a").length > 1) {
           let firstitem = $("#searchresults").find("a")[1];
           $(firstitem).trigger("click");
@@ -348,9 +345,9 @@ var search = (function () {
     _showResults(str, "locations");
   };
   /**
-* Will search according to configured search service and input search field
-* @param {string} value input from text field
-*/
+   * Will search according to configured search service and input search field
+   * @param {string} value input from text field
+   */
   var _search = function (value) {
     // OpenLS or BAN search
     if (_searchparams.localities) {
@@ -499,9 +496,9 @@ var search = (function () {
 
   /**
    * Build query for elastic search depending on wanted version and params
-   * @param {*} version 
-   * @param {*} mode 
-   * @param {*} val 
+   * @param {*} version
+   * @param {*} mode
+   * @param {*} val
    * @param {*} queryLayers - not used after ElasticSearch 7 version
    */
   var buildQuery = function (version, mode, val, queryLayers) {
@@ -571,11 +568,11 @@ var search = (function () {
             ],
           },
         },
-      }
+      };
     } else {
       // Search for special char
       const specialChars = /[+\-=&|><!(){}[\]^"~*?:\\/]/g;
-      const reWhiteSpace = new RegExp("/^\s+$/");
+      const reWhiteSpace = new RegExp("/^s+$/");
 
       switch (mode) {
         case "term":
@@ -587,7 +584,7 @@ var search = (function () {
         case "match":
           if (specialChars.test(val)) {
             // escape special elasitc char with \\
-            var escapeChar = val.replace(specialChars, '\\$&');
+            var escapeChar = val.replace(specialChars, "\\$&");
 
             query = { query_string: { query: escapeChar, fields: [] } };
           } else {
@@ -602,33 +599,31 @@ var search = (function () {
         queryFilter = {
           query: {
             multi_match: {
-              query, fields: []
+              query,
+              fields: [],
             },
           },
-        }
+        };
       } else {
         queryFilter = {
           query: {
             bool: {
-              must: [
-                query,
-              ],
+              must: [query],
             },
           },
-        }
+        };
       }
     }
     return queryFilter;
   };
 
   /**
-    * Private Method: _sendPrevious6ElasticsearchRequest
-    * 
-    * request on elasticsearche version previous to 7
-    * @deprecated
-    */
+   * Private Method: _sendPrevious6ElasticsearchRequest
+   *
+   * request on elasticsearche version previous to 7
+   * @deprecated
+   */
   var _sendPrevious6ElasticsearchRequest = function (val, versionELS) {
-
     var sendQuery = true;
     var searchableLayers = $.grep(_searchableElasticsearchLayers, function (l, i) {
       return l.getVisible();
@@ -842,8 +837,8 @@ var search = (function () {
           error: function (xhr, ajaxOptions, thrownError) {
             mviewer.alert(
               "Problème avec l'instance Elasticsearch.\n" +
-              thrownError +
-              "\n Désactivation du service.",
+                thrownError +
+                "\n Désactivation du service.",
               "alert-warning"
             );
             _searchparams.features = false;
@@ -859,20 +854,21 @@ var search = (function () {
 
   /**
    * Private Method: _sendElasticsearchRequest
-   * 
-   * val represent search value given 
+   *
+   * val represent search value given
    */
   var _sendElasticsearchRequest = function (val) {
-
     // Keep previous elasticsearch call version
-    // when only one elasticsearch 
-    if (typeof _elasticSearchVersion === 'string' || _elasticSearchVersion instanceof String) {
+    // when only one elasticsearch
+    if (
+      typeof _elasticSearchVersion === "string" ||
+      _elasticSearchVersion instanceof String
+    ) {
       _sendPrevious6ElasticsearchRequest(val);
     }
     // New version configuration in <elasticsearchs>
     // Since ElasticSearch 7 DocType can not be used to search several layers data in same index
     else {
-
       let sendQuery = true;
       // We can have several layers with one elk index each
       let searchableLayers = $.grep(_searchableElasticsearchLayers, function (l, i) {
@@ -881,15 +877,13 @@ var search = (function () {
 
       // send request only if at least one layer is searcheable or elastic search in standalone mode
       if (searchableLayers.length > 0 || _searchparams.static) {
-
         // clean previous search and feature
         $(".elasticsearch").remove();
         _sourceEls.clear();
 
         // for each layer searcheable and visible layer launch elk search
         for (callIndex = 0; callIndex < searchableLayers.length; callIndex++) {
-
-          let layerId = searchableLayers[callIndex].values_.mviewerid
+          let layerId = searchableLayers[callIndex].values_.mviewerid;
           let mode = _elasticSearchQuerymode.get(layerId);
           let versionELS = parseFloat(_elasticSearchVersion.get(layerId));
 
@@ -913,7 +907,11 @@ var search = (function () {
           // Only add geofilter if required in search params
           if (_searchparams.bbox) {
             var currentExtent = _map.getView().calculateExtent(_map.getSize());
-            var projectedMapExtent = ol.proj.transformExtent(currentExtent, _projection.getCode(), _elasticSearchProj);
+            var projectedMapExtent = ol.proj.transformExtent(
+              currentExtent,
+              _projection.getCode(),
+              _elasticSearchProj
+            );
             var geometryfield = _elasticSearchGeometryfield.get(layerId) || "location";
             var geofilter = { geo_shape: {} };
             geofilter.geo_shape[geometryfield] = {
@@ -940,7 +938,6 @@ var search = (function () {
               dataType: "json",
               contentType: contentType,
               success: function (data) {
-
                 let str = "";
                 let indexId = "";
                 let mouseOverField = "";
@@ -950,8 +947,8 @@ var search = (function () {
 
                 if (nb > 0) {
                   indexId = data.hits.hits[0]._index;
-                  mouseOverField = _elasticSearchmouseoverfields.get(indexId).split(',');
-                  titleDisplayKey = _elasticSearchdisplayfields.get(indexId).split(',');
+                  mouseOverField = _elasticSearchmouseoverfields.get(indexId).split(",");
+                  titleDisplayKey = _elasticSearchdisplayfields.get(indexId).split(",");
 
                   // get format from conf but defaut GeoJSON
                   if (_elasticSearchGeomtype.get(indexId) === "WKT") {
@@ -960,37 +957,40 @@ var search = (function () {
                 }
 
                 for (var j = 0, nb; j < nb && j < 10; j++) {
-
                   let currentFeature = data.hits.hits[j];
 
-                  let geom = formatELS.readGeometry(
-                    currentFeature._source.location
-                  );
+                  let geom = formatELS.readGeometry(currentFeature._source.location);
 
-                  let xyz = mviewer.getLonLatZfromGeometry(geom, _elasticSearchProj, zoom);
+                  let xyz = mviewer.getLonLatZfromGeometry(
+                    geom,
+                    _elasticSearchProj,
+                    zoom
+                  );
 
                   var title = "";
                   title += $.map(currentFeature._source, function (value, key) {
-
                     if (!mouseOverField.length || mouseOverField.includes(key)) {
                       if (typeof value === "string") {
                         return value;
                       }
                     }
-                  }).join(" - ")
-
+                  }).join(" - ");
 
                   let action_click = "";
 
                   // always zoom on feature
                   let feature = new ol.Feature({
-                    geometry: geom.transform(_elasticSearchProj, _map.getView().getProjection()),
+                    geometry: geom.transform(
+                      _elasticSearchProj,
+                      _map.getView().getProjection()
+                    ),
                     title: title,
                   });
                   feature.setId("feature." + indexId + "." + j);
                   _sourceEls.addFeature(feature);
 
-                  action_click += "mviewer.zoomToFeature('feature." + indexId + "." + j + "', 16);";
+                  action_click +=
+                    "mviewer.zoomToFeature('feature." + indexId + "." + j + "', 16);";
 
                   //If index has the same name than a mviewer layer make the query on layer
                   if (_overLayers[indexId]) {
@@ -1000,7 +1000,9 @@ var search = (function () {
                       xyz.lon +
                       "," +
                       xyz.lat +
-                      ",'" + _elasticSearchProj + "','" +
+                      ",'" +
+                      _elasticSearchProj +
+                      "','" +
                       indexId +
                       "','" +
                       currentFeature._source[_elasticSearchLinkid.get(indexId)] +
@@ -1014,7 +1016,15 @@ var search = (function () {
                     //action_over = "mviewer.zoomToInitialExtent();";
                   }
 
-                  action_over += "mviewer.flash(" + "'" + _elasticSearchProj + "'," + xyz.lon + "," + xyz.lat + ");";
+                  action_over +=
+                    "mviewer.flash(" +
+                    "'" +
+                    _elasticSearchProj +
+                    "'," +
+                    xyz.lon +
+                    "," +
+                    xyz.lat +
+                    ");";
                   str +=
                     '<a class="elasticsearch list-group-item" href="#" ' +
                     'onclick="' +
@@ -1043,8 +1053,8 @@ var search = (function () {
               error: function (xhr, ajaxOptions, thrownError) {
                 mviewer.alert(
                   "Problème avec l'instance Elasticsearch.\n" +
-                  thrownError +
-                  "\n Désactivation du service.",
+                    thrownError +
+                    "\n Désactivation du service.",
                   "alert-warning"
                 );
                 _searchparams.features = false;
@@ -1157,7 +1167,7 @@ var search = (function () {
       _elasticSearchUrl = configuration.elasticsearch.url;
       _elasticSearchQuerymode = configuration.elasticsearch.querymode;
       _elasticSearchGeometryfield = configuration.elasticsearch.geometryfield;
-      // @Deprecated not available after elastic search 7 version 
+      // @Deprecated not available after elastic search 7 version
       _elasticSearchDocTypes = configuration.elasticsearch.doctypes;
       _elasticSearchVersion = configuration.elasticsearch.version || "1.4";
       // common id between elasticsearch document types (_id)  and geoserver featureTypes
@@ -1182,13 +1192,24 @@ var search = (function () {
         _elasticSearchGeometryfield.set(elasticsearch.layer, elasticsearch.geometryfield);
         _elasticSearchVersion.set(elasticsearch.layer, elasticsearch.version ?? "7");
         // common id between elasticsearch document types (_id)  and geoserver featureTypes
-        _elasticSearchLinkid.set(elasticsearch.layer, elasticsearch.linkid ?? "featureid");
-        _elasticSearchGeomtype.set(elasticsearch.layer, elasticsearch.geometryformat ?? "GeoJSON");
-        _elasticSearchdisplayfields.set(elasticsearch.layer, elasticsearch.displayfields ?? "");
-        _elasticSearchmouseoverfields.set(elasticsearch.layer, elasticsearch.mouseoverfields ?? "");
+        _elasticSearchLinkid.set(
+          elasticsearch.layer,
+          elasticsearch.linkid ?? "featureid"
+        );
+        _elasticSearchGeomtype.set(
+          elasticsearch.layer,
+          elasticsearch.geometryformat ?? "GeoJSON"
+        );
+        _elasticSearchdisplayfields.set(
+          elasticsearch.layer,
+          elasticsearch.displayfields ?? ""
+        );
+        _elasticSearchmouseoverfields.set(
+          elasticsearch.layer,
+          elasticsearch.mouseoverfields ?? ""
+        );
       });
     }
-
 
     if (!_olsCompletionUrl) {
       _searchparams.localities = false;
@@ -1235,8 +1256,8 @@ var search = (function () {
   };
 
   /**
-   * 
-   * @param {*} li 
+   *
+   * @param {*} li
    */
   var _toggleParameter = function (li) {
     var span = $(li).find("span");
@@ -1261,8 +1282,8 @@ var search = (function () {
   };
 
   /**
-   * 
-   * @param {*} featureid 
+   *
+   * @param {*} featureid
    */
   var _showFeature = function (featureid) {
     var feature = _sourceEls.getFeatureById(featureid).clone();
@@ -1271,7 +1292,7 @@ var search = (function () {
   };
 
   /**
-   * 
+   *
    */
   var _clear = function () {
     if (_sourceEls && _sourceOverlay) {
@@ -1297,7 +1318,6 @@ var search = (function () {
       padding: [0, $("#sidebar-wrapper").width(), 0, 0],
       duration: duration,
     });
-
 
     function clear() {
       _sourceOverlay.clear();
