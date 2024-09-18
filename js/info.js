@@ -183,12 +183,20 @@ var info = (function () {
         _typeCoordinates === "xy" ? hdms : hdms.replace(/ /g, "").replace("N", "N - ");
       $("#coordinates span").text(hdms);
     }
-    //Request vector layers
-    if (queryType === "map") {
+    // read snapping interaction
+    const snapInter = mviewer
+      .getMap()
+      .getInteractions()
+      .getArray()
+      .filter((w) => w instanceof ol.interaction.Snap)[0];
+    const snapActive = snapInter && snapInter?.getActive?.();
+    //Request vector layers only if snaping interaction doesn't exists
+    if (queryType === "map" && !snapActive) {
       var pixel = evt.pixel;
       var vectorLayers = {};
       var format = new ol.format.GeoJSON();
       var f_idx = 0;
+
       _map.forEachFeatureAtPixel(pixel, function (feature, layer) {
         var l = layer.get("mviewerid");
         if (
@@ -221,6 +229,7 @@ var info = (function () {
           }
         }
       });
+
       for (var layerid in vectorLayers) {
         var originLayer =
           layerid in _overLayers
