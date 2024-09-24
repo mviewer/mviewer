@@ -24,19 +24,245 @@ var draw = (function () {
 
   var _snappingLayer;
 
-  /**
-   * draw tool enabled.
-   * @type {boolean}
-   */
   var _modDrawEnabled = false;
 
   var _drawTooltips = [];
 
-  /**
-   * The help measure tooltip message.
-   * @type {Element}
+  var _helpTooltipMessage;
+
+  var _helpTooltip;
+
+  /** Initialisation of drawing tools
+   *
+   * This function loaded specific configuration from <tools><draw> section of xml configuration
+   * Create necessary layer, interaction and button depending on configuration
+   *
    */
-  var _helpMeasureTooltipMessage;
+  var _initDrawTool = function () {
+    // Get specific configuration
+    _config = configuration.getConfiguration().tools.draw;
+    _map = mviewer.getMap();
+    _projection = mviewer.getProjection().getCode(); // For change the projection if necessary
+    _sourceDraw = new ol.source.Vector(); // New source
+
+    _vectorDraw = new ol.layer.Vector({
+      // New vector
+      source: _sourceDraw,
+      style: function (feature) {
+        return _drawStyle[feature.getGeometry().getType()];
+      },
+    });
+    _map.addLayer(_vectorDraw);
+
+    // Add geometry modification on source
+    _modifyInt = new ol.interaction.Modify({
+      source: _sourceDraw,
+    });
+    _map.addInteraction(_modifyInt);
+
+    _modifyInt.on("modifystart", function (e) {
+      _currentFeature = e.features.getArray()[0];
+      _createPanelInfo(
+        _currentFeature.getGeometry().getType(),
+        _currentFeature.getProperties().label
+      );
+      _measureGeometry(_currentFeature.getGeometry());
+      document.getElementById("drawingPanelInfoLabel").value =
+        _currentFeature.getProperties().label;
+    });
+
+    _modifyInt.on("modifyend", function (e) {
+      // enable delete and export once feature is created
+      _measureGeometry(_currentFeature.getGeometry());
+      document.getElementById("drawingPanelTrash").disabled = false;
+      document.getElementById("dpExportBtn").disabled = false;
+    });
+    // init snap layer
+    _initSnappingLayer();
+    // initialize buttons
+    _initButtons();
+  };
+
+  /**
+   * Several type of drawing are possible Polygon, LineString or Point
+   * If no geometry type given, all drawing type are available
+   * geometryTypes should be a String with types separeted with coma ,
+   * @param {} geometryTypes
+   */
+  var _initButtons = function () {
+    const availableTypes = ["Point", "LineString", "Polygon"];
+    let defaultTypes = ["Point", "LineString"];
+    let types = defaultTypes;
+
+    // read wanted types from configuration
+    if (_config.geometryTypes) {
+      types = _config.geometryTypes.replace(" ", "").split(",");
+      if (!types || types.length == 0) {
+        types = defaultTypes;
+      }
+    }
+    let button, buttonOptions;
+
+    // If only one geom create only one button ( if value is correct )
+    if (types.length == 1 && types.every((item) => availableTypes.includes(item))) {
+      button = [
+        '<button class="mv-modetools btn btn-default btn-raised" href="#"',
+        " onclick=\"draw.addDrawInteraction('",
+        types[0],
+        '\');mviewer.tools.draw.toggle();" id="draw',
+        types[0],
+        '" title="Dessiner" i18n="draw.button.main"',
+        ' tabindex="118 " accesskey="4">',
+        '<i class="fas fa-pencil-ruler"></i>',
+        "</button>",
+      ].join("");
+    } else {
+      // create master draw button to access other
+      button = [
+        '<button class="mv-modetools btn btn-default btn-raised" href="#"',
+        ' onclick="mviewer.tools.draw.toggle();" id="drawBtn" title="Dessiner" i18n="draw.button.main"',
+        ' tabindex="118 " accesskey="4">',
+        '<i class="fas fa-pencil-ruler"></i>',
+        "</button>",
+      ].join("");
+
+      // loop on types to create button
+      buttonOptions = [
+        '<div id="drawoptions" style="display:none;" class="btn-group btn-group-sm"',
+        ' role="group" aria-label="true">',
+      ].join("");
+
+      for (const type of types) {
+        if (type === "Point") {
+          buttonOptions = [
+            buttonOptions,
+            '<button id="drawPoint" title="Point" i18n="draw.button.point"',
+            ' class="btn btn-default button-tools btn-raised" onclick="draw.addDrawInteraction(\'Point\');">',
+            '<i class="fas fa-map-pin"></i>',
+            "</button>",
+          ].join("");
+        }
+        if (type === "LineString") {
+          buttonOptions = [
+            buttonOptions,
+            '<button id="drawLineString" title="Trajet ou Polygone"',
+            ' class="btn btn-default button-tools btn-raised" i18n="draw.button.line" onclick="draw.addDrawInteraction(\'LineString\');">',
+            '<i class="fas fa-bezier-curve"></i>',
+            "</button>",
+          ].join("");
+        }
+        if (type === "Polygon") {
+          buttonOptions = [
+            buttonOptions,
+            '<button id="drawPolygon" title="Polygone"',
+            ' class="btn btn-default button-tools btn-raised" i18n="draw.button.polygon" onclick="draw.addDrawInteraction(\'Polygon\');">',
+            '<i class="fas fa-draw-polygon"></i>',
+            "</button>",
+          ].join("");
+        }
+      }
+      // close
+      buttonOptions = [buttonOptions, "</div>"].join("");
+    }
+
+    $("#toolstoolbar").append(button);
+    $(buttonOptions).insertAfter("#toolstoolbar");
+  };
+
+  /**
+   * Public Method: _toggle exported as toggle
+   *
+   * Description
+   **/
+  var _toggle = function () {
+    if (_modDrawEnabled) {
+      // If the module draw is active
+      // mviewer.unsetTool will launch draw.disable
+      mviewer.unsetTool("draw");
+    } else {
+      // If the module draw is not active
+      // mviewer.unsetTool will launch draw.enable
+      mviewer.setTool("draw");
+    }
+  };
+
+  /**
+   * Enable drawbutton
+   */
+  var _enableDrawTool = function () {
+    _modDrawEnabled = true;
+
+    // if several geometry types
+    if (document.getElementById("drawBtn")) {
+      document.getElementById("drawBtn").classList.add("active");
+    }
+    // could be null if only on type of drawing
+    if (document.getElementById("drawoptions")) {
+      document.getElementById("drawoptions").style.display = "block";
+    }
+  };
+
+  /**
+   * _disableToolDraw. used to reset this tool
+   */
+  var _disableToolDraw = function () {
+    _modDrawEnabled = false;
+
+    // remove all interaction
+    _map.removeInteraction(_drawInt);
+    _map.removeInteraction(_modifyInt);
+
+    // loop on all feature overlay
+    for (const drawTooltip of _drawTooltips) {
+      _map.removeOverlay(drawTooltip);
+    }
+    // remove help overlay and interaction
+    _map.un("pointermove", _pointerMoveHandler);
+    $(_helpTooltipMessage).addClass("hidden");
+    _map.removeInteraction(_helpTooltip);
+
+    // remove all drawned feature
+    _sourceDraw.clear();
+    _clearToolDraw();
+  };
+
+  /**
+   * deleted selected feature from source and remove overlay ( help and name )
+   */
+  var _deleteSelectedFeatureDraw = function () {
+    _map.removeOverlay(_drawTooltips[_currentFeature.id_]);
+    if (_helpTooltip) {
+      _map.removeInteraction(_helpTooltip);
+    }
+    _sourceDraw.removeFeature(_currentFeature);
+    $("#drawingPanelInfo").addClass("hidden");
+  };
+
+  /**
+   * remove all draw tool information from dom
+   */
+  var _clearToolDraw = function () {
+    if (document.getElementById("drawBtn")) {
+      document.getElementById("drawBtn").classList.remove("active");
+    }
+    if (document.getElementById("drawPoint")) {
+      document.getElementById("drawPoint").classList.remove("active");
+    }
+    if (document.getElementById("drawLineString")) {
+      document.getElementById("drawLineString").classList.remove("active");
+    }
+    if (document.getElementById("drawPolygon")) {
+      document.getElementById("drawPolygon").classList.remove("active");
+    }
+
+    //TODO remove Jquery
+    $("#drawoptions").hide();
+    $("#drawingPanelInfo").addClass("hidden");
+
+    if (document.getElementById("inputButton")) {
+      inputButton.value = "";
+    }
+  };
 
   let _drawStyle = {
     Polygon: [
@@ -105,12 +331,9 @@ var draw = (function () {
     }),
   };
 
-  // drawing tools state
-  var isDrawing = false;
-
   /**
-   *  Create overlay
-   * @returns
+   *  Create overlay on given feature
+   * @param {*} feature
    */
   var _createDrawTooltip = function (feature) {
     // Creation of new HTML element
@@ -130,54 +353,47 @@ var draw = (function () {
   };
 
   /**
-   * Handle pointer move used by measure tools.
+   * Handle pointer move used to display help
    * @param {ol.MapBrowserEvent} evt
    */
-
   var _pointerMoveHandler = function (evt) {
     if (evt.dragging) {
       return;
     }
-    console.log("update help message");
+
     /** @type {string} */
-    var helpMsg = "Cliquer pour débuter la mesure";
+    var helpMsg = "Cliquer pour débuter le dessin";
     if (_currentFeature) {
       var geom = _currentFeature.getGeometry();
       if (geom instanceof ol.geom.Polygon) {
-        helpMsg = "Cliquer pour poursuivre le polygone";
+        helpMsg = "Cliquer pour poursuivre le polygone <BR/>";
+        helpMsg += "Double cliquer pour finaliser le polygone";
       } else if (geom instanceof ol.geom.LineString) {
-        helpMsg = "Cliquer pour poursuivre la ligne";
+        helpMsg = "Cliquer pour poursuivre la ligne<BR/>";
+        helpMsg += "Double cliquer pour finaliser la ligne<BR/>";
+        helpMsg += "Rapprocher vous du point d'origine pour faire un polygone<BR/>";
       }
     }
-    _helpMeasureTooltipMessage.innerHTML = helpMsg;
-    _helpMeasureTooltip.setPosition(evt.coordinate);
-    $(_helpMeasureTooltipMessage).removeClass("hidden");
+    _helpTooltipMessage.innerHTML = helpMsg;
+    _helpTooltip.setPosition(evt.coordinate);
+    $(_helpTooltipMessage).removeClass("hidden");
   };
 
   /**
-   * Creates a new help tooltip
+   * Creates a help tooltip
    */
-
   _createHelpTooltip = function () {
-    if (_helpMeasureTooltipMessage) {
-      _helpMeasureTooltipMessage.parentNode.removeChild(_helpMeasureTooltipMessage);
+    if (_helpTooltipMessage) {
+      _helpTooltipMessage.parentNode.removeChild(_helpTooltipMessage);
     }
-    _helpMeasureTooltipMessage = document.createElement("div");
-    _helpMeasureTooltipMessage.className = "tooltip hidden";
-    _helpMeasureTooltip = new ol.Overlay({
-      element: _helpMeasureTooltipMessage,
+    _helpTooltipMessage = document.createElement("div");
+    _helpTooltipMessage.className = "drawTooltip";
+    _helpTooltip = new ol.Overlay({
+      element: _helpTooltipMessage,
       offset: [15, 0],
       positioning: "center-left",
     });
-    _map.addOverlay(_helpMeasureTooltip);
-  };
-
-  /**
-   * Enable drawbutton
-   */
-  var _enableDrawTool = function () {
-    document.getElementById("drawoptions").style.display = "block";
-    document.getElementById("drawBtn").classList.add("active");
+    _map.addOverlay(_helpTooltip);
   };
 
   /**
@@ -198,8 +414,10 @@ var draw = (function () {
       '">',
       '<i id="drawingPanelTrash" disabled class="icon-draw clickable glyphicon glyphicon-trash" onclick="draw.clearFeature()";></i>',
       "</div>",
-      '<div id="drawingPanelMesure" class="content">',
-      "<p></p>",
+      "<div>",
+      '<div id="drawingPanelPosition" class="content"/>',
+      '<div id="drawingPanelLength" class="content"/>',
+      '<div id="drawingPanelArea" class="content"/>',
       "</div>",
       '<div id="drawingPanelExport" class="footer">',
       '<button id="dpExportBtn" disabled onclick="draw.export();">Enregister le projet</button>',
@@ -224,6 +442,13 @@ var draw = (function () {
       });
   };
 
+  /**
+   *  Used to change LineString in Polygone
+   *  calcul distance in pixel and not in meter.
+   * @param {*} point1
+   * @param {*} point2
+   * @returns
+   */
   var _getNbPixelsBetweenTwoPoints = function (point1, point2) {
     // convert coord in pixel
     var pixel1 = _map.getPixelFromCoordinate(point1);
@@ -241,15 +466,13 @@ var draw = (function () {
    * @param {*} type
    */
   var _addDrawInteraction = function (type) {
-    console.log("ADD INTERACTION");
-
     // if interaction exist disabled it and change button style
     if (_currentDrawType == type) {
       document.getElementById("draw" + _currentDrawType).classList.remove("active");
       _map.removeInteraction(_drawInt);
       _currentDrawType = null;
       _map.removeInteraction(_snapInter);
-      if (_config.snapLayerUrl) {
+      if (_config.snapLayerUrl || _config.snapLayerId) {
         _map.removeLayer(_snappingLayer);
       }
     } else {
@@ -287,7 +510,7 @@ var draw = (function () {
         _createHelpTooltip();
         _map.on("pointermove", _pointerMoveHandler);
         $(_map.getViewport()).on("mouseout", function () {
-          $(_helpMeasureTooltipMessage).addClass("hidden");
+          $(_helpTooltipMessage).addClass("hidden");
         });
       }
 
@@ -314,24 +537,8 @@ var draw = (function () {
 
           // Show measurement
           geomFeature.on("change", function (event) {
-            console.log("on change");
-
-            let outputMeasureDraw;
             let position = geomFeature.getCoordinates();
-            if (geomFeature.getType() === "Point") {
-              outputMeasureDraw = ol.coordinate.toStringHDMS(ol.proj.toLonLat(position));
-            } else if (geomFeature.getType() === "LineString") {
-              outputMeasureDraw = _measureDrawFormatLength(geomFeature.getCoordinates());
-            } else if (geomFeature.getType() === "Polygon") {
-              outputMeasureDraw = _measureDrawFormatLength(
-                geomFeature.getCoordinates()[0]
-              );
-              outputMeasureDraw = outputMeasureDraw.concat(
-                " ",
-                _measureDrawFormatArea(_currentFeature)
-              );
-            }
-            document.getElementById("drawingPanelMesure").innerHTML = outputMeasureDraw;
+            _measureGeometry(geomFeature);
             _drawTooltips[_currentFeature.id_].setPosition(position);
           });
         },
@@ -341,8 +548,6 @@ var draw = (function () {
       _drawInt.on(
         "drawend",
         function (evt) {
-          console.log("on drawend");
-
           let feature = evt.feature;
 
           // enable delete and export once feature is created
@@ -363,52 +568,22 @@ var draw = (function () {
             ) {
               let newGeometry = new ol.geom.Polygon([coordinates]);
               feature.setGeometry(newGeometry);
+              _measureGeometry(newGeometry);
             }
-
-            geometry = feature.getGeometry();
-            let coordinatesLine =
-              geometry.getType() === "LineString"
-                ? geometry.getCoordinates()
-                : geometry.getCoordinates()[0];
-            // Create new empty array
-            let newCoord = [];
-            let start;
-            let end;
-            // calculate median coordinates for each segment
-            for (let i = 0; i < coordinatesLine.length - 1; i++) {
-              start = coordinatesLine[i];
-              end = coordinatesLine[i + 1];
-
-              // Add the first point to the array
-              newCoord.push(start);
-
-              // calculate median point coordinates
-              var midpoint = [(start[0] + end[0]) / 2, (start[1] + end[1]) / 2];
-
-              // Add the middle point to the array
-              newCoord.push(midpoint);
-            }
-            // Then, add the last point
-            newCoord.push(end);
-
-            // Set new coordinates to the feature
-            feature
-              .getGeometry()
-              .setCoordinates(
-                geometry.getType() === "LineString" ? newCoord : [newCoord]
-              );
           }
 
           if (type === "Point") {
-            document.getElementById("drawingPanelMesure").innerHTML =
+            document.getElementById("drawingPanelPosition").innerHTML =
               ol.coordinate.toStringHDMS(ol.proj.toLonLat(coordinates));
           }
 
           if (_config.singleDraw == "true") {
             _map.removeInteraction(_drawInt);
+            _map.un("pointermove", _pointerMoveHandler);
+            $(_helpTooltipMessage).addClass("hidden");
+            _map.removeInteraction(_helpTooltip);
             document.getElementById("draw" + _currentDrawType).classList.remove("active");
             _currentDrawType = null;
-            isDrawing = false;
           }
         },
         this
@@ -420,9 +595,9 @@ var draw = (function () {
    * Export feature
    */
   var _exportFeatures = function () {
-    const format = new ol.format.GeoJSON({ featureProjection: "EPSG:3857" });
+    const format = new ol.format.GeoJSON({ featureProjection: _projection });
     const features = _sourceDraw.getFeatures();
-    const json = format.writeFeatures(features);
+    const json = format.writeFeaturesObject(features);
 
     // Launch download
     const blob = new Blob([json], { type: "application/json" });
@@ -437,11 +612,28 @@ var draw = (function () {
   };
 
   /**
+   * set position, length or area in dom depending on geom type
+   * @param {*} geometry
+   */
+  var _measureGeometry = function (geometry) {
+    if (geometry.getType() === "Point") {
+      let position = geometry.getCoordinates();
+      let outputMeasureDraw = ol.coordinate.toStringHDMS(ol.proj.toLonLat(position));
+      document.getElementById("drawingPanelPosition").innerHTML = outputMeasureDraw;
+    } else if (geometry.getType() === "LineString") {
+      _measureDrawLength(geometry.getCoordinates());
+    } else if (geometry.getType() === "Polygon") {
+      _measureDrawLength(geometry.getCoordinates()[0]);
+      _measureDrawArea(geometry);
+    }
+  };
+
+  /**
    * measure format length output
    * @param {ol.geom.LineString} line
    * @return {string}
    */
-  var _measureDrawFormatLength = function (coordinates) {
+  var _measureDrawLength = function (coordinates) {
     var length = 0;
 
     for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
@@ -456,17 +648,17 @@ var draw = (function () {
       output = Math.round(length * 100) / 100 + " " + "m";
     }
 
+    document.getElementById("drawingPanelLength").innerHTML = "Longueur : " + output;
     return output;
   };
 
   /**
-   * measure format Area output
-   * @param {ol.geom.Polygon} polygon
-   * @return {string}
+   *
+   * @param {*} geometry
+   * @returns
    */
-
-  var _measureDrawFormatArea = function (polygon) {
-    var area = Math.abs(_wgs84Sphere.getArea(polygon.getGeometry()));
+  var _measureDrawArea = function (geometry) {
+    var area = Math.abs(_wgs84Sphere.getArea(geometry));
     var output;
     if (area < 0.0001) {
       output = 0;
@@ -478,70 +670,8 @@ var draw = (function () {
       output = Math.round((area / 1000000) * 100) / 100 + " " + "km<sup>2</sup>";
     }
 
+    document.getElementById("drawingPanelArea").innerHTML = "Aire : " + output;
     return output;
-  };
-
-  var _deleteFeatureDraw = function () {
-    _map.removeOverlay(_drawTooltips[_currentFeature.id_]);
-    _sourceDraw.removeFeature(_currentFeature);
-    $("#drawingPanelInfo").addClass("hidden");
-  };
-
-  var _clearToolDraw = function () {
-    if (document.getElementById("drawBtn")) {
-      document.getElementById("drawBtn").classList.remove("active");
-    }
-    if (document.getElementById("drawPoint")) {
-      document.getElementById("drawPoint").classList.remove("active");
-    }
-    if (document.getElementById("drawLineString")) {
-      document.getElementById("drawLineString").classList.remove("active");
-    }
-    if (document.getElementById("drawPolygon")) {
-      document.getElementById("drawPolygon").classList.remove("active");
-    }
-
-    $("#drawoptions").hide();
-    $("#drawingPanelInfo").addClass("hidden");
-    if (document.getElementById("inputButton")) {
-      inputButton.value = "";
-    }
-  };
-
-  // Clear all element add on the map
-  var _clearOldDraw = function () {
-    _sourceDraw.clear();
-    $(".tooltip-measure-static").remove();
-  };
-
-  /**
-   * _resetToolDraw. used to reset this tool
-   */
-  var _resetToolDraw = function () {
-    _clearOldDraw();
-    _map.removeInteraction(_drawInt);
-    _map.removeInteraction(_modifyInt);
-    // loop on all overlay
-    for (const drawTooltip of _drawTooltips) {
-      _map.removeOverlay(drawTooltip);
-    }
-    _modDrawEnabled = false;
-    _clearToolDraw();
-  };
-
-  /**
-   * Public Method: _toggle exported as toggle
-   *
-   * Description
-   **/
-  var _toggle = function () {
-    if (_modDrawEnabled) {
-      // If the module draw is active
-      mviewer.unsetTool("draw");
-    } else {
-      // If the module draw is not active
-      mviewer.setTool("draw");
-    }
   };
 
   /**
@@ -570,147 +700,13 @@ var draw = (function () {
     }
   };
 
-  /**
-   * Several type of drawing are possible Polygon, LineString or Point
-   * If no geometry type given, all drawing type are available
-   * geometryTypes should be a String with types separeted with coma ,
-   * @param {} geometryTypes
-   */
-  var _initButtons = function () {
-    const availableTypes = ["Point", "LineString", "Polygon"];
-    let defaultTypes = ["Point", "LineString"];
-    let types = defaultTypes;
-
-    if (_config.geometryTypes) {
-      types = _config.geometryTypes.replace(" ", "").split(",");
-      if (!types || types.length == 0) {
-        types = defaultTypes;
-      }
-    }
-    let button, buttonOptions;
-
-    // If only one geom create only one button ( if value is correct )
-    if (types.length == 1 && types.every((item) => availableTypes.includes(item))) {
-      button = [
-        '<button class="mv-modetools btn btn-default btn-raised" href="#"',
-        " onclick=\"draw.addDrawInteraction('",
-        types[0],
-        '\');" id="draw',
-        types[0],
-        '" title="Dessiner" i18n="draw.button.main"',
-        ' tabindex="118 " accesskey="4">',
-        '<i class="fas fa-pencil-ruler"></i>',
-        "</button>",
-      ].join("");
-    } else {
-      // create master draw button to access other
-      button = [
-        '<button class="mv-modetools btn btn-default btn-raised" href="#"',
-        ' onclick="mviewer.tools.draw.toggle();" id="drawBtn" title="Dessiner" i18n="draw.button.main"',
-        ' tabindex="118 " accesskey="4">',
-        '<i class="fas fa-pencil-ruler"></i>',
-        "</button>",
-      ].join("");
-
-      // loop on types to create button
-      buttonOptions = [
-        '<div id="drawoptions" style="display:none;" class="btn-group btn-group-sm"',
-        ' role="group" aria-label="true">',
-      ].join("");
-
-      for (const type of types) {
-        if (type === "Point") {
-          buttonOptions = [
-            buttonOptions,
-            '<button id="drawPoint" title="Point" i18n="draw.button.point"',
-            ' class="btn btn-default button-tools btn-raised" onclick="draw.addDrawInteraction(\'Point\');">',
-            '<i class="fas fa-map-pin"></i>',
-            "</button>",
-          ].join("");
-        }
-        if (type === "LineString") {
-          buttonOptions = [
-            buttonOptions,
-            '<button id="drawLineString" title="Trajet ou Polygone"',
-            ' class="btn btn-default button-tools btn-raised" i18n="draw.button.line" onclick="draw.addDrawInteraction(\'LineString\');">',
-            '<i class="fas fa-bezier-curve"></i>',
-            "</button>",
-          ].join("");
-        }
-        if (type === "Polygon") {
-          buttonOptions = [
-            buttonOptions,
-            '<button id="drawPolygon" title="Polygone"',
-            ' class="btn btn-default button-tools btn-raised" i18n="draw.button.polygon" onclick="draw.addDrawInteraction(\'Polygon\');">',
-            '<i class="fas fa-draw-polygon"></i>',
-            "</button>",
-          ].join("");
-        }
-      }
-      // close
-      buttonOptions = [buttonOptions, "</div>"].join("");
-    }
-
-    $("#toolstoolbar").append(button);
-    $(buttonOptions).insertAfter("#toolstoolbar");
-  };
-
-  /** Initialisation of drawing tools
-   *
-   * This function loaded specific configuration from <tools><draw> section of xml configuration
-   * Create necessary layer, interaction and button depending on configuration
-   *
-   */
-  var _initDrawTool = function () {
-    // Get specific configuration
-    _config = configuration.getConfiguration().tools.draw;
-    _map = mviewer.getMap();
-    _projection = mviewer.getProjection().getCode(); // For change the projection if necessary
-    _sourceDraw = new ol.source.Vector(); // New source
-
-    _vectorDraw = new ol.layer.Vector({
-      // New vector
-      source: _sourceDraw,
-      style: function (feature) {
-        return _drawStyle[feature.getGeometry().getType()];
-      },
-    });
-    _map.addLayer(_vectorDraw);
-
-    // Add geometry modification on source
-    _modifyInt = new ol.interaction.Modify({
-      source: _sourceDraw,
-    });
-    _map.addInteraction(_modifyInt);
-
-    _modifyInt.on("modifystart", function (e) {
-      _currentFeature = e.features.getArray()[0];
-      _createPanelInfo(
-        _currentFeature.getGeometry().getType(),
-        _currentFeature.getProperties().label
-      );
-      document.getElementById("drawingPanelInfoLabel").value =
-        _currentFeature.getProperties().label;
-    });
-
-    _modifyInt.on("modifyend", function (e) {
-      // enable delete and export once feature is created
-      document.getElementById("drawingPanelTrash").disabled = false;
-      document.getElementById("dpExportBtn").disabled = false;
-    });
-    // init snap layer
-    _initSnappingLayer();
-    // initialize buttons
-    _initButtons();
-  };
-
   return {
     init: _initDrawTool,
     enable: _enableDrawTool,
     toggle: _toggle,
-    disable: _resetToolDraw,
+    disable: _disableToolDraw,
     addDrawInteraction: _addDrawInteraction,
-    clearFeature: _deleteFeatureDraw,
+    clearFeature: _deleteSelectedFeatureDraw,
     export: _exportFeatures,
   };
 })();
