@@ -1,12 +1,13 @@
-
 var draw = (function () {
-
   class DeleteOnRightClick extends ol.interaction.Draw {
     constructor(options) {
       super(options);
 
       this.handleEvent = function (mapBrowserEvent) {
-        if (mapBrowserEvent.type === 'pointerdown' && mapBrowserEvent.originalEvent.button === 2) {
+        if (
+          mapBrowserEvent.type === "pointerdown" &&
+          mapBrowserEvent.originalEvent.button === 2
+        ) {
           // Right-click event, delete the feature being drawn
           this.abortDrawing();
           return true;
@@ -358,7 +359,7 @@ var draw = (function () {
     let drawTooltipElt = document.createElement("input");
     drawTooltipElt.className = "drawTooltip";
     drawTooltipElt.setAttribute("id", "drawTooltip-" + feature.id_);
-    drawTooltipElt.type = 'text';
+    drawTooltipElt.type = "text";
     drawTooltipElt.value = feature.getProperties().label;
 
     drawTooltip = new ol.Overlay({
@@ -369,7 +370,7 @@ var draw = (function () {
 
     _map.addOverlay(drawTooltip);
 
-    drawTooltipElt.addEventListener('input', function () {
+    drawTooltipElt.addEventListener("input", function () {
       document.getElementById("drawingPanelInfoLabel").value = drawTooltipElt.value;
       _currentFeature.set("label", inputUser);
     });
@@ -387,18 +388,24 @@ var draw = (function () {
     }
 
     /** @type {string} */
-    var helpMsg = mviewer.lang ? mviewer.lang[mviewer.lang.lang]("draw.help.start") : "Cliquer pour débuter le dessin";
+    var helpMsg = mviewer.lang
+      ? mviewer.lang[mviewer.lang.lang]("draw.help.start")
+      : "Cliquer pour débuter le dessin";
     if (_currentFeature) {
       var geom = _currentFeature.getGeometry();
       if (geom instanceof ol.geom.Polygon) {
         helpMsg = "Cliquer pour poursuivre le polygone <BR/>";
         helpMsg += "Double cliquer pour finaliser le polygone";
-        helpMsg = mviewer.lang ? mviewer.lang[mviewer.lang.lang]("draw.help.polygon") : helpMsg;
+        helpMsg = mviewer.lang
+          ? mviewer.lang[mviewer.lang.lang]("draw.help.polygon")
+          : helpMsg;
       } else if (geom instanceof ol.geom.LineString) {
         helpMsg = "Cliquer pour poursuivre la ligne<BR/>";
         helpMsg += "Double cliquer pour finaliser la ligne<BR/>";
         helpMsg += "Rapprocher vous du point d'origine pour faire un polygone<BR/>";
-        helpMsg = mviewer.lang ? mviewer.lang[mviewer.lang.lang]("draw.help.linestring") : helpMsg;
+        helpMsg = mviewer.lang
+          ? mviewer.lang[mviewer.lang.lang]("draw.help.linestring")
+          : helpMsg;
       }
     }
     _helpTooltipMessage.innerHTML = helpMsg;
@@ -464,8 +471,7 @@ var draw = (function () {
       .getElementById("drawingPanelInfoLabel")
       .addEventListener("input", function () {
         let inputUser = document.getElementById("drawingPanelInfoLabel").value;
-        document.getElementById("drawTooltip-" + _currentFeature.id_).value =
-          inputUser;
+        document.getElementById("drawTooltip-" + _currentFeature.id_).value = inputUser;
         _currentFeature.set("label", inputUser);
       });
   };
@@ -526,7 +532,9 @@ var draw = (function () {
         }
         _snapInter = new ol.interaction.Snap({
           source: _snappingLayer.getSource(),
-          option: { pixelTolerance: _config.snapTolerance ? _config.snapTolerance : "10" }
+          option: {
+            pixelTolerance: _config.snapTolerance ? _config.snapTolerance : "10",
+          },
         });
         _map.addInteraction(_drawInt);
         _map.addInteraction(_snapInter);
@@ -546,7 +554,6 @@ var draw = (function () {
       _drawInt.on(
         "drawstart",
         function (evt) {
-
           _currentFeature = evt.feature;
           let featureId = ol.util.getUid(_currentFeature);
           _currentFeature.setId(featureId);
@@ -614,8 +621,11 @@ var draw = (function () {
           }
 
           if (_config.help == "true") {
-            let helpMsg = "Pour modifier votre dessin, <BR/> maintenez le clique gauche enfoncé <BR/> sur l'endroit que vous souhaitez modifier <BR/>";
-            helpMsg = mviewer.lang ? mviewer.lang[mviewer.lang.lang]("draw.help.panel") : helpMsg;
+            let helpMsg =
+              "Pour modifier votre dessin, <BR/> maintenez le clique gauche enfoncé <BR/> sur l'endroit que vous souhaitez modifier <BR/>";
+            helpMsg = mviewer.lang
+              ? mviewer.lang[mviewer.lang.lang]("draw.help.panel")
+              : helpMsg;
             document.getElementById("drawingPanelHelp").innerHTML = helpMsg;
           }
 
@@ -690,7 +700,9 @@ var draw = (function () {
       output = Math.round(length * 100) / 100 + " " + "m";
     }
 
-    let lineMsg = mviewer.lang ? mviewer.lang[mviewer.lang.lang]("draw.measure.line") : "Longueur : ";
+    let lineMsg = mviewer.lang
+      ? mviewer.lang[mviewer.lang.lang]("draw.measure.line")
+      : "Longueur : ";
     document.getElementById("drawingPanelLength").innerHTML = lineMsg + output;
     return output;
   };
@@ -713,7 +725,9 @@ var draw = (function () {
       output = Math.round((area / 1000000) * 100) / 100 + " " + "km<sup>2</sup>";
     }
 
-    let AreaMsg = mviewer.lang ? mviewer.lang[mviewer.lang.lang]("draw.measure.area") : "Aire : ";
+    let AreaMsg = mviewer.lang
+      ? mviewer.lang[mviewer.lang.lang]("draw.measure.area")
+      : "Aire : ";
     document.getElementById("drawingPanelArea").innerHTML = AreaMsg + output;
     return output;
   };
