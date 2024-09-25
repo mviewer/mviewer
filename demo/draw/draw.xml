@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <application title="Mviewer" mouseposition="false" logo="" help="mviewer_help.html" drawtools="true" measuretools="true" mapprint="true" exportpng="true" style="css/themes/wet_asphalt.css" togglealllayersfromtheme="true"/>
+    <application lang="fr" title="Mviewer" mouseposition="false" logo="" help="mviewer_help.html" drawtools="true" measuretools="true" mapprint="true" exportpng="true" style="css/themes/wet_asphalt.css" togglealllayersfromtheme="true"/>
     <tools>
-		<draw geometryTypes="Polygon" help="true" geometryStroke="#2e5367" snapLimitZoom="16" snapLayerUrl="https://www.geo2france.fr/geoserver/pci/ows?service=WFS&amp;version=1.0.0&amp;request=GetFeature&amp;typeName=pci%3Ageo_parcelle_2023&amp;outputFormat=application%2Fjson"/>
+		<draw geometryTypes="Polygon" help="true" geometryStroke="#2e5367" snapLimitZoom="16" snapTolerance="10" snapLayerUrl="https://www.geo2france.fr/geoserver/pci/ows?service=WFS&amp;version=1.0.0&amp;request=GetFeature&amp;typeName=pci%3Ageo_parcelle_2023&amp;outputFormat=application%2Fjson"/>
 	</tools>
 	<mapoptions maxzoom="19" projection="EPSG:3857" center="255919,6427622" zoom="16" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
   

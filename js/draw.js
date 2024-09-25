@@ -1,4 +1,22 @@
+
 var draw = (function () {
+
+  class DeleteOnRightClick extends ol.interaction.Draw {
+    constructor(options) {
+      super(options);
+
+      this.handleEvent = function (mapBrowserEvent) {
+        if (mapBrowserEvent.type === 'pointerdown' && mapBrowserEvent.originalEvent.button === 2) {
+          // Right-click event, delete the feature being drawn
+          this.abortDrawing();
+          return true;
+        }
+
+        return ol.interaction.Draw.prototype.handleEvent.call(this, mapBrowserEvent);
+      };
+    }
+  }
+
   // tools configuration
   var _config;
 
@@ -337,10 +355,11 @@ var draw = (function () {
    */
   var _createDrawTooltip = function (feature) {
     // Creation of new HTML element
-    let drawTooltipElt = document.createElement("div");
+    let drawTooltipElt = document.createElement("input");
     drawTooltipElt.className = "drawTooltip";
     drawTooltipElt.setAttribute("id", "drawTooltip-" + feature.id_);
-    drawTooltipElt.innerHTML = feature.getProperties().label;
+    drawTooltipElt.type = 'text';
+    drawTooltipElt.value = feature.getProperties().label;
 
     drawTooltip = new ol.Overlay({
       element: drawTooltipElt,
@@ -349,6 +368,12 @@ var draw = (function () {
     });
 
     _map.addOverlay(drawTooltip);
+
+    drawTooltipElt.addEventListener('input', function () {
+      document.getElementById("drawingPanelInfoLabel").value = drawTooltipElt.value;
+      _currentFeature.set("label", inputUser);
+    });
+
     _drawTooltips[feature.id_] = drawTooltip;
   };
 
@@ -362,16 +387,18 @@ var draw = (function () {
     }
 
     /** @type {string} */
-    var helpMsg = "Cliquer pour débuter le dessin";
+    var helpMsg = mviewer.lang ? mviewer.lang[mviewer.lang.lang]("draw.help.start") : "Cliquer pour débuter le dessin";
     if (_currentFeature) {
       var geom = _currentFeature.getGeometry();
       if (geom instanceof ol.geom.Polygon) {
         helpMsg = "Cliquer pour poursuivre le polygone <BR/>";
         helpMsg += "Double cliquer pour finaliser le polygone";
+        helpMsg = mviewer.lang ? mviewer.lang[mviewer.lang.lang]("draw.help.polygon") : helpMsg;
       } else if (geom instanceof ol.geom.LineString) {
         helpMsg = "Cliquer pour poursuivre la ligne<BR/>";
         helpMsg += "Double cliquer pour finaliser la ligne<BR/>";
         helpMsg += "Rapprocher vous du point d'origine pour faire un polygone<BR/>";
+        helpMsg = mviewer.lang ? mviewer.lang[mviewer.lang.lang]("draw.help.linestring") : helpMsg;
       }
     }
     _helpTooltipMessage.innerHTML = helpMsg;
@@ -418,9 +445,10 @@ var draw = (function () {
       '<div id="drawingPanelPosition" class="content"/>',
       '<div id="drawingPanelLength" class="content"/>',
       '<div id="drawingPanelArea" class="content"/>',
+      '<div id="drawingPanelHelp" class="content" />',
       "</div>",
       '<div id="drawingPanelExport" class="footer">',
-      '<button id="dpExportBtn" disabled onclick="draw.export();">Enregister le projet</button>',
+      '<button id="dpExportBtn" i18n="draw.button.export" disabled onclick="draw.export();">Enregister le projet</button>',
       "</div>",
       "</div>",
     ].join("");
@@ -436,7 +464,7 @@ var draw = (function () {
       .getElementById("drawingPanelInfoLabel")
       .addEventListener("input", function () {
         let inputUser = document.getElementById("drawingPanelInfoLabel").value;
-        document.getElementById("drawTooltip-" + _currentFeature.id_).innerHTML =
+        document.getElementById("drawTooltip-" + _currentFeature.id_).value =
           inputUser;
         _currentFeature.set("label", inputUser);
       });
@@ -483,7 +511,7 @@ var draw = (function () {
       _currentDrawType = type;
       document.getElementById("draw" + _currentDrawType).classList.add("active");
 
-      _drawInt = new ol.interaction.Draw({
+      _drawInt = new DeleteOnRightClick({
         source: _sourceDraw,
         type: type,
         style: _drawStyle[type],
@@ -498,6 +526,7 @@ var draw = (function () {
         }
         _snapInter = new ol.interaction.Snap({
           source: _snappingLayer.getSource(),
+          option: { pixelTolerance: _config.snapTolerance ? _config.snapTolerance : "10" }
         });
         _map.addInteraction(_drawInt);
         _map.addInteraction(_snapInter);
@@ -517,7 +546,6 @@ var draw = (function () {
       _drawInt.on(
         "drawstart",
         function (evt) {
-          console.log("on drawstart");
 
           _currentFeature = evt.feature;
           let featureId = ol.util.getUid(_currentFeature);
@@ -541,6 +569,14 @@ var draw = (function () {
             _measureGeometry(geomFeature);
             _drawTooltips[_currentFeature.id_].setPosition(position);
           });
+        },
+        this
+      );
+
+      _drawInt.on(
+        "drawabort",
+        function (evt) {
+          _deleteSelectedFeatureDraw();
         },
         this
       );
@@ -575,6 +611,12 @@ var draw = (function () {
           if (type === "Point") {
             document.getElementById("drawingPanelPosition").innerHTML =
               ol.coordinate.toStringHDMS(ol.proj.toLonLat(coordinates));
+          }
+
+          if (_config.help == "true") {
+            let helpMsg = "Pour modifier votre dessin, <BR/> maintenez le clique gauche enfoncé <BR/> sur l'endroit que vous souhaitez modifier <BR/>";
+            helpMsg = mviewer.lang ? mviewer.lang[mviewer.lang.lang]("draw.help.panel") : helpMsg;
+            document.getElementById("drawingPanelHelp").innerHTML = helpMsg;
           }
 
           if (_config.singleDraw == "true") {
@@ -648,7 +690,8 @@ var draw = (function () {
       output = Math.round(length * 100) / 100 + " " + "m";
     }
 
-    document.getElementById("drawingPanelLength").innerHTML = "Longueur : " + output;
+    let lineMsg = mviewer.lang ? mviewer.lang[mviewer.lang.lang]("draw.measure.line") : "Longueur : ";
+    document.getElementById("drawingPanelLength").innerHTML = lineMsg + output;
     return output;
   };
 
@@ -670,7 +713,8 @@ var draw = (function () {
       output = Math.round((area / 1000000) * 100) / 100 + " " + "km<sup>2</sup>";
     }
 
-    document.getElementById("drawingPanelArea").innerHTML = "Aire : " + output;
+    let AreaMsg = mviewer.lang ? mviewer.lang[mviewer.lang.lang]("draw.measure.area") : "Aire : ";
+    document.getElementById("drawingPanelArea").innerHTML = AreaMsg + output;
     return output;
   };
 
