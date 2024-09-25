@@ -597,7 +597,7 @@ var draw = (function () {
   var _exportFeatures = function () {
     const format = new ol.format.GeoJSON({ featureProjection: _projection });
     const features = _sourceDraw.getFeatures();
-    const json = format.writeFeaturesObject(features);
+    const json = format.writeFeatures(features);
 
     // Launch download
     const blob = new Blob([json], { type: "application/json" });
