@@ -537,7 +537,7 @@ var draw = (function () {
 
           // Show measurement
           geomFeature.on("change", function (event) {
-            let position = geomFeature.getCoordinates();
+            let position = geomFeature.getLastCoordinate();
             _measureGeometry(geomFeature);
             _drawTooltips[_currentFeature.id_].setPosition(position);
           });
