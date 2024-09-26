@@ -51,6 +51,8 @@ var draw = (function () {
 
   var _helpTooltip;
 
+  var _commonDrawStyle;
+
   /** Initialisation of drawing tools
    *
    * This function loaded specific configuration from <tools><draw> section of xml configuration
@@ -64,11 +66,13 @@ var draw = (function () {
     _projection = mviewer.getProjection().getCode(); // For change the projection if necessary
     _sourceDraw = new ol.source.Vector(); // New source
 
+    _commonDrawStyle = _drawStyleBase(_config);
+
     _vectorDraw = new ol.layer.Vector({
       // New vector
       source: _sourceDraw,
       style: function (feature) {
-        return _drawStyle[feature.getGeometry().getType()];
+        return _commonDrawStyle[feature.getGeometry().getType()];
       },
     });
     _map.addLayer(_vectorDraw);
@@ -283,71 +287,62 @@ var draw = (function () {
     }
   };
 
-  let _drawStyle = {
-    Polygon: [
-      new ol.style.Style({
-        stroke: new ol.style.Stroke({
-          color: "#2e5367",
-          width: 3,
+  let _drawStyleBase = (extConfig) => {
+    const commonLineStroke = new ol.style.Stroke({
+      color: extConfig?.lineStroke || "#2e5367",
+      width: 3,
+    });
+    let commonPointStroke = new ol.style.Stroke({
+      color: extConfig?.pointStroke || "#2e5367",
+      width: 3,
+    });
+    const commonFill = new ol.style.Fill({
+      color: "rgba(0, 0, 255, 0.1)",
+    });
+    const pointFill = new ol.style.Fill({
+      color: extConfig?.pointFill || "rgba(0, 0, 255, 0.1)",
+    });
+    return {
+      Polygon: [
+        new ol.style.Style({
+          stroke: commonLineStroke,
+          fill: commonFill,
         }),
-        fill: new ol.style.Fill({
-          color: "rgba(0, 0, 255, 0.1)",
+        new ol.style.Style({
+          image: new ol.style.Circle({
+            radius: 5,
+            fill: pointFill,
+            stroke: commonPointStroke,
+          }),
+          geometry: function (feature) {
+            const coordinates = feature.getGeometry().getCoordinates()[0];
+            if (coordinates.length > 2) {
+              return new ol.geom.MultiPoint(coordinates);
+            }
+          },
         }),
-      }),
-      new ol.style.Style({
+      ],
+      LineString: [
+        new ol.style.Style({
+          stroke: commonLineStroke,
+          fill: commonFill,
+        }),
+        new ol.style.Style({
+          image: new ol.style.Circle({
+            radius: 5,
+            fill: pointFill,
+            stroke: commonPointStroke,
+          }),
+        }),
+      ],
+      Point: new ol.style.Style({
         image: new ol.style.Circle({
-          radius: 5,
-          fill: new ol.style.Fill({
-            color: "white",
-          }),
-          stroke: new ol.style.Stroke({
-            color: "#2e5367",
-            width: 3,
-          }),
-        }),
-        geometry: function (feature) {
-          const coordinates = feature.getGeometry().getCoordinates()[0];
-          if (coordinates.length > 2) {
-            return new ol.geom.MultiPoint(coordinates);
-          }
-        },
-      }),
-    ],
-    LineString: [
-      new ol.style.Style({
-        stroke: new ol.style.Stroke({
-          color: "#2e5367",
-          width: 3,
-        }),
-        fill: new ol.style.Fill({
-          color: "rgba(0, 0, 255, 0.1)",
+          radius: 6,
+          fill: pointFill,
+          stroke: commonPointStroke,
         }),
       }),
-      new ol.style.Style({
-        image: new ol.style.Circle({
-          radius: 5,
-          fill: new ol.style.Fill({
-            color: "white",
-          }),
-          stroke: new ol.style.Stroke({
-            color: "#2e5367",
-            width: 3,
-          }),
-        }),
-      }),
-    ],
-    Point: new ol.style.Style({
-      image: new ol.style.Circle({
-        radius: 6,
-        fill: new ol.style.Fill({
-          color: "rgba(128, 128, 128, 0.1)",
-        }),
-        stroke: new ol.style.Stroke({
-          color: "#2e5367",
-          width: 2,
-        }),
-      }),
-    }),
+    };
   };
 
   /**
@@ -520,7 +515,7 @@ var draw = (function () {
       _drawInt = new DeleteOnRightClick({
         source: _sourceDraw,
         type: type,
-        style: _drawStyle[type],
+        style: _commonDrawStyle[type],
       });
 
       const snapZoomValid = _config?.snapLimitZoom
