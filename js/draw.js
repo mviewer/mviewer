@@ -94,7 +94,7 @@ var draw = (function () {
         _currentFeature.getProperties().label;
     });
 
-    _modifyInt.on("modifyend", function (e) {
+    _modifyInt.on("modifyend", () => {
       // enable delete and export once feature is created
       _measureGeometry(_currentFeature.getGeometry());
       document.getElementById("drawingPanelTrash").disabled = false;
@@ -150,7 +150,7 @@ var draw = (function () {
           buttonOptions = `
             ${buttonOptions}
             <button id="drawPoint" title="Point" i18n="draw.button.point"
-             class="btn btn-default button-tools btn-raised" onclick="draw.addDrawInteraction(\'Point\');"
+             class="btn btn-default button-tools btn-raised" onclick="draw.addDrawInteraction('Point');"
             >
               <i class="fas fa-map-pin"></i>
             </button>`;
@@ -159,19 +159,19 @@ var draw = (function () {
           buttonOptions = `
             ${buttonOptions}
             <button id="drawLineString" title="Trajet ou Polygone"
-             class="btn btn-default button-tools btn-raised" i18n="draw.button.line" onclick="draw.addDrawInteraction(\'LineString\');">
+             class="btn btn-default button-tools btn-raised" i18n="draw.button.line" onclick="draw.addDrawInteraction('LineString');">
             <i class="fas fa-bezier-curve"></i>
             </button>`;
         }
         if (type === "Polygon") {
           buttonOptions = `${buttonOptions}
             <button id="drawPolygon" title="Polygone"
-             class="btn btn-default button-tools btn-raised" i18n="draw.button.polygon" onclick="draw.addDrawInteraction(\'Polygon\');">
+             class="btn btn-default button-tools btn-raised" i18n="draw.button.polygon" onclick="draw.addDrawInteraction('Polygon');">
             <i class="fas fa-draw-polygon"></i>
             </button>`;
         }
       }
-      
+
       // close
       buttonOptions = [buttonOptions, "</div>"].join("");
     }
@@ -271,7 +271,7 @@ var draw = (function () {
     $("#drawingPanelInfo").addClass("hidden");
 
     if (document.getElementById("inputButton")) {
-      inputButton.value = "";
+      document.getElementById("inputButton").value = "";
     }
   };
 
@@ -346,7 +346,7 @@ var draw = (function () {
     drawTooltipElt.type = "text";
     drawTooltipElt.value = feature.getProperties().label;
 
-    drawTooltip = new ol.Overlay({
+    let drawTooltip = new ol.Overlay({
       element: drawTooltipElt,
       offset: [0, -15],
       positioning: "bottom-center",
@@ -552,7 +552,7 @@ var draw = (function () {
           _drawTooltips[featureId].setPosition(geomFeature.getLastCoordinate());
 
           // Show measurement
-          geomFeature.on("change", function (event) {
+          geomFeature.on("change", function () {
             let position = geomFeature.getLastCoordinate();
             _measureGeometry(geomFeature);
             _drawTooltips[_currentFeature.id_].setPosition(position);
@@ -561,13 +561,7 @@ var draw = (function () {
         this
       );
 
-      _drawInt.on(
-        "drawabort",
-        function (evt) {
-          _deleteSelectedFeatureDraw();
-        },
-        this
-      );
+      _drawInt.on("drawabort", _deleteSelectedFeatureDraw, this);
 
       _drawInt.on(
         "drawend",
@@ -620,7 +614,9 @@ var draw = (function () {
           }
 
           _map.addInteraction(_modifyInt);
-          _map.addInteraction(_snapInter);
+          if (_snapInter) {
+            _map.addInteraction(_snapInter);
+          }
         },
         this
       );
