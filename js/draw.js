@@ -130,11 +130,7 @@ var draw = (function () {
     if (types.length == 1 && types.every((item) => availableTypes.includes(item))) {
       button = `
         <button class="mv-modetools btn btn-default btn-raised" href="#"
-         onclick=\"draw.addDrawInteraction('
-        ${types[0]},
-        \');mviewer.tools.draw.toggle();" id="draw
-        ${types[0]},
-        " title="Dessiner" i18n="draw.button.main"
+         onclick="draw.addDrawInteraction('${types[0]}');mviewer.tools.draw.toggle();" id="draw${types[0]}" title="Dessiner" i18n="draw.button.main"
          tabindex="118 " accesskey="4">
         <i class="fas fa-pencil-ruler"></i>
         </button>`;
@@ -178,8 +174,6 @@ var draw = (function () {
       
       // close
       buttonOptions = [buttonOptions, "</div>"].join("");
-      console.log(buttonOptions)
-      
     }
 
     $("#toolstoolbar").append(button);
@@ -348,6 +342,7 @@ var draw = (function () {
     let drawTooltipElt = document.createElement("input");
     drawTooltipElt.className = "drawTooltip";
     drawTooltipElt.setAttribute("id", "drawTooltip-" + feature.id_);
+    drawTooltipElt.setAttribute("oninput", "this.setAttribute('size',this.value.length)");
     drawTooltipElt.type = "text";
     drawTooltipElt.value = feature.getProperties().label;
 
