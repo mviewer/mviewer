@@ -359,7 +359,7 @@ var draw = (function () {
 
     drawTooltipElt.addEventListener("input", function () {
       document.getElementById("drawingPanelInfoLabel").value = drawTooltipElt.value;
-      _currentFeature.set("label", inputUser);
+      _currentFeature.set("label", drawTooltipElt.value);
     });
 
     _drawTooltips[feature.id_] = drawTooltip;
