@@ -425,19 +425,21 @@ var draw = (function () {
     // Add HTML component modal to the DOM
     var panelInfo = `
       <div id="drawingPanelInfo" draggable>
-        <div class="header">
-          <i class="${iconClass} icon-draw"></i>
-          <input id="drawingPanelInfoLabel" type="text" placeholder="${placeholder}">
-          <i id="drawingPanelTrash" disabled class="icon-draw clickable glyphicon glyphicon-trash" onclick="draw.clearFeature()"></i>
+        <div class="drawingPanel__header">
+          <div>
+            <i class="${iconClass} icon-draw"></i>
+            <input id="drawingPanelInfoLabel" type="text" placeholder="${placeholder}">
+          </div>
+          <a id="drawingPanelTrash" disabled class="icon-draw clickable" title="Supprimer la géométrie" i18n="draw.button.delete" onclick="draw.clearFeature()"><span class="glyphicon glyphicon-trash"></span></a>
         </div>
-        <div>
+        <div class="drawingPanel__body">
           <div id="drawingPanelPosition" class="content" />
           <div id="drawingPanelLength" class="content" />
           <div id="drawingPanelArea" class="content" />
           <div id="drawingPanelHelp" class="content" />
         </div>
-        <div id="drawingPanelExport" class="footer">
-          <button id="dpExportBtn" i18n="draw.button.export" disabled onclick="draw.export();">Enregister le projet</button>
+        <div id="drawingPanelExport" class="drawingPanel__footer">
+          <button id="dpExportBtn" i18n="draw.button.export" class="btn btn-primary btn-sm" disabled onclick="draw.export();">Enregister le projet</button>
         </div>
       </div>`;
 
