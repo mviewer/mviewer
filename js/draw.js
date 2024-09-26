@@ -618,6 +618,9 @@ var draw = (function () {
             document.getElementById("draw" + _currentDrawType).classList.remove("active");
             _currentDrawType = null;
           }
+
+          _map.addInteraction(_modifyInt);
+          _map.addInteraction(_snapInter);
         },
         this
       );
