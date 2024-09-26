@@ -128,60 +128,52 @@ var draw = (function () {
 
     // If only one geom create only one button ( if value is correct )
     if (types.length == 1 && types.every((item) => availableTypes.includes(item))) {
-      button = [
-        '<button class="mv-modetools btn btn-default btn-raised" href="#"',
-        " onclick=\"draw.addDrawInteraction('",
-        types[0],
-        '\');mviewer.tools.draw.toggle();" id="draw',
-        types[0],
-        '" title="Dessiner" i18n="draw.button.main"',
-        ' tabindex="118 " accesskey="4">',
-        '<i class="fas fa-pencil-ruler"></i>',
-        "</button>",
-      ].join("");
+      button = `
+        <button class="mv-modetools btn btn-default btn-raised" href="#"
+         onclick=\"draw.addDrawInteraction('
+        ${types[0]},
+        \');mviewer.tools.draw.toggle();" id="draw
+        ${types[0]},
+        " title="Dessiner" i18n="draw.button.main"
+         tabindex="118 " accesskey="4">
+        <i class="fas fa-pencil-ruler"></i>
+        </button>`;
     } else {
       // create master draw button to access other
-      button = [
-        '<button class="mv-modetools btn btn-default btn-raised" href="#"',
-        ' onclick="mviewer.tools.draw.toggle();" id="drawBtn" title="Dessiner" i18n="draw.button.main"',
-        ' tabindex="118 " accesskey="4">',
-        '<i class="fas fa-pencil-ruler"></i>',
-        "</button>",
-      ].join("");
+      button = `
+        <button class="mv-modetools btn btn-default btn-raised" href="#"
+         onclick="mviewer.tools.draw.toggle();" id="drawBtn" title="Dessiner" i18n="draw.button.main"
+         tabindex="118 " accesskey="4">
+          <i class="fas fa-pencil-ruler"></i>
+        </button>`;
 
       // loop on types to create button
-      buttonOptions = [
-        '<div id="drawoptions" style="display:none;" class="btn-group btn-group-sm"',
-        ' role="group" aria-label="true">',
-      ].join("");
+      buttonOptions = ` <div id="drawoptions" style="display:none;" class="btn-group btn-group-sm" role="group" aria-label="true">`;
 
       for (const type of types) {
         if (type === "Point") {
-          buttonOptions = [
-            buttonOptions,
-            '<button id="drawPoint" title="Point" i18n="draw.button.point"',
-            ' class="btn btn-default button-tools btn-raised" onclick="draw.addDrawInteraction(\'Point\');">',
-            '<i class="fas fa-map-pin"></i>',
-            "</button>",
-          ].join("");
+          buttonOptions = `
+            ${buttonOptions},
+            <button id="drawPoint" title="Point" i18n="draw.button.point"
+             class="btn btn-default button-tools btn-raised" onclick="draw.addDrawInteraction(\'Point\');"
+            >
+              <i class="fas fa-map-pin"></i>
+            </button>`;
         }
         if (type === "LineString") {
-          buttonOptions = [
-            buttonOptions,
-            '<button id="drawLineString" title="Trajet ou Polygone"',
-            ' class="btn btn-default button-tools btn-raised" i18n="draw.button.line" onclick="draw.addDrawInteraction(\'LineString\');">',
-            '<i class="fas fa-bezier-curve"></i>',
-            "</button>",
-          ].join("");
+          buttonOptions = `
+            ${buttonOptions},
+            <button id="drawLineString" title="Trajet ou Polygone"
+             class="btn btn-default button-tools btn-raised" i18n="draw.button.line" onclick="draw.addDrawInteraction(\'LineString\');">
+            <i class="fas fa-bezier-curve"></i>
+            </button>`;
         }
         if (type === "Polygon") {
-          buttonOptions = [
-            buttonOptions,
-            '<button id="drawPolygon" title="Polygone"',
-            ' class="btn btn-default button-tools btn-raised" i18n="draw.button.polygon" onclick="draw.addDrawInteraction(\'Polygon\');">',
-            '<i class="fas fa-draw-polygon"></i>',
-            "</button>",
-          ].join("");
+          buttonOptions = `${buttonOptions},
+            <button id="drawPolygon" title="Polygone"
+             class="btn btn-default button-tools btn-raised" i18n="draw.button.polygon" onclick="draw.addDrawInteraction(\'Polygon\');">
+            <i class="fas fa-draw-polygon"></i>
+            </button>`;
         }
       }
       // close
@@ -434,26 +426,23 @@ var draw = (function () {
     let iconClass = type === "Point" ? "fas fa-map-pin" : "fas fa-draw-polygon";
 
     // Add HTML component modal to the DOM
-    var panelInfo = [
-      '<div id="drawingPanelInfo" draggable>',
-      '<div class="header">',
-      `<i class="${iconClass} icon-draw"></i>`,
-      '<input id="drawingPanelInfoLabel" type="text" placeholder="',
-      placeholder,
-      '">',
-      '<i id="drawingPanelTrash" disabled class="icon-draw clickable glyphicon glyphicon-trash" onclick="draw.clearFeature()";></i>',
-      "</div>",
-      "<div>",
-      '<div id="drawingPanelPosition" class="content"/>',
-      '<div id="drawingPanelLength" class="content"/>',
-      '<div id="drawingPanelArea" class="content"/>',
-      '<div id="drawingPanelHelp" class="content" />',
-      "</div>",
-      '<div id="drawingPanelExport" class="footer">',
-      '<button id="dpExportBtn" i18n="draw.button.export" disabled onclick="draw.export();">Enregister le projet</button>',
-      "</div>",
-      "</div>",
-    ].join("");
+    var panelInfo = `
+      <div id="drawingPanelInfo" draggable>
+        <div class="header">
+          <i class="${iconClass} icon-draw"></i>
+          <input id="drawingPanelInfoLabel" type="text" placeholder="${placeholder}">
+          <i id="drawingPanelTrash" disabled class="icon-draw clickable glyphicon glyphicon-trash" onclick="draw.clearFeature()"></i>
+        </div>
+        <div>
+          <div id="drawingPanelPosition" class="content" />
+          <div id="drawingPanelLength" class="content" />
+          <div id="drawingPanelArea" class="content" />
+          <div id="drawingPanelHelp" class="content" />
+        </div>
+        <div id="drawingPanelExport" class="footer">
+          <button id="dpExportBtn" i18n="draw.button.export" disabled onclick="draw.export();">Enregister le projet</button>
+        </div>
+      </div>`;
 
     let existingPanelInfo = $("#drawingPanelInfo");
     if (existingPanelInfo.length) {
