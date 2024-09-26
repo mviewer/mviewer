@@ -149,11 +149,10 @@ var draw = (function () {
 
       // loop on types to create button
       buttonOptions = ` <div id="drawoptions" style="display:none;" class="btn-group btn-group-sm" role="group" aria-label="true">`;
-
       for (const type of types) {
         if (type === "Point") {
           buttonOptions = `
-            ${buttonOptions},
+            ${buttonOptions}
             <button id="drawPoint" title="Point" i18n="draw.button.point"
              class="btn btn-default button-tools btn-raised" onclick="draw.addDrawInteraction(\'Point\');"
             >
@@ -162,22 +161,25 @@ var draw = (function () {
         }
         if (type === "LineString") {
           buttonOptions = `
-            ${buttonOptions},
+            ${buttonOptions}
             <button id="drawLineString" title="Trajet ou Polygone"
              class="btn btn-default button-tools btn-raised" i18n="draw.button.line" onclick="draw.addDrawInteraction(\'LineString\');">
             <i class="fas fa-bezier-curve"></i>
             </button>`;
         }
         if (type === "Polygon") {
-          buttonOptions = `${buttonOptions},
+          buttonOptions = `${buttonOptions}
             <button id="drawPolygon" title="Polygone"
              class="btn btn-default button-tools btn-raised" i18n="draw.button.polygon" onclick="draw.addDrawInteraction(\'Polygon\');">
             <i class="fas fa-draw-polygon"></i>
             </button>`;
         }
       }
+      
       // close
       buttonOptions = [buttonOptions, "</div>"].join("");
+      console.log(buttonOptions)
+      
     }
 
     $("#toolstoolbar").append(button);
