@@ -63,4 +63,5 @@ Pour activer l'outil, vous devez le rajouter dans la balise ``<tools>`` :
 * ``help`` : (boolean) - Utilsier l'aide
 * ``nbPixelsToClosePolygon`` : (int) - Distance en pixels pour fermer automatiquement la forme et créer un polygone.
 * ``singleDraw`` : (boolen) - True pour dessiner uniquement une forme à la fois.
+* ``snapTolerance`` : (int) - Tolérence du snapping en pixel (c.fg pixelTolerance ol > v8.0)
 
