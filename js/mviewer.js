@@ -700,6 +700,13 @@ mviewer = (function () {
       mviewer.tools.addlayers.init();
     }
 
+    //Drawing tool
+    if (appconfig.drawtools === "true") {
+      //Load drawing module
+      mviewer.tools.draw = draw;
+      mviewer.tools.draw.init();
+    }
+
     //Activate GetFeatureInfo tool
     mviewer.setTool("info");
 
