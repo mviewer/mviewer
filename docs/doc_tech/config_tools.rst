@@ -22,13 +22,14 @@ Les outils sont localisés dans la balise <tools> de la configuration XML.
 .. code-block:: xml
        :linenos:
 
-        <application>
+        <config>
+            <application/>
             <tools>
                 ... outils
             </tools>
 
             ....reste de la configuration XML
-        </application>
+        </config>
 
 Les outils sont présentés dans les sections qui suivent. 
 
