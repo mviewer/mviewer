@@ -1,8 +1,7 @@
 import { initDropdown } from "./custom-dropdown.js";
 
 var trackview = (function () {
-
-  // Get all configurations 
+  // Get all configurations
   const tracksList = mviewer.customComponents.trackview.config.options.mviewer.parcours;
   let currentTracks = tracksList[0];
   let currentSelectedSegmentId = 0;
@@ -11,7 +10,11 @@ var trackview = (function () {
   let dataGraph;
 
   // Define global layer and source used for this add-on
-  let hiddenLayerGPX, vectorLayerSegment, sourceSegment, vectorLayerPointKilometers, sourcePointKilometers;
+  let hiddenLayerGPX,
+    vectorLayerSegment,
+    sourceSegment,
+    vectorLayerPointKilometers,
+    sourcePointKilometers;
 
   /**
    * This function is used to create the style of each kilometers points ( or other depending on the config file ).
@@ -19,7 +22,6 @@ var trackview = (function () {
    * @returns {style} The style of each kilometers points ( or other... ) styleKilo
    */
   var _styleKilo = function (feature) {
-
     // define null stype if display false
     let styleKilo = null;
     if (currentTracks.param.pointKilometers.display === "true") {
@@ -37,21 +39,20 @@ var trackview = (function () {
         text: new ol.style.Text({
           text: String(feature.getProperties().properties.id),
           fill: new ol.style.Fill({
-            color: currentTracks.style.pointKilometers.color.text
+            color: currentTracks.style.pointKilometers.color.text,
           }),
         }),
-      })
-    };
+      });
+    }
     return styleKilo;
-  }
+  };
 
   /**
-   * 
-   * @param {*} feature 
-   * @returns 
+   *
+   * @param {*} feature
+   * @returns
    */
   var _createSelectedSegementStyle = (feature) => {
-
     const selectedSegment = new ol.style.Style({
       stroke: new ol.style.Stroke({
         color: currentTracks.style.segment.color.selected,
@@ -76,11 +77,10 @@ var trackview = (function () {
             color: currentTracks.style.point.color.stroke,
             width: currentTracks.style.point.width,
           }),
-        })
+        }),
       });
       return [selectedSegment, selectedPoint];
-    }
-    else if (currentSelectedSegmentId > feature.getProperties().properties.id) {
+    } else if (currentSelectedSegmentId > feature.getProperties().properties.id) {
       return [selectedSegment];
     } else {
       const defaultSegment = new ol.style.Style({
@@ -91,15 +91,14 @@ var trackview = (function () {
       });
       return [defaultSegment];
     }
-  }
+  };
 
   /**
    * This function allow you to initialize all of the layers and the styles presents on the map
-   * @params index 
+   * @params index
    * @returns Nothing
    */
   var _initLayer = (index) => {
-
     currentTracks = tracksList[index];
 
     // Mviewer layer creation
@@ -112,7 +111,7 @@ var trackview = (function () {
       vectorlegend: true,
       visible: true,
       opacity: currentTracks.stats.opacity,
-      tooltip: true
+      tooltip: true,
     };
 
     // Define legend
@@ -121,12 +120,14 @@ var trackview = (function () {
         {
           label: currentTracks.title,
           geometry: currentTracks.style.geometry,
-          styles: [new ol.style.Style({
-            stroke: new ol.style.Stroke({
-              color: currentTracks.style.segment.color.default,
-              width: currentTracks.style.segment.width.default,
+          styles: [
+            new ol.style.Style({
+              stroke: new ol.style.Stroke({
+                color: currentTracks.style.segment.color.default,
+                width: currentTracks.style.segment.width.default,
+              }),
             }),
-          })],
+          ],
         },
       ],
     };
@@ -147,19 +148,19 @@ var trackview = (function () {
         url: currentTracks.data.url,
         format: new ol.format.GPX(),
       }),
-      style: null
+      style: null,
     });
     mviewer.getMap().addLayer(hiddenLayerGPX);
 
     // Point layer each kilometers
     vectorLayerPointKilometers = new ol.layer.Vector({
       source: new ol.source.Vector(),
-      style: _styleKilo
+      style: _styleKilo,
     });
     sourcePointKilometers = vectorLayerPointKilometers.getSource();
     mviewer.getMap().addLayer(vectorLayerPointKilometers);
 
-    vectorLayerSegment.on('change:visible', function (event) {
+    vectorLayerSegment.on("change:visible", function (event) {
       const isVisible = vectorLayerSegment.getVisible();
       vectorLayerPointKilometers.setVisible(isVisible);
 
@@ -171,7 +172,7 @@ var trackview = (function () {
         document.getElementById("trackview-panel").classList.remove("hidden");
       }
     });
-  }
+  };
 
   // features list could be in parameter of the function
   // why _ here in function name and not in other function :)
@@ -181,12 +182,11 @@ var trackview = (function () {
    * @returns {point[]} Array of points
    */
   var _createFeatures = function () {
-
     let featuresGPX = hiddenLayerGPX.getSource().getFeatures();
 
     // If no feature nothing to do
     if (featuresGPX.length === 0) {
-      console.error("There is no features !")
+      console.error("There is no features !");
       return;
     }
 
@@ -201,7 +201,6 @@ var trackview = (function () {
 
     // Collect coordinates of all points in multiString order
     for (let i = 0; i < coordinates.length; i++) {
-
       let featureX = coordinates[i][0];
       let featureY = coordinates[i][1];
       let featureZ = coordinates[i][2];
@@ -211,21 +210,23 @@ var trackview = (function () {
       let currentPoint = [featureX, featureY];
 
       // Conversion of the current point in other projection for a better manipulation
-      let currentPointConvert = ol.proj.transform(currentPoint, 'EPSG:3857', 'EPSG:4326');
+      let currentPointConvert = ol.proj.transform(currentPoint, "EPSG:3857", "EPSG:4326");
 
       // Only after first point
       if (i > 0) {
-
-        const distanceCalc = (turf.distance(previousPointConvert, currentPointConvert) * 1000); // Distance between the current point and the previous one
+        const distanceCalc =
+          turf.distance(previousPointConvert, currentPointConvert) * 1000; // Distance between the current point and the previous one
 
         // If the distance is greater than the max distance, we create a point and a segment
-        if ((distanceTotalForSegment + distanceCalc) > markerDistance) {
-
+        if (distanceTotalForSegment + distanceCalc > markerDistance) {
           const distanceManquante = (markerDistance - distanceTotalForSegment) / 1000; // We calculate the missing distance
           markerDistance += 1000;
 
           // Get coords for the wanted distance
-          const segmentTurf = turf.lineString([previousPointConvert, currentPointConvert]);
+          const segmentTurf = turf.lineString([
+            previousPointConvert,
+            currentPointConvert,
+          ]);
           const along = turf.along(segmentTurf, distanceManquante);
           const pointCoords = along.geometry.coordinates;
 
@@ -235,8 +236,8 @@ var trackview = (function () {
           const feature = new ol.Feature({
             geometry: olPoint,
             properties: {
-              id: idKilometre
-            }
+              id: idKilometre,
+            },
           });
 
           // We add each feature to the source
@@ -254,29 +255,33 @@ var trackview = (function () {
           geometry: segment,
           properties: {
             id: i,
-            distance: distanceTotalForSegment
-          }
+            distance: distanceTotalForSegment,
+          },
         });
 
         // Finally, we add each segment feature to the segment source
         sourceSegment.addFeature(segmentFeature);
-
       }
       finalData[i] = [distanceTotalForSegment, featureZ]; // Add distance and point in finalData array
       // CurrentPoint.set('distance', distance);
 
       previousPoint = currentPoint;
       previousPointConvert = currentPointConvert;
-    };
+    }
 
     dataGraph = _addGraph(finalData);
   };
 
-  // VerticalLine plugin 
+  // VerticalLine plugin
   const verticalLine = {
     id: "verticalLine",
     afterDatasetsDraw(chart, args, plugins) {
-      const { ctx, tooltip, chartArea: { top, bottom, left, right, width, heigth }, scales: { x, y } } = chart;
+      const {
+        ctx,
+        tooltip,
+        chartArea: { top, bottom, left, right, width, heigth },
+        scales: { x, y },
+      } = chart;
       var xCoord = null;
 
       if (chart.tooltip?._active?.length) {
@@ -294,8 +299,8 @@ var trackview = (function () {
       ctx.stroke();
       ctx.closePath();
       ctx.setLineDash([]);
-    }
-  }
+    },
+  };
 
   /**
    * This function allow you to add a graph on the map to show the altitude of each parcours.
@@ -303,7 +308,6 @@ var trackview = (function () {
    * @returns {chart} The graph who has create
    */
   var _addGraph = function (data) {
-
     let xAxisGraphData = [];
     let yAxisGraphData = [];
 
@@ -319,17 +323,21 @@ var trackview = (function () {
       type: currentTracks.style.graph.type,
       data: {
         labels: xAxisGraphData,
-        datasets: [{
-          data: yAxisGraphData,
-          label: currentTracks.label,
-          pointBackgroundColor: currentTracks.style.graph.color.point,
-          borderColor: currentTracks.style.graph.color.segment,
-          fill: true
-        }],
+        datasets: [
+          {
+            data: yAxisGraphData,
+            label: currentTracks.label,
+            pointBackgroundColor: currentTracks.style.graph.color.point,
+            borderColor: currentTracks.style.graph.color.segment,
+            fill: true,
+          },
+        ],
       },
       options: {
         onHover: (event) => {
-          var points = trackLineChart.getElementsAtEventForMode(event, 'index', { intersect: false });
+          var points = trackLineChart.getElementsAtEventForMode(event, "index", {
+            intersect: false,
+          });
 
           // if point exist
           if (points.length) {
@@ -346,28 +354,38 @@ var trackview = (function () {
             max: maxValeur,
             title: {
               display: true,
-              text: currentTracks.style.graph.name.xAxis.text
+              text: currentTracks.style.graph.name.xAxis.text,
             },
           },
           y: {
             title: {
               display: true,
-              text: currentTracks.style.graph.name.yAxis.text
+              text: currentTracks.style.graph.name.yAxis.text,
             },
           },
         },
         plugins: {
+          tooltip: {
+            borderWidth: 1,
+            borderColor: "white",
+            callbacks: {
+              label: function (tooltipItem) {
+                var dataItem = tooltipItem.raw;
+                return "Altitude " + dataItem + " m";
+              },
+            },
+          },
           title: {
             display: true,
-            text: currentTracks.style.graph.title
+            text: currentTracks.style.graph.title,
           },
         },
         interaction: {
           intersect: false,
-          mode: 'index',
+          mode: "index",
         },
       },
-      plugins: [verticalLine]
+      plugins: [verticalLine],
     });
     return trackLineChart;
   };
@@ -378,13 +396,12 @@ var trackview = (function () {
    * @returns Nothing
    */
   var _zoomOnFeature = () => {
-
     // Zoom on first feature
     let firstfeature = hiddenLayerGPX.getSource().getFeatures()[0];
 
     mviewer.getMap().getView().fit(firstfeature.getGeometry().getExtent(), {
       duration: 3000, // Define the animation time in ms
-      maxZoom: 13.75 // Define the zoom max when the page is load
+      maxZoom: 13.75, // Define the zoom max when the page is load
     });
   };
 
@@ -394,7 +411,9 @@ var trackview = (function () {
    * @returns Nothing
    */
   var _clearTool = () => {
-    var legend = document.querySelector(`[data-layerid="${currentTracks.stats.layerId}"].mv-layer-details`);
+    var legend = document.querySelector(
+      `[data-layerid="${currentTracks.stats.layerId}"].mv-layer-details`
+    );
 
     // If legend, we remove it
     if (legend) {
@@ -412,7 +431,7 @@ var trackview = (function () {
     // Clear all source that we need
     sourceSegment.clear();
     sourcePointKilometers.clear();
-  }
+  };
 
   /**
    * This function allow you to initialize the trackview addon.
@@ -420,7 +439,6 @@ var trackview = (function () {
    * @returns Nothing
    */
   var _initTool = function () {
-
     // Trackview-parcours dropdown
     let dropdown = document.getElementById("trackview-parcours");
 
@@ -440,11 +458,10 @@ var trackview = (function () {
 
       // If an element is selected in the list
       if (itemValue) {
-
         _clearTool();
         _initLayer(itemValue);
 
-        hiddenLayerGPX.getSource().once('change', function (e) {
+        hiddenLayerGPX.getSource().once("change", function (e) {
           if (hiddenLayerGPX.getSource().getState() === "ready") {
             console.log("Features are loaded");
             _createFeatures();
@@ -461,23 +478,25 @@ var trackview = (function () {
     _initLayer(0);
 
     mviewer.getMap().once("rendercomplete", function (e) {
-
       _zoomOnFeature(); // Calling fonction for zoom on the features
-      _createFeatures(); // Calling fonction for create all of the features 
+      _createFeatures(); // Calling fonction for create all of the features
       initDropdown(); // Calling the init of the dropdown
 
       /*********** Detect feature on the map ***********/
       mviewer.getMap().on("pointermove", function (event) {
-
-        mviewer.getMap().forEachFeatureAtPixel(event.pixel, function (feature, layer) {
-          // Check if the layer pointed is equal to the layer of interest
-          if (feature && layer === vectorLayerSegment) {
-            mviewer.pointHover = feature.getProperties().properties.distance;
-            currentSelectedSegmentId = feature.getProperties().properties.id;
-            dataGraph.update();
-            vectorLayerSegment.changed();
-          }
-        }, { hitTolerance: currentTracks.param.tolerance.value }); // Value in pixel
+        mviewer.getMap().forEachFeatureAtPixel(
+          event.pixel,
+          function (feature, layer) {
+            // Check if the layer pointed is equal to the layer of interest
+            if (feature && layer === vectorLayerSegment) {
+              mviewer.pointHover = feature.getProperties().properties.distance;
+              currentSelectedSegmentId = feature.getProperties().properties.id;
+              dataGraph.update();
+              vectorLayerSegment.changed();
+            }
+          },
+          { hitTolerance: currentTracks.param.tolerance.value }
+        ); // Value in pixel
       });
     });
   };
