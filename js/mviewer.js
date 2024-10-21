@@ -1069,8 +1069,15 @@ mviewer = (function () {
           });
           groups.push(grp);
         });
-        view.groups = groups;
+        $.each(_themes[theme.id].layers, function (id, layer) {
+          if (layer.showintoc) {
+            reverse_layers.push(layer);
+          }
+        });
+        view.layers = reverse_layers.reverse();
         view.cls = classes.join(" ");
+        view.groups = groups;
+        // view.cls = classes.join(" ");
         //NO GROUPS
       } else {
         $.each(_themes[theme.id].layers, function (id, layer) {
