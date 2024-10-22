@@ -347,6 +347,22 @@ mviewer = (function () {
       }),
     });
 
+    var extent = mapoptions.extent
+      ? ol.proj.transformExtent(
+          mapoptions.extent.split(",").map(function (item) {
+            return parseFloat(item);
+          }),
+          "EPSG:3857",
+          mapoptions.projection
+        )
+      : null;
+
+    if (extent !== null) {
+      _map.getView().fit(extent, {
+        size: _map.getSize(),
+      });
+    }
+
     const mapReadyEvent = new CustomEvent("map-ready", {
       detail: {
         map: _map,
