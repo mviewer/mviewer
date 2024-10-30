@@ -25,9 +25,6 @@
   },
   "homepage": ".",
   "dependencies": {
-    "@turf/buffer": "^6.5.0",
-    "@turf/collect": "^6.5.0",
-    "bootstrap": "^3.4.1",
     "sass": "^1.57.1",
     "vite": "^4.5.2"
   },
