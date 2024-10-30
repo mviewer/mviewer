@@ -456,4 +456,4 @@ Il est essentiel de renseigner le même id que précédemment pour assurer le bo
 
 **Personnalisation de l'extension**
 
-Pour plus d'informations sur la personnalisation de cette extension, veuillez consulter la documentation complète à l'adresse suivante : https://github.com/mviewer/mviewer/tree/master/demo/addons/trackview
+Pour plus d'informations sur la personnalisation de cette extension, veuillez consulter la documentation complète à l'adresse suivante : https://github.com/mviewer/mviewer/tree/master/demo/addons/trackview/readme.md
