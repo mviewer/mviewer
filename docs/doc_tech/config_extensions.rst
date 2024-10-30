@@ -409,3 +409,51 @@ Voici un exemple :
 **Personnalisation du modèle**
 
 Pour la personnalisation du modèle, se référer à la documentation ici https://github.com/mviewer/mviewer/tree/master/demo/addons/print#layout-with-a-json-template
+
+Extension trackview
+-------------------
+Ce plugin permet de consulter une tarce d'activités ( vtt, course à pied, etc. ) par l'utilisation de fichier de données au format GPX. 
+Pour plus de détails, il permet également de visualiser ces données sous la forme d'un graphique altimétrique.
+
+.. image:: ../_images/dev/config_extension/trackview.png
+              :alt: Visualiser un parcours GPX
+              :align: center
+
+**Installation**
+
+L'extension **trackview** se situe par défaut, dans le répertoire ``/demo/addons``. Pour une meilleure organisation et une maintenance plus facile, il est conseillé de déplacer les addons utilisés dans un dossier séparé.
+
+1. Ajout de l'extension dans votre fichier de config **.xml**
+
+Il est nécessaire d'ajouter les lignes de code ci-dessous afin d'ajouter l'extension à votre application.
+
+.. code-block:: xml
+
+	<extensions>
+	  <extension type="component" id="trackview" path="demo/addons"/>
+	</extensions>
+
+2. Utilisation d'un ID unique
+
+Dans la balise *application* se trouve un attribut que l'on nomme *id*. C'est ici qu'il faut renseigner l'id qu'on souhaite donner à notre application.
+
+.. code-block:: xml
+
+	<application id="mon_id"/>
+
+3. Intégrer votre application dans le fichier de configuration **config.json**
+
+Il est essentiel de renseigner le même id que précédemment pour assurer le bon fonctionnement de l’extension.
+
+.. code-block:: json
+
+	"options": {
+	  "mviewer": {
+		"mon_id": {
+		}
+	  }
+	}
+
+**Personnalisation de l'extension**
+
+Pour plus d'informations sur la personnalisation de cette extension, veuillez consulter la documentation complète à l'adresse suivante : https://github.com/mviewer/mviewer/tree/master/demo/addons/trackview/readme.md
