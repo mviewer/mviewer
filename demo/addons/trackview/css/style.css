@@ -1,0 +1,149 @@
+#trackview-panel {
+    width: calc(100% - 50px);
+    height: auto;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background-color: white;
+    border-color: lightblue;
+    filter: opacity(80%);
+}
+
+#trackview-graph {
+    max-height: 230px;
+    width: 100%;
+}
+
+.hidden {
+    display: none;
+}
+
+#backgroundlayerstoolbar-default, #mviewerinfosbar, .ol-attribution.ol-unselectable.ol-control, .ol-scale-line.ol-unselectable {
+    z-index: 1;
+    margin-bottom: 232px;
+}
+
+/* Parameters of the dropdown */
+
+#trackview-dropdown-custom {
+    position: fixed;
+    margin: 60px 0 0 270px; /* For the position of the dropdown on the addon || Change this line if needed*/ 
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.dropdown {
+    border-radius: 0.5em;
+    min-width: 11em;
+    position: relative;
+    margin: 2em;
+    padding: 0.5em;
+}
+
+.dropdown * {
+    box-sizing: border-box;
+}
+
+.select {
+    background: whitesmoke;
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px rgb(182, 178, 178) solid;
+    border-radius: 0.5em;
+    padding: 1em;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.select-clicked {
+    border: 2px gray solid;
+    box-shadow: 0 0 0.8em black;
+}
+
+.select:hover {
+    background: rgb(230, 229, 229);
+    transform: scale(1.01);
+}
+
+.caret {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid black;
+    transition: 0.3s;
+}
+
+.caret-rotate {
+    transform: rotate(180deg);
+}
+
+.menu {
+    list-style: none;
+    padding: 0.2em 0.5em;
+    background: white;
+    border: 1px #363a43 solid;
+    box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
+    border-radius: 0.5em;
+    color: black;
+    position: absolute;
+    top: 4em;
+    left: 50%;
+    width: 90%;
+    transform: translateX(-50%);
+    opacity: 0;     
+    display: none;
+    transition: 0.2s;
+    z-index: 1;
+}
+
+.menu li {
+    padding: 0.7em 0.5em;
+    margin: 0.3em 0;
+    border-radius: 0.5em;
+    cursor: pointer;
+}
+
+.menu li:hover {
+    background: lightgray;
+}
+
+.menu .active {
+    background: lightgray;
+}
+
+.menu-open {
+    display: block;
+    opacity: 1;
+}
+
+/* The phone version */
+
+.xs #backgroundlayerstoolbar-default, .xs #mviewerinfosbar, .xs .ol-attribution.ol-unselectable.ol-control, .xs .ol-scale-line.ol-unselectable {
+    margin-bottom: 210px;
+}
+
+.xs #trackview-dropdown-custom {
+    margin: 60px 0 0 210px;
+}
+
+.xs #wrapper.toggled-2 #trackview-panel {
+    width: 100%!important;
+}
+
+/* The thematic menu */
+
+#wrapper.toggled-2 #trackview-panel {
+    width: calc(100% - 50px)!important;
+    transition: all 0.5s ease;
+}
+
+#wrapper #trackview-panel {
+    width: calc(100% - 250px)!important;
+    transition: all 0.5s ease;
+}

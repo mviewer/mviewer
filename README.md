@@ -4,7 +4,7 @@ Visualiseur géographique [Kartenn](https://kartenn.region-bretagne.fr/demo/) ba
 
 Liens utiles :
 
-- [Site officiel](https://mviewer.netlify.com/)
+- [Site officiel](https://mviewer.github.io/fr/)
 - [Versions](https://github.com/geobretagne/mviewer/releases/)
 - [Démos](http://kartenn.region-bretagne.fr/kartoviz/demo/)
 - [Documentation](http://mviewerdoc.readthedocs.io/fr/stable/)
@@ -94,7 +94,7 @@ docker build -t mviewer/mviewer .
 # faire tourner le conteneur, et le rendre accessible sur le port 8080. A l'arret du
 # conteneur celui-ci est supprimé (option `--rm`):
 
-docker run --rm -p8080:80 -v$(pwd)/apps:/usr/share/nginx/html/apps mviewer/mviewer
+docker run --rm -p8080:8080 -v$(pwd)/apps:/usr/share/nginx/html/apps mviewer/mviewer
 ```
 
 Une fois le conteneur lancé, `mviewer` sera disponible sur `http://localhost:8080`.
@@ -104,7 +104,7 @@ mviewer dans un répertoire existant, vous pouvez le monter à la place de celui
 proposé par défaut par le dépot en utilisant l'option `-v` de docker comme suit:
 
 ```
-docker run --rm -p8080:80 -v/chemin/vers/repertoire_de_configurations_xml:/usr/share/nginx/html/apps mviewer/mviewer
+docker run --rm -p8080:8080 -v/chemin/vers/repertoire_de_configurations_xml:/usr/share/nginx/html/apps mviewer/mviewer
 ```
 
 La seule contrainte étant que le chemin doit être indiqué à docker de manière absolue.

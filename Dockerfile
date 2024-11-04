@@ -1,4 +1,4 @@
-FROM nginx:alpine
+FROM nginxinc/nginx-unprivileged:alpine
 
 VOLUME ["/usr/share/nginx/html/apps"]
 

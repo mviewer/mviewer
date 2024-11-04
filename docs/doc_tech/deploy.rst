@@ -78,7 +78,7 @@ Ce mode ne convient pas pour effectuer ses propres applications mviewer.
     #Récupérer la dernière image buildée de mviewer
     docker pull mviewer/mviewer
     #Lancer le container docker mviewer
-    docker run --rm -p80:80 mviewer/mviewer
+    docker run --rm -p80:8080 mviewer/mviewer
 
 
 mviewer et un dossier d'applications
@@ -90,7 +90,7 @@ C'est la solution à privilégier pour créer ses propres applications. En paral
 
     # Lancer le container mviewer + le répertoire web apps qui pointe vers
     # /chemin/vers/repertoire_de_configurations_xml
-    docker run --rm -p80:80 \
+    docker run --rm -p80:8080 \
         -v/chemin/vers/repertoire_de_configurations_xml:/usr/share/nginx/html/apps \
         mviewer/mviewer
 
@@ -122,7 +122,7 @@ Cette solution permet de mettre en place les mêmes possibilités que la méthod
         container_name: mviewer
         build: .
         ports:
-          - "80:80"
+          - "80:8080"
         image: mviewer/mviewer
         volumes:
           - '${APPSPATH}:/usr/share/nginx/html/apps'

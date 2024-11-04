@@ -1,0 +1,216 @@
+{
+  "type": "module",
+  "js": [
+    "../../../lib/chartjs-3.7.1/Chart.min.js",
+    "lib/turf.min.js",
+    "js/custom-dropdown.js",
+    "js/trackview.js"
+  ],
+  "css": "/css/style.css",
+  "html": "./trackview.html",
+  "target": "page-content-wrapper",
+  "options": {
+    "mviewer": {
+      "parcours": [
+        {
+          "id": 0,
+          "label": "Parcours 13 km",
+          "title": "Circuit",
+          "param": {
+            "pointKilometers": {
+              "display": "true"
+            },
+            "tolerance": {
+              "value": 2
+            }
+          },
+          "style": {
+            "geometry": "LineString",
+            "segment": {
+              "color": {
+                "default": "#f00",
+                "selected": "#03224c"
+              },
+              "width": {
+                "default": 3,
+                "selected": 5
+              }
+            },
+            "point": {
+              "color": {
+                "image": "#03224c",
+                "stroke": "#fff"
+              },
+              "radius": 7,
+              "width": 2
+            },
+            "pointKilometers": {
+              "color": {
+                "image": "#fff",
+                "stroke": "f00",
+                "text": "#333"
+              },
+              "radius": 9,
+              "width": 0.8
+            },
+            "graph": {
+              "type": "line",
+              "title": "Dénivelé du parcours en fonction de la distance parcourue",
+              "name": {
+                "xAxis": {
+                  "text": "Distance (km)"
+                },
+                "yAxis": {
+                  "text": "Dénivelé (m)"
+                }
+              },
+              "color": {
+                "segment": "#f00",
+                "point": "#f00"
+              }
+            }
+          },
+          "stats": {
+            "type": "customlayer",
+            "layerId": "parcours_1",
+            "opacity": 0.8
+          },
+          "data": {
+            "url": "demo/trackview/data/parcours_13km.gpx"
+          }
+        },
+        {
+          "id": 1,
+          "label": "Parcours 5 km",
+          "title": "Circuit",
+          "param": {
+            "pointKilometers": {
+              "display": "false"
+            },
+            "tolerance": {
+              "value": 2
+            }
+          },
+          "style": {
+            "geometry": "LineString",
+            "segment": {
+              "color": {
+                "default": "#f00",
+                "selected": "#03224c"
+              },
+              "width": {
+                "default": 3,
+                "selected": 5
+              }
+            },
+            "point": {
+              "color": {
+                "image": "#03224c",
+                "stroke": "#fff"
+              },
+              "radius": 7,
+              "width": 2
+            },
+            "pointKilometers": {
+              "color": {
+                "image": "#fff",
+                "stroke": "f00",
+                "text": "#333"
+              },
+              "radius": 9,
+              "width": 0.8
+            },
+            "graph": {
+              "type": "line",
+              "title": "Dénivelé du parcours en fonction de la distance parcourue",
+              "name": {
+                "xAxis": {
+                  "text": "Distance (km)"
+                },
+                "yAxis": {
+                  "text": "Dénivelé (m)"
+                }
+              },
+              "color": {
+                "segment": "#f00",
+                "point": "#f00"
+              }
+            }
+          },
+          "stats": {
+            "type": "customlayer",
+            "layerId": "parcours_1",
+            "opacity": 0.8
+          },
+          "data": {
+            "url": "demo/trackview/data/parcours_5km.gpx"
+          }
+        },
+        {
+          "id": 2,
+          "label": "Parcours VTT",
+          "title": "Circuit",
+          "param": {
+            "pointKilometers": {
+              "display": "true"
+            }
+          },
+          "style": {
+            "geometry": "LineString",
+            "segment": {
+              "color": {
+                "default": "#f00",
+                "selected": "#0f0"
+              },
+              "width": {
+                "default": 3,
+                "selected": 5
+              }
+            },
+            "point": {
+              "color": {
+                "image": "#00f",
+                "stroke": "#fff"
+              },
+              "radius": 7,
+              "width": 2
+            },
+            "pointKilometers": {
+              "color": {
+                "image": "#00f",
+                "stroke": "000",
+                "text": "#fff"
+              },
+              "radius": 9,
+              "width": 3
+            },
+            "graph": {
+              "type": "line",
+              "title": "Dénivelé du parcours en fonction de la distance parcourue",
+              "name": {
+                "xAxis": {
+                  "text": "Distance (km)"
+                },
+                "yAxis": {
+                  "text": "Dénivelé (m)"
+                }
+              },
+              "color": {
+                "segment": "#0f0",
+                "point": "#00f"
+              }
+            }
+          },
+          "stats": {
+            "type": "customlayer",
+            "layerId": "parcours_1",
+            "opacity": 0.8
+          },
+          "data": {
+            "url": "demo/trackview/data/pierre.gpx"
+          }
+        }
+      ]
+    }
+  }
+}

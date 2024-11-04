@@ -8,7 +8,7 @@ var configuration = (function () {
 
   // Mviewer version a saisir manuellement
 
-  var VERSION = "3.11";
+  var VERSION = "3.12";
 
   var _showhelp_startup = false;
 
@@ -364,6 +364,10 @@ var configuration = (function () {
     }
     if (conf.application.logo) {
       $(".mv-logo").attr("src", conf.application.logo);
+    }
+    if (location.hash && !location.search) {
+      $(".mv-title").attr("href", location.hash);
+      $(".navbar-brand").attr("href", location.hash);
     }
     if (conf.application.showhelp === "true") {
       _showhelp_startup = true;
@@ -745,6 +749,7 @@ var configuration = (function () {
               oLayer.timeinterval = layer.timeinterval || "day";
             }
             oLayer.timecontrol = layer.timecontrol || "calendar";
+            oLayer.timeshowavailable = layer.timeshowavailable === "true";
             if (layer.timevalues && layer.timevalues.search(",")) {
               oLayer.timevalues = layer.timevalues.split(",");
             }

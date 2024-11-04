@@ -113,7 +113,7 @@ Paramètres pour gérer l'affichage de la couche
 * ``legendurl`` :guilabel:`studio` : url permettant de récupérer la légende. Si non défini, c'est un GetLegendGraphic qui est effectué.
 * ``filter`` :guilabel:`studio` : Expression CQL permettant de filtrer la couche ex: insee=35000 Ou INTERSECT(the_geom, POINT (-74.817265 40.5296504)) [tutorial] (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial).
 * ``filterstyle`` :guilabel:`studio` : pour les couches de type vector-tms uniquement. Il permet de ne pas conserver, dans le style, la représentation de certaines couches. Cela permet donc de ne pas représenter un type de données présent dans le flux tuilé vectoriel. Il faut indiquer ici le nom d'une ou de plusieurs couches référencées dans la propriété "source-layer" du fichier de style au format JSON. Lorsque plusieurs couches sont à ajouter, le séparateur est la virgule et sans espace.
-* ``toplayer`` :guilabel:`studio` : Précise si la couche demeure figée. Booléen. Défaut = true. Si plusieurs couches sont en toplayer, elles seront affichées dans l'ordre d'écriture du XML.
+* ``toplayer`` :guilabel:`studio` : Booléan stipulant si la couche est affichée au premier plan sur la carte. La valeur par défaut est false. Si plusieurs couches sont en toplayer, elles seront affichées dans l’ordre d’écriture du XML.
 * ``expanded`` :guilabel:`studio` : Booléan précisant si le panneau de la couche est agrandi au démarrage. La valeur par défaut est false.
 * ``showintoc`` :guilabel:`studio` :  Booléen stipulant si la couche est affichée dans la légende. La valeur par défaut est true.
 * ``minzoom`` :  pour les couches de type vector-tms, la valeur correspond au niveau de zoom minimal de visibilité de la couche. Par défaut, la valeur est récupérée à partir du fichier de style au format JSON. Pour plus de détail, voir la `documentation Openlayers <https://openlayers.org/en/latest/apidoc/module-ol_layer_VectorTile-VectorTileLayer.html>`_.
@@ -196,6 +196,7 @@ Paramètres pour gérer la dimension temporelle des couches WMS
 * ``timevalues``: Valeurs temporelles séparées par des virgules. À utiliser avec le controle slider pour des valeurs non régulières ex (1950, 1976, 1980, 2004).
 * ``timemin``: Date mini format : "yyyy-mm-dd".
 * ``timemax``: Date maxi format : "yyyy-mm-dd".
+* ``timeshowavailable``: Booléen pour n'afficher dans le calendrier que les dates disponibles fournies par le getCapabilities (à utiliser avec le type `calendar` uniquement)
 
 Paramètres pour gérer le filtre attributaire (liste déroulante) des couches WMS
 ===================================================================================
@@ -205,8 +206,8 @@ Paramètres pour gérer le filtre attributaire (liste déroulante) des couches W
 * ``attributevalues`` :guilabel:`studio` : Valeurs de la sélection attributaire séparées par des virgules.
 * ``attributelabel``:  Texte à afficher pour chaque atttribut de la liste déroulante associée.
 * ``attributestylesync``: Booléen qui précise s'il convient d'appliquer un style (sld) spécifique lors du filtre attributaire. Dans ce cas la convention est la suivante : nom_style@attributevalue ou url_style_externe@attributevalue.sld.
-* ``attributefilterenabled``: Booléen précisant si le filtre est activé par défaut (avec la première valeur de la liste attributevalues).
-* ``attributeoperator`` : guilabel:`studio` : Opérateur utilisé pour construire le filtre. (= ou like). Defaut = "=". Attention dans le cas de like, le wildcard est harcodé : %
+* ``attributefilterenabled``: Booléen précisant si le filtre est activé par défaut (avec la première valeur de la liste attributevalues). Si cette option n'est pas activée, une valeur "Par défaut" apparaît dans la liste et ne filtre pas les données. Valeur par défaut = false.
+* ``attributeoperator`` : Opérateur utilisé pour construire le filtre. (= ou like). Defaut = "=". Attention dans le cas de like, le wildcard est harcodé : %
 * ``wildcardpattern`` : Pattern à utiliser pour les filtre utilisant l'opérateur like. Defaut = "%value%, autres possibilités "%value" et "value%".
 
 Autres paramètres
@@ -262,7 +263,7 @@ Si deux couches ont le même index dans un même fichier de configuration XML, p
 	   <layer   index="1" />
            <layer   index="2" />
 
-* ``showintoc``
+* ``showintoc`` :guilabel:`studio`
 
 Avec ce paramètre renseigné, les paramètres index et toplayer sont également pris en compte pour l'affichage sur la carte.
 
@@ -307,6 +308,6 @@ Cet élément optionnel, permet d'associer un template type Mustache (https://gi
 
 **Paramètres**
 
-* ``url``: paramètre optionnel de type url qui indique l'emplacement du template à utiliser.
+* ``url`` :guilabel:`studio` : paramètre optionnel de type url qui indique l'emplacement du template à utiliser.
 
 
