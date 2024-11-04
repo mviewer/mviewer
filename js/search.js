@@ -1186,29 +1186,64 @@ var search = (function () {
       _elasticSearchGeomtype = new Map();
       _elasticSearchdisplayfields = new Map();
       _elasticSearchmouseoverfields = new Map();
-      configuration.elasticsearchs.elasticsearch.forEach((elasticsearch, index) => {
-        _elasticSearchUrl.set(elasticsearch.layer, elasticsearch.url);
-        _elasticSearchQuerymode.set(elasticsearch.layer, elasticsearch.querymode);
-        _elasticSearchGeometryfield.set(elasticsearch.layer, elasticsearch.geometryfield);
-        _elasticSearchVersion.set(elasticsearch.layer, elasticsearch.version ?? "7");
+
+      if (configuration.elasticsearchs.elasticsearch.constructor === Array) {
+        configuration.elasticsearchs.elasticsearch.forEach((elasticsearch, index) => {
+          _elasticSearchUrl.set(elasticsearch.layer, elasticsearch.url);
+          _elasticSearchQuerymode.set(elasticsearch.layer, elasticsearch.querymode);
+          _elasticSearchGeometryfield.set(
+            elasticsearch.layer,
+            elasticsearch.geometryfield
+          );
+          _elasticSearchVersion.set(elasticsearch.layer, elasticsearch.version ?? "7");
+          // common id between elasticsearch document types (_id)  and geoserver featureTypes
+          _elasticSearchLinkid.set(
+            elasticsearch.layer,
+            elasticsearch.linkid ?? "featureid"
+          );
+          _elasticSearchGeomtype.set(
+            elasticsearch.layer,
+            elasticsearch.geometryformat ?? "GeoJSON"
+          );
+          _elasticSearchdisplayfields.set(
+            elasticsearch.layer,
+            elasticsearch.displayfields ?? ""
+          );
+          _elasticSearchmouseoverfields.set(
+            elasticsearch.layer,
+            elasticsearch.mouseoverfields ?? ""
+          );
+        });
+      } else {
+        let currentElkConfig = configuration.elasticsearchs.elasticsearch;
+        _elasticSearchUrl.set(currentElkConfig.layer, currentElkConfig.url);
+        _elasticSearchQuerymode.set(currentElkConfig.layer, currentElkConfig.querymode);
+        _elasticSearchGeometryfield.set(
+          currentElkConfig.layer,
+          currentElkConfig.geometryfield
+        );
+        _elasticSearchVersion.set(
+          currentElkConfig.layer,
+          currentElkConfig.version ?? "7"
+        );
         // common id between elasticsearch document types (_id)  and geoserver featureTypes
         _elasticSearchLinkid.set(
-          elasticsearch.layer,
-          elasticsearch.linkid ?? "featureid"
+          currentElkConfig.layer,
+          currentElkConfig.linkid ?? "featureid"
         );
         _elasticSearchGeomtype.set(
-          elasticsearch.layer,
-          elasticsearch.geometryformat ?? "GeoJSON"
+          currentElkConfig.layer,
+          currentElkConfig.geometryformat ?? "GeoJSON"
         );
         _elasticSearchdisplayfields.set(
-          elasticsearch.layer,
-          elasticsearch.displayfields ?? ""
+          currentElkConfig.layer,
+          currentElkConfig.displayfields ?? ""
         );
         _elasticSearchmouseoverfields.set(
-          elasticsearch.layer,
-          elasticsearch.mouseoverfields ?? ""
+          currentElkConfig.layer,
+          currentElkConfig.mouseoverfields ?? ""
         );
-      });
+      }
     }
 
     if (!_olsCompletionUrl) {
