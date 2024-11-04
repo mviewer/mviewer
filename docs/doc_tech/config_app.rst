@@ -59,7 +59,7 @@ Paramètres principaux
 * ``showhelp`` :guilabel:`studio` : paramètre optionnel de type booléen (true/false) précisant si l'aide est affichée en popup au démarrage de l'application. Valeur par défaut **false**.
 * ``style`` :guilabel:`studio` : paramètre optionnel de type url précisant la feuille de style à utiliser afin de modifier l'apparence de l'application (couleurs, polices...). Valeur par défaut **css/themes/default.css**. Voir : ":ref:`configcss`".
 * ``exportpng`` :guilabel:`studio` : paramètre optionnel de type booléen (true/false) activant l'export de la carte en png. Valeur par défaut **false**. Attention l'export ne fonctionne qu'avec des couches locales (même origine) ou avec des couches servies avec  `CORS <https://enable-cors.org/>`_ activé.
-* ``mapprint`` : paramètre optionnel de type booléen (true/false) activant l'impression de la vue courante depuis le navigateur. Valeur par défaut **false**.
+* ``mapprint`` :guilabel:`studio` : paramètre optionnel de type booléen (true/false) activant l'impression de la vue courante depuis le navigateur. Valeur par défaut **false**.
 * ``measuretools`` :guilabel:`studio` : paramètre optionnel de type booléen (true/false) activant les outils de mesure. Valeur par défaut **false**.
 * ``zoomtools`` :guilabel:`studio` : paramètre optionnel de type booléen (true/false) activant les outils de zoom +/-. Valeur par défaut **true**.
 * ``initialextenttool`` :guilabel:`studio` : paramètre optionnel de type booléen (true/false) activant le bouton de retour à l'étendue initiale. Valeur par défaut **true**.
@@ -86,7 +86,7 @@ Paramètres secondaires
 * ``lang``: Langue à utiliser pour l'interface. Passer "?lang=en" dans l'url pour forcer la langue et ignorer la config. Par défaut, lang n'est pas activé. Le fichier mviewer.i18n.json contient les expressions à traduire dans différentes langues. Pour traduire le texte d'un élément html, il faut que cet élément dispose d'un attribut i18n=texte.a.traduire. En javascript la traduction s'appuie sur la méthode mviewer.tr("texte.a.traduire").
 * ``langfile``: URL du fichier de traduction supplémentaire à utiliser en complément de mviewer.i18n.json.
 * ``favicon`` :guilabel:`studio` : URL du fichier image à utiliser comme favicon de l'application.
-* ``addlayerstools``: paramètre optionnel de type booléen (true/false) activant le panneau pour ajouter des couches WMS à la carte.
+* ``addlayerstools`` :guilabel:`studio` : paramètre optionnel de type booléen (true/false) activant le panneau pour ajouter des couches WMS à la carte.
 * ``sortlayersinfopanel``: mode de tri des couches dans le panneau d'information en suivant la légende qui suit l'ordre des couches de la map (valeur **default**) ou la toc (valeur **toc**). Valeur par défaut **default**.
 
 Modes de templates
