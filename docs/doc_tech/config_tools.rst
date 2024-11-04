@@ -57,7 +57,8 @@ Pour activer l'outil, vous devez le rajouter dans la balise ``<tools>`` :
             <draw geometryTypes="Polygon" snapLayerId="geom_parcelle_2023" ... />
         </tools>
 
-** Paramètres **
+Paramètres
+----------
 
 * ``geometryTypes`` : (string) - List des géométries à dessiner.
 * ``snapLayerId`` : (string) - Un ID de couche WFS déjà utilisé dans la configuration XML (e.g custom layer)
