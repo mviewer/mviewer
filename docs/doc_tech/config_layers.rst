@@ -206,7 +206,7 @@ Paramètres pour gérer le filtre attributaire (liste déroulante) des couches W
 * ``attributevalues`` :guilabel:`studio` : Valeurs de la sélection attributaire séparées par des virgules.
 * ``attributelabel``:  Texte à afficher pour chaque atttribut de la liste déroulante associée.
 * ``attributestylesync``: Booléen qui précise s'il convient d'appliquer un style (sld) spécifique lors du filtre attributaire. Dans ce cas la convention est la suivante : nom_style@attributevalue ou url_style_externe@attributevalue.sld.
-* ``attributefilterenabled``: Booléen précisant si le filtre est activé par défaut (avec la première valeur de la liste attributevalues).
+* ``attributefilterenabled``: Booléen précisant si le filtre est activé par défaut (avec la première valeur de la liste attributevalues). Si cette option n'est pas activée, une valeur "Par défaut" apparaît dans la liste et ne filtre pas les données. Valeur par défaut = false.
 * ``attributeoperator`` : guilabel:`studio` : Opérateur utilisé pour construire le filtre. (= ou like). Defaut = "=". Attention dans le cas de like, le wildcard est harcodé : %
 * ``wildcardpattern`` : Pattern à utiliser pour les filtre utilisant l'opérateur like. Defaut = "%value%, autres possibilités "%value" et "value%".
 
