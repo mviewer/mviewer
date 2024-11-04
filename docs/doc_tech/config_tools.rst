@@ -3,8 +3,11 @@
 
 .. _tools:
 
+Configurer - Les outils
+=======================
+
 Présentation
-============
+------------
 
 Cette page vous servira à comprendre comment utiliser les outils disponibles.
 Les outils sont intégrées dans le coeur mviewer et utilisés selon la configuration du XML. Le fichier est chargé dans tous les cas.
