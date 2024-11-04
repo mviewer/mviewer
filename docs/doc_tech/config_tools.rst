@@ -16,7 +16,7 @@ La différence avec les extensions est qu'une extension (et ses fichiers) est ch
 
 Les outils concerne ici : 
 
-- l'outil de dessin
+-l'outil de dessin
 
 D'autres outils viendront compléter cette liste.
 
@@ -40,13 +40,13 @@ Outil de dessin
 
 L'outil de dessin permet de : 
 
-- dessiner un point
-- dessiner un polygon
-- dessiner une ligne
-- donner un nom à une forme
-- exporter le dessin en GeoJSON
-- afficher des informations de mesure
-- dessiner selon une couche d'accroche WFS (snapping)
+-dessiner un point
+-dessiner un polygon
+-dessiner une ligne
+-donner un nom à une forme
+-exporter le dessin en GeoJSON
+-afficher des informations de mesure
+-dessiner selon une couche d'accroche WFS (snapping)
 
 Pour activer l'outil, vous devez le rajouter dans la balise ``<tools>`` :
 
@@ -60,12 +60,12 @@ Pour activer l'outil, vous devez le rajouter dans la balise ``<tools>`` :
 Paramètres
 ----------
 
-* ``geometryTypes`` : (string) - List des géométries à dessiner.
-* ``snapLayerId`` : (string) - Un ID de couche WFS déjà utilisé dans la configuration XML (e.g custom layer)
-* ``snapLayerUrl`` : (string) - URL complète d'une couche WFS (le format doit être en ``application/json`` )
-* ``snapLimitZoom`` : (int) - Limite l'activation du snapping par niveau de zoom. Cela permet de limiter le chargement d'entités WFS. Le snapping sera actif si le zoom de la carte est supérieur à cette valeur.
-* ``help`` : (boolean) - Utilsier l'aide
-* ``nbPixelsToClosePolygon`` : (int) - Distance en pixels pour fermer automatiquement la forme et créer un polygone.
-* ``singleDraw`` : (boolen) - True pour dessiner uniquement une forme à la fois.
-* ``snapTolerance`` : (int) - Tolérence du snapping en pixel (c.fg pixelTolerance ol > v8.0)
+-``geometryTypes`` : (string) - List des géométries à dessiner.
+-``snapLayerId`` : (string) - Un ID de couche WFS déjà utilisé dans la configuration XML (e.g custom layer)
+-``snapLayerUrl`` : (string) - URL complète d'une couche WFS (le format doit être en ``application/json`` )
+-``snapLimitZoom`` : (int) - Limite l'activation du snapping par niveau de zoom. Cela permet de limiter le chargement d'entités WFS. Le snapping sera actif si le zoom de la carte est supérieur à cette valeur.
+-``help`` : (boolean) - Utilsier l'aide
+-``nbPixelsToClosePolygon`` : (int) - Distance en pixels pour fermer automatiquement la forme et créer un polygone.
+-``singleDraw`` : (boolen) - True pour dessiner uniquement une forme à la fois.
+-``snapTolerance`` : (int) - Tolérence du snapping en pixel (c.fg pixelTolerance ol > v8.0)
 
