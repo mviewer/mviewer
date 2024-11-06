@@ -11,6 +11,11 @@ var apiFeatures = (function () {
   function _connect(url) {
     if (!url) {
       url = $("#addLayers_service_url_api_features").val();
+      if (!url) {
+        let message = "L'url ne peut pas être vide !";
+        _error(message);
+        return
+      };
     }
     $("#addlayers_results_loading").show();
     _ajaxPromise({
@@ -136,7 +141,8 @@ var apiFeatures = (function () {
       title: title,
       visible: true,
       opacity: 1,
-      tooltip: true,
+      queryable: true,
+      infospanel: "right-panel"
     };
 
     // Source layer with geojson data

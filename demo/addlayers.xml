@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <application title="Ajout d'une couche WMS" mouseposition="false" logo="" help="mviewer_help.html" 
+    <application title="Ajout d'une couche" mouseposition="false" logo="" help="mviewer_help.html" 
         addlayerstools="true"
         measuretools="true" exportpng="true" style="css/themes/wet_asphalt.css" togglealllayersfromtheme="true"/>
     <mapoptions maxzoom="19" projection="EPSG:3857" center="-220750.13768758904,6144925.57790189" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
@@ -25,11 +25,11 @@
     <searchparameters bbox="false" localities="true" features="false" />   
 
     <themes> 
-        <theme name="Éducation"  collapsed="false" id="education" icon="fas fa-graduation-cap">
-		    <layer id="lycee" name="Lycées"  visible="true" tiled="false"
+        <theme name="Éducation" collapsed="false" id="education" icon="fas fa-graduation-cap">
+		    <layer id="lycee" name="Lycées" visible="true" tiled="false"
                 searchable="false" queryable="true" fields="axe" aliases="axe" 
                 attributefilter="true" attributefield="secteur_li" 
-				attributevalues="Public,Privé sous contrat avec l'éducation nationale"  attributelabel="Filtre" attributestylesync="false" attributefilterenabled="false"  
+				attributevalues="Public,Privé sous contrat avec l'éducation nationale" attributelabel="Filtre" attributestylesync="false" attributefilterenabled="false"  
                 infoformat="application/vnd.ogc.gml" featurecount="20"
                 sld="https://kartenn.region-bretagne.fr/styles/lycee_secteur.sld" 
                 url="https://ows.region-bretagne.fr/geoserver/rb/wms" 
