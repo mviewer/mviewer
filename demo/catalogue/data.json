@@ -423,6 +423,15 @@
       "level": "intermédiaire",
       "url_source": "../demo/print.xml",
       "url_demo": "../?config=demo/print.xml"
+    },
+    {
+      "id": "50",
+      "title": "Outil de suivi de tracé GPS",
+      "tags": "plugin,GPX,trackview",
+      "description": "Mise en place d'un addon (trackview) pour visualiser dans mviewer des tracés GPS type GPX.",
+      "level": "intermédiaire",
+      "url_source": "../demo/trackview.xml",
+      "url_demo": "../?config=demo/trackview.xml"
     }
   ]
 }
