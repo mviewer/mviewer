@@ -598,6 +598,16 @@
                     CSW
                   </a>
                 </li>
+                <li role="presentation">
+                  <a
+                    href="#add_api_features"
+                    aria-controls="messages"
+                    role="tab"
+                    data-toggle="tab"
+                    i18n="addlayers.modal.api_features">
+                    API Features
+                  </a>
+                </li>
               </ul>
               <!-- Tab panes -->
               <div class="tab-content" id="addlayers_tabs">
@@ -656,6 +666,33 @@
                     Connexion&nbsp;
                     <span class="glyphicon glyphicon-chevron-right"></span>
                   </button>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="add_api_features">
+                  <h4 i18n="addlayers.modal.api_features">
+                    Ajouter des données issue d'un service OGC API Features
+                  </h4>
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col">
+                        Choisissez un serveur :
+                        <select
+                          id="addLayers_service_url_api_features_select"
+                          class="form-control form-control-sm addLayers_service_url_api_features_select">
+                          <option value=""></option>
+                        </select>
+                        <br />
+                        ...ou saisissez l'url du service :
+                        <input
+                          type="text"
+                          id="addLayers_service_url_api_features"
+                          value="" />
+                        <button onclick="apiFeatures.connect();" type="button">
+                          Connexion&nbsp;
+                          <span class="glyphicon glyphicon-chevron-right"></span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="container-fluid">
@@ -915,6 +952,7 @@
     <script type="text/javascript" src="js/zoom.js"></script>
     <script type="text/javascript" src="js/measure.js"></script>
     <script type="text/javascript" src="js/draw.js"></script>
+    <script type="text/javascript" src="js/apiFeatures.js"></script>
     <script type="text/javascript" src="js/addlayers.js"></script>
     <script type="text/javascript" src="js/info.js"></script>
     <script type="text/javascript" src="js/search.js"></script>

@@ -270,6 +270,11 @@ var addlayers = (function () {
               `<option value="${x.url}">${x.label}</option>`
             );
           });
+          json.api_features.map((x) => {
+            $("#addLayers_service_url_api_features_select").append(
+              `<option value="${x.url}">${x.label}</option>`
+            );
+          });
         });
       //Add html elements to the DOM
 
@@ -295,6 +300,11 @@ var addlayers = (function () {
         _url = $("#addLayers_service_url_csw_select").val();
         $("#addLayers_service_url_csw").val(_url);
         _connectCsw();
+      });
+      $("#addLayers_service_url_api_features_select").change(function () {
+        _url = $("#addLayers_service_url_api_features_select").val();
+        $("#addLayers_service_url_api_features_select").val(_url);
+        apiFeatures.connect(_url);
       });
     }
     _loaded = true;
@@ -655,5 +665,6 @@ var addlayers = (function () {
     connect: _connect,
     connectCsw: _connectCsw,
     addLayer: _addLayer,
+    message: _message,
   };
 })();
