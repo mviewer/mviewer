@@ -432,6 +432,24 @@
       "level": "intermédiaire",
       "url_source": "../demo/trackview.xml",
       "url_demo": "../?config=demo/trackview.xml"
+    },
+    {
+      "id": "51",
+      "title": "Outil de dessin type polygone",
+      "tags": "plugin,draw,dessin",
+      "description": "Mise en place d'un addon (draw) pour faire du dessin. Il est paramétré dans cet exemple pour le type polygone.",
+      "level": "intermédiaire",
+      "url_source": "../demo/draw/draw.xml",
+      "url_demo": "../?config=demo/draw/draw.xml"
+    },
+    {
+      "id": "52",
+      "title": "Outil de dessin tout type de géométrie",
+      "tags": "plugin,draw,dessin",
+      "description": "Mise en place d'un addon (draw) pour faire du dessin. Il est paramétré dans cet exemple pour tout type de géométrie (point, ligne, polygone).",
+      "level": "intermédiaire",
+      "url_source": "../demo/draw/draw2.xml",
+      "url_demo": "../?config=demo/draw/draw2.xml"
     }
   ]
 }
