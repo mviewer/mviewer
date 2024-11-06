@@ -450,6 +450,15 @@
       "level": "intermédiaire",
       "url_source": "../demo/draw/draw2.xml",
       "url_demo": "../?config=demo/draw/draw2.xml"
+    },
+    {
+      "id": "53",
+      "title": "Datavisualisation issues de superset",
+      "tags": "superset,dataviz,template",
+      "description": "Insertion dans un template MST de datavisualisation réalisées à partir de l'outil superset.",
+      "level": "intermédiaire",
+      "url_source": "../demo/superset.xml",
+      "url_demo": "../?config=demo/superset.xml"
     }
   ]
 }
