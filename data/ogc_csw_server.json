@@ -9,5 +9,8 @@
     {"label":"Catalogue Geo2France","url":"https://www.geo2france.fr/geonetwork/srv/fre/csw","defaultfilter":"linkProtocol='OGC:WMS'"},
     {"label":"Catalogue GeoBretagne","url":"https://geobretagne.fr/geonetwork/srv/fre/csw","defaultfilter":"linkProtocol like '%WMS'"},
     {"label":"Catalogue PIGMA","url":"https://www.pigma.org/geonetwork/srv/eng/csw","defaultfilter":"protocol='OGC:WMS-1.1.1-http-get-map' OR protocol='OGC:WMS'"}
+],
+"api_features":[
+    {"label":"JDev - OGC API Feature","url": "https://gis.jdev.fr/geoserver/ogc/features/v1/collections"}
 ]
 }
