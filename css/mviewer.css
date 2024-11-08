@@ -1058,8 +1058,8 @@ li.elasticsearch.list-group-item.disabled{
 }*/
 
 .modal-header{
-	border-bottom:none;
-	padding-bottom:0px;
+	border-bottom: none;
+	padding-bottom: 0px;
 }
 
 ul#searchparameters{
@@ -1096,7 +1096,58 @@ ul#searchparameters{
 }
 
 .modal-content{
-	border-radius: 0px;
+	border-radius: 9px;
+}
+
+#button-apiFeat-connect {
+  margin: 8px 0px;
+  background-color: white;
+  border-radius: 9px;
+  border: 1px lightgray solid;
+  padding: 6px 8px;
+}
+
+#addLayers_service_url_api_features_select {
+  border-radius: 4px;
+}
+
+#addLayers_service_url_api_features {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+#addLayers_service_url_api_features_select {
+  cursor: pointer;
+}
+
+ul.nav.nav-tabs {
+  margin-bottom: 10px!important;
+}
+
+div.row.pl-1.layer-result-row {
+  margin: 10px;
+  padding: 6px 0;
+}
+
+div.row.pl-1.layer-result-row:hover {
+  background-color: lightgray;
+}
+
+div.row.pl-1.layer-result-row div.col-md-8 {
+  padding: 0px 30px;
+}
+
+button#btn-icon-apiFeature {
+  border-style: none;
+  background-color: white;
+  border: 1px solid white;
+  border-radius: 15px;
+  padding: 3px 10px 0 10px;
+}
+
+button#btn-icon-apiFeature:hover {
+  border-color: gray;
+  transform: scale(1.05);
 }
 
 /*******************************

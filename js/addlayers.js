@@ -214,7 +214,7 @@ var addlayers = (function () {
    */
   var _addlayersEnabled = false;
 
-  var _url = undefined;
+  var _url = undefined
 
   var _urlCsw = undefined;
 
@@ -304,6 +304,7 @@ var addlayers = (function () {
       $("#addLayers_service_url_api_features_select").change(function () {
         _url = $("#addLayers_service_url_api_features_select").val();
         $("#addLayers_service_url_api_features_select").val(_url);
+        apiFeatures.clearErrorMessage();
         apiFeatures.connect(_url);
       });
     }
@@ -337,13 +338,17 @@ var addlayers = (function () {
    * list and display all layers
    */
   var _connect = function () {
-    _url = $("#addLayers_service_url").val();
+    _url = document.getElementById("addLayers_service_url").value;
+    //_url = $("#addLayers_service_url").val();
     _connectServer();
   };
 
   var _error = function (textContent) {
-    $("#addlayers_results").empty();
-    _message(textContent, "alert-danger", $("#addlayers_results"));
+    let addLayersResults = document.getElementById("addlayers_results");
+    addLayersResults.innerHTML = "";
+    _message(textContent, "alert-danger", addLayersResults);
+    // $("#addlayers_results").empty();
+    // _message(textContent, "alert-danger", $("#addlayers_results"));
   };
 
   /**
@@ -351,16 +356,38 @@ var addlayers = (function () {
    * @param {String} msg
    */
   var _message = function (msg, cls, parentDiv) {
-    var item = $(
-      [
-        '<div class="alert ' + cls + ' alert-dismissible" role="alert">',
-        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">',
-        '<span aria-hidden="true">&times;</span></button>',
-        mviewer.tr(msg),
-        "</div>",
-      ].join("")
-    );
-    parentDiv.append(item);
+
+    var item = document.createElement("div");
+    item.className = `alert ${cls} alert-dismissible`;
+    item.role = "alert";
+    item.id = "divAlertApiFeature";
+
+    let itemButton = document.createElement("button");
+    itemButton.type = "button";
+    itemButton.className = "close";
+    itemButton.ariaLabel = "Close";
+    itemButton.setAttribute("data-dismiss", "alert");
+    
+    let itemSpan = document.createElement("span");
+    itemSpan.ariaHidden = "true";
+    itemSpan.innerHTML = "&times;";
+
+    itemButton.appendChild(itemSpan);
+    item.appendChild(itemButton);
+
+    item.innerHTML += mviewer.tr(msg);
+
+    parentDiv.appendChild(item);
+    // var item = $(
+    //   [
+    //     '<div class="alert ' + cls + ' alert-dismissible" role="alert">',
+    //     '<button type="button" class="close" data-dismiss="alert" aria-label="Close">',
+    //     '<span aria-hidden="true">&times;</span></button>',
+    //     mviewer.tr(msg),
+    //     "</div>",
+    //   ].join("")
+    // );
+    // parentDiv.append(item);
   };
   /**
    * private Method: _ajaxPromise. Used to get a Promise from an ajax call
@@ -521,8 +548,10 @@ var addlayers = (function () {
    * by querying a CSW Service
    */
   var _connectCsw = function () {
-    _urlCsw = $("#addLayers_service_url_csw").val();
-    let filterCsw = $("#addLayers_service_filter_csw").val();
+    // _urlCsw = $("#addLayers_service_url_csw").val();
+    _urlCsw = document.getElementById("addLayers_service_url_csw").value;
+    // let filterCsw = $("#addLayers_service_filter_csw").val();
+    let filterCsw = document.getElementById("addLayers_service_filter_csw").value;
     let selectedServer = _config.csw.find((x) => x.url == _urlCsw);
     let filterTxt = `protocol='OGC:WMS-1.1.1-http-get-map' OR protocol='OGC:WMS'`;
     if (selectedServer) {
@@ -537,7 +566,11 @@ var addlayers = (function () {
       }
     }
 
-    $("#addlayers_results").empty();
+    let addLayersResults = document.getElementById("addlayers_results");
+    let addLayersResultsLoading = document.getElementById("addlayers_results_loading");
+
+    // Empty
+    addLayersResults.innerHTML = "";
     let startPos = _pagingInfos.currentPage * _pagingInfos.pageSize + 1;
     const params = `?request=GetRecords&service=CSW&version=2.0.2&typeNames=csw:Record&resultType=results&maxRecords=${_pagingInfos.pageSize}&startPosition=${startPos}&ELEMENTSETNAME=full`;
     const filter = encodeURIComponent(filterTxt);
@@ -546,7 +579,8 @@ var addlayers = (function () {
       params +
       "&constraintLanguage=CQL_TEXT&CONSTRAINT_LANGUAGE_VERSION=1.1.0&CONSTRAINT=" +
       filter;
-    $("#addlayers_results_loading").show();
+    // Show
+    addLayersResultsLoading.style.display = "block";
     _ajaxPromise({
       url: url,
       type: "get",
@@ -555,7 +589,7 @@ var addlayers = (function () {
       .then(
         function onSuccess(data) {
           if (data.indexOf("ExceptionReport") > 0) {
-            let message = "Problème réseau pour intérroger " + url + "<br>";
+            let message = "Problème réseau pour intérroger <strong>" + url + "</strong><br>";
             message += data;
             _error(message);
             return;
@@ -567,26 +601,29 @@ var addlayers = (function () {
             _pagingInfos.nbPages = Math.ceil(
               _resultList.nbTotalResults / _pagingInfos.pageSize
             );
-            _showLayerList(_layerList, $("#addlayers_results"));
+            _showLayerList(_layerList, addLayersResults);
             _addPager();
           }
-          $("#addlayers_results_loading").hide();
+          // Hide
+          addLayersResultsLoading.style.display = "none";
         },
         function onError(jqXHR, textStatus, errorThrown) {
           console.log(jqXHR);
-          var message = "Problème réseau pour intérroger " + url + "<br>";
+          var message = "Problème réseau pour intérroger <strong>" + url + "</strong><br>";
           if (jqXHR.responseText) {
             message += jqXHR.responseText;
           }
           _error(message);
-          $("#addlayers_results_loading").hide();
+          // Hide
+          addLayersResultsLoading.style.display = "none";
         }
       )
       .catch(function errorHandler(error) {
         console.log(error);
-        var message = "Problème réseau pour intérroger " + url + "<br>";
+        var message = "Problème réseau pour intérroger <strong>" + url + "<strong><br>";
         _error(message);
-        $("#addlayers_results_loading").hide();
+        // Hide
+        addLayersResultsLoading.style.display = "none";
       });
   };
 

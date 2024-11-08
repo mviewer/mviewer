@@ -585,7 +585,7 @@
                     role="tab"
                     data-toggle="tab"
                     i18n="addlayers.modal.ogc">
-                    OGC
+                    WMS
                   </a>
                 </li>
                 <li role="presentation">
@@ -600,6 +600,7 @@
                 </li>
                 <li role="presentation">
                   <a
+                    onclick="apiFeatures.clearErrorMessage();"
                     href="#add_api_features"
                     aria-controls="messages"
                     role="tab"
@@ -612,21 +613,20 @@
               <!-- Tab panes -->
               <div class="tab-content" id="addlayers_tabs">
                 <div role="tabpanel" class="tab-pane active" id="add_ogc">
-                  <h4 i18n="addlayers.modal.ogc">
-                    Ajouter des données issue d'un service OGC
-                  </h4>
                   <div class="container-fluid">
                     <div class="row">
-                      <div class="col">
-                        Choisissez un serveur :
+                      <div class="col" i18n="addlayers.server">
                         <select
                           id="addLayers_service_url_select"
                           class="form-control form-control-sm addLayers_service_url_select">
-                          <option value=""></option>
+                          <option value="" selected>Choisissez un serveur</option>
                         </select>
                         <br />
-                        ...ou saisissez l'url du service :
-                        <input type="text" id="addLayers_service_url" value="" />
+                        <input 
+                          placeholder="Ou saisissez l'url du service ici" 
+                          type="text" 
+                          id="addLayers_service_url" 
+                          value="" />
                         <button
                           onclick="mviewer.tools.addlayers.connect();"
                           type="button">
@@ -638,18 +638,14 @@
                   </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="add_csw">
-                  <h4 i18n="addlayers.modal.csw">
-                    Ajouter des données issue d'un service CSW
-                  </h4>
-                  Choisissez un serveur :
                   <select
                     id="addLayers_service_url_csw_select"
                     class="form-control form-control-sm addLayers_service_url_select">
-                    <option value=""></option>
+                    <option value="" selected>Choisissez un serveur</option>
                   </select>
                   <br />
-                  ...ou saisissez l'url du service :
                   <input
+                    placeholder="Ou saisissez l'url du service ici" 
                     type="text"
                     id="addLayers_service_url_csw"
                     class="form-control"
@@ -668,28 +664,27 @@
                   </button>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="add_api_features">
-                  <h4 i18n="addlayers.modal.api_features">
-                    Ajouter des données issue d'un service OGC API Features
-                  </h4>
                   <div class="container-fluid">
                     <div class="row">
                       <div class="col">
-                        Choisissez un serveur :
                         <select
                           id="addLayers_service_url_api_features_select"
                           class="form-control form-control-sm addLayers_service_url_api_features_select">
-                          <option value=""></option>
+                          <option value="default">Choisissez un serveur</option>
                         </select>
                         <br />
-                        ...ou saisissez l'url du service :
-                        <input
-                          type="text"
-                          id="addLayers_service_url_api_features"
-                          value="" />
-                        <button onclick="apiFeatures.connect();" type="button">
-                          Connexion&nbsp;
-                          <span class="glyphicon glyphicon-chevron-right"></span>
-                        </button>
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <div class="input-group">
+                              <input id="addLayers_service_url_api_features" type="text" class="form-control" placeholder="Ou saisissez l'url du service ici">
+                              <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" onclick="apiFeatures.connect();">
+                                  <i class="fas fa-search"></i>
+                                </button>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

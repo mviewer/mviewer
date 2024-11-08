@@ -1,59 +1,61 @@
-var apiFeatures = (function () {
-  /**
-   * private Method: _ajaxPromise. Used to get a Promise from an ajax call
-   */
-  var _ajaxPromise = function (options) {
-    return new Promise(function (resolve, reject) {
-      $.ajax(options).done(resolve).fail(reject);
-    });
-  };
+const apiFeatures = (function () {
 
-  function _connect(url) {
-    if (!url) {
-      url = $("#addLayers_service_url_api_features").val();
-      if (!url) {
-        let message = "L'url ne peut pas être vide !";
-        _error(message);
-        return
-      };
-    }
-    $("#addlayers_results_loading").show();
-    _ajaxPromise({
-      url: url,
-      type: "get",
-      dataType: "json",
-    })
-      .then(
-        function onSuccess(data) {
-          // parse collections
-          let _resultList = _parseCollection(data);
-          if (_resultList !== null) {
-            _showLayerList(_resultList.layers, $("#addlayers_results"));
-            //addlayers.addPager();
-          }
+  const _loadData = (url) => {
 
-          $("#addlayers_results_loading").hide();
-        },
-        function onError(jqXHR, textStatus, errorThrown) {
-          console.log(jqXHR);
-          var message = "Problème réseau pour intérroger " + url + "<br>";
-          if (jqXHR.responseText) {
-            message += jqXHR.responseText;
-          }
-          _error(message);
-          $("#addlayers_results_loading").hide();
+    const addLayerResultLoading = document.getElementById("addlayers_results_loading"); 
+
+    // Show the input
+    addLayerResultLoading.style.display = "block";
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+      
+        // parse collections
+        let _resultList = _parseCollection(data);
+        if (_resultList !== null) {
+          let divParent = document.getElementById("addlayers_results");
+          _showLayerList(_resultList.layers, divParent);
         }
-      )
+
+        // Hide the input
+        addLayerResultLoading.style.display = "none";
+      })
       .catch(function errorHandler(error) {
-        console.log(error);
-        var message = "Erreur dans la récupération de données " + url + "<br>";
+        var message = "Erreur dans la récupération de données <strong>" + url + "</strong><br>";
         _error(message);
-        $("#addlayers_results_loading").hide();
+        // Hide the input
+        addLayerResultLoading.style.display = "none";
       });
   }
 
+  function _connect(url) {
+
+    var selectElement = document.getElementById("addLayers_service_url_api_features_select");
+    var inputElement = document.getElementById("addLayers_service_url_api_features");
+
+    if (!url) {
+      url = document.getElementById("addLayers_service_url_api_features").value;
+      if (!url) {
+        let message = "L'url ne peut pas être vide !";
+        _error(message);
+        return;
+      };
+    }
+
+    _loadData(url);
+
+    if (inputElement.value != "" && selectElement.value) {
+      _clearInputUrl();
+      if (selectElement.value != "default") {
+        selectElement.value = "default";
+      };
+    };
+    if (selectElement.value === "default") {
+      return;
+    };
+  };
+
   function _parseCollection(data) {
-    console.log(data);
     let nbTotalResults = data.collections.length;
     let layers = data.collections;
 
@@ -65,57 +67,89 @@ var apiFeatures = (function () {
   }
 
   function _error(message) {
-    $("#addlayers_results").empty();
-    addlayers.message(message, "alert-danger", $("#addlayers_results"));
+    let parentDiv = document.getElementById("addlayers_results");
+    // Empty parentDiv
+    parentDiv.innerHTML = "";
+    _message(message, "alert-danger", parentDiv);
   }
 
   /**
    * private Method: _showLayerList. Used to render HTML from a layerList
    */
   var _showLayerList = function (layerList, parentDiv) {
-    parentDiv.empty();
+    // Empty parentDiv
+    parentDiv.innerHTML = "";
 
     $.each(layerList, function (id, layer) {
-      let btn = $(
-        '<button class="vcenter"><span class="glyphicon glyphicon-plus"></span></button>'
-      );
-      let childContainerRow = $(`<div class="row"></div>`);
-      let childContainerCol = $(`<div class="col-md-12"></div>`);
-      childContainerRow.append(childContainerCol);
+      let btn = document.createElement("button");
+      btn.className = "vcenter";
+      btn.id = "btn-icon-apiFeature";
 
-      btn.click(function () {
+      let btnIcon = document.createElement("i");
+      btnIcon.className = "fas fa-plus fa-solid";
+
+      btn.appendChild(btnIcon);
+
+      let childContainerRow = document.createElement("div");
+      childContainerRow.className = "row";
+
+      let childContainerCol = document.createElement("div");
+      childContainerCol.className = "col-md-12";
+
+      childContainerRow.appendChild(childContainerCol);
+
+      btn.addEventListener("click", function () {
         _findItems(layer, this);
+
+        btnIcon.className = "fas fa-spinner fa-spin";
+
+        setTimeout(function () {
+          btnIcon.className = "fas fa-plus fa-solid";
+        }, 2000);
       });
 
       let rowClass = layer.Layer && layer.Layer.length > 0 ? "" : "layer-result-row";
-      const layerContentRow = $(
-        `<div class="row pl-1 ${rowClass}" style="padding-left: 20px;"></div>`
-      );
-      let layerContent = $(`<div class="col-md-8"> </div>`);
-      const btnContent = $(`<div class="col-md-1"> </div>`);
 
-      let title = $(
-        `<span class="layer-result" title="${layer.title}">${layer.title}</span>`
-      );
+      const layerContentRow = document.createElement("div");
+      layerContentRow.className = `row pl-1 ${rowClass}`;
+      layerContentRow.style.paddingLeft = "20px";
 
-      layerContentRow.append(btnContent);
-      layerContentRow.append(layerContent);
-      layerContent.append(title);
-      layerContent.append(
-        `<br/><span class="layer-result-descr" title="${layer.description}">${layer.description}</span>`
-      );
+      let layerContent = document.createElement("div");
+      layerContent.className = "col-md-8";
 
-      layerContentRow.append($(`<div class="col-md-3"></div>`));
+      const btnContent = document.createElement("div");
+      btnContent.className = "col-md-1";
 
-      btnContent.append(btn);
+      let title = document.createElement("span");
+      title.textContent = `${layer.title}`;
+      title.className = "layer-result";
+      title.title = `${layer.title}`;
 
-      parentDiv.append(layerContentRow);
+      layerContentRow.appendChild(btnContent);
+      layerContentRow.appendChild(layerContent);
+      layerContent.appendChild(title);
+
+      let br = document.createElement("br");
+      let layerResult = document.createElement("span");
+      layerResult.textContent = `${layer.description}`;
+      layerResult.className = "layer-result-descr";
+      layerResult.title = `${layer.description}`;
+
+      layerContent.appendChild(br);
+      layerContent.appendChild(layerResult);
+
+      let divLayerContentRow = document.createElement("div");
+      divLayerContentRow.className = "col-md-3";
+
+      layerContentRow.appendChild(divLayerContentRow);
+
+      btnContent.appendChild(btn);
+
+      parentDiv.appendChild(layerContentRow);
     });
   };
 
   var _findItems = function (layer, button) {
-    console.log(layer);
-
     let url = "";
     // if links.type equalse geo+json get href
     layer.links.forEach((link, index) => {
@@ -124,6 +158,60 @@ var apiFeatures = (function () {
         _initLayer(layer.id, layer.title, url);
       }
     });
+  };
+
+  /**
+   * This function is a copy of the addlayers.message() function => Unlike the original, this one works on native JavaScript rather than Jquery
+   * _message Show message method.
+   * @param {String} msg
+   */
+  var _message = function (msg, cls, parentDiv) {
+
+    var item = document.createElement("div");
+    item.className = `alert ${cls} alert-dismissible`;
+    item.role = "alert";
+    item.id = "divAlertApiFeature";
+
+    let itemButton = document.createElement("button");
+    itemButton.type = "button";
+    itemButton.className = "close";
+    itemButton.ariaLabel = "Close";
+    itemButton.setAttribute("data-dismiss", "alert");
+    
+    let itemSpan = document.createElement("span");
+    itemSpan.ariaHidden = "true";
+    itemSpan.innerHTML = "&times;";
+
+    itemButton.appendChild(itemSpan);
+    item.appendChild(itemButton);
+
+    item.innerHTML += mviewer.tr(msg);
+
+    parentDiv.appendChild(item);
+  };
+
+  var _clearErrorMessage = () => {
+    let divAlertApiFeature = document.getElementById("divAlertApiFeature");
+
+    if (divAlertApiFeature) {
+      document.getElementById("divAlertApiFeature").style.display = "none";
+    };
+  };
+
+  var _clearResultsList = () => {
+    let resultsFeature = document.getElementById("addlayers_results");
+
+    if(resultsFeature) {
+      resultsFeature.innerHTML = "";
+    };
+  };
+
+  var _clearInputUrl = () => {
+    let urlTextApiFeature = document.getElementById("addLayers_service_url_api_features");
+
+    if (urlTextApiFeature && urlTextApiFeature.value != "") {
+      urlTextApiFeature.value = "";
+    };
   };
 
   /**
@@ -170,5 +258,6 @@ var apiFeatures = (function () {
 
   return {
     connect: _connect,
+    clearErrorMessage: _clearErrorMessage
   };
 })();

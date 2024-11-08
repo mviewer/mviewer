@@ -1,5 +1,6 @@
 {
   "de": {
+    "addlayers.server": "Wählen Sie einen Server :",
     "attribute.control.filter": "Filtern",
     "bottom.panel.close": "Dieses Panel schließen",
     "bottom.panel.title": "Informationen",
@@ -118,6 +119,7 @@
     "theme.layers.restricted": "Daten zum eingeschränkten Zugriff"
   },
   "en": {
+    "addlayers.server": "Choose a server :",
     "attribute.control.filter": "Filter",
     "bottom.panel.close": "Close this panel",
     "bottom.panel.title": "Informations",
@@ -246,6 +248,7 @@
     "theme.layers.restricted": "Restricted data"
   },
   "fr": {
+    "addlayers.server": "Choisissez un serveur :",
     "attribute.control.filter": "Filtrer",
     "bottom.panel.close": "Fermer ce panneau",
     "bottom.panel.title": "Informations",
@@ -377,6 +380,7 @@
     "theme.layers.restricted": "Données accès restreint"
   },
   "sk": {
+    "addlayers.server": "Vyberte si server :",
     "attribute.control.filter": "Filter",
     "bottom.panel.close": "Zavrieť tento panel",
     "bottom.panel.title": "Informácie",
