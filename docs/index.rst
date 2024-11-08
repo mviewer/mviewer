@@ -79,6 +79,7 @@ Cette partie est dédiée aux personnes qui ont vocation à déployer et configu
    doc_tech/config_styles.rst
    doc_tech/config_tools.rst
    doc_tech/config_environmentvar.rst
+   doc_tech/config_urlparams.rst
 
 Documentation dévelopeur
 -------------------------------------------------
