@@ -19,39 +19,39 @@ var draw = (function () {
   }
 
   // tools configuration
-  var _config;
+  let _config;
 
-  var _map;
+  let _map;
 
-  var _wgs84Sphere = ol.sphere;
+  let _wgs84Sphere = ol.sphere;
 
-  var _vectorDraw;
+  let _vectorDraw;
 
-  var _projection;
+  let _projection;
 
-  var _sourceDraw;
+  let _sourceDraw;
 
-  var _drawInt;
+  let _drawInt;
 
-  var _snapInter;
+  let _snapInter;
 
-  var _modifyInt;
+  let _modifyInt;
 
-  var _currentDrawType;
+  let _currentDrawType;
 
-  var _currentFeature;
+  let _currentFeature;
 
-  var _snappingLayer;
+  let _snappingLayer;
 
-  var _modDrawEnabled = false;
+  let _modDrawEnabled = false;
 
-  var _drawTooltips = [];
+  let _drawTooltips = [];
 
-  var _helpTooltipMessage;
+  let _helpTooltipMessage;
 
-  var _helpTooltip;
+  let _helpTooltip;
 
-  var _commonDrawStyle;
+  let _commonDrawStyle;
 
   /** Initialisation of drawing tools
    *
@@ -400,9 +400,9 @@ var draw = (function () {
   /**
    * Creates a help tooltip
    */
-  _createHelpTooltip = function () {
+  var _createHelpTooltip = function () {
     if (_helpTooltipMessage) {
-      _helpTooltipMessage.parentNode.removeChild(_helpTooltipMessage);
+      _helpTooltipMessage.remove();
     }
     _helpTooltipMessage = document.createElement("div");
     _helpTooltipMessage.className = "drawTooltip";
