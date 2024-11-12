@@ -580,6 +580,7 @@
               <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
                   <a
+                    onclick="mviewer.tools.addlayers.clearResultsList();"
                     href="#add_ogc"
                     aria-controls="profile"
                     role="tab"
@@ -590,6 +591,8 @@
                 </li>
                 <li role="presentation">
                   <a
+                    onclic
+                    onclick="mviewer.tools.addlayers.clearResultsList();"
                     href="#add_csw"
                     aria-controls="messages"
                     role="tab"
@@ -600,7 +603,7 @@
                 </li>
                 <li role="presentation">
                   <a
-                    onclick="apiFeatures.clearErrorMessage();"
+                    onclick="apiFeatures.clearResultsList();"
                     href="#add_api_features"
                     aria-controls="messages"
                     role="tab"
@@ -625,9 +628,16 @@
                         <div class="row">
                           <div class="col-lg-12">
                             <div class="input-group">
-                              <input id="addLayers_service_url" type="text" class="form-control" placeholder="Ou saisissez l'url du service ici">
+                              <input
+                                id="addLayers_service_url"
+                                type="text"
+                                class="form-control"
+                                placeholder="Ou saisissez l'url du service ici" />
                               <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" onclick="mviewer.tools.addlayers.connect();">
+                                <button
+                                  class="btn btn-default"
+                                  type="button"
+                                  onclick="mviewer.tools.addlayers.connect();">
                                   <i class="fas fa-search"></i>
                                 </button>
                               </span>
@@ -648,9 +658,16 @@
                   <div class="row">
                     <div class="col-lg-12">
                       <div class="input-group">
-                        <input id="addLayers_service_url_csw" type="text" class="form-control" placeholder="Ou saisissez l'url du service ici">
+                        <input
+                          id="addLayers_service_url_csw"
+                          type="text"
+                          class="form-control"
+                          placeholder="Ou saisissez l'url du service ici" />
                         <span class="input-group-btn">
-                          <button class="btn btn-default" type="button" onclick="mviewer.tools.addlayers.connectCsw();">
+                          <button
+                            class="btn btn-default"
+                            type="button"
+                            onclick="mviewer.tools.addlayers.connectCsw();">
                             <i class="fas fa-search"></i>
                           </button>
                         </span>
@@ -662,7 +679,7 @@
                     type="text"
                     id="addLayers_service_filter_csw"
                     class="form-control csw_search"
-                    placeholder="Ajouter un filtre..."/>
+                    placeholder="Ajouter un filtre..." />
                 </div>
                 <div role="tabpanel" class="tab-pane" id="add_api_features">
                   <div class="container-fluid">
@@ -677,9 +694,16 @@
                         <div class="row">
                           <div class="col-lg-12">
                             <div class="input-group">
-                              <input id="addLayers_service_url_api_features" type="text" class="form-control" placeholder="Ou saisissez l'url du service ici">
+                              <input
+                                id="addLayers_service_url_api_features"
+                                type="text"
+                                class="form-control"
+                                placeholder="Ou saisissez l'url du service ici" />
                               <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" onclick="apiFeatures.connect();">
+                                <button
+                                  class="btn btn-default"
+                                  type="button"
+                                  onclick="apiFeatures.connect();">
                                   <i class="fas fa-search"></i>
                                 </button>
                               </span>

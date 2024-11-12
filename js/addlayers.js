@@ -214,7 +214,7 @@ var addlayers = (function () {
    */
   var _addlayersEnabled = false;
 
-  var _url = undefined
+  var _url = undefined;
 
   var _urlCsw = undefined;
 
@@ -356,18 +356,17 @@ var addlayers = (function () {
    * @param {String} msg
    */
   var _message = function (msg, cls, parentDiv) {
-
     var item = document.createElement("div");
     item.className = `alert ${cls} alert-dismissible`;
     item.role = "alert";
-    item.id = "divAlertApiFeature";
+    item.id = "divAlertAddLayers";
 
     let itemButton = document.createElement("button");
     itemButton.type = "button";
     itemButton.className = "close";
     itemButton.ariaLabel = "Close";
     itemButton.setAttribute("data-dismiss", "alert");
-    
+
     let itemSpan = document.createElement("span");
     itemSpan.ariaHidden = "true";
     itemSpan.innerHTML = "&times;";
@@ -528,7 +527,7 @@ var addlayers = (function () {
           $("#addlayers_results_loading").hide();
         },
         function onError(jqXHR, textStatus, errorThrown) {
-          var message = "Problème réseau pour intérroger " + url + "<br>";
+          var message = "Problème réseau pour intérroger <strong>" + url + "</strong><br>";
           if (jqXHR.responseText) {
             message += jqXHR.responseText;
           }
@@ -538,7 +537,7 @@ var addlayers = (function () {
       )
       .catch(function errorHandler(error) {
         console.log(error);
-        var message = "Problème réseau pour intérroger " + url + "<br>";
+        var message = "Problème réseau pour intérroger <strong>" + url + "</strong><br>";
         _error(message);
         $("#addlayers_results_loading").hide();
       });
@@ -589,7 +588,8 @@ var addlayers = (function () {
       .then(
         function onSuccess(data) {
           if (data.indexOf("ExceptionReport") > 0) {
-            let message = "Problème réseau pour intérroger <strong>" + url + "</strong><br>";
+            let message =
+              "Problème réseau pour intérroger <strong>" + url + "</strong><br>";
             message += data;
             _error(message);
             return;
@@ -609,7 +609,8 @@ var addlayers = (function () {
         },
         function onError(jqXHR, textStatus, errorThrown) {
           console.log(jqXHR);
-          var message = "Problème réseau pour intérroger <strong>" + url + "</strong><br>";
+          var message =
+            "Problème réseau pour intérroger <strong>" + url + "</strong><br>";
           if (jqXHR.responseText) {
             message += jqXHR.responseText;
           }
@@ -625,6 +626,26 @@ var addlayers = (function () {
         // Hide
         addLayersResultsLoading.style.display = "none";
       });
+  };
+
+  var _clearResultsList = () => {
+    let addLayersResults = document.getElementById("addlayers_results");
+    let divAlert = document.getElementById("divAlertAddLayers");
+
+    if (addLayersResults) {
+      addLayersResults.innerHTML = "";
+    };
+    if (divAlert) {
+      _clearErrorMessage();
+    };
+  };
+
+  var _clearErrorMessage = () => {
+    let divAlert = document.getElementById("divAlertAddLayers");
+
+    if (divAlert) {
+      document.getElementById("divAlertAddLayers").style.display = "none";
+    };
   };
 
   /**
@@ -703,5 +724,6 @@ var addlayers = (function () {
     connectCsw: _connectCsw,
     addLayer: _addLayer,
     message: _message,
+    clearResultsList: _clearResultsList,
   };
 })();

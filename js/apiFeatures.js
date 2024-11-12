@@ -1,17 +1,14 @@
 const apiFeatures = (function () {
-
   let actionHistory = [];
 
   const _loadData = (url) => {
-
-    const addLayerResultLoading = document.getElementById("addlayers_results_loading"); 
+    const addLayerResultLoading = document.getElementById("addlayers_results_loading");
 
     // Show the input
     addLayerResultLoading.style.display = "block";
     fetch(url)
-      .then(response => response.json())
-      .then(data => {
-      
+      .then((response) => response.json())
+      .then((data) => {
         // parse collections
         let _resultList = _parseCollection(data);
         if (_resultList !== null) {
@@ -23,16 +20,18 @@ const apiFeatures = (function () {
         addLayerResultLoading.style.display = "none";
       })
       .catch(function errorHandler(error) {
-        var message = "Erreur dans la récupération de données <strong>" + url + "</strong><br>";
+        var message =
+          "Erreur dans la récupération de données <strong>" + url + "</strong><br>";
         _error(message);
         // Hide the input
         addLayerResultLoading.style.display = "none";
       });
-  }
+  };
 
   function _connect(url) {
-
-    const serverListElt = document.getElementById("addLayers_service_url_api_features_select");
+    const serverListElt = document.getElementById(
+      "addLayers_service_url_api_features_select"
+    );
     const urlInputElt = document.getElementById("addLayers_service_url_api_features");
 
     if (!url) {
@@ -41,8 +40,8 @@ const apiFeatures = (function () {
         let message = "L'url ne peut pas être vide !";
         _error(message);
         return;
-      };
-    };
+      }
+    }
 
     // If there is an action
     if (actionHistory.length > 0) {
@@ -54,7 +53,7 @@ const apiFeatures = (function () {
         // Clear the server list
         _clearServerList();
         // Save the new action => url
-        actionHistory[0] = ({state : "url"});
+        actionHistory[0] = { state: "url" };
         // Load data
         _loadData(url);
       }
@@ -65,36 +64,36 @@ const apiFeatures = (function () {
           // Then, just load data
           _loadData(url);
         }
-        // Check if the selected value server is not "default" 
+        // Check if the selected value server is not "default"
         else if (serverListElt.value !== "default") {
           // Clear url input
           _clearUrlInput();
           // Save the new action => server
-          actionHistory[0] = ({state : "server"});
+          actionHistory[0] = { state: "server" };
           // Load data
           _loadData(url);
-        };
-      };
-    };
+        }
+      }
+    }
 
     // If there is no action
     if (actionHistory.length === 0) {
       // Check if the selected server option is "default"
       if (serverListElt.value !== "default") {
         // Save the current action
-        actionHistory[0] = ({state : "server"});
+        actionHistory[0] = { state: "server" };
         // Load data
         _loadData(url);
       }
-      // Check if the url input is not null 
+      // Check if the url input is not null
       else if (urlInputElt.value !== "") {
         // Save the current action
-        actionHistory[0] = ({state : "url"});
+        actionHistory[0] = { state: "url" };
         // Load data
         _loadData(url);
-      };
-    };
-  };
+      }
+    }
+  }
 
   function _parseCollection(data) {
     let nbTotalResults = data.collections.length;
@@ -206,18 +205,17 @@ const apiFeatures = (function () {
    * @param {String} msg
    */
   var _message = function (msg, cls, parentDiv) {
-
     var item = document.createElement("div");
     item.className = `alert ${cls} alert-dismissible`;
     item.role = "alert";
-    item.id = "divAlertApiFeature";
+    item.id = "divAlertAddLayers";
 
     let itemButton = document.createElement("button");
     itemButton.type = "button";
     itemButton.className = "close";
     itemButton.ariaLabel = "Close";
     itemButton.setAttribute("data-dismiss", "alert");
-    
+
     let itemSpan = document.createElement("span");
     itemSpan.ariaHidden = "true";
     itemSpan.innerHTML = "&times;";
@@ -230,18 +228,30 @@ const apiFeatures = (function () {
     parentDiv.appendChild(item);
   };
 
-  var _clearErrorMessage = () => {
-    let divAlertApiFeature = document.getElementById("divAlertApiFeature");
+  var _clearResultsList = () => {
+    let addLayerResults = document.getElementById("addlayers_results");
+    let divAlert = document.getElementById("divAlertAddLayers");
 
-    if (divAlertApiFeature) {
-      document.getElementById("divAlertApiFeature").style.display = "none";
+    if (addLayerResults) {
+      addLayerResults.innerHTML = "";
+    };
+    if (divAlert) {
+      _clearErrorMessage();
+    };
+  };
+
+  var _clearErrorMessage = () => {
+    let divAlertAddLayers = document.getElementById("divAlertAddLayers");
+
+    if (divAlertAddLayers) {
+      document.getElementById("divAlertAddLayers").style.display = "none";
     };
   };
 
   var _clearResultsList = () => {
     let resultsFeature = document.getElementById("addlayers_results");
 
-    if(resultsFeature) {
+    if (resultsFeature) {
       resultsFeature.innerHTML = "";
     };
   };
@@ -255,12 +265,14 @@ const apiFeatures = (function () {
   };
 
   var _clearServerList = () => {
-    let serverListApiFeature = document.getElementById("addLayers_service_url_api_features_select");
+    let serverListApiFeature = document.getElementById(
+      "addLayers_service_url_api_features_select"
+    );
 
     if (serverListApiFeature.value !== "default") {
       serverListApiFeature.value = "default";
     };
-  }
+  };
 
   /**
    * This function allow you to initialize all of the layers and the styles presents on the map
@@ -278,7 +290,7 @@ const apiFeatures = (function () {
       visible: true,
       opacity: 1,
       queryable: true,
-      infospanel: "right-panel"
+      infospanel: "right-panel",
     };
 
     // Source layer with geojson data
@@ -306,6 +318,7 @@ const apiFeatures = (function () {
 
   return {
     connect: _connect,
-    clearErrorMessage: _clearErrorMessage
+    clearErrorMessage: _clearErrorMessage,
+    clearResultsList: _clearResultsList,
   };
 })();
