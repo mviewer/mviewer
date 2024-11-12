@@ -527,7 +527,8 @@ var addlayers = (function () {
           $("#addlayers_results_loading").hide();
         },
         function onError(jqXHR, textStatus, errorThrown) {
-          var message = "Problème réseau pour intérroger <strong>" + url + "</strong><br>";
+          var message =
+            "Problème réseau pour intérroger <strong>" + url + "</strong><br>";
           if (jqXHR.responseText) {
             message += jqXHR.responseText;
           }
@@ -634,10 +635,10 @@ var addlayers = (function () {
 
     if (addLayersResults) {
       addLayersResults.innerHTML = "";
-    };
+    }
     if (divAlert) {
       _clearErrorMessage();
-    };
+    }
   };
 
   var _clearErrorMessage = () => {
@@ -645,7 +646,7 @@ var addlayers = (function () {
 
     if (divAlert) {
       document.getElementById("divAlertAddLayers").style.display = "none";
-    };
+    }
   };
 
   /**

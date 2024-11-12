@@ -234,10 +234,10 @@ const apiFeatures = (function () {
 
     if (addLayerResults) {
       addLayerResults.innerHTML = "";
-    };
+    }
     if (divAlert) {
       _clearErrorMessage();
-    };
+    }
   };
 
   var _clearErrorMessage = () => {
@@ -245,7 +245,7 @@ const apiFeatures = (function () {
 
     if (divAlertAddLayers) {
       document.getElementById("divAlertAddLayers").style.display = "none";
-    };
+    }
   };
 
   var _clearResultsList = () => {
@@ -253,7 +253,7 @@ const apiFeatures = (function () {
 
     if (resultsFeature) {
       resultsFeature.innerHTML = "";
-    };
+    }
   };
 
   var _clearUrlInput = () => {
@@ -261,7 +261,7 @@ const apiFeatures = (function () {
 
     if (urlTextApiFeature) {
       urlTextApiFeature.value = "";
-    };
+    }
   };
 
   var _clearServerList = () => {
@@ -271,7 +271,7 @@ const apiFeatures = (function () {
 
     if (serverListApiFeature.value !== "default") {
       serverListApiFeature.value = "default";
-    };
+    }
   };
 
   /**
