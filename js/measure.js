@@ -292,7 +292,7 @@ var measure = (function () {
           var geom = evt.target;
           var output;
           if (geom instanceof ol.geom.Polygon) {
-            output = _measureFormatArea(/** @type {ol.geom.Polygon} */(geom));
+            output = _measureFormatArea(/** @type {ol.geom.Polygon} */ (geom));
             var coords = geom.getCoordinates()[0];
             var nbCoords = coords.length;
             if (nbCoords < 2) {
@@ -301,7 +301,7 @@ var measure = (function () {
               tooltipCoord = coords[nbCoords - 2];
             }
           } else if (geom instanceof ol.geom.LineString) {
-            output = _measureFormatLength(/** @type {ol.geom.LineString} */(geom));
+            output = _measureFormatLength(/** @type {ol.geom.LineString} */ (geom));
             tooltipCoord = geom.getLastCoordinate();
           }
           _measureTooltipResult.innerHTML = output;
