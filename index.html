@@ -615,24 +615,25 @@
                 <div role="tabpanel" class="tab-pane active" id="add_ogc">
                   <div class="container-fluid">
                     <div class="row">
-                      <div class="col" i18n="addlayers.server">
+                      <div class="col">
                         <select
                           id="addLayers_service_url_select"
                           class="form-control form-control-sm addLayers_service_url_select">
                           <option value="" selected>Choisissez un serveur</option>
                         </select>
                         <br />
-                        <input 
-                          placeholder="Ou saisissez l'url du service ici" 
-                          type="text" 
-                          id="addLayers_service_url" 
-                          value="" />
-                        <button
-                          onclick="mviewer.tools.addlayers.connect();"
-                          type="button">
-                          Connexion&nbsp;
-                          <span class="glyphicon glyphicon-chevron-right"></span>
-                        </button>
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <div class="input-group">
+                              <input id="addLayers_service_url" type="text" class="form-control" placeholder="Ou saisissez l'url du service ici">
+                              <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" onclick="mviewer.tools.addlayers.connect();">
+                                  <i class="fas fa-search"></i>
+                                </button>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -644,24 +645,24 @@
                     <option value="" selected>Choisissez un serveur</option>
                   </select>
                   <br />
-                  <input
-                    placeholder="Ou saisissez l'url du service ici" 
-                    type="text"
-                    id="addLayers_service_url_csw"
-                    class="form-control"
-                    value="" />
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="input-group">
+                        <input id="addLayers_service_url_csw" type="text" class="form-control" placeholder="Ou saisissez l'url du service ici">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button" onclick="mviewer.tools.addlayers.connectCsw();">
+                            <i class="fas fa-search"></i>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                   <br />
-                  Filter:
                   <input
                     type="text"
                     id="addLayers_service_filter_csw"
                     class="form-control csw_search"
-                    placeholder="Rechercher..." />
-
-                  <button onclick="mviewer.tools.addlayers.connectCsw();" type="button">
-                    Connexion&nbsp;
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                  </button>
+                    placeholder="Ajouter un filtre..."/>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="add_api_features">
                   <div class="container-fluid">

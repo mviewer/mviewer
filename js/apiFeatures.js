@@ -1,5 +1,7 @@
 const apiFeatures = (function () {
 
+  let actionHistory = [];
+
   const _loadData = (url) => {
 
     const addLayerResultLoading = document.getElementById("addlayers_results_loading"); 
@@ -30,8 +32,8 @@ const apiFeatures = (function () {
 
   function _connect(url) {
 
-    var selectElement = document.getElementById("addLayers_service_url_api_features_select");
-    var inputElement = document.getElementById("addLayers_service_url_api_features");
+    const serverListElt = document.getElementById("addLayers_service_url_api_features_select");
+    const urlInputElt = document.getElementById("addLayers_service_url_api_features");
 
     if (!url) {
       url = document.getElementById("addLayers_service_url_api_features").value;
@@ -40,18 +42,57 @@ const apiFeatures = (function () {
         _error(message);
         return;
       };
-    }
+    };
 
-    _loadData(url);
+    // If there is an action
+    if (actionHistory.length > 0) {
+      // Get the last action
+      const lastAction = actionHistory[0];
 
-    if (inputElement.value != "" && selectElement.value) {
-      _clearInputUrl();
-      if (selectElement.value != "default") {
-        selectElement.value = "default";
+      // Check if the last action is about the server list and if there is a value in the entry
+      if (lastAction.state === "server" && urlInputElt.value) {
+        // Clear the server list
+        _clearServerList();
+        // Save the new action => url
+        actionHistory[0] = ({state : "url"});
+        // Load data
+        _loadData(url);
+      }
+      // Check if the last action is about the url input and if there is a selected server in the list
+      else if (lastAction.state === "url" && serverListElt.value) {
+        // Check if the selected server option is "default"
+        if (serverListElt.value === "default") {
+          // Then, just load data
+          _loadData(url);
+        }
+        // Check if the selected value server is not "default" 
+        else if (serverListElt.value !== "default") {
+          // Clear url input
+          _clearUrlInput();
+          // Save the new action => server
+          actionHistory[0] = ({state : "server"});
+          // Load data
+          _loadData(url);
+        };
       };
     };
-    if (selectElement.value === "default") {
-      return;
+
+    // If there is no action
+    if (actionHistory.length === 0) {
+      // Check if the selected server option is "default"
+      if (serverListElt.value !== "default") {
+        // Save the current action
+        actionHistory[0] = ({state : "server"});
+        // Load data
+        _loadData(url);
+      }
+      // Check if the url input is not null 
+      else if (urlInputElt.value !== "") {
+        // Save the current action
+        actionHistory[0] = ({state : "url"});
+        // Load data
+        _loadData(url);
+      };
     };
   };
 
@@ -83,7 +124,6 @@ const apiFeatures = (function () {
     $.each(layerList, function (id, layer) {
       let btn = document.createElement("button");
       btn.className = "vcenter";
-      btn.id = "btn-icon-apiFeature";
 
       let btnIcon = document.createElement("i");
       btnIcon.className = "fas fa-plus fa-solid";
@@ -206,13 +246,21 @@ const apiFeatures = (function () {
     };
   };
 
-  var _clearInputUrl = () => {
+  var _clearUrlInput = () => {
     let urlTextApiFeature = document.getElementById("addLayers_service_url_api_features");
 
-    if (urlTextApiFeature && urlTextApiFeature.value != "") {
+    if (urlTextApiFeature) {
       urlTextApiFeature.value = "";
     };
   };
+
+  var _clearServerList = () => {
+    let serverListApiFeature = document.getElementById("addLayers_service_url_api_features_select");
+
+    if (serverListApiFeature.value !== "default") {
+      serverListApiFeature.value = "default";
+    };
+  }
 
   /**
    * This function allow you to initialize all of the layers and the styles presents on the map
