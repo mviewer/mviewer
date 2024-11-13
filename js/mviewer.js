@@ -112,70 +112,76 @@ mviewer = (function () {
         const data = await response.json();
         if (data.features) {
           const result = data.features;
-        const coordinates = result[0].geometry.coordinates;
-        mviewer.zoomToLocation(coordinates[0], coordinates[1], 18, false, "EPSG:4326");
-        mviewer.showLocation("EPSG:4326", coordinates[0], coordinates[1], true);
-      } else {
-        mviewer.alert(`Erreur. L'adresse ${API.q} n'a pu être trouvée !`, "alert-danger");
-      }
-    };
-    const request_cadastre = async (url) => {
-      const response = await fetch(url);
-      const data = await response.json();
-      if (data.features) {
-        const features = new ol.format.GeoJSON({
-          dataProjection: "EPSG:4326",
-          featureProjection: "EPSG:3857",
-        }).readFeatures(data);
-        const selected_polygon_style = new ol.style.Style({
-          stroke: new ol.style.Stroke({
-            width: 5,
-            color: "#ff0000",
-          }),
-          fill: new ol.style.Fill({
-            color: "rgba(255,0,0,0.5)",
-          }),
-          text: new ol.style.Text({
-            font: "12px Arial",
-            fill: new ol.style.Fill({
-              color: "#ffffff",
+          const coordinates = result[0].geometry.coordinates;
+          mviewer.zoomToLocation(coordinates[0], coordinates[1], 18, false, "EPSG:4326");
+          mviewer.showLocation("EPSG:4326", coordinates[0], coordinates[1], true);
+        } else {
+          mviewer.alert(
+            `Erreur. L'adresse ${API.q} n'a pu être trouvée !`,
+            "alert-danger"
+          );
+        }
+      };
+      const request_cadastre = async (url) => {
+        const response = await fetch(url);
+        const data = await response.json();
+        if (data.features) {
+          const features = new ol.format.GeoJSON({
+            dataProjection: "EPSG:4326",
+            featureProjection: "EPSG:3857",
+          }).readFeatures(data);
+          const selected_polygon_style = new ol.style.Style({
+            stroke: new ol.style.Stroke({
+              width: 5,
+              color: "#ff0000",
             }),
-            text: data.features[0].properties["idu"],
-            placement: "center",
-          }),
+            fill: new ol.style.Fill({
+              color: "rgba(255,0,0,0.5)",
+            }),
+            text: new ol.style.Text({
+              font: "12px Arial",
+              fill: new ol.style.Fill({
+                color: "#ffffff",
+              }),
+              text: data.features[0].properties["idu"],
+              placement: "center",
+            }),
+          });
+          features.forEach(function (f) {
+            f.setStyle(selected_polygon_style);
+          });
+          _sourceOverlay.addFeatures(features);
+          var boundingExtent = _sourceOverlay.getExtent();
+          var duration = 2000;
+          _map.getView().fit(boundingExtent, {
+            size: _map.getSize(),
+            padding: [0, $("#sidebar-wrapper").width(), 0, 0],
+            duration: duration,
+          });
+        } else {
+          mviewer.alert(
+            `Erreur. L'adresse ${API.q} n'a pu être trouvée !`,
+            "alert-danger"
+          );
+        }
+      };
+      if (API.qtype == "ban") {
+        const ban = c.urlparams.qtype.filter(function (o) {
+          return o.name === "ban";
         });
-        features.forEach(function (f) {
-          f.setStyle(selected_polygon_style);
+        if (ban && ban[0] && ban[0].url) {
+          request_ban(`${ban[0].url}?q=${API.q}`);
+        }
+      } else if (API.qtype == "cadastre") {
+        const cadastre = c.urlparams.qtype.filter(function (o) {
+          return o.name === "cadastre";
         });
-        _sourceOverlay.addFeatures(features);
-        var boundingExtent = _sourceOverlay.getExtent();
-        var duration = 2000;
-        _map.getView().fit(boundingExtent, {
-          size: _map.getSize(),
-          padding: [0, $("#sidebar-wrapper").width(), 0, 0],
-          duration: duration,
-        });
-      } else {
-        mviewer.alert(`Erreur. L'adresse ${API.q} n'a pu être trouvée !`, "alert-danger");
-      }
-    };
-    if (API.qtype == "ban") {
-      const ban = c.urlparams.qtype.filter(function (o) {
-        return o.name === "ban";
-      });
-      if (ban && ban[0] && ban[0].url) {
-        request_ban(`${ban[0].url}?q=${API.q}`);
-      }
-    } else if (API.qtype == "cadastre") {
-      const cadastre = c.urlparams.qtype.filter(function (o) {
-        return o.name === "cadastre";
-      });
-      if (cadastre && cadastre[0] && cadastre[0].url) {
-        const parameters = decodeURIComponent(API.q);
-        request_cadastre(`${cadastre[0].url}?${parameters}`);
+        if (cadastre && cadastre[0] && cadastre[0].url) {
+          const parameters = decodeURIComponent(API.q);
+          request_cadastre(`${cadastre[0].url}?${parameters}`);
+        }
       }
     }
-  }
   };
 
   var _applyPermalink = function () {
