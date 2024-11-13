@@ -122,7 +122,6 @@ En partant de la démo Elasticsearch : http://kartenn.region-bretagne.fr/kartovi
 **Syntaxe**
 
 .. code-block:: bash
-       :linenos:
 
    <elasticsearchs>
    	   <elasticsearch url="http://monserveur/els/_search" geometryfield="geometry" linkid="search_id" querymode="match" mouseoverfields="id, name" displayfields="id, name" layer="layerid"/>
