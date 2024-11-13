@@ -7,7 +7,6 @@ var capabilitiesParser = (function () {
     const doc = new DOMParser().parseFromString(data, "text/xml");
 
     capabilitiesFromXML = _xmlToJson(doc);
-    console.log(capabilitiesFromXML.GetRecordsResponse.SearchResults.Record);
 
     const nbTotalResults = Number(
       capabilitiesFromXML.GetRecordsResponse.SearchResults["@attributes"]
@@ -62,20 +61,17 @@ var capabilitiesParser = (function () {
       if (url.indexOf("&layers") > 0) {
         //GeoIDe Case
         let sp = new URLSearchParams(url);
-        console.log(sp);
         if (!title) {
           title = name;
         }
         name = sp.get("layers");
       }
-      console.log(wmsRessource);
       let retour = {
         Name: name,
         Url: url,
         Title: title,
         Abstract: x["dc:description"]["#text"],
       };
-      console.log(retour.Name);
 
       let thumbnail = x["dc:URI"].find(
         (x) =>
@@ -255,8 +251,6 @@ var addlayers = (function () {
             "Impossible de récupérer la liste des serveurs csw et ogc",
             "alert-warning"
           );
-          console.error("Impossible de récupérer la liste des serveurs csw et ogc");
-          console.log(error);
         })
         .then((json) => {
           _config = json;
@@ -318,6 +312,24 @@ var addlayers = (function () {
         Url: layerInfos.url,
         Title: layerInfos.title,
         filter: layerInfos.filter,
+      });
+    }
+
+    const btnConnectWms = document.getElementById("addLayers_service_url");
+    const btnConnectCsw = document.getElementById("addLayers_service_url_csw");
+
+    if (btnConnectWms) {
+      btnConnectWms.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          _connect(btnConnectWms.value);
+        }
+      });
+    }
+    if (btnConnectCsw) {
+      btnConnectCsw.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          _connectCsw(btnConnectCsw.value);
+        }
       });
     }
   };
@@ -537,7 +549,6 @@ var addlayers = (function () {
         }
       )
       .catch(function errorHandler(error) {
-        console.log(error);
         var message = "Problème réseau pour intérroger <strong>" + url + "</strong><br>";
         _error(message);
         $("#addlayers_results_loading").hide();
@@ -609,7 +620,6 @@ var addlayers = (function () {
           addLayersResultsLoading.style.display = "none";
         },
         function onError(jqXHR, textStatus, errorThrown) {
-          console.log(jqXHR);
           var message =
             "Problème réseau pour intérroger <strong>" + url + "</strong><br>";
           if (jqXHR.responseText) {
@@ -621,7 +631,6 @@ var addlayers = (function () {
         }
       )
       .catch(function errorHandler(error) {
-        console.log(error);
         var message = "Problème réseau pour intérroger <strong>" + url + "<strong><br>";
         _error(message);
         // Hide
@@ -629,15 +638,28 @@ var addlayers = (function () {
       });
   };
 
-  var _clearResultsList = () => {
-    let addLayersResults = document.getElementById("addlayers_results");
-    let divAlert = document.getElementById("divAlertAddLayers");
+  var _clearTab = () => {
+    const addLayersResults = document.getElementById("addlayers_results");
+    const serverListWms = document.getElementById("addLayers_service_url_select");
+    const urlContentWms = document.getElementById("addLayers_service_url");
+    const serverListCsw = document.getElementById("addLayers_service_url_csw_select");
+    const urlContentCsw = document.getElementById("addLayers_service_url_csw");
 
+    _clearErrorMessage();
     if (addLayersResults) {
       addLayersResults.innerHTML = "";
     }
-    if (divAlert) {
-      _clearErrorMessage();
+    if (serverListWms.value !== "default") {
+      serverListWms.value = "";
+    }
+    if (urlContentWms.value !== "") {
+      urlContentWms.value = "";
+    }
+    if (serverListCsw.value !== "default") {
+      serverListCsw.value = "";
+    }
+    if (urlContentCsw.value !== "") {
+      urlContentCsw.value = "";
     }
   };
 
@@ -725,6 +747,6 @@ var addlayers = (function () {
     connectCsw: _connectCsw,
     addLayer: _addLayer,
     message: _message,
-    clearResultsList: _clearResultsList,
+    clearResultsList: _clearTab,
   };
 })();

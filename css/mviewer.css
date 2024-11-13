@@ -2122,7 +2122,7 @@ div.row.pl-1.layer-result-row {
 }
 
 div.row.pl-1.layer-result-row:hover {
-  background-color: lightgray;
+  background-color: #d3d3d382;
 }
 
 div.row.pl-1.layer-result-row div.col-md-8 {

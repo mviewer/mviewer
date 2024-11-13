@@ -1,6 +1,16 @@
 const apiFeatures = (function () {
   let actionHistory = [];
 
+  const btnConnectApiFeature = document.getElementById("addLayers_service_url_api_features");
+
+  if (btnConnectApiFeature) {
+    btnConnectApiFeature.addEventListener("keypress", function (e) {
+      if (e.key === "Enter") {
+        _connect(btnConnectApiFeature.value);
+      }
+    });
+  }
+
   const _loadData = (url) => {
     const addLayerResultLoading = document.getElementById("addlayers_results_loading");
 
@@ -72,6 +82,8 @@ const apiFeatures = (function () {
           actionHistory[0] = { state: "server" };
           // Load data
           _loadData(url);
+          // Add url in the input
+          urlInputElt.value = url;
         }
       }
     }
@@ -84,6 +96,8 @@ const apiFeatures = (function () {
         actionHistory[0] = { state: "server" };
         // Load data
         _loadData(url);
+        // Add url in the input
+        urlInputElt.value = url;
       }
       // Check if the url input is not null
       else if (urlInputElt.value !== "") {
@@ -228,16 +242,14 @@ const apiFeatures = (function () {
     parentDiv.appendChild(item);
   };
 
-  var _clearResultsList = () => {
-    let addLayerResults = document.getElementById("addlayers_results");
-    let divAlert = document.getElementById("divAlertAddLayers");
+  var _clearTab = () => {
 
-    if (addLayerResults) {
-      addLayerResults.innerHTML = "";
-    }
-    if (divAlert) {
-      _clearErrorMessage();
-    }
+    _clearResultsList();
+    _clearErrorMessage();
+    _clearUrlInput();
+    _clearServerList();
+
+    actionHistory = [];
   };
 
   var _clearErrorMessage = () => {
@@ -319,6 +331,6 @@ const apiFeatures = (function () {
   return {
     connect: _connect,
     clearErrorMessage: _clearErrorMessage,
-    clearResultsList: _clearResultsList,
+    clearResultsList: _clearTab,
   };
 })();
