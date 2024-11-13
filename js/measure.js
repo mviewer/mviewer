@@ -195,7 +195,7 @@ var measure = (function () {
    * Creates a new help tooltip
    */
 
-  _createHelpTooltip = function () {
+  var _createHelpTooltip = function () {
     if (_helpMeasureTooltipMessage) {
       _helpMeasureTooltipMessage.parentNode.removeChild(_helpMeasureTooltipMessage);
     }
