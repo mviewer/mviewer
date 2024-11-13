@@ -58,7 +58,7 @@
     {
       "id": "6",
       "title": "Cadastre",
-      "tags": "Cadastre, flux",
+      "tags": "Cadastre, params, url, flux",
       "description": "Exemple illustrant l'utilisation de 2 sources différentes du cadastre : geobretagne.fr (un flux vectoriel pour la Bretagne), cadastre.gouv.fr (un flux par commune)",
       "level": "simple",
       "url_source": "../demo/cad.xml",
