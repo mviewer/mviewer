@@ -1,7 +1,9 @@
 const apiFeatures = (function () {
   let actionHistory = [];
 
-  const btnConnectApiFeature = document.getElementById("addLayers_service_url_api_features");
+  const btnConnectApiFeature = document.getElementById(
+    "addLayers_service_url_api_features"
+  );
 
   if (btnConnectApiFeature) {
     btnConnectApiFeature.addEventListener("keypress", function (e) {
@@ -243,7 +245,6 @@ const apiFeatures = (function () {
   };
 
   var _clearTab = () => {
-
     _clearResultsList();
     _clearErrorMessage();
     _clearUrlInput();
