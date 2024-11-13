@@ -74,36 +74,35 @@ exemple
 
 .. code-block:: bash
 
-input {
-  jdbc {
-     jdbc_connection_string =>"jdbc:postgresql://hostname:port/bddname"
-     jdbc_user =>"user"
-     jdbc_password => "paswword"
-     jdbc_driver_class => "org.postgresql.Driver"
-     statement => "SELECT **(champ_souhaitées dont clé primaire au mina)**, ST_AsEWKT(ST_TRANSFORM(geom, 4326)) as geometry from schemaname.tablename WHERE geom IS NOT NULL"
-     jdbc_paging_enabled => "true"
-     jdbc_page_size => "50000"
-     jdbc_fetch_size => "10000"
-     #schedule => "* * * * *"
- }
-}
-
-filter {
- mutate {
-   split => { "geometry" => ";" }
-   add_field => { "location" => "%{[geometry][1]}" }
-   remove_field => [ "geometry" ]
- }
-}
-
-output {
-  elasticsearch {
-    hosts => ["http://localhost"]
-    index => "LAYERID"
-    document_id => "%{cle_primaire_jointure}"  
-
- }
-}
+   input {
+     jdbc {
+        jdbc_connection_string =>"jdbc:postgresql://hostname:port/bddname"
+        jdbc_user =>"user"
+        jdbc_password => "paswword"
+        jdbc_driver_class => "org.postgresql.Driver"
+        statement => "SELECT **(champ_souhaitées dont clé primaire au mina)**, ST_AsEWKT(ST_TRANSFORM(geom, 4326)) as geometry from schemaname.tablename WHERE geom IS NOT NULL"
+        jdbc_paging_enabled => "true"
+        jdbc_page_size => "50000"
+        jdbc_fetch_size => "10000"
+        #schedule => "* * * * *"
+    }
+   }
+   
+   filter {
+    mutate {
+      split => { "geometry" => ";" }
+      add_field => { "location" => "%{[geometry][1]}" }
+      remove_field => [ "geometry" ]
+    }
+   }
+   
+   output {
+     elasticsearch {
+       hosts => ["http://localhost"]
+       index => "LAYERID"
+       document_id => "%{cle_primaire_jointure}"  
+    }
+   }
 
 Attention les données indexées dans elasticsearch sont toujours en 4326
 
@@ -111,7 +110,7 @@ Puis lancer l'indexation :
 
 .. code-block:: bash
 
-/usr/share/logstash/bin/logstash -f /etc/logstash/conf.d/LAYERNAME.conf
+   /usr/share/logstash/bin/logstash -f /etc/logstash/conf.d/LAYERNAME.conf
 
 Connecter mviewer à cet index Elasticsearch
 --------------------------------------------
@@ -125,20 +124,20 @@ En partant de la démo Elasticsearch : http://kartenn.region-bretagne.fr/kartovi
 .. code-block:: xml
        :linenos:
 
-  <elasticsearchs>
-	   <elasticsearch url="http://monserveur/els/_search" geometryfield="geometry" linkid="search_id" querymode="match" mouseoverfields="id, name" displayfields="id, name" layer="layerid"/>
-  </elasticsearchs>
+   <elasticsearchs>
+   	   <elasticsearch url="http://monserveur/els/_search" geometryfield="geometry" linkid="search_id" querymode="match" mouseoverfields="id, name" displayfields="id, name" layer="layerid"/>
+   </elasticsearchs>
 
 **Attributs**
 
 * ``url``: URL de l'API Search
 * ``geometryfield``: nom du champ utilisé par l'instance elasticsearch pour stocker la géométrie
 * ``linkid``: nom du champ à  utiliser côté serveur wms/wfs pour faire le lien avec la propriété _id des documents elasticsearch
-* ``querymode`` *(optionnel)* : query mode used by elasticsearch to find results : match ou term ou phrase - default = match. Le mode match convient pour la recherche libre et naturelle. Le mode phrase permet de faire des recherches sur une phrase et le mode terme permet de faire une recherche sur un terme exact. Il est à noter que l'utilisateur peut activer le mode terme en préfixant sa recherche de # et activer le mode phrase en encadrant sa recherche de "".
+* ``querymode`` *(optionnel)* : mode de requête utilisé par elasticsearch pour trouver le résultat. Valeurs possibles match, term ou phrase - default = match. Le mode match convient pour la recherche libre et naturelle. Le mode phrase permet de faire des recherches sur une phrase et le mode terme permet de faire une recherche sur un terme exact. Il est à noter que l'utilisateur peut activer le mode terme en préfixant sa recherche de # et activer le mode phrase en encadrant sa recherche de "".
 * ``version`` *(optionnel)* : version de l'instance elasticsearch (exemple = 5.3)
-* ``geometryformat`` *(optionnel)* : defaut GeoJson, valeur possible GeoJson ou WKT en fonction du format
-* ``mouseoverfields`` *(optionnel)* : liste d'attribut a afficher au survol de l'entité dans le résultat recherche ( les champs doivent être disponible dans l'indexation )
-* ``displayfields`` *(optionnel)* : liste d'attribut a afficher sur la liste des entités dans le résultat de recherche ( les champs doivent être disponible dans l'indexation )
+* ``geometryformat`` *(optionnel)* : par défaut GeoJson. Valeurs possibles GeoJson ou WKT en fonction du format dans elasticsearch
+* ``mouseoverfields`` *(optionnel)* : liste d'attributs à afficher au survol de l'entité dans le résultat recherche (les champs doivent être disponibles dans l'indexation)
+* ``displayfields`` *(optionnel)* : liste d'attributs à afficher sur la liste des entités dans le résultat de recherche (les champs doivent être disponibles dans l'indexation)
 * ``layer`` *(optionnel)* : layerid de la couche côte mviewer
 
 @Deprecated
