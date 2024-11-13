@@ -89,7 +89,7 @@ mviewer = (function () {
   var _overLayersReady = function () {
     mviewer.init();
     _applyPermalink();
-    _applyUrmParameters();
+    _applyUrlParameters();
     //Get backgroundlayer value if exists
     if (
       API.lb &&
@@ -104,7 +104,7 @@ mviewer = (function () {
     _showCheckedLayers();
   };
 
-  var _applyUrmParameters = function () {
+  var _applyUrlParameters = function () {
     const c = configuration.getConfiguration();
     if (c.urlparams && c.urlparams.qtype && API.q && API.qtype) {
       if (API.qtype == "ban") {
