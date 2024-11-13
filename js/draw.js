@@ -1,4 +1,4 @@
-var draw = (function () {
+let draw = (function () {
   class DeleteOnRightClick extends ol.interaction.Draw {
     constructor(options) {
       super(options);
@@ -59,7 +59,7 @@ var draw = (function () {
    * Create necessary layer, interaction and button depending on configuration
    *
    */
-  var _initDrawTool = function () {
+  let _initDrawTool = function () {
     // Get specific configuration
     _config = configuration.getConfiguration().tools.draw;
     _map = mviewer.getMap();
@@ -112,7 +112,7 @@ var draw = (function () {
    * geometryTypes should be a String with types separeted with coma ,
    * @param {} geometryTypes
    */
-  var _initButtons = function () {
+  let _initButtons = function () {
     const availableTypes = ["Point", "LineString", "Polygon"];
     let defaultTypes = ["Point", "LineString"];
     let types = defaultTypes;
@@ -185,7 +185,7 @@ var draw = (function () {
    *
    * Description
    **/
-  var _toggle = function () {
+  let _toggle = function () {
     if (_modDrawEnabled) {
       // If the module draw is active
       // mviewer.unsetTool will launch draw.disable
@@ -200,7 +200,7 @@ var draw = (function () {
   /**
    * Enable drawbutton
    */
-  var _enableDrawTool = function () {
+  let _enableDrawTool = function () {
     _modDrawEnabled = true;
 
     // if several geometry types
@@ -216,7 +216,7 @@ var draw = (function () {
   /**
    * _disableToolDraw. used to reset this tool
    */
-  var _disableToolDraw = function () {
+  let _disableToolDraw = function () {
     _modDrawEnabled = false;
 
     // remove all interaction
@@ -240,7 +240,7 @@ var draw = (function () {
   /**
    * deleted selected feature from source and remove overlay ( help and name )
    */
-  var _deleteSelectedFeatureDraw = function () {
+  let _deleteSelectedFeatureDraw = function () {
     _map.removeOverlay(_drawTooltips[_currentFeature.id_]);
     if (_helpTooltip) {
       _map.removeInteraction(_helpTooltip);
@@ -252,7 +252,7 @@ var draw = (function () {
   /**
    * remove all draw tool information from dom
    */
-  var _clearToolDraw = function () {
+  let _clearToolDraw = function () {
     if (document.getElementById("drawBtn")) {
       document.getElementById("drawBtn").classList.remove("active");
     }
@@ -337,7 +337,7 @@ var draw = (function () {
    *  Create overlay on given feature
    * @param {*} feature
    */
-  var _createDrawTooltip = function (feature) {
+  let _createDrawTooltip = function (feature) {
     // Creation of new HTML element
     let drawTooltipElt = document.createElement("input");
     drawTooltipElt.className = "drawTooltip";
@@ -366,17 +366,17 @@ var draw = (function () {
    * Handle pointer move used to display help
    * @param {ol.MapBrowserEvent} evt
    */
-  var _pointerMoveHandler = function (evt) {
+  let _pointerMoveHandler = function (evt) {
     if (evt.dragging) {
       return;
     }
 
     /** @type {string} */
-    var helpMsg = mviewer.lang
+    let helpMsg = mviewer.lang
       ? mviewer.lang[mviewer.lang.lang]("draw.help.start")
       : "Cliquer pour débuter le dessin";
     if (_currentFeature) {
-      var geom = _currentFeature.getGeometry();
+      let geom = _currentFeature.getGeometry();
       if (geom instanceof ol.geom.Polygon) {
         helpMsg = "Cliquer pour poursuivre le polygone <BR/>";
         helpMsg += "Double cliquer pour finaliser le polygone";
@@ -400,7 +400,7 @@ var draw = (function () {
   /**
    * Creates a help tooltip
    */
-  var _createHelpTooltip = function () {
+  let _createHelpTooltip = function () {
     if (_helpTooltipMessage) {
       _helpTooltipMessage.remove();
     }
@@ -419,11 +419,11 @@ var draw = (function () {
    *
    * @param {*} type
    */
-  var _createPanelInfo = function (type, placeholder) {
+  let _createPanelInfo = function (type, placeholder) {
     let iconClass = type === "Point" ? "fas fa-map-pin" : "fas fa-draw-polygon";
 
     // Add HTML component modal to the DOM
-    var panelInfo = `
+    let panelInfo = `
       <div id="drawingPanelInfo" draggable>
         <div class="drawingPanel__header">
           <div>
@@ -466,14 +466,14 @@ var draw = (function () {
    * @param {*} point2
    * @returns
    */
-  var _getNbPixelsBetweenTwoPoints = function (point1, point2) {
+  let _getNbPixelsBetweenTwoPoints = function (point1, point2) {
     // convert coord in pixel
-    var pixel1 = _map.getPixelFromCoordinate(point1);
-    var pixel2 = _map.getPixelFromCoordinate(point2);
+    let pixel1 = _map.getPixelFromCoordinate(point1);
+    let pixel2 = _map.getPixelFromCoordinate(point2);
 
     //  nb pixel between pixel
-    var dx = pixel2[0] - pixel1[0];
-    var dy = pixel2[1] - pixel1[1];
+    let dx = pixel2[0] - pixel1[0];
+    let dy = pixel2[1] - pixel1[1];
     return Math.sqrt(dx * dx + dy * dy);
   };
 
@@ -482,7 +482,7 @@ var draw = (function () {
    *
    * @param {*} type
    */
-  var _addDrawInteraction = function (type) {
+  let _addDrawInteraction = function (type) {
     // if interaction exist disabled it and change button style
     if (_currentDrawType == type) {
       document.getElementById("draw" + _currentDrawType).classList.remove("active");
@@ -628,7 +628,7 @@ var draw = (function () {
   /**
    * Export feature
    */
-  var _exportFeatures = function () {
+  let _exportFeatures = function () {
     const format = new ol.format.GeoJSON({ featureProjection: _projection });
     const features = _sourceDraw.getFeatures();
     const json = format.writeFeatures(features);
@@ -649,7 +649,7 @@ var draw = (function () {
    * set position, length or area in dom depending on geom type
    * @param {*} geometry
    */
-  var _measureGeometry = function (geometry) {
+  let _measureGeometry = function (geometry) {
     if (geometry.getType() === "Point") {
       let position = geometry.getCoordinates();
       let outputMeasureDraw = ol.coordinate.toStringHDMS(ol.proj.toLonLat(position));
@@ -667,15 +667,15 @@ var draw = (function () {
    * @param {ol.geom.LineString} line
    * @return {string}
    */
-  var _measureDrawLength = function (coordinates) {
-    var length = 0;
+  let _measureDrawLength = function (coordinates) {
+    let length = 0;
 
-    for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
-      var c1 = ol.proj.transform(coordinates[i], _projection, "EPSG:4326");
-      var c2 = ol.proj.transform(coordinates[i + 1], _projection, "EPSG:4326");
+    for (let i = 0, ii = coordinates.length - 1; i < ii; ++i) {
+      let c1 = ol.proj.transform(coordinates[i], _projection, "EPSG:4326");
+      let c2 = ol.proj.transform(coordinates[i + 1], _projection, "EPSG:4326");
       length += _wgs84Sphere.getDistance(c1, c2);
     }
-    var output;
+    let output;
     if (length > 100) {
       output = Math.round((length / 1000) * 100) / 100 + " " + "km";
     } else {
@@ -694,9 +694,9 @@ var draw = (function () {
    * @param {*} geometry
    * @returns
    */
-  var _measureDrawArea = function (geometry) {
-    var area = Math.abs(_wgs84Sphere.getArea(geometry));
-    var output;
+  let _measureDrawArea = function (geometry) {
+    let area = Math.abs(_wgs84Sphere.getArea(geometry));
+    let output;
     if (area < 0.0001) {
       output = 0;
     } else if (area < 10000) {
@@ -717,7 +717,7 @@ var draw = (function () {
   /**
    * Create snapping layer from snapLayerUrl or snapLayerId
    */
-  var _initSnappingLayer = () => {
+  let _initSnappingLayer = () => {
     if (_config.snapLayerUrl) {
       _snappingLayer = new ol.layer.Vector({
         source: new ol.source.Vector({
