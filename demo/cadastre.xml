@@ -10,9 +10,10 @@
 			url="http://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20" 
 			visible="false" attribution="Map tiles by  &lt;a href='https://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
     </baselayers>
-    <urlparams>
+    <urlparams fill="" stroke="rgba(232, 19, 232,0.6)" >
         <qtype name="ban" url="https://api-adresse.data.gouv.fr/search/" />
         <qtype name="cadastre" url="https://apicarto.ign.fr/api/cadastre/parcelle" />
+        <qtype name="admin" url="https://geo.api.gouv.fr" />
     </urlparams>
     <proxy url=""/>    
     <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban" attribution="La recherche d'adresse est un service proposé par l'API adresse.data.gouv.fr"/>

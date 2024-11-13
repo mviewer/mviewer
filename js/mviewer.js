@@ -127,6 +127,18 @@ mviewer = (function () {
           );
         }
       }
+      if (API.qtype == "admin") {
+        const adminentity = c.urlparams.qtype.filter(function (o) {
+          return o.name === "admin";
+        });
+        if (adminentity && adminentity[0] && adminentity[0].url) {
+          const parameters = new URLSearchParams(API.q);
+          const service = parameters.get("service");
+          parameters.delete("service");
+          const pathUrl = `${adminentity[0].url}/${service}?${parameters.toString()}`;
+          mviewer.urlParams.requestApiCartoAdmin(pathUrl, 2000);
+        }
+      }
     }
   };
 

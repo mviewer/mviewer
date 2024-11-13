@@ -1,5 +1,6 @@
 import * as apiBanUtils from "./apiBan.js";
 import * as apiCartoCadastreUtils from "./apiCartoCadastre.js";
+import * as geoApiGouvUtils from "./geoApiGouv.js";
 
 /**
  * Some utils to use mviewer URL Params
@@ -7,4 +8,5 @@ import * as apiCartoCadastreUtils from "./apiCartoCadastre.js";
 mviewer.urlParams = {
   ...apiBanUtils,
   ...apiCartoCadastreUtils,
+  ...geoApiGouvUtils,
 };

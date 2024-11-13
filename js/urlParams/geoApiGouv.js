@@ -1,22 +1,37 @@
 import { polygonStyle } from "./styles.js";
 
 /**
- * Will request api and display overlay feature
+ * Will request https://geo.api.gouv.fr/ api and display overlay feature
  * @param {string} url
  * @param {int} duration
  */
-export const requestApiCartoCadastre = async (url, duration = 2000) => {
+export const requestApiCartoAdmin = async (url, duration = 2000) => {
   const mviewerSourceOverlay = mviewer?.getSourceOverlay?.();
   const response = await fetch(url);
   const data = await response.json();
-  if (data.features) {
+  if (!_.isEmpty(data) && data[0].contour) {
+    const geojsonObject = {
+      type: "FeatureCollection",
+      crs: {
+        type: "name",
+        properties: {
+          name: "EPSG:4326",
+        },
+      },
+      features: [
+        {
+          type: "Feature",
+          geometry: data[0].contour,
+        },
+      ],
+    };
     const features = new ol.format.GeoJSON({
       dataProjection: "EPSG:4326",
       featureProjection: "EPSG:3857",
-    }).readFeatures(data);
+    }).readFeatures(geojsonObject);
 
     features.forEach(function (f) {
-      f.setStyle(polygonStyle(data.features[0].properties["idu"]));
+      f.setStyle(polygonStyle(""));
     });
 
     mviewerSourceOverlay.addFeatures(features);
@@ -28,6 +43,9 @@ export const requestApiCartoCadastre = async (url, duration = 2000) => {
       duration: duration,
     });
   } else {
-    mviewer.alert(`Erreur. La parcelle n'a pu être trouvée !`, "alert-danger");
+    mviewer.alert(
+      `Erreur. Aucune entité administrative n'a été trouvée !`,
+      "alert-danger"
+    );
   }
 };
