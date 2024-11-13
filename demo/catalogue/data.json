@@ -423,6 +423,42 @@
       "level": "intermédiaire",
       "url_source": "../demo/print.xml",
       "url_demo": "../?config=demo/print.xml"
+    },
+    {
+      "id": "50",
+      "title": "Outil de suivi de tracé GPS",
+      "tags": "plugin,GPX,trackview",
+      "description": "Mise en place d'un addon (trackview) pour visualiser dans mviewer des tracés GPS type GPX.",
+      "level": "intermédiaire",
+      "url_source": "../demo/trackview.xml",
+      "url_demo": "../?config=demo/trackview.xml"
+    },
+    {
+      "id": "51",
+      "title": "Outil de dessin type polygone",
+      "tags": "plugin,draw,dessin",
+      "description": "Mise en place d'un addon (draw) pour faire du dessin. Il est paramétré dans cet exemple pour le type polygone.",
+      "level": "intermédiaire",
+      "url_source": "../demo/draw/draw.xml",
+      "url_demo": "../?config=demo/draw/draw.xml"
+    },
+    {
+      "id": "52",
+      "title": "Outil de dessin tout type de géométrie",
+      "tags": "plugin,draw,dessin",
+      "description": "Mise en place d'un addon (draw) pour faire du dessin. Il est paramétré dans cet exemple pour tout type de géométrie (point, ligne, polygone).",
+      "level": "intermédiaire",
+      "url_source": "../demo/draw/draw2.xml",
+      "url_demo": "../?config=demo/draw/draw2.xml"
+    },
+    {
+      "id": "53",
+      "title": "Datavisualisation issues de superset",
+      "tags": "superset,dataviz,template",
+      "description": "Insertion dans un template MST de datavisualisation réalisées à partir de l'outil superset.",
+      "level": "intermédiaire",
+      "url_source": "../demo/superset.xml",
+      "url_demo": "../?config=demo/superset.xml"
     }
   ]
 }
