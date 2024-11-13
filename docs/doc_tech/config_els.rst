@@ -121,7 +121,7 @@ En partant de la démo Elasticsearch : http://kartenn.region-bretagne.fr/kartovi
 
 **Syntaxe**
 
-.. code-block:: xml
+.. code-block:: bash
        :linenos:
 
    <elasticsearchs>
