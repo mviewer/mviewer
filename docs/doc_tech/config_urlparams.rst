@@ -6,11 +6,12 @@
 Configurer - Les paramètres d'URL
 =================================
 
-Centrer la carte à l'ouverture grâce à deux paramètres d'URL sur une adresse ou une parcelle
---------------------------------------------------------------------------------------------
+Centrer la carte à l'ouverture sur une entité via une API
+---------------------------------------------------------
 
-L'application peut s'ouvrir en centrant la carte sur une localité particulière (adresse ou parcelle)
-Ce paramétrage dynamique est rendu possible en ajoutant à l'URL mviewer les paramètres suivants : 
+L'application peut s'ouvrir en centrant la carte sur une localité particulière (e.g adresse, parcelle, contours d'entité administrative).
+
+Ce paramétrage dynamique est rendu possible en ajoutant à l'URL mviewer les paramètres suivants et des compléments dans la configuration XML : 
 
 * ?q=21 rue dupont des loges Rennes&qtype=ban
 * ?q=code_insee%3D35238%26section%3DAB%26numero%3D0001&qtype=cadastre
