@@ -45,7 +45,10 @@ Ce paramétrage dynamique est rendu possible en ajoutant à l'URL mviewer les pa
        </urlparams>
 
 
-**Spécificité de l'API : admin**
+
+
+Spécificité : apicarto.ign.fr
+-----------------------------
 
 Les paramètres d'appel sont conservé tels que saisie dans l'URL.
 
