@@ -47,7 +47,7 @@ Ce paramétrage dynamique est rendu possible en ajoutant à l'URL mviewer les pa
 
 
 
-Spécificité : apicarto.ign.fr
+Spécificité : geo.api.gouv.fr
 -----------------------------
 
 Les paramètres d'appel sont conservé tels que saisie dans l'URL.
