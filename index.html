@@ -577,16 +577,19 @@
               <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
                   <a
+                    onclick="mviewer.tools.addlayers.clearResultsList();"
                     href="#add_ogc"
                     aria-controls="profile"
                     role="tab"
                     data-toggle="tab"
                     i18n="addlayers.modal.ogc">
-                    OGC
+                    WMS
                   </a>
                 </li>
                 <li role="presentation">
                   <a
+                    onclic
+                    onclick="mviewer.tools.addlayers.clearResultsList();"
                     href="#add_csw"
                     aria-controls="messages"
                     role="tab"
@@ -595,64 +598,118 @@
                     CSW
                   </a>
                 </li>
+                <li role="presentation">
+                  <a
+                    onclick="apiFeatures.clearResultsList();"
+                    href="#add_api_features"
+                    aria-controls="messages"
+                    role="tab"
+                    data-toggle="tab"
+                    i18n="addlayers.modal.api_features">
+                    API Features
+                  </a>
+                </li>
               </ul>
               <!-- Tab panes -->
               <div class="tab-content" id="addlayers_tabs">
                 <div role="tabpanel" class="tab-pane active" id="add_ogc">
-                  <h4 i18n="addlayers.modal.ogc">
-                    Ajouter des données issue d'un service OGC
-                  </h4>
                   <div class="container-fluid">
                     <div class="row">
                       <div class="col">
-                        Choisissez un serveur :
                         <select
                           id="addLayers_service_url_select"
                           class="form-control form-control-sm addLayers_service_url_select">
-                          <option value=""></option>
+                          <option value="" selected>Choisissez un serveur</option>
                         </select>
                         <br />
-                        ...ou saisissez l'url du service :
-                        <input type="text" id="addLayers_service_url" value="" />
-                        <button
-                          onclick="mviewer.tools.addlayers.connect();"
-                          type="button">
-                          Connexion&nbsp;
-                          <span class="glyphicon glyphicon-chevron-right"></span>
-                        </button>
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <div class="input-group">
+                              <input
+                                id="addLayers_service_url"
+                                type="text"
+                                class="form-control"
+                                placeholder="Ou saisissez l'url du service ici" />
+                              <span class="input-group-btn">
+                                <button
+                                  class="btn btn-default"
+                                  type="button"
+                                  onclick="mviewer.tools.addlayers.connect();">
+                                  <i class="fas fa-search"></i>
+                                </button>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="add_csw">
-                  <h4 i18n="addlayers.modal.csw">
-                    Ajouter des données issue d'un service CSW
-                  </h4>
-                  Choisissez un serveur :
                   <select
                     id="addLayers_service_url_csw_select"
                     class="form-control form-control-sm addLayers_service_url_select">
-                    <option value=""></option>
+                    <option value="" selected>Choisissez un serveur</option>
                   </select>
                   <br />
-                  ...ou saisissez l'url du service :
-                  <input
-                    type="text"
-                    id="addLayers_service_url_csw"
-                    class="form-control"
-                    value="" />
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="input-group">
+                        <input
+                          id="addLayers_service_url_csw"
+                          type="text"
+                          class="form-control"
+                          placeholder="Ou saisissez l'url du service ici" />
+                        <span class="input-group-btn">
+                          <button
+                            class="btn btn-default"
+                            type="button"
+                            onclick="mviewer.tools.addlayers.connectCsw();">
+                            <i class="fas fa-search"></i>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                   <br />
-                  Filter:
                   <input
                     type="text"
                     id="addLayers_service_filter_csw"
                     class="form-control csw_search"
-                    placeholder="Rechercher..." />
-
-                  <button onclick="mviewer.tools.addlayers.connectCsw();" type="button">
-                    Connexion&nbsp;
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                  </button>
+                    placeholder="Ajouter un filtre..." />
+                </div>
+                <div role="tabpanel" class="tab-pane" id="add_api_features">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col">
+                        <select
+                          id="addLayers_service_url_api_features_select"
+                          class="form-control form-control-sm addLayers_service_url_api_features_select">
+                          <option value="default">Choisissez un serveur</option>
+                        </select>
+                        <br />
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <div class="input-group">
+                              <input
+                                id="addLayers_service_url_api_features"
+                                type="text"
+                                class="form-control"
+                                placeholder="Ou saisissez l'url du service ici" />
+                              <span class="input-group-btn">
+                                <button
+                                  class="btn btn-default"
+                                  type="button"
+                                  onclick="apiFeatures.connect();">
+                                  <i class="fas fa-search"></i>
+                                </button>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="container-fluid">
@@ -660,7 +717,6 @@
                   <div class="col-md-12 col-sm-12 col-xs-12 text-center center-block">
                     <div class="loading_container">
                       <div class="single4"></div>
-                      Chargement...
                     </div>
                   </div>
                 </div>
@@ -912,6 +968,7 @@
     <script type="text/javascript" src="js/zoom.js"></script>
     <script type="text/javascript" src="js/measure.js"></script>
     <script type="text/javascript" src="js/draw.js"></script>
+    <script type="text/javascript" src="js/apiFeatures.js"></script>
     <script type="text/javascript" src="js/addlayers.js"></script>
     <script type="text/javascript" src="js/info.js"></script>
     <script type="text/javascript" src="js/search.js"></script>
