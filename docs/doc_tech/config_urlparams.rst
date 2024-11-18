@@ -45,7 +45,24 @@ Ce paramétrage dynamique est rendu possible en ajoutant à l'URL mviewer les pa
        </urlparams>
 
 
+Ajouter une nouvelle API
+------------------------
 
+Les APIs ne retournent pas les objets géographiques (e.g GeoJSON) de la même façon. Ainsi, seules ces 3 APIs sont utilisables pour le moment.
+Il est toutefois possible de rajouter facilement une API supplémentaire mais cela nécessite une contribution.
+
+Voici le code source relatif :
+
+https://github.com/mviewer/mviewer/tree/develop/js/urlParams
+
+Si vous souhaitez contribuer et proposer une autre API vous devez créer un nouveau fichier pour cette API dans le répertoire mis en lien au-dessus avec le code qui convient.
+Ensuite, vous devrez prévoir un nom dédié utilisable dans la balise `qtype` du XML (e.g la `BAN` utilise `name="ban"`, l'API `geo.api.gouv.fr` utilise `name="admin"`).
+
+L'URL et la valeur de la propriété `name` seront réutilisée pour réaliser l'appel correspondant (selon le fichier ajouté dans `js/urlParams` et mviewer.js) ;
+
+https://github.com/mviewer/mviewer/blob/develop/js/mviewer.js#L118
+
+https://github.com/mviewer/mviewer/blob/develop/js/urlParams/urlParams.js#L8
 
 Spécificité : geo.api.gouv.fr
 -----------------------------
