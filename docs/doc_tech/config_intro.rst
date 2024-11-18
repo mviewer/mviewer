@@ -57,6 +57,7 @@ Il est possible d'instancier un mviewer avec des **paramètres** de configuratio
 * ``mode`` : Mode d'affichage à utiliser (d - default, s - simplifié, u - ultrasimplifié). Le mode simplifié ne dispose pas du panneau des thématiques et le mode ultra simplifié ne dispose pas de la barre de navigation.
 * ``title`` : Titre à utiliser. Seulement exploité en mode défault et simplifié.
 * ``topics`` : Thèmes à filtrer.
+* ``q``  et ``qtype``: Rechercher une localité. Exemple pour centrer au démarrage la carte sur une adresse en utilisant la BAN (base adresse nationale) : ``mviewer/?q=71 rue dupont des loges Rennes&qtype=ban``
 * ``addLayer`` : pour ajouter une couche WMS à la carte. ce paramètre prends comme valeur un objet **JSON** contenant
 
   * ``url`` : url du service
@@ -84,3 +85,4 @@ Sections de configurations
 - Configurer les couches thématiques ":ref:`configlayers`".
 - Configurer la recherche ":ref:`configsearch`".
 - Configurer le proxy ":ref:`configproxy`".
+- Configurer les paramètres d'URL ":ref:`configurlparams`".

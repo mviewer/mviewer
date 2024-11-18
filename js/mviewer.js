@@ -89,6 +89,7 @@ mviewer = (function () {
   var _overLayersReady = function () {
     mviewer.init();
     _applyPermalink();
+    _applyUrlParameters();
     //Get backgroundlayer value if exists
     if (
       API.lb &&
@@ -101,6 +102,44 @@ mviewer = (function () {
       mviewer.setBaseLayer(configuration.getDefaultBaseLayer());
     }
     _showCheckedLayers();
+  };
+
+  var _applyUrlParameters = function () {
+    const c = configuration.getConfiguration();
+    if (c.urlparams && c.urlparams.qtype && API.q && API.qtype) {
+      if (API.qtype == "ban") {
+        const ban = c.urlparams.qtype.filter(function (o) {
+          return o.name === "ban";
+        });
+        if (ban && ban[0] && ban[0].url) {
+          mviewer.urlParams.requestBan(`${ban[0].url}?q=${API.q}`);
+        }
+      }
+      if (API.qtype == "cadastre") {
+        const cadastre = c.urlparams.qtype.filter(function (o) {
+          return o.name === "cadastre";
+        });
+        if (cadastre && cadastre[0] && cadastre[0].url) {
+          const parameters = decodeURIComponent(API.q);
+          mviewer.urlParams.requestApiCartoCadastre(
+            `${cadastre[0].url}?${parameters}`,
+            2000
+          );
+        }
+      }
+      if (API.qtype == "admin") {
+        const adminentity = c.urlparams.qtype.filter(function (o) {
+          return o.name === "admin";
+        });
+        if (adminentity && adminentity[0] && adminentity[0].url) {
+          const parameters = new URLSearchParams(API.q);
+          const service = parameters.get("service");
+          parameters.delete("service");
+          const pathUrl = `${adminentity[0].url}/${service}?${parameters.toString()}`;
+          mviewer.urlParams.requestApiCartoAdmin(pathUrl, 2000);
+        }
+      }
+    }
   };
 
   var _applyPermalink = function () {

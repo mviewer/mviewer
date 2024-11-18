@@ -459,6 +459,15 @@
       "level": "intermédiaire",
       "url_source": "../demo/superset.xml",
       "url_demo": "../?config=demo/superset.xml"
+    },
+    {
+      "id": "49",
+      "title": "Cadastre - Filtres et paramètres d'URL",
+      "tags": "cadastre, customcontrol, url, params, ban, apicarto",
+      "description": "Consultation de données du cadastre et zoom sur l'adresse ou une parcelle à partir de l'URL",
+      "level": "simple",
+      "url_source": "../demo/cadastre.xml",
+      "url_demo": "../?config=demo/cadastre.xml&q=code_insee%3D35238%26section%3DAB%26numero%3D0001&qtype=cadastre"
     }
   ]
 }
