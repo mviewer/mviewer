@@ -6,6 +6,28 @@
 Configurer - Les paramètres d'URL
 =================================
 
+Notions d'encodage
+------------------
+
+Pour utiliser les paramètres dans l'URL, vous devrez encoder ce qui doit être contenu dans le paramètre `q`.
+
+Vous devrez notamment renseigner dans le paramètre `q` tous les paramètres utile à l'appel final (ce sont les paramètres de l'API ou du service qui retourne les entités).
+
+Voici la table d'encodage des caractères :
+
+https://www.nicolas-hoffmann.net/utilitaires/codes-hexas-ascii-unicode-utf8-caracteres-usuels.php
+
+Exemple décodé :
+
+`?q=code_insee=35238&section=AB&numero=0001&qtype=cadastre`
+
+Exemple encodé :
+
+`?q=code_insee%3D35238%26section%3DAB%26numero%3D0001&qtype=cadastre`
+
+Notez ici que le caractète `=` de `qytpe=cadastre` n'est pas encodé car il n'est pas dans le paramètre `q`.
+
+
 Centrer la carte à l'ouverture sur une entité via une API
 ---------------------------------------------------------
 
