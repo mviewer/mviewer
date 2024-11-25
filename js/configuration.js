@@ -99,11 +99,13 @@ var configuration = (function () {
         } else {
           theme.group = [];
         }
-        theme.group.forEach(function (group) {
-          if (!Array.isArray(group.layer)) {
-            group.layer = [group.layer];
-          }
-        });
+        theme.group
+          .filter((gp) => gp?.layer)
+          .forEach(function (group) {
+            if (!Array.isArray(group.layer)) {
+              group.layer = [group.layer];
+            }
+          });
         if (theme.layer) {
           if (!Array.isArray(theme.layer)) {
             theme.layer = [theme.layer];
