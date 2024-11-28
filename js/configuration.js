@@ -620,6 +620,14 @@ var configuration = (function () {
           });
         }
         layers.reverse().forEach(function (layerConfig) {
+          const templateData = () => {
+            return typeof layerConfig.template === "string"
+              ? layerConfig.template
+              : {
+                  ...layerConfig.template,
+                  url: _renderEnvPath(layerConfig.template.url),
+                };
+          };
           const layer = mviewer?.env
             ? {
                 ...layerConfig,
@@ -633,10 +641,7 @@ var configuration = (function () {
                     .split(",")
                     .map((sld) => _renderEnvPath(sld))
                     .join(","),
-                template: layerConfig.template && {
-                  ...layerConfig.template,
-                  url: _renderEnvPath(layerConfig.template.url),
-                },
+                template: layerConfig.template ? templateData() : "",
               }
             : layerConfig;
 
