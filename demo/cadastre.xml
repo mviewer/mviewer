@@ -14,6 +14,7 @@
         <qtype name="ban" url="https://api-adresse.data.gouv.fr/search/" />
         <qtype name="cadastre" url="https://apicarto.ign.fr/api/cadastre/parcelle" />
         <qtype name="admin" url="https://geo.api.gouv.fr" />
+        <qtype name="features" url="https://gis.jdev.fr/geoserver" />
     </urlparams>
     <proxy url=""/>    
     <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban" attribution="La recherche d'adresse est un service proposé par l'API adresse.data.gouv.fr"/>

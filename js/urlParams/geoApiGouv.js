@@ -1,4 +1,5 @@
 import { polygonStyle } from "./styles.js";
+import { zoomToGeoJSON } from "./utils.js";
 
 /**
  * Will request https://geo.api.gouv.fr/ api and display overlay feature
@@ -34,14 +35,7 @@ export const requestApiCartoAdmin = async (url, duration = 2000) => {
       f.setStyle(polygonStyle(""));
     });
 
-    mviewerSourceOverlay.addFeatures(features);
-    var boundingExtent = mviewerSourceOverlay.getExtent();
-
-    _map.getView().fit(boundingExtent, {
-      size: _map.getSize(),
-      padding: [0, $("#sidebar-wrapper").width(), 0, 0],
-      duration: duration,
-    });
+    zoomToGeoJSON(features, 2000);
   } else {
     mviewer.alert(
       `Erreur. Aucune entité administrative n'a été trouvée !`,
