@@ -1,4 +1,4 @@
-import { zoomToGeoJSON } from "./utils";
+import { zoomToGeoJSON } from "./utils.js";
 
 /**
  * Read OGC API Feature URL to zoom to features result
