@@ -38,6 +38,7 @@ Ce paramétrage dynamique est rendu possible en ajoutant à l'URL mviewer les pa
 * ?q=21 rue dupont des loges Rennes&qtype=ban
 * ?q=code_insee%3D35238%26section%3DAB%26numero%3D0001&qtype=cadastre
 * &q=service%3Depcis%26nom%3DNan%26fields%3Dcontour&qtype=admin
+* &q=layer%3Didf:COMMUNES_IDF%26filter%3DCODE_INSEE%3D77177&qtype=features
 * &q=layer%3Dbzh:COMMUNES_BZH%26filter%3DPOP_MUN_17%3E7000%20AND%20DENSITE%20%3E500%26bbox%3D2.318017,48.907152,2.350675,48.918123%26service%3Dhttps://my.map.server.fr/geoserver&qtype=features
 
 **Syntaxe**
