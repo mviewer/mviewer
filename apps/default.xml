@@ -49,7 +49,7 @@
 				<template url="https://kartenn.region-bretagne.fr/kartoviz/apps/region/territoire/templates/territoire.pop.cat_age.mst"></template>
 			</layer>
 		</theme>         
-        <theme name="Environnement"  collapsed="false" id="environnement" icon="fas fa-leaf">
+        <theme name="Environnement"  collapsed="true" id="environnement" icon="fas fa-leaf">
             <layer id="reserve_naturelle_regionale" name="Réserves naturelles régionales"  visible="false" tiled="false"
 				searchable="false" queryable="true" fields="axe" aliases="axe"   
 				infoformat="application/vnd.ogc.gml" featurecount="1"
@@ -62,7 +62,7 @@
 				<template url="https://kartenn.region-bretagne.fr/kartoviz/apps/region/global/templates/global.reserve_naturelle_reg.mst"></template>
 		    </layer> 
         </theme>
-        <theme name="Éducation"  collapsed="false" id="education" icon="fas fa-graduation-cap">
+        <theme name="Éducation"  collapsed="true" id="education" icon="fas fa-graduation-cap">
 		    <layer id="lycee" name="Lycées"  visible="false" tiled="false"
                 searchable="false" queryable="true" fields="axe" aliases="axe" 
                 attributefilter="true" attributefield="secteur_li" 
@@ -76,7 +76,7 @@
                 <template url="https://kartenn.region-bretagne.fr/kartoviz/apps/region/global/templates/global.lycee.mst"></template> 
 		    </layer>                             
         </theme>
-        <theme name="Transports"  collapsed="false" id="transport" icon="fas fa-bus">
+        <theme name="Transports"  collapsed="true" id="transport" icon="fas fa-bus">
         	<group name="Transport ferroviaire" id="grp1" >
 		<layer id="ligne_ferroviaire" name="Lignes ferroviaires"  visible="false" tiled="true"
                     queryable="false" 
