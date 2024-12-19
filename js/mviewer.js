@@ -89,6 +89,7 @@ mviewer = (function () {
   var _overLayersReady = function () {
     mviewer.init();
     _applyPermalink();
+    _applyUrlParameters();
     //Get backgroundlayer value if exists
     if (
       API.lb &&
@@ -101,6 +102,13 @@ mviewer = (function () {
       mviewer.setBaseLayer(configuration.getDefaultBaseLayer());
     }
     _showCheckedLayers();
+  };
+
+  var _applyUrlParameters = function () {
+    const c = configuration.getConfiguration();
+    if (c.urlparams && c.urlparams.qtype && API.q && API.qtype) {
+      mviewer.urlParams.requestService();
+    }
   };
 
   var _applyPermalink = function () {

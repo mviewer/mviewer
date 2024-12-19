@@ -54,7 +54,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'mviewer'
-copyright = u'2020, Communauté mviewer'
+copyright = u'2024, Communauté mviewer'
 author = u'Communauté mviewer'
 
 # The version info for the project you're documenting, acts as replacement for

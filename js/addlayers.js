@@ -7,7 +7,6 @@ var capabilitiesParser = (function () {
     const doc = new DOMParser().parseFromString(data, "text/xml");
 
     capabilitiesFromXML = _xmlToJson(doc);
-    console.log(capabilitiesFromXML.GetRecordsResponse.SearchResults.Record);
 
     const nbTotalResults = Number(
       capabilitiesFromXML.GetRecordsResponse.SearchResults["@attributes"]
@@ -62,20 +61,17 @@ var capabilitiesParser = (function () {
       if (url.indexOf("&layers") > 0) {
         //GeoIDe Case
         let sp = new URLSearchParams(url);
-        console.log(sp);
         if (!title) {
           title = name;
         }
         name = sp.get("layers");
       }
-      console.log(wmsRessource);
       let retour = {
         Name: name,
         Url: url,
         Title: title,
         Abstract: x["dc:description"]["#text"],
       };
-      console.log(retour.Name);
 
       let thumbnail = x["dc:URI"].find(
         (x) =>
@@ -255,8 +251,6 @@ var addlayers = (function () {
             "Impossible de récupérer la liste des serveurs csw et ogc",
             "alert-warning"
           );
-          console.error("Impossible de récupérer la liste des serveurs csw et ogc");
-          console.log(error);
         })
         .then((json) => {
           _config = json;
@@ -267,6 +261,11 @@ var addlayers = (function () {
           });
           json.ogc.map((x) => {
             $("#addLayers_service_url_select").append(
+              `<option value="${x.url}">${x.label}</option>`
+            );
+          });
+          json.api_features.map((x) => {
+            $("#addLayers_service_url_api_features_select").append(
               `<option value="${x.url}">${x.label}</option>`
             );
           });
@@ -296,6 +295,12 @@ var addlayers = (function () {
         $("#addLayers_service_url_csw").val(_url);
         _connectCsw();
       });
+      $("#addLayers_service_url_api_features_select").change(function () {
+        _url = $("#addLayers_service_url_api_features_select").val();
+        $("#addLayers_service_url_api_features_select").val(_url);
+        apiFeatures.clearErrorMessage();
+        apiFeatures.connect(_url);
+      });
     }
     _loaded = true;
 
@@ -307,6 +312,24 @@ var addlayers = (function () {
         Url: layerInfos.url,
         Title: layerInfos.title,
         filter: layerInfos.filter,
+      });
+    }
+
+    const btnConnectWms = document.getElementById("addLayers_service_url");
+    const btnConnectCsw = document.getElementById("addLayers_service_url_csw");
+
+    if (btnConnectWms) {
+      btnConnectWms.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          _connect(btnConnectWms.value);
+        }
+      });
+    }
+    if (btnConnectCsw) {
+      btnConnectCsw.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          _connectCsw(btnConnectCsw.value);
+        }
       });
     }
   };
@@ -327,13 +350,17 @@ var addlayers = (function () {
    * list and display all layers
    */
   var _connect = function () {
-    _url = $("#addLayers_service_url").val();
+    _url = document.getElementById("addLayers_service_url").value;
+    //_url = $("#addLayers_service_url").val();
     _connectServer();
   };
 
   var _error = function (textContent) {
-    $("#addlayers_results").empty();
-    _message(textContent, "alert-danger", $("#addlayers_results"));
+    let addLayersResults = document.getElementById("addlayers_results");
+    addLayersResults.innerHTML = "";
+    _message(textContent, "alert-danger", addLayersResults);
+    // $("#addlayers_results").empty();
+    // _message(textContent, "alert-danger", $("#addlayers_results"));
   };
 
   /**
@@ -341,16 +368,37 @@ var addlayers = (function () {
    * @param {String} msg
    */
   var _message = function (msg, cls, parentDiv) {
-    var item = $(
-      [
-        '<div class="alert ' + cls + ' alert-dismissible" role="alert">',
-        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">',
-        '<span aria-hidden="true">&times;</span></button>',
-        mviewer.tr(msg),
-        "</div>",
-      ].join("")
-    );
-    parentDiv.append(item);
+    var item = document.createElement("div");
+    item.className = `alert ${cls} alert-dismissible`;
+    item.role = "alert";
+    item.id = "divAlertAddLayers";
+
+    let itemButton = document.createElement("button");
+    itemButton.type = "button";
+    itemButton.className = "close";
+    itemButton.ariaLabel = "Close";
+    itemButton.setAttribute("data-dismiss", "alert");
+
+    let itemSpan = document.createElement("span");
+    itemSpan.ariaHidden = "true";
+    itemSpan.innerHTML = "&times;";
+
+    itemButton.appendChild(itemSpan);
+    item.appendChild(itemButton);
+
+    item.innerHTML += mviewer.tr(msg);
+
+    parentDiv.appendChild(item);
+    // var item = $(
+    //   [
+    //     '<div class="alert ' + cls + ' alert-dismissible" role="alert">',
+    //     '<button type="button" class="close" data-dismiss="alert" aria-label="Close">',
+    //     '<span aria-hidden="true">&times;</span></button>',
+    //     mviewer.tr(msg),
+    //     "</div>",
+    //   ].join("")
+    // );
+    // parentDiv.append(item);
   };
   /**
    * private Method: _ajaxPromise. Used to get a Promise from an ajax call
@@ -491,7 +539,8 @@ var addlayers = (function () {
           $("#addlayers_results_loading").hide();
         },
         function onError(jqXHR, textStatus, errorThrown) {
-          var message = "Problème réseau pour intérroger " + url + "<br>";
+          var message =
+            "Problème réseau pour intérroger <strong>" + url + "</strong><br>";
           if (jqXHR.responseText) {
             message += jqXHR.responseText;
           }
@@ -500,8 +549,7 @@ var addlayers = (function () {
         }
       )
       .catch(function errorHandler(error) {
-        console.log(error);
-        var message = "Problème réseau pour intérroger " + url + "<br>";
+        var message = "Problème réseau pour intérroger <strong>" + url + "</strong><br>";
         _error(message);
         $("#addlayers_results_loading").hide();
       });
@@ -511,8 +559,10 @@ var addlayers = (function () {
    * by querying a CSW Service
    */
   var _connectCsw = function () {
-    _urlCsw = $("#addLayers_service_url_csw").val();
-    let filterCsw = $("#addLayers_service_filter_csw").val();
+    // _urlCsw = $("#addLayers_service_url_csw").val();
+    _urlCsw = document.getElementById("addLayers_service_url_csw").value;
+    // let filterCsw = $("#addLayers_service_filter_csw").val();
+    let filterCsw = document.getElementById("addLayers_service_filter_csw").value;
     let selectedServer = _config.csw.find((x) => x.url == _urlCsw);
     let filterTxt = `protocol='OGC:WMS-1.1.1-http-get-map' OR protocol='OGC:WMS'`;
     if (selectedServer) {
@@ -527,7 +577,11 @@ var addlayers = (function () {
       }
     }
 
-    $("#addlayers_results").empty();
+    let addLayersResults = document.getElementById("addlayers_results");
+    let addLayersResultsLoading = document.getElementById("addlayers_results_loading");
+
+    // Empty
+    addLayersResults.innerHTML = "";
     let startPos = _pagingInfos.currentPage * _pagingInfos.pageSize + 1;
     const params = `?request=GetRecords&service=CSW&version=2.0.2&typeNames=csw:Record&resultType=results&maxRecords=${_pagingInfos.pageSize}&startPosition=${startPos}&ELEMENTSETNAME=full`;
     const filter = encodeURIComponent(filterTxt);
@@ -536,7 +590,8 @@ var addlayers = (function () {
       params +
       "&constraintLanguage=CQL_TEXT&CONSTRAINT_LANGUAGE_VERSION=1.1.0&CONSTRAINT=" +
       filter;
-    $("#addlayers_results_loading").show();
+    // Show
+    addLayersResultsLoading.style.display = "block";
     _ajaxPromise({
       url: url,
       type: "get",
@@ -545,7 +600,8 @@ var addlayers = (function () {
       .then(
         function onSuccess(data) {
           if (data.indexOf("ExceptionReport") > 0) {
-            let message = "Problème réseau pour intérroger " + url + "<br>";
+            let message =
+              "Problème réseau pour intérroger <strong>" + url + "</strong><br>";
             message += data;
             _error(message);
             return;
@@ -557,27 +613,62 @@ var addlayers = (function () {
             _pagingInfos.nbPages = Math.ceil(
               _resultList.nbTotalResults / _pagingInfos.pageSize
             );
-            _showLayerList(_layerList, $("#addlayers_results"));
+            _showLayerList(_layerList, addLayersResults);
             _addPager();
           }
-          $("#addlayers_results_loading").hide();
+          // Hide
+          addLayersResultsLoading.style.display = "none";
         },
         function onError(jqXHR, textStatus, errorThrown) {
-          console.log(jqXHR);
-          var message = "Problème réseau pour intérroger " + url + "<br>";
+          var message =
+            "Problème réseau pour intérroger <strong>" + url + "</strong><br>";
           if (jqXHR.responseText) {
             message += jqXHR.responseText;
           }
           _error(message);
-          $("#addlayers_results_loading").hide();
+          // Hide
+          addLayersResultsLoading.style.display = "none";
         }
       )
       .catch(function errorHandler(error) {
-        console.log(error);
-        var message = "Problème réseau pour intérroger " + url + "<br>";
+        var message = "Problème réseau pour intérroger <strong>" + url + "<strong><br>";
         _error(message);
-        $("#addlayers_results_loading").hide();
+        // Hide
+        addLayersResultsLoading.style.display = "none";
       });
+  };
+
+  var _clearTab = () => {
+    const addLayersResults = document.getElementById("addlayers_results");
+    const serverListWms = document.getElementById("addLayers_service_url_select");
+    const urlContentWms = document.getElementById("addLayers_service_url");
+    const serverListCsw = document.getElementById("addLayers_service_url_csw_select");
+    const urlContentCsw = document.getElementById("addLayers_service_url_csw");
+
+    _clearErrorMessage();
+    if (addLayersResults) {
+      addLayersResults.innerHTML = "";
+    }
+    if (serverListWms.value !== "default") {
+      serverListWms.value = "";
+    }
+    if (urlContentWms.value !== "") {
+      urlContentWms.value = "";
+    }
+    if (serverListCsw.value !== "default") {
+      serverListCsw.value = "";
+    }
+    if (urlContentCsw.value !== "") {
+      urlContentCsw.value = "";
+    }
+  };
+
+  var _clearErrorMessage = () => {
+    let divAlert = document.getElementById("divAlertAddLayers");
+
+    if (divAlert) {
+      document.getElementById("divAlertAddLayers").style.display = "none";
+    }
   };
 
   /**
@@ -655,5 +746,7 @@ var addlayers = (function () {
     connect: _connect,
     connectCsw: _connectCsw,
     addLayer: _addLayer,
+    message: _message,
+    clearResultsList: _clearTab,
   };
 })();
