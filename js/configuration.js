@@ -8,7 +8,7 @@ var configuration = (function () {
 
   // Mviewer version a saisir manuellement
 
-  var VERSION = "3.12.1";
+  var VERSION = "3.13";
 
   var _showhelp_startup = false;
 
@@ -99,11 +99,13 @@ var configuration = (function () {
         } else {
           theme.group = [];
         }
-        theme.group.forEach(function (group) {
-          if (!Array.isArray(group.layer)) {
-            group.layer = [group.layer];
-          }
-        });
+        theme.group
+          .filter((gp) => gp?.layer)
+          .forEach(function (group) {
+            if (!Array.isArray(group.layer)) {
+              group.layer = [group.layer];
+            }
+          });
         if (theme.layer) {
           if (!Array.isArray(theme.layer)) {
             theme.layer = [theme.layer];
@@ -618,6 +620,14 @@ var configuration = (function () {
           });
         }
         layers.reverse().forEach(function (layerConfig) {
+          const templateData = () => {
+            return typeof layerConfig.template === "string"
+              ? layerConfig.template
+              : {
+                  ...layerConfig.template,
+                  url: _renderEnvPath(layerConfig.template.url),
+                };
+          };
           const layer = mviewer?.env
             ? {
                 ...layerConfig,
@@ -631,10 +641,7 @@ var configuration = (function () {
                     .split(",")
                     .map((sld) => _renderEnvPath(sld))
                     .join(","),
-                template: layerConfig.template && {
-                  ...layerConfig.template,
-                  url: _renderEnvPath(layerConfig.template.url),
-                },
+                template: layerConfig.template ? templateData() : "",
               }
             : layerConfig;
 
