@@ -363,9 +363,9 @@
     },
     {
       "id": "43",
-      "title": "Ajout d'une couche WMS",
-      "tags": "CSW, WMS, ajout couche",
-      "description": "Ajout depuis le mviewer d'une couche WMS distante à partir d'un flux WMS ou CSW",
+      "title": "Ajout d'une couche WMS ou via API features",
+      "tags": "CSW, WMS, ajout couche, API features",
+      "description": "Ajout depuis le mviewer d'une couche WMS distante à partir d'un flux WMS ou CSW ou d'une couche API features",
       "level": "simple",
       "url_source": "../demo/addlayers.xml",
       "url_demo": "../?config=demo/addlayers.xml"
