@@ -1,8 +1,5 @@
 {
   "de": {
-    "addlayers.modal.title": "",
-    "addlayers.modal.ogc": "",
-    "addlayers.modal.csw": "",
     "addlayers.server": "Wählen Sie einen Server :",
     "attribute.control.filter": "Filtern",
     "bottom.panel.close": "Dieses Panel schließen",
