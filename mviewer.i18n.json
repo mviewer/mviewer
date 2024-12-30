@@ -1,5 +1,8 @@
 {
   "de": {
+    "addlayers.modal.title": "",
+    "addlayers.modal.ogc": "",
+    "addlayers.modal.csw": "",
     "addlayers.server": "Wählen Sie einen Server :",
     "attribute.control.filter": "Filtern",
     "bottom.panel.close": "Dieses Panel schließen",
@@ -119,6 +122,9 @@
     "theme.layers.restricted": "Daten zum eingeschränkten Zugriff"
   },
   "en": {
+    "addlayers.modal.title": "Add a data",
+    "addlayers.modal.ogc": "OGC Service",
+    "addlayers.modal.csw": "CSW Service",
     "addlayers.server": "Choose a server :",
     "attribute.control.filter": "Filter",
     "bottom.panel.close": "Close this panel",
@@ -248,6 +254,9 @@
     "theme.layers.restricted": "Restricted data"
   },
   "fr": {
+    "addlayers.modal.title": "Ajouter une donnée",
+    "addlayers.modal.ogc": "Service OGC",
+    "addlayers.modal.csw": "Service CSW",
     "addlayers.server": "Choisissez un serveur :",
     "attribute.control.filter": "Filtrer",
     "bottom.panel.close": "Fermer ce panneau",
