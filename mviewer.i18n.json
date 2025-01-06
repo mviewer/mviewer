@@ -1,5 +1,8 @@
 {
   "de": {
+    "addlayers.modal.title": "Hinzufügen von Daten",
+    "addlayers.modal.ogc": "OGC Service",
+    "addlayers.modal.csw": "CSW Service",
     "addlayers.server": "Wählen Sie einen Server :",
     "attribute.control.filter": "Filtern",
     "bottom.panel.close": "Dieses Panel schließen",
@@ -386,6 +389,9 @@
     "theme.layers.restricted": "Données accès restreint"
   },
   "sk": {
+    "addlayers.modal.title": "Pridanie údajov",
+    "addlayers.modal.ogc": "Služba OGC",
+    "addlayers.modal.csw": "Služba CSW",
     "addlayers.server": "Vyberte si server :",
     "attribute.control.filter": "Filter",
     "bottom.panel.close": "Zavrieť tento panel",
