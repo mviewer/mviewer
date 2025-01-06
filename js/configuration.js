@@ -834,7 +834,11 @@ var configuration = (function () {
             oLayer.dynamiclegend = layer.dynamiclegend === "true" ? true : false;
             oLayer.vectorlegend = layer.vectorlegend === "true" ? true : false;
             oLayer.nohighlight =
-              layer.type != "sensorthings" || layer.nohighlight === "true" ? true : false;
+              layer.type === "sensorthings"
+                ? "false"
+                : layer.nohighlight === "true"
+                ? true
+                : false;
             oLayer.infohighlight =
               layer.type === "sensorthings" || layer.infohighlight === "false"
                 ? false
