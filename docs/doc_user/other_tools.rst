@@ -107,6 +107,8 @@ Choix du type de lien
 * lb : couche de fond par défaut
 * mode : mode d'affichage (n,s ou u)
 
+Il est possible d'ajouter un paramètre popup=false pour ne pas afficher au démarrage de l'application la popup (à l'inverse popup=true pour forcer l'affichage).
+
 Export de la carte
 ------------------
 
