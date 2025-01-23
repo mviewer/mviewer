@@ -889,6 +889,17 @@
               <h4 class="modal-title" i18n="help.modal.title">DOCUMENTATION</h4>
             </div>
             <div class="modal-body"></div>
+            <div class="modal-footer">
+              <div class="form-group pull-left">
+                <label for="checkbox">
+                  <input
+                    type="checkbox"
+                    id="showHelpOnce"
+                    i18n="help.modal.notshowagain" />
+                  Ne plus afficher
+                </label>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -981,6 +992,7 @@
     <script type="text/javascript" src="js/sensorthings.js"></script>
     <script type="text/javascript" src="js/sensorFeature.js"></script>
     <script type="module" src="js/urlParams/urlParams.js"></script>
+    <script type="module" src="js/cookies/main.js"></script>
     <script>
       if (
         typeof mviewer == "undefined" ||
