@@ -1109,7 +1109,7 @@ var configuration = (function () {
       mviewer.setBaseLayer(_defaultBaseLayer);
     }
 
-    if (_showhelp_startup) {
+    if (_showhelp_startup && localStorage.getItem("helpCheckBox") !== "true") {
       $("#help").modal("show");
     }
 
