@@ -322,7 +322,7 @@
     "help.modal.help": "Aide",
     "help.modal.lexicon": "Lexique",
     "help.modal.title": "DOCUMENTATION",
-    "help.modal.notshowagain": "Ne plus afficher",
+    "help.modal.notshowagain": "Ne plus afficher au démarrage",
     "infos.powered": "Propulsé par ",
     "lang.modal.title": "Langues",
     "layer.authent.login": "Login",
