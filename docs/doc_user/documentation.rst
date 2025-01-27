@@ -23,6 +23,12 @@ Pour fermer ce panneau, il vous suffit soit :
 * de cliquer sur la croix en haut en droite du cadre,
 * de cliquer en dehors du cadre.
 
+Limiter l'affichage à l'ouverture
+***********************************
+
+Une case à cocher (en bas à gauche) permet à l'utilisateur de masquer la documentation à la prochaine consultation.
+Cette information est sauvegardée dans le localStorage (voir section "cookies").
+
 Configurer le panneau
 ************************************
 
