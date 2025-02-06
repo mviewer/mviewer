@@ -461,13 +461,22 @@
       "url_demo": "../?config=demo/superset.xml"
     },
     {
-      "id": "49",
+      "id": "54",
       "title": "Cadastre - Filtres et paramètres d'URL",
       "tags": "cadastre, customcontrol, url, params, ban, apicarto",
       "description": "Consultation de données du cadastre et zoom sur l'adresse ou une parcelle à partir de l'URL",
       "level": "simple",
       "url_source": "../demo/cadastre.xml",
       "url_demo": "../?config=demo/cadastre.xml&q=code_insee%3D35238%26section%3DAB%26numero%3D0001&qtype=cadastre"
+    },
+    {
+      "id": "55",
+      "title": "Fond de plan vectoriels",
+      "tags": "tms,fond de plan, data.gouv",
+      "description": "Utilisation des fonds de plan issus de openmaptiles.data.gouv.fr",
+      "level": "intermédiaire",
+      "url_source": "../demo/tms_datagouv.xml",
+      "url_demo": "../?config=demo/tms_datagouv.xml"
     }
   ]
 }
