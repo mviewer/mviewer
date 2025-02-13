@@ -9,7 +9,7 @@ mviewer.templates.tooltip = `<div class="tooltip mv-tooltip" role="tooltip">
 let locationHref = location.hash || "#";
 mviewer.templates.themeLayer = `<li class="mv-nav-item" onclick="mviewer.toggleLayer(this);" data-layerid="{{layerid}}"">
     <a href="${locationHref}" >
-        <span class="state-icon far mv-unchecked"></span> {{title}}
+        <span class="state-icon far mv-unchecked"></span> <div i18n="layers.{{layerid}}">{{title}}</div>
         <input type="checkbox" class="hidden" value="false" >
     </a>
 </li>`;
@@ -19,7 +19,7 @@ mviewer.templates.theme = `
     <a href="#">
         <span class="fa-stack fa-lg pull-left col-sm-3">
             <i class="{{icon}} fa-stack-1x "></i>
-        </span>{{name}}
+        </span><div i18n="themes.{{id}}">{{name}}</div>
     {{#toggleAllLayers}}
         <div class="toggle-theme-layers">
             <span class="badge" title="Afficher/Masquer toutes les couches de la thématique" i18n="theme.display.layers">0/1</span>

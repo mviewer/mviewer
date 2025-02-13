@@ -1832,10 +1832,11 @@ mviewer = (function () {
         if (langitems.length === 0 && showHelp) {
           // set no padding for the first item element
           // help popup only
+          // set to right padding to take into account language dropdown menu syle
           p = 0;
         }
         langitems.push(
-          '<li style="padding-left:' +
+'<li style="padding-right:' +
             p +
             '" type="button" class="btn mv-translate""><a href="#" idlang="' +
             language +
@@ -1849,17 +1850,43 @@ mviewer = (function () {
 
       // if help popup only
       if (showHelp) {
-        $("#help .modal-body").append(
-          '<ul style="padding-left:0">' + langitems.join("") + "</ul>"
-        );
+                //$("#help .modal-body").append('<ul style="padding-left:0">' + langitems.join("") + '</ul>');
+				$("#lang-button, #lang-selector").addClass("enabled");
+                $("#lang-body>ul").append(langitems.join(""));
+                $("#lang-selector>ul").append(langitems.join(""));
+
       } else {
         // display selector or modal according to device
         $("#lang-button, #lang-selector").addClass("enabled");
         $("#lang-body>ul").append(langitems.join(""));
         $("#lang-selector>ul").append(langitems.join(""));
       }
-      $(".mv-translate a").click(function () {
+      $(".mv-translate a").click(function() {
         _changeLanguage($(this).attr("idlang"));
+//hide current lang mst and unhide new mst
+                $(".mv-translate").removeClass("active");
+                //selector to use depending if popup or modal
+                // check if  #popup-content inside .modal-panel is empty
+                var info_panel_selector_to_use = "#right-panel"
+                if ($('.modal-panel #popup-content').html().trim() !== '') {
+                    info_panel_selector_to_use = ".modal-panel";
+                  }
+                
+                // hide other languages slides
+                $(info_panel_selector_to_use).find(".carousel-inner").find("li.item").not(".mst_" + configuration.getLang()).addClass("hidden-item").removeClass("item");
+                // show those of the new language
+                $(info_panel_selector_to_use).find(".carousel-inner").find("li.mst_" + $(this).attr("idlang")).addClass("item").removeClass("hidden-item");
+                // find inside div with id right-panel the div with class carousel-inner and hide all divs that contain item inside of it
+                $(info_panel_selector_to_use).find(".carousel-inner").find("div.item").hide();
+
+                
+                // show the div that contains the clicked language in its class with data counter as filter
+                $(info_panel_selector_to_use).find(".carousel-inner").find("div.item.mst_"+$(this).attr("idlang")).show();
+                //close panel if opened to trigger reload
+                $(info_panel_selector_to_use).removeClass('active');
+                // unselect point graphically only 
+                $("#mv_marker").hide();
+
       });
     }
 
