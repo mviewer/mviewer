@@ -87,7 +87,7 @@
     <div id="loading-page">
       <div class="single4"></div>
       <div id="loader-title" i18n="loader.text">Chargement de l'application ...</div>
-        <div id="loader-subtitle" i18n="loader.title"></div>
+      <div id="loader-subtitle" i18n="loader.title"></div>
     </div>
     <div id="error">
       <h1></h1>
@@ -112,7 +112,7 @@
           <a class="navbar-brand" href="#">
             <img alt="Logo" src="img/logo/earth-globe.svg" class="mv-logo" />
           </a>
-            <a class="navbar-brand mv-title" i18n="map_title" href="#">mViewer</a>
+          <a class="navbar-brand mv-title" href="#" i18n="map_title">mViewer</a>
           <a
             type="button"
             class="navbar-toggle"
@@ -889,6 +889,17 @@
               <h4 class="modal-title" i18n="help.modal.title">DOCUMENTATION</h4>
             </div>
             <div class="modal-body"></div>
+            <div class="modal-footer">
+              <div id="showHelpOnceBloc" class="form-group pull-left show-help-tracker">
+                <label for="checkbox">
+                  <input
+                    type="checkbox"
+                    id="showHelpOnce"
+                    i18n="help.modal.notshowagain" />
+                  Ne plus afficher au démarrage
+                </label>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -981,6 +992,7 @@
     <script type="text/javascript" src="js/sensorthings.js"></script>
     <script type="text/javascript" src="js/sensorFeature.js"></script>
     <script type="module" src="js/urlParams/urlParams.js"></script>
+    <script type="module" src="js/cookies/main.js"></script>
     <script>
       if (
         typeof mviewer == "undefined" ||
