@@ -1,5 +1,8 @@
 {
   "de": {
+    "addlayers.modal.title": "Hinzufügen von Daten",
+    "addlayers.modal.ogc": "OGC Service",
+    "addlayers.modal.csw": "CSW Service",
     "addlayers.server": "Wählen Sie einen Server :",
     "attribute.control.filter": "Filtern",
     "bottom.panel.close": "Dieses Panel schließen",
@@ -51,6 +54,7 @@
     "help.modal.help": "Hilfe",
     "help.modal.lexicon": "Lexikon",
     "help.modal.title": "DOKUMENTATION",
+    "help.modal.notshowagain": "Nicht länger anzeigen",
     "infos.powered": "Unterstützt durch ",
     "lang.modal.title": "Sprachen",
     "layer.authent.login": "Login",
@@ -119,6 +123,9 @@
     "theme.layers.restricted": "Daten zum eingeschränkten Zugriff"
   },
   "en": {
+    "addlayers.modal.title": "Add a data",
+    "addlayers.modal.ogc": "OGC Service",
+    "addlayers.modal.csw": "CSW Service",
     "addlayers.server": "Choose a server :",
     "attribute.control.filter": "Filter",
     "bottom.panel.close": "Close this panel",
@@ -180,6 +187,7 @@
     "help.modal.doc": "Link to the documentation",
     "help.modal.help": "Help",
     "help.modal.lexicon": "Lexicon",
+    "help.modal.notshowagain": "No longer display",
     "help.modal.title": "DOCUMENTATION",
     "infos.powered": "Powered by ",
     "lang.modal.title": "Languages",
@@ -248,6 +256,9 @@
     "theme.layers.restricted": "Restricted data"
   },
   "fr": {
+    "addlayers.modal.title": "Ajouter une donnée",
+    "addlayers.modal.ogc": "Service OGC",
+    "addlayers.modal.csw": "Service CSW",
     "addlayers.server": "Choisissez un serveur :",
     "attribute.control.filter": "Filtrer",
     "bottom.panel.close": "Fermer ce panneau",
@@ -311,6 +322,7 @@
     "help.modal.help": "Aide",
     "help.modal.lexicon": "Lexique",
     "help.modal.title": "DOCUMENTATION",
+    "help.modal.notshowagain": "Ne plus afficher au démarrage",
     "infos.powered": "Propulsé par ",
     "lang.modal.title": "Langues",
     "layer.authent.login": "Login",
@@ -380,6 +392,9 @@
     "theme.layers.restricted": "Données accès restreint"
   },
   "sk": {
+    "addlayers.modal.title": "Pridanie údajov",
+    "addlayers.modal.ogc": "Služba OGC",
+    "addlayers.modal.csw": "Služba CSW",
     "addlayers.server": "Vyberte si server :",
     "attribute.control.filter": "Filter",
     "bottom.panel.close": "Zavrieť tento panel",
@@ -402,6 +417,7 @@
     "help.modal.doc": "Odkaz na dokumentáciu",
     "help.modal.help": "Pomoc",
     "help.modal.lexicon": "Lexicon",
+    "help.modal.notshowagain": "Už nezobrazovať",
     "help.modal.title": "Dokumentácia",
     "lang.modal.title": "Jazyk",
     "layer.authent.login": "Login",
