@@ -1832,9 +1832,9 @@ mviewer = (function () {
         if (langitems.length === 0 && showHelp) {
           // set no padding for the first item element
           // help popup only
+          // set to right padding to take into account language dropdown menu syle
           p = 0;
         }
-        // set right-padding instead of left to take into account  language dropdown menu syle
         langitems.push(
           '<li style="padding-right:' +
             p +
@@ -1867,10 +1867,7 @@ mviewer = (function () {
         //selector to use depending if popup or modal
         // check if  #popup-content inside .modal-panel is empty
         var info_panel_selector_to_use = "#right-panel";
-        if (
-          $(".modal-panel #popup-content").html() &&
-          $(".modal-panel #popup-content").html().trim() !== ""
-        ) {
+        if ($(".modal-panel #popup-content").html() && $(".modal-panel #popup-content").html().trim() !== "") {
           info_panel_selector_to_use = ".modal-panel";
         }
 

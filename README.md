@@ -10,6 +10,9 @@ Liens utiles :
 - [Documentation](http://mviewerdoc.readthedocs.io/fr/stable/)
 - [Générateur d'applications](https://github.com/geobretagne/mviewerstudio/)
 
+## Feuille de route
+
+La road map du projet est disponible à cette adresse : https://github.com/geobretagne/mviewer/projects/8
 
 ## Déploiement
 

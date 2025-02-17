@@ -8,7 +8,7 @@ var configuration = (function () {
 
   // Mviewer version a saisir manuellement
 
-  var VERSION = "3.14-snapshot";
+  var VERSION = "3.13";
 
   var _showhelp_startup = false;
 
@@ -901,11 +901,7 @@ var configuration = (function () {
             oLayer.dynamiclegend = layer.dynamiclegend === "true" ? true : false;
             oLayer.vectorlegend = layer.vectorlegend === "true" ? true : false;
             oLayer.nohighlight =
-              layer.type === "sensorthings"
-                ? "false"
-                : layer.nohighlight === "true"
-                  ? true
-                  : false;
+              layer.type != "sensorthings" || layer.nohighlight === "true" ? true : false;
             oLayer.infohighlight =
               layer.type === "sensorthings" || layer.infohighlight === "false"
                 ? false
@@ -1176,7 +1172,7 @@ var configuration = (function () {
       mviewer.setBaseLayer(_defaultBaseLayer);
     }
 
-    if (_showhelp_startup && localStorage.getItem("helpCheckBox") !== "true") {
+    if (_showhelp_startup) {
       $("#help").modal("show");
     }
 
