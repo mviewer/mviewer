@@ -1867,7 +1867,7 @@ mviewer = (function () {
         //selector to use depending if popup or modal
         // check if  #popup-content inside .modal-panel is empty
         var info_panel_selector_to_use = "#right-panel";
-        if ($(".modal-panel #popup-content").html().trim() !== "") {
+        if ($(".modal-panel #popup-content").html() && $(".modal-panel #popup-content").html().trim() !== "") {
           info_panel_selector_to_use = ".modal-panel";
         }
 
