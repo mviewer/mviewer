@@ -2,9 +2,7 @@ name: Code style checking
 on:
   pull_request:
   push:
-    branches:
-      - master
-      - 'features/**'
+    branches: [develop]
 
 jobs:
   prettier:
