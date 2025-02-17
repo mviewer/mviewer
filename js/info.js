@@ -110,18 +110,71 @@ var info = (function () {
    * @param featurescount {Integer}
    *
    */
-  var _customizeHTML = function (html, featurescount) {
+
+  var _customizeHTML = function (
+    html,
+    featurescount,
+    lang_to_add = "",
+    template_is_mst_file = false
+  ) {
     //manipulate html to activate first item.
     var tmp = document.createElement("div");
     $(tmp).append(html);
-    $(tmp).find("li.item").first().addClass("active");
+    if (configuration.getLanguages().length > 1) {
+      // check if lang_to_add is defined and is in the list of languages
+      // if so add id that can be used by button to show the content
+      if (lang_to_add != "" && configuration.getLanguages().includes(lang_to_add)) {
+        // hide cluster_length first elements
+        $(tmp).find("li.item").slice(0, featurescount).addClass(`mst_${lang_to_add}`);
+      }
+
+      // hide all elements initially if immeadiate div child is not of class "gml-item"
+      if (
+        $(tmp).find("li.item").first().find("div").first().attr("class") != "gml-item"
+      ) {
+        if (!template_is_mst_file) {
+          $(tmp).find("li.item").hide();
+        }
+      }
+      $(tmp)
+        .find(`li.item.mst_${configuration.getLang()}`)
+        .slice(0, featurescount)
+        .css("display", "");
+      // do NOT use .show() as it will set display to something we dont want
+    }
+    $(tmp)
+      .find("li.item.mst_" + configuration.getLang())
+      .first()
+      .addClass("active");
+
+    // hide other languages slides
+    $(tmp)
+      .find("li.item")
+      .not(".mst_" + configuration.getLang())
+      .addClass("hidden-item")
+      .removeClass("item");
+
+    // if element is current language show it
+
     //manipulate html to add data-counter attribute to each feature.
     if (featurescount > 1) {
-      $(tmp)
-        .find("li.item")
-        .each(function (i, item) {
-          $(item).attr("data-counter", i + 1 + "/" + featurescount);
-        });
+      if (
+        configuration.getLanguages().length > 1 &&
+        lang_to_add !== "" &&
+        configuration.getLanguages().includes(lang_to_add)
+      ) {
+        $(tmp)
+          .find("li.item.mst_" + lang_to_add)
+          .each(function (i, item) {
+            $(item).attr("data-counter", i + 1 + "/" + featurescount);
+          });
+      } else {
+        $(tmp)
+          .find("li.item")
+          .each(function (i, item) {
+            $(item).attr("data-counter", i + 1 + "/" + featurescount);
+          });
+      }
     }
     return [$(tmp).html()];
   };
@@ -282,11 +335,28 @@ var info = (function () {
             var id = views[panel].layers.length + 1;
             //Create html content from features
             var html_result = "";
-            if (l.template) {
-              html_result = applyTemplate(features, l);
+            // check if l.template has a field other than url
+            if (Object.keys(l.template).some((key) => key !== "url")) {
+              // contains an  actual template not just url
+              html_result.push(applyTemplate(features, l));
             } else {
-              html_result = createContentHtml(features, l);
+              languages = configuration.getLanguages();
+              if (languages.length > 1) {
+                languages.forEach(function (lang) {
+                  var template_field_name = "template_" + lang;
+                  if (l[template_field_name]) {
+                    html_result.push(applyTemplate(features, l, lang));
+                  } else {
+                    html_result.push(createContentHtml(features, layerinfos));
+                  }
+                });
+              } else {
+                html_result.push(createContentHtml(features, l));
+              }
             }
+
+            // *****
+
             //Set view with layer info & html formated features
             views[panel].layers.push({
               panel: panel,
@@ -512,20 +582,66 @@ var info = (function () {
               _queriedFeatures.push.apply(_queriedFeatures, getFeatureInfo.features);
             }
             var features = getFeatureInfo.features;
+            var languages = configuration.getLanguages();
             if (features.length > 0) {
               if (_panelsTemplate[panel] == "allintabs") {
                 features.forEach(function (feature, index) {
-                  if (layerinfos.template) {
+                  // check if l.template has a field other than url
+                  if (Object.keys(layerinfos.template).some((key) => key !== "url")) {
+                    // try to find .mst template file
                     html_result.push(applyTemplate([feature], layerinfos));
                   } else {
-                    html_result.push(createContentHtml([feature], layerinfos));
+                    // either used multiple langs or template doesnt exist
+                    if (languages.length > 1) {
+                      // multiple languages
+                      languages.forEach(function (lang) {
+                        var template_field_name = "template_" + lang;
+                        if (layerinfos[template_field_name]) {
+                          html_result.push(applyTemplate([feature], layerinfos, lang));
+                        } else if (
+                          // check if l.template has a field other than url
+                          Object.keys(layerinfos.template).some((key) => key !== "url")
+                        ) {
+                          // multiple languages but one mst template
+                          html_result.push(applyTemplate([feature], layerinfos));
+                        } else {
+                          // nothing found
+                          html_result.push(createContentHtml([feature], layerinfos));
+                        }
+                      });
+                    } else {
+                      // single language
+                      html_result.push(createContentHtml([feature], layerinfos));
+                    }
                   }
                 });
-              } else {
-                if (layerinfos.template) {
+              } // features from here on
+              else {
+                // check if l.template has a field other than url
+                if (Object.keys(layerinfos.template).some((key) => key !== "url")) {
+                  // try to find .mst template file
                   html_result.push(applyTemplate(features, layerinfos));
                 } else {
-                  html_result.push(createContentHtml(features, layerinfos));
+                  // either used multiple langs or template doesnt exist
+                  if (languages.length > 1) {
+                    // multiple languages
+                    languages.forEach(function (lang) {
+                      var template_field_name = "template_" + lang;
+                      if (layerinfos[template_field_name]) {
+                        html_result.push(applyTemplate(features, layerinfos, lang));
+                      } else if (
+                        Object.keys(layerinfos.template).some((key) => key !== "url")
+                      ) {
+                        // multiple languages but one mst template
+                        html_result.push(applyTemplate(features, layerinfos));
+                      } else {
+                        // nothing found
+                        html_result.push(createContentHtml(features, layerinfos));
+                      }
+                    });
+                  } else {
+                    html_result.push(createContentHtml(features, layerinfos));
+                  }
                 }
               }
             }
@@ -966,8 +1082,8 @@ var info = (function () {
    * @param olayer {mviewer.overLayer}
    */
 
-  var applyTemplate = function (olfeatures, olayer) {
-    var tpl = olayer.template;
+  var applyTemplate = function (olfeatures, olayer, lang = "") {
+    var tpl = olayer["template" + (lang == "" ? "" : "_" + lang)];
     var _json = function (str) {
       var result = null;
       try {
@@ -1041,7 +1157,9 @@ var info = (function () {
       obj.features.push({ ...feature.getProperties(), feature_ol_uid: feature.ol_uid });
     });
     var rendered = Mustache.render(tpl, obj);
-    return _customizeHTML(rendered, olfeatures.length);
+    var template_is_mst_file =
+      olayer.template && !olayer[`template_${lang}`] ? true : false;
+    return _customizeHTML(rendered, olfeatures.length, lang, template_is_mst_file);
   };
 
   /**
