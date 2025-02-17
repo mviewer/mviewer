@@ -807,8 +807,6 @@ var configuration = (function () {
             }
             //Mustache template
             if (layer.template && layer.template.url) {
-
-              
               /* if there are multiple languages, the user then has 2 possibilities:
                     a - provide a template local file for each language,
                         + ie: https://url.com/template_fr.mst, https://url.com/template_en.mst
