@@ -1867,7 +1867,10 @@ mviewer = (function () {
         //selector to use depending if popup or modal
         // check if  #popup-content inside .modal-panel is empty
         var info_panel_selector_to_use = "#right-panel";
-        if ($(".modal-panel #popup-content").html() && $(".modal-panel #popup-content").html().trim() !== "") {
+        if (
+          $(".modal-panel #popup-content").html() &&
+          $(".modal-panel #popup-content").html().trim() !== ""
+        ) {
           info_panel_selector_to_use = ".modal-panel";
         }
 
@@ -1963,19 +1966,45 @@ mviewer = (function () {
       "data-original-title",
     ];
     var _element = $(element);
-    _element.find("[i18n]").each((i, el) => {
-      let find = false;
-      let tr = mviewer.lang[lang]($(el).attr("i18n"));
-      htmlType.forEach((att) => {
-        if ($(el).attr(att) && tr) {
-          $(el).attr(att, tr);
-          find = true;
+
+    // get mviewer default i18n keys
+    var mviewer_default_i18n_keys = [];
+    var defaultI18nFile = "mviewer.i18n.json";
+    $.get(defaultI18nFile).done(function (dic) {
+      mviewer_default_i18n_keys = Object.keys(dic[lang]);
+
+      _element.find("[i18n]").each((i, el) => {
+        let is_mviewer_translation = mviewer_default_i18n_keys.includes(
+          $(el).attr("i18n")
+        ); // dont show the i18n id in debug mode if the element's translationis provided by mviewer
+        let find = false;
+        let tr = mviewer.lang[lang]($(el).attr("i18n"));
+        htmlType.forEach((att) => {
+          if ($(el).attr(att) && tr) {
+            $(el).attr(att, tr);
+            find = true;
+          }
+        });
+
+        var debug_translation = new URLSearchParams(window.location.href)
+          .get("debug_translation")
+          ?.match(/[a-zA-Z0-9]+/)[0];
+
+        if (!find && $(el).text().indexOf("{{") === -1) {
+          if (debug_translation === "true" && !is_mviewer_translation) {
+            // debug mode, used to see the generated i18n ids to create the i18n json dictionnary
+            // dont show i18n keys for translations already provided by mviewer
+            $(el).text($(el).attr("i18n"));
+          } else {
+            if (!(tr === $(el).attr("i18n"))) {
+              // if tranlsation exists
+              $(el).text(tr);
+            } // else do nothing, keep the innertext already there
+          }
         }
       });
-      if (!find && $(el).text().indexOf("{{") === -1) {
-        $(el).text(tr);
-      }
     });
+
     _element.find("[data-content]").each((i, el) => {
       var content = $("<div></div>").append($(el).attr("data-content"));
       content.find("[i18n]").each((i, contentEl) => {
