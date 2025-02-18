@@ -1111,8 +1111,11 @@
             const is400 = status === "parsererror" ? "400" : "";
 
             if (API.debug === "true") {
-              document.querySelector("#loader-title").innerHTML =
-                `<i class="fa fa-code" aria-hidden="true"></i> code ${is404 || is400}`;
+              document.querySelector(
+                "#loader-title"
+              ).innerHTML = `<i class="fa fa-code" aria-hidden="true"></i> code ${
+                is404 || is400
+              }`;
               return;
             }
             if (request.statusCode().status === 404) {
