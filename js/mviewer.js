@@ -1887,7 +1887,7 @@ mviewer = (function () {
         // find inside div with id right-panel the div with class carousel-inner and hide all divs that contain item inside of it
         $(info_panel_selector_to_use).find(".carousel-inner").find("div.item").hide();
 
-        // show the div that contains the clicked language in its class with data counter as filter
+        // show the div that contains the clicked language in its class
         $(info_panel_selector_to_use)
           .find(".carousel-inner")
           .find("div.item.mst_" + $(this).attr("idlang"))
