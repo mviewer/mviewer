@@ -157,6 +157,56 @@ rajoutez les nouvelles clés dans votre fichier de traduction::
 
 4 - Ajoutez les paramètres *lang='en,fr,bzh'* et *langfile='./chemin/fichier/traduction'*
 
-5 - Eventuellement, choissisez d'afficher le sélecteur de langue dans la popup d'aide avec le paramètre *showhelp='true'*
+5 - Eventuellement, choisissez d'afficher le sélecteur de langue dans la popup d'aide avec le paramètre *showhelp='true'*
 
 6 - Testez
+
+**Traduction du contenu dynamique**
+
+* Utilisez le paramètre debug_translation=true pour afficher les attributs i18n à ajouter dans votre dictionnaire: 
+    http://kartenn.region-bretagne.fr/kartoviz/?config=demo/lang.xml&debug_translation=true
+
+
+* Les attributs ci-dessous sont en commun par toutes cartes, et sont à ajouter dans votre fichier json:
+
+ * *loader.title* : Nom affiché lors du chargement de la carte
+ * *map_title* : Nom de la carte
+
+Les attributs des thèmes et les layers seront de la forme: *themes.id_généré* et *layers.id_généré*.
+
+
+Traduction des templates
+---------------------------------
+
+Mviewer propose, en option, de traduire les templates Mustache utilisés pour les fiche d'information. Vous pouvez donc appeler un template par langue, deux choix se présentent à vous :
+
+
+**1 - Appel des templates locaux**
+
+Renseignez le chemin du template de la manière suivante: 
+
+    *<template url=\"chemin/nom_du_template\" />*
+
+*Attention:* nom_du_template n'est pas un dossier, mais le préfixe commun entre vos fichiers templates.
+
+Par exemple si *lang='fr,de'*, mviewer va chercher les templates *chemin/nom_du_template_fr.mst* et *chemin/nom_du_template_en.mst*. Il faudra donc mettre la fiche d'information de chaque langue dans le fichier correspondant:
+::
+
+    chemin
+    ├── nom_du_template_fr.mst
+    ├── nom_du_template_de.mst
+    └── ...
+
+
+
+
+**2 - Appel des templates distants**
+
+Renseignez l'url des templates de la manière suivante: <template url=\"votre_url/exemple\"  />
+
+Mviewer fera donc appel à votre template distant en ajoutant le suffixe de la langue choisie comme paramètre.
+
+Exemple pour *lang='en,fr,bzh'*, 3 requêtes seront envoyées: 
+    *votre_url/exemple?lang=en* ; *votre_url/exemple?lang=fr* ; *votre_url/exemple?lang=bzh*
+
+
