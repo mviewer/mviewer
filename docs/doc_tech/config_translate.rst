@@ -183,7 +183,9 @@ Mviewer propose, en option, de traduire les templates Mustache utilisés pour le
 
 **1 - Appel des templates locaux**
 
-Renseignez le chemin du template de la manière suivante: <template url="chemin/nom_du_template" />
+Renseignez le chemin du template de la manière suivante: 
+
+    *<template url=\"chemin/nom_du_template\" />*
 
 *Attention:* nom_du_template n'est pas un dossier, mais le préfixe commun entre vos fichiers templates.
 
@@ -200,10 +202,11 @@ Par exemple si *lang='fr,de'*, mviewer va chercher les templates *chemin/nom_du_
 
 **2 - Appel des templates distants**
 
-Renseignez l'url de la manière suivante: <template url="votre_url/exemple"  />
+Renseignez l'url des templates de la manière suivante: <template url=\"votre_url/exemple\"  />
 
 Mviewer fera donc appel à votre template distant en ajoutant le suffixe de la langue choisie comme paramètre.
 
-Exemple pour *lang='en,fr,bzh'*, 3 requêtes seront envoyées:  *votre_url/exemple?lang=en* ; *votre_url/exemple?lang=fr* ; *votre_url/exemple?lang=bzh*
+Exemple pour *lang='en,fr,bzh'*, 3 requêtes seront envoyées: 
+    *votre_url/exemple?lang=en* ; *votre_url/exemple?lang=fr* ; *votre_url/exemple?lang=bzh*
 
 

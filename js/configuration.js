@@ -867,7 +867,11 @@ var configuration = (function () {
                     languages.forEach(function (lang) {
                       // check if you can get the template for this language
                       var template_url_field_name = "template_" + lang;
-                      var template_url = layer.template.url + "&lang=" + lang;
+
+                      var template_url = new URL(layer.template.url);
+                      template_url = template_url.searchParams
+                        .set("lang", lang)
+                        .toString();
 
                       $.get(mviewer.ajaxURL(template_url, _proxy), function (template) {
                         console.log("added template through api");
