@@ -815,19 +815,18 @@ var configuration = (function () {
                     b - provide an api url that accepts the lang as a parameter
                         + ie: https://url.com/template?lang=fr
                         + the given url will be https://url.com/template
-                    
                 */
 
               /* to implement this i will add template_{lang} field to the layer object
-                while still having a fallback template field as the default template, or in case there is only one language
-
                 in any case, the system will try to find all the templates and save them in the layer properties
                 
                 */
               var found = 0;
-              var need_to_find = configuration.getLanguages().length;
-              var finished_loading_async = false;
+              var languages = configuration.getLanguages();
 
+              // used jquery validator's url regex
+              var isUrl = (str) => str.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g) !== null;
+              
               if (
                 configuration.getLang().length === 1 ||
                 layer.template.url.endsWith(".mst")
@@ -838,47 +837,37 @@ var configuration = (function () {
                   found = true;
                 });
               } else {
-                // try with the local file solution first (a)
-                var languages = configuration.getLanguages();
-                // in case user has multiple languages but one
-                if (!layer.template.url.endsWith(".mst")) {
-                  var requests = languages.map(function (lang) {
+                if (isUrl(layer.template.url)) {
+                  // try with the api solution (b)
+                  languages.forEach(function (lang) {
                     // check if you can get the template for this language
+                    var template_url_field_name = "template_" + lang;
+
+                    var template_url = new URL(layer.template.url);
+                    template_url.searchParams.set("lang", lang);
+                    template_url = template_url.toString();
+
+                    $.get(mviewer.ajaxURL(template_url, _proxy), function (template) {
+                      oLayer[template_url_field_name] = template;
+                      //console.log("added " + lang + " template through api");
+                      found++;
+                    }).fail(function () {
+                      console.log("failed to load " + lang + " template through api");
+                    });
+                  });
+                } else {
+                  languages.forEach(function (lang) {
                     var template_url_field_name = "template_" + lang;
                     var template_url = layer.template.url + "_" + lang + ".mst";
 
-                    return $.get(
-                      mviewer.ajaxURL(template_url, _proxy),
-                      function (template) {
-                        console.log("added template through filesystem");
-                        oLayer[template_url_field_name] = template;
-                        found++;
-                      }
-                    );
-                  });
-
-                  $.when.apply($, requests).done(function () {
-                    finished_loading_async = true;
-                  });
-
-                  if (finished_loading_async && found !== need_to_find) {
-                    // if didn't find the local file
-                    // try with the api solution (b)
-                    languages.forEach(function (lang) {
-                      // check if you can get the template for this language
-                      var template_url_field_name = "template_" + lang;
-
-                      var template_url = new URL(layer.template.url);
-                      template_url = template_url.searchParams
-                        .set("lang", lang)
-                        .toString();
-
-                      $.get(mviewer.ajaxURL(template_url, _proxy), function (template) {
-                        console.log("added template through api");
-                        oLayer[template_url_field_name] = template;
-                      });
+                    $.get(mviewer.ajaxURL(template_url, _proxy), function (template) {
+                      oLayer[template_url_field_name] = template;
+                      //console.log("added " + lang + " template through filesystem");
+                      found++;
+                    }).fail(function () {
+                      console.log("failed to load " + lang + " template through filesystem");
                     });
-                  }
+                  });
                 }
               }
             } else if (layer.template) {
