@@ -825,8 +825,11 @@ var configuration = (function () {
               var languages = configuration.getLanguages();
 
               // used jquery validator's url regex
-              var isUrl = (str) => str.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g) !== null;
-              
+              var isUrl = (str) =>
+                str.match(
+                  /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+                ) !== null;
+
               if (
                 configuration.getLang().length === 1 ||
                 layer.template.url.endsWith(".mst")
@@ -865,7 +868,9 @@ var configuration = (function () {
                       //console.log("added " + lang + " template through filesystem");
                       found++;
                     }).fail(function () {
-                      console.log("failed to load " + lang + " template through filesystem");
+                      console.log(
+                        "failed to load " + lang + " template through filesystem"
+                      );
                     });
                   });
                 }
