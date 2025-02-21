@@ -809,12 +809,10 @@ var configuration = (function () {
             if (layer.template && layer.template.url) {
               /* if there are multiple languages, the user then has 2 possibilities:
                     a - provide a template local file for each language,
-                        + ie: https://url.com/template_fr.mst, https://url.com/template_en.mst
-                        + the given url will be https://url.com/template
-                        + NB: i used a link for the explanation but it shouldn't necessarily be a link, a local file would work just as well
-                    b - provide an api url that accepts the lang as a parameter
-                        + ie: https://url.com/template?lang=fr
-                        + the given url will be https://url.com/template
+                        + ie: directory/template_fr.mst, directory/template_en.mst
+                        + the given url will be directory/template
+                        + ie: directory/template?lang=fr
+                        + the given url will be directory/template
                 */
 
               /* to implement this i will add template_{lang} field to the layer object
