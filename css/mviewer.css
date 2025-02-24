@@ -2166,28 +2166,26 @@ button.vcenter:hover {
   right: 2em;
 }
 
-@media screen and (max-width: 992px) {
-	#accordion .panel-collapse {
-		margin-bottom: 5em;
-	}
+#modal-panel #accordion .panel-collapse {
+	margin-bottom: 5em;
+}
 
-	.counter-slide {
-		position: fixed;
-		z-index: 500;
-		bottom: 5em;
-		left: 47%;
-	}
+#modal-panel #accordion .counter-slide {
+	position: fixed;
+	z-index: 500;
+	bottom: 5em;
+	left: 47%;
+}
 
-	#accordion .carousel-control>span {
-		bottom: 2.5em;
-	}
+#modal-panel #accordion .carousel-control>span {
+	bottom: 2.5em;
+}
 
-	#accordion .panel-collapse {
-		margin-bottom: 5em;
-	}
+#modal-panel #accordion .panel-collapse {
+	margin-bottom: 5em;
+}
 
-	#accordion .left.carousel-control>span {
-		right: auto;
-		left: 2em;
-	}
+#modal-panel #accordion .left.carousel-control>span {
+	right: auto;
+	left: 2em;
 }
