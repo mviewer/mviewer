@@ -1816,6 +1816,11 @@ mviewer = (function () {
     return xyz;
   };
 
+  // returns name of language in its own language, ie autonym
+  // eg: de -> Deutsch, en -> English, fr -> français ...
+  const getLangNameAutonym = (langCode) =>
+    new Intl.DisplayNames([langCode], { type: "language" }).of(langCode);
+
   var _configureTranslate = function (dic) {
     var lang = configuration.getLang();
     var languages = configuration.getLanguages();
@@ -1832,26 +1837,28 @@ mviewer = (function () {
         if (langitems.length === 0 && showHelp) {
           // set no padding for the first item element
           // help popup only
+           // set to right padding to take into account language dropdown menu syle
           p = 0;
         }
         langitems.push(
-          '<li style="padding-left:' +
+          '<li style="padding-right:' +
             p +
             '" type="button" class="btn mv-translate""><a href="#" idlang="' +
             language +
             '"><span style="margin-right: 5px;" class="flag-icon flag-icon-squared flag-icon-' +
             icon +
             '"></span><span>' +
-            language +
+            getLangNameAutonym(language) +
             "</span></a></li>"
         );
       });
 
       // if help popup only
       if (showHelp) {
-        $("#help .modal-body").append(
-          '<ul style="padding-left:0">' + langitems.join("") + "</ul>"
-        );
+        //$("#help .modal-body").append('<ul style="padding-left:0">' + langitems.join("") + '</ul>');
+        $("#lang-button, #lang-selector").addClass("enabled");
+        $("#lang-body>ul").append(langitems.join(""));
+        $("#lang-selector>ul").append(langitems.join(""));
       } else {
         // display selector or modal according to device
         $("#lang-button, #lang-selector").addClass("enabled");
@@ -1860,6 +1867,43 @@ mviewer = (function () {
       }
       $(".mv-translate a").click(function () {
         _changeLanguage($(this).attr("idlang"));
+               //hide current lang mst and unhide new mst
+               $(".mv-translate").removeClass("active");
+               //selector to use depending if popup or modal
+               // check if  #popup-content inside .modal-panel is empty
+               var info_panel_selector_to_use = "#right-panel";
+               if (
+                 $(".modal-panel #popup-content").html() &&
+                 $(".modal-panel #popup-content").html().trim() !== ""
+               ) {
+                 info_panel_selector_to_use = ".modal-panel";
+               }
+       
+               // hide other languages slides
+               $(info_panel_selector_to_use)
+                 .find(".carousel-inner")
+                 .find("li.item")
+                 .not(".mst_" + configuration.getLang())
+                 .addClass("hidden-item")
+                 .removeClass("item");
+               // show those of the new language
+               $(info_panel_selector_to_use)
+                 .find(".carousel-inner")
+                 .find("li.mst_" + $(this).attr("idlang"))
+                 .addClass("item")
+                 .removeClass("hidden-item");
+               // find inside div with id right-panel the div with class carousel-inner and hide all divs that contain item inside of it
+               $(info_panel_selector_to_use).find(".carousel-inner").find("div.item").hide();
+       
+               // show the div that contains the clicked language in its class
+               $(info_panel_selector_to_use)
+                 .find(".carousel-inner")
+                 .find("div.item.mst_" + $(this).attr("idlang"))
+                 .show();
+               //close panel if opened to trigger reload
+               $(info_panel_selector_to_use).removeClass("active");
+               // unselect point graphically only
+               $("#mv_marker").hide();
       });
     }
 
@@ -1927,13 +1971,41 @@ mviewer = (function () {
       "data-original-title",
     ];
     var _element = $(element);
-    _element.find("[i18n]").each((i, el) => {
-      let find = false;
-      let tr = mviewer.lang[lang]($(el).attr("i18n"));
-      htmlType.forEach((att) => {
-        if ($(el).attr(att) && tr) {
-          $(el).attr(att, tr);
-          find = true;
+    
+// get mviewer default i18n keys
+var mviewer_default_i18n_keys = [];
+var defaultI18nFile = "mviewer.i18n.json";
+$.get(defaultI18nFile).done(function (dic) {
+  mviewer_default_i18n_keys = Object.keys(dic[lang]);
+
+  _element.find("[i18n]").each((i, el) => {
+    let is_mviewer_translation = mviewer_default_i18n_keys.includes(
+      $(el).attr("i18n")
+    ); // dont show the i18n id in debug mode if the element's translationis provided by mviewer
+    let find = false;
+    let tr = mviewer.lang[lang]($(el).attr("i18n"));
+    htmlType.forEach((att) => {
+      if ($(el).attr(att) && tr) {
+        $(el).attr(att, tr);
+        find = true;
+      }
+    });
+
+    var debug_translation = new URLSearchParams(window.location.href)
+      .get("debug_translation")
+      ?.match(/[a-zA-Z0-9]+/)[0];
+
+    if (!find && $(el).text().indexOf("{{") === -1) {
+      if (debug_translation === "true" && !is_mviewer_translation) {
+        // debug mode, used to see the generated i18n ids to create the i18n json dictionnary
+        // dont show i18n keys for translations already provided by mviewer
+        $(el).text($(el).attr("i18n"));
+      } else {
+        if (!(tr === $(el).attr("i18n"))) {
+          // if tranlsation exists
+          $(el).text(tr);
+        } // else do nothing, keep the innertext already there
+      }
         }
       });
       if (!find && $(el).text().indexOf("{{") === -1) {

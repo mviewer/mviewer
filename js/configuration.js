@@ -807,16 +807,79 @@ var configuration = (function () {
             }
             //Mustache template
             if (layer.template && layer.template.url) {
-              $.get(mviewer.ajaxURL(layer.template.url, _proxy), function (template) {
-                oLayer.template = template;
-              });
+              /* if there are multiple languages, the user then has 2 possibilities:
+                    a - provide a template local file for each language,
+                        + ie: directory/template_fr.mst, directory/template_en.mst
+                        + the given url will be directory/template
+                        + ie: directory/template?lang=fr
+                        + the given url will be directory/template
+                */
+
+              /* to implement this i will add template_{lang} field to the layer object
+                in any case, the system will try to find all the templates and save them in the layer properties
+                
+                */
+              var found = 0;
+              var languages = configuration.getLanguages();
+
+              // used jquery validator's url regex
+              var isUrl = (str) =>
+                str.match(
+                  /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+                ) !== null;
+
+              if (
+                configuration.getLang().length === 1 ||
+                layer.template.url.endsWith(".mst")
+              ) {
+                //NORMAL CASE, conditions: [mst extension at the end of the url]"
+                $.get(mviewer.ajaxURL(layer.template.url, _proxy), function (template) {
+                  oLayer.template = template;
+                  found = true;
+                });
+              } else {
+                if (isUrl(layer.template.url)) {
+                  // try with the api solution (b)
+                  languages.forEach(function (lang) {
+                    // check if you can get the template for this language
+                    var template_url_field_name = "template_" + lang;
+
+                    var template_url = new URL(layer.template.url);
+                    template_url.searchParams.set("lang", lang);
+                    template_url = template_url.toString();
+
+                    $.get(mviewer.ajaxURL(template_url, _proxy), function (template) {
+                      oLayer[template_url_field_name] = template;
+                      //console.log("added " + lang + " template through api");
+                      found++;
+                    }).fail(function () {
+                      console.log("failed to load " + lang + " template through api");
+                    });
+                  });
+                } else {
+                  languages.forEach(function (lang) {
+                    var template_url_field_name = "template_" + lang;
+                    var template_url = layer.template.url + "_" + lang + ".mst";
+
+                    $.get(mviewer.ajaxURL(template_url, _proxy), function (template) {
+                      oLayer[template_url_field_name] = template;
+                      //console.log("added " + lang + " template through filesystem");
+                      found++;
+                    }).fail(function () {
+                      console.log(
+                        "failed to load " + lang + " template through filesystem"
+                      );
+                    });
+                  });
+                }
+              }
             } else if (layer.template) {
               oLayer.template = layer.template;
             } else {
               oLayer.template = false;
             }
             oLayer.queryable = layer.queryable === "true" ? true : false;
-            oLayer.exclusive = layer.exclusive === "true" ? true : false;
+            oLayer.exclusive = layer.exclusive === "true" ? true : false;l
             oLayer.searchable = layer.searchable === "true" ? true : false;
             if (oLayer.searchable) {
               oLayer = search.configSearchableLayer(oLayer, layer);
