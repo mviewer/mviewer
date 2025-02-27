@@ -879,7 +879,7 @@ var configuration = (function () {
               oLayer.template = false;
             }
             oLayer.queryable = layer.queryable === "true" ? true : false;
-            oLayer.exclusive = layer.exclusive === "true" ? true : false;l
+            oLayer.exclusive = layer.exclusive === "true" ? true : false;
             oLayer.searchable = layer.searchable === "true" ? true : false;
             if (oLayer.searchable) {
               oLayer = search.configSearchableLayer(oLayer, layer);

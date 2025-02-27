@@ -354,7 +354,6 @@ var info = (function () {
               }
             }
 
-
             // ***
 
             //Set view with layer info & html formated features
@@ -586,13 +585,13 @@ var info = (function () {
             if (features.length > 0) {
               if (_panelsTemplate[panel] == "allintabs") {
                 features.forEach(function (feature, index) {
-                // check if l.template has a field other than url
-                if (Object.keys(layerinfos.template).some((key) => key !== "url")) {
-                // try to find .mst template file
+                  // check if l.template has a field other than url
+                  if (Object.keys(layerinfos.template).some((key) => key !== "url")) {
+                    // try to find .mst template file
                     html_result.push(applyTemplate([feature], layerinfos));
                   } else {
-                     // either used multiple langs or template doesnt exist
-                     if (languages.length > 1) {
+                    // either used multiple langs or template doesnt exist
+                    if (languages.length > 1) {
                       // multiple languages
                       languages.forEach(function (lang) {
                         var template_field_name = "template_" + lang;
@@ -622,8 +621,8 @@ var info = (function () {
                   // try to find .mst template file
                   html_result.push(applyTemplate(features, layerinfos));
                 } else {
-                   // either used multiple langs or template doesnt exist
-                   if (languages.length > 1) {
+                  // either used multiple langs or template doesnt exist
+                  if (languages.length > 1) {
                     // multiple languages
                     languages.forEach(function (lang) {
                       var template_field_name = "template_" + lang;
@@ -1158,7 +1157,7 @@ var info = (function () {
     });
     var rendered = Mustache.render(tpl, obj);
     var template_is_mst_file =
-    olayer.template && !olayer[`template_${lang}`] ? true : false;
+      olayer.template && !olayer[`template_${lang}`] ? true : false;
     return _customizeHTML(rendered, olfeatures.length, lang, template_is_mst_file);
   };
 
