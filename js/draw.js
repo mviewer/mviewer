@@ -695,7 +695,9 @@ let draw = (function () {
    * @returns
    */
   let _measureDrawArea = function (geometry) {
-    let area = Math.abs(_wgs84Sphere.getArea(geometry));
+    let area = Math.abs(
+      _wgs84Sphere.getArea(geometry, { projection: _projection || "EPSG:3857" })
+    );
     let output;
     if (area < 0.0001) {
       output = 0;

@@ -176,7 +176,9 @@ var measure = (function () {
    */
 
   var _measureFormatArea = function (polygon) {
-    var area = Math.abs(_wgs84Sphere.getArea(polygon));
+    var area = Math.abs(
+      _wgs84Sphere.getArea(polygon, { projection: _projection || "EPSG:3857" })
+    );
     var output;
     if (area < 0.0001) {
       output = 0;
