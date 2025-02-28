@@ -129,31 +129,31 @@ var info = (function () {
 
       // hide all elements initially if immeadiate div child is not of class "gml-item"
       if (
-        $(tmp).find("li.item").first().find("div").first().attr("class") != "gml-item"
+        $(tmp).find("li.item").first().find("div").first().attr("class") != "gml-item" &&
+        !template_is_mst_file
       ) {
-        if (!template_is_mst_file) {
-          $(tmp).find("li.item").hide();
-        }
+        $(tmp).find("li.item").hide();
       }
+
       $(tmp)
         .find(`li.item.mst_${configuration.getLang()}`)
         .slice(0, featurescount)
         .css("display", "");
       // do NOT use .show() as it will set display to something we dont want
+      $(tmp)
+        .find("li.item.mst_" + configuration.getLang())
+        .first()
+        .addClass("active");
+
+      // hide other languages slides
+      $(tmp)
+        .find("li.item")
+        .not(".mst_" + configuration.getLang())
+        .addClass("hidden-item")
+        .removeClass("item");
+    } else {
+      $(tmp).find("li.item").first().addClass("active");
     }
-    $(tmp)
-      .find("li.item.mst_" + configuration.getLang())
-      .first()
-      .addClass("active");
-
-    // hide other languages slides
-    $(tmp)
-      .find("li.item")
-      .not(".mst_" + configuration.getLang())
-      .addClass("hidden-item")
-      .removeClass("item");
-
-    // if element is current language show it
 
     //manipulate html to add data-counter attribute to each feature.
     if (featurescount > 1) {
