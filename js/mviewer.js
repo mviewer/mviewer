@@ -2042,7 +2042,6 @@ mviewer = (function () {
         }
       });
     });
-    console.log("found " + _element.find("[i18n]").length + " i18n elements");
     var ret = element === "body" ? true : _element[0].outerHTML;
     return ret;
   };
