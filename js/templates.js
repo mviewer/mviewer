@@ -46,7 +46,7 @@ mviewer.templates.theme = `
 mviewer.templates.layerControl = `
 <li class="{{cls}}" data-layerid="{{layerid}}" data-title=" {{title}}">
     <div class="row layerdisplay-title" >
-        <i class="mv-grip fas fa-grip-vertical" title="Déplacer" i18n="theme.layers.move"></i><a>{{title}}</a>
+        <i class="mv-grip fas fa-grip-vertical" title="Déplacer" i18n="theme.layers.move"></i><a i18n="{{layerid}}.legend.title" >{{title}}</a>
         {{#secure_layer}}
         <button data-toggle="modal"
                 data-target="#loginpanel"'
@@ -75,7 +75,7 @@ mviewer.templates.layerControl = `
             <div class="loader">Loading...</div>
         </div>
         <canvas class="vector-legend" id="vector-legend-{{layerid}}" width="0" height="0"/>
-        <img class="mv-legend" {{crossorigin}} id="legend-{{layerid}}" src="{{legendurl}}"
+        <img class="mv-legend" {{crossorigin}} id="legend-{{layerid}}" i18n="{{layerid}}.legend.image" src="{{legendurl}}"
                 alt="Légende non disponible" onload="mviewer.legendSize(this)"
                 onError="this.onerror=null;this.src=\'img/nolegend.png\';"/>
     </div>
