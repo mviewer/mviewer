@@ -119,40 +119,52 @@ var info = (function () {
     //manipulate html to activate first item.
     var tmp = document.createElement("div");
     $(tmp).append(html);
-    if (configuration.getLanguages().length > 1) {
-      // check if lang_to_add is defined and is in the list of languages
-      // if so add id that can be used by button to show the content
-      if (lang_to_add != "" && configuration.getLanguages().includes(lang_to_add)) {
-        // hide cluster_length first elements
-        $(tmp).find("li.item").slice(0, featurescount).addClass(`mst_${lang_to_add}`);
-      }
 
-      // hide all elements initially if immeadiate div child is not of class "gml-item"
-      if (
-        $(tmp).find("li.item").first().find("div").first().attr("class") != "gml-item" &&
-        !template_is_mst_file
-      ) {
-        $(tmp).find("li.item").hide();
-      }
-
-      $(tmp)
-        .find(`li.item.mst_${configuration.getLang()}`)
-        .slice(0, featurescount)
-        .css("display", "");
-      // do NOT use .show() as it will set display to something we dont want
-      $(tmp)
-        .find("li.item.mst_" + configuration.getLang())
-        .first()
-        .addClass("active");
-
-      // hide other languages slides
-      $(tmp)
-        .find("li.item")
-        .not(".mst_" + configuration.getLang())
-        .addClass("hidden-item")
-        .removeClass("item");
-    } else {
+    if (template_is_mst_file) {
+      // user provided mst file, regardless of number of langs, and for retrocompatibility reasons, we assume the map is monolingual
       $(tmp).find("li.item").first().addClass("active");
+    } else {
+      if (configuration.getLanguages().length > 1) {
+        // check if lang_to_add is defined and is in the list of languages
+        // if so add id that can be used by button to show the content
+        if (lang_to_add != "" && configuration.getLanguages().includes(lang_to_add)) {
+          // hide cluster_length first elements
+          $(tmp).find("li.item").slice(0, featurescount).addClass(`mst_${lang_to_add}`);
+        }
+
+        // multiple msts + multiple langs
+
+        // hide all elements initially if immeadiate div child is not of class "gml-item"
+        // TODO remember why gml-item
+        if (
+          $(tmp).find("li.item").first().find("div").first().attr("class") != "gml-item"
+        ) {
+          // hide all items
+          $(tmp).find("li.item").hide();
+
+          $(tmp)
+            .find(`li.item.mst_${configuration.getLang()}`)
+            .slice(0, featurescount)
+            .css("display", "");
+
+          // do NOT use .show() as it will set display to something we dont want
+          $(tmp)
+            .find("li.item.mst_" + configuration.getLang())
+            .first()
+            .addClass("active");
+
+          // hide other languages slides
+          $(tmp)
+            .find("li.item")
+            .not(".mst_" + configuration.getLang())
+            .addClass("hidden-item")
+            .removeClass("item");
+        } else {
+        }
+      } else {
+        // one lang but multiple msts, should not be
+        $(tmp).find("li.item").first().addClass("active");
+      }
     }
 
     //manipulate html to add data-counter attribute to each feature.

@@ -1934,6 +1934,7 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
 
 #lang-button, #lang-selector {
     display:none;
+    text-transform: capitalize;
 }
 #lang-button.enabled, #lang-selector.enabled {
     display:inline-block;

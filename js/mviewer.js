@@ -1830,16 +1830,36 @@ mviewer = (function () {
       languages.forEach(function (language) {
         var langStr = "";
         var icon = language;
-        var p;
-        if (language === "en") {
-          icon = "gb";
+        var p = 0;
+        switch (language) {
+          case "en":
+            icon = "gb"; // england
+            break;
+          case "ar":
+            icon = "sa"; // saudi arabia
+            break;
+          case "uk":
+            icon = "ua"; // ukraine
+            break;
+          case "ko":
+            icon = "kr"; // south korea
+            break;
+          case "sl":
+            icon = "si"; // slovenia
+            break;
+          case "sq":
+            icon = "al"; // albania
+            break;
+          case "sv":
+            icon = "se"; // sweden
+            break;
+          default:
+            icon = language;
         }
-        if (langitems.length === 0 && showHelp) {
-          // set no padding for the first item element
-          // help popup only
-          // set to right padding to take into account language dropdown menu syle
-          p = 0;
-        }
+
+        // set no padding for the first item element
+        // help popup only
+        // set to right padding to take into account language dropdown menu syle
         langitems.push(
           '<li style="padding-right:' +
             p +
@@ -1895,12 +1915,12 @@ mviewer = (function () {
             .addClass("item")
             .removeClass("hidden-item");
           // find inside div with id right-panel the div with class carousel-inner and hide all divs that contain item inside of it
-          $(info_panel_selector_to_use).find(".carousel-inner").find("div.item").hide();
+          $(info_panel_selector_to_use).find(".carousel-inner").find("li.item").hide();
 
           // show the div that contains the clicked language in its class
           $(info_panel_selector_to_use)
             .find(".carousel-inner")
-            .find("div.item.mst_" + $(this).attr("idlang"))
+            .find("li.item.mst_" + $(this).attr("idlang"))
             .show();
           //close panel if opened to trigger reload
           $(info_panel_selector_to_use).removeClass("active");
@@ -2011,9 +2031,6 @@ mviewer = (function () {
           }
         }
       });
-      if (!find && $(el).text().indexOf("{{") === -1) {
-        $(el).text(tr);
-      }
     });
     _element.find("[data-content]").each((i, el) => {
       var content = $("<div></div>").append($(el).attr("data-content"));
@@ -2025,7 +2042,7 @@ mviewer = (function () {
         }
       });
     });
-
+    console.log("found " + _element.find("[i18n]").length + " i18n elements");
     var ret = element === "body" ? true : _element[0].outerHTML;
     return ret;
   };

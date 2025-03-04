@@ -29,7 +29,7 @@ mviewer.templates.theme = `
     <ul class="nav-pills nav-stacked" style="list-style-type:none;">
         {{#groups}}
             <li class="level-2">
-                <a href="#">{{title}}</a>
+                <a href="#" i18n="{{title}}">{{title}}</a>
                 <ul class="nav-pills nav-stacked" style="list-style-type:none;">
                 {{#layers}}
                     ${mviewer.templates.themeLayer}
