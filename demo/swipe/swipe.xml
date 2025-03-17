@@ -12,6 +12,9 @@
     togglealllayersfromtheme="false">
 </application>
 <mapoptions maxzoom="18" projection="EPSG:3857" center="-230072,6204699" zoom="14" />
+<olscompletion type="ban" url="https://api-adresse.data.gouv.fr/search/" attribution="Base adresse nationale (BAN)" />
+<searchparameters bbox="true" localities="true" features="false" static="false"/>
+
 <baselayers style="default">
 	<baselayer  type="WMTS" id="ortho_50" label="Photo aérienne 1950" title="IGN" thumbgallery="img/basemap/ortho-ancien.jpg"
             url="https://data.geopf.fr/wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS.1950-1965" format="image/png" visible="true" fromcapacity="false"
