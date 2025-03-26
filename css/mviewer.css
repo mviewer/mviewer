@@ -2147,9 +2147,13 @@ button.vcenter:hover {
 }
 
 #accordion .carousel-inner {
-  max-height: 60vh;
+  max-height: 75vh;
   overflow-y: auto;
   margin-bottom: 2em;
+}
+
+#modal-panel #accordion .carousel-inner {
+	max-height: 60vh;
 }
 
 #modal-panel #accordion .counter-slide {
