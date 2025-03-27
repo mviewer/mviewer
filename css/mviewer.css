@@ -1781,12 +1781,6 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
 #accordion.panel-group .panel+.panel {
     margin-top: 0;
 }
-/* to scroll in accordion */
-
-#accordion .panel-collapse.collapse.in{
-  overflow-y: auto;
-  max-height:600px;
-}
 
 /* Sub-title layers */
 .selected-sld.fas span{
@@ -2140,4 +2134,35 @@ button.vcenter {
 button.vcenter:hover {
   border-color: gray;
   transform: scale(1.05);
+}
+
+/* Template - Accordion + carousel */
+
+#accordion .carousel-control .glyphicon-chevron-left, 
+#accordion .carousel-control .glyphicon-chevron-right, 
+#accordion .carousel-control .icon-next, 
+#accordion .carousel-control .icon-prev {
+  top: auto;
+  bottom: 7px;
+}
+
+#accordion .carousel-inner {
+  max-height: 75vh;
+  overflow-y: auto;
+  margin-bottom: 2em;
+}
+
+#modal-panel #accordion .carousel-inner {
+	max-height: 60vh;
+}
+
+#modal-panel #accordion .counter-slide {
+	position: relative;
+	z-index: 500;
+	left: 47%;
+}
+
+#right-panel #accordion span.counter-slide {
+  position: static;
+  transform: translate(500%, -70%);
 }
