@@ -5,50 +5,45 @@
   "target": "page-content-wrapper",
   "options": {
     "mviewer": {
-      "sinp-filter": {
-        "tooltipPosition": "bottom-left",
+      "pacte":{
+        "tooltipPosition": "bottom-right",
         "title": "Filtrer",
         "open": true,
         "zoomOnFeatures": true,
         "legendTitle": "Sélectionner une donnée :",
-
         "style": {
           "border": "1px #2e5367 solid",
-          "background": "#2e5367",
+          "background": "#0f4496",
           "text": "white",
-          "colorButton": "#2e5367"
+          "colorButton": "#0f4496"
         },
-        "layers": [
-          {
-            "layerId": "occurence_public_filter",
-            "downloadFormats": [
-              { "label": "CSV", "format": "CSV" },
-              { "label": "Shapefiles", "format": "SHAPE-ZIP" },
-              { "label": "Geojson", "format": "application/json" }
+        "layers": [{
+          "layerId": "structure_illetrisme",
+		  "downloadFormats": [
+              { "label": "CSV", "format": "CSV"},
+              { "label": "Shapefiles", "format": "SHAPE-ZIP"},
+              { "label": "Geojson", "format": "application/json"},
+			  { "label": "Excel", "format": "excel"}
             ],
-            "filter": [
-              {
-                "attribut": "man_made",
+		  
+          "filter": [{
+               "attribut": "publics",
                 "type": "combobox",
-                "label": "Man_made",
+                "label": "Public visé",
+                "dataSeparator": ",",
                 "updateOnChange": true
-              },
-              {
-                "attribut": "operator",
-                "type": "button",
-                "label": "Operator",
+            },
+			{
+               "attribut": "critere",
+                "type": "combobox",
+                "label": "Critère",
+                "dataSeparator": ",",
                 "updateOnChange": true
-              },
-              {
-                "attribut": "colour",
-                "type": "button",
-                "label": "colour",
-                "updateOnChange": true
-              }
-            ]
-          }
-        ]
-      },
+            }
+          ]
+        }]
+      }
+,
       "filter": {
         "tooltipPosition": "bottom-left",
         "title": "Filtrer",
