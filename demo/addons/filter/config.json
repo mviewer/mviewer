@@ -5,7 +5,7 @@
   "target": "page-content-wrapper",
   "options": {
     "mviewer": {
-      "pacte":{
+      "pacte": {
         "tooltipPosition": "bottom-right",
         "title": "Filtrer",
         "open": true,
@@ -17,33 +17,35 @@
           "text": "white",
           "colorButton": "#0f4496"
         },
-        "layers": [{
-          "layerId": "structure_illetrisme",
-		  "downloadFormats": [
-              { "label": "CSV", "format": "CSV"},
-              { "label": "Shapefiles", "format": "SHAPE-ZIP"},
-              { "label": "Geojson", "format": "application/json"},
-			  { "label": "Excel", "format": "excel"}
+        "layers": [
+          {
+            "layerId": "structure_illetrisme",
+            "downloadFormats": [
+              { "label": "CSV", "format": "CSV" },
+              { "label": "Shapefiles", "format": "SHAPE-ZIP" },
+              { "label": "Geojson", "format": "application/json" },
+              { "label": "Excel", "format": "excel" }
             ],
-		  
-          "filter": [{
-               "attribut": "publics",
+
+            "filter": [
+              {
+                "attribut": "publics",
                 "type": "combobox",
                 "label": "Public visé",
                 "dataSeparator": ",",
                 "updateOnChange": true
-            },
-			{
-               "attribut": "critere",
+              },
+              {
+                "attribut": "critere",
                 "type": "combobox",
                 "label": "Critère",
                 "dataSeparator": ",",
                 "updateOnChange": true
-            }
-          ]
-        }]
-      }
-,
+              }
+            ]
+          }
+        ]
+      },
       "filter": {
         "tooltipPosition": "bottom-left",
         "title": "Filtrer",
