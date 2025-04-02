@@ -650,7 +650,7 @@ var info = (function () {
             var selectedFeature = _queriedFeatures.filter((feature) => {
               return feature.ol_uid == e.relatedTarget.id;
             });
-            if (!_.isEmpty(_queriedFeatures) && _queriedFeatures[0].get("features")) {
+            if (!_.isEmpty(_queriedFeatures) && !_queriedFeatures[0].get("features")) {
               mviewer.highlightSubFeature(selectedFeature[0]);
             }
           });
