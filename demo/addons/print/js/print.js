@@ -12,7 +12,7 @@ import ModalContent from "./components/ModalContent.js";
 import { getOptions } from "./components/Block.js";
 
 const onCloseModal = () => {
-  const btnClose = document.getElementById("print-panel-close");
+  const btnClose = document.getElementById("closePrintModal");
   btnClose.onclick = () => {
     document.querySelector("#mapBlock").remove();
     document.querySelector("#print-mapPrint").remove();
