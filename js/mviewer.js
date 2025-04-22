@@ -2547,7 +2547,7 @@ mviewer = (function () {
      */
     highlightSubFeature: function (feature) {
       _sourceSubSelectOverlay.clear();
-      if (feature && typeof getGeometryName === "function") {
+      if (feature) {
         _sourceSubSelectOverlay.addFeature(feature);
       }
     },
