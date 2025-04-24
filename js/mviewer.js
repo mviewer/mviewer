@@ -1406,18 +1406,19 @@ mviewer = (function () {
         _map.addLayer(l);
         break;
     }
-    //Il est peut être possible de mieux traiter le cas undefined
-    if (baselayer.attributioncollapsible == "undefined"){
-      l.set("attributioncollapsible", "false"); //By default, if attributioncollapsible is not define, set attributioncollapsible to false
-    } else {
-      l.set("attributioncollapsible", baselayer.attributioncollapsible);
-    }
-    l.on('change:visible', function(event) {
-      if (l.getVisible() && l.get("attributioncollapsible")) {
-        _map.getControls().getArray().find(control => control instanceof ol.control.Attribution).setCollapsible(false);
-      } else if (l.get("attributioncollapsible")) {
-        _map.getControls().getArray().find(control => control instanceof ol.control.Attribution).setCollapsible(true);
-      }
+    // manage attribution by layer
+    let isCollapsible = baselayer?.attributioncollapsible;
+    l.set("attributioncollapsible", ["true", "", undefined].includes(isCollapsible));
+    // on baselayer change, set attribution collapsible
+    l.on("change:visible", function (event) {
+      // don't set collapsible if layer is not visible
+      if (event.oldValue) return;
+      // set collapsible attribution param according to baselayer settings
+      _map
+        .getControls()
+        .getArray()
+        .find((control) => control instanceof ol.control.Attribution)
+        .setCollapsible(event.target.get("attributioncollapsible"));
     });
   };
 
