@@ -315,7 +315,6 @@ mviewer = (function () {
       controls: [
         //new ol.control.FullScreen(),
         new ol.control.Attribution({ 
-          collapsed: false,
           collapsible: true,
         }),
         new ol.control.ScaleLine({
