@@ -52,8 +52,8 @@
         metadata=""
         metadata-csw="">
     </layer>
-     <layer id="cad2" name="Cadastre complet" visible="true" queryable="false"
-        type="customlayer" opacity="0.8" legendurl="img/blank.gif"
+     <layer id="cad2" name="Cadastre complet" visible="false" queryable="false"
+        type="customlayer" opacity="0.8" legendurl="img/blank.gif" showintoc="false"
         url="demo/cad/layer2.js"
         attribution="Source: DGFIP. Cette couche affiche le cadastre de la commune sélectionnée dans le panneau Sélection parcellaire"
         metadata=""
