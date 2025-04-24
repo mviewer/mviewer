@@ -72,6 +72,7 @@ Elément enfant de ``<baselayers>`` permettant le paramétrage de chaque fond de
 		matrixset=""
 		maxzoom=""
 		opacity=""
+		attributioncollapsible="" 
 	/>
 
 **Paramètres principaux**
@@ -97,7 +98,7 @@ Elément enfant de ``<baselayers>`` permettant le paramétrage de chaque fond de
 * ``matrixset`` : paramètre optionnel précisant le style à associer à la couche. Paramètre obligatoire pour les couches de type WMTS si le paramètre **fromcapacity** n'est pas activé.
 * ``maxzoom``: paramètre optionnel de type numérique définissant le zoom maximum pour la couche (pas géré pour le type vector-tms).
 * ``opacity``: opacité du fond de carte . Valeur numérique de 0 à 1. Défaut = 1.
-
+* ``attributioncollapsible``: paramètre optionnel qui permet de rendre retractable ou non les attributions. Quand il est mis à false, les attributions sont affichées et ne peuvent être cachées.
 
 **Exemple**
 
@@ -107,6 +108,7 @@ Elément enfant de ``<baselayers>`` permettant le paramétrage de chaque fond de
 	<baselayer
 		type="OSM"
 		id="osm1"
+		attributioncollapsible="false"
 		label="OpenStreetMap"
 		title="OpenSTreetMap"
 		thumbgallery="img/basemap/osm.png"

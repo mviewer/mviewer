@@ -314,7 +314,7 @@ mviewer = (function () {
       target: "map",
       controls: [
         //new ol.control.FullScreen(),
-        new ol.control.Attribution({ 
+        new ol.control.Attribution({
           collapsible: true,
         }),
         new ol.control.ScaleLine({
