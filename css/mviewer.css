@@ -1675,6 +1675,12 @@ button.btn.btn-default.btn-raised, a#exportpng,a.btn.btn-default {
 	border-radius: 30px;
 }
 
+.ol-attribution.ol-uncollapsible {
+  right: auto; 
+  border-radius: 30px;
+  bottom: 8px;
+}
+
 #page-content-wrapper:has(#bottom-panel.active) .ol-attribution.ol-unselectable.ol-control{
 	margin-bottom: 345px;
 	transition: 0.5s;

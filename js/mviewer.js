@@ -314,7 +314,10 @@ mviewer = (function () {
       target: "map",
       controls: [
         //new ol.control.FullScreen(),
-        new ol.control.Attribution({ collapsible: true }),
+        new ol.control.Attribution({ 
+          collapsed: false,
+          collapsible: true,
+        }),
         new ol.control.ScaleLine({
           units: mapoptions.scaleunits || "metric",
           bar: mapoptions.scalebar === "true",
@@ -1403,6 +1406,19 @@ mviewer = (function () {
         _map.addLayer(l);
         break;
     }
+    //Il est peut être possible de mieux traiter le cas undefined
+    if (baselayer.attributioncollapsible == "undefined"){
+      l.set("attributioncollapsible", "false"); //By default, if attributioncollapsible is not define, set attributioncollapsible to false
+    } else {
+      l.set("attributioncollapsible", baselayer.attributioncollapsible);
+    }
+    l.on('change:visible', function(event) {
+      if (l.getVisible() && l.get("attributioncollapsible")) {
+        _map.getControls().getArray().find(control => control instanceof ol.control.Attribution).setCollapsible(false);
+      } else if (l.get("attributioncollapsible")) {
+        _map.getControls().getArray().find(control => control instanceof ol.control.Attribution).setCollapsible(true);
+      }
+    });
   };
 
   /**
