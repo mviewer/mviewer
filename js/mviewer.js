@@ -314,7 +314,9 @@ mviewer = (function () {
       target: "map",
       controls: [
         //new ol.control.FullScreen(),
-        new ol.control.Attribution({ collapsible: true }),
+        new ol.control.Attribution({
+          collapsible: true,
+        }),
         new ol.control.ScaleLine({
           units: mapoptions.scaleunits || "metric",
           bar: mapoptions.scalebar === "true",
@@ -1403,6 +1405,20 @@ mviewer = (function () {
         _map.addLayer(l);
         break;
     }
+    // manage attribution by layer
+    let isCollapsible = baselayer?.attributioncollapsible;
+    l.set("attributioncollapsible", ["true", "", undefined].includes(isCollapsible));
+    // on baselayer change, set attribution collapsible
+    l.on("change:visible", function (event) {
+      // don't set collapsible if layer is not visible
+      if (event.oldValue) return;
+      // set collapsible attribution param according to baselayer settings
+      _map
+        .getControls()
+        .getArray()
+        .find((control) => control instanceof ol.control.Attribution)
+        .setCollapsible(event.target.get("attributioncollapsible"));
+    });
   };
 
   /**
