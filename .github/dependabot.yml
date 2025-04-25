@@ -1,0 +1,7 @@
+version: 2
+updates:
+  - package-ecosystem: "npm" # ou "pip", "maven", etc.
+    directory: "/" # répertoire contenant ton fichier de dépendances
+    schedule:
+      interval: "weekly"
+    target-branch: "develop"
