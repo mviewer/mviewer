@@ -209,7 +209,7 @@
     "nav.responsive.about": "About",
     "nav.responsive.legend": "Legend",
     "nav.responsive.topics": "Topics",
-    "navbar-toggle": "Display/hide thematics",
+    "navbar.toggle": "Display/hide themes",
     "navbar.search.placeholder": "Search",
     "right.panel.close": "Close",
     "right.panel.title": "Informations",
