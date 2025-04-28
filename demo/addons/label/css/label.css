@@ -1,0 +1,8 @@
+#label-custom-component {
+  display: none;
+  margin-bottom: 28px !important;
+}
+
+.label-tooltip {
+  font-weight: 400 !important;
+}

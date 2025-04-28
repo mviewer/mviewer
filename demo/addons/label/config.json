@@ -1,0 +1,37 @@
+{
+  "js": [
+    "js/label.js"
+  ],
+  "css": "css/label.css",
+  "html": "label.html",
+  "target": "layers-container-box",
+  "options": {
+    "mviewer": {
+      "ssiad_paph_territoire": {
+        "layer": [
+          {
+            "layerId": "ssiad_paph_territoire",
+            "field": "SSIAD_RS",
+            "textColor": "black",
+            "strokeColor": "white",
+            "font": "11px Calibri,sans-serif",
+            "zoomThreshold": 5
+          }
+        ]
+      },
+      "addon_label": {
+        "layer": [
+          {
+            "layerId": "point",
+            "field": "NOM",
+            "textColor": "black",
+            "strokeColor": "white",
+            "font": "12px Calibri,sans-serif",
+            "offsetY": -8,
+            "offsetX": 8
+          }
+        ]
+      }
+    }
+  }
+}
