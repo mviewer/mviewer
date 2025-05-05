@@ -1,7 +1,10 @@
 const label = (function () {
-  // Variables globales
-  let mviewerId, options, layerId, field, layer, source, isCluster, label;
+  // Global variables
+  let mviewerId, options, layerId, field, layer, source, isCluster, label, features;
 
+  /**
+   * Get config from config file
+   */
   function _getConfig() {
     mviewerId = configuration.getConfiguration().application.id;
     options = mviewer.customComponents.label.config.options.mviewer[mviewerId];
@@ -21,7 +24,7 @@ const label = (function () {
   }
 
   /**
-   * style des étiquettes
+   * Label style
    */
   function _labelStyle(text, geometry) {
     const formattedText = _wrapText(text);
@@ -55,14 +58,16 @@ const label = (function () {
   }
 
   /**
-   * Formate une chaîne de caractères en la découpant en lignes
-   * de longueur maximale, sans couper les mots.
-   *
-   * @param str - La chaîne à formater.
-   * @returns Une chaîne avec des retours à la ligne insérés.
+   * Format a string by wrapping text without breaking words
+   * @param str - The string to format
+   * @returns A string with inserted line breaks
    */
   function _wrapText(str) {
     if (!str || str.length <= 30) return str || "";
+
+    console.log("str", str); 
+    console.log(str.length);
+    
 
     const words = str.split(" ");
     const lines = [];
@@ -89,52 +94,45 @@ const label = (function () {
     _getConfig();
     _addComponent();
     _addClickListener();
-    // Mettre à jour la visibilité lors des changements de résolution
+    // Update visibility on zoom level changes
     const view = mviewer.getMap().getView();
     view.on("change:resolution", _updateZoomVisibility);
     _updateZoomVisibility();
   }
 
   /**
-   * Créer le container pour le bouton
+   * Create the container for the label button
    */
   function _createLabelCheckboxContainer() {
-    // Créer l'élément <a> principal
     const labelLink = document.createElement("a");
     labelLink.dataset.layerid = layerId;
     labelLink.className = "label-tooltip";
     labelLink.href = "#";
     labelLink.id = `${layerId}-label-tooltip`;
 
-    const zoomLabel = document.createElement("p");
+    const zoomLabel = document.createElement("div");
     zoomLabel.dataset.layerid = layerId;
     zoomLabel.textContent = "Zoomer pour afficher les étiquettes";
     zoomLabel.id = `${layerId}-label-zoom`;
 
-    // Icône d'état
     const stateIcon = document.createElement("span");
-    stateIcon.className =
-      "state-icon far mv-unchecked glyphicon glyphicon-chevron-up";
+    stateIcon.className = "state-icon far mv-unchecked glyphicon glyphicon-chevron-up";
 
-    // Texte visible
     const labelText = document.createElement("div");
     labelText.style.display = "inline";
     labelText.textContent = "Afficher les étiquettes";
 
-    // Checkbox caché
     const checkboxInput = document.createElement("input");
     checkboxInput.type = "checkbox";
     checkboxInput.className = "hidden";
     checkboxInput.value = "false";
     checkboxInput.id = `${layerId}-label-checkbox`;
 
-    // Ajouter les éléments dans <a>
     labelLink.appendChild(zoomLabel);
     labelLink.appendChild(stateIcon);
     labelLink.appendChild(labelText);
     labelLink.appendChild(checkboxInput);
 
-    // Créer la structure d'encapsulation
     const colDiv = document.createElement("div");
     colDiv.className = "col-md-12";
     colDiv.appendChild(labelLink);
@@ -147,7 +145,7 @@ const label = (function () {
   }
 
   /**
-   * créer le component et l'ajouter dans le custom control
+   * Create the component and add it to the custom control
    */
   function _addComponent() {
     if ($(`#${layerId}-label-tooltip`).length) {
@@ -159,11 +157,14 @@ const label = (function () {
     if (component && targetDiv) {
       targetDiv.prepend(component);
     } else {
-      console.warn("targetDiv introuvable");
+      console.warn("targetDiv not found");
       return;
     }
   }
 
+  /**
+   * Add or remove label to style
+   */
   function _updateFeatureStyle(feature, geometry, baseStyle, label) {
     const isChecked = _getLabelCheckboxValue();
     const isZoomThreshold = _isZoomThreshold();
@@ -192,7 +193,11 @@ const label = (function () {
   }
 
   /**
-   * Fonctions d'agrégation pour les clusters
+   * Aggregation functions for clusters
+   */
+
+  /**
+   * Get max value
    */
   function getMax(features) {
     let maxValue = 0;
@@ -207,6 +212,9 @@ const label = (function () {
     return maxValue;
   }
 
+  /**
+   * Get min value
+   */
   function getMin(features) {
     let minValue = 0;
     features.forEach((ft) => {
@@ -220,6 +228,9 @@ const label = (function () {
     return minValue;
   }
 
+  /**
+   * Get sum value
+   */
   function getSum(features) {
     let sum = 0;
     features.forEach((ft) => {
@@ -231,6 +242,9 @@ const label = (function () {
     return sum;
   }
 
+  /**
+   * Get avg value
+   */
   function getAverage(features) {
     let sum = 0;
     let count = 0;
@@ -241,11 +255,11 @@ const label = (function () {
         count++;
       }
     });
-    return count > 0 ? parseFloat((sum / count).toFixed(2)) : null; // Garde 2 décimales
+    return count > 0 ? parseFloat((sum / count).toFixed(2)) : null; // Keep 2 decimals
   }
 
   /**
-   * Fonctions qui vérifie type = numérique
+   * Check if attribute is numeric
    */
   function isNumericAttribute(features) {
     for (const ft of features) {
@@ -257,47 +271,50 @@ const label = (function () {
     return false;
   }
 
+  /**
+   * Get label for clusters according to aggregation function
+   */
   function getMethod(method, clusterFeatures) {
-    if (method !== "count" && !isNumericAttribute(clusterFeatures, field)) {
-      console.warn(
-        `L'attribut ${field} doit être numérique pour effectuer une agrégation`
-      );
+    if (method !== "count" && !isNumericAttribute(clusterFeatures)) {
+      console.warn(`Attribute ${field} must be numeric for aggregation`);
       return;
     }
 
     let label;
     switch (method) {
       case "avg":
-        label = `moyenne = ${getAverage(clusterFeatures, field)}`;
+        label = `moyenne = ${getAverage(clusterFeatures)}`;
         break;
       case "count":
-        label = `count = ${clusterFeatures.length}`;
+        label = `compte = ${clusterFeatures.length}`;
         break;
       case "max":
-        label = `max = ${getMax(clusterFeatures, field)}`;
+        label = `max = ${getMax(clusterFeatures)}`;
         break;
       case "min":
-        label = `min = ${getMin(clusterFeatures, field)}`;
+        label = `min = ${getMin(clusterFeatures)}`;
         break;
       case "sum":
-        label = `somme = ${getSum(clusterFeatures, field)}`;
+        label = `somme = ${getSum(clusterFeatures)}`;
         break;
       default:
-        console.warn(`Méthode inconnue : ${method}`);
+        console.warn(`Unknown method: ${method}`);
         break;
     }
+
+    console.log('label', label)
 
     return label;
   }
 
   /**
-   * Afficher ou enlever les étiquettes en fonction du bouton
+   * Show or remove labels based on the button state
    */
   function _updateStyle() {
     _getConfig();
 
     const isVisible = layer?.getVisible() ?? false;
-    if (!isVisible) return; // Évite des calculs inutiles si la couche est invisible
+    if (!isVisible) return;
 
     if (isCluster) {
       layer
@@ -328,13 +345,11 @@ const label = (function () {
           geometry = _getLongestMultiLine(geometry);
         }
 
-        // récupère le style de base
         const baseStyle =
           typeof layer.getStyle() === "function"
             ? layer.getStyle()(ft)
             : layer.getStyle();
 
-        // récupère la valeur à afficher
         const label = ft.get(field) || "N/A";
 
         _updateFeatureStyle(ft, geometry, baseStyle, label);
@@ -343,8 +358,7 @@ const label = (function () {
   }
 
   /**
-   * si c'est multipolygon
-   * trouver le + grand polygone pour appliquer le label uniquement sur celui ci
+   * If multipolygon, find the largest polygon to apply the label
    */
   function _getLargestMultiPolygon(geometry) {
     let polygons = geometry.getPolygons();
@@ -362,8 +376,7 @@ const label = (function () {
   }
 
   /**
-   * si c'est multiline
-   * trouver la + longue ligne pour appliquer le label uniquement sur celle ci
+   * If multiline, find the longest line to apply the label
    */
   function _getLongestMultiLine(geometry) {
     let lines = geometry.getLineStrings();
@@ -381,30 +394,24 @@ const label = (function () {
   }
 
   /**
-   * ecouteurs d'evmt : checkbox + custom control + add layer
+   * Event listeners: checkbox + custom control + add layer
    */
   function _addClickListener() {
     _getConfig();
 
-    // clique sur a checkbox
     $(`#${layerId}-label-tooltip`).on("click", function () {
-      // maj la checkbox
       _updateCheckbox();
-      // maj le style
       _updateStyle();
     });
 
-    // si custom control
     $(`[data-layerid="${layerId}"]`).on("click", function () {
       _updateStyle();
     });
 
-    // si on ajoute la couche de puis la liste des couches
     $(`.mv-nav-item[data-layerid="${layerId}"]`).on("click", function () {
       init();
     });
 
-    // pour les clusters car ils sont recalculés à chaque changement de zoom
     mviewer
       .getMap()
       .getView()
@@ -418,15 +425,16 @@ const label = (function () {
       });
   }
 
+  /**
+   * Update checkbox value
+   */
   function _updateCheckbox() {
     const checkbox = $(`#${layerId}-label-checkbox`);
-    const stateIcon = $(`#${layerId}-label-tooltip .state-icon`)[0]; // Récupérer l'élément DOM réel
+    const stateIcon = $(`#${layerId}-label-tooltip .state-icon`)[0];
 
-    // Inverser la valeur de la checkbox
     const isChecked = !checkbox.prop("checked");
     checkbox.prop("checked", isChecked);
 
-    // Mettre à jour la classe de l'icône en fonction de l'état de la checkbox
     const iconClass = isChecked
       ? "state-icon far glyphicon glyphicon-chevron-up mv-checked"
       : "state-icon far mv-unchecked glyphicon glyphicon-chevron-up";
@@ -434,12 +442,15 @@ const label = (function () {
     stateIcon.className = iconClass;
   }
 
+  /**
+   * Get checkbox value
+   */
   function _getLabelCheckboxValue() {
     return $(`#${layerId}-label-checkbox`).prop("checked");
   }
 
   /**
-   * Indique si le niveau de zoom a atteint le seuil minimum défini
+   * Check if the zoom level has reached the threshold
    */
   function _isZoomThreshold() {
     const view = mviewer.getMap().getView();
@@ -450,12 +461,11 @@ const label = (function () {
   }
 
   /**
-   * MaJ la visibilité des étiquettes en fonction du zoom
+   * Update label visibility depending on zoom
    */
   function _updateZoomVisibility() {
     const isZoomThreshold = _isZoomThreshold();
 
-    // Activer ou désactiver l'affichage de la checkbox
     const span = $(`#${layerId}-label-tooltip span`);
     const div = $(`#${layerId}-label-tooltip div`);
     if (div && span) {
@@ -463,16 +473,14 @@ const label = (function () {
       span.css("display", isZoomThreshold ? "inline-block" : "none");
     }
 
-    // Ne pas toucher à l'état du switch si isVisible est vrai
     const labelCheckbox = $(`#${layerId}-label-checkbox`);
     if (labelCheckbox && !isZoomThreshold) {
       labelCheckbox.checked = false;
     }
 
-    // Masquer ou afficher le paragraphe de zoom
     const zoomLabel = $(`#${layerId}-label-zoom`);
     if (zoomLabel) {
-      zoomLabel.css("display", isZoomThreshold ? "none" : "block"); // Affiche le message si le zoom est trop faible
+      zoomLabel.css("display", isZoomThreshold ? "none" : "inline-block");
     }
   }
 
