@@ -5,6 +5,86 @@ const fileimport = (function () {
   var _srsHTML = ["<option value='EPSG:4326'>EPSG:4326</option>"];
 
   /**
+   * Private method createDefaultOLayerOption
+   * Creates default layer options for imported layers
+   * @param {*} idLayer
+   * @param {*} title
+   * @param {*} params
+   * @returns
+   */
+  const createDefaultOLayerOption = (idLayer, title, params) => {
+    let id = idLayer || _.uniqidId("import_file_");
+    return {
+      projections: {
+        projection: [
+          {
+            proj4js:
+              "'EPSG:3857','+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs'",
+          },
+          {
+            proj4js:
+              "'EPSG:2154','+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'",
+          },
+        ],
+      },
+      type: "import",
+      id: id,
+      name: title,
+      visible: "true",
+      legendurl: "img/blank.gif",
+      urlparam: "file",
+      queryable: true,
+      vectorlegend: true,
+      expanded: true,
+      sld: null,
+      template: false,
+      icon: "fas fa-file",
+      layername: id,
+      theme: "csv",
+      rank: 1,
+      index: null,
+      title: title,
+      layerid: id,
+      infospanel: "right-panel",
+      style: "",
+      toplayer: false,
+      draggable: true,
+      opacity: 1,
+      maxzoom: null,
+      minzoom: null,
+      tooltip: false,
+      tooltipenabled: false,
+      tooltipcontent: "",
+      timefilter: false,
+      timecontrol: "calendar",
+      timeshowavailable: false,
+      timemin: 2020,
+      timemax: 2025,
+      attributefilter: false,
+      attributeoperator: "=",
+      wildcardpattern: "%value%",
+      attributestylesync: false,
+      attributefilterenabled: false,
+      customcontrol: false,
+      customcontrolpath: "customcontrols",
+      exclusive: false,
+      searchable: false,
+      checked: true,
+      visiblebydefault: true,
+      tiled: false,
+      dynamiclegend: false,
+      nohighlight: false,
+      infohighlight: true,
+      showintoc: true,
+      useproxy: false,
+      jsonfields: [],
+      secure: "public",
+      authentification: false,
+      ...params,
+    };
+  };
+
+  /**
    * Private method _toggleImportLayer
    */
   var _toggleImportLayer = function () {
@@ -201,8 +281,8 @@ const fileimport = (function () {
    * Reads csv from URL and calls _initCsvModal with parsed data.
    * @param {*} idLayer
    */
-  const _loadUrlFile = function (idLayer) {
-    const url = document.getElementById("importFileByUrl").value;
+  const _loadUrlFile = function (idLayer, urlFromAPI) {
+    const url = urlFromAPI || document.getElementById("importFileByUrl").value;
     const oLayer = mviewer.getLayers()[idLayer];
     // read csv from URL
     fetch(url).then((response) => {
@@ -211,11 +291,16 @@ const fileimport = (function () {
           // parse csv to json
           console.log(data);
 
-          _initCsvModal(idLayer, data, oLayer, "grist.csv");
-
-          // var tmp = Papa.parse(data, { header: true });
-
           // call _mapCSV with parsed data
+          if (oLayer.xfield && oLayer.yfield) {
+            _mapCSV(
+              data,
+              oLayer,
+              oLayer.layer
+            );
+          } else {
+            _initCsvModal(idLayer, data, oLayer, "grist.csv");
+          }
           // _mapCSV(data, mviewer.getLayers()[idLayer], mviewer.getLayers()[idLayer].layer);
         });
       } else {
@@ -741,9 +826,9 @@ const fileimport = (function () {
    * @param {Object} oLayer
    * @param {Object} l
    */
-  var _loadCSV = function (oLayer, l) {
+  var _loadCSV = function (oLayer, l, url) {
     // No wizard here. file is directly geocoded at startup. Used with persistant csv with layer config parameters (geocodingfields...)
-    if (oLayer.url && oLayer.geocoder) {
+    if ((oLayer.url || url) && oLayer.geocoder) {
       $.ajax({
         url: oLayer.url,
         success: function (data) {
@@ -803,16 +888,47 @@ const fileimport = (function () {
     return mviewer.lang ? mviewer.lang[mviewer.lang.lang](messageId) : message;
   };
 
+  /**
+   * Private method _createLayerFromApi
+   * Creates layer from API file if URL param is available.
+   * Layer will be processed and added to map as native layer.
+   */
+  const _createLayerFromApi = () => {
+    if (API.file) {
+      // default oLayer params
+      let params = createDefaultOLayerOption(_.uniqueId(), "fichier csv", {
+        xfield: API?.xfield,
+        yfield: API?.yfield,
+      });
+      // create vector layer and add it to map
+      configuration.createVectorLayer(params, {
+        url: API.file,
+      });
+    }
+  };
+
   return {
     init: function () {
+      // Avoid to use existing XML layer. Allow to create a new one with default params.
+      _createLayerFromApi();
+
+      // parse layers and load data, or show wizard modal
       var layers = mviewer.getLayers();
+      let layerAPIToUse = null;
       for (var layer in layers) {
         if (layers[layer].type === "import") {
           var oLayer = layers[layer];
-          if (oLayer.url) {
-            _loadCSV(oLayer, oLayer.layer);
+          if (oLayer.urlparam && !oLayer?.geocoder) {
+            _loadUrlFile(oLayer.id, API.file);
+          } else if (oLayer.urlparam && oLayer?.geocoder) {
+            _loadCSV(oLayer, oLayer.layer, API.file);
+          } else if (oLayer.url && !oLayer?.geocoder === "BAN") {
+            _loadUrlFile(oLayer.id, oLayer.url);
+          } else if (oLayer.geocoder && oLayer.url) {
+            _loadCSV(oLayer, oLayer.layer, oLayer.url);
           } else {
             _initLoaderFile(oLayer);
+            layerAPIToUse = oLayer;
             _buttonActive = oLayer.visiblebydefault;
             _importLayer = oLayer;
             $(`.nav-pills [data-layerid=${oLayer.layerid}]`).on("click", function () {
