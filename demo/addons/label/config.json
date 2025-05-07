@@ -1,7 +1,5 @@
 {
-  "js": [
-    "js/label.js"
-  ],
+  "js": ["js/label.js"],
   "css": "css/label.css",
   "html": "label.html",
   "target": "layers-container-box",

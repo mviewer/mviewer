@@ -65,10 +65,6 @@ const label = (function () {
   function _wrapText(str) {
     if (!str || str.length <= 30) return str || "";
 
-    console.log("str", str); 
-    console.log(str.length);
-    
-
     const words = str.split(" ");
     const lines = [];
     let line = words[0];
@@ -301,8 +297,6 @@ const label = (function () {
         console.warn(`Unknown method: ${method}`);
         break;
     }
-
-    console.log('label', label)
 
     return label;
   }
