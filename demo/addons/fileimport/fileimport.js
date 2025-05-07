@@ -293,11 +293,7 @@ const fileimport = (function () {
 
           // call _mapCSV with parsed data
           if (oLayer.xfield && oLayer.yfield) {
-            _mapCSV(
-              data,
-              oLayer,
-              oLayer.layer
-            );
+            _mapCSV(data, oLayer, oLayer.layer);
           } else {
             _initCsvModal(idLayer, data, oLayer, "grist.csv");
           }
