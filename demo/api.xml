@@ -19,7 +19,7 @@
             attribution="&lt;a href='https://geoservices.ign.fr/services-web-essentiels/' target='_blank'>&lt;img src='https://geoservices.ign.fr/themes/custom/ignpro/logo.svg' width=100px>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
     </baselayers> 
     <authentification url="who" loginurl="?login" logouturl="../j_spring_security_logout" enabled="true"/>
-    <olscompletion url="https://api-adresse.data.gouv.fr/search/" type="ban" attribution="La recherche d'adresse est un service proposé par l'API adresse.data.gouv.fr"/>
+    <olscompletion url="https://data.geopf.fr/geocodage/search/" type="ban" attribution="La recherche d'adresse est un service proposé par la geoplateforme IGN"/>
     <searchparameters bbox="true" localities="true" features="false"/>
    
 

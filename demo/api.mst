@@ -35,7 +35,7 @@
 	var url_gpu = '';
 
 	if (mviewer.clickedCoordinates) {
-		var urladdr ="https://api-adresse.data.gouv.fr/reverse/?lon="+mviewer.clickedCoordinates.x+"&lat="+mviewer.clickedCoordinates.y;
+		var urladdr ="https://data.geopf.fr/geocodage/reverse/?lon="+mviewer.clickedCoordinates.x+"&lat="+mviewer.clickedCoordinates.y;
 		url_gpu = "https://apicarto.ign.fr/api/gpu/zone-urba?geom=%7B%22type%22%3A%20%22Point%22%2C%22coordinates%22%3A%5B"+mviewer.clickedCoordinates.x+"%2C"+mviewer.clickedCoordinates.y+"%5D%7D";
 		console.log(url_gpu);
 		

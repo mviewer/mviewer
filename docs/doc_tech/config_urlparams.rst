@@ -56,7 +56,7 @@ Ce paramétrage dynamique est rendu possible en ajoutant à l'URL mviewer les pa
 
 **Attributs**
 
-* ``url``: URL du service utilisé : BAN https://api-adresse.data.gouv.fr/search/ ou CADASTRE pour les parcelles cadastrales  https://apicarto.ign.fr/api/cadastre/parcelle
+* ``url``: URL du service utilisé : BAN https://data.geopf.fr/geocodage/search/ ou CADASTRE pour les parcelles cadastrales  https://apicarto.ign.fr/api/cadastre/parcelle
 * ``name``: Type de service utilisé cadastre ou ban
 * ``fill``: Couleur de l'intérieur d'un polygon (e.g code rgba)
 * ``stroke``: Couleur du contours (e.g code rgba)
@@ -67,7 +67,7 @@ Ce paramétrage dynamique est rendu possible en ajoutant à l'URL mviewer les pa
        :linenos:
 
        <urlparams fill="" stroke="rgba(232, 19, 232,0.6)" >
-              <qtype name="ban" url="https://api-adresse.data.gouv.fr/search/" />
+              <qtype name="ban" url="https://data.geopf.fr/geocodage/search/" />
               <qtype name="cadastre" url="https://apicarto.ign.fr/api/cadastre/parcelle" />
               <qtype name="admin" url="https://geo.api.gouv.fr" />
               <qtype name="features" url="https://a.map.server.fr" />

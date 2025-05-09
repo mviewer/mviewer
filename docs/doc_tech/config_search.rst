@@ -20,7 +20,7 @@ Liens vers service d'autocomplétion et de géocodage d'adresses.
 
 **Attributs**
 
-* ``url``: URL du service d'autocomplétion d'adresse : BAN https://api-adresse.data.gouv.fr/search/ ou IGN  https://data.geopf.fr/geocodage/completion
+* ``url``: URL du service d'autocomplétion d'adresse : BAN https://data.geopf.fr/geocodage/search/ ou IGN  https://data.geopf.fr/geocodage/completion
 * ``type``: Optional - Type de service utilisé ign ou ban - defaut = ign
 * ``attribution``: Attribution du service de geocodage.
 
@@ -29,9 +29,7 @@ Liens vers service d'autocomplétion et de géocodage d'adresses.
 .. code-block:: xml
        :linenos:
 
-       <olscompletion url="https://api-adresse.data.gouv.fr/search/" 
-	   type="ban" 
-	   attribution="La recherche d'adresse est un service proposé par l'API adresse.data.gouv.fr"/>
+       <olscompletion url="https://data.geopf.fr/geocodage/search/" type="ban" attribution="La recherche d'adresse est un service proposé par la geoplateforme IGN"/>
 
 
 Recherche d'entités
