@@ -16,7 +16,7 @@
         <extension type="component" id="filter" path="demo/addons"/>
 	</extensions>
 	<mapoptions maxzoom="24" projection="EPSG:2154" center="719675,7012000" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244"/>
-	<olscompletion type="ban" url="https://api-adresse.data.gouv.fr/search/" attribution="" />
+	<olscompletion url="https://data.geopf.fr/geocodage/search/" type="ban" attribution="La recherche d'adresse est un service proposé par la geoplateforme IGN"/>
 	<searchparameters bbox="false" localities="true" features="false" static="false"/>
 	<baselayers style="gallery"><!-- style="default"||gallery" -->
 			<baselayer  type="WMS" id="osmgp1" attributioncollapsible="false" layers="faded" label="OSM - Géo2France - couleur" title="OSM" thumbgallery="apps/img/basemap/osmGP.jpg"

@@ -12,7 +12,7 @@
     togglealllayersfromtheme="false">
 </application>
 <mapoptions maxzoom="18" projection="EPSG:3857" center="-324758.482762259,6050184.623044413" zoom="15" />
-<olscompletion type="ban" url="https://api-adresse.data.gouv.fr/search/" attribution="" />
+<olscompletion url="https://data.geopf.fr/geocodage/search/" type="ban" attribution="La recherche d'adresse est un service proposé par la geoplateforme IGN"/>
 <searchparameters bbox="false" localities="true" features="false" static="false"/>
 <baselayers style="default">
     <baselayer visible="false" id="positron" thumbgallery="img/basemap/positron.png" title="CartoDb" label="Positron" type="OSM" url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution="Map tiles by  &lt;a href=&quot;https://cartodb.com/attributions&quot;&gt;CartoDb&lt;/a&gt;, under  &lt;a href=&quot;https://creativecommons.org/licenses/by/3.0/&quot;&gt;CC BY 3.0 &lt;/a&gt;"  ></baselayer>

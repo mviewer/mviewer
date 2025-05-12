@@ -598,7 +598,7 @@ const fileimport = (function () {
         processData: false,
         url: oLayer.geocoderurl
           ? oLayer.geocoderurl
-          : "https://api-adresse.data.gouv.fr/search/csv/",
+          : "https://data.geopf.fr/geocodage/search/csv/",
         data: formData,
         contentType: false,
         success: function (data) {

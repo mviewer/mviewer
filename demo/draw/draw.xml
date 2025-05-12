@@ -19,7 +19,7 @@
  
 	</baselayers>     
     <proxy url=""/>
-    <!-- <olscompletion url="https://api-adresse.data.gouv.fr/search/" type="ban" attribution="La recherche d'adresse est un service proposé par la BAN"/> -->
+    <olscompletion url="https://data.geopf.fr/geocodage/search/" type="ban" attribution="La recherche d'adresse est un service proposé par la geoplateforme IGN"/> -->
     <olscompletion url="https://data.geopf.fr/geocodage/completion" type="ign" attribution="IGN"/>
 
     <searchparameters bbox="false" localities="true" features="false" />   
