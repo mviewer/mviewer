@@ -681,7 +681,10 @@ var configuration = (function () {
             var mvid;
             var oLayer = {};
             Object.assign(oLayer, layer);
-            var clean_ident = layerId.replace(/:|,| |\./g, "");
+            // Create a clean ident for the layer by removing any character not in [a-z] (so it is valid but still
+            // regognizable) and appending the base64 encoding of the original name, for uniqueness. 
+            // The = at the end are changed to _ because this sign cannot appear in a CSS ident.
+            var clean_ident = layerId.replace(/[^a-z]/g, "") + "_" + btoa(layerId).replace(/=/g, "_");
             var _overLayers = mviewer.getLayers();
             if (_overLayers[clean_ident]) {
               doublons[clean_ident] += 1;
