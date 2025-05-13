@@ -1,13 +1,13 @@
 {
-// Définition des variables realtives à la couche.
+  // Définition des variables realtives à la couche.
   const GEOSERVER_URL = "https://ows.region-bretagne.fr/geoserver";
   const WORKSPACE = "rb";
   const LAYER = "bief";
   const LAYER_URL = `${GEOSERVER_URL}/${WORKSPACE}/wfs?service=WFS&version=1.0.0&request=GetFeature&typeNames=${LAYER}&outputFormat=application/json&srsName=EPSG:4326`;
-// Définition de la variable customlayer. Elle doit être unique et correspond au nom du fichier.
+  // Définition de la variable customlayer. Elle doit être unique et correspond au nom du fichier.
   const LAYER_ID = "bief";
 
-// Style des entités
+  // Style des entités
   const legend = {
     items: [
       {
@@ -58,13 +58,13 @@
     ],
   };
 
-//Appel de la donnée
+  //Appel de la donnée
   const layer = new ol.layer.Vector({
     source: new ol.source.Vector({
       url: LAYER_URL,
       format: new ol.format.GeoJSON(),
     }),
-	//Analyse thématique ici sur l'attribut enjeu_bio
+    //Analyse thématique ici sur l'attribut enjeu_bio
     style: function (feature, resolution) {
       var stl;
       if (feature.get("enjeu_bio")) {
@@ -88,5 +88,4 @@
   });
   handle = false;
   new CustomLayer(LAYER_ID, layer, legend);
-  
 }
