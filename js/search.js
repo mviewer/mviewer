@@ -122,7 +122,7 @@ var search = (function () {
    * ElasticSearch use only 4326 projection
    * Transformation in Mviewer projection is needed
    */
-  const _elasticSearchProj = "EPSG:4326";
+  const _proj4326 = "EPSG:4326";
 
   /**
    * Property: _fuseSearchData
@@ -273,6 +273,7 @@ var search = (function () {
 
     mviewer.zoomToFeature = search.zoomToFeature;
     mviewer.showFeature = search.showFeature;
+    mviewer.animateToFeature = search.animateToFeature;
   };
 
   /**
@@ -299,7 +300,7 @@ var search = (function () {
       const zoom = zoomByType[res[i].classification] || 12;
       str += `<a class="${type}-location list-group-item" href="#" onclick="
           mviewer.zoomToLocation(${res[i].x}, ${res[i].y}, ${zoom}, ${_searchparams.querymaponclick});
-          mviewer.showLocation('EPSG:4326',${res[i].x}, ${res[i].y}, ${_searchparams.banmarker});">
+          mviewer.showLocation(${_proj4326},${res[i].x}, ${res[i].y}, ${_searchparams.banmarker});">
           ${res[i].fulltext}
       </a>`;
     }
@@ -337,7 +338,7 @@ var search = (function () {
                   ${zoom},
                   ${_searchparams.querymaponclick}
               );
-              mviewer.showLocation('EPSG:4326', ${geom.coordinates[0]}, ${geom.coordinates[1]}, ${_searchparams.banmarker});">
+              mviewer.showLocation(${_proj4326}, ${geom.coordinates[0]}, ${geom.coordinates[1]}, ${_searchparams.banmarker});">
               ${props.label}
           </a>`;
     }
@@ -361,7 +362,7 @@ var search = (function () {
         var parameters = { q: value, limit: 5 };
         if (_searchparams.bbox) {
           var center = _map.getView().getCenter();
-          var center = ol.proj.transform(center, _projection.getCode(), "EPSG:4326");
+          var center = ol.proj.transform(center, _projection.getCode(), _proj4326);
           parameters.lon = center[0];
           parameters.lat = center[1];
         }
@@ -463,25 +464,30 @@ var search = (function () {
             result_label = Mustache.render(_fuseSearchResult, element);
           }
           var geom = new ol.format.GeoJSON().readGeometry(element.geometry);
-          var xyz = mviewer.getLonLatZfromGeometry(geom, _elasticSearchProj, zoom);
+          var xyz = mviewer.getLonLatZfromGeometry(geom, _proj4326, zoom);
+          var extentCenter = _getCenterWithExtent(geom, _proj4326);
           str +=
             '<a class="fuse list-group-item" title="' +
             result_label +
             '" ' +
-            'href="#" onclick="mviewer.zoomToLocation(' +
+            'href="#" onclick="mviewer.animateToFeature(' +
             xyz.lon +
             "," +
             xyz.lat +
             "," +
             xyz.zoom +
             "," +
+            extentCenter[0] +
+            "," +
+            extentCenter[1] +
+            "," +
             _searchparams.querymaponclick +
-            ");mviewer.showLocation('_elasticSearchProj'," +
+            ");mviewer.showLocation('"+_proj4326 +"'," +
             xyz.lon +
             "," +
             xyz.lat +
             ', false);" ' +
-            "onmouseover=\"mviewer.flash('_elasticSearchProj'," +
+            "onmouseover=\"mviewer.flash('"+_proj4326 +"'," +
             xyz.lon +
             "," +
             xyz.lat +
@@ -910,7 +916,7 @@ var search = (function () {
             var projectedMapExtent = ol.proj.transformExtent(
               currentExtent,
               _projection.getCode(),
-              _elasticSearchProj
+              _proj4326
             );
             var geometryfield = _elasticSearchGeometryfield.get(layerId) || "location";
             var geofilter = { geo_shape: {} };
@@ -963,7 +969,7 @@ var search = (function () {
 
                   let xyz = mviewer.getLonLatZfromGeometry(
                     geom,
-                    _elasticSearchProj,
+                    _proj4326,
                     zoom
                   );
 
@@ -981,7 +987,7 @@ var search = (function () {
                   // always zoom on feature
                   let feature = new ol.Feature({
                     geometry: geom.transform(
-                      _elasticSearchProj,
+                      _proj4326,
                       _map.getView().getProjection()
                     ),
                     title: title,
@@ -1001,7 +1007,7 @@ var search = (function () {
                       "," +
                       xyz.lat +
                       ",'" +
-                      _elasticSearchProj +
+                      _proj4326 +
                       "','" +
                       indexId +
                       "','" +
@@ -1019,7 +1025,7 @@ var search = (function () {
                   action_over +=
                     "mviewer.flash(" +
                     "'" +
-                    _elasticSearchProj +
+                    _proj4326 +
                     "'," +
                     xyz.lon +
                     "," +
@@ -1360,6 +1366,79 @@ var search = (function () {
     setTimeout(clear, duration * 2);
   };
 
+  /**
+   * Private Method: _triggerQueryMap
+   * Trigger queryMap function with a (optionnal) delay.
+   *
+   * @param {Array} coordinate
+   * @param {number} duration
+   */
+  const _triggerQueryMap = (coordinate, duration) => {
+    setTimeout(() => {
+      info.queryMap({
+        coordinate: coordinate,
+        pixel: _map.getPixelFromCoordinate(coordinate),
+      });
+    }, duration || 0);
+  };
+
+  /**
+   * Public Method: animateToFeature
+   * Animate to a feature with a given zoom level
+   * @param {float} lon - longitude
+   * @param {float} lat - latitude
+   * @param {number} zoom - zoom level
+   * @param {float} xCenter - center x coordinate of extent
+   * @param {float} yCenter - center y coordinate of extent
+   * @param {boolean} queryMap - boolean to trigger queryMap (true to trigger)
+   * @param {boolean} hideLeftPannel - boolean to hide left panel (false to display). True by default
+   * 
+   */
+  var _animateToFeature = (lon, lat, zoom, xCenter, yCenter, queryMap, hideLeftPannel = true) => {
+    let mapView = _map.getView();
+    let mapProjection = mapView.getProjection().getCode();
+    let coordsForQueryMap = ol.proj.transform([lon, lat], _proj4326, mapProjection);
+    // Get the center of the extent
+    let centerCoords = [xCenter, yCenter];
+
+    _sourceOverlay.clear();
+
+    let duration = 3000;  
+
+    mapView.animate({
+      center: centerCoords,
+      zoom: zoom,
+      duration: duration,
+    });
+
+    if (queryMap) {
+      _triggerQueryMap(coordsForQueryMap, duration + 100);
+    }
+    if (hideLeftPannel) {
+      document.getElementById("wrapper").classList.add("toggled-2");
+    }
+  };
+
+  /**
+   * Private Method: _getCenterWithExtent
+   * Get the center of a geometry extent
+   * @param {geometry} geom - geometry to get the center from
+   * @param {string} sourceProj - source projection of the geometry
+   * @returns - center coordinates
+   */
+  var _getCenterWithExtent = (geom, sourceProj) => {
+    let mapView = _map.getView();
+    let mapProjection = mapView.getProjection().getCode();
+    let extent = geom.getExtent();
+    let viewExtent = (sourceProj && sourceProj !== mapProjection)
+      ? ol.proj.transformExtent(extent, sourceProj, mapProjection)
+      : extent;
+
+    let center = ol.extent.getCenter(viewExtent);
+
+    return center;
+  };
+
   return {
     init: _init,
     configSearchableLayer: _configSearchableLayer,
@@ -1369,6 +1448,7 @@ var search = (function () {
     options: _searchparams,
     showFeature: _showFeature,
     zoomToFeature: _zoomToFeature,
+    animateToFeature: _animateToFeature,
     clear: _clear,
     clearSearchField: _clearSearchField,
     initSearchMarker: _initSearchMarker,
