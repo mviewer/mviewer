@@ -386,7 +386,7 @@ var configuration = (function () {
       $("#help h4.modal-title").text(conf.application.titlehelp);
     }
     if (conf.application.iconhelp) {
-      $("#iconhelp span").attr("class", conf.application.iconhelp);
+      $("#iconhelp i").attr("class", conf.application.iconhelp);
     }
     if (conf.application.coordinates === "true") {
       _captureCoordinates = true;

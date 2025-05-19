@@ -1,23 +1,31 @@
 <ul class="nav nav-tabs" role="tablist">    
-	<li role="presentation" class="active"><a href="#h_kartenn" aria-controls="profile" role="tab" data-toggle="tab">Mviewer</a></li>
-    <li role="presentation" ><a href="#h_aide" aria-controls="messages" role="tab" data-toggle="tab" i18n="help.modal.help">Aide</a></li>
-    <li role="presentation" ><a href="#h_definition" aria-controls="profile" role="tab" data-toggle="tab" i18n="help.modal.lexicon">Lexique</a></li>
-    <li role="presentation" ><a href="#h_credits" aria-controls="settings" role="tab" data-toggle="tab" i18n="help.modal.credits">Crédits</a></li>   
+	<li class="nav-item" class="active" role="presentation">
+        <a class="nav-link active" href="#h_kartenn" aria-controls="profile" role="tab" data-bs-toggle="tab">Mviewer</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" href="#h_aide" aria-controls="messages" role="tab" data-bs-toggle="tab" i18n="help.modal.help">Aide</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" href="#h_definition" aria-controls="profile" role="tab" data-bs-toggle="tab" i18n="help.modal.lexicon">Lexique</a>
+    </li>
+    <li class="nav-item" role="presentation" >
+        <a class="nav-link" href="#h_credits" aria-controls="settings" role="tab" data-bs-toggle="tab" i18n="help.modal.credits">Crédits</a>
+    </li>   
 </ul>
 
  <!-- Tab panes -->
-<div class="tab-content">
-	<div role="tabpanel" class="tab-pane active" id="h_kartenn">
+<div class="tab-content p-3">
+	<div role="tabpanel" class="tab-pane fade show active" id="h_kartenn">
         <h4 i18n="help.modal.about">À propos du Mviewer</h4>        
     </div>  
-    <div role="tabpanel" class="tab-pane" id="h_aide">
+    <div role="tabpanel" class="tab-pane fade" id="h_aide">
         <h4 i18n="help.modal.help">Aide </h4>
         <a href="http://mviewerdoc.readthedocs.io/fr/latest/" target="_blank" i18n="help.modal.doc">Lien vers la documentation</a>
     </div>  
-    <div role="tabpanel" class="tab-pane" id="h_definition">
+    <div role="tabpanel" class="tab-pane fade" id="h_definition">
         <h4 i18n="help.modal.lexicon">Lexique </h4>        
     </div>
-    <div role="tabpanel" class="tab-pane" id="h_credits">
+    <div role="tabpanel" class="tab-pane fade" id="h_credits">
         <h4 i18n="help.modal.credits">Crédits </h4>      
     </div>    
 </div>

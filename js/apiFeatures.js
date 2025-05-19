@@ -141,7 +141,7 @@ const apiFeatures = (function () {
       btn.className = "vcenter";
 
       let btnIcon = document.createElement("i");
-      btnIcon.className = "fas fa-plus fa-solid";
+      btnIcon.className = "ri-add-circle-line";
 
       btn.appendChild(btnIcon);
 
@@ -159,15 +159,14 @@ const apiFeatures = (function () {
         btnIcon.className = "fas fa-spinner fa-spin";
 
         setTimeout(function () {
-          btnIcon.className = "fas fa-plus fa-solid";
+          btnIcon.className = "ri-checkbox-circle-fill";
         }, 2000);
       });
 
       let rowClass = layer.Layer && layer.Layer.length > 0 ? "" : "layer-result-row";
 
       const layerContentRow = document.createElement("div");
-      layerContentRow.className = `row pl-1 ${rowClass}`;
-      layerContentRow.style.paddingLeft = "20px";
+      layerContentRow.className = `pl-1 ${rowClass} list-group-item`;
 
       let layerContent = document.createElement("div");
       layerContent.className = "col-md-8";
@@ -228,15 +227,9 @@ const apiFeatures = (function () {
 
     let itemButton = document.createElement("button");
     itemButton.type = "button";
-    itemButton.className = "close";
+    itemButton.className = "btn-close";
     itemButton.ariaLabel = "Close";
-    itemButton.setAttribute("data-dismiss", "alert");
-
-    let itemSpan = document.createElement("span");
-    itemSpan.ariaHidden = "true";
-    itemSpan.innerHTML = "&times;";
-
-    itemButton.appendChild(itemSpan);
+    itemButton.setAttribute("data-bs-dismiss", "alert");
     item.appendChild(itemButton);
 
     item.innerHTML += mviewer.tr(msg);

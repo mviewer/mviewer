@@ -29,8 +29,8 @@ var zoom = (function () {
             onclick="mviewer.tools.zoom.changeZoom(1)"
             i18n="tbar.right.zoom.in"
             title="Zoom avant (zoom fenêtre : shift + clic sur la carte)"
-            class="btn btn-default btn-raised" tabindex="104" accesskey="4" >
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            type="button" class="btn btn-light" tabindex="104" accesskey="4" >
+            <i class="ri-zoom-in-line"></i>
         </button>`;
 
   /**
@@ -41,9 +41,9 @@ var zoom = (function () {
             onclick="mviewer.tools.zoom.changeZoom(-1)"
             title="Zoom arrière"
             i18n="tbar.right.zoom.out"
-            class="btn btn-default btn-raised"
+            type="button" class="btn btn-light"
             tabindex="106" accesskey="6">
-            <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+            <i class="ri-zoom-out-line"></i>
         </button>`;
 
   /**
@@ -51,8 +51,8 @@ var zoom = (function () {
    * @private
    */
   const buttonZoomToInitialExtent = `<button href="#" onclick="mviewer.zoomToInitialExtent();"
-            title="Revenir à l'étendue géographique de départ" i18n="tbar.right.zoom.initial" class="btn btn-default btn-raised" tabindex="105" accesskey="5">
-            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+            title="Revenir à l'étendue géographique de départ" i18n="tbar.right.zoom.initial" type="button" class="btn btn-light" tabindex="105" accesskey="5">
+            <i class="ri-road-map-line"></i>
         </button>`;
 
   /**
@@ -60,7 +60,7 @@ var zoom = (function () {
    * @private
    */
   const zoomToolbar = `
-        <div id="zoomtoolbar" class="btn-group-vertical btn-group-sm" role="group" aria-label="true">
+        <div id="zoomtoolbar" class="btn-group-vertical" role="group" aria-label="true">
         </div>
     `;
 
