@@ -6,6 +6,14 @@ mviewer.templates.tooltip = `<div class="tooltip mv-tooltip" role="tooltip">
     <div class="mv-tooltip tooltip-inner popover-content"></div>
 </div>`;
 
+mviewer.templates.popover = `
+  <div class="popover bs-popover-top mv-tooltip mv-popover" role="tooltip">
+    <div class="popover-arrow mv-tooltip"></div>
+    <h3 class="popover-header d-none"></h3>
+    <div class="popover-body mv-tooltip popover-content tooltip-inner"></div>
+  </div>
+`;
+
 let locationHref = location.hash || "#";
 mviewer.templates.themeLayer = `<li class="mv-nav-item" onclick="mviewer.toggleLayer(this);" data-layerid="{{layerid}}"">
     <a href="${locationHref}" >
@@ -17,9 +25,10 @@ mviewer.templates.themeLayer = `<li class="mv-nav-item" onclick="mviewer.toggleL
 mviewer.templates.theme = `
 <li class="{{cls}}" id="theme-layers-{{id}}" >
     <a href="#">
-        <span class="fa-stack fa-lg pull-left col-sm-3">
+        <div class="menu-theme-layers-name">
+        <span class="fa-stack">
             <i class="{{icon}} fa-stack-1x "></i>
-        </span>{{name}}
+            </span>{{name}}</div>
     {{#toggleAllLayers}}
         <div class="toggle-theme-layers">
             <span class="badge" title="Afficher/Masquer toutes les couches de la thématique" i18n="theme.display.layers">0/1</span>
@@ -45,34 +54,36 @@ mviewer.templates.theme = `
 
 mviewer.templates.layerControl = `
 <li class="{{cls}}" data-layerid="{{layerid}}" data-title=" {{title}}">
-    <div class="row layerdisplay-title" >
-        <i class="mv-grip fas fa-grip-vertical" title="Déplacer" i18n="theme.layers.move"></i><a>{{title}}</a>
+    <div class="layerdisplay-title" >
+        <div class="layerdisplay-titleLabel">
+            <i class="mv-grip ri-apps-2-fill" title="Déplacer" i18n="theme.layers.move"></i></i><div>{{title}}</div>
         {{#secure_layer}}
-        <button data-toggle="modal"
-                data-target="#loginpanel"'
+        <button data-bs-toggle="modal"
+                data-bs-target="#loginpanel"'
                 onclick="mviewer.setLoginInfo(this);"'
                 id="ar#{{layerid}}"'
                 title="Données accès restreint"'
                 i18n="theme.layers.restricted
                 tabindex="111" accesskey="11" class="btn btn-default btn-raised">
-            <span class="lock-icon glyphicon glyphicon-lock" aria-hidden="true"></span>
+            <i class="ri-lock-line"></i>
         </button>
         {{/secure_layer}}
+        </div>
         <a href="${locationHref}" class="mv-layer-remove" aria-label="close" onclick="mviewer.removeLayer(this)" title="Supprimer" i18n="theme.layers.remove">
-            <span class="glyphicon glyphicon-remove"></span>
+            <i class="ri-close-large-line"></i>
         </a>
     </div>
     <div class="layerdisplay-subtitle">
     {{#styleControl}}
-        <div class="selected-sld fas"><span></span></div>
+        <div class="selected-sld layerdisplay-badge"><span></span></div>
     {{/styleControl}}
     {{#attributeControl}}
-        <div class="selected-attribute fas"><span>Par défaut</span></div>
+        <div class="selected-attribute layerdisplay-badge"><span>Par défaut</span></div>
     {{/attributeControl}}
     </div>
-    <div class="row layerdisplay-legend">
+    <div class="layerdisplay-legend">
         <div id="loading-{{layerid}}" class="mv-layer-indicator" style="display:none">
-            <div class="loader">Loading...</div>
+            <i class="ri-loader-4-line"></i>
         </div>
         <canvas class="vector-legend" id="vector-legend-{{layerid}}" width="0" height="0"/>
         <img class="mv-legend" {{crossorigin}} id="legend-{{layerid}}" src="{{legendurl}}"
@@ -80,7 +91,7 @@ mviewer.templates.layerControl = `
                 onError="this.onerror=null;this.src=\'img/nolegend.png\';"/>
     </div>
     <div class="mv-layer-options" style="display: none;" data-layerid="{{layerid}}" >
-        <div class="row">
+        <div class="row mv-layer-options-opacity my-1">
             <div class="col-md-12">
                 <div class="form-group form-group-opacity">
                     <label for="{{layerid}}-layer-opacity" i18n="legend.label.opacity">Opacité</label>
@@ -93,35 +104,37 @@ mviewer.templates.layerControl = `
             </div>
         </div>
     {{#tooltipControl}}
-        <div class="row">
+        <div class="row mv-layer-options-tooltips mb-3">
             <div class="col-md-12">
                 <a data-layerid="{{layerid}}" class="layer-tooltip"
                         onclick="info.toggleTooltipLayer(this);" id="{{layerid}}-layer-tooltip" href="#">
                     <span class="state-icon far mv-unchecked"></span><div style="display:inline;" i18n="legend.radio.tooltips">Afficher les infobulles</div>
-                    <input type="checkbox" class="hidden" value="false">
+                    <input type="checkbox" class="hidden" value="false" style="display:none;">
                 </a>
             </div>
         </div>
     {{/tooltipControl}}
     {{#attribution}}
-        <div class="row">
+        <div class="row mv-layer-options-attribution my-1 mb-2">
             <div class="col-md-12">
-                <p>
+                <div>
                     <span id="{{layerid}}-attribution">{{{attribution}}}</span>
                     {{#metadata}}
-                        <a href="#" role="button" id="{{layerid}}-layer-summary" tabindex="10" data-trigger="focus"
-                                data-toggle="popover" class="mv-layer-summary" data-html="true"
-                                data-content="">
-                                <span title="Afficher les informations" i18n="theme.layers.infos" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                        <a href="#" tabindex="0" role="button" id="{{layerid}}-layer-summary" tabindex="10" data-bs-trigger="focus"
+                                data-bs-custom-class="popover-layer-summary" data-bs-title="Popover title" data-bs-toggle="popover" data-bs-container="body" class="mv-layer-summary" data-bs-html="true"
+                                data-bs-content="g">
+                                <i title="Afficher les informations" i18n="theme.layers.infos" class="ri-information-line"></i>
                         </a>
                     {{/metadata}}
-                    <span id="{{layerid}}-date" style="float:right;">{{modifiedDate}}</span>
-                </p>
+                </div> 
+                <div>  
+                    <span id="{{layerid}}-date" class="mv-layer-options-attribution-date">{{modifiedDate}}</span>
+                </div> 
             </div>
         </div>
     {{/attribution}}
     {{#styleControl}}
-        <div class="row">
+        <div class="row mv-layer-options-styles my-1">
             <div class="col-md-12">
                 <div class="form-group form-group-analyses">
                     {{#styleTitle }}
@@ -130,7 +143,7 @@ mviewer.templates.layerControl = `
                     {{^styleTitle}}
                         <label for="{{layerid}}-styles-selector" i18n="style.control.analyses">Analyse</label>
                     {{/styleTitle}}
-                    <select class="form-control" name="{{layerid}}" id="{{layerid}}-styles-selector"
+                    <select class="form-select form-select-sm my-1" name="{{layerid}}" id="{{layerid}}-styles-selector"
                             onchange="mviewer.setLayerStyle(this.name ,this.value, this);">
                     {{#styles}}
                         <option label="{{label}}" value="{{style}}">{{label}}</option>
@@ -141,7 +154,7 @@ mviewer.templates.layerControl = `
         </div>
     {{/styleControl}}
     {{#attributeControl}}
-        <div class="row">
+        <div class="row mv-layer-options-attribute my-1">
             <div class="col-md-12">
                 <div class="form-group form-group-attributes">
                     {{#attributeLabel}}
@@ -150,7 +163,7 @@ mviewer.templates.layerControl = `
                     {{^attributeLabel}}
                         <label for="{{layerid}}-attributes-selector" i18n="attribute.control.filter">Attributs</label>
                     {{/attributeLabel}}
-                    <select class="form-control" name="{{layerid}}" id="{{layerid}}-attributes-selector"
+                    <select class="form-select form-select-sm my-1" name="{{layerid}}" id="{{layerid}}-attributes-selector"
                         onchange="mviewer.setLayerAttribute(this.name ,this.value, this);">
                     {{#attributes}}
                         <option label="{{label}}" value="{{attribute}}">{{label}}</option>
@@ -161,19 +174,23 @@ mviewer.templates.layerControl = `
         </div>
     {{/attributeControl}}
     {{#timeControl}}
-        <div class="row">
+        <div class="row mv-layer-options-time my-2">
             <div class="col-md-12">
                 <div class="form-group form-group-timer ">
-                    <label for="{{layerid}}-layer-timefilter" i18n="control.time.time">Temporalité</label>
-                    <span class="fa mv-time-player" data-layerid="{{layerid}}" style="margin-left: 3px;"></span>
-                    <span class="mv-time-player-selection" data-layerid="{{layerid}}" style="margin-left: 3px;"></span>
+                    <div class="mv-layer-options-time-header">
+                        <label for="{{layerid}}-layer-timefilter" i18n="control.time.time">Temporalité</label>
+                        <div>                        
+                            <span class="mv-time-player-selection" data-layerid="{{layerid}}"></span>
+                            <span class="mv-time-player" data-layerid="{{layerid}}"></span>
+                        </div>
+                    </div>
                     <input type="text" id="{{layerid}}-layer-timefilter" name="{{layerid}}" >
                 </div>
             </div>
         </div>
     {{/timeControl}}
     {{#sensorthings}}
-    <div class="row">
+    <div class="row mv-layer-options-time my-2">
         <div class="col-md-12">
             <div class="form-group form-group-timer ">
                 <label for="{{layerid}}-layer-sensorthings" i18n="legend.label.sensorthings">SensorThings</label>
@@ -188,10 +205,10 @@ mviewer.templates.layerControl = `
     </div>
     {{/sensorthings}}
         <div class="mv-custom-controls" data-layerid="{{layerid}}"></div>
-        </div>
-        <a href="#" aria-label="Options" onclick="mviewer.toggleLayerOptions(this);" title="Options" i18n="theme.layers.options" class="icon-options">
-            <span class="state-icon glyphicon glyphicon-chevron-down"></span>
-        </a>
+    </div>
+    <a href="#" aria-label="Options" onclick="mviewer.toggleLayerOptions(this);" title="Options" i18n="theme.layers.options" class="icon-options">
+        <i class="state-icon ri-arrow-down-line"></i>
+    </a>
 </li>`;
 
 mviewer.templates.backgroundLayerControlGallery = `
@@ -208,10 +225,10 @@ mviewer.templates.featureInfo.default = `
     <div class="row">
         <div class="col-md-12">
             <div class="tabs-left">
-                <ul class="nav nav-tabs">
+                <ul class="nav nav-tabs flex-column">
                 {{#layers}}
-                    <li title="{{name}}" class="{{#firstlayer}}active{{/firstlayer}}" data-layerid="{{layerid}}">
-                        <a onclick="mviewer.setInfoPanelTitle(this,\'{{panel}}\');" title="{{name}}" href="#slide-{{panel}}-{{id}}" data-toggle="tab">
+                    <li title="{{name}}" class="{{#firstlayer}}active{{/firstlayer}} nav-item" data-layerid="{{layerid}}">
+                        <a class="{{#firstlayer}}active{{/firstlayer}} nav-link" onclick="mviewer.setInfoPanelTitle(this,\'{{panel}}\');" title="{{name}}" href="#slide-{{panel}}-{{id}}" data-bs-toggle="tab">
                             <span class="fa {{theme_icon}}"></span>
                         </a>
                     </li>
@@ -220,19 +237,19 @@ mviewer.templates.featureInfo.default = `
                 <div class="tab-content">
                 {{#layers}}
                     <div  role="tabpanel" class="{{#firstlayer}}active in {{/firstlayer}}tab-pane" id="slide-{{panel}}-{{id}}" >
-                        <div id="carousel-{{panel}}-{{id}}" div class="carousel slide" data-interval="false">
+                        <div id="carousel-{{panel}}-{{id}}" class="carousel slide carousel-dark" data-bs-interval="false">
                         <ul class="carousel-inner" role="listbox">
                         {{{html}}}
                         </ul>
                         {{#manyfeatures}}
-                            <a class="left carousel-control" href="#carousel-{{panel}}-{{id}}" 
-                            role="button" data-slide="prev">
-                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <a class="carousel-control-prev" data-bs-target="#carousel-{{panel}}-{{id}}" 
+                            role="button" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="sr-only" i18n="carousel.control.previous">Previous</span>
                             </a>
-                            <a class="right carousel-control" href="#carousel-{{panel}}-{{id}}" 
-                            role="button" data-slide="next">
-                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <a class="carousel-control-next" data-bs-target="#carousel-{{panel}}-{{id}}" 
+                            role="button" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="sr-only" i18n="carousel.control.next">Next</span>
                             </a>
                             <span class="badge counter-slide">1/{{nbfeatures}}</span>
@@ -333,12 +350,12 @@ mviewer.templates.featureInfo.accordion = [
   "{{#manyfeatures}}",
   '<a class="left carousel-control" href="#carousel-{{panel}}-{{id}}" ',
   'role="button" data-slide="prev">',
-  '<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>',
+  '<i class="ri-arrow-right-s-line"></i>',
   '<span class="sr-only" i18n="carousel.control.previous">Previous</span>',
   "</a>",
   '<a class="right carousel-control" href="#carousel-{{panel}}-{{id}}" ',
   'role="button" data-slide="next">',
-  '<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>',
+  '<i class="ri-arrow-left-s-line"></i>',
   '<span class="sr-only" i18n="carousel.control.next">Next</span>',
   "</a>",
   '<span class="badge counter-slide">1/{{nbfeatures}}</span>',
@@ -372,7 +389,7 @@ mviewer.templates.featureInfo.allintabs = [
   '<div class="tab-content">',
   "{{#layers}}",
   '<div  role="tabpanel" class="{{#firstlayer}}active in {{/firstlayer}}tab-pane" id="slide-{{panel}}-{{id}}" >',
-  '<div id="carousel-{{panel}}-{{id}}" div class="carousel slide" data-interval="false">',
+  '<div id="carousel-{{panel}}-{{id}}" div class="carousel slide" data-bs-interval="false">',
   '<ul class="carousel-inner" role="listbox">',
   "{{{html}}}",
   "</ul>",

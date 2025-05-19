@@ -200,7 +200,7 @@ var search = (function () {
     }
     if (_searchparams.closeafterclick) {
       $("#searchresults .list-group-item").click(function () {
-        $(".searchresults-title .close").trigger("click");
+        $(".searchresults-title .btn-close").trigger("click");
       });
     }
     $("#searchresults").show();
@@ -224,7 +224,7 @@ var search = (function () {
       _map.addLayer(vector);
     }
 
-    $(".searchresults-title .close").click(function () {
+    $(".searchresults-title .btn-close").click(function () {
       _clearSearchField();
       if (_sourceEls) {
         _sourceEls.clear();
@@ -297,7 +297,7 @@ var search = (function () {
         7: 17,
       };
       const zoom = zoomByType[res[i].classification] || 12;
-      str += `<a class="${type}-location list-group-item" href="#" onclick="
+      str += `<a class="${type}-location list-group-item list-group-item-action" href="#" onclick="
           mviewer.zoomToLocation(${res[i].x}, ${res[i].y}, ${zoom}, ${_searchparams.querymaponclick});
           mviewer.showLocation('EPSG:4326',${res[i].x}, ${res[i].y}, ${_searchparams.banmarker});">
           ${res[i].fulltext}
@@ -465,7 +465,7 @@ var search = (function () {
           var geom = new ol.format.GeoJSON().readGeometry(element.geometry);
           var xyz = mviewer.getLonLatZfromGeometry(geom, _elasticSearchProj, zoom);
           str +=
-            '<a class="fuse list-group-item" title="' +
+            '<a class="fuse list-group-item list-group-item-action" title="' +
             result_label +
             '" ' +
             'href="#" onclick="mviewer.zoomToLocation(' +
@@ -810,7 +810,7 @@ var search = (function () {
               }
 
               str +=
-                '<a class="elasticsearch list-group-item" href="#" ' +
+                '<a class="elasticsearch list-group-item  list-group-item-action" href="#" ' +
                 'onclick="' +
                 action_click +
                 '" ' +
