@@ -3,7 +3,7 @@ body{
   --mv-color-primary-100:color-mix(in srgb, var(--mv-color-primary) 10%, rgba(255, 255, 255, 0));
   --mv-color-body:#515151;
   --mv-navbar-h:65px;
-  --mv-font: var(--mv-customfont, 'system-ui, sans-serif');
+  --mv-font: var(--mv-customfont, 'system-ui');
 }
 
 html, body {
@@ -522,14 +522,21 @@ a#searchparams {
 
 .active #layers-container {
   display: block;
+  max-height: 85vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#legend-modal .active #layers-container {
+  max-height: 100%;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 #layers-container-box {
   font-size: 0.85em;
     position: fixed;
-    overflow-y: auto;
     overflow-x: hidden;
-    max-height: 100%;
     margin: 1em;
     padding: 0 0 5em 0;
     max-width: 260px;
@@ -841,6 +848,11 @@ a#searchparams {
   display: none;
 }
 
+#menu span.state-icon{
+	padding-right: 10px;
+  padding-top: 3px;
+}
+
 .nav-pills li a{
 border-radius:0px;
 }
@@ -908,6 +920,19 @@ line-height: 33px;
 }
 
 /* Interrogation */
+.mv-header {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: space-between;
+  padding: 0.7em;;
+}
+
+.mv-header h6 {
+  margin: 0;
+}
 
 #right-panel {
   right: 0px;
@@ -929,7 +954,7 @@ line-height: 33px;
   opacity: 1;
 }
 
-#right-panel .item.active {
+#right-panel .featureInfo__default .item.active {
     overflow-y: auto;
     padding-bottom: 10em;
     padding-right: 10px;
@@ -939,20 +964,6 @@ line-height: 33px;
     padding: 0 0 0 5px;
 }
 
-.mv-header {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-content: center;
-  justify-content: space-between;
-  padding: 0.7em;;
-}
-
-.mv-header h6 {
-  margin: 0;
-}
-
 #right-panel-selector, #right-panel-selector .row , #right-panel-selector .col-md-12 , #right-panel-selector .tabs-left ,
 #right-panel .carousel.slide, #right-panel .nav.nav-tabs, #right-panel .tab-content,
 #right-panel .tab-pane.active, #carousel-right-panel-1, #right-panel .item.active, #right-panel .carousel-inner {
@@ -960,7 +971,7 @@ line-height: 33px;
 }
 
 /* all */
-.popup-content {
+.popup-content.mv-panel-queryable {
   overflow-y: hidden;
   overflow-x: hidden;
   position: absolute;
@@ -970,7 +981,7 @@ line-height: 33px;
   padding: 0 0 0 0;
 }
 
-.mv-panel-queryable img {
+.popup-content img {
   max-width: 100%;
 }
 
@@ -993,7 +1004,7 @@ line-height: 33px;
   cursor:pointer
 }
 
-.mv-panel-queryable span.counter-slide {
+.counter-slide {
   font-size: 9px;
   right: 145px;
   bottom: 20px;
@@ -1012,10 +1023,63 @@ line-height: 33px;
   display: block;
 }
 
+/* Modes de template */
+
+.featureInfo__brut .carousel-item {
+    position: relative;
+    display: block;
+    float: none;
+    margin-bottom: 1em;
+    padding-top: 1em;
+}
+
+.featureInfo__brut .item.active {
+    padding-bottom: 1em!important;
+}
+
+.featureInfo__brut .list-group.card-body {
+    padding: 0 15px;
+}
+
+.featureInfo__brut .card {
+    margin: 0 12px;
+    margin-bottom: 1em;
+}
+
+.featureInfo__brut .card:last-child {
+    margin-bottom: 10em;
+}
+
+#bottom-panel .featureInfo__brut .list-group {
+    height: 295px!important;
+}
+
+.accordion-button:not(.collapsed) {
+    color: #212529;
+    background-color: #21252908;
+}
+
+.accordion-button:hover{
+    background-color: #21252910;
+}
+
+.accordion-button:focus{
+    box-shadow:none;
+}
+
+#right-panel .featureInfo__accordion .accordion, #bottom-panel .featureInfo__accordion .accordion {
+    padding: 0 12px;
+    margin-bottom: 10em;
+}
+
+.featureInfo__accordion .accordion-body {
+    padding: 12px;
+}
+
 /* Bottom */ 
 
 #bottom-panel .popup-content {
-  width: calc(100% - 170px);
+  width: calc(100% - 255px);
 }
 
 #bottom-panel-selector, #bottom-panel-selector .carousel ,#bottom-panel-selector .tab-pane, #bottom-panel-selector>div, #bottom-panel-selector .tabs-left, #bottom-panel-selector .tab-content {
@@ -1029,21 +1093,11 @@ line-height: 33px;
   right: 50%;
 }
 
-/*Agrandissement de la photo dans une modal */
-.popphoto {
-  cursor: pointer;
+#bottom-panel :not(.featureInfo__brut) .item.active {
+  max-height: 290px;
+  overflow-y: scroll;
   max-width: 100%;
-  max-height: 210px;
 }
-
-/** old **/
-
-
-/*******************************
-------------- POPUP
-********************************/
-
-/* popup photo */
 
 
 #datalist {
@@ -1266,11 +1320,6 @@ div#datalist {
 	margin-top:-14px;
 }
 
-span.state-icon.far{
-	padding-right: 10px;
-    padding-top: 3px;
-}
-
 #bottom-panel-btn {
   text-align: center;
 }
@@ -1361,39 +1410,6 @@ span.state-icon.far{
     opacity: 0.8;
 }
 
-.row.pl-1.layer-result-row.list-group-item {}
-
-/*accordion template*/
-#right-panel .panel-collapse .carousel-inner  {
-    padding-left: 0px;
-    padding-right: 0px;
-    width: 100%;
-}
-
-#right-panel .panel-collapse .carousel-inner .item {
-    padding-left: 5px;
-    padding-right: 5px;
-    width: 100%;
-}
-
-#right-panel .panel-collapse .panel-body  {
-    padding: 0;
-}
-
-#right-panel .panel-collapse .left.carousel-control span, #right-panel .panel-collapse .right.carousel-control span  {
-    border-radius: 5px;
-    background: #fff;
-}
-
-#accordion.panel-group .panel+.panel {
-    margin-top: 0;
-}
-/* to scroll in accordion */
-
-#accordion .panel-collapse.collapse.in{
-  overflow-y: auto;
-  max-height:600px;
-}
 
 /* Custom svg as icon*/
 .demo-icon1::before {
@@ -1554,25 +1570,6 @@ span.state-icon.far{
   font-size: 20px;
 }
 
-.caret-toggle h4 .state-icon{
-	font-size: 16px;
-	color: white;
-}
-
-.caret-toggle.collapsed h4 .state-icon.firstLayer:after {
-	content: "\2b";/*plus*/
-}
-.caret-toggle h4 .state-icon.firstLayer:after {
-	content: "\2212";/*moins*/
-}
-
-.caret-toggle h4 .state-icon.notFirstLayer:after {
-	content: "\2212";/*moins*/
-}
-.caret-toggle.collapsed h4 .state-icon.notFirstLayer:after {
-	content: "\2b";/*plus*/
-}
-
 /* Sharepanel */
 #mv-display-mode {
     display: flex;
@@ -1697,33 +1694,37 @@ input.drawTooltip {
 
 /* Template - Accordion + carousel */
 
-#accordion .carousel-control .glyphicon-chevron-left, 
-#accordion .carousel-control .glyphicon-chevron-right, 
-#accordion .carousel-control .icon-next, 
-#accordion .carousel-control .icon-prev {
+.featureInfo__accordion #accordion .carousel-control-next, 
+.featureInfo__accordion #accordion .carousel-control-prev {
   top: auto;
-  bottom: 7px;
+  bottom: -40px;
 }
 
-#accordion .carousel-inner {
+.featureInfo__accordion .carousel-control-next-icon, .featureInfo__accordion .carousel-control-prev-icon {
+  width: 1.2rem;
+}
+
+.featureInfo__accordion #accordion .carousel-inner {
   max-height: 75vh;
   overflow-y: auto;
   margin-bottom: 2em;
 }
 
 #modal-panel #accordion .carousel-inner {
-	max-height: 60vh;
+	padding: 10px;
 }
 
 #modal-panel #accordion .counter-slide {
-	position: relative;
-	z-index: 500;
-	left: 47%;
+	position: absolute;
+  left: 45%;
+  right: auto;
+  bottom: -30px;
 }
 
 #right-panel #accordion span.counter-slide {
-  position: static;
-  transform: translate(500%, -70%);
+  position: absolute;
+  right: 44%;
+  bottom: -30px;
 }
 
 

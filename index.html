@@ -792,7 +792,7 @@
       </div>
       <!-- IMAGE POPUP -->
       <div id="imagepopup" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title"></h5>
@@ -806,9 +806,9 @@
               <div class="row">
                 <div class="col-md-12">
                   <img
-                    class="popphoto center-block"
+                    class="center-block"
                     src="img/blank.gif"
-                    style="max-height: 512px"
+                    style="max-width: 100%;"
                     alt="image" />
                 </div>
               </div>
@@ -863,7 +863,7 @@
       </div>
       <!-- THEMATIC POPUP -->
       <div id="thematic-modal" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog modal-dialog-scrollable">
           <div class="modal-content" role="document">
             <div class="modal-header">
               <h5 class="modal-title" i18n="thematic.modal.title">Thématiques</h5>
@@ -879,7 +879,7 @@
       </div>
       <!-- LEGEND POPUP -->
       <div id="legend-modal" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog modal-dialog-scrollable">
           <div class="modal-content" role="document">
             <div class="modal-header">
               <h5 class="modal-title" i18n="legend.modal.title">Options d'affichage</h5>
@@ -895,7 +895,7 @@
       </div>
       <!-- FEATUREINFO POPUP -->
       <div id="modal-panel" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-md">
+        <div class="modal-dialog modal-md modal-dialog-scrollable">
           <div class="modal-content" role="document">
             <div class="modal-header">
               <h5 class="modal-title" i18n="featureinfo.modal.title">Informations</h5>
@@ -1144,7 +1144,7 @@
             mviewer.orderLayer(actionMove);
           },
         });
-        $("#right-panel .close,#bottom-panel .mv-close").click(function () {
+        $("#right-panel .btn-close,#bottom-panel .btn-close").click(function () {
           mviewer.hideLocation();
         });
       });
