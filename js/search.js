@@ -304,7 +304,7 @@ var search = (function () {
       };
       const zoom = zoomByType[res[i].classification] || 12;
       str += `<a class="${type}-location list-group-item" href="#" onclick="
-          mviewer.animateToFeature(${res[i].x}, ${res[i].y}, ${zoom}, ${transformedCoords[0]}, ${transformedCoords[1]}, ${_searchparams.querymaponclick});
+          mviewer.animateToFeature(${JSON.stringify([res[i].x, res[i].y])}, ${zoom}, ${JSON.stringify(transformedCoords)}, ${_searchparams.querymaponclick});
           mviewer.showLocation('${_proj4326}',${res[i].x}, ${res[i].y}, ${_searchparams.banmarker});">
           ${res[i].fulltext}
       </a>`;
@@ -340,11 +340,9 @@ var search = (function () {
       const zoom = zoomByType[props.type] || 14;
       str += `<a class="geoportail list-group-item" href="#" title="${props.context} - ${props.type}"
               onclick="mviewer.animateToFeature(
-                  ${coords[0]},
-                  ${coords[1]},
+                  ${JSON.stringify([coords[0], coords[1]])},
                   ${zoom},
-                  ${extentCenter[0]},
-                  ${extentCenter[1]},
+                  ${JSON.stringify(extentCenter)},
                   ${_searchparams.querymaponclick}
               );
               mviewer.showLocation('${_proj4326}', ${coords[0]}, ${coords[1]}, ${_searchparams.banmarker});">
@@ -478,7 +476,7 @@ var search = (function () {
           str += `
             <a class="fuse list-group-item" title="${result_label}" 
                 href="#" onclick="
-                  mviewer.animateToFeature(${xyz.lon}, ${xyz.lat}, ${xyz.zoom}, ${extentCenter[0]}, ${extentCenter[1]}, ${_searchparams.querymaponclick}); 
+                  mviewer.animateToFeature(${JSON.stringify([xyz.lon, xyz.lat])}, ${xyz.zoom}, ${JSON.stringify(extentCenter)}, ${_searchparams.querymaponclick}); 
                   mviewer.showLocation('${_proj4326}', ${xyz.lon}, ${xyz.lat}, false);" 
                 onmouseover="mviewer.flash('${_proj4326}', ${xyz.lon}, ${xyz.lat}, false);">
               ${result_label}
@@ -1367,36 +1365,27 @@ var search = (function () {
   /**
    * Public Method: animateToFeature
    * Animate to a feature with a given zoom level
-   * @param {float} lon - longitude
-   * @param {float} lat - latitude
-   * @param {number} zoom - zoom level
-   * @param {float} xCenter - center x coordinate of extent
-   * @param {float} yCenter - center y coordinate of extent
-   * @param {boolean} queryMap - boolean to trigger queryMap (true to trigger)
-   * @param {boolean} hideLeftPannel - boolean to hide left panel (false to display). True by default
-   *
+   * @param {Array} coordinates - Array containing [longitude, latitude, zoom level]
+   * @param {number} zoom - Zoom level
+   * @param {Array} center - Array containing [center x coordinate, center y coordinate] (extent center)
+   * @param {boolean} queryMap - Boolean to trigger queryMap (true to trigger)
+   * @param {boolean} hideLeftPannel - Boolean to hide left panel (true to hide, false to display). Defaults to false
    */
-  var _animateToFeature = (
-    lon,
-    lat,
-    zoom,
-    xCenter,
-    yCenter,
-    queryMap,
-    hideLeftPannel = true
-  ) => {
+  var _animateToFeature = (coordinates, zoom, center, queryMap, hideLeftPannel = false) => {
+    // Get the coordinates
+    let lon = coordinates[0];
+    let lat = coordinates[1];
+
     let mapView = _map.getView();
     let mapProjection = mapView.getProjection().getCode();
     let coordsForQueryMap = ol.proj.transform([lon, lat], _proj4326, mapProjection);
-    // Get the center of the extent
-    let centerCoords = [xCenter, yCenter];
 
     _sourceOverlay.clear();
 
     let duration = 3000;
 
     mapView.animate({
-      center: centerCoords,
+      center: center,
       zoom: zoom,
       duration: duration,
     });
