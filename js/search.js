@@ -290,6 +290,11 @@ var search = (function () {
     let str = "";
     const searchType = `.${type}-location`;
     for (let i = 0, len = res.length; i < len && i < 5; i++) {
+      const transformedCoords = ol.proj.transform(
+        [res[i].x, res[i].y],
+        _proj4326,
+        _projection.getCode()
+      );
       const zoomByType = {
         2: 13,
         4: 14,
@@ -299,7 +304,7 @@ var search = (function () {
       };
       const zoom = zoomByType[res[i].classification] || 12;
       str += `<a class="${type}-location list-group-item" href="#" onclick="
-          mviewer.zoomToLocation(${res[i].x}, ${res[i].y}, ${zoom}, ${_searchparams.querymaponclick});
+          mviewer.animateToFeature(${res[i].x}, ${res[i].y}, ${zoom}, ${transformedCoords[0]}, ${transformedCoords[1]}, ${_searchparams.querymaponclick});
           mviewer.showLocation('${_proj4326}',${res[i].x}, ${res[i].y}, ${_searchparams.banmarker});">
           ${res[i].fulltext}
       </a>`;
@@ -322,7 +327,9 @@ var search = (function () {
     var str = "";
     for (var i = 0, len = res.length; i < len && i < 5; i++) {
       var props = res[i].properties;
-      var geom = res[i].geometry;
+      var geom = new ol.format.GeoJSON().readGeometry(res[i].geometry);
+      var extentCenter = _getCenterWithExtent(geom, _proj4326);
+      var coords = geom.getCoordinates();
       const zoomByType = {
         city: 13,
         town: 15,
@@ -332,13 +339,15 @@ var search = (function () {
       };
       const zoom = zoomByType[props.type] || 14;
       str += `<a class="geoportail list-group-item" href="#" title="${props.context} - ${props.type}"
-              onclick="mviewer.zoomToLocation(
-                  ${geom.coordinates[0]},
-                  ${geom.coordinates[1]},
+              onclick="mviewer.animateToFeature(
+                  ${coords[0]},
+                  ${coords[1]},
                   ${zoom},
+                  ${extentCenter[0]},
+                  ${extentCenter[1]},
                   ${_searchparams.querymaponclick}
               );
-              mviewer.showLocation('${_proj4326}', ${geom.coordinates[0]}, ${geom.coordinates[1]}, ${_searchparams.banmarker});">
+              mviewer.showLocation('${_proj4326}', ${coords[0]}, ${coords[1]}, ${_searchparams.banmarker});">
               ${props.label}
           </a>`;
     }
