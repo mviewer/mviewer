@@ -304,8 +304,15 @@ var search = (function () {
       };
       const zoom = zoomByType[res[i].classification] || 12;
       str += `<a class="${type}-location list-group-item" href="#" onclick="
-          mviewer.animateToFeature(${JSON.stringify([res[i].x, res[i].y])}, ${zoom}, ${JSON.stringify(transformedCoords)}, ${_searchparams.querymaponclick});
-          mviewer.showLocation('${_proj4326}',${res[i].x}, ${res[i].y}, ${_searchparams.banmarker});">
+          mviewer.animateToFeature(${JSON.stringify([
+            res[i].x,
+            res[i].y,
+          ])}, ${zoom}, ${JSON.stringify(transformedCoords)}, ${
+        _searchparams.querymaponclick
+      });
+          mviewer.showLocation('${_proj4326}',${res[i].x}, ${res[i].y}, ${
+        _searchparams.banmarker
+      });">
           ${res[i].fulltext}
       </a>`;
     }
@@ -338,14 +345,18 @@ var search = (function () {
         housenumber: 18,
       };
       const zoom = zoomByType[props.type] || 14;
-      str += `<a class="geoportail list-group-item" href="#" title="${props.context} - ${props.type}"
+      str += `<a class="geoportail list-group-item" href="#" title="${props.context} - ${
+        props.type
+      }"
               onclick="mviewer.animateToFeature(
                   ${JSON.stringify([coords[0], coords[1]])},
                   ${zoom},
                   ${JSON.stringify(extentCenter)},
                   ${_searchparams.querymaponclick}
               );
-              mviewer.showLocation('${_proj4326}', ${coords[0]}, ${coords[1]}, ${_searchparams.banmarker});">
+              mviewer.showLocation('${_proj4326}', ${coords[0]}, ${coords[1]}, ${
+        _searchparams.banmarker
+      });">
               ${props.label}
           </a>`;
     }
@@ -476,9 +487,13 @@ var search = (function () {
           str += `
             <a class="fuse list-group-item" title="${result_label}" 
                 href="#" onclick="
-                  mviewer.animateToFeature(${JSON.stringify([xyz.lon, xyz.lat])}, ${xyz.zoom}, ${JSON.stringify(extentCenter)}, ${_searchparams.querymaponclick}); 
+                  mviewer.animateToFeature(${JSON.stringify([xyz.lon, xyz.lat])}, ${
+            xyz.zoom
+          }, ${JSON.stringify(extentCenter)}, ${_searchparams.querymaponclick}); 
                   mviewer.showLocation('${_proj4326}', ${xyz.lon}, ${xyz.lat}, false);" 
-                onmouseover="mviewer.flash('${_proj4326}', ${xyz.lon}, ${xyz.lat}, false);">
+                onmouseover="mviewer.flash('${_proj4326}', ${xyz.lon}, ${
+            xyz.lat
+          }, false);">
               ${result_label}
             </a>`;
         });
@@ -1371,7 +1386,13 @@ var search = (function () {
    * @param {boolean} queryMap - Boolean to trigger queryMap (true to trigger)
    * @param {boolean} hideLeftPannel - Boolean to hide left panel (true to hide, false to display). Defaults to false
    */
-  var _animateToFeature = (coordinates, zoom, center, queryMap, hideLeftPannel = false) => {
+  var _animateToFeature = (
+    coordinates,
+    zoom,
+    center,
+    queryMap,
+    hideLeftPannel = false
+  ) => {
     // Get the coordinates
     let lon = coordinates[0];
     let lat = coordinates[1];
