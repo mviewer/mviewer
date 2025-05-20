@@ -300,7 +300,7 @@ var search = (function () {
       const zoom = zoomByType[res[i].classification] || 12;
       str += `<a class="${type}-location list-group-item" href="#" onclick="
           mviewer.zoomToLocation(${res[i].x}, ${res[i].y}, ${zoom}, ${_searchparams.querymaponclick});
-          mviewer.showLocation(${_proj4326},${res[i].x}, ${res[i].y}, ${_searchparams.banmarker});">
+          mviewer.showLocation('${_proj4326}',${res[i].x}, ${res[i].y}, ${_searchparams.banmarker});">
           ${res[i].fulltext}
       </a>`;
     }
@@ -338,7 +338,7 @@ var search = (function () {
                   ${zoom},
                   ${_searchparams.querymaponclick}
               );
-              mviewer.showLocation(${_proj4326}, ${geom.coordinates[0]}, ${geom.coordinates[1]}, ${_searchparams.banmarker});">
+              mviewer.showLocation('${_proj4326}', ${geom.coordinates[0]}, ${geom.coordinates[1]}, ${_searchparams.banmarker});">
               ${props.label}
           </a>`;
     }
@@ -466,38 +466,14 @@ var search = (function () {
           var geom = new ol.format.GeoJSON().readGeometry(element.geometry);
           var xyz = mviewer.getLonLatZfromGeometry(geom, _proj4326, zoom);
           var extentCenter = _getCenterWithExtent(geom, _proj4326);
-          str +=
-            '<a class="fuse list-group-item" title="' +
-            result_label +
-            '" ' +
-            'href="#" onclick="mviewer.animateToFeature(' +
-            xyz.lon +
-            "," +
-            xyz.lat +
-            "," +
-            xyz.zoom +
-            "," +
-            extentCenter[0] +
-            "," +
-            extentCenter[1] +
-            "," +
-            _searchparams.querymaponclick +
-            ");mviewer.showLocation('" +
-            _proj4326 +
-            "'," +
-            xyz.lon +
-            "," +
-            xyz.lat +
-            ', false);" ' +
-            "onmouseover=\"mviewer.flash('" +
-            _proj4326 +
-            "'," +
-            xyz.lon +
-            "," +
-            xyz.lat +
-            ', false);" >' +
-            result_label +
-            "</a>";
+          str += `
+            <a class="fuse list-group-item" title="${result_label}" 
+                href="#" onclick="
+                  mviewer.animateToFeature(${xyz.lon}, ${xyz.lat}, ${xyz.zoom}, ${extentCenter[0]}, ${extentCenter[1]}, ${_searchparams.querymaponclick}); 
+                  mviewer.showLocation('${_proj4326}', ${xyz.lon}, ${xyz.lat}, false);" 
+                onmouseover="mviewer.flash('${_proj4326}', ${xyz.lon}, ${xyz.lat}, false);">
+              ${result_label}
+            </a>`;
         });
       }
       _showResults(str);
