@@ -482,12 +482,16 @@ var search = (function () {
             extentCenter[1] +
             "," +
             _searchparams.querymaponclick +
-            ");mviewer.showLocation('"+_proj4326 +"'," +
+            ");mviewer.showLocation('" +
+            _proj4326 +
+            "'," +
             xyz.lon +
             "," +
             xyz.lat +
             ', false);" ' +
-            "onmouseover=\"mviewer.flash('"+_proj4326 +"'," +
+            "onmouseover=\"mviewer.flash('" +
+            _proj4326 +
+            "'," +
             xyz.lon +
             "," +
             xyz.lat +
@@ -967,11 +971,7 @@ var search = (function () {
 
                   let geom = formatELS.readGeometry(currentFeature._source.location);
 
-                  let xyz = mviewer.getLonLatZfromGeometry(
-                    geom,
-                    _proj4326,
-                    zoom
-                  );
+                  let xyz = mviewer.getLonLatZfromGeometry(geom, _proj4326, zoom);
 
                   var title = "";
                   title += $.map(currentFeature._source, function (value, key) {
@@ -986,10 +986,7 @@ var search = (function () {
 
                   // always zoom on feature
                   let feature = new ol.Feature({
-                    geometry: geom.transform(
-                      _proj4326,
-                      _map.getView().getProjection()
-                    ),
+                    geometry: geom.transform(_proj4326, _map.getView().getProjection()),
                     title: title,
                   });
                   feature.setId("feature." + indexId + "." + j);
@@ -1392,9 +1389,17 @@ var search = (function () {
    * @param {float} yCenter - center y coordinate of extent
    * @param {boolean} queryMap - boolean to trigger queryMap (true to trigger)
    * @param {boolean} hideLeftPannel - boolean to hide left panel (false to display). True by default
-   * 
+   *
    */
-  var _animateToFeature = (lon, lat, zoom, xCenter, yCenter, queryMap, hideLeftPannel = true) => {
+  var _animateToFeature = (
+    lon,
+    lat,
+    zoom,
+    xCenter,
+    yCenter,
+    queryMap,
+    hideLeftPannel = true
+  ) => {
     let mapView = _map.getView();
     let mapProjection = mapView.getProjection().getCode();
     let coordsForQueryMap = ol.proj.transform([lon, lat], _proj4326, mapProjection);
@@ -1403,7 +1408,7 @@ var search = (function () {
 
     _sourceOverlay.clear();
 
-    let duration = 3000;  
+    let duration = 3000;
 
     mapView.animate({
       center: centerCoords,
@@ -1430,9 +1435,10 @@ var search = (function () {
     let mapView = _map.getView();
     let mapProjection = mapView.getProjection().getCode();
     let extent = geom.getExtent();
-    let viewExtent = (sourceProj && sourceProj !== mapProjection)
-      ? ol.proj.transformExtent(extent, sourceProj, mapProjection)
-      : extent;
+    let viewExtent =
+      sourceProj && sourceProj !== mapProjection
+        ? ol.proj.transformExtent(extent, sourceProj, mapProjection)
+        : extent;
 
     let center = ol.extent.getCenter(viewExtent);
 

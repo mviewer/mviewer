@@ -1818,8 +1818,7 @@ mviewer = (function () {
     } else if (geometry.getType() === "Point") {
       coordinates = geometry.getFlatCoordinates();
       xyz = { lon: coordinates[0], lat: coordinates[1], zoom: maxzoom || 15 };
-    } 
-    else {
+    } else {
       var extent = geometry.getExtent();
       var projExtent = ol.proj.transformExtent(extent, proj, _projection.getCode());
       var resolution = _map.getView().getResolutionForExtent(projExtent, _map.getSize());
@@ -1828,7 +1827,7 @@ mviewer = (function () {
         zoom = maxzoom;
       }
       if (geometry.getType() === "Polygon") {
-        coordinates = geometry.getInteriorPoints().getCoordinates();  
+        coordinates = geometry.getInteriorPoints().getCoordinates();
       } else if (geometry.getType() === "MultiPolygon") {
         coordinates = geometry.getInteriorPoints().getPoint(0).getCoordinates();
       }
@@ -2498,7 +2497,7 @@ mviewer = (function () {
     /**
      * Public Method: zoomToLocation
      * @deprecated use animateToFeature instead
-     * 
+     *
      */
 
     zoomToLocation: function (x, y, zoom, querymap, srs) {
