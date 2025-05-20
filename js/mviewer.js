@@ -1888,7 +1888,7 @@ mviewer = (function () {
         langitems.push(
           '<li style="padding-right:' +
             p +
-            '" type="button" class="btn mv-translate""><a href="#" idlang="' +
+            '" type="button" class="mv-translate""><a class="dropdown-item" href="#" idlang="' +
             language +
             '"><span style="margin-right: 5px;" class="flag-icon flag-icon-squared flag-icon-' +
             icon +
