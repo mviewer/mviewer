@@ -56,7 +56,7 @@ mviewer.templates.layerControl = `
 <li class="{{cls}}" data-layerid="{{layerid}}" data-title=" {{title}}">
     <div class="layerdisplay-title" >
         <div class="layerdisplay-titleLabel">
-            <i class="mv-grip ri-apps-2-fill" title="Déplacer" i18n="theme.layers.move"></i></i><div>{{title}}</div>
+            <i class="mv-grip ri-draggable" title="Déplacer" i18n="theme.layers.move"></i></i><div>{{title}}</div>
         {{#secure_layer}}
         <button data-bs-toggle="modal"
                 data-bs-target="#loginpanel"'

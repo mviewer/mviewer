@@ -445,7 +445,7 @@ var configuration = (function () {
             if (response.user != "") {
               $("#login").attr("href", _authentification.logouturl);
               $("#login").attr("title", title);
-              $("#login span")[0].className = "fas fa-lock";
+              $("#login i")[0].className = "ri-lock-fill";
               $("#login-box>span").text(response.user);
             } else {
               var url = "";

@@ -50,8 +50,6 @@
       <h1></h1>
     </div>
     <div id="main" style="opacity: 0.01">
-      
-      <!-- NAVBAR -->
       <!-- NAVBAR -->
       <nav class="navbar" id="mv-navbar">
         <div class="container-fluid p-0">
@@ -70,28 +68,31 @@
             <a class="navbar-brand mv-title" href="#">mViewer</a>
           </div>
           <div class="nav navbar-nav navbar-right">
-            <li>
-              <div id="login-box" class="navbar-form" style="display: none">
-                <span></span>
-                <a
-                  class="btn btn-default btn-raised"
-                  type="button"
-                  href="?login"
-                  id="login"
-                  title="Se connecter"
-                  tabindex="110"
-                  accesskey="10"
-                  i18n="tbar.right.login">
-                  <span class="fas fa-lock-open" aria-hidden="true"></span>
-                </a>
-              </div>
-            </li>
-            <li>
-              <!-- Ajax Loader -->
+            <li class="hidden-xs hidden-sm hidden-md mx-2">
+                <div id="coordinates">
+                  <span class=""></span>
+                </div>
+              </li>
+            <li >
               <div id="loading-indicator" class="mx-2" style="display: none">
                 <i class="ri-loader-4-line"></i>
               </div>
             </li>
+            <li id="lang-selector" class="mx-3 dropdown hidden-xs hidden-sm">
+                <a
+                  href="#"
+                  class="btn btn-light dropdown-toggle"
+                  data-bs-toggle="dropdown"
+                  type="button"
+                  role="button"
+                  aria-expanded="false">
+                  <span i18n="nav.down.lang">Langue</span>
+                </a>
+                <ul class="dropdown-menu mv-translate">
+                  <!--insert languages-->
+                </ul>
+              </li>
+              <!--//LANG SELECTOR-->
             <li>
               <div class="navbar-form" role="search" id="searchtool">
                 <div class="form-group input-group">
@@ -114,8 +115,7 @@
                 </div>
               </div>
             </li>
-            <li class="hidden-xs hidden-sm">
-              <div class="nav navbar-nav">
+            <li class="ms-3 hidden-xs hidden-sm">
                 <button
                   id="iconhelp"
                   type="button"
@@ -126,80 +126,56 @@
                   title="Lien vers la documentation">
                   <i class="ri-home-5-line"></i>
                 </button>
+            </li>
+            <li class="ms-2">
+              <div id="login-box" style="display: none">
+                <span></span>
+                <a
+                  class="btn btn-light"
+                  type="button"
+                  href="?login"
+                  id="login"
+                  title="Se connecter"
+                  tabindex="110"
+                  accesskey="10"
+                  i18n="tbar.right.login">
+                  <i class="ri-lock-unlock-line"></i>
+                </a>
               </div>
             </li>
-          </div>
+          </div>    
+        </div>
+      </nav>
+      <nav id="mvNavbarMobile" class="mvNav__mobile">
+        <a
+                  href="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#help"
+                  i18n="nav.responsive.about">
+                  <i class="ri-home-5-fill"></i>
+                </a>
           <a
-            id="navbar-btn-menu-mobile"
-            type="button"
-            class="navbar-toggle"
-            data-bs-toggle="collapse"
-            data-bs-target="#bs-example-navbar-collapse-1"
-            href="#">
-            <i class="ri-menu-line"></i>
-          </a>
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav mv-nav">
-              <li class="hidden-lg hidden-md">
-                <a
                   href="#"
                   data-bs-toggle="modal"
                   data-bs-target="#thematic-modal"
                   i18n="nav.responsive.topics">
-                  Thématiques
+                  <i class="ri-stack-fill"></i>
                 </a>
-              </li>
-              <li class="hidden-lg hidden-md">
                 <a
                   href="#"
                   data-bs-toggle="modal"
                   data-bs-target="#legend-modal"
                   i18n="nav.responsive.legend">
-                  Légende
+                  <i class="ri-equalizer-fill"></i>
                 </a>
-              </li>
-              <li class="hidden-lg hidden-md">
                 <a
-                  href="#"
-                  data-bs-toggle="modal"
-                  data-bs-target="#help"
-                  i18n="nav.responsive.about">
-                  A propos
-                </a>
-              </li>
-              <li class="hidden-xs hidden-sm hidden-md">
-                <div class="navbar-form navbar-left" id="coordinates">
-                  <span class=""></span>
-                </div>
-              </li>
-              <!--LANG SELECTOR-->
-              <li id="lang-button" class="hidden-lg hidden-md">
-                <a
+                  id="lang-button"
                   href="#"
                   data-bs-toggle="modal"
                   data-bs-target="#lang-popup"
                   i18n="nav.down.lang">
-                  Langues
+                  <i class="ri-message-3-fill"></i>
                 </a>
-              </li>
-              <li id="lang-selector" class="dropdown hidden-xs hidden-sm">
-                <a
-                  href="#"
-                  class="dropdown-toggle"
-                  data-bs-toggle="dropdown"
-                  role="button"
-                  aria-expanded="true">
-                  <span i18n="nav.down.lang">Langue</span>
-                  <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu mv-translate">
-                  <!--insert languages-->
-                </ul>
-              </li>
-              <!--//LANG SELECTOR-->
-            </ul>
-          </div>
-        </div>
       </nav>
       <div id="wrapper">
         <!-- LEFT MENU SIDEBAR -->
