@@ -1,0 +1,25 @@
+{
+  "js": ["js/label.js"],
+  "css": "css/label.css",
+  "html": "label.html",
+  "target": "layers-container-box",
+  "options": {
+    "mviewer": {
+      "default": {
+        "layer": [
+          {
+            "layerId": "epci",
+            "field": "nom_epci",
+            "font": "12px Calibri,sans-serif",
+            "textColor": "black",
+            "strokeColor": "lightblue",
+            "offsetX": 0,
+            "offsetY": 0,
+            "width": 6,
+            "zoomThreshold": 9
+          }
+        ]
+      }
+    }
+  }
+}
