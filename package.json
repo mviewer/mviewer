@@ -29,6 +29,6 @@
     "vite": "^4.5.2"
   },
   "devDependencies": {
-    "prettier": "^2.7.1"
+    "prettier": "^3.5.3"
   }
 }
