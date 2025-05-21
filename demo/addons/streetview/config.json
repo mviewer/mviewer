@@ -1,0 +1,14 @@
+{
+  "type": "module",
+  "js": [
+    "js/streetview.js"
+  ],
+  "css": "",
+  "html": "streetview.html",
+  "target": "toolstoolbar",
+  "options": {
+    "mviewer": {
+      "streetview": {}
+    }
+  }
+}
