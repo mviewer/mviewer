@@ -19,8 +19,8 @@
  
 	</baselayers>     
     <proxy url=""/>
-    <olscompletion url="https://data.geopf.fr/geocodage/search/" type="ban" attribution="La recherche d'adresse est un service proposé par la geoplateforme IGN"/> -->
-    <olscompletion url="https://data.geopf.fr/geocodage/completion" type="ign" attribution="IGN"/>
+    <!-- <olscompletion url="https://api-adresse.data.gouv.fr/search/" type="search" attribution="La recherche d'adresse est un service de l'IGN via les données de la BAN"/> -->
+    <olscompletion url="https://data.geopf.fr/geocodage/completion" type="completion" attribution="Service d'autocomplétion de l'IGN"/>
 
     <searchparameters bbox="false" localities="true" features="false" />   
 

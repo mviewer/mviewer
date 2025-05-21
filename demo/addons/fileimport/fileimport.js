@@ -575,13 +575,15 @@ const fileimport = (function () {
 
   /**
    * Private method _geocode
-   * POSTs local file and parameters to API geocode service
+   * POSTs local file and parameters to API geocode service.
+   * Will use IGN [POST] search/csv service
+   * Service details : https://geoservices.ign.fr/documentation/services/services-geoplateforme/geocodage
    * @param {String} _csv
    * @param {Object} oLayer
    * @param {Object} l
    */
   var _geocode = function (_csv, oLayer, l) {
-    if (oLayer.geocoder === "ban") {
+    if (oLayer.geocoder === "search") {
       // Create post form data
       var formData = new FormData();
       formData.append("data", new Blob([_csv], { type: "text/csv" }));
@@ -660,6 +662,11 @@ const fileimport = (function () {
     _source.addFeatures(_features);
     // zoom to layer extent
     mviewer.getMap().getView().fit(_source.getExtent());
+    let zoom = mviewer.getMap().getView().getZoom();
+    mviewer
+      .getMap()
+      .getView()
+      .setZoom(zoom - 1);
     $("#csv-status").attr("class", "start");
     //draw layer Legend
     oLayer.legend = {

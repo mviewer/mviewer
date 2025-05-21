@@ -1,8 +1,8 @@
 /**
- * Will request BAN Api
+ * Will request IGN search Adresse Api
  * @param {string} url
  */
-export const requestBan = async (url) => {
+export const requestSearchAddress = async (url) => {
   const response = await fetch(url);
   const data = await response.json();
   if (data.features) {
