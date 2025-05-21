@@ -314,7 +314,9 @@ mviewer = (function () {
       target: "map",
       controls: [
         //new ol.control.FullScreen(),
-        new ol.control.Attribution({ collapsible: true }),
+        new ol.control.Attribution({
+          collapsible: true,
+        }),
         new ol.control.ScaleLine({
           units: mapoptions.scaleunits || "metric",
           bar: mapoptions.scalebar === "true",
@@ -1403,6 +1405,20 @@ mviewer = (function () {
         _map.addLayer(l);
         break;
     }
+    // manage attribution by layer
+    let isCollapsible = baselayer?.attributioncollapsible;
+    l.set("attributioncollapsible", ["true", "", undefined].includes(isCollapsible));
+    // on baselayer change, set attribution collapsible
+    l.on("change:visible", function (event) {
+      // don't set collapsible if layer is not visible
+      if (event.oldValue) return;
+      // set collapsible attribution param according to baselayer settings
+      _map
+        .getControls()
+        .getArray()
+        .find((control) => control instanceof ol.control.Attribution)
+        .setCollapsible(event.target.get("attributioncollapsible"));
+    });
   };
 
   /**
@@ -1810,8 +1826,12 @@ mviewer = (function () {
       if (maxzoom && zoom > maxzoom) {
         zoom = maxzoom;
       }
-      var center = ol.proj.transform(ol.extent.getCenter(extent), proj, "EPSG:4326");
-      xyz = { lon: center[0], lat: center[1], zoom: zoom };
+      if (geometry.getType() === "Polygon") {
+        coordinates = geometry.getInteriorPoints().getCoordinates();
+      } else if (geometry.getType() === "MultiPolygon") {
+        coordinates = geometry.getInteriorPoints().getPoint(0).getCoordinates();
+      }
+      xyz = { lon: coordinates[0], lat: coordinates[1], zoom: zoom };
     }
     return xyz;
   };
@@ -2476,6 +2496,7 @@ mviewer = (function () {
 
     /**
      * Public Method: zoomToLocation
+     * @deprecated use animateToFeature instead
      *
      */
 
@@ -2547,7 +2568,7 @@ mviewer = (function () {
      */
     highlightSubFeature: function (feature) {
       _sourceSubSelectOverlay.clear();
-      if (feature && typeof getGeometryName === "function") {
+      if (feature) {
         _sourceSubSelectOverlay.addFeature(feature);
       }
     },

@@ -889,6 +889,17 @@
               <h4 class="modal-title" i18n="help.modal.title">DOCUMENTATION</h4>
             </div>
             <div class="modal-body"></div>
+            <div class="modal-footer">
+              <div id="showHelpOnceBloc" class="form-group pull-left show-help-tracker">
+                <label for="checkbox">
+                  <input
+                    type="checkbox"
+                    id="showHelpOnce"
+                    i18n="help.modal.notshowagain" />
+                  Ne plus afficher au démarrage
+                </label>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -975,12 +986,13 @@
     <script type="text/javascript" src="js/templates.js"></script>
     <script type="text/javascript" src="js/featurestyles.js"></script>
     <script type="text/javascript" src="js/custom.js"></script>
-    <script type="text/javascript" src="lib/i18njs/i18n.js"></script>
-    <script type="text/javascript" src="lib/moment/moment.js"></script>
+    <script type="text/javascript" src="lib/i18njs/i18n.min.js"></script>
+    <script type="text/javascript" src="lib/moment/moment.min.js"></script>
     <script type="text/javascript" src="lib/lodash-4.17.21/lodash.min.js"></script>
     <script type="text/javascript" src="js/sensorthings.js"></script>
     <script type="text/javascript" src="js/sensorFeature.js"></script>
     <script type="module" src="js/urlParams/urlParams.js"></script>
+    <script type="module" src="js/cookies/main.js"></script>
     <script>
       if (
         typeof mviewer == "undefined" ||

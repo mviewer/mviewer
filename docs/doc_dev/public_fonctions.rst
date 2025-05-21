@@ -50,7 +50,7 @@ Il existe déjà les fonctions suivantes :
     .. function:: showLocation(projection, x ,y)
     
         :param string projection: Projection de la carte
-        :param float x: Coordonnée y
+        :param float x: Coordonnée x
         :param float y: Coordonnée y
             
         :return: Affiche une punaise sur les coordonnées entrées.
@@ -59,14 +59,27 @@ Il existe déjà les fonctions suivantes :
             
         :return: Traduit dans la langue courante de mviewer une valeur de type ``machaine.a.traduire`` (cf :ref:`translation`) . 
     
+    .. deprecated:: 3.15
+       Cette fonction est obsolète et ne devrait plus être utilisée. 
+       Veuillez utiliser :func:`animateToFeature` à la place.
     .. function:: zoomToLocation(x,y,zoom, querymap)
     
-        :param float x: Coordonnée y
+        :param float x: Coordonnée x
         :param float y: Coordonnée y
         :param int zoom: Zoom de la carte
         :param boolean querymap: Interrogation de la carte
             
         :return: Zoom aux coordonnées indiquées et en option interroge la carte à ces coordonnées.
+
+    .. function:: animateToFeature(coordinates, zoom, center, querymap, hideleftpanel)
+
+        :param array coordinates: Coordonnées [x, y] du point cible
+        :param int zoom: Niveau de zoom de la carte
+        :param boolean center: Centre la carte sur les coordonnées
+        :param boolean querymap: Interroge la carte à ces coordonnées
+        :param boolean hideleftpanel: Masque le panneau de gauche au moment du zoom - valeur par défaut : false
+            
+        :return: Zoom aux coordonnées indiquées, avec en option l'interrogation de la carte à ces coordonnées et la possibilité de masquer le panneau de gauche.
 
     .. function:: getLayersAttribute(attribute)
     

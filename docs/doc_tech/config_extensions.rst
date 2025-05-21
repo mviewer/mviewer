@@ -227,6 +227,8 @@ Elle nécessite plusieurs prérequis :
 	      "updateOnChange": true
             },...
 
+Plus d'informations sur la configuration : https://github.com/mviewer/mviewer/tree/master/demo/addons/filter
+
 Extension zoomToArea
 --------------------
 Ce plugin permet à l'utilisateur de zoomer sur une zone d'intérêt sélectionnée préalablement dans une liste déroulante située en haut à droite du header mviewer.

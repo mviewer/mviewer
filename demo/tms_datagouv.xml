@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <application panelstate="open" title="Fond de carte TMS data.gouv" logo="https://kartenn.region-bretagne.fr/kartoviz/apps/region/global/img/logo/rb_blanc.svg" help="https://kartenn.region-bretagne.fr/kartoviz/apps/region/global/global_help.html" exportpng="true" legend="true" measuretools="true" legendasimage="false" popup="false" print="false" style="https://kartenn.region-bretagne.fr/kartoviz/apps/region/global/css/theme_global.css" />
+    <mapoptions maxzoom="18" projection="EPSG:3857" center="-255516,6140243" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
+
+	<baselayers style="gallery"><!-- style="default"||gallery" -->     
+		<baselayer visible="true" id="positron" thumbgallery="img/basemap/positron.png" title="Positron" 
+			label="Positron" type="vector-tms" 
+			url="https://openmaptiles.data.gouv.fr/data/planet-vector/{z}/{x}/{y}.pbf" 
+			styleurl="https://openmaptiles.data.gouv.fr/styles/positron/style.json" style="openmaptiles" attribution="IGN"  ></baselayer>
+		<baselayer visible="false" id="bright" thumbgallery="img/basemap/bright.png" title="Bright" 
+			label="Bright" type="vector-tms" 
+			url="https://openmaptiles.data.gouv.fr/data/planet-vector/{z}/{x}/{y}.pbf" 
+			styleurl="https://openmaptiles.data.gouv.fr/styles/osm-bright/style.json" style="openmaptiles" attribution="IGN"  ></baselayer>
+		<baselayer visible="false" id="open" thumbgallery="img/basemap/OpenMapTiles.png" title="OpenMapTiles" 
+			label="OpenMapTiles" type="vector-tms" 
+			url="https://openmaptiles.data.gouv.fr/data/planet-vector/{z}/{x}/{y}.pbf" 
+			styleurl="https://openmaptiles.data.gouv.fr/styles/osm-openmaptiles/style.json" style="openmaptiles" attribution="IGN"  ></baselayer>
+		<baselayer visible="false" id="dark" thumbgallery="img/basemap/darkmatter.png" title="Dark Matter" 
+			label="Dark Matter" type="vector-tms" 
+			url="https://openmaptiles.data.gouv.fr/data/planet-vector/{z}/{x}/{y}.pbf" 
+			styleurl="https://openmaptiles.data.gouv.fr/styles/dark-matter/style.json" style="openmaptiles" attribution="IGN"  ></baselayer>
+		<baselayer visible="false" id="toner" thumbgallery="img/basemap/toner.png" title="Toner" 
+			label="Toner" type="vector-tms" 
+			url="https://openmaptiles.data.gouv.fr/data/planet-vector/{z}/{x}/{y}.pbf" 
+			styleurl="https://openmaptiles.data.gouv.fr/styles/maptiler-toner/style.json" style="openmaptiles" attribution="IGN"  ></baselayer>
+		<baselayer visible="false" id="fiord" thumbgallery="img/basemap/fiord.png" title="Fiord" 
+			label="Fiord Color" type="vector-tms" 
+			url="https://openmaptiles.data.gouv.fr/data/planet-vector/{z}/{x}/{y}.pbf" 
+			styleurl="https://openmaptiles.data.gouv.fr/styles/fiord-color/style.json" style="openmaptiles" attribution="IGN"  ></baselayer>
+    </baselayers> 
+    <olscompletion url="https://wxs.ign.fr/essentiels/ols/apis/completion" type="geoportail" attribution="IGN"/>
+    <searchparameters bbox="true" localities="true" features="true"/>
+
+    <extensions>    
+        <extension type="component" id="isochroneAddon" path="https://kartenn.region-bretagne.fr/kartoviz/demo/addons"/>
+    </extensions>
+    <themes>
+        <theme name="Limites administratives"  collapsed="true" id="territoire" icon="fas fa-globe"> 
+			<layer id="epci" name="Intercommunalité" visible="true" tiled="false"
+				queryable="true" fields="nom,code_epci" aliases="Nom,SIREN"
+                infoformat="application/vnd.ogc.gml" featurecount="1"
+				style="epci_region" 
+				url="https://geobretagne.fr/geoserver/ign/wms" 
+				attribution="IGN - ADMIN EXPRESS" 
+				metadata="https://geobretagne.fr/geonetwork/srv/fre/catalog.search?node=srv#/metadata/2298d744-49cb-4fcb-9487-26f916fecdff" 
+				metadata-csw="https://geobretagne.fr/geonetwork/srv/fre/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=2298d744-49cb-4fcb-9487-26f916fecdff" />			
+        </theme>
+
+    </themes>
+</config>
