@@ -684,7 +684,7 @@ var info = (function () {
             _projection.getCode(),
             _clickCoordinates[0],
             _clickCoordinates[1],
-            !showPin ? search.options.banmarker : showPin
+            !showPin ? search.options.marker : showPin
           );
         } else {
           $("#mv_marker").hide();

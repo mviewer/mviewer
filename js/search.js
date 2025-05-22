@@ -63,7 +63,7 @@ var search = (function () {
 
   /**
    * Property: _olsCompletionType
-   * String. The service type used by the geocode control (ign or ban)
+   * String. The service type used by the geocode control (search or completion)
    */
 
   var _olsCompletionType = null;
@@ -277,77 +277,47 @@ var search = (function () {
   };
 
   /**
-   * Display geoportail or IGN search services
-   * @param {string} url
-   * @param {string} type
-   */
-  const displayIgnSearchList = async (url, type = "ign") => {
-    // request
-    let response = await fetch(url);
-    let data = await response.json();
-    // display response
-    let res = data.results;
-    let str = "";
-    const searchType = `.${type}-location`;
-    for (let i = 0, len = res.length; i < len && i < 5; i++) {
-      const transformedCoords = ol.proj.transform(
-        [res[i].x, res[i].y],
-        _proj4326,
-        _projection.getCode()
-      );
-      const zoomByType = {
-        2: 13,
-        4: 14,
-        5: 15,
-        6: 16,
-        7: 17,
-      };
-      const zoom = zoomByType[res[i].classification] || 12;
-      str += `<a class="${type}-location list-group-item" href="#" onclick="
-          mviewer.animateToFeature(${JSON.stringify([
-            res[i].x,
-            res[i].y,
-          ])}, ${zoom}, ${JSON.stringify(transformedCoords)}, ${
-        _searchparams.querymaponclick
-      });
-          mviewer.showLocation('${_proj4326}',${res[i].x}, ${res[i].y}, ${
-        _searchparams.banmarker
-      });">
-          ${res[i].fulltext}
-      </a>`;
-    }
-    $(searchType).remove();
-    if (res.length > 0) {
-      _showResults(str, "locations");
-    }
-  };
-  /**
    * Request BAN search service
    * @param {string} url
    */
-  const displayBanSearchList = async (url) => {
+  const displaySearchList = async (url, type = "completion") => {
+    const searchType = `.${type}-location`;
+    const zoomByType = {
+      municipality: 13,
+      administratif: 13,
+      city: 13,
+      locality: 15,
+      town: 15,
+      village: 16,
+      street: 17,
+      housenumber: 18,
+    };
     // request
     const response = await fetch(url);
     const data = await response.json();
     // display response
-    var res = data.features;
-    var str = "";
+    const res = data?.results || data?.features || [];
+    let str = "";
     for (var i = 0, len = res.length; i < len && i < 5; i++) {
       var props = res[i].properties;
-      var geom = new ol.format.GeoJSON().readGeometry(res[i].geometry);
+      let geom;
+      if (res[i]?.geometry) {
+        // search
+        geom = new ol.format.GeoJSON().readGeometry(res[i].geometry);
+      } else {
+        // completion
+        geom = new ol.geom.Point([res[i]?.x, res[i]?.y]);
+      }
+
       var extentCenter = _getCenterWithExtent(geom, _proj4326);
       var coords = geom.getCoordinates();
-      const zoomByType = {
-        city: 13,
-        town: 15,
-        village: 16,
-        street: 17,
-        housenumber: 18,
-      };
-      const zoom = zoomByType[props.type] || 14;
-      str += `<a class="geoportail list-group-item" href="#" title="${props.context} - ${
-        props.type
-      }"
+      const poiType = props?.type || res[i]?.kind;
+      const zoom = zoomByType[poiType] || 14;
+      let title = "";
+      if (type === "search") {
+        title = `${props?.context}-${props?.type}` || "";
+      }
+      str += `<a class="${searchType} list-group-item" href="#" ${title}"
               onclick="mviewer.animateToFeature(
                   ${JSON.stringify([coords[0], coords[1]])},
                   ${zoom},
@@ -355,12 +325,12 @@ var search = (function () {
                   ${_searchparams.querymaponclick}
               );
               mviewer.showLocation('${_proj4326}', ${coords[0]}, ${coords[1]}, ${
-        _searchparams.banmarker
+        _searchparams.marker
       });">
-              ${props.label}
+              ${props?.label || res[i].fulltext}
           </a>`;
     }
-    $(".geoportail").remove();
+    $(searchType).remove();
     _showResults(str, "locations");
   };
   /**
@@ -368,15 +338,14 @@ var search = (function () {
    * @param {string} value input from text field
    */
   var _search = function (value) {
-    // OpenLS or BAN search
+    // OpenLS or IGN services
     if (_searchparams.localities) {
-      if (["ign", "geoportail"].includes(_olsCompletionType)) {
-        displayIgnSearchList(
+      if (["completion", "geoportail"].includes(_olsCompletionType)) {
+        displaySearchList(
           `${_olsCompletionUrl}?text=${value}&type=StreetAddress,PositionOfInterest&ter=5`,
           _olsCompletionType
         );
-      } else if (_olsCompletionType === "ban") {
-        // BAN search
+      } else if (_olsCompletionType === "search") {
         var parameters = { q: value, limit: 5 };
         if (_searchparams.bbox) {
           var center = _map.getView().getCenter();
@@ -385,12 +354,12 @@ var search = (function () {
           parameters.lat = center[1];
         }
         // create URL
-        const banUrl = new URL(_olsCompletionUrl);
-        banUrl.searchParams.append("q", parameters.q);
-        banUrl.searchParams.append("limit", parameters.limit);
-        const banUrlStr = banUrl.toString();
-        // display resulr
-        displayBanSearchList(banUrlStr);
+        const searchUrl = new URL(_olsCompletionUrl);
+        searchUrl.searchParams.append("q", parameters.q);
+        searchUrl.searchParams.append("limit", parameters.limit);
+        const searchUrlString = searchUrl.toString();
+        // display result
+        displaySearchList(searchUrlString, _olsCompletionType);
       }
     }
 
@@ -1285,9 +1254,7 @@ var search = (function () {
       var label = configuration.searchparameters.inputlabel;
       $("#searchfield").attr("placeholder", label).attr("title", label);
     }
-    _searchparams.banmarker = sparams.banmarker
-      ? sparams.banmarker === "true" || false
-      : true;
+    _searchparams.marker = sparams.marker ? sparams.marker === "true" || false : true;
     _initSearch();
   };
 

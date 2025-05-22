@@ -49,7 +49,7 @@ Les attributs (et l'élément) suivant sont spécifiques à cette extension :
 ````
 
 Pour les couches csv (avec adresse, mais sans coordonnées) :
-* ``geocoder`` : précise l’API de géocodage à utiliser (ban).
+* ``geocoder`` : précise l’API de géocodage à utiliser (privilégier le service "search" de l'IGN).
 * ``geocoderurl`` (optionnel) : permet de overrider l'url par défaut du geocoder 
 * ``geocodingfields`` : précise les champs utilisables pour le géocodage.
 * ``xfield`` : précise le champ du service de géocodage à utiliser pour la longitude.
@@ -68,7 +68,7 @@ ou avec adresse et sans coordonnées) :
     legendurl="img/blank.gif"
     queryable="true"
     vectorlegend="true"
-    geocoder="ban"
+    geocoder="search"
     xfield="longitude"
     yfield="latitude"
     expanded="true">
