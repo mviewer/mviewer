@@ -1,0 +1,17 @@
+{
+  "type": "module",
+  "js": ["js/streetview.js"],
+  "css": "",
+  "html": "streetview.html",
+  "target": "toolstoolbar",
+  "options": {
+    "mviewer": {
+      "streetview": {
+        "coordinates": {
+          "type": "xy"
+        },
+        "url": "http://maps.google.com/maps?q=&layer=c&cbll="
+      }
+    }
+  }
+}
