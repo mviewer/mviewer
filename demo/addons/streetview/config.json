@@ -8,7 +8,12 @@
   "target": "toolstoolbar",
   "options": {
     "mviewer": {
-      "streetview": {}
+      "streetview": {
+        "coordinates": {
+          "type": "xy"
+        },
+        "url": "http://maps.google.com/maps?q=&layer=c&cbll="
+      }
     }
   }
 }
