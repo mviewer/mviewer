@@ -1,10 +1,20 @@
 ## Import de fichier
 
-Cette extension permet d'importer des fichiers de façon temporaire (en local) des fichiers au format `csv` ou `shp`. 
+Cette extension permet d'importer des fichiers de façon temporaire (en local) des fichiers au format `csv` ou `shp` ou `GeoJSON`. 
+
 Les données importées ne sont pas sauvegardées et seront perdues à la fermeture du navigateur.
-Dans le cas du Shapefile, le fichier `.shp` doit se trouver compressé dans un fichier `.zip` qui inclut également 
-un fichier `.dbf` encodé en UTF-8 (pour les attributs) et `.prj` (pour permettre l'interprétation du SRS à l'extension).
+
+### SHP
+
+Dans le cas du Shapefile, le fichier `.shp` doit se trouver compressé dans un fichier `.zip` qui inclut également un fichier `.dbf` encodé en UTF-8 (pour les attributs) et `.prj` (pour permettre l'interprétation du SRS à l'extension).
+
 En cas d'absence du fichier `.prj` l'utilisateur est sollicité d'indiquer le SRS.
+
+### GeoJSON
+
+Correspond au format `.geojson` (type `application/geo+json`).
+
+La projection devra être en `EPSG:4326`. Les fichier JSON (`application/json`) ne sont actuellement pas encore compatible.
 
 #### 4 ressources dans cette extension
 
@@ -60,8 +70,7 @@ Pour les couches csv (avec coordonnées) :
 La définition de chaque projection se fait dans un élément enfant ``<projection proj4js=""/>`` qui contient la chaîne de caractère proj4js comme attribut.
 Par défaut le SCR WGS84 (EPSG:4326) est supporté. L'import d'un shapefile n'utilise pas cette définition, mais l'obtient directement du fichier `.prj`.
 
-Exemple qui rend disponible l'IHM de l'extension, permettant l'import `shp` et `csv` (avec des coordonnées en `EPSG:4326`,`EPSG:3857` ou `EPSG:2154` 
-ou avec adresse et sans coordonnées) :
+Exemple qui rend disponible l'IHM de l'extension, permettant l'import `geojson`, `shp` et `csv` (avec des coordonnées en `EPSG:4326` (obligatoire en GeoJSON), `EPSG:3857` ou `EPSG:2154` ou avec adresse et sans coordonnées) :
 
 ````
 <layer type="import" id="import_file" name="Importer un fichier"  visible="true"

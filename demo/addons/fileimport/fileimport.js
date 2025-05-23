@@ -174,7 +174,7 @@ const fileimport = (function () {
     return `<div class="dropzone dz-clickable" id="drop_zone" onclick="$('#loadcsv-${oLayer.layerid}').click();" ondrop="fileimport.dropHandler(event);" ondragover="fileimport.dragOverHandler(event);">
                   <div id="csv-status" class="start">
                       <div class="dz-default dz-message"><span class="fas fa-cloud-upload-alt fa-3x"></span>
-                          <p i18n="fileimport.upload.dropzone">Glisser un fichier CSV ou SHP (en ZIP) ici ou clic pour sélectionner un fichier...</p>
+                          <p i18n="fileimport.upload.dropzone">Glisser un fichier GeoJSON, CSV ou SHP (en ZIP) ici ou clic pour sélectionner un fichier...</p>
                       </div>
                       <div class="dz-work dz-message"><span class="fas fa-spin fa-cog fa-3x"></span>
                           <p i18n="fileimport.upload.processing">Traitement en cours</p>
@@ -209,6 +209,13 @@ const fileimport = (function () {
       ];
       if (zipMimeTypes.includes(file.type)) {
         _unzip(file, oLayer);
+      } else if (["application/geo+json"].includes(file.type)) {
+        // Load GeoJSON directly
+        var reader = new FileReader();
+        reader.onload = function (evt) {
+          loadGeoJson(oLayer, oLayer.layer, evt.target.result);
+        };
+        reader.readAsText(file);
       } else {
         _initCsvModal(idlayer, file, oLayer);
       }
@@ -552,7 +559,7 @@ const fileimport = (function () {
                 features: features,
               })
             );
-            mviewer.getMap().getView().fit(featureSource.getExtent());
+            utils.zoomToFeaturesExtent(featureSource.getFeatures());
             // set legend
             var legendStyle = getImportStyle(oLayer.layer.getSource().getFeatures()[0]);
             var geometryType = oLayer.layer
@@ -643,7 +650,10 @@ const fileimport = (function () {
         var feature = new ol.Feature({
           geometry: new ol.geom.Point(
             ol.proj.transform(
-              [parseFloat(a[oLayer.xfield]), parseFloat(a[oLayer.yfield])],
+              [
+                parseFloat(a[oLayer.xfield].replace(",", ".")),
+                parseFloat(a[oLayer.yfield].replace(",", ".")),
+              ],
               ol.proj.get(_epsg),
               oLayer.mapProjection
             )
@@ -659,7 +669,7 @@ const fileimport = (function () {
     // if fusesearch is enabled in config, 'change' event is fired and handled in the  _processSearchableLayer method (search.js)
     _source.addFeatures(_features);
     // zoom to layer extent
-    mviewer.getMap().getView().fit(_source.getExtent());
+    utils.zoomToFeaturesExtent(_source.getFeatures());
     $("#csv-status").attr("class", "start");
     //draw layer Legend
     oLayer.legend = {
@@ -680,22 +690,26 @@ const fileimport = (function () {
    * @param {Object} oLayer
    * @param {Object} l
    */
-  var _loadCSV = function (oLayer, l) {
-    // No wizard here. file is directly geocoded at startup. Used with persistant csv with layer config parameters (geocodingfields...)
+  let _loadCSV = function (oLayer, l) {
+    // No wizard here. file is directly geocoded at startup. Used with persistent csv with layer config parameters (geocodingfields...)
     if (oLayer.url && oLayer.geocoder) {
-      $.ajax({
-        url: oLayer.url,
-        success: function (data) {
+      fetch(oLayer.url)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(response.statusText || "HTTP error");
+          }
+          return response.text();
+        })
+        .then((data) => {
           _geocode(data, oLayer, l);
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-          var alertText = _getI18NAlertMessage(
+        })
+        .catch((error) => {
+          const alertText = _getI18NAlertMessage(
             "Problème avec la récupération du fichier csv",
             "fileimport.alert.fileloading"
           );
-          mviewer.alert(alertText + thrownError, "alert-warning");
-        },
-      });
+          mviewer.alert(`${alertText}: ${error.message}`, "alert-warning");
+        });
     }
   };
 
@@ -742,6 +756,50 @@ const fileimport = (function () {
     return mviewer.lang ? mviewer.lang[mviewer.lang.lang](messageId) : message;
   };
 
+  /**
+   * Public method loadGeoJson
+   * Loads a GeoJSON file into the given layer
+   * @param {Object} oLayer - Layer configuration object
+   * @param {Object} l - OpenLayers vector layer
+   * @param {String|Object} geojson - GeoJSON data as string or parsed object
+   */
+  const loadGeoJson = function (oLayer, l, geojson) {
+    try {
+      let _source = l.getSource();
+      l.setStyle(getImportStyle.bind(this));
+
+      // Parse if input is string
+      let data = typeof geojson === "string" ? JSON.parse(geojson) : geojson;
+
+      let features = new ol.format.GeoJSON({
+        featureProjection: oLayer.mapProjection,
+        dataProjection: "EPSG:4326", // Assumes GeoJSON is in WGS84
+      }).readFeatures(data);
+
+      _source.clear();
+      _source.addFeatures(features);
+
+      utils.zoomToFeaturesExtent(features);
+
+      // Generate legend
+      oLayer.legend = {
+        items: [
+          {
+            styles: [getImportStyle(features[0])],
+            label: "GeoJSON",
+            geometry: features[0].getGeometry().getType(),
+          },
+        ],
+      };
+      mviewer.drawVectorLegend(oLayer.layerid, oLayer.legend.items);
+    } catch (err) {
+      let alertText = _getI18NAlertMessage(
+        "Erreur lors du chargement du fichier GeoJSON",
+        "fileimport.alert.geojson"
+      );
+      mviewer.alert(alertText + ": " + err.message, "alert-warning");
+    }
+  };
   return {
     init: function () {
       var layers = mviewer.getLayers();
@@ -824,6 +882,7 @@ const fileimport = (function () {
         ev.dataTransfer.clearData();
       }
     },
+    loadGeoJson: loadGeoJson,
   };
 })();
 

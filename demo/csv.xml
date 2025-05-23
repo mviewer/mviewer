@@ -19,7 +19,7 @@
     </extensions>
     <themes>
         <theme name="csv"  collapsed="false" id="csv" icon="fas fa-users">
-            <layer type="import" id="csv1" name="demo csv"  visible="false"
+            <layer type="import" id="csv1" name="Fichier CSV chargé au démarrage"  visible="false"
                 queryable="true"
                 vectorlegend="true"
                 geocoder="ban"
@@ -36,7 +36,7 @@
                 fusesearchresult="{{nom}}"
                 attribution="Dans cet exemple, le fichier csv, persistant et disponible en ligne, est géocodé à l'ouverture de l'application. La recherche est activée">
             </layer>
-            <layer type="import" id="import_file" name="Importer un fichier CSV"  visible="true"
+            <layer type="import" id="import_file" name="Fichier importé (CSV, GeoJSON, SHP)"  visible="true"
                 legendurl="img/blank.gif"
                 queryable="true"
                 vectorlegend="true"

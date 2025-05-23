@@ -197,11 +197,46 @@ var utils = (function () {
     return _WMTSTileResolutions[matrixset];
   };
 
+  /**
+   * This function calculates the zoom level for a given extent and map size.
+   * @param {ol.Extent} extent - The extent to calculate the zoom level for.
+   */
+  _calculateZoomExtent = (extent) => {
+    const view = mviewer.getMap().getView();
+    const size = mviewer.getMap().getSize();
+    const resolution = view.getResolutionForExtent(extent, size);
+    return view.getZoomForResolution(resolution);
+  };
+
+  /**
+   * this function zooms the map to the extent of the given features.
+   * @param {array} features
+   */
+  _zoomToFeaturesExtent = (features) => {
+    if (!features || features.length === 0) {
+      return;
+    }
+    const extent = ol.extent.createEmpty();
+    features.forEach((feature) =>
+      ol.extent.extend(extent, feature.getGeometry().getExtent())
+    );
+    const geometry = features[0].getGeometry();
+    const isSinglePoint = features.length < 2 && geometry.getType() === "Point";
+
+    const zoom = isSinglePoint ? 16 : _calculateZoomExtent(extent);
+
+    const center = ol.extent.getCenter(extent);
+
+    mviewer.animateToFeature(center, zoom - 1, center, false);
+  };
+
   return {
     lonlat2osmtile: _lonlat2osmtile,
     testConfiguration: _testConfiguration,
     initWMTSMatrixsets: _initWMTSMatrixsets,
     getWMTSTileMatrix: _getWMTSTileMatrix,
     getWMTSTileResolutions: _getWMTSTileResolutions,
+    calculateZoomExtent: _calculateZoomExtent,
+    zoomToFeaturesExtent: _zoomToFeaturesExtent,
   };
 })();
