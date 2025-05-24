@@ -116,75 +116,61 @@ var info = (function () {
     lang_to_add = "",
     template_to_use = "none"
   ) {
-
     //manipulate html to activate first item.
     var tmp = document.createElement("div");
     $(tmp).append(html);
-    
 
     // activate first item, except when multiple langs, activate the first one of the active lang
     $(tmp).find("li.item").first().addClass("active");
-    
-  switch (template_to_use) {
-    case "none":
-      $(tmp).find("li.item").first().addClass("active");
 
-      break;
+    switch (template_to_use) {
+      case "none":
+        $(tmp).find("li.item").first().addClass("active");
 
-    case "one":
-      // activate first element
-      // for retrocompatibility reasons we ignore the number of langs
-      $(tmp).find("li.item").first().addClass("active");
-      
+        break;
 
-      break;
+      case "one":
+        // activate first element
+        // for retrocompatibility reasons we ignore the number of langs
+        $(tmp).find("li.item").first().addClass("active");
 
-    case "multi":
-      
-      
-      // some quick checks
-      if (
-        lang_to_add != "" || configuration.getLanguages().includes(lang_to_add)
-      ) {
+        break;
+
+      case "multi":
+        // some quick checks
+        if (lang_to_add != "" || configuration.getLanguages().includes(lang_to_add)) {
           //mark current lang elements
-          $(tmp).find("li.item")
-            .slice(0, featurescount)
-            .addClass(`mst_${lang_to_add}`);
-      }
-      
+          $(tmp).find("li.item").slice(0, featurescount).addClass(`mst_${lang_to_add}`);
+        }
 
+        // hide all items
+        $(tmp).find("li.item").hide();
 
+        $(tmp)
+          .find(`li.item.mst_${configuration.getLang()}`)
+          .slice(0, featurescount)
+          .css("display", "");
 
-          // hide all items
-          $(tmp).find("li.item").hide();
+        // do NOT use .show() as it will set display to something we dont want
+        $(tmp)
+          .find("li.item.mst_" + configuration.getLang())
+          .first()
+          .addClass("active");
 
-          $(tmp)
-            .find(`li.item.mst_${configuration.getLang()}`)
-            .slice(0, featurescount)
-            .css("display", "");
+        // hide other languages slides
+        $(tmp)
+          .find("li.item")
+          .not(".mst_" + configuration.getLang())
+          .addClass("hidden-item")
+          .removeClass("item");
 
-          // do NOT use .show() as it will set display to something we dont want
-          $(tmp)
-            .find("li.item.mst_" + configuration.getLang())
-            .first()
-            .addClass("active");
+        break;
 
-          // hide other languages slides
-          $(tmp)
-            .find("li.item")
-            .not(".mst_" + configuration.getLang())
-            .addClass("hidden-item")
-            .removeClass("item");
-
-      break;
-    
-    
-    default:
-      // weird cases, only activate first element
-      $(tmp).find("li.item").first().addClass("active");
-      break;
-  }
-
+      default:
+        // weird cases, only activate first element
+        $(tmp).find("li.item").first().addClass("active");
+        break;
+    }
 
     //manipulate html to add data-counter attribute to each feature.
     if (featurescount > 1) {
@@ -370,14 +356,13 @@ var info = (function () {
               // contains an  actual template not just url
               html_result.push(applyTemplate(features, l));
             } else {
-
               languages = configuration.getLanguages();
-              
+
               if (languages.length < 2) {
                 // 0: if lang param is empty, 1: one lang in config
                 html_result.push(createContentHtml(features, l));
               } else {
-                if(l.template){
+                if (l.template) {
                   // actually provided multiple mst
                   languages.forEach(function (lang) {
                     var template_field_name = "template_" + lang;
@@ -387,11 +372,10 @@ var info = (function () {
                       html_result.push(createContentHtml(features, l));
                     }
                   });
-                }else{
+                } else {
                   // no mst found
                   html_result.push(createContentHtml(features, l));
                 }
-
               }
             }
 
@@ -607,7 +591,7 @@ var info = (function () {
             });
 
             var t = [];
-            
+
             $(features).each(function (i, feature) {
               t.push(feature);
             });
@@ -750,60 +734,56 @@ var info = (function () {
           }
           $("#" + panel + " .popup-content").append(template);
 
-
           // the following code is to link the information panel's title to the layer name, so that a translation is always possible without having to retireve dictionnary
 
           firstlayer_id = view.layers.filter((layer) => layer.firstlayer)[0].layerid;
-          
-
 
           let panel_header = $("#" + panel + " .mv-header h5");
-          
+
           panel_header.attr("i18n", "layers." + firstlayer_id);
 
-
           // default
-          var layer_picker_container_selector = '#sidebar-wrapper';
+          var layer_picker_container_selector = "#sidebar-wrapper";
           // mobile
-          if(configuration.getConfiguration().mobile){
-            layer_picker_container_selector = '#thematic-modal';
+          if (configuration.getConfiguration().mobile) {
+            layer_picker_container_selector = "#thematic-modal";
           }
 
           layer_picker_container = $(layer_picker_container_selector);
 
           // some error detection
           if (layer_picker_container.length === 0) {
-            throw new Error('sidebar-wrapper not found');
+            throw new Error("sidebar-wrapper not found");
           }
           // get the i18n id from the corresponding layer, the link here is the i18n tag set using setInfoPanelTitle
-          const layer_title_el = layer_picker_container.find(`[i18n="${panel_header.attr("i18n")}"]`);
+          const layer_title_el = layer_picker_container.find(
+            `[i18n="${panel_header.attr("i18n")}"]`
+          );
 
           if (layer_title_el.length > 1) {
-            throw new Error('i18n layers id has been used in more than one html element');
+            throw new Error("i18n layers id has been used in more than one html element");
           } else if (layer_title_el.length === 0) {
             // simplified mode, no layer picker
           }
 
-          
           var title = layer_title_el.text();
-          
+
           // info panel title
           panel_header.text(title);
-          
-          
-          
 
           // info panel layer selection onhover's text
-          if(configuration.getLanguages().length > 1) {
+          if (configuration.getLanguages().length > 1) {
             // update every tab in the layer's selection title according to the layer selection left tab title, with reverse in order to keep the panel's title same as first layer
-            $("#" + panel + " .nav-tabs li").toArray().reverse().forEach(function(item, index) {
-              mviewer.setInfoPanelTitle(
-              $(item).find("a"),
-              panel,
-              `layers.${$(item).attr("data-layerid")}`
-              );
-            });
-
+            $("#" + panel + " .nav-tabs li")
+              .toArray()
+              .reverse()
+              .forEach(function (item, index) {
+                mviewer.setInfoPanelTitle(
+                  $(item).find("a"),
+                  panel,
+                  `layers.${$(item).attr("data-layerid")}`
+                );
+              });
           }
 
           const infoPanelReadyEvent = new CustomEvent("infopanel-ready", {
