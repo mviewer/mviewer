@@ -107,7 +107,7 @@ mviewer.templates.layerControl = `
         <div class="row">
             <div class="col-md-12">
                 <p>
-                    <span id="{{layerid}}-attribution">{{{attribution}}}</span>
+                    <span i18n="{{layerid}}.legend.attribution" id="{{layerid}}-attribution">{{{attribution}}}</span>
                     {{#metadata}}
                         <a href="#" role="button" id="{{layerid}}-layer-summary" tabindex="10" data-trigger="focus"
                                 data-toggle="popover" class="mv-layer-summary" data-html="true"
@@ -211,7 +211,7 @@ mviewer.templates.featureInfo.default = `
                 <ul class="nav nav-tabs">
                 {{#layers}}
                     <li title="{{name}}" class="{{#firstlayer}}active{{/firstlayer}}" data-layerid="{{layerid}}">
-                        <a onclick="mviewer.setInfoPanelTitle(this,\'{{panel}}\');" title="{{name}}" href="#slide-{{panel}}-{{id}}" data-toggle="tab">
+                        <a onclick="mviewer.setInfoPanelTitle(this,\'{{panel}}\',\'layers.{{layerid}}\');" title="{{name}}" i18n="layers.{{layerid}}" href="#slide-{{panel}}-{{id}}" data-toggle="tab">
                             <span class="fa {{theme_icon}}"></span>
                         </a>
                     </li>
@@ -274,7 +274,7 @@ mviewer.templates.featureInfo.accordion = `
                 <div class="panel">
                 <div class="panel-heading mv-theme" role="tab" id="heading-{{panel}}-{{id}}" data-layerid="{{layerid}}">
                     <h4 class="panel-title">
-                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#accordion-{{panel}}-{{id}}" aria-expanded="{{#firstlayer}}true{{/firstlayer}}{{^firstlayer}}false{{/firstlayer}}" aria-controls="accordion-{{panel}}-{{id}}">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" i18n="layers.{{layerid}}" href="#accordion-{{panel}}-{{id}}" aria-expanded="{{#firstlayer}}true{{/firstlayer}}{{^firstlayer}}false{{/firstlayer}}" aria-controls="accordion-{{panel}}-{{id}}">
                     {{name}}
                     </a>
                     </h4>
@@ -317,7 +317,7 @@ mviewer.templates.featureInfo.accordion = [
   '<div class="panel">',
   '<div class="panel-heading mv-theme caret-toggle {{^firstlayer}}collapsed{{/firstlayer}}" id="dataToggleDiv" data-toggle="collapse" data-parent="#accordion" href="#accordion-{{panel}}-{{id}}" role="tab" id="heading-{{panel}}-{{id}}" data-layerid="{{layerid}}">',
   '<h4 class="panel-title text-right">',
-  '<a role="button" class="pull-left" aria-expanded="{{#firstlayer}}true{{/firstlayer}}{{^firstlayer}}false{{/firstlayer}}" aria-controls="accordion-{{panel}}-{{id}}">',
+  '<a role="button" class="pull-left" i18n="layers.{{layerid}}" aria-expanded="{{#firstlayer}}true{{/firstlayer}}{{^firstlayer}}false{{/firstlayer}}" aria-controls="accordion-{{panel}}-{{id}}">',
   "{{name}}",
   "</a>",
   '{{#firstlayer}}<span class="state-icon glyphicon firstLayer"></span>{{/firstlayer}}',
@@ -362,7 +362,7 @@ mviewer.templates.featureInfo.allintabs = [
   '<ul class="nav nav-tabs">',
   "{{#layers}}",
   '<li title="{{name}}" class="{{#firstlayer}}active{{/firstlayer}}" data-layerid="{{layerid}}" {{#initiallayerid}}initiallayerid="{{initiallayerid}}" {{/initiallayerid}}>',
-  '<a onclick="mviewer.setInfoPanelTitle(this,\'{{panel}}\');" title="{{name}}" href="#slide-{{panel}}-{{id}}" data-toggle="tab">',
+  '<a onclick="mviewer.setInfoPanelTitle(this,\'{{panel}}\',\'layers.{{layerid}}\');" title="{{name}}" i18n="layers.{{layerid}}" href="#slide-{{panel}}-{{id}}" data-toggle="tab">',
   '<span class="fa {{theme_icon}}"></span>',
   '{{#multiple}}<span class="item-number">{{index}}</spanclass>{{/multiple}}',
   "</a>",
