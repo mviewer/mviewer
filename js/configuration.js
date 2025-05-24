@@ -807,13 +807,49 @@ var configuration = (function () {
             }
             //Mustache template
             if (layer.template && layer.template.url) {
-              $.get(mviewer.ajaxURL(layer.template.url, _proxy), function (template) {
-                oLayer.template = template;
-              });
-            } else if (layer.template) {
-              oLayer.template = layer.template;
+              /* if there are multiple languages, the user then has 2 possibilities:
+                    a - provide a template local file for each language,
+                        + ie: directory/template_fr.mst, directory/template_en.mst
+                        + the given url will be directory/template
+                        + ie: directory/template?lang=fr
+                        + the given url will be directory/template
+                */
+
+              /* to implement this i will add template_{lang} field to the layer object
+                in any case, the system will try to find all the templates and save them in the layer properties
+                
+                */
+
+              var languages = configuration.getLanguages();
+
+              // used jquery validator's url regex
+              const isUrl = (str) =>
+                str.match(
+                  /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+                ) !== null;
+              const uniqLang = configuration.getLang().length === 1;
+              if (uniqLang || layer.template.url.endsWith(".mst")) {
+                //NORMAL CASE, conditions: [mst extension at the end of the url]"
+                $.get(mviewer.ajaxURL(layer.template.url, _proxy), function (template) {
+                  oLayer.template = template;
+                });
+              } else {
+                languages.forEach(function (lang) {
+                  let correctUrl = isUrl(layer.template.url);
+                  var template_url_field_name = `template_${lang}`;
+                  let template_url = utils.getTemplateUrl(lang, layer, correctUrl);
+                  $.get(mviewer.ajaxURL(template_url, _proxy), function (template) {
+                    oLayer[template_url_field_name] = template;
+                  }).fail(() => {
+                    const msg = correctUrl
+                      ? "failed to load " + lang + " template through api"
+                      : "failed to load " + lang + " template through filesystem";
+                    console.log(msg);
+                  });
+                });
+              }
             } else {
-              oLayer.template = false;
+              oLayer.template = layer?.template || false;
             }
             oLayer.queryable = layer.queryable === "true" ? true : false;
             oLayer.exclusive = layer.exclusive === "true" ? true : false;
@@ -837,8 +873,8 @@ var configuration = (function () {
               layer.type === "sensorthings"
                 ? "false"
                 : layer.nohighlight === "true"
-                ? true
-                : false;
+                  ? true
+                  : false;
             oLayer.infohighlight =
               layer.type === "sensorthings" || layer.infohighlight === "false"
                 ? false

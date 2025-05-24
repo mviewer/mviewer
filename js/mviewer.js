@@ -1836,6 +1836,11 @@ mviewer = (function () {
     return xyz;
   };
 
+  // returns name of language in its own language, ie autonym
+  // eg: de -> Deutsch, en -> English, fr -> français ...
+  const getLangNameAutonym = (langCode) =>
+    new Intl.DisplayNames([langCode], { type: "language" }).of(langCode);
+
   var _configureTranslate = function (dic) {
     var lang = configuration.getLang();
     var languages = configuration.getLanguages();
@@ -1845,33 +1850,54 @@ mviewer = (function () {
       languages.forEach(function (language) {
         var langStr = "";
         var icon = language;
-        var p;
-        if (language === "en") {
-          icon = "gb";
+        var p = 0;
+        switch (language) {
+          case "en":
+            icon = "gb"; // england
+            break;
+          case "ar":
+            icon = "sa"; // saudi arabia
+            break;
+          case "uk":
+            icon = "ua"; // ukraine
+            break;
+          case "ko":
+            icon = "kr"; // south korea
+            break;
+          case "sl":
+            icon = "si"; // slovenia
+            break;
+          case "sq":
+            icon = "al"; // albania
+            break;
+          case "sv":
+            icon = "se"; // sweden
+            break;
+          default:
+            icon = language;
         }
-        if (langitems.length === 0 && showHelp) {
-          // set no padding for the first item element
-          // help popup only
-          p = 0;
-        }
+
+        // set no padding for the first item element
+        // help popup only
+        // set to right padding to take into account language dropdown menu syle
         langitems.push(
-          '<li style="padding-left:' +
+          '<li style="padding-right:' +
             p +
             '" type="button" class="btn mv-translate""><a href="#" idlang="' +
             language +
             '"><span style="margin-right: 5px;" class="flag-icon flag-icon-squared flag-icon-' +
             icon +
             '"></span><span>' +
-            language +
+            getLangNameAutonym(language) +
             "</span></a></li>"
         );
       });
 
       // if help popup only
       if (showHelp) {
-        $("#help .modal-body").append(
-          '<ul style="padding-left:0">' + langitems.join("") + "</ul>"
-        );
+        $("#lang-button, #lang-selector").addClass("enabled");
+        $("#lang-body>ul").append(langitems.join(""));
+        $("#lang-selector>ul").append(langitems.join(""));
       } else {
         // display selector or modal according to device
         $("#lang-button, #lang-selector").addClass("enabled");
@@ -1880,6 +1906,63 @@ mviewer = (function () {
       }
       $(".mv-translate a").click(function () {
         _changeLanguage($(this).attr("idlang"));
+
+        if (languages.length > 1) {
+          // only make items hidden if there are multiple languages
+
+          //hide current lang mst and show new mst
+
+          // close lang selector
+          if (configuration.getConfiguration().mobile) {
+            $("#lang-popup").modal("hide");
+          } else {
+            $(".mv-translate").removeClass("active");
+          }
+
+          var available_info_panels = [];
+
+          var all_panels_selectors = ["#right-panel", "#bottom-panel", "#modal-panel"];
+          all_panels_selectors.forEach((selector) => {
+            full_selector = selector + " .popup-content";
+            if ($(full_selector).html() && $(full_selector).html().trim() !== "") {
+              // add panel selector to the array
+              available_info_panels.push(selector);
+            }
+          });
+          // in case no panel selector  found, defaults to right panel
+          if (available_info_panels.length === 0) {
+            available_info_panels = ["#right-panel"];
+          }
+
+          // apply translations to all panels
+          available_info_panels.forEach((info_panel_selector_to_use) => {
+            // hide other languages slides
+            $(info_panel_selector_to_use)
+              .find(".carousel-inner")
+              .find("li.item")
+              .not(".mst_" + configuration.getLang())
+              .addClass("hidden-item")
+              .removeClass("item");
+            // show those of the new language
+            $(info_panel_selector_to_use)
+              .find(".carousel-inner")
+              .find("li.mst_" + $(this).attr("idlang"))
+              .addClass("item")
+              .removeClass("hidden-item");
+            // find inside div with id right-panel the div with class carousel-inner and hide all divs that contain item inside of it
+            $(info_panel_selector_to_use).find(".carousel-inner").find("li.item").hide();
+
+            // show the div that contains the clicked language in its class
+            $(info_panel_selector_to_use)
+              .find(".carousel-inner")
+              .find("li.item.mst_" + $(this).attr("idlang"))
+              .show();
+            //close panel if opened to trigger reload
+            $(info_panel_selector_to_use).removeClass("active");
+          });
+
+          $("#mv_marker").hide();
+        }
       });
     }
 
@@ -1947,19 +2030,43 @@ mviewer = (function () {
       "data-original-title",
     ];
     var _element = $(element);
-    _element.find("[i18n]").each((i, el) => {
-      let find = false;
-      let tr = mviewer.lang[lang]($(el).attr("i18n"));
-      htmlType.forEach((att) => {
-        if ($(el).attr(att) && tr) {
-          $(el).attr(att, tr);
-          find = true;
+
+    // get mviewer default i18n keys
+    var mviewer_default_i18n_keys = [];
+    var defaultI18nFile = "mviewer.i18n.json";
+    $.get(defaultI18nFile).done(function (dic) {
+      mviewer_default_i18n_keys = Object.keys(dic[lang]);
+
+      _element.find("[i18n]").each((i, el) => {
+        let is_mviewer_translation = mviewer_default_i18n_keys.includes(
+          $(el).attr("i18n")
+        ); // dont show the i18n id in debug mode if the element's translationis provided by mviewer
+        let find = false;
+        let tr = mviewer.lang[lang]($(el).attr("i18n"));
+        htmlType.forEach((att) => {
+          if ($(el).attr(att) && tr) {
+            $(el).attr(att, tr);
+            find = true;
+          }
+        });
+
+        var debug_translation = new URLSearchParams(window.location.href)
+          .get("debug_translation")
+          ?.match(/[a-zA-Z0-9]+/)[0];
+
+        if (!find && $(el).text().indexOf("{{") === -1) {
+          if (debug_translation === "true" && !is_mviewer_translation) {
+            // debug mode, used to see the generated i18n ids to create the i18n json dictionnary
+            // dont show i18n keys for translations already provided by mviewer
+            $(el).text($(el).attr("i18n"));
+          } else if (!(tr === $(el).attr("i18n"))) {
+            // if tranlsation exists
+            $(el).text(tr);
+          } // else do nothing, keep the innertext already there
         }
       });
-      if (!find && $(el).text().indexOf("{{") === -1) {
-        $(el).text(tr);
-      }
     });
+
     _element.find("[data-content]").each((i, el) => {
       var content = $("<div></div>").append($(el).attr("data-content"));
       content.find("[i18n]").each((i, contentEl) => {
@@ -1970,7 +2077,6 @@ mviewer = (function () {
         }
       });
     });
-
     var ret = element === "body" ? true : _element[0].outerHTML;
     return ret;
   };
@@ -3439,9 +3545,39 @@ mviewer = (function () {
       animation = setInterval(play, 2000);
     },
 
-    setInfoPanelTitle: function (el, panel) {
-      var title = $(el).attr("data-original-title");
+    setInfoPanelTitle: function (el, panel, new_i18n) {
+      // default
+      var layer_picker_container_selector = "#sidebar-wrapper";
+      // mobile
+      if (configuration.getConfiguration().mobile) {
+        layer_picker_container_selector = "#thematic-modal";
+      }
+
+      layer_picker_container = $(layer_picker_container_selector);
+
+      if (layer_picker_container.length === 0) {
+        throw new Error("sidebar-wrapper not found");
+      }
+      // get the corresponding layer from i18n id
+      const layer_title_el = layer_picker_container.find(`[i18n="${new_i18n}"]`);
+      if (layer_title_el.length > 1) {
+        throw new Error("same i18n id has been used in more than one layer");
+      } else if (layer_title_el.length === 0) {
+        throw new Error("No element found with the given i18n id");
+      }
+
+      var title = layer_title_el.text();
       $("#" + panel + " .mv-header h5").text(title);
+
+      // also update the panel's title's i18n attribute
+      if (new_i18n) {
+        $("#" + panel + " .mv-header h5").attr("i18n", new_i18n);
+      }
+
+      // update the title of the element and its parent too
+      $(el).parent().attr("title", title);
+      $(el).attr("data-original-title", title);
+      $(el).attr("title", title);
     },
 
     nextBackgroundLayer: function () {

@@ -197,11 +197,21 @@ var utils = (function () {
     return _WMTSTileResolutions[matrixset];
   };
 
+  _getTemplateUrl = (lang, layer, isUrl) => {
+    if (!isUrl) return `${layer.template.url}_${lang}.mst`;
+
+    var template_url = new URL(layer.template.url);
+    template_url.searchParams.set("lang", lang);
+    template_url = template_url.toString();
+    return template_url;
+  };
+
   return {
     lonlat2osmtile: _lonlat2osmtile,
     testConfiguration: _testConfiguration,
     initWMTSMatrixsets: _initWMTSMatrixsets,
     getWMTSTileMatrix: _getWMTSTileMatrix,
     getWMTSTileResolutions: _getWMTSTileResolutions,
+    getTemplateUrl: _getTemplateUrl,
   };
 })();

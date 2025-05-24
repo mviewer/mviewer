@@ -9,7 +9,7 @@ mviewer.templates.tooltip = `<div class="tooltip mv-tooltip" role="tooltip">
 let locationHref = location.hash || "#";
 mviewer.templates.themeLayer = `<li class="mv-nav-item" onclick="mviewer.toggleLayer(this);" data-layerid="{{layerid}}"">
     <a href="${locationHref}" >
-        <span class="state-icon far mv-unchecked"></span> {{title}}
+        <span class="state-icon far mv-unchecked"></span> <div i18n="layers.{{layerid}}">{{title}}</div>
         <input type="checkbox" class="hidden" value="false" >
     </a>
 </li>`;
@@ -19,7 +19,7 @@ mviewer.templates.theme = `
     <a href="#">
         <span class="fa-stack fa-lg pull-left col-sm-3">
             <i class="{{icon}} fa-stack-1x "></i>
-        </span>{{name}}
+        </span><div i18n="themes.{{id}}">{{name}}</div>
     {{#toggleAllLayers}}
         <div class="toggle-theme-layers">
             <span class="badge" title="Afficher/Masquer toutes les couches de la thématique" i18n="theme.display.layers">0/1</span>
@@ -29,7 +29,7 @@ mviewer.templates.theme = `
     <ul class="nav-pills nav-stacked" style="list-style-type:none;">
         {{#groups}}
             <li class="level-2">
-                <a href="#">{{title}}</a>
+                <a href="#" i18n="{{title}}">{{title}}</a>
                 <ul class="nav-pills nav-stacked" style="list-style-type:none;">
                 {{#layers}}
                     ${mviewer.templates.themeLayer}
@@ -46,7 +46,7 @@ mviewer.templates.theme = `
 mviewer.templates.layerControl = `
 <li class="{{cls}}" data-layerid="{{layerid}}" data-title=" {{title}}">
     <div class="row layerdisplay-title" >
-        <i class="mv-grip fas fa-grip-vertical" title="Déplacer" i18n="theme.layers.move"></i><a>{{title}}</a>
+        <i class="mv-grip fas fa-grip-vertical" title="Déplacer" i18n="theme.layers.move"></i><a i18n="{{layerid}}.legend.title" >{{title}}</a>
         {{#secure_layer}}
         <button data-toggle="modal"
                 data-target="#loginpanel"'
@@ -75,7 +75,7 @@ mviewer.templates.layerControl = `
             <div class="loader">Loading...</div>
         </div>
         <canvas class="vector-legend" id="vector-legend-{{layerid}}" width="0" height="0"/>
-        <img class="mv-legend" {{crossorigin}} id="legend-{{layerid}}" src="{{legendurl}}"
+        <img class="mv-legend" {{crossorigin}} id="legend-{{layerid}}" i18n="{{layerid}}.legend.image" src="{{legendurl}}"
                 alt="Légende non disponible" onload="mviewer.legendSize(this)"
                 onError="this.onerror=null;this.src=\'img/nolegend.png\';"/>
     </div>
@@ -107,7 +107,7 @@ mviewer.templates.layerControl = `
         <div class="row">
             <div class="col-md-12">
                 <p>
-                    <span id="{{layerid}}-attribution">{{{attribution}}}</span>
+                    <span i18n="{{layerid}}.legend.attribution" id="{{layerid}}-attribution">{{{attribution}}}</span>
                     {{#metadata}}
                         <a href="#" role="button" id="{{layerid}}-layer-summary" tabindex="10" data-trigger="focus"
                                 data-toggle="popover" class="mv-layer-summary" data-html="true"
@@ -211,7 +211,7 @@ mviewer.templates.featureInfo.default = `
                 <ul class="nav nav-tabs">
                 {{#layers}}
                     <li title="{{name}}" class="{{#firstlayer}}active{{/firstlayer}}" data-layerid="{{layerid}}">
-                        <a onclick="mviewer.setInfoPanelTitle(this,\'{{panel}}\');" title="{{name}}" href="#slide-{{panel}}-{{id}}" data-toggle="tab">
+                        <a onclick="mviewer.setInfoPanelTitle(this,\'{{panel}}\',\'layers.{{layerid}}\');" title="{{name}}" i18n="layers.{{layerid}}" href="#slide-{{panel}}-{{id}}" data-toggle="tab">
                             <span class="fa {{theme_icon}}"></span>
                         </a>
                     </li>
@@ -274,7 +274,7 @@ mviewer.templates.featureInfo.accordion = `
                 <div class="panel">
                 <div class="panel-heading mv-theme" role="tab" id="heading-{{panel}}-{{id}}" data-layerid="{{layerid}}">
                     <h4 class="panel-title">
-                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#accordion-{{panel}}-{{id}}" aria-expanded="{{#firstlayer}}true{{/firstlayer}}{{^firstlayer}}false{{/firstlayer}}" aria-controls="accordion-{{panel}}-{{id}}">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" i18n="layers.{{layerid}}" href="#accordion-{{panel}}-{{id}}" aria-expanded="{{#firstlayer}}true{{/firstlayer}}{{^firstlayer}}false{{/firstlayer}}" aria-controls="accordion-{{panel}}-{{id}}">
                     {{name}}
                     </a>
                     </h4>
@@ -317,7 +317,7 @@ mviewer.templates.featureInfo.accordion = [
   '<div class="panel">',
   '<div class="panel-heading mv-theme caret-toggle {{^firstlayer}}collapsed{{/firstlayer}}" id="dataToggleDiv" data-toggle="collapse" data-parent="#accordion" href="#accordion-{{panel}}-{{id}}" role="tab" id="heading-{{panel}}-{{id}}" data-layerid="{{layerid}}">',
   '<h4 class="panel-title text-right">',
-  '<a role="button" class="pull-left" aria-expanded="{{#firstlayer}}true{{/firstlayer}}{{^firstlayer}}false{{/firstlayer}}" aria-controls="accordion-{{panel}}-{{id}}">',
+  '<a role="button" class="pull-left" i18n="layers.{{layerid}}" aria-expanded="{{#firstlayer}}true{{/firstlayer}}{{^firstlayer}}false{{/firstlayer}}" aria-controls="accordion-{{panel}}-{{id}}">',
   "{{name}}",
   "</a>",
   '{{#firstlayer}}<span class="state-icon glyphicon firstLayer"></span>{{/firstlayer}}',
@@ -362,7 +362,7 @@ mviewer.templates.featureInfo.allintabs = [
   '<ul class="nav nav-tabs">',
   "{{#layers}}",
   '<li title="{{name}}" class="{{#firstlayer}}active{{/firstlayer}}" data-layerid="{{layerid}}" {{#initiallayerid}}initiallayerid="{{initiallayerid}}" {{/initiallayerid}}>',
-  '<a onclick="mviewer.setInfoPanelTitle(this,\'{{panel}}\');" title="{{name}}" href="#slide-{{panel}}-{{id}}" data-toggle="tab">',
+  '<a onclick="mviewer.setInfoPanelTitle(this,\'{{panel}}\',\'layers.{{layerid}}\');" title="{{name}}" i18n="layers.{{layerid}}" href="#slide-{{panel}}-{{id}}" data-toggle="tab">',
   '<span class="fa {{theme_icon}}"></span>',
   '{{#multiple}}<span class="item-number">{{index}}</spanclass>{{/multiple}}',
   "</a>",
