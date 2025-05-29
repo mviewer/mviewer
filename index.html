@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr-fr" lang="fr-fr" dir="ltr">
   <head>
     <title>mviewer</title>
@@ -1124,11 +1124,8 @@
             const is400 = status === "parsererror" ? "400" : "";
 
             if (API.debug === "true") {
-              document.querySelector(
-                "#loader-title"
-              ).innerHTML = `<i class="fa fa-code" aria-hidden="true"></i> code ${
-                is404 || is400
-              }`;
+              document.querySelector("#loader-title").innerHTML =
+                `<i class="fa fa-code" aria-hidden="true"></i> code ${is404 || is400}`;
               return;
             }
             if (request.statusCode().status === 404) {
