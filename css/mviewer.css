@@ -3,6 +3,7 @@ body{
   --mv-color-primary-100:color-mix(in srgb, var(--mv-color-primary) 10%, rgba(255, 255, 255, 0));
   --mv-color-body:#515151;
   --mv-navbar-h:65px;
+  --mv-navbar-color: var(--mv-customcolor-secondary, var(--mv-color-primary));
   --mv-navbar-mobile-h:60px;
   --mv-font: var(--mv-customfont, 'system-ui');
 }
@@ -272,7 +273,7 @@ a {
 
 #mv-navbar {
   z-index: 1030;
-  background-color: var(--mv-color-primary);
+  background-color: var(--mv-navbar-color);
   padding: 0.5em 1em;
   height: var(--mv-navbar-h);
   position: fixed;
