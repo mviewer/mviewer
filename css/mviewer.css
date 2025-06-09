@@ -309,6 +309,11 @@ a {
 	transition: 0.5s;
 }
 
+#geolocbtn.enabled {
+    background-color: color-mix(in srgb, var(--mv-color-primary) 20%, white);
+    color: var(--mv-color-primary);
+}
+
 .tooltip-measure-static, 
 .tooltip2.tooltip-measure {
     background-color: #000000;
