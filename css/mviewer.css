@@ -203,6 +203,7 @@ a {
   background: #555;
 }
 /* Alert */
+
 #alerts-zone {
   bottom: 0px;
   position: absolute;
@@ -258,6 +259,13 @@ a {
   font-size: 10px;
   border-radius: 4px;
   padding-right: 5px;
+}
+
+#feature-info {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  z-index: 100;
 }
 
 /* Map-pins */
@@ -524,6 +532,12 @@ a#searchparams {
 /* Not display when not active */
 #layers-container {
   display: none;
+}
+
+#layers-container-box.toggled {
+    -webkit-transform: translate3d(200px,0,0);
+    transform: translate3d(200px,0,0);
+    -ms-transform: translateX(200px);
 }
 
 #layers-container-box-header {
@@ -837,6 +851,8 @@ a#searchparams {
   height: auto;
 }
 
+
+
 #menu {
     margin-top: 0px;
 }
@@ -904,11 +920,11 @@ a#searchparams {
   padding-top: 3px;
 }
 
-.nav-pills li a{
+#menu .nav-pills li a{
 border-radius:0px;
 }
 
-li.level-2{
+#menu li.level-2{
 text-indent:9px;
 }
 
@@ -975,6 +991,7 @@ line-height: 33px;
 }
 
 /* Interrogation */
+
 .mv-header {
   display: flex;
   align-items: center;
@@ -989,6 +1006,100 @@ line-height: 33px;
   margin: 0;
 }
 
+/* All */
+
+.popup-content.mv-panel-queryable {
+  overflow-y: hidden;
+  overflow-x: hidden;
+  position: absolute;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  padding: 0 0 0 0;
+}
+
+.popup-content.mv-panel-queryable:has(.featureInfo__brut), #bottom-panel .popup-content.mv-panel-queryable:has(.featureInfo__accordion) {
+    overflow-y: auto!important;
+}
+
+.popup-content img {
+  max-width: 100%;
+}
+
+.mv-panel-queryable .nav-link {
+  padding: 0.5em 0.75em!important;
+}
+
+.mv-panel-queryable .nav-link.active>span {
+  color: var(--mv-color-primary)!important;
+}
+
+.mv-panel-queryable .nav-link.active{
+  color: var(--mv-color-primary)!important;
+  box-shadow: 5px 0px 0px -2px var(--mv-color-primary) inset;
+}
+
+.mv-panel-queryable .nav-link:hover{
+  color: var(--mv-color-primary)!important;
+  box-shadow: 5px 0px 0px -2px var(--mv-color-primary) inset;
+  cursor:pointer
+}
+
+.featureInfo__default div:has(>.counter-slide) {
+    position: relative;
+    width: 100%;
+    text-align: center;
+}
+
+#right-panel .featureInfo__default div:has(>.counter-slide) {
+  margin-top: -12em;
+}
+
+#bottom-panel .featureInfo__default div:has(>.counter-slide) {
+  margin-top: -6em;
+}
+
+.counter-slide {
+  font-size: 9px;
+  background-color: #efefef;
+  color: #8f8f8fe6;
+}
+
+.popup-content .tab-content .tab-pane {
+  display: none;
+  background-color: #fff;
+  overflow-y: hidden;
+}
+
+.popup-content .tab-pane {
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.popup-content .tab-content .active {
+  display: block;
+}
+
+.popup-content .nav-tabs {
+  float: left;
+  border-bottom: 0;
+}
+.popup-content .nav-tabs li {
+  float: none;
+  margin: 0;
+}
+.popup-content .nav-tabs li a {
+  margin-right: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+.popup-content .nav-tabs .fa {
+  color: #ccc;
+}
+
+
+/* Right */ 
 #right-panel {
   right: 0px;
   opacity: 0;
@@ -1025,62 +1136,50 @@ line-height: 33px;
   height: 100%;
 }
 
-/* all */
-.popup-content.mv-panel-queryable {
-  overflow-y: hidden;
-  overflow-x: hidden;
-  position: absolute;
-  left: 0px;
-  height: 100%;
-  width: 100%;
-  padding: 0 0 0 0;
+/* Bottom */ 
+
+#bottom-panel {
+    bottom: 0px;
+    opacity: 0;
+    height: 0;
+    width: 100%;
+    background: #fff;
+    position: fixed;
+    z-index: 4;
+    padding-right: 250px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
 }
 
-.popup-content img {
-  max-width: 100%;
+#bottom-panel.active {
+    height: var(--mv-bottompanel-size);
+    opacity: 1;
 }
 
-.mv-panel-queryable .nav-link {
-  padding: 0.5em 0.75em!important;
+#bottom-panel.toggled {
+    -webkit-transform: translate3d(200px,0,0);
+    transform: translate3d(200px,0,0);
+    -ms-transform: translateX(200px);
 }
 
-.mv-panel-queryable .nav-link.active>span {
-  color: var(--mv-color-primary)!important;
+#bottom-panel .popup-content {
+  width: calc(100% - 255px);
 }
 
-.mv-panel-queryable .nav-link.active{
-  color: var(--mv-color-primary)!important;
-  box-shadow: 5px 0px 0px -2px var(--mv-color-primary) inset;
+#bottom-panel-selector .featureInfo__default .carousel, #bottom-panel-selector .featureInfo_allintabs .carousel, #bottom-panel-selector .featureInfo__brut .carousel {
+  height: calc(var(--mv-bottompanel-size) - 10px);
 }
 
-.mv-panel-queryable .nav-link:hover{
-  color: var(--mv-color-primary)!important;
-  box-shadow: 5px 0px 0px -2px var(--mv-color-primary) inset;
-  cursor:pointer
-}
-
-.counter-slide {
-  font-size: 9px;
-  right: 145px;
-  bottom: 20px;
-  position: fixed;
-  background-color: #efefef;
-  color: #8f8f8fe6;
-}
-
-.popup-content .tab-content .tab-pane {
-  display: none;
-  background-color: #fff;
-  overflow-y: hidden;
-}
-
-.popup-content .tab-content .active {
-  display: block;
+#bottom-panel .featureInfo__default .carousel-inner, #bottom-panel .featureInfo_allintabs .carousel-inner {
+    height: 100%;
+    overflow-y: scroll;
+    padding-bottom: 5em;
 }
 
 /* Modes de template */
 
-.featureInfo__brut .carousel-item {
+.featureInfo__brut li {
     position: relative;
     display: block;
     float: none;
@@ -1088,8 +1187,8 @@ line-height: 33px;
     padding-top: 1em;
 }
 
-.featureInfo__brut .item.active {
-    padding-bottom: 1em!important;
+.featureInfo__brut li:not(:first-child) {
+    border-top: 1px solid #e8e8e8;
 }
 
 .featureInfo__brut .list-group.card-body {
@@ -1104,16 +1203,15 @@ line-height: 33px;
 .featureInfo__brut .card:last-child {
     margin-bottom: 10em;
 }
-/*
-#bottom-panel .featureInfo__brut .list-group {
-    height: 295px!important;
-    height: calc(var(--mv-bottompanel-size) - 55px);
-    overflow-y: auto !important;
-}
-*/
+
 .accordion-button:not(.collapsed) {
     color: #212529;
     background-color: #21252908;
+}
+
+.accordion-button::after {
+  -webkit-filter: grayscale(1);
+  filter: grayscale(1);
 }
 
 .accordion-button:hover{
@@ -1133,39 +1231,85 @@ line-height: 33px;
     padding: 12px;
 }
 
-/* Bottom */ 
-
-#bottom-panel .popup-content {
-  width: calc(100% - 255px);
+.featureInfo__accordion .carousel li {
+    list-style: none;
 }
 
-#bottom-panel-selector, #bottom-panel-selector .carousel ,#bottom-panel-selector .tab-pane, #bottom-panel-selector>div, #bottom-panel-selector .tabs-left, #bottom-panel-selector .tab-content {
-  height: calc(100% - 10px);
+.featureInfo_allintabs .carousel-inner li {
+    padding: 0px 10px 0 0;
 }
 
-#bottom-panel .counter-slide {
-  bottom: 10px;
+/* Template - Accordion + carousel */
+
+.featureInfo__accordion #accordion .carousel-control-next, 
+.featureInfo__accordion #accordion .carousel-control-prev {
+  top: auto;
+  bottom: -3em;
+}
+
+.featureInfo__accordion .carousel-control-next-icon, .featureInfo__accordion .carousel-control-prev-icon {
+  width: 1.2rem;
+}
+
+.featureInfo__accordion #accordion .carousel-inner {
+  max-height: 75vh;
+  overflow-y: auto;
+  margin-bottom: 4em;
+}
+
+#right-panel #accordion span.counter-slide {
   position: absolute;
-  font-size: 9px;
-  right: 50%;
+  right: 44%;
+  bottom: -40px;
 }
 
-#bottom-panel :not(.featureInfo__brut) .item.active {
-  /*max-height: 290px;*/
-  max-height: calc(var(--mv-bottompanel-size) - 60px);
-  overflow-y: scroll;
-  max-width: 100%;
+#bottom-panel #accordion span.counter-slide {
+  position: absolute;
+  right: 44%;
+  bottom: -5em;
 }
 
+/* Modal Panel */
 
-/*Filtres*/
+#modal-panel .modal-dialog {
+    max-height: 85vh;
+}
 
-.layer-searchable {
-  background-image: url(../img/btn/search.png);
-  background-repeat: no-repeat;
-  background-position: center right;
-  width: 10px;
-  background-size: 100%;
+#modal-panel .featureInfo__accordion .carousel .active {
+    max-height: 60vh;
+}
+
+#modal-panel #accordion .carousel-inner {
+	padding: 10px;
+}
+
+#modal-panel #accordion .counter-slide {
+	position: absolute;
+  left: 45%;
+  right: auto;
+  bottom: -40px;
+}
+
+/* Style for GML template */
+
+.gml-item-title {
+    font-size: x-large;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.gml-item-field {
+    margin-bottom: 5px;
+}
+
+.gml-item-field-name {
+    float: left;
+    padding-right: 10px;
+    font-weight: 500;
+}
+
+.gml-item-field-name::after {
+    content: " : ";
 }
 
 /* GetFeatureInfo style */
@@ -1224,7 +1368,6 @@ line-height: 33px;
     margin-left: -11px;
 }
 
-
 .ol-popup-closer {
     text-decoration: none;
     position: absolute;
@@ -1238,126 +1381,15 @@ line-height: 33px;
     color: #333;
 }
 
+/*Filtres*/
 
-/*******************************
--------------LEGEND LAYER
-********************************/
-
-
-
-#layers-container-box.toggled {
-    -webkit-transform: translate3d(200px,0,0);
-    transform: translate3d(200px,0,0);
-    -ms-transform: translateX(200px);
+.layer-searchable {
+  background-image: url(../img/btn/search.png);
+  background-repeat: no-repeat;
+  background-position: center right;
+  width: 10px;
+  background-size: 100%;
 }
-
-
-/*******************************
--------------BOTTOM PANEL
-********************************/
-#bottom-panel.toggled {
-    -webkit-transform: translate3d(200px,0,0);
-    transform: translate3d(200px,0,0);
-    -ms-transform: translateX(200px);
-}
-
-#bottom-panel {
-    bottom: 0px;
-    opacity: 0;
-    height: 0;
-    width: 100%;
-    background: #fff;
-    position: fixed;
-    z-index: 4;
-    padding-right: 250px;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    transition: all 0.5s ease;
-}
-
-#bottom-panel.active {
-    height: var(--mv-bottompanel-size);
-    opacity: 1;
-}
-
-#bottom-panel .close {
-  margin-top: -45px;
-}
-
-
-/*******************************
--------------CSS Fiche info GML
-********************************/
-.gml-item-title {
-    padding-bottom: 6px;
-    padding-top: 15px;
-}
-
-.gml-item-field-name {
-    float: left;
-    padding-right: 10px;
-}
-
-.gml-item-field-name::after {
-    content: " : ";
-}
-
-
-/*******************************
--------------BASEMAP
-********************************/
-
-#share img {
-  margin-left: -15px;
-  margin-top: -15px;
-}
-
-
-
-
-/*******************************
--------------TAB VERTICAL
-********************************/
-
-.popup-content .nav-tabs {
-  float: left;
-  border-bottom: 0;
-}
-.popup-content .nav-tabs li {
-  float: none;
-  margin: 0;
-}
-.popup-content .nav-tabs li a {
-  margin-right: 0;
-  border: 0;
-  border-radius: 0;
-}
-
-.popup-content .nav-tabs .glyphicon, .popup-content .nav-tabs .fa {
-  color: #ccc;
-}
-
-
-/* vertical tab end */
-
-.popup-content .tab-pane {
-    padding-left: 2px;
-    padding-right: 2px;
-}
-
-
-
-/*******************************
-------------- MAP OPTIONS
-********************************/
-
-
-#feature-info {
-  position: absolute;
-  height: 1px;
-  width: 1px;
-  z-index: 100;
- }
 
 /*******************************
 ------------- ADD LAYER PANEL
@@ -1412,7 +1444,6 @@ line-height: 33px;
     opacity: 0.8;
 }
 
-
 /* Custom svg as icon*/
 .demo-icon1::before {
   content: '';
@@ -1431,10 +1462,6 @@ line-height: 33px;
     background: url(../img/logo/worldwide.svg) no-repeat scroll;
     background-size: 16px 16px;
     margin-top: 9px;
-}
-
-.mv-nav>li{
-    display: inline-block;
 }
 
 .xs .menu-toggle,
@@ -1568,6 +1595,7 @@ line-height: 33px;
 }
 
 /* Sharepanel */
+
 #mv-display-mode {
     display: flex;
     align-items: stretch;
@@ -1618,6 +1646,12 @@ line-height: 33px;
 #IframeShare h6 button{
   background: none;
   border: none;
+}
+
+#shareToMapfishButton {
+  border-radius: 0px;
+  border: none;
+  padding-left:0px;
 }
 
 /***********************************
@@ -1687,41 +1721,6 @@ input.drawTooltip {
 .datepicker table tbody tr td.disabled {
   color: rgba(119,119,119,0.2);
   pointer-events: none;
-}
-
-/* Template - Accordion + carousel */
-
-.featureInfo__accordion #accordion .carousel-control-next, 
-.featureInfo__accordion #accordion .carousel-control-prev {
-  top: auto;
-  bottom: -40px;
-}
-
-.featureInfo__accordion .carousel-control-next-icon, .featureInfo__accordion .carousel-control-prev-icon {
-  width: 1.2rem;
-}
-
-.featureInfo__accordion #accordion .carousel-inner {
-  max-height: 75vh;
-  overflow-y: auto;
-  margin-bottom: 2em;
-}
-
-#modal-panel #accordion .carousel-inner {
-	padding: 10px;
-}
-
-#modal-panel #accordion .counter-slide {
-	position: absolute;
-  left: 45%;
-  right: auto;
-  bottom: -30px;
-}
-
-#right-panel #accordion span.counter-slide {
-  position: absolute;
-  right: 44%;
-  bottom: -30px;
 }
 
 .xs .hidden-xs, .sm .hidden-sm {

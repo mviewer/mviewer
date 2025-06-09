@@ -252,7 +252,7 @@ mviewer.templates.featureInfo.default = `
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="sr-only" i18n="carousel.control.next">Next</span>
                             </a>
-                            <span class="badge counter-slide">1/{{nbfeatures}}</span>
+                            <div><span class="badge counter-slide">1/{{nbfeatures}}</span></div>
                         {{/manyfeatures}}
                         </div>
                     </div>
@@ -267,11 +267,11 @@ mviewer.templates.featureInfo.brut = `
 <div id="{{panel}}-selector">
     <div class="row featureInfo__brut">
         <div class="col-md-12">
-            <div class="list-group" style="height:100%;width:100%;overflow-y: scroll;padding-bottom: 82px;">
+            <div class="list-group">
             {{#layers}}
                 <div class="card">
                 <div class="card-header"> <h6 class="panel-title m-0">{{name}}</h6> </div>
-                <ul class="list-group card-body" data-layerid="{{layerid}}" style="padding-right:0px;">
+                <ul class="list-group card-body" data-layerid="{{layerid}}">
                 {{{html}}}
                 </ul>
                 </div>
