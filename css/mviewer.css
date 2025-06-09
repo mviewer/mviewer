@@ -613,9 +613,21 @@ a#searchparams {
   color: var(--mv-color-body);
 }
 
-.mv-layer-details img {
-  width: auto;
+.big-legend img{
+    max-width: 220px;
+    margin-bottom: .5em;
 }
+
+.text-big-legend:hover{
+    cursor: pointer;
+}
+
+.layerdisplay-legend.big-legend {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
 
 .mv-layer-details .icon-options {
   text-align: center;
@@ -623,7 +635,7 @@ a#searchparams {
   color: var(--mv-color-body);
 }
 
-.mv-layer-options label, .mv-layer-options span, .mv-layer-options a, .mv-layer-options-attribution-date {
+.mv-layer-options label, .mv-layer-options span, .mv-layer-options a, .mv-layer-options-attribution-date, .text-big-legend {
   font-size: 0.9em;
   color: var(--mv-color-body);
 }
@@ -699,6 +711,10 @@ a#searchparams {
 
 #layers-container .mv-layer-options .slider-handle {
   background: var(--mv-color-primary); 
+}
+
+#layers-container .mv-layer-options .slider-handle:hover {
+  outline: 3px solid var(--mv-color-primary-100);
 }
 
 /* Temporalité */
