@@ -3616,7 +3616,7 @@ mviewer = (function () {
       var title = configuration.getConfiguration().baselayers.baselayer[nexid].label;
       $("#backgroundlayersbtn").css("background-image", 'url("' + thumb + '")');
       if (!configuration.getConfiguration().mobile) {
-        $("#backgroundlayersbtn").attr("data-original-title", title);
+        $("#backgroundlayersbtn").attr("data-bs-original-title", title);
         $("#backgroundlayersbtn").tooltip("hide").tooltip({
           placement: "top",
           trigger: "hover",
