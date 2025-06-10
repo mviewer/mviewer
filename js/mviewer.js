@@ -3169,9 +3169,13 @@ mviewer = (function () {
         switch (layer.timeinterval) {
           case "year":
             options.minViewMode = 2;
+            options.format = "yyyy";
             break;
-          case "month":
-            (options.startView = 2), (options.minViewMode = 1);
+          case "month":            
+            options.format = "yyyy-mm";
+            options.startView = 1;
+            options.minViewMode = 1;
+            options.maxViewMode = 2;
             break;
           default:
             break;
