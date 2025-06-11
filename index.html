@@ -808,12 +808,13 @@
             </div>
             <div class="modal-body"></div>
             <div class="modal-footer">
-              <div id="showHelpOnceBloc" class="form-group pull-left show-help-tracker">
-                <label for="checkbox">
-                  <input
+              <div id="showHelpOnceBloc" class="form-check form-switch show-help-tracker">                
+                <input
+                    class="form-check-input"
                     type="checkbox"
                     id="showHelpOnce"
-                    i18n="help.modal.notshowagain" />
+                     switch/>
+                <label for="showHelpOnce" i18n="help.modal.notshowagain">
                   Ne plus afficher au démarrage
                 </label>
               </div>
