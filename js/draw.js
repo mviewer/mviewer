@@ -129,45 +129,45 @@ let draw = (function () {
     // If only one geom create only one button ( if value is correct )
     if (types.length == 1 && types.every((item) => availableTypes.includes(item))) {
       button = `
-        <button class="mv-modetools btn btn-default btn-raised" href="#"
+        <button class="mv-modetools btn btn-light" href="#"
          onclick="draw.addDrawInteraction('${types[0]}');mviewer.tools.draw.toggle();" id="draw${types[0]}" title="Dessiner" i18n="draw.button.main"
          tabindex="118 " accesskey="4">
-        <i class="fas fa-pencil-ruler"></i>
+        <i class="ri-pencil-ruler-2-line"></i>
         </button>`;
     } else {
       // create master draw button to access other
       button = `
-        <button class="mv-modetools btn btn-default btn-raised" href="#"
+        <button class="mv-modetools btn btn-light" href="#"
          onclick="mviewer.tools.draw.toggle();" id="drawBtn" title="Dessiner" i18n="draw.button.main"
          tabindex="118 " accesskey="4">
-          <i class="fas fa-pencil-ruler"></i>
+          <i class="ri-pencil-ruler-2-line"></i>
         </button>`;
 
       // loop on types to create button
-      buttonOptions = ` <div id="drawoptions" style="display:none;" class="btn-group btn-group-sm" role="group" aria-label="true">`;
+      buttonOptions = ` <div id="drawoptions" style="display:none;" class="btn-group" role="group" aria-label="true">`;
       for (const type of types) {
         if (type === "Point") {
           buttonOptions = `
             ${buttonOptions}
             <button id="drawPoint" title="Point" i18n="draw.button.point"
-             class="btn btn-default button-tools btn-raised" onclick="draw.addDrawInteraction('Point');"
+             class="btn btn-light button-tools" onclick="draw.addDrawInteraction('Point');"
             >
-              <i class="fas fa-map-pin"></i>
+              <i class="ri-map-pin-2-line"></i>
             </button>`;
         }
         if (type === "LineString") {
           buttonOptions = `
             ${buttonOptions}
             <button id="drawLineString" title="Trajet ou Polygone"
-             class="btn btn-default button-tools btn-raised" i18n="draw.button.line" onclick="draw.addDrawInteraction('LineString');">
-            <i class="fas fa-bezier-curve"></i>
+             class="btn btn-light button-tools" i18n="draw.button.line" onclick="draw.addDrawInteraction('LineString');">
+            <i class="ri-guide-line"></i>
             </button>`;
         }
         if (type === "Polygon") {
           buttonOptions = `${buttonOptions}
             <button id="drawPolygon" title="Polygone"
-             class="btn btn-default button-tools btn-raised" i18n="draw.button.polygon" onclick="draw.addDrawInteraction('Polygon');">
-            <i class="fas fa-draw-polygon"></i>
+             class="btn btn-light button-tools" i18n="draw.button.polygon" onclick="draw.addDrawInteraction('Polygon');">
+              <i class="ri-shape-line"></i>
             </button>`;
         }
       }
@@ -177,7 +177,7 @@ let draw = (function () {
     }
 
     $("#toolstoolbar").append(button);
-    $(buttonOptions).insertAfter("#toolstoolbar");
+    $(buttonOptions).insertAfter("#drawBtn");
   };
 
   /**
@@ -209,7 +209,7 @@ let draw = (function () {
     }
     // could be null if only on type of drawing
     if (document.getElementById("drawoptions")) {
-      document.getElementById("drawoptions").style.display = "block";
+      document.getElementById("drawoptions").style.display = "inline-flex";
     }
   };
 
@@ -420,17 +420,17 @@ let draw = (function () {
    * @param {*} type
    */
   let _createPanelInfo = function (type, placeholder) {
-    let iconClass = type === "Point" ? "fas fa-map-pin" : "fas fa-draw-polygon";
+    let iconClass = type === "Point" ? "ri-map-pin-2-line" : "ri-shape-line";
 
     // Add HTML component modal to the DOM
     let panelInfo = `
       <div id="drawingPanelInfo" draggable>
-        <div class="drawingPanel__header">
-          <div>
-            <i class="${iconClass} icon-draw"></i>
-            <input id="drawingPanelInfoLabel" type="text" placeholder="${placeholder}">
+        <div class="drawingPanel__header">          
+          <div class="input-group">
+            <span class="input-group-text"><i class="${iconClass} icon-draw"></i></span>
+            <input type="text" class="form-control" id="drawingPanelInfoLabel" placeholder="${placeholder}">
+            <a type="button" id="drawingPanelTrash" disabled class="icon-draw clickable btn btn-outline-secondary" title="Supprimer la géométrie" i18n="draw.button.delete" onclick="draw.clearFeature()"><i class="ri-delete-bin-line"></i></a>
           </div>
-          <a id="drawingPanelTrash" disabled class="icon-draw clickable" title="Supprimer la géométrie" i18n="draw.button.delete" onclick="draw.clearFeature()"><span class="glyphicon glyphicon-trash"></span></a>
         </div>
         <div class="drawingPanel__body">
           <div id="drawingPanelPosition" class="content" />
