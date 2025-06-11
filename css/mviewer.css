@@ -1434,13 +1434,72 @@ line-height: 33px;
 }
 
 /* Langues */
-#lang-selector {
-    display:none;
+
+#lang-selector, #lang-button {
+    display:none!important;
+}
+
+#lang-button.enabled {
+    display:flex!important;
 }
 
 #main:not(.xs) #lang-selector.enabled {
-    display:block;
+    display:block!important;
 }
+
+#lang-selector .dropdown-menu {
+    min-width: 6em;
+}
+
+#lang-selector li a {
+    text-transform: uppercase;
+}
+
+.langList {
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: .5em;
+    justify-content: flex-end;
+}
+
+.langList a {
+    /* background-color: #f5f5f5; */
+    padding: 4px 10px;
+    border-radius: 0.6em;
+    text-transform: uppercase;
+    border: 1px solid #d1d1d1;
+}
+
+.langList a .flag-icon, #lang-selector a .flag-icon{
+    border-radius: 1em;
+}
+
+.langList a:hover, .langList a.activeLang {
+    background-color: var(--mv-color-primary-100);
+    border-color: var(--mv-color-primary);
+}
+
+.langList li {
+    padding: 0 5px 0 0;
+}
+
+/* Lang modal */ 
+
+.xs #lang-body .langList {
+    flex-direction: column;
+}
+
+.xs #lang-body .langList li {
+    margin-bottom: 10px;
+}
+
+.xs #lang-body .langList a {
+    padding: 12px 10px;
+}
+
+
+/* Other */
 
 #table-csv {
   table-layout: fixed;

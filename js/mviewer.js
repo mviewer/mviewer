@@ -1913,9 +1913,7 @@ mviewer = (function () {
         // help popup only
         // set to right padding to take into account language dropdown menu syle
         langitems.push(
-          '<li style="padding-right:' +
-            p +
-            '" type="button" class="mv-translate""><a class="dropdown-item" href="#" idlang="' +
+          '<li type="button" class="mv-translate""><a class="dropdown-item" href="#" idlang="' +
             language +
             '"><span style="margin-right: 5px;" class="flag-icon flag-icon-squared flag-icon-' +
             icon +
@@ -1930,6 +1928,9 @@ mviewer = (function () {
         $("#lang-button, #lang-selector").addClass("enabled");
         $("#lang-body>ul").append(langitems.join(""));
         $("#lang-selector>ul").append(langitems.join(""));
+        $("#help .modal-body").append(
+          '<ul class="langList">' + langitems.join("") + "</ul>"
+        );
       } else {
         // display selector or modal according to device
         $("#lang-button, #lang-selector").addClass("enabled");
@@ -1937,6 +1938,14 @@ mviewer = (function () {
         $("#lang-selector>ul").append(langitems.join(""));
       }
       $(".mv-translate a").click(function () {
+        let activeLangItemsOld = document.querySelectorAll('.mv-translate a.activeLang');
+        activeLangItemsOld.forEach(i => {
+          i.classList.remove("activeLang");
+        });
+        let langElementItems = document.querySelectorAll('[idlang="'+ $(this).attr("idlang") + '"]');
+        langElementItems.forEach(i => {
+          i.classList.add("activeLang");
+        });
         _changeLanguage($(this).attr("idlang"));
 
         if (languages.length > 1) {
@@ -2009,6 +2018,10 @@ mviewer = (function () {
       mviewer.tr = mviewer.lang[lang];
       _elementTranslate("body");
       mviewer.lang.lang = lang;
+      let langElementItems = document.querySelectorAll('[idlang="'+ lang + '"]');
+      langElementItems.forEach(i => {
+        i.classList.add("activeLang");
+      });
     } else {
       console.log("langue non disponible " + lang);
     }

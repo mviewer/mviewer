@@ -88,7 +88,7 @@
                   aria-expanded="false">
                   <span i18n="nav.down.lang">Langue</span>
                 </a>
-                <ul class="dropdown-menu mv-translate">
+                <ul class="dropdown-menu mv-translate dropdown-menu-end">
                   <!--insert languages-->
                 </ul>
               </li>
@@ -151,6 +151,7 @@
                   href="#"
                   data-bs-toggle="modal"
                   data-bs-target="#help"
+                  data-bs-original-title="A propos"
                   i18n="nav.responsive.about">
                   <i class="ri-home-5-fill"></i>
                 </a>
@@ -158,6 +159,7 @@
                   href="#"
                   data-bs-toggle="modal"
                   data-bs-target="#thematic-modal"
+                  data-bs-original-title="Thématiques"
                   i18n="nav.responsive.topics">
                   <i class="ri-stack-fill"></i>
                 </a>
@@ -165,6 +167,7 @@
                   href="#"
                   data-bs-toggle="modal"
                   data-bs-target="#legend-modal"
+                  data-bs-original-title="Légende"
                   i18n="nav.responsive.legend">
                   <i class="ri-equalizer-fill"></i>
                 </a>
@@ -173,12 +176,14 @@
                   href="#"
                   data-bs-toggle="modal"
                   data-bs-target="#lang-popup"
+                  data-bs-original-title="Langues"
                   i18n="nav.down.lang">
                   <i class="ri-message-3-fill"></i>
                 </a>
                 <a
                   id=""
                   href="#"
+                  data-bs-original-title="Se connecter"
                   i18n="tbar.right.login">
                   <i class="ri-lock-unlock-line"></i>
                 </a>
@@ -784,7 +789,7 @@
                 aria-label="Close"></button>
             </div>
             <div id="lang-body" class="modal-body">
-              <ul></ul>
+              <ul class="langList"></ul>
             </div>
           </div>
         </div>
