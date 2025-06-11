@@ -916,18 +916,18 @@ mviewer = (function () {
    *
    */
 
-  var _updateMedia = function (s) {
+  var _updateMedia = function (s, displayMode) {
     switch (s) {
       case "xs":
       case "sm":
         if (_mediaSize === "xl") {
-          _updateViewPort("xs");
+          _updateViewPort("xs", displayMode);
         }
         break;
       case "md":
       case "lg":
         if (_mediaSize === "xs") {
-          _updateViewPort("xl");
+          _updateViewPort("xl", displayMode);
         }
         break;
     }
@@ -940,34 +940,52 @@ mviewer = (function () {
 
   var _updateViewPort = function (s, displayMode) {
     _mediaSize = s;
-    if (s === "xs") {
+    if (s === "xs") {      
       $("#wrapper, #main").removeClass("xl").addClass("xs");
       $("#menu").appendTo("#thematic-modal .modal-body");
       $("#legend").appendTo("#legend-modal .modal-body");
       configuration.getConfiguration().mobile = true;
-      if (displayMode) {
+      if ($('#right-panel').hasClass('active')){
+        $("#right-panel").removeClass("active")
+      }
+      if ($('#bottom-panel').hasClass('active')){
+        $("#bottom-panel").removeClass("active")
+      }
+      if (displayMode) {        
         $("#wrapper, #main").addClass("mode-" + displayMode);
         $("#page-content-wrapper").append(`
                     <a
                         id="btn-mode-su-menu"
-                        class="btn btn-primary btn-sm"
+                        class="btn btn-primary"
                         type="button"
                         href="#"
                         data-bs-toggle="modal"
                         data-bs-target="#legend-modal"
                         title="Afficher la légende"
                         i18n="data.toggle">
-                        <i class="ri-stack-line"></i>
+                        <i class="ri-equalizer-fill"></i>
                         <span i18n="data.toggle"> Afficher la légende</span>
                     </a>`);
         if (displayMode === "u") {
           $("#mv-navbar").remove();
         }
+        if (displayMode === "s") {
+          $("#searchtool").appendTo("#main");
+        }        
       }
     } else {
-      $("#wrapper, #main").removeClass("xs").addClass("xl");
-      $("#menu").appendTo("#sidebar-wrapper");
-      $("#legend").appendTo("#layers-container-box");
+      $("#wrapper, #main").removeClass("xs").addClass("xl");      
+      if (displayMode !== "s" || displayMode !== "u") {
+          $("#menu").appendTo("#sidebar-wrapper");
+          $("#legend").appendTo("#layers-container-box");
+      }
+      if (displayMode === "s") {
+          $("#searchtool").appendTo("#searchtool_nav");
+          $("#legend").appendTo("#legend-modal .modal-body");
+      }
+      if (displayMode === "u") {
+          $("#legend").appendTo("#legend-modal .modal-body");
+      } 
       configuration.getConfiguration().mobile = false;
     }
   };
@@ -986,8 +1004,25 @@ mviewer = (function () {
         $("#searchtool").appendTo("#main");
         $("#searchtool").removeClass("navbar-form");
       }
+      if (API.mode === "u" || API.mode === "s" ){
+        $("#legend").appendTo("#legend-modal .modal-body");
+        $("#page-content-wrapper").append(`
+                    <a
+                        id="btn-mode-su-menu"
+                        class="btn btn-primary"
+                        type="button"
+                        href="#"
+                        data-bs-toggle="modal"
+                        data-bs-target="#legend-modal"
+                        title="Afficher la légende"
+                        i18n="data.toggle">
+                        <i class="ri-equalizer-fill"></i>
+                        <span i18n="data.toggle"> Afficher la légende</span>
+                    </a>`);
+      }
+      $("#wrapper, #main").addClass("mode-" + displayMode);
     }
-    if ($(window).width() < 992 || displayMode !== "d") {
+    if ($(window).width() < 992) {
       _mediaSize = "xs";
       configuration.getConfiguration().mobile = true;
     } else {
@@ -996,9 +1031,8 @@ mviewer = (function () {
     }
     if (_mediaSize === "xs") {
       _updateViewPort("xs", displayMode);
-    }
-    if (displayMode === "d") {
-      $(window).resize(function () {
+    }    
+    $(window).resize(function () {
         var w = $(this).width();
         var s = "";
         if (w < 768) {
@@ -1012,10 +1046,9 @@ mviewer = (function () {
         }
         if (s !== _bsize) {
           _bsize = s;
-          _updateMedia(_bsize);
+          _updateMedia(_bsize, displayMode);
         }
-      });
-    }
+    });    
     if (configuration.getConfiguration().mobile) {
       $("#thematic-modal .modal-body").append(
         '<ul class="sidebar-nav nav-pills nav-stacked" id="menu"></ul>'
@@ -1026,12 +1059,6 @@ mviewer = (function () {
         '<ul class="sidebar-nav nav-pills nav-stacked" id="menu"></ul>'
       );
     }
-
-    $(".navbar-collapse a, #map").on("click", function () {
-      if ($(".navbar-collapse").hasClass("in")) {
-        $(".navbar-toggle").click();
-      }
-    });
   };
 
   /**

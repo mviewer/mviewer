@@ -68,7 +68,7 @@
             <a class="navbar-brand mv-title" href="#" i18n="map_title">mViewer</a>
           </div>
           <div class="nav navbar-nav navbar-right">
-            <li class="hidden-xs hidden-sm hidden-md mx-2">
+            <li class="hidden-xs mx-2">
                 <div id="coordinates">
                   <span class=""></span>
                 </div>
@@ -78,7 +78,7 @@
                 <i class="ri-loader-4-line"></i>
               </div>
             </li>
-            <li id="lang-selector" class="mx-3 dropdown hidden-xs hidden-sm">
+            <li id="lang-selector" class="mx-3 dropdown hidden-xs">
                 <a
                   href="#"
                   class="btn btn-light dropdown-toggle"
@@ -93,7 +93,7 @@
                 </ul>
               </li>
               <!--//LANG SELECTOR-->
-            <li>
+            <li id="searchtool_nav">
               <div class="navbar-form" role="search" id="searchtool">
                 <div class="form-group input-group">
                   <input
@@ -176,6 +176,12 @@
                   i18n="nav.down.lang">
                   <i class="ri-message-3-fill"></i>
                 </a>
+                <a
+                  id=""
+                  href="#"
+                  i18n="tbar.right.login">
+                  <i class="ri-lock-unlock-line"></i>
+                </a>
       </nav>
       <div id="wrapper">
         <!-- LEFT MENU SIDEBAR -->
@@ -243,7 +249,7 @@
               </div>
             </div>
           </div>
-          <div id="mouse-position" class="container"></div>
+          <div id="mouse-position" class="container hidden-xs"></div>
           <!-- MARKER USED BY SEARCH IN FEATURES FUNCTIONNALITY, TO LOCATE SELECTED FEATURE ON THE MAP-->
           <img id="mv_marker" class="mv_marker_img" style="max-width: 50px" />
           <svg
