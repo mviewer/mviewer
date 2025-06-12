@@ -934,7 +934,7 @@ line-height: 33px;
 
 .nav-pills.nav-stacked ul a:hover {
   background: none;
-  color: var(--mv-color-primary);
+  color: var(--mv-theme-bicolore);
 }
 .nav-pills.nav-stacked ul a input {
   display: none;
