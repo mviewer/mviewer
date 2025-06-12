@@ -2854,11 +2854,12 @@ mviewer = (function () {
      */
     activeCalendar: (layerid, options) => {
       $("#" + layerid + "-layer-timefilter")
-        .closest("div")
-        .append(
-          '<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>'
-        )
-        .datepicker(options);
+          .closest("div")
+          .append(
+            '<span class="input-group-text"><i class="ri-calendar-line"></i></span>'
+          );
+        $("#" + layerid + "-layer-timefilter")
+          .datepicker(options);
     },
     /**
      * Public Method: add Layer in legend
@@ -3196,15 +3197,16 @@ mviewer = (function () {
         $("#" + layer.layerid + "-layer-timefilter")
           .addClass("mv-calendar-timer")
           .addClass("form-control")
-          .wrap('<div class="input-group date"></div>');
+          .wrap('<div class="input-group input-group-sm my-2 date"></div>');
 
         $("#" + layer.layerid + "-layer-timefilter");
 
         $("#" + layer.layerid + "-layer-timefilter")
           .closest("div")
           .append(
-            '<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>'
-          )
+            '<span class="input-group-text"><i class="ri-calendar-line"></i></span>'
+          );
+        $("#" + layer.layerid + "-layer-timefilter")
           .datepicker(options);
         $("#" + layer.layerid + "-layer-timefilter").on("change", function (data, cc) {
           mviewer.setLayerTime(layer.layerid, data.currentTarget.value);

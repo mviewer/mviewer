@@ -828,6 +828,23 @@ a#searchparams {
   box-shadow: none;
 }
 
+/* Calendar */
+
+.datepicker {
+    font-size: .9em;
+}
+
+.datepicker table tr td span.active.active, 
+.datepicker table tr td span.active.disabled.active, 
+.datepicker table tr td span.active.disabled:active, 
+.datepicker table tr td span.active.disabled:hover.active, 
+.datepicker table tr td span.active.disabled:hover:active, 
+.datepicker table tr td span.active:active, 
+.datepicker table tr td span.active:hover, 
+.datepicker table tr td span.active:hover:active {
+    background-color: var(--mv-color-primary)!important;
+}
+
 /* Sidebar */
 
 #sidebar-wrapper {
