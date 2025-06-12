@@ -64,7 +64,7 @@ mviewer.templates.layerControl = `
                 id="ar#{{layerid}}"'
                 title="Données accès restreint"'
                 i18n="theme.layers.restricted
-                tabindex="111" accesskey="11" class="btn btn-default btn-raised">
+                tabindex="111" accesskey="11" class="btn">
             <i class="ri-lock-line"></i>
         </button>
         {{/secure_layer}}
