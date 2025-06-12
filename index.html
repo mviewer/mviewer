@@ -489,18 +489,14 @@
                 <form>
                   <input type="hidden" id="service-url" />
                   <input type="hidden" id="layer-id" />
-                  <input
-                    type="text"
-                    class="form-control mb-3"
-                    id="user"
-                    placeholder="Login"
-                    i18n="layer.authent.login" />
-                  <input
-                    type="password"
-                    class="form-control mb-3"
-                    id="pass"
-                    placeholder="Mot de passe"
-                    i18n="layer.authent.password" />
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="user" placeholder="Login">
+                    <label for="user" i18n="layer.authent.login">Login</label>
+                  </div>
+                  <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="pass" placeholder="Mot de passe">
+                    <label for="pass" i18n="layer.authent.password">Mot de passe</label>
+                  </div>
                   <input
                     type="button"
                     id="savelogin"
