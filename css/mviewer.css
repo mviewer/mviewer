@@ -685,6 +685,14 @@ a#searchparams {
   border-radius: 10px;
 }
 
+.btn__login{
+  padding: 0 2px;
+}
+
+.btn__login:hover {
+  cursor: pointer;
+}
+
 /* Opacity */
 
 .mv-layer-options .slider-handle {
