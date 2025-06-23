@@ -176,7 +176,9 @@ var measure = (function () {
    */
 
   var _measureFormatArea = function (polygon) {
-    var area = Math.abs(_wgs84Sphere.getArea(polygon));
+    var area = Math.abs(
+      _wgs84Sphere.getArea(polygon, { projection: _projection || "EPSG:3857" })
+    );
     var output;
     if (area < 0.0001) {
       output = 0;
@@ -342,10 +344,25 @@ var measure = (function () {
   };
 
   /**
+   * Public Method: _createEscapeEvent
+   * used to create an event to close the measure tool
+   * when the escape key is pressed
+   */
+  var createEscapeEvent = () => {
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        if (_modMeasureEnabled) {
+          console.log("escape");
+          mviewer.unsetTool("measure");
+        }
+      }
+    });
+  };
+
+  /**
    * _toggle. used to enable/disable this tool
    * public version of this method is toggle
    */
-
   var _toggle = function () {
     if (_modMeasureEnabled) {
       mviewer.unsetTool("measure");
@@ -401,6 +418,9 @@ var measure = (function () {
     $(buttonoptions).insertAfter("#toolstoolbar");
 
     _map.addLayer(vector);
+
+    // event to close the measure tool when the escape key is pressed
+    createEscapeEvent();
   };
 
   return {

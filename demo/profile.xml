@@ -12,7 +12,7 @@
     togglealllayersfromtheme="false">
 </application>
 <mapoptions maxzoom="18" projection="EPSG:3857" center="-227192,6206289" zoom="12" />
-<olscompletion type="ban" url="https://api-adresse.data.gouv.fr/search/" attribution="" />
+<olscompletion url="https://data.geopf.fr/geocodage/search/" type="ban" attribution="La recherche d'adresse est un service proposé par la geoplateforme IGN"/>
 <searchparameters bbox="false" localities="true" features="false" static="false"/>
 <proxy url="../proxy/?url="/> 
 <baselayers style="default"> 

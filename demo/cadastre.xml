@@ -11,13 +11,13 @@
 			visible="false" attribution="Map tiles by  &lt;a href='https://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
     </baselayers>
     <urlparams fill="" stroke="rgba(232, 19, 232,0.6)" >
-        <qtype name="ban" url="https://api-adresse.data.gouv.fr/search/" />
+        <qtype name="ban" url="https://data.geopf.fr/geocodage/search" />
         <qtype name="cadastre" url="https://apicarto.ign.fr/api/cadastre/parcelle" />
         <qtype name="admin" url="https://geo.api.gouv.fr" />
         <qtype name="features" url="https://gis.jdev.fr/geoserver" />
     </urlparams>
     <proxy url=""/>    
-    <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban" attribution="La recherche d'adresse est un service proposé par l'API adresse.data.gouv.fr"/>
+    <olscompletion url="https://data.geopf.fr/geocodage/search/" type="ban" attribution="La recherche d'adresse est un service proposé par la geoplateforme IGN"/>
     <themes>
         <theme name="Couches de cadastre.gouv.fr"  id="cadastre_gouv2" collapsed="false" icon="fas fa-home">             
             <layer id="cad2" name="Cadastre complet" visible="true" queryable="false" expanded="true"

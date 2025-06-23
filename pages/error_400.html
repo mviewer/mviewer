@@ -135,15 +135,15 @@
     document.querySelector("#reload").addEventListener("click", x => {
       let newUrl = `${window.location.protocol}//${window.location.host}`;
       if(pathName) {
-        newUrl += `/${pathName}`;
+        newUrl += `${pathName}`;
       }
-      newUrl += `/?config=${xml}`;
+      newUrl += `?config=${xml}`;
       window.location.href = newUrl;
     })
     document.querySelector("#goxml").addEventListener("click", x => {
       let newUrl = `${window.location.protocol}//${window.location.host}`;
       if(pathName) {
-        newUrl += `/${pathName}`;
+        newUrl += `${pathName}`;
       }
       newUrl += `/${xml}`;
       window.location.href = newUrl;

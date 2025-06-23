@@ -1,21 +1,17 @@
 {
-  mviewer.customLayers.pnr = {};
-  var pnr = mviewer.customLayers.pnr;
+  // Définition des constantes liées à la couche GeoServer
+  const GEOSERVER_URL = "https://ows.region-bretagne.fr/geoserver";
+  const WORKSPACE = "rb";
+  const LAYER = "parc_naturel_regional";
+  const LAYER_URL = `${GEOSERVER_URL}/${WORKSPACE}/wfs?service=WFS&version=1.0.0&request=GetFeature&typeNames=${LAYER}&outputFormat=application/json&srsName=EPSG:4326`;
+  // Définition de la variable customlayer. Elle doit être unique et correspond au nom du fichier.
+  const LAYER_ID = "pnr";
 
-  pnr.legend = {
+  // Style des entités
+  const legend = {
     items: [
       {
-        label: "PNR d'Armorique",
-        geometry: "Polygon",
-        styles: [
-          new ol.style.Style({
-            stroke: new ol.style.Stroke({ color: "rgba(248, 194, 145,1.0)", width: 3 }),
-            fill: new ol.style.Fill({ color: "rgba(248, 194, 145,.7)" }),
-          }),
-        ],
-      },
-      {
-        label: "PNR du golfe du Morbihan",
+        label: "PNR",
         geometry: "Polygon",
         styles: [
           new ol.style.Style({
@@ -24,40 +20,21 @@
           }),
         ],
       },
-      {
-        label: "Projet",
-        geometry: "Polygon",
-        styles: [
-          new ol.style.Style({
-            stroke: new ol.style.Stroke({ color: "rgba(229, 80, 57,1.0)", width: 3 }),
-            fill: new ol.style.Fill({ color: "rgba(229, 80, 57,0.7)" }),
-          }),
-        ],
-      },
     ],
   };
 
-  mviewer.customLayers.pnr.layer = new ol.layer.Vector({
+  //Appel de la donnée projection 4326
+  const layer = new ol.layer.Vector({
     source: new ol.source.Vector({
-      url: "https://ows.region-bretagne.fr/geoserver/rb/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GETFEATURE&TYPENAME=parc_naturel_regional&outputFormat=application/json&srsName=EPSG:4326",
+      url: LAYER_URL,
       format: new ol.format.GeoJSON(),
     }),
+    //Analyse thématique
     style: function (feature, resolution) {
-      var stl;
-      if (feature.get("pnr_ident")) {
-        switch (feature.get("pnr_ident")) {
-          case "1":
-            stl = pnr.legend.items[0].styles;
-            break;
-          case "2":
-            stl = pnr.legend.items[1].styles;
-            break;
-          default:
-            stl = pnr.legend.items[2].styles;
-        }
-      }
-      return stl;
+      return legend.items[0].styles;
     },
   });
-  mviewer.customLayers.pnr.handle = false;
+  handle = false;
+
+  new CustomLayer(LAYER_ID, layer, legend);
 }

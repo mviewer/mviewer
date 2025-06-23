@@ -1,8 +1,14 @@
 {
-  mviewer.customLayers.bief = {};
-  var bief = mviewer.customLayers.bief;
+  // Définition des variables realtives à la couche.
+  const GEOSERVER_URL = "https://ows.region-bretagne.fr/geoserver";
+  const WORKSPACE = "rb";
+  const LAYER = "bief";
+  const LAYER_URL = `${GEOSERVER_URL}/${WORKSPACE}/wfs?service=WFS&version=1.0.0&request=GetFeature&typeNames=${LAYER}&outputFormat=application/json&srsName=EPSG:4326`;
+  // Définition de la variable customlayer. Elle doit être unique et correspond au nom du fichier.
+  const LAYER_ID = "bief";
 
-  bief.legend = {
+  // Style des entités
+  const legend = {
     items: [
       {
         label: "Enjeu bio. modéré",
@@ -52,33 +58,34 @@
     ],
   };
 
-  mviewer.customLayers.bief.layer = new ol.layer.Vector({
+  //Appel de la donnée
+  const layer = new ol.layer.Vector({
     source: new ol.source.Vector({
-      url: "https://ows.region-bretagne.fr/geoserver/rb/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GETFEATURE&TYPENAME=bief&outputFormat=application/json&srsName=EPSG:4326",
+      url: LAYER_URL,
       format: new ol.format.GeoJSON(),
     }),
+    //Analyse thématique ici sur l'attribut enjeu_bio
     style: function (feature, resolution) {
       var stl;
       if (feature.get("enjeu_bio")) {
         switch (feature.get("enjeu_bio")) {
           case "modéré":
-            stl = bief.legend.items[0].styles;
+            stl = legend.items[0].styles;
             break;
           case "élevé":
-            stl = bief.legend.items[1].styles;
+            stl = legend.items[1].styles;
             break;
           case "très élevé":
-            stl = bief.legend.items[2].styles;
+            stl = legend.items[2].styles;
             break;
           case "majeur":
-            stl = bief.legend.items[3].styles;
+            stl = legend.items[3].styles;
             break;
-          default:
-            stl = bief.legend.items[1].styles;
         }
       }
       return stl;
     },
   });
-  mviewer.customLayers.bief.handle = false;
+  handle = false;
+  new CustomLayer(LAYER_ID, layer, legend);
 }
