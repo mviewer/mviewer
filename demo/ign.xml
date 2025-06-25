@@ -17,7 +17,7 @@
             url="https://data.geopf.fr/wmts" layers="ELEVATION.SLOPES" format="image/jpeg" visible="false" fromcapacity="false"
             attribution="&lt;a href='https://geoservices.ign.fr/services-geoplateforme-diffusion' target='_blank'>&lt;img src='img/basemap/geoservices.png'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
     </baselayers> 
-    <olscompletion url="https://data.geopf.fr/geocodage/completion" type="ign" attribution="IGN"/>
+    <olscompletion url="https://data.geopf.fr/geocodage/completion" type="completion" attribution="Service d'autocomplétion de l'IGN"/>
     <searchparameters bbox="false" localities="true" features="false"/>
 
     <extensions>    

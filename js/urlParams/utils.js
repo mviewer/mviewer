@@ -1,4 +1,4 @@
-import { requestBan } from "./apiBan.js";
+import { requestSearchAddress } from "./apiSearchAddress.js";
 import { requestApiCartoCadastre } from "./apiCartoCadastre.js";
 import { requestApiCartoAdmin } from "./geoApiGouv.js";
 import { getFeatures } from "./ogcApiFeature.js";
@@ -38,11 +38,11 @@ export const requestService = () => {
   let url = typesInfos?.url;
   let name = typesInfos?.name;
   // types that needs URL from XML
-  if (["ban", "cadastre", "admin"].includes(name) && !url) {
+  if (["search", "cadastre", "admin"].includes(name) && !url) {
     return;
   }
-  if (name == "ban") {
-    requestBan(`${url}?q=${API.q}`);
+  if (name == "search") {
+    requestSearchAddress(`${url}?q=${API.q}`);
   }
   if (name == "cadastre") {
     const parameters = decodeURIComponent(API.q);

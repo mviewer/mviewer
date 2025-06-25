@@ -78,7 +78,7 @@ Ce mode ne convient pas pour effectuer ses propres applications mviewer.
     #Récupérer la dernière image buildée de mviewer
     docker pull mviewer/mviewer
     #Lancer le container docker mviewer
-    docker run --rm -p80:8080 mviewer/mviewer
+    docker run --rm -p8080:80 mviewer/mviewer
 
 
 mviewer et un dossier d'applications
@@ -90,7 +90,7 @@ C'est la solution à privilégier pour créer ses propres applications. En paral
 
     # Lancer le container mviewer + le répertoire web apps qui pointe vers
     # /chemin/vers/repertoire_de_configurations_xml
-    docker run --rm -p80:8080 \
+    docker run --rm -p8080:80 \
         -v/chemin/vers/repertoire_de_configurations_xml:/usr/share/nginx/html/apps \
         mviewer/mviewer
 
@@ -122,7 +122,7 @@ Cette solution permet de mettre en place les mêmes possibilités que la méthod
         container_name: mviewer
         build: .
         ports:
-          - "80:8080"
+          - "8080:80"
         image: mviewer/mviewer
         volumes:
           - '${APPSPATH}:/usr/share/nginx/html/apps'
@@ -138,13 +138,13 @@ Cette solution permet de mettre en place les mêmes possibilités que la méthod
 Test navigateur
 =================
 
-Une fois déployée, l'application est accessible dans le navigateur internet en saisissant l'URL http://nom_du_serveur/demo/
+Une fois déployée, l'application est accessible dans le navigateur internet en saisissant l'URL http://nom_du_serveur:8080/demo/
 
 exemples :
 
- - http://localhost/demo/
- - http://localhost/index.html
- - http://localhost/?config=apps/default.xml
+ - http://localhost:8080/demo/
+ - http://localhost:8080/index.html
+ - http://localhost:8080/?config=apps/default.xml
 
 
 Mettre à jour mon instance de mviewer

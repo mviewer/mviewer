@@ -61,7 +61,7 @@
       "tags": "Cadastre, flux",
       "description": "Exemple illustrant l'utilisation de 2 sources différentes du cadastre : geobretagne.fr (un flux vectoriel pour la Bretagne), cadastre.gouv.fr (un flux par commune)",
       "level": "simple",
-      "url_source": "../demo/cad.xml",
+      "url_source": "../demo/cad/cad.xml",
       "url_demo": "../?config=demo/cad/cad.xml"
     },
     {
@@ -477,6 +477,24 @@
       "level": "intermédiaire",
       "url_source": "../demo/tms_datagouv.xml",
       "url_demo": "../?config=demo/tms_datagouv.xml"
+    },
+    {
+      "id": "56",
+      "title": "Ajouter des étiquettes à une couche (plugin)",
+      "tags": "label, étiquettes, vector, plugin",
+      "description": "Exemple d'application mobilisant le plugin label permettant d'ajouter des étiquettes à une couche vecteur ou cluster via un bouton dans la légende",
+      "level": "intermédiaire",
+      "url_source": "../demo/label.xml",
+      "url_demo": "../?config=demo/label.xml"
+    },
+    {
+      "id": "57",
+      "title": "Filtre sur une commune avec paramètre dans l'URL",
+      "tags": "vector, filtre",
+      "description": "Exemple d'application permettant de filtrer sur une commune via un paramètre dans l'URL.",
+      "level": "intermédiaire",
+      "url_source": "../demo/ma_commune/config.xml",
+      "url_demo": "../?config=demo/ma_commune/config.xml&commune=22266"
     }
   ]
 }

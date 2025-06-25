@@ -1,7 +1,7 @@
 <config>
     <application title="Démo Fuse" logo="" help="demo/demo_fuse_help.html" showhelp="true" style="css/themes/nephritis.css" exportpng="false" measuretools="false" />
     <mapoptions maxzoom="20" projection="EPSG:3857" center="-307903.74898791354,6141345.088741366" zoom="8" />
-    <searchparameters banmarker="true" imgurl='img/map_marker.png' imgwidth='50px' svgcolor='orange' localities="true" features="true" bbox="false" querymaponclick="true" closeafterclick="false"/>
+    <searchparameters marker="true" imgurl='img/map_marker.png' imgwidth='50px' svgcolor='orange' localities="true" features="true" bbox="false" querymaponclick="true" closeafterclick="false"/>
     <elasticsearch url="https://ows.region-bretagne.fr/kartenn/_search" geometryfield="geometry" querymode="match" linkid="search_id" version="1.4"/>
     <baselayers style="default">
         <baselayer  visible="true" type="OSM" id="positron" label="Positron" title="CartoDb" thumbgallery="img/basemap/positron.png" url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20" attribution="Map tiles by  &lt;a href='https://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" /> 
@@ -9,7 +9,7 @@
             url="https://data.geopf.fr/wmts" layers="ORTHOIMAGERY.ORTHOPHOTOS" format="image/jpeg" visible="false" fromcapacity="false"
             attribution="&lt;a href='https://geoservices.ign.fr/services-geoplateforme-diffusion' target='_blank'>&lt;img src='img/basemap/geoservices.png'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
     </baselayers>
-    <olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban" attribution="La recherche d'adresse est un service proposé par l'API adresse.data.gouv.fr"/>
+    <olscompletion url="https://data.geopf.fr/geocodage/search/" type="ban" attribution="La recherche d'adresse est un service proposé par la geoplateforme IGN"/>
     <themes>
         <theme id="lycee" name="Education" collapsed="false" icon="fas fa-book">
             <layer id="lycee"

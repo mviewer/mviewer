@@ -21,13 +21,23 @@ Cette extension permet de filtrer les thèmes, groupes et couches présents dans
   "options": {
     "position": 0,
     "fuseOptions": {
-      "threshold": 0.3
+      "threshold": 0.3,
+      "distance": 500
     }
   }
 }
 ````
 
- Pour que ce composant s'affiche dans mviewer, il faut depuis un **config.xml** ajouter cette section :
+- **threshold**: Indique à quel moment l'algorithme de recherche abandonne. 0.0 nécessite une correspondance parfaite, 1.0 correspond à n'importe quoi.
+
+- **distance**: Nombre de caractères de correspondance entre la recherche et le mot recherché.
+
+D'autres options sont disponibles. La documentation Fuse vous donnera la liste des paramètres disponibles (à rajouter comme `threshold` ou `distance`) :
+
+- https://www.fusejs.io/api/options.html#location
+
+
+Pour que ce composant s'affiche dans mviewer, il faut depuis un **config.xml** ajouter cette section :
 
  ````
  <extensions>
@@ -35,4 +45,6 @@ Cette extension permet de filtrer les thèmes, groupes et couches présents dans
 </extensions>
  ````
 
- Plus d'info sous : https://mviewerdoc.readthedocs.io/fr/latest/doc_tech/config_customcomponent.html
+Plus d'informations ici :
+
+https://mviewerdoc.readthedocs.io/fr/latest/doc_tech/config_customcomponent.html

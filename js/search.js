@@ -63,7 +63,7 @@ var search = (function () {
 
   /**
    * Property: _olsCompletionType
-   * String. The service type used by the geocode control (ign or ban)
+   * String. The service type used by the geocode control (search or completion)
    */
 
   var _olsCompletionType = null;
@@ -122,7 +122,7 @@ var search = (function () {
    * ElasticSearch use only 4326 projection
    * Transformation in Mviewer projection is needed
    */
-  const _elasticSearchProj = "EPSG:4326";
+  const _proj4326 = "EPSG:4326";
 
   /**
    * Property: _fuseSearchData
@@ -273,75 +273,64 @@ var search = (function () {
 
     mviewer.zoomToFeature = search.zoomToFeature;
     mviewer.showFeature = search.showFeature;
+    mviewer.animateToFeature = search.animateToFeature;
   };
 
-  /**
-   * Display geoportail or IGN search services
-   * @param {string} url
-   * @param {string} type
-   */
-  const displayIgnSearchList = async (url, type = "ign") => {
-    // request
-    let response = await fetch(url);
-    let data = await response.json();
-    // display response
-    let res = data.results;
-    let str = "";
-    const searchType = `.${type}-location`;
-    for (let i = 0, len = res.length; i < len && i < 5; i++) {
-      const zoomByType = {
-        2: 13,
-        4: 14,
-        5: 15,
-        6: 16,
-        7: 17,
-      };
-      const zoom = zoomByType[res[i].classification] || 12;
-      str += `<a class="${type}-location list-group-item" href="#" onclick="
-          mviewer.zoomToLocation(${res[i].x}, ${res[i].y}, ${zoom}, ${_searchparams.querymaponclick});
-          mviewer.showLocation('EPSG:4326',${res[i].x}, ${res[i].y}, ${_searchparams.banmarker});">
-          ${res[i].fulltext}
-      </a>`;
-    }
-    $(searchType).remove();
-    if (res.length > 0) {
-      _showResults(str, "locations");
-    }
-  };
   /**
    * Request BAN search service
    * @param {string} url
    */
-  const displayBanSearchList = async (url) => {
+  const displaySearchList = async (url, type = "completion") => {
+    const searchType = `.${type}-location`;
+    const zoomByType = {
+      municipality: 13,
+      administratif: 13,
+      city: 13,
+      locality: 15,
+      town: 15,
+      village: 16,
+      street: 17,
+      housenumber: 18,
+    };
     // request
     const response = await fetch(url);
     const data = await response.json();
     // display response
-    var res = data.features;
-    var str = "";
+    const res = data?.results || data?.features || [];
+    let str = "";
     for (var i = 0, len = res.length; i < len && i < 5; i++) {
       var props = res[i].properties;
-      var geom = res[i].geometry;
-      const zoomByType = {
-        city: 13,
-        town: 15,
-        village: 16,
-        street: 17,
-        housenumber: 18,
-      };
-      const zoom = zoomByType[props.type] || 14;
-      str += `<a class="geoportail list-group-item" href="#" title="${props.context} - ${props.type}"
-              onclick="mviewer.zoomToLocation(
-                  ${geom.coordinates[0]},
-                  ${geom.coordinates[1]},
+      let geom;
+      if (res[i]?.geometry) {
+        // search
+        geom = new ol.format.GeoJSON().readGeometry(res[i].geometry);
+      } else {
+        // completion
+        geom = new ol.geom.Point([res[i]?.x, res[i]?.y]);
+      }
+
+      var extentCenter = _getCenterWithExtent(geom, _proj4326);
+      var coords = geom.getCoordinates();
+      const poiType = props?.type || res[i]?.kind;
+      const zoom = zoomByType[poiType] || 14;
+      let title = "";
+      if (type === "search") {
+        title = `${props?.context}-${props?.type}` || "";
+      }
+      str += `<a class="${searchType} list-group-item" href="#" ${title}"
+              onclick="mviewer.animateToFeature(
+                  ${JSON.stringify([coords[0], coords[1]])},
                   ${zoom},
+                  ${JSON.stringify(extentCenter)},
                   ${_searchparams.querymaponclick}
               );
-              mviewer.showLocation('EPSG:4326', ${geom.coordinates[0]}, ${geom.coordinates[1]}, ${_searchparams.banmarker});">
-              ${props.label}
+              mviewer.showLocation('${_proj4326}', ${coords[0]}, ${coords[1]}, ${
+        _searchparams.marker
+      });">
+              ${props?.label || res[i].fulltext}
           </a>`;
     }
-    $(".geoportail").remove();
+    $(searchType).remove();
     _showResults(str, "locations");
   };
   /**
@@ -349,29 +338,28 @@ var search = (function () {
    * @param {string} value input from text field
    */
   var _search = function (value) {
-    // OpenLS or BAN search
+    // OpenLS or IGN services
     if (_searchparams.localities) {
-      if (["ign", "geoportail"].includes(_olsCompletionType)) {
-        displayIgnSearchList(
+      if (["ign", "completion", "geoportail"].includes(_olsCompletionType)) {
+        displaySearchList(
           `${_olsCompletionUrl}?text=${value}&type=StreetAddress,PositionOfInterest&ter=5`,
           _olsCompletionType
         );
-      } else if (_olsCompletionType === "ban") {
-        // BAN search
+      } else if (["ban", "search"].includes(_olsCompletionType)) {
         var parameters = { q: value, limit: 5 };
         if (_searchparams.bbox) {
           var center = _map.getView().getCenter();
-          var center = ol.proj.transform(center, _projection.getCode(), "EPSG:4326");
+          var center = ol.proj.transform(center, _projection.getCode(), _proj4326);
           parameters.lon = center[0];
           parameters.lat = center[1];
         }
         // create URL
-        const banUrl = new URL(_olsCompletionUrl);
-        banUrl.searchParams.append("q", parameters.q);
-        banUrl.searchParams.append("limit", parameters.limit);
-        const banUrlStr = banUrl.toString();
-        // display resulr
-        displayBanSearchList(banUrlStr);
+        const searchUrl = new URL(_olsCompletionUrl);
+        searchUrl.searchParams.append("q", parameters.q);
+        searchUrl.searchParams.append("limit", parameters.limit);
+        const searchUrlString = searchUrl.toString();
+        // display result
+        displaySearchList(searchUrlString, _olsCompletionType);
       }
     }
 
@@ -463,31 +451,20 @@ var search = (function () {
             result_label = Mustache.render(_fuseSearchResult, element);
           }
           var geom = new ol.format.GeoJSON().readGeometry(element.geometry);
-          var xyz = mviewer.getLonLatZfromGeometry(geom, _elasticSearchProj, zoom);
-          str +=
-            '<a class="fuse list-group-item" title="' +
-            result_label +
-            '" ' +
-            'href="#" onclick="mviewer.zoomToLocation(' +
-            xyz.lon +
-            "," +
-            xyz.lat +
-            "," +
-            xyz.zoom +
-            "," +
-            _searchparams.querymaponclick +
-            ");mviewer.showLocation('_elasticSearchProj'," +
-            xyz.lon +
-            "," +
-            xyz.lat +
-            ', false);" ' +
-            "onmouseover=\"mviewer.flash('_elasticSearchProj'," +
-            xyz.lon +
-            "," +
-            xyz.lat +
-            ', false);" >' +
-            result_label +
-            "</a>";
+          var xyz = mviewer.getLonLatZfromGeometry(geom, _proj4326, zoom);
+          var extentCenter = _getCenterWithExtent(geom, _proj4326);
+          str += `
+            <a class="fuse list-group-item" title="${result_label}" 
+                href="#" onclick="
+                  mviewer.animateToFeature(${JSON.stringify([xyz.lon, xyz.lat])}, ${
+            xyz.zoom
+          }, ${JSON.stringify(extentCenter)}, ${_searchparams.querymaponclick}); 
+                  mviewer.showLocation('${_proj4326}', ${xyz.lon}, ${xyz.lat}, false);" 
+                onmouseover="mviewer.flash('${_proj4326}', ${xyz.lon}, ${
+            xyz.lat
+          }, false);">
+              ${result_label}
+            </a>`;
         });
       }
       _showResults(str);
@@ -910,7 +887,7 @@ var search = (function () {
             var projectedMapExtent = ol.proj.transformExtent(
               currentExtent,
               _projection.getCode(),
-              _elasticSearchProj
+              _proj4326
             );
             var geometryfield = _elasticSearchGeometryfield.get(layerId) || "location";
             var geofilter = { geo_shape: {} };
@@ -961,11 +938,7 @@ var search = (function () {
 
                   let geom = formatELS.readGeometry(currentFeature._source.location);
 
-                  let xyz = mviewer.getLonLatZfromGeometry(
-                    geom,
-                    _elasticSearchProj,
-                    zoom
-                  );
+                  let xyz = mviewer.getLonLatZfromGeometry(geom, _proj4326, zoom);
 
                   var title = "";
                   title += $.map(currentFeature._source, function (value, key) {
@@ -980,10 +953,7 @@ var search = (function () {
 
                   // always zoom on feature
                   let feature = new ol.Feature({
-                    geometry: geom.transform(
-                      _elasticSearchProj,
-                      _map.getView().getProjection()
-                    ),
+                    geometry: geom.transform(_proj4326, _map.getView().getProjection()),
                     title: title,
                   });
                   feature.setId("feature." + indexId + "." + j);
@@ -1001,7 +971,7 @@ var search = (function () {
                       "," +
                       xyz.lat +
                       ",'" +
-                      _elasticSearchProj +
+                      _proj4326 +
                       "','" +
                       indexId +
                       "','" +
@@ -1019,7 +989,7 @@ var search = (function () {
                   action_over +=
                     "mviewer.flash(" +
                     "'" +
-                    _elasticSearchProj +
+                    _proj4326 +
                     "'," +
                     xyz.lon +
                     "," +
@@ -1284,9 +1254,7 @@ var search = (function () {
       var label = configuration.searchparameters.inputlabel;
       $("#searchfield").attr("placeholder", label).attr("title", label);
     }
-    _searchparams.banmarker = sparams.banmarker
-      ? sparams.banmarker === "true" || false
-      : true;
+    _searchparams.marker = sparams.marker ? sparams.marker === "true" || false : true;
     _initSearch();
   };
 
@@ -1360,6 +1328,85 @@ var search = (function () {
     setTimeout(clear, duration * 2);
   };
 
+  /**
+   * Private Method: _triggerQueryMap
+   * Trigger queryMap function with a (optionnal) delay.
+   *
+   * @param {Array} coordinate
+   * @param {number} duration
+   */
+  const _triggerQueryMap = (coordinate, duration) => {
+    setTimeout(() => {
+      info.queryMap({
+        coordinate: coordinate,
+        pixel: _map.getPixelFromCoordinate(coordinate),
+      });
+    }, duration || 0);
+  };
+
+  /**
+   * Public Method: animateToFeature
+   * Animate to a feature with a given zoom level
+   * @param {Array} coordinates - Array containing [longitude, latitude, zoom level]
+   * @param {number} zoom - Zoom level
+   * @param {Array} center - Array containing [center x coordinate, center y coordinate] (extent center)
+   * @param {boolean} queryMap - Boolean to trigger queryMap (true to trigger)
+   * @param {boolean} hideLeftPannel - Boolean to hide left panel (true to hide, false to display). Defaults to false
+   */
+  var _animateToFeature = (
+    coordinates,
+    zoom,
+    center,
+    queryMap,
+    hideLeftPannel = false
+  ) => {
+    // Get the coordinates
+    let lon = coordinates[0];
+    let lat = coordinates[1];
+
+    let mapView = _map.getView();
+    let mapProjection = mapView.getProjection().getCode();
+    let coordsForQueryMap = ol.proj.transform([lon, lat], _proj4326, mapProjection);
+
+    _sourceOverlay.clear();
+
+    let duration = 3000;
+
+    mapView.animate({
+      center: center,
+      zoom: zoom,
+      duration: duration,
+    });
+
+    if (queryMap) {
+      _triggerQueryMap(coordsForQueryMap, duration + 100);
+    }
+    if (hideLeftPannel) {
+      document.getElementById("wrapper").classList.add("toggled-2");
+    }
+  };
+
+  /**
+   * Private Method: _getCenterWithExtent
+   * Get the center of a geometry extent
+   * @param {geometry} geom - geometry to get the center from
+   * @param {string} sourceProj - source projection of the geometry
+   * @returns - center coordinates
+   */
+  var _getCenterWithExtent = (geom, sourceProj) => {
+    let mapView = _map.getView();
+    let mapProjection = mapView.getProjection().getCode();
+    let extent = geom.getExtent();
+    let viewExtent =
+      sourceProj && sourceProj !== mapProjection
+        ? ol.proj.transformExtent(extent, sourceProj, mapProjection)
+        : extent;
+
+    let center = ol.extent.getCenter(viewExtent);
+
+    return center;
+  };
+
   return {
     init: _init,
     configSearchableLayer: _configSearchableLayer,
@@ -1369,6 +1416,7 @@ var search = (function () {
     options: _searchparams,
     showFeature: _showFeature,
     zoomToFeature: _zoomToFeature,
+    animateToFeature: _animateToFeature,
     clear: _clear,
     clearSearchField: _clearSearchField,
     initSearchMarker: _initSearchMarker,
