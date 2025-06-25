@@ -118,11 +118,17 @@ html {
 
 /* Icon check / uncheck -> layers, tooltips */
 .mv-unchecked:before {
-  content: "\f111";
+  font-family: "remixicon";
+  content: "\EB7D";
 }
 
 .mv-checked:before {
-  content: "\f192";
+  font-family: "remixicon";
+  content: "\EB80";
+}
+
+.mv-checked {
+    color: var(--mv-color-primary)!important;
 }
 
 .btn-primary {
@@ -142,9 +148,6 @@ html {
     --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e");
 }
 
-.nav-tabs .nav-link {
-    color: #646464;
-}
 
 .tooltip .tooltip-inner{
   color: white;
@@ -635,6 +638,10 @@ a#searchparams {
     align-items: flex-start;
 }
 
+.layer-tooltip .state-icon {
+    font-size: larger;
+    margin-right: 5px;
+}
 
 .mv-layer-details .icon-options {
   text-align: center;
