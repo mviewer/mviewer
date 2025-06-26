@@ -898,8 +898,6 @@ a#searchparams {
   height: auto;
 }
 
-
-
 #menu {
     margin-top: 0px;
 }
@@ -926,9 +924,13 @@ a#searchparams {
   color: var(--mv-theme-bicolore);
 }
 
-#menu .opened > a {
+#menu .opened.level-1 > a {
   background-color: color-mix(in srgb, var(--mv-theme-bicolore) 20%, white);
   color: var(--mv-theme-bicolore);
+  font-weight: 600;
+}
+
+#menu .level-2 > a {
   font-weight: 600;
 }
 
