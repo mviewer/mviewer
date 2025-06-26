@@ -1,6 +1,6 @@
 {
   "js": ["fullscreen.js"],
-  "css": "style.css",
+  "css": "",
   "html": "fullscreen.html",
   "target": "toolstoolbar"
 }
