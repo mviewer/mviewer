@@ -15,7 +15,7 @@
         <theme id="theme-20171106150925" name="Education" collapsed="false" icon="book">
             <layer id="lycee"
                 name="Lycées en Bretagne"
-                type="geojson"
+                type="customlayer"
                 legendurl="demo/lycee.png"
                 url="https://ows.region-bretagne.fr/geoserver/rb/wfs?SERVICE=WFS&amp;VERSION=1.0.0&amp;REQUEST=GETFEATURE&amp;TYPENAME=lycee&amp;outputFormat=application/json&amp;srsName=EPSG:4326"
                 metadata="https://geobretagne.fr/geonetwork/apps/georchestra/?uuid=99e78163-ce9a-4eee-9ea0-36afc2a53d25"
