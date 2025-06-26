@@ -954,7 +954,7 @@ a#searchparams {
   color: var(--mv-theme-bicolore);
 }
 
-#menu .opened.level-1 > a {
+#menu .opened:not(.level-2) > a {
   background-color: color-mix(in srgb, var(--mv-theme-bicolore) 20%, white);
   color: var(--mv-theme-bicolore);
   font-weight: 600;
