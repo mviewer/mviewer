@@ -1,9 +1,9 @@
 <html>
 <head>
   <meta charset='UTF-8'>
-  <title>Mviewer - Error</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,900;1,400&display=swap" rel="stylesheet">
-  <link href="../lib/font-awesome-5.13.0/css/all.min.css" rel="stylesheet" />
+  <title>Mviewer | Error</title>
+  <link rel="icon" type="image/png" href="../favicon.png" />
+  <link href="../lib/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet" />
 
   <style type="text/css">
 
@@ -13,99 +13,36 @@
 
   body {
     text-align: center;
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding:0;
     overflow: hidden;
-    display: table;
-    min-width: 100%;
   }
 
-  .layout{
-    width: 400px;
-    margin: 0 auto;
-    margin: 0;
-    display: table-cell;
-    vertical-align: middle;
+  .layout-error {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     height: 100%;
-  }
+}
 
-  /* Titre et textes */
-  .title{
-    font-size: 100px;
-    color: #263239;
+.title {
+    font-size: 5em;
     font-weight: 700;
-    margin: 0 auto 20px;
-    line-height: 1;
-    font-family: 'Roboto', sans-serif;
-  }
-  .text{
-    font-size: 18px;
-    color: #777;
-    font-weight: normal;
-    margin: 0 auto;
-    line-height: 1.6;
-  }
+}
 
-  .sub {
-    color: #455A64;
-    font-size: 25px;
-  }
+.sub.text {
+    font-weight: 600;
+}
 
-  /* Illustration */
-  .illustration{
-    background-image: url(../img/illu_error.svg);
-    background-repeat: no-repeat;
-    background-size: contain;
-    height: 40%;
-    background-position: center;
-  }
-
-
-  /* Icônes & Animation */
-  .iconSettingOne {
-      width: 3em;
-      top: 45%;
-      position: relative;
-  }
-
-  .iconSettingTwo {
-      width: 5em;
-      top: 40%;
-      position: relative;
-  }
-
-  .rotate {
-    animation: rotation 8s infinite linear;
-  }
-
-  .rotate2 {
-    animation: rotation 8s infinite linear;
-    animation-direction: reverse;
-  }
-
-  @keyframes rotation {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(359deg);
-    }
-  }
-
+.text {
+    font-size: larger;
+    color: #656565;;
+}
 
   </style>
 </head>
 
 <body>
-  <div class="layout">
-    <div class="illustration">
-      <img src="../img/setting.svg" class="rotate iconSettingOne" />
-      <img src="../img/setting.svg" class="rotate2 iconSettingTwo" />
-    </div>
-		<div class="title">
-      <i class="fas fa-exclamation-triangle" style="font-size:xx-large"></i>
-    </div>
+  <div class="layout-error container">
+		<h1 class="title mb-4">Oops !</h1>
     <h3>Votre navigateur n'est pas compatible avec cette application.</h3>
     <div class="sub text">
       Les navigateurs recommandés sont Google Chrome, Mozilla Firefox, Microsoft Edge, 
