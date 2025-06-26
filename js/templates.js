@@ -190,21 +190,19 @@ mviewer.templates.layerControl = `
         </div>
     {{/timeControl}}
     {{#sensorthings}}
-    <div class="row mv-layer-options-time my-2">
+    <div class="row mv-layer-options-sensor my-2">
         <div class="col-md-12">
-            <div class="form-group form-group-timer ">
-                <label for="{{layerid}}-layer-sensorthings" i18n="legend.label.sensorthings">SensorThings</label>
+            <div class="form-group">        
                 <span class="fas fa-satellite-dish" data-layerid="{{layerid}}" style="margin-left: 3px;"></span>
-                <div class="panel panel-default">
-                    <div class="panel-body list-streams" id="sensorthings-list-{{layerid}}">
-                        Veuillez sélectionner un capteur...
-                    </div>
+                <label for="{{layerid}}-layer-sensorthings" i18n="legend.label.sensorthings">SensorThings</label>
+                <div class="list-streams" id="sensorthings-list-{{layerid}}">
+                    <span>Sélectionnez un capteur sur la carte</span>
                 </div>
             </div>
         </div>
     </div>
     {{/sensorthings}}
-        <div class="mv-custom-controls" data-layerid="{{layerid}}"></div>
+    <div class="mv-custom-controls" data-layerid="{{layerid}}"></div>
     </div>
     <a href="#" aria-label="Options" onclick="mviewer.toggleLayerOptions(this);" title="Options" i18n="theme.layers.options" class="icon-options">
         <i class="state-icon ri-arrow-down-line"></i>
@@ -355,24 +353,24 @@ mviewer.templates.featureInfo.allintabs = [
 ].join("");
 
 mviewer.templates.ctrlSensor = `
-<ul class="nav-pills nav-stacked" style="list-style-type:none;">
+<ul class="p-0 my-2" style="list-style-type:none;">
     {{#datastreams}}
-    <li class="datastreams" onclick="mviewer.getLayer('{{idLayer}}').layer.sensorthings.query(this)" data-datastreamid="{{id}}">
+    <li class="datastreams mb-2" onclick="mviewer.getLayer('{{idLayer}}').layer.sensorthings.query(this)" data-datastreamid="{{id}}">
         <a href="#">
             <span class="state-icon far mv-unchecked" name='{{name}}' datastream-span-id="{{id}}">
             </span>
             {{name}}
-            <input type="checkbox" class="hidden" value="false" datastream-input-id="{{id}}">
+            <input type="checkbox" value="false" datastream-input-id="{{id}}">
         </a>
     </li>
     {{/datastreams}}
     {{#multidatastreams}}
-    <li class="datastreams" onclick="mviewer.getLayer('{{idLayer}}').layer.sensorthings.query(this)" data-datastreamid="{{id}}">
+    <li class="datastreams mb-2" onclick="mviewer.getLayer('{{idLayer}}').layer.sensorthings.query(this)" data-datastreamid="{{id}}">
         <a href="#">
             <span class="state-icon far mv-unchecked" name='{{name}}' datastream-span-id="{{id}}">
             </span>
             {{name}}
-            <input type="checkbox" class="hidden" value="false" datastream-input-id="{{id}}">
+            <input type="checkbox" value="false" datastream-input-id="{{id}}">
         </a>
     </li>
     {{/multidatastreams}}

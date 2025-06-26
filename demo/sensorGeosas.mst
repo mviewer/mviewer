@@ -1,5 +1,5 @@
 {{#features}}
-	<li id="{{feature_ol_uid}}" class="inventaire item" style="height: 300px;">
+	<li id="{{feature_ol_uid}}" class="inventaire item" style="height:100%;">
         <p>
             <b>Feature ol uid : </b> {{feature_ol_uid}}
         </p>
@@ -9,7 +9,7 @@
                 <b>Streams sélectionnés : </b> {{streamsNames}}
             </p>
         {{/observations}}
-        <div class="chart-container" style="position: relative; margin: auto; height: 250px; width:80vh">
+        <div class="chart-container" style="height:100%;">
             <canvas id="chart-{{feature_ol_uid}}"></canvas>
         </div>
     </li>

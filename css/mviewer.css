@@ -887,6 +887,36 @@ a#searchparams {
     background-color: var(--mv-color-primary)!important;
 }
 
+/* SensorThing */
+
+.mv-layer-options-sensor label {
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.datastreams input {
+    display: none;
+}
+
+.datastreams a {
+    text-transform: capitalize;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    line-height: 1.3;
+}
+
+.datastreams a:hover {
+    color: var(--mv-color-primary);
+}
+
+.datastreams .state-icon{
+  font-size: 1.2em;
+  margin-right: 5px;
+}
+
 /* Sidebar */
 
 #sidebar-wrapper {
@@ -1968,3 +1998,4 @@ input.drawTooltip {
   background-color: var(--mv-color-primary-100);
   color: var(--mv-color-primary);
 }
+
