@@ -68,7 +68,6 @@ html {
 }
 
 .tooltip .tooltip-inner{
-  color: white;
   font-size: smaller;
   font-family: var(--bs-body-font-family);
 }
@@ -78,6 +77,7 @@ html {
   font-family: var(--bs-body-font-family);
   padding: 10px;
   line-height:1.2;
+  min-width: 100px;
 }
 
 .form-check-input:checked {
@@ -229,7 +229,7 @@ a {
 
 .mv-checked:before {
   font-family: "remixicon";
-  content: "\EB80";
+  content: "\F059";
 }
 
 .mv-checked {
