@@ -1,0 +1,5 @@
+{
+    "js": ["cc_superset_ocs2d.js"],
+    "target": "page-content-wrapper"
+    
+}
