@@ -6,7 +6,7 @@
 #statsPanel {
 	position: fixed;
 	left: 10rem;
-  top: calc(100vh - 300px);
+  	top: calc(100vh - 300px);
 	z-index: 900;
 	max-width: 90rem;
 	background-color: #FFFFFF;
@@ -15,7 +15,6 @@
 	padding: 1.5rem;
 	box-shadow: 0 2px 20px 0 rgb(0 0 0 / 10%), 0 2px 20px 0 rgb(0 0 0 / 10%);
 	border-radius: 5px;
-	font-family: sans-serif;
 }
 
 /* Icône pour fermer le panel */

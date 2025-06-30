@@ -46,10 +46,10 @@ var stats = (function () {
 
       //Add button to toolstoolbar
       var button = `
-      <button id="statsbtn" class="btn btn-default btn-raised"
+      <button id="statsbtn" class="btn btn-light"
         onclick="stats.toggle();"  title="Afficher les stats" i18n="tbar.right.stat"
         tabindex="116" accesskey="f">
-        <span class="glyphicon glyphicon-stats" aria-hidden="true">
+        <i class="ri-bar-chart-fill"></i>
         </span>
       </button>`;
       $("#toolstoolbar").prepend(button);
