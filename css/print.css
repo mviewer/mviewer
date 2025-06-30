@@ -6,14 +6,16 @@
 */
 
 /* Suppression des blocs inutiles */
+#mv-navbar,
 #sidebar-wrapper,
 #zoomtoolbar,
 #toolstoolbar,
 .ol-attribution,
-.tooltip-inner,
-.tooltip-arrow,
 #backgroundlayerstoolbar-default,
-#backgroundlayerstoolbar-gallery {
+#backgroundlayerstoolbar-gallery, 
+.tooltip, 
+.carousel-control-prev,
+.carousel-control-next  {
 	display: none;
 }
 
@@ -61,6 +63,10 @@
 
 #right-panel .active {
 	padding-bottom: 0 !important;
+}
+
+#right-panel {
+    padding: 1em!important;
 }
 
 #right-panel .mv-header,
