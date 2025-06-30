@@ -20,7 +20,7 @@
             attribution="&lt;a href='https://geoservices.ign.fr/services-geoplateforme-diffusion' target='_blank'>&lt;img src='img/basemap/geoservices.png'>&lt;/a>" style="normal" matrixset="PM" maxzoom="22"/>
 </baselayers>
 <themes mini="false"> 
-    <theme id="theme-20180710144351" name="Cadastre historique" collapsed="true" icon="fas fa-envira">
+    <theme id="theme-20180710144351" name="Cadastre historique" collapsed="false" icon="fas fa-arrow-right">
         <layer 
             id="napoleo"
             legendurl="img/blank.gif"

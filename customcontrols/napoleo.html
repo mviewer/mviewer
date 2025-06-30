@@ -1,36 +1,21 @@
-<div class="row">
-    <style>
-        .icon-flipped {
-            transform: scaleX(-1);
-            -moz-transform: scaleX(-1);
-            -webkit-transform: scaleX(-1);
-            -ms-transform: scaleX(-1);
-        }
-    </style>
-    <div class="row">
-      <div class="col-md-10 col-md-offset-1">
-        <select id="napoleo-select" placeholder="Choisir une commune" i18n="custom.napoleo.select" class="form-control" onchange="mviewer.customControls.napoleo.updateTA(this);">
-        </select>
-      </div>
-    </div>
-      <div class="row" style="padding-top:3px;">
-      <div class="col-md-6 col-md-offset-1 btn-group">
-         <button class="btn btn-default"
-            onclick="mviewer.customControls.napoleo.zoomToTA()">
-            <i class="glyphicon glyphicon-zoom-in"></i>
-       </button>
-        <button class="btn btn-default"
-            onclick="mviewer.getMap().getView().setRotation(mviewer.getMap().getView().getRotation() + (-90 * Math.PI / 180))">
-            <i class="glyphicon glyphicon-repeat icon-flipped"></i>
-        </button>
-        <button class="btn btn-default"
-            onclick="mviewer.getMap().getView().setRotation(mviewer.getMap().getView().getRotation() + (90 * Math.PI / 180))">
-            <i class="glyphicon glyphicon-repeat"></i>
-       </button>
-      </div>
-      <div class="col-md-3 col-md-offset-1 checkbox">
-          <label><input id="napoleo-quality" type="checkbox" value="false" onchange="mviewer.customControls.napoleo.updateQuality();" i18n="custom.napoleo.quality">HD</label>
-      </div>
-    </div>
+<div>
+  <select id="napoleo-select" placeholder="Choisir une commune" i18n="custom.napoleo.select" class="form-select form-select-sm" onchange="mviewer.customControls.napoleo.updateTA(this);">
+  </select>
+  <div class="form-check my-2">
+    <input class="form-check-input" id="napoleo-quality" type="checkbox" value="false" onchange="mviewer.customControls.napoleo.updateQuality();" i18n="custom.napoleo.quality">
+    <label class="form-check-label" for="napoleo-quality">
+      HD
+    </label>
+  </div>
+  <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+    <button type="button" class="btn btn-light" onclick="mviewer.customControls.napoleo.zoomToTA()">
+      <i class="ri-zoom-in-line"></i>
+    </button>
+    <button type="button" class="btn btn-light" onclick="mviewer.getMap().getView().setRotation(mviewer.getMap().getView().getRotation() + (-90 * Math.PI / 180))">
+      <i class="ri-reset-left-fill"></i>
+    </button>
+    <button type="button" class="btn btn-light" onclick="mviewer.getMap().getView().setRotation(mviewer.getMap().getView().getRotation() + (90 * Math.PI / 180))">
+      <i class="ri-reset-right-fill"></i>
+    </button>
   </div>
 </div>

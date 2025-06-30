@@ -1,5 +1,5 @@
 @charset "UTF-8";
 
-body{
+:root{
   --mvcustom-color-primary: #27ae60;
 }

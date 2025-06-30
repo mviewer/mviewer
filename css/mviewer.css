@@ -51,12 +51,23 @@ html {
 }
 
 .btn-primary {
-  background-color: var(--mv-color-primary)!important;
-  border-color: var(--mv-color-primary)!important;
+    --bs-btn-bg: var(--mv-color-primary);
+    --bs-btn-border-color: var(--mv-color-primary);
+    --bs-btn-hover-bg: color-mix(in srgb, var(--mv-color-primary) 90%, white);
+    --bs-btn-hover-border-color: color-mix(in srgb, var(--mv-color-primary) 90%, white);
+    --bs-btn-active-bg: color-mix(in srgb, var(--mv-color-primary) 90%, white);
+    --bs-btn-active-border-color: color-mix(in srgb, var(--mv-color-primary) 90%, white);
+    --bs-btn-disabled-bg: var(--mv-color-primary);
+    --bs-btn-disabled-border-color: var(--mv-color-primary);
 }
 
-.btn-primary:hover {
-  background-color: color-mix(in srgb, var(--mv-color-primary) 90%, white)!important;
+.btn-outline-primary{
+  --bs-btn-color: var(--mv-color-primary);
+  --bs-btn-border-color: var(--mv-color-primary);
+  --bs-btn-hover-bg: color-mix(in srgb, var(--mv-color-primary) 90%, white);
+  --bs-btn-hover-border-color: color-mix(in srgb, var(--mv-color-primary) 90%, white);
+  --bs-btn-disabled-color: color-mix(in srgb, var(--mv-color-primary) 90%, white);
+  --bs-btn-disabled-border-color: color-mix(in srgb, var(--mv-color-primary) 90%, white);
 }
 
 .btn-close {
@@ -941,6 +952,7 @@ a#searchparams {
     border: 0;
     padding: 2px 0;
     text-indent: 0;
+    font-weight: 500;
 }
 
 #menu>li>a:hover {

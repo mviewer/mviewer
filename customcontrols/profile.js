@@ -39,7 +39,7 @@ mviewer.customControls.profile = (function () {
     var height = ["150px", "200px"];
     console.log("Initialisation");
     var chartPanel = [
-      '<div class="profile-addon panel-graph" style="height: ' + height[target] + ';">',
+      '<div class="profile-addon panel-graph mt-2" style="height: ' + height[target] + ';">',
       '<canvas class="chart1" id="profile-chart"></canvas></div>',
     ].join("");
 
