@@ -10,7 +10,9 @@ const zoomToArea = function () {
   // Add loader during loading data
   $(".navbar-right").prepend(
     `<li><div id="loadingIndicator-zoomToArea">
-        <div class="loader">Loading...</div>
+        <div class="spinner-border spinner-border-sm text-light" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
     </div></li>`
   );
 
