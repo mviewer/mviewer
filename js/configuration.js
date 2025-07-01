@@ -402,10 +402,10 @@ var configuration = (function () {
       $("#exportpng").remove();
     }
     if (!conf.application.mouseposition || conf.application.mouseposition === "false") {
-      $("#mouse-position").hide();
+      $("#mouse-position").remove();
     }
     if (!conf.application.geoloc || !(conf.application.geoloc === "true")) {
-      $("#geolocbtn").hide();
+      $("#geolocbtn").remove();
     }
     if (!conf.application.studio || conf.application.studio === "false") {
       $("#studiolink").remove();

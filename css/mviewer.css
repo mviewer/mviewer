@@ -339,6 +339,16 @@ a {
   right: 1em;
 }
 
+#toolstoolbar>div:not(:last-child)>.btn {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+#toolstoolbar>div:not(:first-child)>.btn {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
 #drawtoolsoptions {
   position: fixed;
   right: 5em;

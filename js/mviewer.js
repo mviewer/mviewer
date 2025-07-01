@@ -281,7 +281,7 @@ mviewer = (function () {
     if (mapoptions.rotation === "true") {
       _rotation = true;
     } else {
-      $("#northbtn").hide();
+      $("#northbtn").remove();
     }
     _center = mapoptions.center.split(",").map(Number);
     //Projection
