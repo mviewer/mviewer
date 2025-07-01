@@ -2584,7 +2584,14 @@ mviewer = (function () {
 
       var url =
         window.location.href.split("#")[0].split("?")[0] + "?" + params(linkParams);
-      $("#permalinklink").attr("href", url).attr("target", "_blank");
+      let urlEmail = `mailto:?&body=` + encodeURIComponent(url);
+      let urlFacebook = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url);
+		  let urlWhatapp = "https://wa.me/?text=" + encodeURIComponent(url);
+      document.getElementById("urlShare__link").value = url;      
+      document.getElementById('btnShareNewTab').setAttribute("href", url);
+      document.getElementById('btnShareEmail').setAttribute("href", urlEmail);
+      document.getElementById('btnShareWhatapp').setAttribute("href", urlWhatapp);
+      document.getElementById('btnShareFacebook').setAttribute("href", urlFacebook);
       $("#permaqr").attr(
         "src",
         "https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=" +

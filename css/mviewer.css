@@ -1645,20 +1645,21 @@ line-height: 33px;
 
 #mv-display-mode {
     display: flex;
-    align-items: stretch;
+    align-items: flex-start;
     justify-content: space-between;
     flex-wrap: nowrap;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 #mv-display-mode label.radio-inline {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-content: center;
-    align-items: center;
+    align-items: stretch;
     border: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);
-    width: 31%;
-    padding: 1em 0;
+    width: 100%;
+    padding: 1em;
+    margin-bottom: 5px;
     border-radius: var(--bs-border-radius);
 }
 
@@ -1668,37 +1669,86 @@ line-height: 33px;
     border-color: var(--mv-color-primary);
 }
 
-#urlIframeShare {
-  font-family: monospace;
-    width: 100%;
-    height: 15vh;
-    background-color: #eaeaea;
-    border: none;
-    resize: none;
-    word-break: break-all;
-}
-
 #IframeShare>div {
   background-color: #8080802b;
   padding: 0.5em;
   border-radius: 3px;
 }
 
-#IframeShare h6 {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* Share panel */
+.is-hidden {
+	display: none;
 }
 
-#IframeShare h6 button{
-  background: none;
-  border: none;
+.iconShare__list > a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: small;
+    text-decoration: none;
+    color: currentColor;
+	transition: 0.3s;
+  text-align: center;
+  line-height: 1;
+  width: 5.2em;
 }
 
-#shareToMapfishButton {
-  border-radius: 0px;
-  border: none;
-  padding-left:0px;
+.iconShare__list > a > i {
+    margin-bottom: 5px;
+}
+
+.iconShare__list > a:hover {
+    cursor: pointer;
+    opacity: .8;
+}
+
+.iconShare__list {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.iconShare__list > a > i {
+    font-size: large;
+    background-color: var(--mv-color-primary);
+    color: white;
+    border-radius: 2em;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#block__ShareLink {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    justify-content: flex-start;
+    border: 1px solid #d1d1d1;
+    padding: 0.5em .5em;
+    border-radius: .7em;
+}
+
+#urlShare__link {
+    border: none;
+    width: 100%;
+}
+
+#blockIframe > div {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+}
+
+#blockIframe > .textEdit {
+    border: 1px solid #d1d1d1;
+    padding: 0.5em .5em;
+    border-radius: .7em;
+    font-family: monospace;
+    font-size: smaller;
+    word-break: break-all;
 }
 
 /* Window info draw tools */

@@ -681,7 +681,7 @@
                     <label class="radio-inline">
                       <input
                         type="radio"
-                        class="form-check-input"
+                        class="form-check-input me-2"
                         value="d"
                         name="mv-display-mode"
                         checked
@@ -689,13 +689,13 @@
                       <div style="display: inline" i18n="share.radio.normal">Normal</div>
                     </label>
                     <label class="radio-inline">
-                      <input type="radio" class="form-check-input" name="mv-display-mode" value="s" />
+                      <input type="radio" class="form-check-input me-2" name="mv-display-mode" value="s" />
                       <div style="display: inline" i18n="share.radio.simple">
                         Simplifié
                       </div>
                     </label>
                     <label class="radio-inline">
-                      <input type="radio" class="form-check-input" name="mv-display-mode" value="u" />
+                      <input type="radio" class="form-check-input me-2" name="mv-display-mode" value="u" />
                       <div style="display: inline" i18n="share.radio.minimal">
                         Ultra simplifié
                       </div>
@@ -705,42 +705,67 @@
               <h6 class="modal-share-title mt-4" i18n="share.modal.type">
                 Mode de partage
               </h6>
-              <div class="row">
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                  <a
-                    type="button"
-                    class="btn btn-default"
-                    id="permalinklink"
-                    href="#"
-                    title="Lien permanent vers la carte"
-                    i18n="share.picture.permalink">
-                    <img src="img/share/share_link.png" height="100px" />
-                  </a>
-                </div>
-                <div id="share" class="col-md-6 col-sm-6 col-xs-6">
-                  <img
-                    id="permaqr"
-                    src="img/blank.gif"
-                    title="QR code vers la carte"
-                    i18n="share.picture.qrcode"
-                    alt="QR code" />
-                </div>
-              </div>
-              <div id="IframeShare" class="mt-4">
-                <h5 class="modal-share-title">
-                  <strong i18n="share.title.iframe">
-                    Code d'intégration de la carte en iframe
-                  </span>
-                  <button
-                    onclick="mviewer.copyToClipboard('urlIframeShare');"
-                    title="Copier le lien"
-                    i18n="share.btn.iframe">
-                    <i class="ri-file-copy-line"></i>
-                  </button>
-                </h6>
-                <div>
-                  <span id="urlIframeShare"></span>
-                </div>
+              
+                    <!--NEw-->
+                    <div class="iconShare__list mb-3">                      
+                        <a id="btnShareNewTab" target="_blank" title="Ouvrir dans un nouvel onglet"><i class="ri-share-box-line"></i><span>Nouvel onglet</span></a>
+                        <a id="btnShareEmail" title="Partager par mail"><i class="ri-mail-line"></i><span>E-mail</span></a>
+                        <a onclick="document.querySelector('#share').classList.toggle('is-hidden');" title="Afficher le QR-Code"><i class="ri-qr-code-fill"></i><span>QR-code</span></a>
+                        <a onclick="document.querySelector('#blockIframe').classList.toggle('is-hidden');" title="Afficher le code d'intégration"><i class="ri-code-s-slash-line"></i><span>Intégrer</span></a>
+                        <a id="btnShareWhatapp" target="_blank" title="Partager sur WhatsApp"><i class="ri-whatsapp-line"></i><span>WhatsApp</span></a>
+                        <a id="btnShareFacebook" target="_blank" title="Partager sur Facebook"><i class="ri-facebook-circle-line"></i><span>Facebook</span></a>
+                    </div>
+                    <div id="blockIframe" class="is-hidden">
+                        <div class="mb-2">
+                            <h6>Code d'intégration en iframe</h6>
+                            <button class="btn btn-primary btn-sm" onclick="mviewer.copyToClipboard('urlIframeShare');">Copier</button>
+                        </div>
+                        <div class="textEdit" id="urlIframeShare" contentEditable></div>                        
+                    </div>
+                    <div id="share" class="my-3 is-hidden">
+                      <h6>QR-code</h6>
+                      <img
+                        id="permaqr"
+                        src="img/blank.gif"
+                        title="QR code vers la carte"
+                        i18n="share.picture.qrcode"
+                        alt="QR code" />
+                    </div>
+                    <hr>
+                    <h6 i18n="share.picture.permalink">Lien de partage</h6>
+                    <div id="block__ShareLink">
+                        <input id="urlShare__link" type="text" value=""></span>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="navigator.clipboard.writeText(document.getElementById('urlShare__link').value);">Copier</button>
+                    </div>
+                    <div id="shareToMapfish">
+                      <hr>
+                      <div class="d-flex flex-row my-3">
+                        <button
+                          id="shareToMapfishButton"
+                          type="button"
+                          class="btn btn-primary"
+                          onclick="mviewer.sendToGeorchestra();">
+                          <i class="ri-share-forward-2-line"></i>
+                          <span i18n="share.btn.mapfishapp">Afficher dans Mapfishapp</span>
+                        </button>
+                        <form
+                          id="georchestraForm"
+                          target="_blank"
+                          method="post"
+                          action="#"
+                          class="ms-2"
+                          style="display: none">
+                          <input type="hidden" id="georchestraFormData" name="data" value="" />
+                          <input
+                            type="submit"
+                            class="btn btn-primary"
+                            data-role="button"
+                            data-mini="true"
+                            data-iconpos="right"
+                            value="geOrchestra" />
+                        </form>
+                      </div>
+                    </div>
               </div>
             </div>
           </div>
