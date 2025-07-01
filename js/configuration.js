@@ -436,11 +436,15 @@ var configuration = (function () {
           //test georchestra proxy
           if (response.proxy == "true") {
             $("#login-box").show();
+            $("#login-box-mob").show();
             let title = mviewer.lang ? mviewer.tr("tbar.right.logout") : "Se déconnecter";
             if (response.user != "") {
               $("#login").attr("href", _authentification.logouturl);
+              $("#login-box-mob").attr("href", _authentification.logouturl);
               $("#login").attr("title", title);
+              $("#login-box-mob").attr("title", title);
               $("#login i")[0].className = "ri-lock-fill";
+              $("#login-box-mob i")[0].className = "ri-lock-fill";
               $("#login-box>span").text(response.user);
             } else {
               var url = "";
@@ -450,6 +454,7 @@ var configuration = (function () {
                 url = location.href + _authentification.loginurl.replace("?", "&");
               }
               $("#login").attr("href", url);
+              $("#login-box-mob").attr("href", url);
             }
           } else {
             console.log(
