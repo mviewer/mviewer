@@ -2585,11 +2585,13 @@ mviewer = (function () {
       var url =
         window.location.href.split("#")[0].split("?")[0] + "?" + params(linkParams);
       let urlEmail = `mailto:?&body=` + encodeURIComponent(url);
+      let urlLinkedin = "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(url);
       let urlFacebook = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url);
 		  let urlWhatapp = "https://wa.me/?text=" + encodeURIComponent(url);
       document.getElementById("urlShare__link").value = url;      
       document.getElementById('btnShareNewTab').setAttribute("href", url);
       document.getElementById('btnShareEmail').setAttribute("href", urlEmail);
+      document.getElementById('btnShareLinkedin').setAttribute("href", urlLinkedin);
       document.getElementById('btnShareWhatapp').setAttribute("href", urlWhatapp);
       document.getElementById('btnShareFacebook').setAttribute("href", urlFacebook);
       $("#permaqr").attr(

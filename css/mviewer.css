@@ -1680,6 +1680,12 @@ line-height: 33px;
 	display: none;
 }
 
+.iconShare__list {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
 .iconShare__list > a {
     display: flex;
     flex-direction: column;
@@ -1690,11 +1696,8 @@ line-height: 33px;
 	transition: 0.3s;
   text-align: center;
   line-height: 1;
-  width: 5.2em;
-}
-
-.iconShare__list > a > i {
-    margin-bottom: 5px;
+  width: 5em;
+  margin-bottom: 10px;
 }
 
 .iconShare__list > a:hover {
@@ -1702,16 +1705,12 @@ line-height: 33px;
     opacity: .8;
 }
 
-.iconShare__list {
-    display: flex;
-    justify-content: flex-start;
-}
-
 .iconShare__list > a > i {
     font-size: large;
     background-color: var(--mv-color-primary);
     color: white;
     border-radius: 2em;
+    margin-bottom: 5px;
     width: 45px;
     height: 45px;
     display: flex;

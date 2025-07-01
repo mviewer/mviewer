@@ -8,7 +8,6 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="description" content="Visualiseur géographique" />
-
     <link rel="icon" type="image/png" href="favicon.png" />
     <link href="lib/flag-icons-4.1.4/css/flag-icons.css" rel="stylesheet" />
     <link href="lib/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet" />
@@ -709,11 +708,12 @@
                     <!--NEw-->
                     <div class="iconShare__list mb-3">                      
                         <a id="btnShareNewTab" target="_blank" title="Ouvrir dans un nouvel onglet"><i class="ri-share-box-line"></i><span>Nouvel onglet</span></a>
-                        <a id="btnShareEmail" title="Partager par mail"><i class="ri-mail-line"></i><span>E-mail</span></a>
-                        <a onclick="document.querySelector('#share').classList.toggle('is-hidden');" title="Afficher le QR-Code"><i class="ri-qr-code-fill"></i><span>QR-code</span></a>
+                        <a id="btnShareEmail" title="Partager par mail"><i class="ri-mail-line"></i><span>E-mail</span></a>                        
                         <a onclick="document.querySelector('#blockIframe').classList.toggle('is-hidden');" title="Afficher le code d'intégration"><i class="ri-code-s-slash-line"></i><span>Intégrer</span></a>
+                        <a id="btnShareLinkedin" target="_blank" title="Partager sur Linkedin"><i class="ri-linkedin-fill"></i><span>Linkedin</span></a>
                         <a id="btnShareWhatapp" target="_blank" title="Partager sur WhatsApp"><i class="ri-whatsapp-line"></i><span>WhatsApp</span></a>
                         <a id="btnShareFacebook" target="_blank" title="Partager sur Facebook"><i class="ri-facebook-circle-line"></i><span>Facebook</span></a>
+                        <a onclick="document.querySelector('#share').classList.toggle('is-hidden');" title="Afficher le QR-Code"><i class="ri-qr-code-fill"></i><span>QR-code</span></a>
                     </div>
                     <div id="blockIframe" class="is-hidden">
                         <div class="mb-2">
