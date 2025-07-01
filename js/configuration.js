@@ -371,7 +371,7 @@ var configuration = (function () {
       $(".mv-title").attr("href", location.hash);
       $(".navbar-brand").attr("href", location.hash);
     }
-    if (conf.application.showhelp === "true") {
+    if (conf.application.showhelp === "true" && conf.application.help) {
       _showhelp_startup = true;
     }
     if (API.popup) {
@@ -381,6 +381,10 @@ var configuration = (function () {
       } else if (API.popup === "false") {
         _showhelp_startup = false;
       }
+    }
+    if (!conf.application.help) {
+      $("#iconhelp").remove();
+      $("#btnHelpMob").remove();
     }
     if (conf.application.titlehelp) {
       $("#help h4.modal-title").text(conf.application.titlehelp);
