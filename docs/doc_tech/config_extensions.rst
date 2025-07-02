@@ -63,6 +63,8 @@ Il faut pour cela ajouter ceci dans votre XML :
         <extension type="component" id="layerfilter" path="demo/addons"/>
     </extensions>
 
+Plus d’informations sur la configuration : https://github.com/mviewer/mviewer/blob/master/demo/addons/layerfilter/README.md
+
 Extension plein écran
 --------------------
 

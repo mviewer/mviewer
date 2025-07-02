@@ -20,8 +20,8 @@ Liens vers service d'autocomplétion et de géocodage d'adresses.
 
 **Attributs**
 
-* ``url``: URL du service d'autocomplétion d'adresse : BAN https://data.geopf.fr/geocodage/search/ ou IGN  https://data.geopf.fr/geocodage/completion
-* ``type``: Optional - Type de service utilisé ign ou ban - defaut = ign
+* ``url``: URL du service d'autocomplétion ou de géocodage de l'IGN. Voir les services disponibles :  https://geoservices.ign.fr/services-geoplateforme-geocodage-autocompletion
+* ``type``: Option - Type de service utilisé "completion" ou "search" - defaut = "completion"
 * ``attribution``: Attribution du service de geocodage.
 
 **Exemple**
@@ -29,7 +29,9 @@ Liens vers service d'autocomplétion et de géocodage d'adresses.
 .. code-block:: xml
        :linenos:
 
-       <olscompletion url="https://data.geopf.fr/geocodage/search/" type="ban" attribution="La recherche d'adresse est un service proposé par la geoplateforme IGN"/>
+       <olscompletion url="https://data.geopf.fr/geocodage/search" 
+	   type="search" 
+	   attribution="La recherche d'adresse est un service de l'IGN via la BAN"/>
 
 
 Recherche d'entités
@@ -51,7 +53,7 @@ Options liées à la recherche d'adresse *(olscompletion)* et/ou à la recherche
        :linenos:
 
 	<searchparameters
-              banmarker=""
+              marker=""
               imgurl=""
               imgwidth=""
               svgcolor=""
@@ -71,7 +73,7 @@ Options liées à la recherche d'adresse *(olscompletion)* et/ou à la recherche
 * ``features`` *(optionnel)* : Utilisation du service de recherche d'entités elasticsearch ou fuse : true ou false (defaut = true).
 * ``bbox`` *(optionnel)* : Recherche d'adresse et/ou d'entitées limitée à l'emprise de la carte : true ou false (defaut = false).
 * ``querymaponclick`` *(optionnel)* : Interroge la carte après sélection d'un résultat dans la liste : true ou false - defaut = false.
-* ``banmarker`` *(optionnel)* : Afficher ou non un icône sur le résultat de la recherche d'adresse : true ou false (defaut = true).
+* ``marker`` *(optionnel)* : Afficher ou non un icône sur le résultat de la recherche d'adresse : true ou false (defaut = true).
 * ``static`` *(optionnel)* : En lien avec le paramètre doctypes. Active ou désactive la recherche associée à des documents requêtés systématiquement, indépendamment des couches affichées : true ou false (defaut = false).
 * ``inputlabel`` *(optionnel)* : Texte à utiliser pour le placeholder de la zone de saisie de la barre de recherche. default = "Rechercher".
 * ``closeafterclick`` *(optionnel)* : Ferme la liste des résultats de recherche après avoir sélectionné un item : true ou false - defaut = false.

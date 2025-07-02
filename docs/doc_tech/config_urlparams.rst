@@ -35,7 +35,7 @@ L'application peut s'ouvrir en centrant la carte sur une localité particulière
 
 Ce paramétrage dynamique est rendu possible en ajoutant à l'URL mviewer les paramètres suivants et des compléments dans la configuration XML : 
 
-* ?q=21 rue dupont des loges Rennes&qtype=ban
+* ?q=21 rue dupont des loges Rennes&qtype=search
 * ?q=code_insee%3D35238%26section%3DAB%26numero%3D0001&qtype=cadastre
 * &q=service%3Depcis%26nom%3DNan%26fields%3Dcontour&qtype=admin
 * &q=layer%3Didf:COMMUNES_IDF%26filter%3DCODE_INSEE%3D77177&qtype=features
@@ -56,8 +56,8 @@ Ce paramétrage dynamique est rendu possible en ajoutant à l'URL mviewer les pa
 
 **Attributs**
 
-* ``url``: URL du service utilisé : BAN https://data.geopf.fr/geocodage/search/ ou CADASTRE pour les parcelles cadastrales  https://apicarto.ign.fr/api/cadastre/parcelle
-* ``name``: Type de service utilisé cadastre ou ban
+* ``url``: URL du service utilisé : (IGN) https://data.geopf.fr/geocodage/search ou CADASTRE pour les parcelles cadastrales  https://apicarto.ign.fr/api/cadastre/parcelle
+* ``name``: Type de service utilisé cadastre ou search (search est le service de géocodage de l'IGN)
 * ``fill``: Couleur de l'intérieur d'un polygon (e.g code rgba)
 * ``stroke``: Couleur du contours (e.g code rgba)
 

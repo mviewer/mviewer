@@ -6,7 +6,8 @@
   "options": {
     "position": 0,
     "fuseOptions": {
-      "threshold": 0.3
+      "threshold": 0.3,
+      "distance": 500
     }
   }
 }
