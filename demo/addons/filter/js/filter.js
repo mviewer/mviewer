@@ -80,14 +80,13 @@ const filter = (function () {
 
       //Add filter button to toolstoolbar
       var button = `
-      <button id="filterbtn" class="btn btn-default btn-raised"
+      <button id="filterbtn" class="btn btn-light"
         onclick="filter.toggle();"  title="Filtrer les données" i18n="tbar.right.filter"
         tabindex="115" accesskey="f">
-        <span class="glyphicon glyphicon-filter" aria-hidden="true">
+        <i class="ri-filter-line"></i>
         </span>
       </button>`;
       $("#toolstoolbar").prepend(button);
-      $("#filterbtn").css("color", options.style.colorButton || "black");
     }
 
     // custom from config
@@ -123,6 +122,7 @@ const filter = (function () {
             window.innerWidth > 360
           ) {
             $("#advancedFilter").show();
+            $("#filterbtn").addClass("active");
           }
 
           // Add draggable on panel
@@ -157,11 +157,11 @@ const filter = (function () {
   var _toggle = function () {
     // show or hide filter panel
     if ($("#advancedFilter").is(":visible")) {
-      $("#filterbtn").removeClass("btn.focus");
-      $("#filterbtn").removeClass("btn.active");
+      $("#filterbtn").removeClass("active");
       $("#advancedFilter").hide();
     } else {
       $("#advancedFilter").show();
+      $("#filterbtn").addClass("active");
     }
   };
 
@@ -176,9 +176,9 @@ const filter = (function () {
     var title =
       mviewer.customComponents.filter.config.options.legendTitle || "Choix de la couche";
     var contentSelectLayer = [
-      `<div class="form-group mb-2 mr-sm-2">
-      <legend id="layerSelectText" class="textlabel">${title}</legend>
-      <select id="select-FilterLayer" class="form-control" onchange="filter.selectLayer(this)">`,
+      `<div class="mb-2">
+      <label id="layerSelectText" class="textlabel form-label">${title}</label>
+      <select id="select-FilterLayer" class="form-select form-select-sm" onchange="filter.selectLayer(this)">`,
     ];
 
     var indexLayerId = 0;
@@ -186,13 +186,11 @@ const filter = (function () {
     for (var [layerId, params] of _layersFiltersParams) {
       // Create div id
       var destinationDivId = "advancedFilter-" + layerId;
-
       // Create div only if not exist
       if (!$("#" + destinationDivId).length) {
         // add selectBox if needed
-        const selected = mviewer.getLayer(layerId)?.layer.getVisible() ? "selected" : "";
         contentSelectLayer.push(
-          `<option selected="${selected}" value="${layerId}">${
+          `<option value="${layerId}">${
             mviewer.getLayer(layerId).name
           }</option>`
         );
@@ -241,8 +239,11 @@ const filter = (function () {
     if (nbLayers > 1 && !$("#select-FilterLayer").length) {
       contentSelectLayer.push("</select></div>");
       $("#selectLayerFilter").append(contentSelectLayer.join(""));
-    }
-
+      if (layerId = _currentSelectedLayer) {
+        let selectCurrentOption = document.querySelector(`#select-FilterLayer option[value=${_currentSelectedLayer}]`); 
+        selectCurrentOption.selected = true;
+      }
+    }  
     _setStyle();
   };
 
@@ -257,14 +258,14 @@ const filter = (function () {
       panel = $(
         '<div id="download-' +
           destinationDivId +
-          '" class="download-section"> <legend class="textlabel">Télécharger</legend></div>'
+          '" class="download-section"> <h6 class="textlabel">Télécharger</legend></h6>'
       );
 
       layerConfig.downloadFormats.forEach((format) => {
         var button = $(`
-        <span class="download-btn" 
+        <span class="download-btn btn btn-outline-primary btn-sm" 
           data-toggle="filter-tooltip" 
-          data-original-title="Télécharger au format ${format.label}">
+          data-bs-original-title="Télécharger au format ${format.label}">
           ${format.label}
         </span>`);
         button.on("click", function (event) {
@@ -471,11 +472,11 @@ const filter = (function () {
     } else {
       _checkBox = [
         `
-        <div class="form-check mb-2 mr-sm-2">
-        <div class="form-check filter-legend">
-        <legend class="textlabel"> ${filterParams.label} </legend>
-        <span id='${clearId}' class="filter-clear glyphicon glyphicon-trash textlabel" onclick="filter.clearFilter(this.id);"
-         data-toggle="filter-tooltip" data-original-title="Réinitaliser ce filtre"></span>
+        <div class="mb-2">
+        <div class="filter-legend">
+        <label class="form-label textlabel"> ${filterParams.label} </label>
+        <span id='${clearId}' class="filter-clear ri-delete-bin-line textlabel" onclick="filter.clearFilter(this.id);"
+         data-toggle="filter-tooltip" data-bs-original-title="Réinitaliser ce filtre"></span>
         </div>
         <div id="${id}" class="form-check">
         `,
@@ -522,15 +523,15 @@ const filter = (function () {
       $("#" + id).empty();
     } else {
       _buttonForm = [
-        '<div class="form-check mb-2 mr-sm-2">',
-        '<div class="form-check filter-legend">',
-        '<legend class="textlabel"> ' + filterParams.label + " </legend>",
+        '<div class="mb-2">',
+        '<div class="filter-legend">',
+        '<label class="textlabel"> ' + filterParams.label + " </label>",
         "<span id=" +
           clearId +
-          ' class="filter-clear glyphicon glyphicon-trash textlabel" onclick="filter.clearFilter(this.id);"',
-        ' data-toggle="filter-tooltip" data-original-title="Réinitaliser ce filtre"></span>',
+          ' class="filter-clear ri-delete-bin-line textlabel" onclick="filter.clearFilter(this.id);"',
+        ' data-toggle="filter-tooltip" data-bs-original-title="Réinitaliser ce filtre"></span>',
         "</div>",
-        '<div id ="' + id + '" class="form-check">',
+        '<div id ="' + id + '" class="filterCheck__list">',
       ];
     }
     filterParams.availableValues.forEach(function (value, index, array) {
@@ -584,19 +585,19 @@ const filter = (function () {
     } else {
       // HTML
       var _text = [
-        '<div class="form-check mb-2 mr-sm-2">',
-        '<div class="form-check filter-legend">',
-        '<legend class="textlabel"> ' + params.label + " </legend>",
+        '<div class="mb-2">',
+        '<div class="filter-legend">',
+        '<label class="form-label textlabel"> ' + params.label + " </label>",
         "<span id=" +
           clearId +
-          ' class="filter-clear glyphicon glyphicon-trash textlabel"',
-        ' data-toggle="filter-tooltip" data-original-title="Réinitaliser ce filtre"></span>',
+          ' class="filter-clear ri-delete-bin-line textlabel"',
+        ' data-toggle="filter-tooltip" data-bs-original-title="Réinitaliser ce filtre"></span>',
         "</div>",
       ];
       _text.push(
         '<input type="text" value="" data-role="tagsinput" id="' +
           id +
-          '" class="form-control">'
+          '" class="form-control form-control-sm">'
       );
       _text.push("</div>");
       $("#" + divId).append(_text.join(""));
@@ -657,14 +658,14 @@ const filter = (function () {
     if (!$("#" + id).length) {
       var _datePicker = [
         `
-        <div class="form-group form-group-timer mb-2 mr-sm-2">
-        <div class="form-check filter-legend">
-        <legend class="textlabel">${params.label}</legend>
-        <span id=${clearId} class="filter-clear glyphicon glyphicon-trash textlabel"
-         data-toggle="filter-tooltip" data-original-title="Réinitaliser ce filtre"></span>
+        <div class="form-group-timer mb-2">
+        <div class="filter-legend">
+        <label class="form-label textlabel">${params.label}</label>
+        <span id=${clearId} class="filter-clear ri-delete-bin-line textlabel"
+         data-toggle="filter-tooltip" data-bs-original-title="Réinitaliser ce filtre"></span>
         </div>`,
       ];
-      _datePicker.push('<input type="text" class="form-control" id="' + id + '" />');
+      _datePicker.push('<input type="text" class="form-control form-control-sm" id="' + id + '" />');
       _datePicker.push("</div>");
       $("#" + divId).append(_datePicker.join(""));
 
@@ -722,21 +723,21 @@ const filter = (function () {
       $("#" + id).empty();
     } else {
       comboBox = [
-        '<div class="form-group mb-2 mr-sm-2">',
-        '<div class="form-check filter-legend">',
-        '<legend class="textlabel"> ' + params.label + " </legend>",
+        '<div class="mb-2">',
+        '<div class="filter-legend">',
+        '<label class="form-label textlabel"> ' + params.label + " </label>",
         "<span id=" +
           clearId +
-          ' class="filter-clear glyphicon glyphicon-trash textlabel"',
-        ' data-toggle="filter-tooltip" data-original-title="Réinitaliser ce filtre"></span>',
+          ' class="filter-clear ri-delete-bin-line textlabel"',
+        ' data-toggle="filter-tooltip" data-bs-original-title="Réinitaliser ce filtre"></span>',
         "</div>",
         '<select id="' +
           id +
-          '" class="form-control" onchange="filter.onValueChange(this)">',
+          '" class="form-select form-select-sm" onchange="filter.onValueChange(this)">',
       ];
     }
 
-    comboBox.push("<option>Choisissez...</option>");
+    comboBox.push("<option>Sélectionnez</option>");
 
     params.availableValues.forEach(function (value, index, array) {
       if (params.currentValues.includes(value)) {
@@ -1089,22 +1090,22 @@ const filter = (function () {
   var _setStyle = function (reinitPosition = false) {
     if (!mviewer.customComponents.filter.config.options.style) return;
     var style = mviewer.customComponents.filter.config.options.style;
-    $(".textlabel").css("color", style.text || "black");
-    $("#advancedFilter").css("background-color", style.background || "white");
-    $("#advancedFilter").css("border", style.border || "0px transparent solid");
+    $(".textlabel").css("color", style.text);
+    $("#advancedFilter").css("background-color", style.background);
+    $("#advancedFilter").css("border", style.border);
     // position
     if (reinitPosition) {
       $("#advancedFilter").css("right", style.right || "60px");
       $("#advancedFilter").css("left", style.left || "");
-      $("#advancedFilter").css("top", style.top || "65px");
+      $("#advancedFilter").css("top", style.top || "75px");
       $("#advancedFilter").css("bottom", style.bottom || "");
     }
     // button style
-    $(".label-info").css("background-color", style.unSelectedBtnColor || "grey");
-    $(".label-info").css("color", style.textSelectBtnColor || "black");
+    $(".label-info").css("background-color", style.unSelectedBtnColor);
+    $(".label-info").css("color", style.textSelectBtnColor);
     $(".form-check-label-checked").css(
       "background-color",
-      style.selectedBtnColor || "#5bc0de"
+      style.selectedBtnColor
     );
   };
 

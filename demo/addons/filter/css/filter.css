@@ -5,81 +5,91 @@
   position: fixed !important;
   top: 240px;
   left: 60px;
-  padding: 5px 15px 2px;
-  max-width: 350px;
+  padding: 1em;
+  border-radius: var(--bs-border-radius);
+  max-width: 300px;
   z-index: 1000 !important;
+  box-shadow: 0px 0px 30px 3px rgba(200, 200, 200, 0.5);
 }
 
 .advancedFilter h2 {
-  font-size: 12.5px;
-  color: #9DE0EF;
-  font-weight: bold;
-  font-family: 'roboto_regular', Arial, Sans-serif;
-  margin-top: 0px;
-  text-align: left;
+    font-size: large;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.advancedFilter h2 .glyphicon-refresh {
-  position: absolute;
-  cursor: pointer;
-  right: 30px;
-  top: 4px;
+.advancedFilter .filter__title {
+    max-width: 80%;
+    line-height: 1.1;
 }
 
-.advancedFilter h2 .glyphicon-remove {
-  position: absolute;
-  cursor: pointer;
-  right: 10px;
-  top: 4px;
+.advancedFilter .bootstrap-tagsinput {
+    width: 100%;
+    font-size: .9em;
+    border-radius: var(--bs-border-radius-sm);
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    box-shadow: none;
 }
 
-.advancedFilter label {
-  margin-right: 2px;
-  margin-left: 2px;
-  padding: .3em .6em .3em;
+.advancedFilter .bootstrap-tagsinput .dropdown-menu {
+    font-size: .9em;
 }
 
-.advancedFilter legend {
-  font-size: 13px;
-  font-style: italic;
-  margin-bottom: 5px;
+.advancedFilter .bootstrap-tagsinput .tag {
+    background-color: var(--mv-color-primary);
+    padding: 2px 7px;
+    border-radius: 7px;
+}
+
+.advancedFilter .filter-legend {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.advancedFilter .filterCheck__list {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .advancedFilter .form-check-label {
-  display: inline-block;
+    display: inline;
+    background-color: #EFEFEF;
+    font-size: .8em;
+    border-radius: 5px;
+    padding: 3px 7px;
+    line-height: 1.4;
+    margin: 3px;
+    color: #505050;
+    transition: .3s;
 }
 
 .advancedFilter .form-check-label:hover {
-  background-color: #EFEFEF;
+  background-color: color-mix(in srgb, var(--mv-color-primary) 80%, rgba(255, 255, 255, 0));
+  color: white;
+  cursor: pointer;
 }
 
 .advancedFilter .form-check-label-checked{
-  background-color: #BBBBBB;
+  background-color: var(--mv-color-primary);
+  color: white;
 }
 
-.form-check {
-  margin-bottom: 5px;
+#advancedFilter-clearAll:hover, #advancedFilter-closeAll:hover, .filter-clear:hover {
+    cursor: pointer;
+    opacity:.8;
 }
 
-/* needed to add x button on filter */
-.filter-legend {
-  position: relative;
+.advancedFilter .download-section {
+    margin-top: 1em;
+    border-top: var(--bs-border-width) solid var(--bs-border-color);
+    padding-top: 0.5em;
 }
 
-.filter-legend .glyphicon-trash {
-  position: absolute;
-  cursor: pointer;
-  right: 30px;
-  top: 4px;
-  color: #9DE0EF;
-}
-
-.download-btn{
-  color:white;
-  margin:10px;
-  cursor: pointer;
-}
-.download-section{
-  margin-top: 5px;
-  margin-bottom: 15px;
+.advancedFilter .download-btn {
+    margin-right: 5px;
+    font-size: small;
 }

@@ -2,7 +2,8 @@
 <config>
 <application
     id="filter"
-    title="Filtrage des données avec un plugin Mviewer"
+    title="Plugin - Filtrer les données"
+    htmltitle="Filtrer les données &lt;span class=&quot;badge text-bg-light&quot;&gt;Plugin&lt;/span&gt;&lt;/div&gt;"
     logo=""
     help=""
     style="css/themes/default.css"

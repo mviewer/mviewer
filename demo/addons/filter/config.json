@@ -11,12 +11,6 @@
         "open": true,
         "zoomOnFeatures": true,
         "legendTitle": "Sélectionner une donnée :",
-        "style": {
-          "border": "1px #2e5367 solid",
-          "background": "#0f4496",
-          "text": "white",
-          "colorButton": "#0f4496"
-        },
         "layers": [
           {
             "layerId": "structure_illetrisme",
@@ -26,7 +20,6 @@
               { "label": "Geojson", "format": "application/json" },
               { "label": "Excel", "format": "excel" }
             ],
-
             "filter": [
               {
                 "attribut": "publics",
@@ -52,26 +45,26 @@
         "open": true,
         "zoomOnFeatures": true,
         "legendTitle": "Sélectionner une donnée :",
-        "style": {
-          "border": "1px #2e5367 solid",
-          "background": "#2e5367",
-          "text": "white",
-          "colorButton": "#2e5367"
-        },
         "layers": [
           {
-            "layerId": "commune",
+            "layerId": "commune",            
             "filter": [
               {
                 "attribut": "nom",
                 "type": "textbox",
                 "label": "Commune",
-                "updateOnChange": true
+                "updateOnChange": false
               }
             ]
           },
           {
             "layerId": "structures",
+            "downloadFormats": [
+              { "label": "CSV", "format": "CSV" },
+              { "label": "Shapefiles", "format": "SHAPE-ZIP" },
+              { "label": "Geojson", "format": "application/json" },
+              { "label": "Excel", "format": "excel" }
+            ],
             "filter": [
               {
                 "attribut": "dep",
@@ -83,7 +76,7 @@
                 "attribut": "ville",
                 "type": "textbox",
                 "label": "Ville",
-                "updateOnChange": true
+                "updateOnChange": false
               },
               {
                 "attribut": "form_jur",

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
 	<application
-		title="Illetrisme - pacte linguistique"
+		title="Plugin - Filtrer et télécharger les données"
+    	htmltitle="Filtrer et télécharger les données &lt;span class=&quot;badge text-bg-light&quot;&gt;Plugin&lt;/span&gt;&lt;/div&gt;"
 		id="pacte"
 		logo="https://www.geo2france.fr/mviewer/apps/img/logo/logo_g2f_blanc.png"
-		help="mviewer_help.html"
-		style="https://www.geo2france.fr/mviewer/apps/css/themes/g2f.css"
+		style="css/themes/chambray.css"
 		exportpng="true"
 		showhelp="false"
 		coordinates="false"
