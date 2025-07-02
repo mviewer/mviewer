@@ -42,14 +42,13 @@ var streetview = (function () {
     _streetViewBtn.addEventListener("click", function () {
       if (_lastCoordinates) {
         _redirectToStreetView(_lastCoordinates);
-
         _streetViewBtn.disabled = true;
         // Disable the button for 5 seconds to prevent multiple clicks
         setTimeout(() => {
           _streetViewBtn.disabled = false;
         }, 5000);
       } else {
-        $("#coordinates span").text("Cliquez d’abord sur la carte ✗");
+        mviewer.toast("StreetView", "Cliquez sur la carte", 6000);
       }
     });
   };
@@ -100,12 +99,7 @@ var streetview = (function () {
 
     _lastCoordinates = formattedCoordinates;
 
-    $("#coordinates span").text("Coordonnées sauvegardées ✓");
-
-    // Clear the coordinates text after 3 seconds
-    setTimeout(() => {
-      $("#coordinates span").text(" ");
-    }, 3000);
+    mviewer.toast("StreetView", "<b>Coordonnées sauvegardées.</b> </br> Cliquez de nouveau sur le bouton pour ouvrir StreetView dans un nouvel onglet.",6000);
   };
 
   return {

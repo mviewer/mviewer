@@ -1,7 +1,7 @@
 {
   "type": "module",
   "js": ["js/streetview.js"],
-  "css": "css/style.css",
+  "css": "",
   "html": "streetview.html",
   "target": "toolstoolbar",
   "options": {
