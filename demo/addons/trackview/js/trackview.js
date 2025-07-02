@@ -62,7 +62,6 @@ var trackview = (function () {
 
     // if current segment is the last selected add point on segment
     if (currentSelectedSegmentId == feature.getProperties().properties.id) {
-      console.log("entré style");
       const geometry = feature.getGeometry();
       const coordinates = geometry.getCoordinates();
       const endCoordinate = coordinates[coordinates.length - 1];

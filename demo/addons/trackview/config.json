@@ -14,7 +14,7 @@
       "parcours": [
         {
           "id": 0,
-          "label": "Parcours 13 km",
+          "label": "Parcours Swimrun - 13 km",
           "title": "Circuit",
           "param": {
             "pointKilometers": {
@@ -28,8 +28,8 @@
             "geometry": "LineString",
             "segment": {
               "color": {
-                "default": "#f00",
-                "selected": "#03224c"
+                "default": "#9c27b0",
+                "selected": "#6c1a7a"
               },
               "width": {
                 "default": 3,
@@ -38,7 +38,7 @@
             },
             "point": {
               "color": {
-                "image": "#03224c",
+                "image": "#6c1a7a",
                 "stroke": "#fff"
               },
               "radius": 7,
@@ -65,8 +65,8 @@
                 }
               },
               "color": {
-                "segment": "#f00",
-                "point": "#f00"
+                "segment": "#9c27b0",
+                "point": "#9c27b0"
               }
             }
           },
@@ -81,7 +81,7 @@
         },
         {
           "id": 1,
-          "label": "Parcours 5 km",
+          "label": "Parcours Swimrun - 5 km",
           "title": "Circuit",
           "param": {
             "pointKilometers": {
@@ -95,8 +95,8 @@
             "geometry": "LineString",
             "segment": {
               "color": {
-                "default": "#f00",
-                "selected": "#03224c"
+                "default": "#7688f7",
+                "selected": "#4d5dc3"
               },
               "width": {
                 "default": 3,
@@ -105,7 +105,7 @@
             },
             "point": {
               "color": {
-                "image": "#03224c",
+                "image": "#7688f7",
                 "stroke": "#fff"
               },
               "radius": 7,
@@ -132,8 +132,8 @@
                 }
               },
               "color": {
-                "segment": "#f00",
-                "point": "#f00"
+                "segment": "#7688f7",
+                "point": "#7688f7"
               }
             }
           },
@@ -159,8 +159,8 @@
             "geometry": "LineString",
             "segment": {
               "color": {
-                "default": "#f00",
-                "selected": "#0f0"
+                "default": "#ff5722",
+                "selected": "#ca3d11"
               },
               "width": {
                 "default": 3,
@@ -169,7 +169,7 @@
             },
             "point": {
               "color": {
-                "image": "#00f",
+                "image": "#ff5722",
                 "stroke": "#fff"
               },
               "radius": 7,
@@ -177,8 +177,8 @@
             },
             "pointKilometers": {
               "color": {
-                "image": "#00f",
-                "stroke": "000",
+                "image": "#ff5722",
+                "stroke": "#ff5722",
                 "text": "#fff"
               },
               "radius": 9,
@@ -196,8 +196,8 @@
                 }
               },
               "color": {
-                "segment": "#0f0",
-                "point": "#00f"
+                "segment": "#ff5722",
+                "point": "#ff5722"
               }
             }
           },

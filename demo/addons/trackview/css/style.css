@@ -4,13 +4,15 @@
     position: fixed;
     bottom: 0;
     right: 0;
-    background-color: white;
-    border-color: lightblue;
-    filter: opacity(80%);
+    background-color: #ffffffed;
+}
+
+.mode-u #wrapper.toggled-2 #trackview-panel, .mode-s #wrapper.toggled-2 #trackview-panel {
+    width: 100%!important;
 }
 
 #trackview-graph {
-    max-height: 230px;
+    max-height: 250px;
     width: 100%;
 }
 
@@ -20,104 +22,77 @@
 
 #backgroundlayerstoolbar-default, #mviewerinfosbar, .ol-attribution.ol-unselectable.ol-control, .ol-scale-line.ol-unselectable {
     z-index: 1;
-    margin-bottom: 232px;
+    margin-bottom: 250px;
 }
 
 /* Parameters of the dropdown */
 
 #trackview-dropdown-custom {
     position: fixed;
-    margin: 60px 0 0 270px; /* For the position of the dropdown on the addon || Change this line if needed*/ 
-    font-family: sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    right: 5em;
+    top: calc(15px + var(--mv-navbar-h));
+    font-size: 0.9em;
 }
 
-.dropdown {
-    border-radius: 0.5em;
-    min-width: 11em;
-    position: relative;
-    margin: 2em;
-    padding: 0.5em;
-}
-
-.dropdown * {
-    box-sizing: border-box;
-}
-
-.select {
-    background: whitesmoke;
-    color: black;
+#trackview-dropdown-custom .select {
+    background-color: var(--bs-body-bg);
+    border: var(--bs-border-width) solid var(--bs-border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 2px rgb(182, 178, 178) solid;
     border-radius: 0.5em;
-    padding: 1em;
+    padding: 0.5em 1em;
     cursor: pointer;
-    transition: background 0.3s;
-}
-
-.select-clicked {
-    border: 2px gray solid;
-    box-shadow: 0 0 0.8em black;
-}
-
-.select:hover {
-    background: rgb(230, 229, 229);
-    transform: scale(1.01);
-}
-
-.caret {
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 6px solid black;
     transition: 0.3s;
 }
 
-.caret-rotate {
+#trackview-dropdown-custom .caret {
+    transition: 0.3s;
+}
+
+#trackview-dropdown-custom .caret-rotate {
     transform: rotate(180deg);
 }
 
-.menu {
+#trackview-parcours.menu {
     list-style: none;
     padding: 0.2em 0.5em;
-    background: white;
-    border: 1px #363a43 solid;
-    box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
-    border-radius: 0.5em;
-    color: black;
+    background-color: var(--bs-body-bg);
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.1);
     position: absolute;
-    top: 4em;
+    top: 3em;
     left: 50%;
-    width: 90%;
+    width: 100%;
     transform: translateX(-50%);
-    opacity: 0;     
+    opacity: 0;
     display: none;
     transition: 0.2s;
     z-index: 1;
 }
 
-.menu li {
+#trackview-parcours.menu li {
     padding: 0.7em 0.5em;
     margin: 0.3em 0;
-    border-radius: 0.5em;
+    border-radius: var(--bs-border-radius);
     cursor: pointer;
 }
 
-.menu li:hover {
-    background: lightgray;
+#trackview-parcours.menu li:hover {
+    background: rgba(211, 211, 211, 0.641);
 }
 
-.menu .active {
-    background: lightgray;
+#trackview-parcours.menu .active {
+    background-color: var(--mv-color-primary);
+    color: white;
 }
 
-.menu-open {
+#trackview-parcours.menu-open {
     display: block;
     opacity: 1;
 }
