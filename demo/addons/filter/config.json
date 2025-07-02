@@ -59,12 +59,6 @@
           },
           {
             "layerId": "structures",
-            "downloadFormats": [
-              { "label": "CSV", "format": "CSV" },
-              { "label": "Shapefiles", "format": "SHAPE-ZIP" },
-              { "label": "Geojson", "format": "application/json" },
-              { "label": "Excel", "format": "excel" }
-            ],
             "filter": [
               {
                 "attribut": "dep",
