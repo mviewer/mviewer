@@ -11,7 +11,7 @@
 </rdf:Description>
 </rdf:RDF>
 </metadata>
-<application title="Démo fulscreen" logo="" help="" style="css/themes/default.css" exportpng="true" showhelp="false" coordinates="false" measuretools="true" togglealllayersfromtheme="false">
+<application title="Plugin - Fullscreen" htmltitle="Fullscreen &lt;span class=&quot;badge text-bg-light&quot;&gt;Plugin&lt;/span&gt;&lt;/div&gt;" logo="" help="" style="css/themes/default.css" exportpng="true" showhelp="false" coordinates="false" measuretools="true" togglealllayersfromtheme="false">
 </application>
 <mapoptions maxzoom="20" projection="EPSG:3857" center="-307903.74898791354,6141345.088741366" zoom="7"/>
 <searchparameters bbox="false" localities="false" features="false" static="false"/>

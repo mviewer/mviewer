@@ -2,7 +2,8 @@
 <config>
 <application
     id="stats"
-    title="Affichage de statistiques avec un plugin Mviewer"
+    title="Plugin - Affichage de statistiques"
+    htmltitle="Affichage de statistiques &lt;span class=&quot;badge text-bg-light&quot;&gt;Plugin&lt;/span&gt;&lt;/div&gt;"
     logo=""
     help=""
     style=""

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <application id="zoomtoarea" title="Plugin - zoomToArea" mouseposition="false" logo="" help="mviewer_help.html" measuretools="true" exportpng="true" style="css/themes/wet_asphalt.css" togglealllayersfromtheme="true"/>
+    <application id="zoomtoarea" title="Plugin - zoomToArea" htmltitle="ZoomToArea &lt;span class=&quot;badge text-bg-light&quot;&gt;Plugin&lt;/span&gt;&lt;/div&gt;" mouseposition="false" logo="" help="mviewer_help.html" measuretools="true" exportpng="true" style="css/themes/wet_asphalt.css" togglealllayersfromtheme="true"/>
     <mapoptions maxzoom="19" projection="EPSG:3857" center="-220750.13768758904,6144925.57790189" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
   
     <baselayers>
