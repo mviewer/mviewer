@@ -1,75 +1,77 @@
-﻿<div id="custom-popin" style="display:none;">
-      <div class="header">
-        <div id="header-content">
-          <i class="fas fa-lg fa-grip-vertical"></i><h3 id="addon_title"> </h3>
+﻿<div id="isochronePanel" style="display:none;top:5em;left:10em">
+      <div class="header mb-3">
+        <div id="header-content" >
+            <i class="ri-guide-line"></i>
+            <span id="addon_title" class="fw-semibold"></span>
         </div>
+        <span id="isochroneClosePanel" class="ri-close-large-line" data-bs-original-title="Fermer la fenêtre"></span>
       </div>
       <div class="body">
         <div>
-            <div id="depart">
-              <h4><i class="fas fa-thumbtack"></i> Point d'origine</h4>
-              <button type="button" id="choisir_depart" class=" btn btn-default"><i class="fas fa-crosshairs"></i> Choisir</button>
+            <div id="depart" class="mb-2">
+              <button type="button" id="choisir_depart" class="btn btn-primary btn-sm"><i class="ri-focus-3-line"></i> Choisir un point d'origine</button>
             </div>
-
+            <hr>
             <div id="parametre-container">
-              <h4>Paramètres</h4>
-              <button id="time-button" type="button" class="btn btn-default selected parametre" data-parametre="temps">
-                <i class="fas fa-clock"></i><span> Temps</span>
-              </button>
-              <button id="distance-button" type="button" class="btn btn-default parametre" data-parametre="distance">
-                <i class="fas fa-ruler-horizontal"></i><span> Distance</span>
-              </button>
-
-
-              <div id="temps" style="display:block;">
-                <h5>Options de temps</h5>
-                <div class="inline-block">
-                  <label for="heures_input">Heures</label>
-                  <input id="heures_input" class="isochrone-times form-control" type="number" min="0" max="9999999">
-                </div>
-                <div class="inline-block">
-                  <label for="minutes_input">Minutes</label> 
-                  <input id="minutes_input" class="isochrone-times form-control" type="number" min="0" max="9999999">
+              <h6>Paramètres</h6>
+              <div class="mb-2">
+                <button id="time-button" type="button" class="btn btn-outline-primary btn-sm selected parametre" data-parametre="temps">
+                  <i class="ri-timer-line"></i><span> Temps</span>
+                </button>
+                <button id="distance-button" type="button" class="btn btn-outline-primary btn-sm parametre" data-parametre="distance">
+                  <i class="ri-ruler-line"></i><span> Distance</span>
+                </button>
+              </div>
+              <div id="temps" style="display:block;" class="mb-3">
+                <div class="row">
+                  <div class="col">
+                    <label for="heures_input">Heures</label>
+                    <input id="heures_input" class="isochrone-times form-control form-control-sm" type="number" min="0" max="9999999">
+                  </div>
+                  <div class="col">
+                    <label for="heures_input">Minutes</label>
+                    <input id="minutes_input" class="isochrone-times form-control form-control-sm" type="number" min="0" max="9999999">
+                  </div>
                 </div>
               </div>
-
-              <div id="distance" style="display:none;">
-                <h5>Options de distance</h5>
-                <div class="inline-block">
-                  <label for="kilometres_input">Kilomètres</label>
-                  <input id="kilometres_input" class="isochrone-distance form-control" type="number"  min="0" max="9999999">
-                </div>
-                <div class="inline-block">
-                  <label for="metres_input">Mètres</label>
-                  <input id="metres_input"  class="isochrone-distance form-control" type="number" min="0" max="9999999">
+              <div id="distance" style="display:none;" class="mb-3">
+                <div class="row">
+                  <div class="col">
+                    <label for="kilometres_input">Kilomètres</label>
+                  <input id="kilometres_input" class="isochrone-distance form-control form-control-sm" type="number"  min="0" max="9999999">
+                  </div>
+                  <div class="col">
+                    <label for="metres_input">Mètres</label>
+                  <input id="metres_input"  class="isochrone-distance form-control form-control-sm" type="number" min="0" max="9999999">
+                  </div>
                 </div>
               </div>
             </div>
-            
-
-            <div id="deplacement">
-            <h4><i class="fas fa-bus-alt"></i> Mode de déplacement</h4>
-              <button id="car-button" type="button" class="selected isochrone-mode btn btn-defaul" data-mode="car">
-                <i class="fa fa-car" aria-hidden="true"></i><span> Voiture</span>
+            <div id="deplacement" class="mb-3">
+              <label class="form-label">Mode de déplacement</label></br>
+              <button id="car-button" type="button" class="selected isochrone-mode btn btn-outline-primary btn-sm" data-mode="car">
+                <i class="ri-car-line"></i><span> Voiture</span>
               </button>
-              <button id="walking-button" type="button" class="isochrone-mode btn btn-default" data-mode="pedestrian">
-                <i class="fa fa-walking" aria-hidden="true"></i><span> Piéton</span>
+              <button id="walking-button" type="button" class="isochrone-mode btn btn-outline-primary btn-sm" data-mode="pedestrian">
+                <i class="ri-walk-line"></i><span> Piéton</span>
               </button>
             </div>
-            <div id="color">
-              <h4><i class="fas fa-palette"></i> Couleur du résultat</h4>
-              <label for="iso_color">Choisir une couleur: </label>
-              <input id="iso_color" name="iso_color" type="color">
+            <div id="color" class="mb-2">
+              <input id="iso_color" name="iso_color" type="color" class="form-control form-control-sm form-control-color">              
+              <label for="iso_color" class="form-label">Personnaliser la couleur du résultat</label>
             </div>
-            <div id="action_buttons">
-            <h4><i class="fas fa-cog"></i> Actions</h4>
-              <button type="button" id="calcul_result" class="btn btn-primary " ><i class="fas fa-calculator"></i> Calculer</button>
-              <button type="button" id="reset" class="btn btn-default" ><i class="fas fa-undo"></i> Réinitialiser</button>
+            <hr>
+            <div id="action_buttons" class="my-2">
+              <button type="button" id="calcul_result" class="btn btn-secondary btn-sm" >Calculer</button>
+              <button type="button" id="reset" class="btn btn-sm" ><i class="ri-reset-left-line"></i> Réinitialiser</button>
             </div>
 
         </div>
-        <div id = "loading" class="loading d-flex align-items-center" style="display:none;">
-          <strong><i class="fas fa-spin fa-spinner"></i> Loading isochrone</strong>
+        <div id="loading" class="my-3" style="display:none;">
+            <div class="spinner-border spinner-border-sm" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            Calcul de l'isochrone
         </div>
       </div>
 </div>

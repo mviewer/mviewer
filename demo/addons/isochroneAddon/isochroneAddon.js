@@ -14,7 +14,7 @@ const isochroneAddon = (function () {
    */
 
   var _toggleForm = function (e) {
-    var _form = document.getElementById("custom-popin");
+    var _form = document.getElementById("isochronePanel");
     if (_form.style.display === "none") {
       _form.style.display = "block";
     } else {
@@ -46,6 +46,7 @@ const isochroneAddon = (function () {
       mviewer.getMap().removeInteraction(_draw);
       mviewer.showLocation("EPSG:4326", _xy[0], _xy[1]);
       info.enable();
+      mviewer.toast("Isochrone", `<i class="ri-focus-3-line"></i> Localisation du point d'origine : ${_xy[0]}, ${_xy[1]}`)
     });
     mviewer.getMap().addInteraction(_draw);
   };
@@ -106,17 +107,11 @@ const isochroneAddon = (function () {
     distances += convert($("#kilometres_input").val(), 1000);
 
     if (!_xy) {
-      mviewer.alert(
-        "Isochrones : Il faut définir l'origine et au moins un temps de parcours ou une distance",
-        "alert-info"
-      );
+      mviewer.toast("Isochrone", `<i class="ri-settings-4-line"></i> Il faut définir un point d'origine et au moins un temps de parcours ou une distance`)
       return;
     }
     if (times === 0 && distances === 0) {
-      mviewer.alert(
-        "Isochrones : Il faut définir temps parcours ou une distance",
-        "alert-info"
-      );
+      mviewer.toast("Isochrone", `<i class="ri-settings-4-line"></i> Il faut définir un temps de parcours ou une distance`)
       return;
     }
 
@@ -140,10 +135,7 @@ const isochroneAddon = (function () {
       dataParameters["costValue"] = distances;
       dataParameters["costType"] = "distance";
     } else {
-      mviewer.alert(
-        "Isochrones : Il faut définir soit un temps soit une distance, pas les deux",
-        "alert-info"
-      );
+      mviewer.toast("Isochrone", `<i class="ri-settings-4-line"></i> Il faut définir un temps de parcours ou une distance, veuillez supprimer l'un des paramètres`)
       return;
     }
 
@@ -153,7 +145,6 @@ const isochroneAddon = (function () {
      * @param  {} .show
      */
 
-    $("#loading-isochrones").show();
     $.ajax({
       type: "GET",
       url: url,
@@ -164,11 +155,11 @@ const isochroneAddon = (function () {
         _showResult(response);
       },
       error: function (request, status, error) {
-        mviewer.alert("Il y a un problème avec le calcul, contacter l'admin");
+        mviewer.alert("Il y a un problème avec le calcul, contactez l'administrateur de l'application","alert-danger");
         document.getElementById("loading").style.display = "none";
       },
     });
-    document.getElementById("loading").style.display = "block";
+    document.getElementById("loading").style.display = "block";    
   };
 
   /**
@@ -226,13 +217,17 @@ const isochroneAddon = (function () {
 
       var _btn = document.createElement("button");
       _btn.id = "hfbtn";
-      _btn.className = "btn btn-default btn-raised";
+      _btn.className = "btn btn-light";
       _btn.title = "isochrone";
       let _span = document.createElement("span");
-      _span.className = "fas fa-route";
+      _span.className = "ri-guide-line";
       _btn.appendChild(_span);
       _btn.addEventListener("click", _toggleForm);
       document.getElementById("toolstoolbar").appendChild(_btn);
+
+      /* Btn to close panel */      
+      const btnClose = document.getElementById("isochroneClosePanel");
+      btnClose.addEventListener("click", _toggleForm);
 
       /**
        *used for getting start point
@@ -285,7 +280,7 @@ const isochroneAddon = (function () {
        *gets info from json file
        */
 
-      var isoTitle = mviewer.customComponents["isochroneAddon"].config.options.title;
+      var isoTitle = mviewer.customComponents["isochroneAddon"].config.options.isoTitle;
       document.getElementById("addon_title").innerText = isoTitle;
       var isoColor =
         mviewer.customComponents["isochroneAddon"].config.options.isohroneColor;
@@ -293,10 +288,10 @@ const isochroneAddon = (function () {
 
       /**
        *adds easy drag to draggable element
-       * @param  {html element} '#custom-popin'
+       * @param  {html element} '#isochronePanel'
        */
 
-      $("#custom-popin").easyDrag({
+      $("#isochronePanel").easyDrag({
         handle: ".header",
         container: $("#map"),
       });

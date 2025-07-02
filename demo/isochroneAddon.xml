@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
   <application
-      title="isochroneAddon"
+      title="Plugin - Isochrone"
+      htmltitle="Isochrone &lt;span class=&quot;badge text-bg-light&quot;&gt;Plugin&lt;/span&gt;&lt;/div&gt;"
       logo=""
       help=""
       style="css/themes/default.css"
