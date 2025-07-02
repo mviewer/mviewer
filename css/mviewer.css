@@ -261,6 +261,14 @@ a {
   font-size: small;
 }
 
+/* Toast */
+
+#toasts-zone {
+    bottom: 2em;
+    right: 4em;
+    position: absolute;
+}
+
 /* Map */
 
 #map {
@@ -2069,4 +2077,5 @@ input.drawTooltip {
   background-color: var(--mv-color-primary-100);
   color: var(--mv-color-primary);
 }
+
 
