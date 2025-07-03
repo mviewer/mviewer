@@ -112,7 +112,7 @@ const label = (function () {
     zoomLabel.id = `${layerId}-label-zoom`;
 
     const stateIcon = document.createElement("span");
-    stateIcon.className = "state-icon far mv-unchecked glyphicon glyphicon-chevron-up";
+    stateIcon.className = "state-icon mv-unchecked";
 
     const labelText = document.createElement("div");
     labelText.style.display = "inline";

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
   <application id="label" lang="fr" langfile="demo/demo.i18n.json"
-    title="Démo de l'addon label" showhelp="false" logo="" style="css/themes/default.css"
+    title="Plugin - Label" 
+    htmltitle="Label &lt;span class=&quot;badge text-bg-light&quot;&gt;Plugin&lt;/span&gt;&lt;/div&gt;"    
+    showhelp="false" logo="" style="css/themes/default.css"
     exportpng="false" geoloc="false" measuretools="false" coordinates="false" mouseposition="false"
     togglealllayersfromtheme="true" />
 

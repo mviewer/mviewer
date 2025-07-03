@@ -2,6 +2,10 @@
   display: none;
 }
 
-.label-tooltip {
-  font-weight: 400 !important;
+.hidden {
+    display: none;
+}
+
+#legend .label-tooltip .state-icon {
+    margin-right: .5em;
 }
