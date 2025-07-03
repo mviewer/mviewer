@@ -138,6 +138,14 @@ a {
   background: #555;
 }
 
+#loading-page {
+        color: #999;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        display: flex;
+        text-align: center;
+      }
 
 /* Loader */
 
@@ -471,7 +479,9 @@ a {
 
 .mv-title {
   font-size: large;
-    font-weight: 500;
+  font-weight: 500;
+  line-height: 1;
+  white-space: normal;
 }
 
 .menu-toggle {
