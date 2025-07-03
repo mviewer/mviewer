@@ -575,10 +575,7 @@ var info = (function () {
             }
             break;
           default:
-            mviewer.alert(
-              "Ce format de réponse : " + contentType + " n'est pas pris en charge",
-              "alert-warning"
-            );
+            mviewer.toast("" + name + "","Format de réponse non pris en charge : " + contentType + " ");
         }
         if (html) {
           //test si présence d'une classe .feature eg template geoserver.
