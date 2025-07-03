@@ -357,7 +357,6 @@ var configuration = (function () {
     if (conf.application.title || API.title) {
       var title = API.title || conf.application.title;
       document.title = title;      
-      document.querySelector('meta[property="og:title"]').setAttribute("content", title);
       title = conf.application.htmltitle || title;
       $(".mv-title").text("");
       $(".mv-title").append(title);
