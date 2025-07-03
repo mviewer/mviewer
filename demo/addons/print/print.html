@@ -4,31 +4,20 @@
   class="modal fade"
   role="dialog"
 >
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-xl">
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button
-          type="button"
-          class="close"
-          id="closePrintModal"
-          data-dismiss="modal"
-        >&times;</button>
-        <h3 class="modal-title">Imprimer la carte</h3>
+        <h5 class="modal-title">Imprimer la carte</h5>
+        <button type="button" id="closePrintModal" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body bodyFlex">
         <div id="blockOptionsImpress">
-          <h4><strong>Options de mise en page</strong></h4>
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Orientation</h3>
-            </div>
-            <div class="panel-body">
-              <select
-                id="print-select-orientation"
-                class="form-control"
-              >
-                <option
+          <h5>Options de mise en page</h5>
+          <div class="my-3">
+            <label for="print-select-orientation" class="form-label">Orientation</label>
+            <select id="print-select-orientation" class="form-select">
+              <option
                   value=""
                   selected
                   i18n="print.select.landscape"
@@ -37,101 +26,80 @@
                   value=""
                   i18n="print.select.landscape"
                 >Portrait</option>
-              </select>
-            </div>
+            </select>
           </div>
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Options de la carte</h3>
-            </div>
-            <div class="panel-body">
-              <div class="input-group">
+          <div class="my-3">
+            <label for="print-select-orientation" class="form-label">Options de la carte</label>
+            <div class="form-check">
                 <input
                   type="checkbox"
                   id="print-scale-checkbox"
-                  class="print-option-checkbox"
+                  class="print-option-checkbox form-check-input"
                   checked
                   aria-label="..."
                 >
                 <label>Barre d'échelle</label>
               </div>
-              <div class="input-group">
+              <div class="form-check">
                 <input
                   type="checkbox"
                   id="print-north-checkbox"
-                  class="print-option-checkbox"
+                  class="print-option-checkbox form-check-input"
                   checked
                   aria-label="..."
                 >
-                <label>Orientation (Nord)</label>
+                <label class="form-check-label">Orientation (Nord)</label>
               </div>
-              <div class="input-group">
+              <div class="form-check">
                 <input
                   type="checkbox"
                   id="print-qrcode-checkbox"
-                  class="print-option-checkbox"
+                  class="print-option-checkbox form-check-input"
                   aria-label="..."
                 >
-                <label>QR Code (partage de la carte)</label>
+                <label class="form-check-label">QR Code (partage de la carte)</label>
               </div>
-            </div>
           </div>
+
           <!-- Single button -->
-          <div class="print-actions">
+          <div class="print-actions mt-5">
             <button
               type="button"
-              class="btn btn-danger print-reset-btn"
+              class="btn btn-outline-primary print-reset-btn"
             >
-              <span
-                class="glyphicon glyphicon-refresh"
-                aria-hidden="true"
-              ></span>
+              <i class="ri-reset-left-line"></i>
             </button>
             <button
               type="button"
-              class="btn btn-primary print-preview-btn"
+              class="btn btn-outline-primary print-preview-btn"
             >
-              <span
-                class="glyphicon glyphicon-eye-open"
-                aria-hidden="true"
-              ></span>
-              Voir
+              <i class="ri-eye-2-line"></i>
+               Voir
             </button>
             <!-- Split button -->
             <div class="btn-group">
               <button
                 type="button"
                 class="btn btn-primary print-download-btn"
-              > <span
-                  class="glyphicon glyphicon-print"
-                  aria-hidden="true"
-                ></span>
+              > <i class="ri-printer-line"></i>
                 Imprimer</button>
               <button
                 type="button"
                 class="btn btn-primary dropdown-toggle"
-                data-toggle="dropdown"
-                aria-haspopup="true"
+                data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <span class="caret"></span>
-                <span class="sr-only">Toggle Dropdown</span>
+                <span class="visually-hidden">Toggle Dropdown</span>
               </button>
-              <ul class="dropdown-menu">
+              <ul class="dropdown-menu dropdown-menu-end">
                 <li><a
-                    class="print-download-btn"
+                    class="dropdown-item print-download-btn"
                     href="#"
-                  ><span
-                      class="glyphicon glyphicon-file"
-                      aria-hidden="true"
-                    ></span> PDF</a></li>
+                  >PDF</a></li>
                 <li><a
-                    class="print-png-btn"
+                    class="dropdown-item print-png-btn"
                     href="#"
-                  ><span
-                      class="glyphicon glyphicon-picture"
-                      aria-hidden="true"
-                    ></span> PNG</a></li>
+                  >PNG</a></li>
               </ul>
             </div>
           </div>

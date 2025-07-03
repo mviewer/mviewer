@@ -60,7 +60,7 @@ const defaultTemplate = ({
     (rowGrid ? "; " : "") + colGrid
   }; z-index:${zindex}">
         ${titleDiv}
-        <button type="button" class="close print-panel-close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="btn-close print-panel-close" aria-label="Close"></button>
         ${typeDiv}
     </div>`;
   return html;

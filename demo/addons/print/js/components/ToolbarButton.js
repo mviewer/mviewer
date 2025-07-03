@@ -6,10 +6,10 @@
 const tooltip = "Imprimer la carte";
 
 const template = `
-<button id="printBtn" class="btn btn-default btn-raised"
+<button id="printBtn" class="btn btn-light"
   onclick="$('#printModal').modal('show');"  title="${tooltip}"
   tabindex="116" accesskey="f">
-  <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+  <i class="ri-printer-line"></i>
 </button>`;
 
 export default () => {

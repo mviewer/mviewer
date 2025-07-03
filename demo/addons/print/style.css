@@ -12,25 +12,14 @@
 * Propriétés de la modale 
 */
 
-/* Modification de la taille de modale - modal-lg non disponible avec bootstrap 3 */
+/* Modification de la taille de modale */
+
 #printModal .modal-dialog {
-	width: 80% !important;
+    max-width: 80% !important;
 }
 
-#printModal .modal-header {
-	padding: 2em 2em 0em 2em;
-}
-
-#printModal .modal-body {
-	padding: 1em 2em 2em;
-}
-
-#printModal .modal-footer {
-	padding: 1em 2em;
-}
-
-#printModal .modal-title {
-	font-weight: bold;
+#printModal .hide, #printModal .print .hide {
+    display: none!important;
 }
 
 /* Structure de la modale */
@@ -51,6 +40,10 @@
 	padding: 15px;
 }
 
+#blockOptionsImpress {
+    margin-right: 2em;
+}
+
 .print .print-panel-close {
 	display: none;
 }
@@ -62,24 +55,22 @@
 	resize: both;
 	overflow: hidden;
 	min-height: fit-content;
-    /* min-width: fit-content; */
 	max-width: 100%;
     max-height: 100%;
-
 }
 
 .blockImpress .badge {
-	background-color: #7788995c;
-	color: #4c5660;
-	font-size: 10px;
-	font-weight: 700;
-	text-transform: uppercase;
-	width: fit-content;
-	padding: 2px;
-	letter-spacing: .05rem;
-	position: absolute;
-	border-radius: 0;
-	z-index: 1;
+	background-color: #d0d0d05c;
+    color: #737373;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    width: fit-content;
+    padding: 2px;
+    letter-spacing: .05rem;
+    position: absolute;
+    border-radius: 0;
+    z-index: 1;
 }
 
 .blockImpress .text {
@@ -87,22 +78,24 @@
 }
 
 #print-title .text {
-	font-size: large;
+	font-size: x-large;
 	font-weight: 700;
 	padding: 20px 10px 0px;
 }
 
-#print-informations .text {
-	font-size: 8px;
-	padding: 20px 5px 5px;
-	font-style: italic;
+.informations p {
+    font-size: small;
+    line-height: 1.2;
+    margin-bottom: 5px;
+}
+
+#print-informations img {
+	max-height: 50px;
 }
 
 #print-comments .text, #print-informations .informations {
 	padding: 20px 10px 5px;
 }
-
-
 
 #mapBlock {
 	width: 100%;
@@ -193,23 +186,27 @@
 	margin: 5px;
 	margin-bottom: 5px;
 	background-color: white;
-	border: 1px solid grey;
 	padding: 5px;
-}
-
-#print-informations img {
-	max-width: 50px;
 }
 
 .print-panel-close {
 	position: absolute;
-	right: 5px;
-	z-index: 1;
-	margin: 2px;
-	opacity: .6;
-	background-color: white;
+    right: 5px;
+    z-index: 1;
+    margin: 2px;
+    opacity: .6;
+    font-size: 0.7em;
 }
 
 #print-qrcode {
 	background-color: white
+}
+
+.qrcode img {max-height: 6em;}
+
+.qrcode.text-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
