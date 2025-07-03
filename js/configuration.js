@@ -367,6 +367,9 @@ var configuration = (function () {
     if (conf.application.logo) {
       $(".mv-logo").attr("src", conf.application.logo);
     }
+    if (conf.application.nologo === "true") {
+      document.querySelector(".mv-logo").remove();
+    }
     if (location.hash && !location.search) {
       $(".mv-title").attr("href", location.hash);
       $(".navbar-brand").attr("href", location.hash);
