@@ -1,0 +1,7 @@
+{
+    "js": ["MapFeatureSelector.js","jquery.easyDrag.min.js","jquery-ui.min.js"],
+    "css": ["style.css","jquery-ui.min.css"],
+    "html": "MapFeatureSelector.html",
+    "target": "page-content-wrapper"
+    
+}

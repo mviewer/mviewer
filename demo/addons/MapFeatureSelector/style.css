@@ -1,0 +1,96 @@
+/* Style par défaut pour le panel */
+#MapFeatureSelector {
+    position: fixed;
+    top: calc(60vh - 300px);
+    z-index: 900;
+    max-width: 50rem;
+    background-color: #ffffff;
+    border: none !important;
+    padding: 1.5rem;
+    box-shadow: 0 2px 20px 0 rgb(0 0 0 / 10%), 0 2px 20px 0 rgb(0 0 0 / 10%);
+    border-radius: 5px;
+    font-family: 'Arial', sans-serif;
+    display: none; 
+}
+
+/* En-tête du panel */
+.statsHeader {
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Icône à côté du titre */
+.statsHeader .fas {
+    font-size: 24px;
+    color: #5f5f5f;
+    margin-right: 10px;
+}
+
+/* Titre du panel */
+.titleHeader {
+    font-size: 18px;
+    font-weight: 500;
+    color: #5f5f5f;
+}
+
+/* Bouton de fermeture */
+.closeStats {
+    cursor: pointer;
+    font-size: 24px;
+    color: #5f5f5f;
+    margin-left: auto;
+}
+
+/* Boutons d'action */
+.action-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #124693;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.action-button .fas {
+    margin-right: 8px;
+}
+
+.action-button:hover {
+    background-color: #0056b3;
+}
+
+.action-button.pressed {
+    background-color: #011a4e; /* Changer la couleur pour indiquer que le bouton est enfoncé */
+}
+
+/* Texte des éléments sélectionnés */
+#selectionCount {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #333333;
+}
+
+/* Curseur par défaut pour le graphique */
+#graph:hover {
+    cursor: default;
+}
+
+/* Adaptation du panel pour les grands écrans */
+@media only screen and (min-width: 767px) {
+    #chart {
+        width: 600px;
+        height: 400px;
+    }
+    #MapFeatureSelector {
+        left: 30rem;
+    }
+}
