@@ -1,4 +1,5 @@
 const COMPONENT_ID = "MapFeatureSelector"
+const OPTIONS = mviewer.customComponents[COMPONENT_ID].config.options
 
 $(document).ready(function () {
     let customLayer = null;
@@ -18,7 +19,7 @@ $(document).ready(function () {
         if (!customLayer) {
             customLayer = new ol.layer.Vector({
                 source: new ol.source.Vector({
-                    url: mviewer.customComponents[COMPONENT_ID].config.options.dallage_geojson_url,
+                    url: OPTIONS.dallage_geojson_url,
                     format: new ol.format.GeoJSON()
                 }),
                 style: originalStyle
@@ -115,11 +116,11 @@ $(document).ready(function () {
 
     // Télécharger la sélection en CSV
     function downloadCSV() {
-        let csvContent = "data:text/csv;charset=utf-8,DALLE,bloc\n";
+        let csvContent = "data:text/csv;charset=utf-8,Dalle,Bloc\n";
         selectedFeatures.forEach(feature => {
             const properties = feature.getProperties();
             //console.log(properties.DALLE + properties.bloc)
-            csvContent += `${properties.DALLE},${properties.bloc}\n`;
+            csvContent += `${properties[OPTIONS.key_dalle_field]},${properties[OPTIONS.key_bloc_field]}\n`;
         });
         const encodedUri = encodeURI(csvContent);
         const link = document.createElement("a");
