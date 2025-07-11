@@ -189,6 +189,4 @@ $(document).ready(function () {
         });
     }, 3000);
 
-    // Activer la sélection par défaut
-    toggleSelection(true);
 });
