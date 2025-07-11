@@ -36,11 +36,14 @@
 }
 
 /* Bouton de fermeture */
-.closeStats {
+#closeMapFeatureSelector {
+    font-size: 30px;
+    font-weight: 400;
+    opacity: 0.2;
+    position: absolute;
+    top: -30px;
+    right: -15px;
     cursor: pointer;
-    font-size: 24px;
-    color: #5f5f5f;
-    margin-left: auto;
 }
 
 /* Boutons d'action */
