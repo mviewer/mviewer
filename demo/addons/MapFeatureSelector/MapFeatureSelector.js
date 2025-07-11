@@ -46,7 +46,7 @@ $(document).ready(function () {
 
     // Mettre à jour le compteur de sélection
     function updateSelectionCount() {
-        document.getElementById('selectionCount').innerText = `Nombre d'éléments sélectionnés: ${selectedFeatures.length}`;
+        document.getElementById('selectionCount').innerText = `Sélectionné(s): ${selectedFeatures.length}`;
     }
 
     // Appliquer le style à une fonctionnalité sélectionnée
