@@ -134,7 +134,7 @@ $(document).ready(function () {
     var _btn = document.createElement("button");
     _btn.className = "btn btn-default btn-raised";
     _btn.title = "Sélection de dalles";
-    _btn.innerHTML = '<span class="fas fa-layer-group"></span>';
+    _btn.innerHTML = '<span class="fas fa-th" />';
     _btn.addEventListener('click', toggle);
     document.getElementById("toolstoolbar").appendChild(_btn);
 
