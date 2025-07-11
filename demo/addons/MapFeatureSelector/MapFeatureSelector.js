@@ -92,7 +92,7 @@ $(document).ready(function () {
             setTimeout(() => {
                 selectedFeatures.pop(); // Remove the last element added by the draw interaction
                 updateSelectionCount();
-                console.log("Selected features:", selectedFeatures);
+                //console.log("Selected features:", selectedFeatures);
               }, "100");
             toggleDrawing(false);  // Arrêter le dessin après la fin
         });
@@ -118,7 +118,7 @@ $(document).ready(function () {
         let csvContent = "data:text/csv;charset=utf-8,DALLE,bloc\n";
         selectedFeatures.forEach(feature => {
             const properties = feature.getProperties();
-            console.log(properties.DALLE + properties.bloc)
+            //console.log(properties.DALLE + properties.bloc)
             csvContent += `${properties.DALLE},${properties.bloc}\n`;
         });
         const encodedUri = encodeURI(csvContent);
