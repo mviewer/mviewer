@@ -1,3 +1,5 @@
+const COMPONENT_ID = "MapFeatureSelector"
+
 $(document).ready(function () {
     let customLayer = null;
     let selectionEnabled = true; // Sélection activée par défaut
@@ -16,7 +18,7 @@ $(document).ready(function () {
         if (!customLayer) {
             customLayer = new ol.layer.Vector({
                 source: new ol.source.Vector({
-                    url: "https://www.geo2france.fr/geoserver/geo2france/ows?SERVICE=WFS&VERSION=1.0.0&REQUEST=GETFEATURE&TYPENAME=dallage_pcrs&outputFormat=application/json&srsName=EPSG:4326",
+                    url: mviewer.customComponents[COMPONENT_ID].config.options.dallage_geojson_url,
                     format: new ol.format.GeoJSON()
                 }),
                 style: originalStyle
