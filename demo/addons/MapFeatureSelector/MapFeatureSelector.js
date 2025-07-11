@@ -116,11 +116,19 @@ $(document).ready(function () {
 
     // Télécharger la sélection en CSV
     function downloadCSV() {
-        let csvContent = "data:text/csv;charset=utf-8,Dalle,Bloc\n";
+        const fields_arr = OPTIONS.fields.split(',')
+        let csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += `${OPTIONS.fields}\n`;
         selectedFeatures.forEach(feature => {
             const properties = feature.getProperties();
             //console.log(properties.DALLE + properties.bloc)
-            csvContent += `${properties[OPTIONS.key_dalle_field]},${properties[OPTIONS.key_bloc_field]}\n`;
+            //csvContent += `${properties[OPTIONS.key_dalle_field]},${properties[OPTIONS.key_bloc_field]}\n`;
+            fields_arr.forEach( (f) => {
+                csvContent += properties[f];
+                csvContent += ','
+            })
+            csvContent = csvContent.slice(0, -1); // rm last comma
+            csvContent += '\n'
         });
         const encodedUri = encodeURI(csvContent);
         const link = document.createElement("a");

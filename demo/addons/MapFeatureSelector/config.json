@@ -5,8 +5,7 @@
     "target": "page-content-wrapper",
     "options": {
         "dallage_geojson_url":"https://www.geo2france.fr/geoserver/geo2france/ows?SERVICE=WFS&VERSION=1.0.0&REQUEST=GETFEATURE&TYPENAME=dallage_pcrs&outputFormat=application/json&srsName=EPSG:4326",
-        "key_dalle_field": "DALLE",
-        "key_bloc_field": "bloc"
+        "fields":"DALLE,bloc"
     }
     
 }
