@@ -109,118 +109,112 @@ const fileimport = (function () {
   /**
    * HTML content of modal for importing csv
    */
-  var _wizard_modal = `<div id="geocoding-modal" class="modal fade" tabindex="-1" role="dialog" >
-    <div class="modal-dialog modal-md">
-    <div class="modal-content" role="document">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal">&times;</button>
-      <h4 class="modal-title" i18n="fileimport.modal.title">Options d'import</h4>
-    </div>
-    <div class="modal-body" >
-      <div class="form-group">
-        <label for="email" i18n="fileimport.data.title">Titre de la donnée:</label>
-        <h3><input type="text" class="csv-name form-control"><h3>
+  var _wizard_modal = `<div id="geocoding-modal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" i18n="fileimport.modal.title">Options d'import</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-        <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="headingZero">
-                <h4 class="panel-title">
-                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseZero" 
-                        aria-expanded="true" aria-controls="collapseZero" i18n="fileimport.select.coordinates">
-                    <b>Sélectionner les champs</b> x, y à utiliser comme coordonnées
-                    </a>
-                </h4>
-            </div>
-            <div id="collapseZero" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingZero">
-                <div class="panel-body">
-                    <table id="table-csv" class="table">
-                        <thead>
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col" i18n="fileimport.srs.lon">X (longitude)</th>
-                            <th scope="col"></th>
-                            <th scope="col" i18n="fileimport.srs.lat">Y (latitude)</th>
-                            <th scope="col" i18n="fileimport.srs.projection">Projection (SRS)</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th scope="row" i18n="fileimport.srs.select">Sélectionner</th>
-                            <td>
-                                <select id="x-select" class="form-control"></select>
-                            </td>
-                            <td><button id="btn-xy" class="btn btn-secondary glyphicon glyphicon-refresh"></button></td>
-                            <td>
-                                <select id="y-select" class="form-control"></select>
-                            </td>
-                            <td>
-                                <select id="srs-select" class="form-control"></select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row" i18n="fileimport.srs.data">Aperçu</th>
-                            <td id="x-data"></td>
-                            <td></td>
-                            <td id="y-data"></td>
-                            <td></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-          <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="headingOne">
-                <h4 class="panel-title">
-                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" 
-                        aria-expanded="false" aria-controls="collapseOne" i18n="fileimport.select.address">
-                  <b>Ou</b> sélectionner les champs à utiliser pour le géocodage (adresse)
-                  </a>
-                </h4>
-            </div>
-            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                <div class="panel-body">
-                  <div class="geocoding csv-fields list-group"/>
-                  </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingTwo">
-                  <h4 class="panel-title">
-                      <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" 
-                            aria-expanded="false" aria-controls="collapseTwo" i18n="fileimport.select.insee">
-                      <b>Ou</b> sélectionner le champ à utiliser pour le géocodage (insee)
-                      </a>
-                  </h4>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                  <div class="panel-body">
-                      <div class="insee csv-fields list-group"/>
-                      </div>
-                  </div>
-                </div>
-                <div class="panel panel-default">
-                  <div class="panel-heading" role="tab" id="headingThree">
-                      <h4 class="panel-title">
-                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" 
-                                aria-expanded="false" aria-controls="collapseThree" i18n="fileimport.select.search">
-                        <b>En option</b> sélectionner les champ à utiliser pour la recherche
-                        </a>
-                      </h4>
-                  </div>
-                  <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                      <div class="panel-body">
-                        <div class="search csv-fields list-group"/>
-                        </div>
-                      </div>
-                  </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button id="submit-button" type="button" data-layerid="" onclick="fileimport.geocodeit(this);" class="geocode btn btn-primary" i18n="fileimport.button.submit">Importer</button>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label i18n="fileimport.data.title" class="form-label">Titre de la couche importée</label>
+          <input type="text" class="csv-name form-control">
+        </div>
+        <div class="accordion" id="accordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                <span i18n="fileimport.select.coordinates">Sélectionnez les champs x, y à utiliser comme coordonnées</span>
+              </button>
+            </h2>
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+              <div class="accordion-body">
+                <table id="table-csv" class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col"></th>      
+                      <th scope="col" i18n="fileimport.srs.lon">X (longitude)</th>
+                      <th scope="col" i18n="fileimport.srs.lat">Y (latitude)</th>
+                      <th scope="col" i18n="fileimport.srs.projection">Projection (SRS)</th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row" i18n="fileimport.srs.select">Sélectionner</th>
+                      <td>
+                        <select id="x-select" class="form-select"></select>
+                      </td>
+                      <td>
+                        <select id="y-select" class="form-select"></select>
+                      </td>
+                      <td>
+                        <select id="srs-select" class="form-select"></select>
+                      </td>
+                      <td>
+                        <button id="btn-xy" class="btn btn-light"><i class="ri-reset-left-fill"></i></button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row" i18n="fileimport.srs.data">Aperçu</th>
+                      <td id="x-data"></td>
+                      <td id="y-data"></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                <span i18n="fileimport.select.address">
+                  <b>OU |</b> sélectionnez les champs à utiliser pour le géocodage (adresse) </span>
+              </button>
+            </h2>
+            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+              <div class="accordion-body">
+                <div class="geocoding csv-fields list-group"></div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                <span i18n="fileimport.select.insee">
+                  <b>OU |</b> Sélectionnez le champ à utiliser pour le géocodage (insee) </span>
+              </button>
+            </h2>
+            <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+              <div class="accordion-body">
+                <div class="insee csv-fields list-group"></div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                <span i18n="fileimport.select.search">
+                  <b>OPTIONNEL |</b> Sélectionnez les champ à utiliser pour la recherche </span>
+              </button>
+            </h2>
+            <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse">
+              <div class="accordion-body">
+                <div class="search csv-fields list-group"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>`;
+      <div class="modal-footer">
+        <button id="submit-button" type="button" data-layerid="" onclick="fileimport.geocodeit(this);" class="geocode btn btn-primary" i18n="fileimport.button.submit">Importer</button>
+      </div>
+    </div>
+  </div>
+</div>`;
 
   /**
    * HTML content of modal for importing shp
@@ -231,14 +225,14 @@ const fileimport = (function () {
             <div class="modal-dialog modal-md">
                 <div class="modal-content" role="document">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title" i18n="fileimport.shpmodal.title">Sélection de la projection</h4>
+                      <h5 class="modal-title" i18n="fileimport.shpmodal.title">Sélection de la projection</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body" >
-                        <div class="form-group">
+                        <div class="mb-3">
                             <p i18n="fileimport.shpmodal.comment">L'archive zip n'inclue pas de fichier .prj !</p>
                             <label for="shp-srs-select" i18n="fileimport.shpmodal.subtitle">SRS de la donnée :</label>
-                            <select id="shp-srs-select" class="form-control"></select>
+                            <select id="shp-srs-select" class="form-select"></select>
                         </div>
                     </div>
                     <div class="modal-footer">

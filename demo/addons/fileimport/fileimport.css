@@ -5,3 +5,48 @@
 #fileimport-button span {
   font-size: 12px;
 }
+
+.dropzone.dz-clickable {
+    cursor: pointer;
+}
+
+.dropzone {
+    box-sizing: border-box;
+    padding: .85rem;
+    border: var(--bs-list-group-border-width) solid #d4d4d4;
+    border-radius: .3rem;
+    transition: all .2s ease-out;
+}
+
+.dropzone:hover {
+    color:var(--mv-color-primary);
+    border-color: var(--mv-color-primary);
+    background-color: var(--mv-color-primary-100);
+}
+
+.dropzone .dz-message {
+    display: none!important;
+    text-align: center;
+    display: block;
+    font-size: small;
+}
+
+.dropzone .dz-message i {
+    font-size: large;
+}
+
+.dropzone .start .dz-default.dz-message {
+    display: block!important;
+}
+
+.dropzone .wait .dz-work.dz-message {
+    display: block!important;
+}
+
+#table-csv {
+  table-layout: fixed;
+}
+
+#table-csv th:nth-child(5){
+  width: 10%;
+}
