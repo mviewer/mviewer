@@ -318,7 +318,7 @@ var search = (function () {
       if (type === "search") {
         title = `${props?.context}-${props?.type}` || "";
       }
-      str += `<a class="${searchType} list-group-item" href="#" ${title}"
+      str += `<a class="${searchType} list-group-item list-group-item-action" href="#" ${title}"
               onclick="mviewer.animateToFeature(
                   ${JSON.stringify([coords[0], coords[1]])},
                   ${zoom},
@@ -429,7 +429,7 @@ var search = (function () {
         // We only display the first results
         results = results.slice(0, max_results);
 
-        str = '<a class="fuse list-group-item disabled">' + layername + "</a>";
+        str = '<a class="fuse list-group-item list-group-item-action disabled">' + layername + "</a>";
         results.forEach(function (element) {
           // from version 4 data are stored in element.item
           element = element.item;
