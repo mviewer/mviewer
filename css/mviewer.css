@@ -144,6 +144,10 @@ a {
   background: #555;
 }
 
+.hidden {
+    display: none !important;
+}
+
 #loading-page {
         color: #999;
         align-items: center;
