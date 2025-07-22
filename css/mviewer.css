@@ -1648,15 +1648,15 @@ line-height: 33px;
 
 /* Lang modal */ 
 
-.xs #lang-body .langList {
+#lang-popup .langList {
     flex-direction: column;
 }
 
-.xs #lang-body .langList li {
+#lang-popup .langList li {
     margin-bottom: 10px;
 }
 
-.xs #lang-body .langList a {
+#lang-popup .langList a {
     padding: 12px 10px;
 }
 
@@ -2098,5 +2098,4 @@ input.drawTooltip {
   background-color: var(--mv-color-primary-100);
   color: var(--mv-color-primary);
 }
-
 
