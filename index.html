@@ -1057,10 +1057,11 @@
                 }
                 configuration.load(_conf);
                 $(document).trigger("ready-for-component");
-                setTimeout(function () {
-                  $("#loading-page").hide();
+                setTimeout(function () {                  
+                  $("#loading-page").addClass("hidden");
                   $("#main").css("opacity", 1).hide();
                   $("#main").fadeIn(1500);
+                  $("#loading-page").hide();
                   mviewer.getMap().updateSize();
                   mviewer.initToolTip();
                 }, 2000);

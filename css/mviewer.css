@@ -46,6 +46,7 @@ html {
   --bs-border-radius-sm: calc(var(--bs-border-radius) - 0.05em);
   --bs-border-radius-lg: calc(var(--bs-border-radius) + 0.05em);
 }
+
 .nav-pills {
    --bs-nav-pills-link-active-bg:var(--mv-color-primary);
 }
@@ -149,13 +150,23 @@ a {
 }
 
 #loading-page {
-        color: #999;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        display: flex;
-        text-align: center;
-      }
+    color: #999;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+    text-align: center;
+    z-index: 2000;
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    opacity: 1;
+    transition: all 5s ease-out;
+}
+
+#loading-page.hidden {
+  opacity: 0;
+}
 
 /* Loader */
 
