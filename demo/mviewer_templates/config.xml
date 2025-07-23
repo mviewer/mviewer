@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <application title="Mviewer Templates" mouseposition="false" logo="demo/mviewer_templates/img/logo_mviewertemplates.svg" help="demo/mviewer_templates/mviewer_templates_aide.html" showhelp="true" 
-    iconhelp="home" measuretools="true" exportpng="true" style="demo/mviewer_templates/mviewer_templates_style.css" togglealllayersfromtheme="false"/>
+    measuretools="true" exportpng="true" style="" togglealllayersfromtheme="false"/>
     <mapoptions maxzoom="19" projection="EPSG:3857" center="-220750.13768758904,6144925.57790189" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
   
     <baselayers style="default"><!-- style="default"||gallery" -->
