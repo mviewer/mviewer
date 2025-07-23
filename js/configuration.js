@@ -409,7 +409,7 @@ var configuration = (function () {
       $("#exportpng").remove();
     }
     if (!conf.application.mouseposition || conf.application.mouseposition === "false") {
-      $("#mouse-position").remove();
+      $("#mouse-position").hide();
     }
     if (!conf.application.geoloc || !(conf.application.geoloc === "true")) {
       $("#geolocbtn").remove();
