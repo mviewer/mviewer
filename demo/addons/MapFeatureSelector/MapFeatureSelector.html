@@ -1,21 +1,25 @@
 <!-- Panel de MapFeautreSelector -->
 <div id="MapFeatureSelector" class="MapFeatureSelector">
-    <div class="statsHeader stat-panel-title">
-        <span class="fas fa-th"></span>
-        <div id="statsTitle" class="titleHeader">Sélection de dalles</div>
-        <a id="closeMapFeatureSelector" data-dismiss="alert" aria-label="close" data-original-title="Fermer">×</a>
+    <div class="selectorHeader mb-3">
+        <div>
+            <i class="ri-map-pin-range-line"></i>
+            <span class="titleHeader fw-semibold">Sélection des entités</span>
+        </div>        
+        <span id="closeMapFeatureSelector" class="ri-close-large-line" data-bs-original-title="Fermer la fenêtre"></span>
     </div>
-    <button class="action-button" id="startDrawing">
-        <span class="fas fa-draw-polygon"></span>
-        <span class="button-text">Sélectionner</span>
-    </button>
-    <button class="action-button" id="clearSelection">
-        <span class="fas fa-trash"></span>
-        <span class="button-text">Effacer la sélection</span>
-    </button>
-    <button class="action-button" id="downloadSelection">
-        <span class="fas fa-download"></span>
-        <span class="button-text">Télécharger la sélection</span>
-    </button>
-    <p id="selectionCount"><i>Aucune sélection</i></p>
+    <div class="d-grid gap-2">
+        <button class="btn btn-outline-primary" id="startDrawing">
+            <i class="ri-shape-line"></i>
+            <span class="button-text">Sélectionner</span>
+        </button>
+        <button class="btn btn-outline-primary" id="clearSelection">
+            <i class="ri-delete-bin-line"></i>
+            <span class="button-text">Effacer la sélection</span>
+        </button>
+        <button class="btn btn-primary" id="downloadSelection">
+            <i class="ri-file-download-line"></i>
+            <span class="button-text">Télécharger la sélection</span>
+        </button>
+    </div>
+    <p id="selectionCount" class="mt-3"><i>Aucune sélection</i></p>
 </div>

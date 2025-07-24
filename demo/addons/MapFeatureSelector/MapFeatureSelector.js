@@ -150,9 +150,9 @@ $(document).ready(function () {
 
   // Créer et ajouter un bouton pour afficher le panel
   var _btn = document.createElement("button");
-  _btn.className = "btn btn-default btn-raised";
+  _btn.className = "btn btn-light";
   _btn.title = "Sélection de dalles";
-  _btn.innerHTML = '<span class="fas fa-th" />';
+  _btn.innerHTML = '<i class="ri-map-pin-range-line"></i>';
   _btn.addEventListener("click", toggle);
   document.getElementById("toolstoolbar").appendChild(_btn);
 
@@ -161,8 +161,8 @@ $(document).ready(function () {
     $("#MapFeatureSelector").easyDrag();
 
     // Rendre la zone d'en-tête de la fenêtre mobile
-    $(".statsHeader").css("cursor", "move").easyDrag({
-      handle: ".statsHeader",
+    $(".selectorHeader").css("cursor", "move").easyDrag({
+      handle: ".selectorHeader",
     });
 
     // Ajouter des écouteurs d'événements aux boutons du panel

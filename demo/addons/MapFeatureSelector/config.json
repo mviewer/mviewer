@@ -1,10 +1,11 @@
 {
-  "js": ["MapFeatureSelector.js"],
-  "css": ["style.css"],
+  "js": ["MapFeatureSelector.js", "js/jquery.easyDrag.min.js"],
+  "css": "style.css",
   "html": "MapFeatureSelector.html",
   "target": "page-content-wrapper",
   "options": {
-    "dallage_geojson_url": "https://www.geo2france.fr/geoserver/geo2france/ows?SERVICE=WFS&VERSION=1.0.0&REQUEST=GETFEATURE&TYPENAME=dallage_pcrs&outputFormat=application/json&srsName=EPSG:4326",
-    "fields": "DALLE,bloc"
+    "dallage_geojson_url": "https://ows.region-bretagne.fr/geoserver/rb/ows?SERVICE=WFS&VERSION=1.0.0&REQUEST=GETFEATURE&TYPENAME=arret_reseau_breizhgo_car&outputFormat=application/json&srsName=EPSG:4326",
+    "fields": "nom,nom_com,code_insee"
   }
 }
+
