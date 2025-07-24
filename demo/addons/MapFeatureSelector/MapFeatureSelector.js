@@ -151,7 +151,7 @@ $(document).ready(function () {
   // Créer et ajouter un bouton pour afficher le panel
   var _btn = document.createElement("button");
   _btn.className = "btn btn-light";
-  _btn.title = "Sélection de dalles";
+  _btn.title = "Sélection des entités";
   _btn.innerHTML = '<i class="ri-map-pin-range-line"></i>';
   _btn.addEventListener("click", toggle);
   document.getElementById("toolstoolbar").appendChild(_btn);
