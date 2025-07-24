@@ -50,14 +50,14 @@ mviewer.customControls.lycee = (function () {
         if (!f.multiple) {
           options.unshift(`<option>${noFilterLabel}</option>`);
         }
-        const select = `<div class="form-group">
+        const select = `<div class="form-group mb-2">
         <label for="${_idlayer}-${f.field}">${f.label} :</label>
-        <div class="col-md-10 col-md-offset-1">
+        <div>
           <select ${f.multiple ? "multiple" : ""} placeholder="${
           f.label
         }" id="${_idlayer}-${f.field}" data-source="${
           f.field
-        }" class="form-control cql-filter" onchange="mviewer.customControls.${_idlayer}.filter(this);">
+        }" class="form-select cql-filter" onchange="mviewer.customControls.${_idlayer}.filter(this);">
             ${options.join("")}
           </select>
         </div>
