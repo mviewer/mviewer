@@ -507,6 +507,24 @@
     },
     {
       "id": "59",
+      "title": "MapFeaturesSelector",
+      "tags": "Téléchargement, csv",
+      "description": "Exemple d'application utilisant un plugin pour télécharger des données attributaires selon une emprise",
+      "level": "intermédiaire",
+      "url_source": "../demo/mapfeatures.xml",
+      "url_demo": "../?config=demo/mapfeatures.xml"
+    },
+    {
+      "id": "60",
+      "title": "Thème personnalisé",
+      "tags": "Style, thème, personnalisation",
+      "description": "Exemple d'application avec un thème .css permettant de personnaliser l'interface du mviewer",
+      "level": "simple",
+      "url_source": "../demo/customstyle.css",
+      "url_demo": "../?config=demo/customtheme.xml"
+    },
+    {
+      "id": "61",
       "title": "Images de rues Panoramax",
       "tags": "plugin, vector, photo",
       "description": "Afficher et filtrer les photos de rues de Panoramax.",
