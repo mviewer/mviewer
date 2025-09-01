@@ -35,15 +35,15 @@ const fullscreen = (function () {
           console.log(
             `Element: ${document.fullscreenElement.id} entered full-screen mode.`
           );
-          _btn.querySelector("span").classList.remove("fa-expand-arrows-alt");
-          _btn.querySelector("span").classList.add("fa-expand");
+          _btn.querySelector("i").classList.remove("ri-fullscreen-line");
+          _btn.querySelector("i").classList.add("ri-fullscreen-exit-line");
           _btn.title = "Quitter le mode plein-écran plein écran";
           _toggleMouseWheelZoom(true);
           _state = 1;
         } else {
           console.log("Leaving full-screen mode.");
-          _btn.querySelector("span").classList.remove("fa-expand");
-          _btn.querySelector("span").classList.add("fa-expand-arrows-alt");
+          _btn.querySelector("i").classList.remove("ri-fullscreen-exit-line");
+          _btn.querySelector("i").classList.add("ri-fullscreen-line");
           _btn.title = "Afficher en plein-écran";
           _toggleMouseWheelZoom(false);
           _state = 0;
