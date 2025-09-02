@@ -328,7 +328,7 @@ mviewer.templates.featureInfo.allintabs = [
   '<ul class="nav nav-tabs flex-column">',
   "{{#layers}}",
   '<li title="{{name}}" class="nav-item" data-layerid="{{layerid}}" {{#initiallayerid}}initiallayerid="{{initiallayerid}}" {{/initiallayerid}}>',
-  '<a class="nav-link {{#firstlayer}}active{{/firstlayer}}" onclick="mviewer.setInfoPanelTitle(this,\'{{panel}}\');" title="{{name}}" i18n="layers.{{layerid}}" href="#slide-{{panel}}-{{id}}" data-bs-toggle="tab">',
+  '<a class="nav-link {{#firstlayer}}active{{/firstlayer}}" onclick="mviewer.setInfoPanelTitle(this,\'{{panel}}\',\'layers.{{initiallayerid}}\');" title="{{name}}" i18n="layers.{{initiallayerid}}" href="#slide-{{panel}}-{{id}}" data-bs-toggle="tab">',
   '<span class="fa {{theme_icon}}"></span>',
   '{{#multiple}}<span class="item-number">{{index}}</spanclass>{{/multiple}}',
   "</a>",

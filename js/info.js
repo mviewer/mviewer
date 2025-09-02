@@ -737,11 +737,17 @@ var info = (function () {
 
           // the following code is to link the information panel's title to the layer name, so that a translation is always possible without having to retireve dictionnary
 
-          firstlayer_id = view.layers.filter((layer) => layer.firstlayer)[0].layerid;
+          const firstLayer = view.layers.find((layer) => layer.firstlayer);
 
+          if (firstLayer) {
+            firstlayer_id = _panelsTemplate[panel] === "allintabs" ? firstLayer.initiallayerid : firstLayer.layerid;
+          }
+          
           let panel_header = $("#" + panel + " .mv-header h6");
 
-          panel_header.attr("i18n", "layers." + firstlayer_id);
+          if(_panelsTemplate[panel] === "allintabs" || _panelsTemplate[panel] === "default") {
+            panel_header.attr("i18n", "layers." + firstlayer_id);
+          }
 
           // default
           var layer_picker_container_selector = "#sidebar-wrapper";
