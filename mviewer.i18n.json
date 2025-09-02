@@ -1,5 +1,6 @@
 {
-  "de": {
+  "de": {    
+    "btn.copy": "Kopieren",
     "addlayers.modal.title": "Hinzufügen von Daten",
     "addlayers.modal.ogc": "OGC Service",
     "addlayers.modal.csw": "CSW Service",
@@ -93,10 +94,13 @@
     "share.btn.iframe": "Link kopieren",
     "share.modal.title": "Anzeigemodus",
     "share.modal.type": "Teilungsmodus",
-    "share.panel.title": "Diese Karte teilen",
+    "share.panel.title": "Diese Karte teilen",    
+    "share.panel.subtitle": "Teilen Sie Ihre Karte mit den ausgewählten Ebenen und dem festgelegten Ausschnitt:",    
+    "share.mode.newtab": "Neue Registerkarte",
+    "share.mode.iframe": "Integrieren",
     "share.picture.permalink": "Permalink zur Karte",
     "share.picture.qrcode": "QR-Code zur Karte",
-    "share.radio.minimal": "ultra vereinfacht",
+    "share.radio.minimal": "Ultra vereinfacht",
     "share.radio.normal": "Normal",
     "share.radio.simple": "Einfach",
     "share.title.iframe": "Code für die Einbettung der Karte in iframe",
@@ -122,6 +126,7 @@
     "theme.layers.restricted": "Daten zum eingeschränkten Zugriff"
   },
   "en": {
+    "btn.copy": "Copy",
     "addlayers.modal.title": "Add a data",
     "addlayers.modal.ogc": "OGC Service",
     "addlayers.modal.csw": "CSW Service",
@@ -226,6 +231,9 @@
     "share.modal.title": "Display mode",
     "share.modal.type": "Sharing mode",
     "share.panel.title": "Share the map",
+    "share.panel.subtitle": "Share your map with the selected layers and the configured extent :",    
+    "share.mode.newtab": "New tab",
+    "share.mode.iframe": "Iframe",
     "share.picture.permalink": "Permalink to the map",
     "share.picture.qrcode": "QR code to the map",
     "share.radio.minimal": "Minimalist",
@@ -254,6 +262,7 @@
     "theme.layers.restricted": "Restricted data"
   },
   "fr": {
+    "btn.copy": "Copier",
     "addlayers.modal.title": "Ajouter une donnée",
     "addlayers.modal.ogc": "Service OGC",
     "addlayers.modal.csw": "Service CSW",
@@ -361,9 +370,12 @@
     "share.modal.title": "Mode d'affichage",
     "share.modal.type": "Mode de partage",
     "share.panel.title": "Partager cette carte",
-    "share.picture.permalink": "Permalien vers la map",
+    "share.panel.subtitle": "Partager votre carte avec les couches sélectionnées et l'emprise paramétrée :",    
+    "share.mode.newtab": "Nouvel onglet",
+    "share.mode.iframe": "Intégrer",
+    "share.picture.permalink": "Permalien vers la carte",
     "share.picture.qrcode": "QR code vers la carte",
-    "share.radio.minimal": "ultra simplifié",
+    "share.radio.minimal": "Ultra-simplifié",
     "share.radio.normal": "Normal",
     "share.radio.simple": "Simple",
     "share.title.iframe": "Code d'intégration de la carte en iframe",
@@ -388,7 +400,8 @@
     "theme.layers.remove": "Supprimer",
     "theme.layers.restricted": "Données accès restreint"
   },
-  "sk": {
+  "sk": {    
+    "btn.copy": "Kopírovať",
     "addlayers.modal.title": "Pridanie údajov",
     "addlayers.modal.ogc": "Služba OGC",
     "addlayers.modal.csw": "Služba CSW",
@@ -452,6 +465,9 @@
     "share.modal.title": "Režim zobrazenia",
     "share.modal.type": "Režim zdieľania",
     "share.panel.title": "Zdieľať túto mapu",
+    "share.panel.subtitle": "Zdieľajte svoju mapu s vybranými vrstvami a nastaveným rozsahom:",    
+    "share.mode.newtab": "Nová karta",
+    "share.mode.iframe": "Iframe",
     "share.picture.permalink": "Permalink k tejto mape",
     "share.picture.qrcode": "QR k tejto mape",
     "share.radio.minimal": "Minimálny",

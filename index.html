@@ -667,7 +667,7 @@
               <h6 class="modal-share-title" i18n="share.modal.title">
                 Mode d'affichage
               </h6>
-              <p>Partager votre carte avec les couches sélectionnées et l'emprise paramétrée :</p>
+              <p i18n="share.panel.subtitle">Partagez votre carte avec les couches sélectionnées et l'emprise paramétrée :</p>
               <div class="row">
                   <div class="form-group" id="mv-display-mode">
                     <label class="radio-inline">
@@ -700,9 +700,9 @@
               
                     <!--NEw-->
                     <div class="iconShare__list mb-3">                      
-                        <a id="btnShareNewTab" target="_blank" title="Ouvrir dans un nouvel onglet"><i class="ri-share-box-line"></i><span>Nouvel onglet</span></a>
+                        <a id="btnShareNewTab" target="_blank" title="Ouvrir dans un nouvel onglet"><i class="ri-share-box-line"></i><span i18n="share.mode.newtab">Nouvel onglet</span></a>
                         <a id="btnShareEmail" title="Partager par mail"><i class="ri-mail-line"></i><span>E-mail</span></a>                        
-                        <a onclick="document.querySelector('#blockIframe').classList.toggle('is-hidden');" title="Afficher le code d'intégration"><i class="ri-code-s-slash-line"></i><span>Intégrer</span></a>
+                        <a onclick="document.querySelector('#blockIframe').classList.toggle('is-hidden');" title="Afficher le code d'intégration"><i class="ri-code-s-slash-line"></i><span i18n="share.mode.newtab">Intégrer</span></a>
                         <a id="btnShareLinkedin" target="_blank" title="Partager sur Linkedin"><i class="ri-linkedin-fill"></i><span>Linkedin</span></a>
                         <a id="btnShareWhatapp" target="_blank" title="Partager sur WhatsApp"><i class="ri-whatsapp-line"></i><span>WhatsApp</span></a>
                         <a id="btnShareFacebook" target="_blank" title="Partager sur Facebook"><i class="ri-facebook-circle-line"></i><span>Facebook</span></a>
@@ -710,8 +710,8 @@
                     </div>
                     <div id="blockIframe" class="is-hidden">
                         <div class="mb-2">
-                            <h6>Code d'intégration en iframe</h6>
-                            <button class="btn btn-primary btn-sm" onclick="mviewer.copyToClipboard('urlIframeShare');">Copier</button>
+                            <h6 i18n="share.title.iframe">Code d'intégration en iframe</h6>
+                            <button class="btn btn-primary btn-sm" onclick="mviewer.copyToClipboard('urlIframeShare');"><span i18n="btn.copy">Copier</span></button>
                         </div>
                         <div class="textEdit" id="urlIframeShare" contentEditable></div>                        
                     </div>
@@ -728,7 +728,7 @@
                     <h6 i18n="share.picture.permalink">Lien de partage</h6>
                     <div id="block__ShareLink">
                         <input id="urlShare__link" type="text" value=""></span>
-                        <button type="button" class="btn btn-primary btn-sm" onclick="navigator.clipboard.writeText(document.getElementById('urlShare__link').value);">Copier</button>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="navigator.clipboard.writeText(document.getElementById('urlShare__link').value);"><span i18n="btn.copy">Copier</span></button>
                     </div>
                     <div id="shareToMapfish">
                       <hr>
