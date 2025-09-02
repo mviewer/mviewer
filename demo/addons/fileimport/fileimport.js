@@ -726,7 +726,7 @@ const fileimport = (function () {
             return;
           }
           features.push(result.value);
-          return source.read().then(add);
+          return source.read().then(add);          
         })
       )
       .catch((error) => console.error(error.stack));
@@ -753,7 +753,7 @@ const fileimport = (function () {
       } else {
         formData.append("citycode", oLayer.geocodingcitycode);
       }
-      $("#csv-status").attr("class", "wait");
+      document.getElementById("csv-status").setAttribute("class", "wait");
       $.ajax({
         type: "POST",
         processData: false,
@@ -795,6 +795,7 @@ const fileimport = (function () {
     l.setStyle(getImportStyle.bind(this));
     //Parse geocoded results
     var results = Papa.parse(data, { header: true });
+<<<<<<< HEAD
 
     let withXY = results.data.filter((f) => f[oLayer.xfield] && f[oLayer.yfield]);
     if (withXY) {
@@ -816,6 +817,29 @@ const fileimport = (function () {
       });
       feature.setProperties(f);
       return feature;
+=======
+    
+    results.data.forEach(function (a) {
+      //create geometries from xfield and y field
+      if (a[oLayer.xfield] && a[oLayer.yfield]) {
+        var feature = new ol.Feature({
+          geometry: new ol.geom.Point(
+            ol.proj.transform(
+              [
+                parseFloat(a[oLayer.xfield].replace(",", ".")),
+                parseFloat(a[oLayer.yfield].replace(",", ".")),
+              ],
+              ol.proj.get(_epsg),
+              oLayer.mapProjection
+            )
+          ),
+        });
+        feature.setProperties(a);
+        _features.push(feature);
+      } else {
+        console.log("paramètres xfield et yfields manquants");
+      }
+>>>>>>> 314ad1c0 (Fileimport - Fix csv import and btn plugin #1084)
     });
     // Add features to layer source
     // if fusesearch is enabled in config, 'change' event is fired and handled in the  _processSearchableLayer method (search.js)
