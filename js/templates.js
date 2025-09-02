@@ -226,7 +226,7 @@ mviewer.templates.featureInfo.default = `
                 <ul class="nav nav-tabs flex-column">
                 {{#layers}}
                     <li title="{{name}}" class="{{#firstlayer}}active{{/firstlayer}} nav-item" data-layerid="{{layerid}}">
-                        <a class="{{#firstlayer}}active{{/firstlayer}} nav-link" onclick="mviewer.setInfoPanelTitle(this,\'{{panel}}\',\'layers.{{layerid}}\');" title="{{name}}" i18n="layers.{{layerid}}" href="#slide-{{panel}}-{{id}}" data-toggle="tab">
+                        <a class="{{#firstlayer}}active{{/firstlayer}} nav-link" onclick="mviewer.setInfoPanelTitle(this,\'{{panel}}\',\'layers.{{layerid}}\');" title="{{name}}" i18n="layers.{{layerid}}" href="#slide-{{panel}}-{{id}}" data-bs-toggle="tab">
                             <span class="fa {{theme_icon}}"></span>
                         </a>
                     </li>
