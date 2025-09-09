@@ -29,7 +29,7 @@ var zoom = (function () {
             onclick="mviewer.tools.zoom.changeZoom(1)"
             i18n="tbar.right.zoom.in"
             title="Zoom avant (zoom fenêtre : shift + clic sur la carte)"
-            type="button" class="btn btn-light" tabindex="104" accesskey="4" >
+            type="button" class="btn btn-light" tabindex="0" accesskey="1" >
             <i class="ri-zoom-in-line"></i>
         </button>`;
 
@@ -42,7 +42,7 @@ var zoom = (function () {
             title="Zoom arrière"
             i18n="tbar.right.zoom.out"
             type="button" class="btn btn-light"
-            tabindex="106" accesskey="6">
+            tabindex="0" accesskey="6">
             <i class="ri-zoom-out-line"></i>
         </button>`;
 
@@ -51,7 +51,7 @@ var zoom = (function () {
    * @private
    */
   const buttonZoomToInitialExtent = `<button href="#" onclick="mviewer.zoomToInitialExtent();"
-            title="Revenir à l'étendue géographique de départ" i18n="tbar.right.zoom.initial" type="button" class="btn btn-light" tabindex="105" accesskey="5">
+            title="Revenir à l'étendue géographique de départ" i18n="tbar.right.zoom.initial" type="button" class="btn btn-light" tabindex="0" accesskey="5">
             <i class="ri-road-map-line"></i>
         </button>`;
 

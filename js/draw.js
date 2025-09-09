@@ -139,7 +139,7 @@ let draw = (function () {
       button = `
         <button class="mv-modetools btn btn-light" href="#"
          onclick="mviewer.tools.draw.toggle();" id="drawBtn" title="Dessiner" i18n="draw.button.main"
-         tabindex="118 " accesskey="4">
+         tabindex="118 " accesskey="44">
           <i class="ri-pencil-ruler-2-line"></i>
         </button>`;
 

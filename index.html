@@ -5,7 +5,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="description" content="Explorez vos données en un clic"/>
     <meta property="og:title" content="Mviewer">
@@ -57,7 +57,7 @@
             </a>
             <a class="navbar-brand mv-title" href="#" i18n="map_title">mViewer</a>
           </div>
-          <div class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-right">
             <li class="hidden-xs mx-2">
                 <div id="coordinates">
                   <span class=""></span>
@@ -133,7 +133,7 @@
                 </a>
               </div>
             </li>
-          </div>    
+          </ul>    
         </div>
       </nav>
       <nav id="mvNavbarMobile" class="mvNav__mobile">
@@ -323,7 +323,7 @@
               id="sharebtn"
               title="Partager cette carte"
               i18n="tbar.right.share"
-              tabindex="111"
+              tabindex="0"
               accesskey="11"
               type="button"
               class="btn btn-light">
@@ -336,7 +336,7 @@
               onclick="mviewer.geoloc();"
               title="Se localiser"
               i18n="tbar.right.location"
-              tabindex="103"
+              tabindex="0"
               accesskey="3">
               <i class="ri-map-pin-line"></i>
             </button>
@@ -347,7 +347,7 @@
               onclick="mviewer.northRotate();"
               title="Orienté au nord"
               i18n="tbar.right.rotation"
-              tabindex="106"
+              tabindex="0"
               accesskey="6">
               <i class="ri-compass-3-line"></i>
             </button>
@@ -358,8 +358,8 @@
               onclick="mviewer.openStudio();"
               title="Modifier la carte"
               i18n="tbar.right.studio"
-              tabindex="106"
-              accesskey="6">
+              tabindex="0"
+              accesskey="16">
               <i class="ri-edit-line"></i>
             </button>
             <a
@@ -369,7 +369,7 @@
               i18n="tbar.right.png"
               download="carte.png"
               class="btn btn-light"
-              tabindex="113"
+              tabindex="0"
               accesskey="13"
               style="display: none">
               <i class="ri-image-line"></i>
@@ -381,8 +381,8 @@
               onclick="window.print();"
               title="Imprimer la vue courante"
               i18n="tbar.right.mapprint"
-              tabindex="106"
-              accesskey="6">
+              tabindex="0"
+              accesskey="27">
               <i class="ri-printer-line"></i>
             </button>
           </div>
@@ -397,8 +397,8 @@
               id="backgroundlayersbtn"
               title="Changer de fond de carte"
               i18n="tbar.right.background"
-              tabindex="103"
-              accesskey="3"
+              tabindex="0"
+              accesskey="2"
               class=" btn-default btn-raised">
             </button>
           </div>

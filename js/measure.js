@@ -397,7 +397,7 @@ var measure = (function () {
     var button = [
       '<button class="mv-modetools btn btn-light" href="#"',
       ' onclick="mviewer.tools.measure.toggle();" id="measurebtn" title="Mesurer" i18n="measure.button.main"',
-      ' tabindex="108" accesskey="8">',
+      ' tabindex="0" accesskey="8">',
       '<i class="ri-ruler-line"></i>',
       "</button>",
     ].join("");

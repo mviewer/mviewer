@@ -56,7 +56,7 @@ mviewer.templates.layerControl = `
 <li class="{{cls}}" data-layerid="{{layerid}}" data-title=" {{title}}">
     <div class="layerdisplay-title" >
         <div class="layerdisplay-titleLabel">
-            <i class="mv-grip ri-draggable" title="Déplacer" i18n="theme.layers.move"></i></i><div i18n="{{layerid}}.legend.title">{{title}}</div>
+            <i class="mv-grip ri-draggable" title="Déplacer" aria-hidden="true" i18n="theme.layers.move"></i></i><div i18n="{{layerid}}.legend.title">{{title}}</div>
         {{#secure_layer}}
         <a data-bs-toggle="modal"
                 data-bs-target="#loginpanel"'
@@ -214,7 +214,7 @@ mviewer.templates.backgroundLayerControlGallery = `
     title="{{label}}"
     style="background:url(\'{{thumbgallery}}\') center bottom/60px no-repeat;"
     onclick="mviewer.setBaseLayer(\'{{id}}\')">
-    <a id="{{id}}_btn" href="#"></a>
+    <a id="{{id}}_btn" href="#" aria-label="{{label}}"></a>
 </li>`;
 
 mviewer.templates.featureInfo = {};
