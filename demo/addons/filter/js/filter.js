@@ -132,8 +132,8 @@ const filter = (function () {
           });
 
           // Update tooltip on button
-          $('[data-toggle="filter-tooltip"]').tooltip({
-            placement: options.tooltipPosition || "bottom-left",
+          $('[data-bs-toggle="filter-tooltip"]').tooltip({
+            placement: options.tooltipPosition || "right",
           });
         } else if (isVisible) {
           setTimeout(_initFilterPanel, 300); // try again in 300 milliseconds
@@ -264,7 +264,7 @@ const filter = (function () {
       layerConfig.downloadFormats.forEach((format) => {
         var button = $(`
         <span class="download-btn btn btn-outline-primary btn-sm" 
-          data-toggle="filter-tooltip" 
+          data-bs-toggle="filter-tooltip" 
           data-bs-original-title="Télécharger au format ${format.label}">
           ${format.label}
         </span>`);
@@ -476,9 +476,9 @@ const filter = (function () {
         <div class="filter-legend">
         <label class="form-label textlabel"> ${filterParams.label} </label>
         <span id='${clearId}' class="filter-clear ri-delete-bin-line textlabel" onclick="filter.clearFilter(this.id);"
-         data-toggle="filter-tooltip" data-bs-original-title="Réinitaliser ce filtre"></span>
+         data-bs-toggle="filter-tooltip" data-bs-original-title="Réinitaliser ce filtre"></span>
         </div>
-        <div id="${id}" class="form-check">
+        <div id="${id}" class="form-check filterCheck__checkbox">
         `,
       ];
     }
@@ -529,7 +529,7 @@ const filter = (function () {
         "<span id=" +
           clearId +
           ' class="filter-clear ri-delete-bin-line textlabel" onclick="filter.clearFilter(this.id);"',
-        ' data-toggle="filter-tooltip" data-bs-original-title="Réinitaliser ce filtre"></span>',
+        ' data-bs-toggle="filter-tooltip" data-bs-original-title="Réinitaliser ce filtre"></span>',
         "</div>",
         '<div id ="' + id + '" class="filterCheck__list">',
       ];
@@ -591,7 +591,7 @@ const filter = (function () {
         "<span id=" +
           clearId +
           ' class="filter-clear ri-delete-bin-line textlabel"',
-        ' data-toggle="filter-tooltip" data-bs-original-title="Réinitaliser ce filtre"></span>',
+        ' data-bs-toggle="filter-tooltip" data-bs-original-title="Réinitaliser ce filtre"></span>',
         "</div>",
       ];
       _text.push(
@@ -662,7 +662,7 @@ const filter = (function () {
         <div class="filter-legend">
         <label class="form-label textlabel">${params.label}</label>
         <span id=${clearId} class="filter-clear ri-delete-bin-line textlabel"
-         data-toggle="filter-tooltip" data-bs-original-title="Réinitaliser ce filtre"></span>
+         data-bs-toggle="filter-tooltip" data-bs-original-title="Réinitaliser ce filtre"></span>
         </div>`,
       ];
       _datePicker.push('<input type="text" class="form-control form-control-sm" id="' + id + '" />');
@@ -729,7 +729,7 @@ const filter = (function () {
         "<span id=" +
           clearId +
           ' class="filter-clear ri-delete-bin-line textlabel"',
-        ' data-toggle="filter-tooltip" data-bs-original-title="Réinitaliser ce filtre"></span>',
+        ' data-bs-toggle="filter-tooltip" data-bs-original-title="Réinitaliser ce filtre"></span>',
         "</div>",
         '<select id="' +
           id +

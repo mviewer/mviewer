@@ -6,7 +6,6 @@
   "options": {
     "mviewer": {
       "pacte": {
-        "tooltipPosition": "bottom-right",
         "title": "Filtrer",
         "open": true,
         "zoomOnFeatures": true,
@@ -40,7 +39,7 @@
         ]
       },
       "filter": {
-        "tooltipPosition": "bottom-left",
+        "tooltipPosition": "bottom",
         "title": "Filtrer",
         "open": true,
         "zoomOnFeatures": true,
@@ -74,7 +73,7 @@
               },
               {
                 "attribut": "form_jur",
-                "type": "button",
+                "type": "checkbox",
                 "label": "Forme juridique",
                 "updateOnChange": true,
                 "dataSeparator": ","

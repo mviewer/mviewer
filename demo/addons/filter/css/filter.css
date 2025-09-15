@@ -31,6 +31,10 @@
     border-radius: var(--bs-border-radius-sm);
     border: var(--bs-border-width) solid var(--bs-border-color);
     box-shadow: none;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 .advancedFilter .bootstrap-tagsinput .dropdown-menu {
@@ -41,6 +45,7 @@
     background-color: var(--mv-color-primary);
     padding: 2px 7px;
     border-radius: 7px;
+    margin-bottom: 2px;
 }
 
 .advancedFilter .filter-legend {
@@ -55,7 +60,7 @@
     flex-wrap: wrap;
 }
 
-.advancedFilter .form-check-label {
+.advancedFilter .filterCheck__list .form-check-label {
     display: inline;
     background-color: #EFEFEF;
     font-size: .8em;
@@ -67,7 +72,8 @@
     transition: .3s;
 }
 
-.advancedFilter .form-check-label:hover {
+
+.advancedFilter .filterCheck__list .form-check-label:hover {
   background-color: color-mix(in srgb, var(--mv-color-primary) 80%, rgba(255, 255, 255, 0));
   color: white;
   cursor: pointer;
@@ -76,6 +82,12 @@
 .advancedFilter .form-check-label-checked{
   background-color: var(--mv-color-primary);
   color: white;
+}
+
+.advancedFilter .filterCheck__checkbox .form-check-label {
+    font-size: .8em;
+    line-height: 1.2;
+    color: #505050;
 }
 
 #advancedFilter-clearAll:hover, #advancedFilter-closeAll:hover, .filter-clear:hover {
