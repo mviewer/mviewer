@@ -730,35 +730,6 @@
                         <input id="urlShare__link" type="text" value=""></span>
                         <button type="button" class="btn btn-primary btn-sm" onclick="navigator.clipboard.writeText(document.getElementById('urlShare__link').value);"><span i18n="btn.copy">Copier</span></button>
                     </div>
-                    <div id="shareToMapfish">
-                      <hr>
-                      <div class="d-flex flex-row my-3">
-                        <button
-                          id="shareToMapfishButton"
-                          type="button"
-                          class="btn btn-primary"
-                          onclick="mviewer.sendToGeorchestra();">
-                          <i class="ri-share-forward-2-line"></i>
-                          <span i18n="share.btn.mapfishapp">Afficher dans Mapfishapp</span>
-                        </button>
-                        <form
-                          id="georchestraForm"
-                          target="_blank"
-                          method="post"
-                          action="#"
-                          class="ms-2"
-                          style="display: none">
-                          <input type="hidden" id="georchestraFormData" name="data" value="" />
-                          <input
-                            type="submit"
-                            class="btn btn-primary"
-                            data-role="button"
-                            data-mini="true"
-                            data-iconpos="right"
-                            value="geOrchestra" />
-                        </form>
-                      </div>
-                    </div>
               </div>
             </div>
           </div>
