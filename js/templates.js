@@ -281,8 +281,8 @@ mviewer.templates.featureInfo.brut = `
 
 mviewer.templates.featureInfo.accordion = `
 <div id="{{panel}}-selector">
-    <div class="row featureInfo__accordion">
-        <div class="col-md-12" style="overflow-y: auto;">
+    <div class="row featureInfo__accordion" style="overflow-y:auto;margin:0;">
+        <div class="col-md-12" style="overflow:auto;">
             <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true" style="list-style: none;">
             {{#layers}}
                 <div class="accordion-item">
