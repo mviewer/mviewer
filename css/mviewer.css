@@ -1972,6 +1972,11 @@ body:has(>#main.mode-u) #layers-container .mv-layer-remove{
     display:none;
 }
 
+body:has(>#main.mode-u) #layers-container-box-header > .btn, 
+body:has(>#main.mode-s) #layers-container-box-header > .btn {
+    border-radius: var(--bs-border-radius-sm);
+}
+
 .mode-s  #wrapper, 
 .mode-u  #wrapper{
     padding: 0;
