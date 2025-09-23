@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <application title="Thème personnalisé" mouseposition="false" logo="" measuretools="true" mapprint="true" exportpng="true" style="demo/customstyle.css" togglealllayersfromtheme="true"/>
+    <application title="Thème personnalisé" mouseposition="false" logo="demo/customtheme/customlogo.png" favicon="demo/customtheme/customlogo.png" measuretools="true" mapprint="true" exportpng="true" style="demo/customtheme/customstyle.css" togglealllayersfromtheme="true"/>
     <mapoptions maxzoom="19" projection="EPSG:3857" center="-220750.13768758904,6144925.57790189" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
   
     <baselayers style="default">
@@ -18,7 +18,7 @@
     <searchparameters bbox="false" localities="true" features="false" />   
 
     <themes>            
-        <theme name="Environnement"  collapsed="false" id="environnement" icon="fas fa-leaf">
+        <theme name="Réserves"  collapsed="false" id="environnement" icon="fas fa-leaf">
             <layer id="reserve_naturelle_regionale" name="Réserves naturelles régionales"  visible="true" tiled="false"
 				searchable="false" queryable="true" fields="axe" aliases="axe"   
 				infoformat="application/vnd.ogc.gml" featurecount="1"
@@ -31,17 +31,13 @@
 				<template url="https://kartenn.region-bretagne.fr/kartoviz/apps/region/global/templates/global.reserve_naturelle_reg.mst"></template>
 		    </layer> 
         </theme>
-        <theme name="Transports"  collapsed="true" id="transport" icon="fas fa-ship">                  
-		        <layer id="port" name="Ports"  visible="false" tiled="false"
-                    searchable="false" queryable="true" fields="axe" aliases="axe"   
+        <theme name="Parcs naturels"  collapsed="true" id="transport" icon="fas fa-ship">                  
+		        <layer id="parc_naturel_regional" name="Parcs naturels régionaux de Bretagne"  visible="false" tiled="false"
+                    searchable="false" queryable="true"
                     infoformat="application/vnd.ogc.gml" featurecount="20" infopanel="bottom-panel"
-                    sld="https://kartenn.region-bretagne.fr/styles/port.sld" 
+                    fields="pnr_nom,description"
                     url="https://ows.region-bretagne.fr/geoserver/rb/wms"
-                    legendurl="https://kartenn.region-bretagne.fr/doc/icons_region/port.svg" 
-                    attribution="Source: Région Bretagne" 
-                    metadata="https://geobretagne.fr/datahub/dataset/c55c4fba-6a37-48ea-8754-a1bf770a684b"
-                    metadata-csw="https://geobretagne.fr/geonetwork/srv/eng/csw?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;elementSetName=full&amp;ID=c55c4fba-6a37-48ea-8754-a1bf770a684b" >
-		            <template url="https://kartenn.region-bretagne.fr/kartoviz/apps/region/global/templates/global.port.mst"></template>
+                    attribution="Source: Région Bretagne" >
 		        </layer>	
         </theme>
     </themes>
