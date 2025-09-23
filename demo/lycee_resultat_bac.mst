@@ -1,7 +1,7 @@
 {{#features}}
 	<li id="{{feature_ol_uid}}" class="item" style="padding-bottom:65px;">
 		<div class="title-feature" style="padding-top:10px;">{{nom}}</div>
-		<h4><select onchange="drawCharts(this.value);">
+		<h4><select class="form-select form-select-sm" onchange="drawCharts(this.value);">
     			<option>2017</option>
     			<option>2016</option>
     			<option>2015</option>
@@ -47,7 +47,6 @@
 <style>
 	.title-feature, .indicateur {
 		color: #2d4059;
-		font-family:"roboto_black";
 		font-size:23px;
 		margin-bottom:3%;
 		line-height:1;
@@ -61,7 +60,6 @@
 	}
 	.number {
 	    font-size: 40px;
-	    font-weight: 900;
 	}
 </style>
 <script>
