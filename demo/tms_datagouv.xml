@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <application panelstate="open" title="Fond de carte TMS data.gouv" logo="https://kartenn.region-bretagne.fr/kartoviz/apps/region/global/img/logo/rb_blanc.svg" help="https://kartenn.region-bretagne.fr/kartoviz/apps/region/global/global_help.html" exportpng="true" legend="true" measuretools="true" legendasimage="false" popup="false" print="false" style="https://kartenn.region-bretagne.fr/kartoviz/apps/region/global/css/theme_global.css" />
+    <application title="Fond de carte TMS data.gouv" logo="https://kartenn.region-bretagne.fr/kartoviz/apps/region/global/img/logo/rb_blanc.svg" help="" exportpng="true" legend="true" measuretools="true" legendasimage="false" popup="false" print="false" style="" />
     <mapoptions maxzoom="18" projection="EPSG:3857" center="-255516,6140243" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
 
 	<baselayers style="gallery"><!-- style="default"||gallery" -->     
@@ -33,7 +33,7 @@
     <searchparameters bbox="true" localities="true" features="true"/>
 
     <extensions>    
-        <extension type="component" id="isochroneAddon" path="https://kartenn.region-bretagne.fr/kartoviz/demo/addons"/>
+        <extension type="component" id="isochroneAddon" path="demo/addons"/>
     </extensions>
     <themes>
         <theme name="Limites administratives"  collapsed="true" id="territoire" icon="fas fa-globe"> 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <application panelstate="open" title="Réutilisation données IGN" logo="" help="" exportpng="true" legend="true" measuretools="true" legendasimage="false" popup="false" print="false" style="css/themes/default.css" />
+    <application title="Réutilisation données IGN" logo="" help="" exportpng="true" legend="true" measuretools="true" legendasimage="false" popup="false" print="false" style="css/themes/default.css" />
     <mapoptions maxzoom="18" projection="EPSG:3857" center="-255516,6140243" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
 
 	<baselayers style="gallery"><!-- style="default"||gallery" -->     

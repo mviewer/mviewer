@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <application panelstate="open" coordinates="false" title="Test usage API" 
+    <application coordinates="false" title="Test usage API" 
 		logo="https://kartenn.region-bretagne.fr/kartoviz/apps/region/_region/img/rb_blanc.svg" 
 		help="https://kartenn.region-bretagne.fr/kartoviz/apps/region/_region/aide.html" 
 		exportpng="true" legend="true" measuretools="false" legendasimage="false" popup="false" print="false" 
