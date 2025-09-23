@@ -719,6 +719,15 @@ a#searchparams {
     align-items: flex-start;
 }
 
+.mv-invisible .layerdisplay-legend:after {
+    content: "\ECB7";
+    font-size: 17px;
+    color: #777777;
+    font-family: "remixicon";
+    position: absolute;
+    left: 46%;
+}
+
 .layer-tooltip .state-icon {
     font-size: larger;
     margin-right: 5px;
