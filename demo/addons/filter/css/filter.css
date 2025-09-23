@@ -79,7 +79,7 @@
   cursor: pointer;
 }
 
-.advancedFilter .form-check-label-checked{
+.advancedFilter .filterCheck__list .form-check-label-checked{
   background-color: var(--mv-color-primary);
   color: white;
 }
