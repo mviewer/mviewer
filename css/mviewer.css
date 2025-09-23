@@ -1965,8 +1965,8 @@ input.drawTooltip {
 .mode-u #sidebar-wrapper,
 .mode-s #layers-container-box, 
 .mode-u #layers-container-box, 
-body:has(>#main.mode-s) #layers-container-box-header, 
-body:has(>#main.mode-u) #layers-container-box-header, 
+body:has(>#main.mode-s) #layers-container-box-header #btn-remove-layers, 
+body:has(>#main.mode-u) #layers-container-box-header #btn-remove-layers, 
 body:has(>#main.mode-s) #layers-container .mv-layer-remove, 
 body:has(>#main.mode-u) #layers-container .mv-layer-remove{
     display:none;
