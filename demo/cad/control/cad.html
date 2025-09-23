@@ -5,72 +5,22 @@
         <div class="color-picker"></div>
     </div>
 </template>
-<select id="dep-select" class="form-control">
+<select id="dep-select" class="form-select form-select-sm mb-2">
     <option value="" disabled="disabled" selected>Departement...</option>
 </select>
-<select id="com-select" class="form-control">
+<select id="com-select" class="form-select form-select-sm mb-2">
     <option value="" disabled="disabled" selected>Commune...</option>
 </select>
-<select id="section-select" class="form-control">
+<select id="section-select" class="form-select form-select-sm mb-2">
     <option value="" disabled="disabled" selected>Section...</option>
 </select>
-<select id="parcelle-select" class="form-control">
+<select id="parcelle-select" class="form-select form-select-sm">
     <option value="" disabled="disabled" selected>Parcelle...</option>
 </select>
 <style>
-@import url(https://fonts.googleapis.com/css?family=Inconsolata:700);
 
-.title {
-    font-family: 'Inconsolata', monospace;
-    font-weight: bold;
-}
-
-header {
-    padding: 8em 0;
-}
-
-.btn-default {
-    background: #fff !important;
-}
-
-header, footer, .picker-wrapper {
+.picker-wrapper {
   transition: background-color 0.5s ease;
-}
-
-header, footer {
-    color: white;
-    background: #303F9F;
-/*    background-image: url("background.png");*/
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.51);
-}
-
-h1.title {
-    font-size: 4em;
-    font-weight: bold;
-}
-
-pre {
-    background: #212121;
-    color: white;
-}
-
-header p {
-    font-size: 1.4em;
-}
-
-footer {
-    padding: 50px 0;
-    text-align: center;
-    font-size: 1.1em;
-    margin-top: 3em;
-}
-
-footer a {
-    color: white;
-}
-
-footer a:hover {
-    color: white;
 }
 
 /* picker */
@@ -87,10 +37,6 @@ footer a:hover {
     margin: 5px;
     border-radius: 100%;
     opacity: 0.7;
-}
-
-.picker-wrapper {
-    padding-left: 20px;
 }
 
 .color-picker > div:hover {
