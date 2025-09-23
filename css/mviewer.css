@@ -1891,7 +1891,7 @@ input.drawTooltip {
 
 .xs .menu-toggle,
 .xs #sidebar-wrapper,
-.xs  #layers-container-box {
+.xs #layers-container-box {
     display:none;
 }
 
@@ -1948,28 +1948,24 @@ input.drawTooltip {
 	bottom: calc(var(--mv-navbar-mobile-h) + 10px);
 }
 
-/* Simplifié */
+/* Other mode */
 
 .mode-s .mv-layer-remove, .mode-u .mv-layer-remove, 
 .mode-s .menu-toggle,
 .mode-s #sidebar-wrapper,
 .mode-u #sidebar-wrapper,
-.mode-s  #layers-container-box, 
-.mode-u  #layers-container-box, 
-.mode-s #layers-container-box-header, 
-.mode-u #layers-container-box-header {
+.mode-s #layers-container-box, 
+.mode-u #layers-container-box, 
+body:has(>#main.mode-s) #layers-container-box-header, 
+body:has(>#main.mode-u) #layers-container-box-header, 
+body:has(>#main.mode-s) #layers-container .mv-layer-remove, 
+body:has(>#main.mode-u) #layers-container .mv-layer-remove{
     display:none;
 }
 
 .mode-s  #wrapper, 
 .mode-u  #wrapper{
     padding: 0;
-}
-
-.mode-s #btn-mode-su-menu {
-    position: fixed;
-    top: calc(var(--mv-navbar-h) + 10px);
-    left: 1em;
 }
 
 .mode-s:not(.xs) #bottom-panel, 
@@ -1980,6 +1976,13 @@ input.drawTooltip {
 .mode-s:not(.xs) #bottom-panel .popup-content,
 .mode-u:not(.xs) #bottom-panel .popup-content {
   width: 100%;
+}
+
+/* Simplifié */
+.mode-s #btn-mode-su-menu {
+    position: fixed;
+    top: calc(var(--mv-navbar-h) + 10px);
+    left: 1em;
 }
 
 .mode-s #mvNavbarMobile a[data-bs-target="#thematic-modal"] {
