@@ -105,8 +105,26 @@
     target: 'mapmini',
     layers: [
       new ol.layer.Tile({
-        source: new ol.source.XYZ({              
-          url: 'https://tile.geobretagne.fr/gwc02/service/tms/1.0.0/satellite@EPSG%3A3857@jpeg/{z}/{x}/{-y}.png'
+        source: new ol.source.WMTS({              
+          url: 'https://data.geopf.fr/wmts',
+          layer: 'ORTHOIMAGERY.ORTHOPHOTOS',
+          format: 'image/jpeg',
+		  style:"normal",
+		  matrixSet:"PM",
+		  tileGrid: new ol.tilegrid.WMTS({
+              origin: [ -20037508, 20037508 ],
+              resolutions: [
+                156543.033928, 78271.516964, 39135.758482, 19567.879241, 9783.9396205,
+                4891.96981025, 2445.98490513, 1222.99245256, 611.496226281,
+                305.748113141, 152.87405657, 76.4370282852, 38.2185141426,
+                19.1092570713, 9.55462853565, 4.77731426782, 2.38865713391,
+                1.19432856696, 0.597164283478, 0.298582141739
+              ],
+              matrixIds: [
+                "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+                "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"
+              ]
+            }),
         })
       })
     ],

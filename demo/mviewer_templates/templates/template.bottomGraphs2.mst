@@ -3,6 +3,7 @@
 {{#features}}
 	<li class="item" style="">
 		<h3 class="title-feature ">{{nom}}</h3>
+    <div class="row">
 		<!-- Colonne 4 - Graph 1 -->
 		<div class="col-sm-4">
 			<!-- Chart 1 Pie-->
@@ -50,6 +51,7 @@
 			</div>
 		</div>
 		<!-- /.Ressources -->
+    </div>
 		
 	</li>
 {{/features}}

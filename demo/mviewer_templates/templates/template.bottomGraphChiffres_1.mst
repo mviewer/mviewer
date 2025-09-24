@@ -3,66 +3,68 @@
 {{#features}}
 	<li class="item">
 		<h3 class="title-feature ">{{nom}}</h3>
-		<!-- Colonne 4 - Chiffres clés -->
-		<div class="col-sm-4">
-			<!--Chiffre clés 1-->
-			<div class="row numberkey">
-				<div class="zone-iconnumber col-sm-3">
-					<div id="iconnumber1"></div>
+		<div class="row">
+			<!-- Colonne 4 - Chiffres clés -->
+			<div class="col-sm-4">
+				<!--Chiffre clés 1-->
+				<div class="row numberkey">
+					<div class="zone-iconnumber col-sm-3">
+						<div id="iconnumber1"></div>
+					</div>
+					<div class="col-sm-8 numText">
+						<div class="number-feature">{{p_pop}}</div>
+						<div class="titlenumber-feature">Nombre d'habitant.e.s</div>
+						<div class="subtitlenumber-feature"><i>Pour l'entité sélectionnée en 2017</i></div>
+					</div>
 				</div>
-				<div class="col-sm-8 numText">
-					<div class="number-feature">{{p_pop}}</div>
-					<div class="titlenumber-feature">Nombre d'habitant.e.s</div>
-					<div class="subtitlenumber-feature"><i>Pour l'entité sélectionnée en 2017</i></div>
+				<!--./Chiffre clé 1-->
+				<!--Chiffre clés 2-->
+				<div class="row numberkey">
+					<div class="zone-iconnumber col-sm-3">
+						<div id="iconnumber2"></div>
+					</div>
+					<div class="col-sm-8 numText">
+						<div class="number-feature"><span id="pop_densite">#</span></div>
+						<div class="titlenumber-feature">Densité de population (hab/km2)</div>
+						<div class="subtitlenumber-feature"><i>Pour l'entité sélectionnée en 2017</i></div>
+					</div>
 				</div>
+				<!--./Chiffre clé 2-->
 			</div>
-			<!--./Chiffre clé 1-->
-			<!--Chiffre clés 2-->
-			<div class="row numberkey">
-				<div class="zone-iconnumber col-sm-3">
-					<div id="iconnumber2"></div>
+			<!-- /.Colonne 4 - Chiffres clés -->
+			<!-- Colonne 5 - Graph -->
+			<div class="col-sm-5">
+				<!-- Chart 1-->
+				<div class="row Chart">
+					<div id="idChart">
+						<canvas class="chart" id="myChartBar1_{{code_geo}}" data-codegeo="{{code_geo}}" data-mychartBar1-1="{{p_pop0014}}" data-mychartBar1-2="{{p_pop1529}}" data-mychartBar1-3="{{p_pop3044}}" data-mychartBar1-4="{{p_pop4559}}" data-mychartBar1-5="{{p_pop6074}}" data-mychartBar1-6="{{p_pop75p}}" width="80" height="32"></canvas>
+					</div>
+					<div class="textChart">
+						<div class="title-chart">Répartition de la population selon la catégorie d'âge</div>
+						<div class="subtitle-chart"><i>Pour l'entité sélectionnée en 2017</i></div>
+					</div>        
 				</div>
-				<div class="col-sm-8 numText">
-					<div class="number-feature"><span id="pop_densite">#</span></div>
-					<div class="titlenumber-feature">Densité de population (hab/km2)</div>
-					<div class="subtitlenumber-feature"><i>Pour l'entité sélectionnée en 2017</i></div>
-				</div>
+				<!-- ./Chart 1-->	
 			</div>
-			<!--./Chiffre clé 2-->
-		</div>
-		<!-- /.Colonne 4 - Chiffres clés -->
-		<!-- Colonne 5 - Graph -->
-		<div class="col-sm-5">
-			<!-- Chart 1-->
-			<div class="row Chart">
-				<div id="idChart">
-					<canvas class="chart" id="myChartBar1_{{code_geo}}" data-codegeo="{{code_geo}}" data-mychartBar1-1="{{p_pop0014}}" data-mychartBar1-2="{{p_pop1529}}" data-mychartBar1-3="{{p_pop3044}}" data-mychartBar1-4="{{p_pop4559}}" data-mychartBar1-5="{{p_pop6074}}" data-mychartBar1-6="{{p_pop75p}}" width="80" height="32"></canvas>
-				</div>
-				<div class="textChart">
-					<div class="title-chart">Répartition de la population selon la catégorie d'âge</div>
-					<div class="subtitle-chart"><i>Pour l'entité sélectionnée en 2017</i></div>
-				</div>        
-			</div>
-			<!-- ./Chart 1-->	
-		</div>
-		<!-- /.Colonne 5 - Graph -->
+			<!-- /.Colonne 5 - Graph -->
 
-		<!-- Ressources -->
-		<div class="col-sm-3">
-			<div id="btn-ressources">
-				<img id="title-btn" src="demo/mviewer_templates/img/download.svg">
-				<button class="btn btn-d">
-					<span class="button-text"><a href="demo/mviewer_templates/ressources/conception/TemplateConception.Bottom.graphChiffrescles_7.1.pdf" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Fiche de conception</a></span>
-				</button>
-				<button class="btn btn-d">
-					<span class="button-text"><a href="demo/mviewer_templates/ressources/tutoriel/TemplateTutoriel_7.1.pdf" target="_blank"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Tutoriel</a></span>
-				</button>
-				<button class="btn btn-d">
-					<span class="button-text"><a href="demo/mviewer_templates/ressources/mst/templatebottomGraphChiffres71.mst" download="templatebottomGraphChiffres71.mst"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Template</a></span>
-				</button>
+			<!-- Ressources -->
+			<div class="col-sm-3">
+				<div id="btn-ressources">
+					<img id="title-btn" src="demo/mviewer_templates/img/download.svg">
+					<button class="btn btn-d">
+						<span class="button-text"><a href="demo/mviewer_templates/ressources/conception/TemplateConception.Bottom.graphChiffrescles_7.1.pdf" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Fiche de conception</a></span>
+					</button>
+					<button class="btn btn-d">
+						<span class="button-text"><a href="demo/mviewer_templates/ressources/tutoriel/TemplateTutoriel_7.1.pdf" target="_blank"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Tutoriel</a></span>
+					</button>
+					<button class="btn btn-d">
+						<span class="button-text"><a href="demo/mviewer_templates/ressources/mst/templatebottomGraphChiffres71.mst" download="templatebottomGraphChiffres71.mst"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Template</a></span>
+					</button>
+				</div>
 			</div>
+			<!-- /.Ressources -->
 		</div>
-		<!-- /.Ressources -->
 
 		
 		
