@@ -2,9 +2,8 @@
 <config>
     <application coordinates="false" title="Test usage API" 
 		logo="https://kartenn.region-bretagne.fr/kartoviz/apps/region/_region/img/rb_blanc.svg" 
-		help="https://kartenn.region-bretagne.fr/kartoviz/apps/region/_region/aide.html" 
-		exportpng="true" legend="true" measuretools="false" legendasimage="false" popup="false" print="false" 
-		style="https://kartenn.region-bretagne.fr/kartoviz/apps/region/_region/css/kartenn.css"/>
+		help="" 
+		exportpng="true" legend="true" measuretools="false" legendasimage="false" popup="false" print="false"/>
     <mapoptions maxzoom="20" projection="EPSG:3857" center="-255418,6120890" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
 
 	<baselayers style="gallery">           		

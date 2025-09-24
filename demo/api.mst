@@ -1,23 +1,26 @@
 {{#features}}
 	<li class="item" id="{{feature_ol_uid}}">
 		<h2 class="rb-title-feature">{{nom_com}}</h2>
-			<h3>API Services publics</h3>
-			<a href="https://etablissements-publics.api.gouv.fr/v3/communes/{{insee_com}}/mairie" target="_blank" title="Document" class="rb-but-link"><span class="fa fa-file" aria-hidden="true"></span> Info mairie</a>    
+			<h3 class="mt-2">API Services publics</h3>
+			<a href="https://etablissements-publics.api.gouv.fr/v3/communes/{{insee_com}}/mairie" target="_blank" title="Document" class="btn btn-primary"><span class="fa fa-file" aria-hidden="true"></span> Info mairie</a>    
 			<div>
-				<span style="font-weight:bold"> Nom :</span> <span id="nom_mairie_{{insee_com}}" /><br/>
-				<span style="font-weight:bold"> Adresse :</span> <span id="adresse_{{insee_com}}" /><br/>
-				<span style="font-weight:bold"> Email :</span> <span id="email_{{insee_com}}" /><br/>
+				<span style="font-weight:bold"> Nom :</span> <span id="nom_mairie_{{insee_com}}"><br/>
+				<span style="font-weight:bold"> Adresse :</span> <span id="adresse_{{insee_com}}"><br/>
+				<span style="font-weight:bold"> Email :</span> <span id="email_{{insee_com}}"><br/>
 			</div>
-			<h3>API GPU</h3>
-			<a id="url_gpu" target="_blank" title="Document" class="rb-but-link"><span class="fa fa-file" aria-hidden="true"></span> Doc GPU</a>    
+			<hr>
+			<h3 class="mt-2">API GPU</h3>
+			<a id="url_gpu" target="_blank" title="Document" class="btn btn-primary"><span class="fa fa-file" aria-hidden="true"></span> Doc GPU</a>    
 			<div>
-				<span style="font-weight:bold"> Zonage :</span> <span id="lib_gpu" /><br/>
+				<span style="font-weight:bold"> Zonage :</span> <span id="lib_gpu"><br/>
 			</div>
-			<h3>API Georisques</h3>
-			<a id="url_risque" target="_blank" title="Document" class="rb-but-link"><span class="fa fa-file" aria-hidden="true"></span> Info risques</a>    
-			<h3>API CEREMA</h3>
+			<hr>
+			<h3 class="mt-2">API Georisques</h3>
+			<a id="url_risque" target="_blank" title="Document" class="btn btn-primary"><span class="fa fa-file" aria-hidden="true"></span> Info risques</a>    
+			<hr>
+			<h3 class="mt-2">API CEREMA</h3>
 			<div>
-				<span style="font-weight:bold"> Conso NAF en <span id="millesime" /> :</span> <span id="naf_arti" /> m²<br/>
+				<span style="font-weight:bold"> Conso NAF en <span id="millesime"> :</span> <span id="naf_arti"> m²<br/>
 			</div>
 
 
