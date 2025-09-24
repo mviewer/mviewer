@@ -1,35 +1,11 @@
 <div class="row">
-    <div class="row">
-        <div class="form-group col-md-10 col-md-offset-1 form-group">
-            <style>
-                .label-mv {
-                    background-color: #2e5367;
-                    font-size: 125%;
-                    padding: 2px 2px 2px 5px;
-                }
-
-                #output {
-                    color: red;
-                }
-
-                #output-box {
-                    border: 1px solid red;
-                    padding: 2px;
-                }
-            </style>
-            <button
-                type="button"
-                id="tiff_center"
-                class="btn btn-success"
-                aria-label="Left Align"
-                style="margin-bottom:5px; width:100%;"
-            >
-                Centrer sur la couche
-            </button>
-            <div id="output-box">
-                <label for="output-tiff">Valeur du pixel :</label>
-                <div id="output-tiff"></div>
-            </div>
+    <div class="d-grid gap-2">
+        <button class="btn btn-primary" id="tiff_center" type="button">Centrer sur la couche</button>
+    </div>
+    <div class="mt-3 row">
+        <p for="output-tiff" class="col-auto">Valeur du pixel:</p>
+        <div class="col-auto">
+            <p id="output-tiff"></p>
         </div>
     </div>
 </div>
