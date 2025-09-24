@@ -1,6 +1,6 @@
 // Generated with https://www.cssportal.com/style-input-range/
 const _css = `input[type=range] {
-  height: 1px;
+  height: 4px;
   -webkit-appearance: none;
   margin: 10px 0;
   width: 100%;
@@ -14,23 +14,23 @@ input[type=range]::-webkit-slider-runnable-track {
   cursor: pointer;
   animate: 0.2s;
   box-shadow: 1px 1px 1px #FFFFFF;
-  background: #3071A9;
+  background: #FFFFFF;
   border-radius: 0px;
-  border: 0px solid #2E5367;
+  border: 0px solid #FFFFFF;
 }
 input[type=range]::-webkit-slider-thumb {
-  box-shadow: 0px 0px 0px #000000;
-  border: 2px solid #FFFFFF;
+  box-shadow: 0px 0px 0px #FFFFFF;
+  border: 3px solid #FFFFFF;
   height: 30px;
   width: 30px;
   border-radius: 20px;
-  background: #2E5367;
+  background: var(--mv-color-primary);
   cursor: pointer;
   -webkit-appearance: none;
   margin-top: -15.5px;
 }
 input[type=range]:focus::-webkit-slider-runnable-track {
-  background: #3071A9;
+  background: #FFFFFF;
 }
 input[type=range]::-moz-range-track {
   width: 100%;
@@ -38,17 +38,17 @@ input[type=range]::-moz-range-track {
   cursor: pointer;
   animate: 0.2s;
   box-shadow: 1px 1px 1px #FFFFFF;
-  background: #3071A9;
+  background: #FFFFFF;
   border-radius: 0px;
-  border: 0px solid #2E5367;
+  border: 0px solid #FFFFFF;
 }
 input[type=range]::-moz-range-thumb {
   box-shadow: 0px 0px 0px #000000;
-  border: 2px solid #FFFFFF;
+  border: 3px solid #FFFFFF;
   height: 30px;
   width: 30px;
   border-radius: 20px;
-  background: #2E5367;
+  background: var(--mv-color-primary);
   cursor: pointer;
 }
 input[type=range]::-ms-track {
@@ -61,32 +61,32 @@ input[type=range]::-ms-track {
   color: transparent;
 }
 input[type=range]::-ms-fill-lower {
-  background: #3071A9;
-  border: 0px solid #2E5367;
+  background: #FFFFFF;
+  border: 0px solid #FFFFFF;
   border-radius: 0px;
   box-shadow: 1px 1px 1px #FFFFFF;
 }
 input[type=range]::-ms-fill-upper {
-  background: #3071A9;
-  border: 0px solid #2E5367;
+  background: #FFFFFF;
+  border: 0px solid #FFFFFF;
   border-radius: 0px;
   box-shadow: 1px 1px 1px #FFFFFF;
 }
 input[type=range]::-ms-thumb {
   margin-top: 1px;
   box-shadow: 0px 0px 0px #000000;
-  border: 2px solid #FFFFFF;
+  border: 3px solid #FFFFFF;
   height: 30px;
   width: 30px;
   border-radius: 20px;
-  background: #2E5367;
+  background: var(--mv-color-primary);
   cursor: pointer;
 }
 input[type=range]:focus::-ms-fill-lower {
-  background: #3071A9;
+  background: #FFFFFF;
 }
 input[type=range]:focus::-ms-fill-upper {
-  background: #3071A9;
+  background: #FFFFFF;
 }
 `;
 
