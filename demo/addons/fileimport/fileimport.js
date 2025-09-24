@@ -247,17 +247,14 @@ const fileimport = (function () {
    */
   var _template = function (oLayer) {
     return `
-    <div class="form-group">
-      <label for="importFileByUrl">Charger un fichier via une URL</label>
+    <div class="form-group mb-3">
+      <label for="importFileByUrl" class="mb-1">Charger un fichier via une URL</label>
       <div class="input-group">
-        <input type="text" class="form-control" id="importFileByUrl" placeholder="http://example.com/file.csv">
-        <span class="input-group-btn">
-          <button class="btn btn-secondary" type="button" onclick="fileimport.loadUrlFile('${oLayer.layerid}')">Valider</button>
-        </span>
+        <input type="text" class="form-control form-control-sm" id="importFileByUrl" placeholder="http://example.com/file.csv">
+        <button class="btn btn-sm btn-primary" type="button" onclick="fileimport.loadUrlFile('${oLayer.layerid}')">Valider</button>
       </div>
     </div>
-    <label for="importFileByUrl">Téléverser un fichier</label>
-
+    <label for="importFileByUrl" class="mb-1">Téléverser un fichier</label>
     <div class="dropzone dz-clickable" id="drop_zone" onclick="$('#loadcsv-${oLayer.layerid}').click();" ondrop="fileimport.dropHandler(event);" ondragover="fileimport.dragOverHandler(event);">
         <div id="csv-status" class="start">
             <div class="dz-default dz-message"><span class="fas fa-cloud-upload-alt fa-3x"></span>
@@ -472,7 +469,7 @@ const fileimport = (function () {
         }
         //update layer title in legend panel
         var title = $("#geocoding-modal .csv-name").val();
-        $(".mv-layer-details[data-layerid='" + idlayer + "'] .layerdisplay-title>a")
+        $(".mv-layer-details[data-layerid='" + idlayer + "'] .layerdisplay-title > .layerdisplay-titleLabel > div")
           .first()
           .text(title);
         $(".mv-layer-details[data-layerid='" + idlayer + "']").data(
@@ -480,7 +477,7 @@ const fileimport = (function () {
           title
         );
 
-        if ($("#collapseZero").hasClass("in") !== false) {
+        if ($("#panelsStayOpen-collapseOne").hasClass("show") !== false) {
           oLayer.xfield = $("#x-select").val();
           oLayer.yfield = $("#y-select").val();
           oLayer.layer.set("xfield", oLayer.xfield);
