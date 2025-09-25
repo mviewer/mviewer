@@ -9,11 +9,11 @@
       "picture_size": ["30%", "60%"],
       "picture_position": {
         "top": "0px",
-        "left": "310px",
+        "left": "275px",
         "right": null,
         "bottom": null
       },
-      "map_position_offset": [-150, 0],
+      "map_position_offset": [-125, 0],
       "show_filters": ["date", "picture_type", "quality_score", "user"],
       "filters": {
         "minDate": null,
