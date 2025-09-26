@@ -469,7 +469,11 @@ const fileimport = (function () {
         }
         //update layer title in legend panel
         var title = $("#geocoding-modal .csv-name").val();
-        $(".mv-layer-details[data-layerid='" + idlayer + "'] .layerdisplay-title > .layerdisplay-titleLabel > div")
+        $(
+          ".mv-layer-details[data-layerid='" +
+            idlayer +
+            "'] .layerdisplay-title > .layerdisplay-titleLabel > div"
+        )
           .first()
           .text(title);
         $(".mv-layer-details[data-layerid='" + idlayer + "']").data(
@@ -723,7 +727,7 @@ const fileimport = (function () {
             return;
           }
           features.push(result.value);
-          return source.read().then(add);          
+          return source.read().then(add);
         })
       )
       .catch((error) => console.error(error.stack));

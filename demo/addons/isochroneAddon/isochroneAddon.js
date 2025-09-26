@@ -46,7 +46,10 @@ const isochroneAddon = (function () {
       mviewer.getMap().removeInteraction(_draw);
       mviewer.showLocation("EPSG:4326", _xy[0], _xy[1]);
       info.enable();
-      mviewer.toast("Isochrone", `<i class="ri-focus-3-line"></i> Localisation du point d'origine : ${_xy[0]}, ${_xy[1]}`)
+      mviewer.toast(
+        "Isochrone",
+        `<i class="ri-focus-3-line"></i> Localisation du point d'origine : ${_xy[0]}, ${_xy[1]}`
+      );
     });
     mviewer.getMap().addInteraction(_draw);
   };
@@ -107,11 +110,17 @@ const isochroneAddon = (function () {
     distances += convert($("#kilometres_input").val(), 1000);
 
     if (!_xy) {
-      mviewer.toast("Isochrone", `<i class="ri-settings-4-line"></i> Il faut définir un point d'origine et au moins un temps de parcours ou une distance`)
+      mviewer.toast(
+        "Isochrone",
+        `<i class="ri-settings-4-line"></i> Il faut définir un point d'origine et au moins un temps de parcours ou une distance`
+      );
       return;
     }
     if (times === 0 && distances === 0) {
-      mviewer.toast("Isochrone", `<i class="ri-settings-4-line"></i> Il faut définir un temps de parcours ou une distance`)
+      mviewer.toast(
+        "Isochrone",
+        `<i class="ri-settings-4-line"></i> Il faut définir un temps de parcours ou une distance`
+      );
       return;
     }
 
@@ -135,7 +144,10 @@ const isochroneAddon = (function () {
       dataParameters["costValue"] = distances;
       dataParameters["costType"] = "distance";
     } else {
-      mviewer.toast("Isochrone", `<i class="ri-settings-4-line"></i> Il faut définir un temps de parcours ou une distance, veuillez supprimer l'un des paramètres`)
+      mviewer.toast(
+        "Isochrone",
+        `<i class="ri-settings-4-line"></i> Il faut définir un temps de parcours ou une distance, veuillez supprimer l'un des paramètres`
+      );
       return;
     }
 
@@ -155,11 +167,14 @@ const isochroneAddon = (function () {
         _showResult(response);
       },
       error: function (request, status, error) {
-        mviewer.alert("Il y a un problème avec le calcul, contactez l'administrateur de l'application","alert-danger");
+        mviewer.alert(
+          "Il y a un problème avec le calcul, contactez l'administrateur de l'application",
+          "alert-danger"
+        );
         document.getElementById("loading").style.display = "none";
       },
     });
-    document.getElementById("loading").style.display = "block";    
+    document.getElementById("loading").style.display = "block";
   };
 
   /**
@@ -225,7 +240,7 @@ const isochroneAddon = (function () {
       _btn.addEventListener("click", _toggleForm);
       document.getElementById("toolstoolbar").appendChild(_btn);
 
-      /* Btn to close panel */      
+      /* Btn to close panel */
       const btnClose = document.getElementById("isochroneClosePanel");
       btnClose.addEventListener("click", _toggleForm);
 

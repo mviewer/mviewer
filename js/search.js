@@ -429,7 +429,10 @@ var search = (function () {
         // We only display the first results
         results = results.slice(0, max_results);
 
-        str = '<a class="fuse list-group-item list-group-item-action disabled">' + layername + "</a>";
+        str =
+          '<a class="fuse list-group-item list-group-item-action disabled">' +
+          layername +
+          "</a>";
         results.forEach(function (element) {
           // from version 4 data are stored in element.item
           element = element.item;

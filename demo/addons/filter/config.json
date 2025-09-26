@@ -46,7 +46,7 @@
         "legendTitle": "Sélectionner une donnée :",
         "layers": [
           {
-            "layerId": "commune",            
+            "layerId": "commune",
             "filter": [
               {
                 "attribut": "nom",

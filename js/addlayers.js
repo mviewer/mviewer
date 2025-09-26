@@ -409,9 +409,7 @@ var addlayers = (function () {
   var _showLayerList = function (layerList, parentDiv) {
     parentDiv.empty();
     $.each(layerList, function (id, layer) {
-      let btn = $(
-        '<button class="vcenter"><i class="ri-add-circle-line"></i></button>'
-      );
+      let btn = $('<button class="vcenter"><i class="ri-add-circle-line"></i></button>');
 
       let childContainerRow = $(`<div class="row"></div>`);
       let childContainerCol = $(`<div class="col-md-12"></div>`);
@@ -420,9 +418,7 @@ var addlayers = (function () {
         _addLayer(layer, this);
       });
       let rowClass = layer.Layer && layer.Layer.length > 0 ? "" : "layer-result-row";
-      const layerContentRow = $(
-        `<div class="pl-1 ${rowClass} list-group-item"></div>`
-      );
+      const layerContentRow = $(`<div class="pl-1 ${rowClass} list-group-item"></div>`);
       let layerContent = $(`<div class="col-md-8"> </div>`);
       const btnContent = $(`<div class="col-md-1"> </div>`);
 

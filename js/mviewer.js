@@ -415,14 +415,14 @@ mviewer = (function () {
    * @param {String} msg
    */
 
-  var _messageToast = function (title,msg,delay) {
-    const toast = document.createElement('div');
-      toast.className = 'toast';
-      toast.setAttribute('role', 'alert');
-      toast.setAttribute('aria-live', 'assertive');
-      toast.setAttribute('aria-atomic', 'true');
-      toast.setAttribute('data-bs-delay', delay ?? 5000);
-      toast.innerHTML = `
+  var _messageToast = function (title, msg, delay) {
+    const toast = document.createElement("div");
+    toast.className = "toast";
+    toast.setAttribute("role", "alert");
+    toast.setAttribute("aria-live", "assertive");
+    toast.setAttribute("aria-atomic", "true");
+    toast.setAttribute("data-bs-delay", delay ?? 5000);
+    toast.innerHTML = `
         <div class="toast-header">
           <strong class="me-auto">${title}</strong>
           <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fermer"></button>
@@ -431,10 +431,10 @@ mviewer = (function () {
           ${msg}
         </div>
       `;
-      document.getElementById('toasts-zone').appendChild(toast);
-      const bsToast = new bootstrap.Toast(toast);
-      bsToast.show();
-      toast.addEventListener('hidden.bs.toast', () => toast.remove());
+    document.getElementById("toasts-zone").appendChild(toast);
+    const bsToast = new bootstrap.Toast(toast);
+    bsToast.show();
+    toast.addEventListener("hidden.bs.toast", () => toast.remove());
   };
 
   var _deleteLayer = function (layername) {
@@ -968,18 +968,18 @@ mviewer = (function () {
 
   var _updateViewPort = function (s, displayMode) {
     _mediaSize = s;
-    if (s === "xs") {      
+    if (s === "xs") {
       $("#wrapper, #main").removeClass("xl").addClass("xs");
       $("#menu").appendTo("#thematic-modal .modal-body");
       $("#legend").appendTo("#legend-modal .modal-body");
       configuration.getConfiguration().mobile = true;
-      if ($('#right-panel').hasClass('active')){
-        $("#right-panel").removeClass("active")
+      if ($("#right-panel").hasClass("active")) {
+        $("#right-panel").removeClass("active");
       }
-      if ($('#bottom-panel').hasClass('active')){
-        $("#bottom-panel").removeClass("active")
+      if ($("#bottom-panel").hasClass("active")) {
+        $("#bottom-panel").removeClass("active");
       }
-      if (displayMode) {        
+      if (displayMode) {
         $("#wrapper, #main").addClass("mode-" + displayMode);
         $("#page-content-wrapper").append(`
                     <a
@@ -999,21 +999,21 @@ mviewer = (function () {
         }
         if (displayMode === "s") {
           $("#searchtool").appendTo("#main");
-        }        
+        }
       }
     } else {
-      $("#wrapper, #main").removeClass("xs").addClass("xl");      
+      $("#wrapper, #main").removeClass("xs").addClass("xl");
       if (displayMode !== "s" || displayMode !== "u") {
-          $("#menu").appendTo("#sidebar-wrapper");
-          $("#legend").appendTo("#layers-container-box");
+        $("#menu").appendTo("#sidebar-wrapper");
+        $("#legend").appendTo("#layers-container-box");
       }
       if (displayMode === "s") {
-          $("#searchtool").appendTo("#searchtool_nav");
-          $("#legend").appendTo("#legend-modal .modal-body");
+        $("#searchtool").appendTo("#searchtool_nav");
+        $("#legend").appendTo("#legend-modal .modal-body");
       }
       if (displayMode === "u") {
-          $("#legend").appendTo("#legend-modal .modal-body");
-      } 
+        $("#legend").appendTo("#legend-modal .modal-body");
+      }
       configuration.getConfiguration().mobile = false;
     }
   };
@@ -1032,7 +1032,7 @@ mviewer = (function () {
         $("#searchtool").appendTo("#main");
         $("#searchtool").removeClass("navbar-form");
       }
-      if (API.mode === "u" || API.mode === "s" ){
+      if (API.mode === "u" || API.mode === "s") {
         $("#legend").appendTo("#legend-modal .modal-body");
         $("#page-content-wrapper").append(`
                     <a
@@ -1059,24 +1059,24 @@ mviewer = (function () {
     }
     if (_mediaSize === "xs") {
       _updateViewPort("xs", displayMode);
-    }    
+    }
     $(window).resize(function () {
-        var w = $(this).width();
-        var s = "";
-        if (w < 768) {
-          s = "xs";
-        } else if (w < 992) {
-          s = "sm";
-        } else if (w < 1200) {
-          s = "md";
-        } else if (w >= 1200) {
-          s = "lg";
-        }
-        if (s !== _bsize) {
-          _bsize = s;
-          _updateMedia(_bsize, displayMode);
-        }
-    });    
+      var w = $(this).width();
+      var s = "";
+      if (w < 768) {
+        s = "xs";
+      } else if (w < 992) {
+        s = "sm";
+      } else if (w < 1200) {
+        s = "md";
+      } else if (w >= 1200) {
+        s = "lg";
+      }
+      if (s !== _bsize) {
+        _bsize = s;
+        _updateMedia(_bsize, displayMode);
+      }
+    });
     if (configuration.getConfiguration().mobile) {
       $("#thematic-modal .modal-body").append(
         '<ul class="sidebar-nav nav-pills nav-stacked" id="menu"></ul>'
@@ -1966,12 +1966,14 @@ mviewer = (function () {
         $("#lang-selector>ul").append(langitems.join(""));
       }
       $(".mv-translate a").click(function () {
-        let activeLangItemsOld = document.querySelectorAll('.mv-translate a.activeLang');
-        activeLangItemsOld.forEach(i => {
+        let activeLangItemsOld = document.querySelectorAll(".mv-translate a.activeLang");
+        activeLangItemsOld.forEach((i) => {
           i.classList.remove("activeLang");
         });
-        let langElementItems = document.querySelectorAll('[idlang="'+ $(this).attr("idlang") + '"]');
-        langElementItems.forEach(i => {
+        let langElementItems = document.querySelectorAll(
+          '[idlang="' + $(this).attr("idlang") + '"]'
+        );
+        langElementItems.forEach((i) => {
           i.classList.add("activeLang");
         });
         _changeLanguage($(this).attr("idlang"));
@@ -2046,8 +2048,8 @@ mviewer = (function () {
       mviewer.tr = mviewer.lang[lang];
       _elementTranslate("body");
       mviewer.lang.lang = lang;
-      let langElementItems = document.querySelectorAll('[idlang="'+ lang + '"]');
-      langElementItems.forEach(i => {
+      let langElementItems = document.querySelectorAll('[idlang="' + lang + '"]');
+      langElementItems.forEach((i) => {
         i.classList.add("activeLang");
       });
     } else {
@@ -2613,15 +2615,17 @@ mviewer = (function () {
       var url =
         window.location.href.split("#")[0].split("?")[0] + "?" + params(linkParams);
       let urlEmail = `mailto:?&body=` + encodeURIComponent(url);
-      let urlLinkedin = "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(url);
-      let urlFacebook = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url);
-		  let urlWhatapp = "https://wa.me/?text=" + encodeURIComponent(url);
-      document.getElementById("urlShare__link").value = url;      
-      document.getElementById('btnShareNewTab').setAttribute("href", url);
-      document.getElementById('btnShareEmail').setAttribute("href", urlEmail);
-      document.getElementById('btnShareLinkedin').setAttribute("href", urlLinkedin);
-      document.getElementById('btnShareWhatapp').setAttribute("href", urlWhatapp);
-      document.getElementById('btnShareFacebook').setAttribute("href", urlFacebook);
+      let urlLinkedin =
+        "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(url);
+      let urlFacebook =
+        "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url);
+      let urlWhatapp = "https://wa.me/?text=" + encodeURIComponent(url);
+      document.getElementById("urlShare__link").value = url;
+      document.getElementById("btnShareNewTab").setAttribute("href", url);
+      document.getElementById("btnShareEmail").setAttribute("href", urlEmail);
+      document.getElementById("btnShareLinkedin").setAttribute("href", urlLinkedin);
+      document.getElementById("btnShareWhatapp").setAttribute("href", urlWhatapp);
+      document.getElementById("btnShareFacebook").setAttribute("href", urlFacebook);
       $("#permaqr").attr(
         "src",
         "https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=" +
@@ -2891,12 +2895,9 @@ mviewer = (function () {
      */
     activeCalendar: (layerid, options) => {
       $("#" + layerid + "-layer-timefilter")
-          .closest("div")
-          .append(
-            '<span class="input-group-text"><i class="ri-calendar-line"></i></span>'
-          );
-        $("#" + layerid + "-layer-timefilter")
-          .datepicker(options);
+        .closest("div")
+        .append('<span class="input-group-text"><i class="ri-calendar-line"></i></span>');
+      $("#" + layerid + "-layer-timefilter").datepicker(options);
     },
     /**
      * Public Method: add Layer in legend
@@ -3024,7 +3025,7 @@ mviewer = (function () {
       $("#" + layer.layerid + "-layer-summary").popover({
         container: "body",
         html: true,
-        title:"",
+        title: "",
         html: true,
         content: layer.summary,
       });
@@ -3222,7 +3223,7 @@ mviewer = (function () {
             options.minViewMode = 2;
             options.format = "yyyy";
             break;
-          case "month":            
+          case "month":
             options.format = "yyyy-mm";
             options.startView = 1;
             options.minViewMode = 1;
@@ -3243,8 +3244,7 @@ mviewer = (function () {
           .append(
             '<span class="input-group-text"><i class="ri-calendar-line"></i></span>'
           );
-        $("#" + layer.layerid + "-layer-timefilter")
-          .datepicker(options);
+        $("#" + layer.layerid + "-layer-timefilter").datepicker(options);
         $("#" + layer.layerid + "-layer-timefilter").on("change", function (data, cc) {
           mviewer.setLayerTime(layer.layerid, data.currentTarget.value);
         });

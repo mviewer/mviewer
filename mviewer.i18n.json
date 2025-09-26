@@ -1,5 +1,5 @@
 {
-  "de": {    
+  "de": {
     "btn.copy": "Kopieren",
     "addlayers.modal.title": "Hinzufügen von Daten",
     "addlayers.modal.ogc": "OGC Service",
@@ -94,8 +94,8 @@
     "share.btn.iframe": "Link kopieren",
     "share.modal.title": "Anzeigemodus",
     "share.modal.type": "Teilungsmodus",
-    "share.panel.title": "Diese Karte teilen",    
-    "share.panel.subtitle": "Teilen Sie Ihre Karte mit den ausgewählten Ebenen und dem festgelegten Ausschnitt:",    
+    "share.panel.title": "Diese Karte teilen",
+    "share.panel.subtitle": "Teilen Sie Ihre Karte mit den ausgewählten Ebenen und dem festgelegten Ausschnitt:",
     "share.mode.newtab": "Neue Registerkarte",
     "share.mode.iframe": "Integrieren",
     "share.picture.permalink": "Permalink zur Karte",
@@ -231,7 +231,7 @@
     "share.modal.title": "Display mode",
     "share.modal.type": "Sharing mode",
     "share.panel.title": "Share the map",
-    "share.panel.subtitle": "Share your map with the selected layers and the configured extent :",    
+    "share.panel.subtitle": "Share your map with the selected layers and the configured extent :",
     "share.mode.newtab": "New tab",
     "share.mode.iframe": "Iframe",
     "share.picture.permalink": "Permalink to the map",
@@ -370,7 +370,7 @@
     "share.modal.title": "Mode d'affichage",
     "share.modal.type": "Mode de partage",
     "share.panel.title": "Partager cette carte",
-    "share.panel.subtitle": "Partager votre carte avec les couches sélectionnées et l'emprise paramétrée :",    
+    "share.panel.subtitle": "Partager votre carte avec les couches sélectionnées et l'emprise paramétrée :",
     "share.mode.newtab": "Nouvel onglet",
     "share.mode.iframe": "Intégrer",
     "share.picture.permalink": "Permalien vers la carte",
@@ -400,7 +400,7 @@
     "theme.layers.remove": "Supprimer",
     "theme.layers.restricted": "Données accès restreint"
   },
-  "sk": {    
+  "sk": {
     "btn.copy": "Kopírovať",
     "addlayers.modal.title": "Pridanie údajov",
     "addlayers.modal.ogc": "Služba OGC",
@@ -465,7 +465,7 @@
     "share.modal.title": "Režim zobrazenia",
     "share.modal.type": "Režim zdieľania",
     "share.panel.title": "Zdieľať túto mapu",
-    "share.panel.subtitle": "Zdieľajte svoju mapu s vybranými vrstvami a nastaveným rozsahom:",    
+    "share.panel.subtitle": "Zdieľajte svoju mapu s vybranými vrstvami a nastaveným rozsahom:",
     "share.mode.newtab": "Nová karta",
     "share.mode.iframe": "Iframe",
     "share.picture.permalink": "Permalink k tejto mape",

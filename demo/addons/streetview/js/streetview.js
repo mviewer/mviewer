@@ -99,7 +99,11 @@ var streetview = (function () {
 
     _lastCoordinates = formattedCoordinates;
 
-    mviewer.toast("StreetView", "<b>Coordonnées sauvegardées.</b> </br> Cliquez de nouveau sur le bouton pour ouvrir StreetView dans un nouvel onglet.",6000);
+    mviewer.toast(
+      "StreetView",
+      "<b>Coordonnées sauvegardées.</b> </br> Cliquez de nouveau sur le bouton pour ouvrir StreetView dans un nouvel onglet.",
+      6000
+    );
   };
 
   return {

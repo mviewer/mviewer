@@ -70,7 +70,9 @@ export const displayNorth = () => {
   const northArrowDiv = document.querySelector(NORTH_DIV_SELECTOR);
   const classList = northArrowDiv.classList;
   checked ? classList.remove("hide") : classList.add("hide");
-  checked ? northArrowDiv.removeAttribute("data-html2canvas-ignore") : northArrowDiv.setAttribute("data-html2canvas-ignore","true");
+  checked
+    ? northArrowDiv.removeAttribute("data-html2canvas-ignore")
+    : northArrowDiv.setAttribute("data-html2canvas-ignore", "true");
 };
 
 /**
@@ -82,5 +84,7 @@ export const displayQrCode = () => {
   if (!qrCodeDiv) return;
   const classList = qrCodeDiv.classList;
   checked ? classList.remove("hide") : classList.add("hide");
-  checked ? qrCodeDiv.removeAttribute("data-html2canvas-ignore") : qrCodeDiv.setAttribute("data-html2canvas-ignore","true");
+  checked
+    ? qrCodeDiv.removeAttribute("data-html2canvas-ignore")
+    : qrCodeDiv.setAttribute("data-html2canvas-ignore", "true");
 };

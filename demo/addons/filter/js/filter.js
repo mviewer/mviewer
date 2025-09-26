@@ -190,9 +190,7 @@ const filter = (function () {
       if (!$("#" + destinationDivId).length) {
         // add selectBox if needed
         contentSelectLayer.push(
-          `<option value="${layerId}">${
-            mviewer.getLayer(layerId).name
-          }</option>`
+          `<option value="${layerId}">${mviewer.getLayer(layerId).name}</option>`
         );
         $("#advancedFilter").append('<div id="' + destinationDivId + '" "></div>');
       }
@@ -239,11 +237,13 @@ const filter = (function () {
     if (nbLayers > 1 && !$("#select-FilterLayer").length) {
       contentSelectLayer.push("</select></div>");
       $("#selectLayerFilter").append(contentSelectLayer.join(""));
-      if (layerId = _currentSelectedLayer) {
-        let selectCurrentOption = document.querySelector(`#select-FilterLayer option[value=${_currentSelectedLayer}]`); 
+      if ((layerId = _currentSelectedLayer)) {
+        let selectCurrentOption = document.querySelector(
+          `#select-FilterLayer option[value=${_currentSelectedLayer}]`
+        );
         selectCurrentOption.selected = true;
       }
-    }  
+    }
     _setStyle();
   };
 
@@ -588,9 +588,7 @@ const filter = (function () {
         '<div class="mb-2">',
         '<div class="filter-legend">',
         '<label class="form-label textlabel"> ' + params.label + " </label>",
-        "<span id=" +
-          clearId +
-          ' class="filter-clear ri-delete-bin-line textlabel"',
+        "<span id=" + clearId + ' class="filter-clear ri-delete-bin-line textlabel"',
         ' data-bs-toggle="filter-tooltip" data-bs-original-title="Réinitaliser ce filtre"></span>',
         "</div>",
       ];
@@ -665,7 +663,9 @@ const filter = (function () {
          data-bs-toggle="filter-tooltip" data-bs-original-title="Réinitaliser ce filtre"></span>
         </div>`,
       ];
-      _datePicker.push('<input type="text" class="form-control form-control-sm" id="' + id + '" />');
+      _datePicker.push(
+        '<input type="text" class="form-control form-control-sm" id="' + id + '" />'
+      );
       _datePicker.push("</div>");
       $("#" + divId).append(_datePicker.join(""));
 
@@ -726,9 +726,7 @@ const filter = (function () {
         '<div class="mb-2">',
         '<div class="filter-legend">',
         '<label class="form-label textlabel"> ' + params.label + " </label>",
-        "<span id=" +
-          clearId +
-          ' class="filter-clear ri-delete-bin-line textlabel"',
+        "<span id=" + clearId + ' class="filter-clear ri-delete-bin-line textlabel"',
         ' data-bs-toggle="filter-tooltip" data-bs-original-title="Réinitaliser ce filtre"></span>',
         "</div>",
         '<select id="' +
@@ -1103,10 +1101,7 @@ const filter = (function () {
     // button style
     $(".label-info").css("background-color", style.unSelectedBtnColor);
     $(".label-info").css("color", style.textSelectBtnColor);
-    $(".form-check-label-checked").css(
-      "background-color",
-      style.selectedBtnColor
-    );
+    $(".form-check-label-checked").css("background-color", style.selectedBtnColor);
   };
 
   return {

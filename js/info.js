@@ -575,7 +575,10 @@ var info = (function () {
             }
             break;
           default:
-            mviewer.toast("" + name + "","Format de réponse non pris en charge : " + contentType + " ");
+            mviewer.toast(
+              "" + name + "",
+              "Format de réponse non pris en charge : " + contentType + " "
+            );
         }
         if (html) {
           //test si présence d'une classe .feature eg template geoserver.
@@ -740,12 +743,18 @@ var info = (function () {
           const firstLayer = view.layers.find((layer) => layer.firstlayer);
 
           if (firstLayer) {
-            firstlayer_id = _panelsTemplate[panel] === "allintabs" ? firstLayer.initiallayerid : firstLayer.layerid;
+            firstlayer_id =
+              _panelsTemplate[panel] === "allintabs"
+                ? firstLayer.initiallayerid
+                : firstLayer.layerid;
           }
-          
+
           let panel_header = $("#" + panel + " .mv-header h6");
 
-          if(_panelsTemplate[panel] === "allintabs" || _panelsTemplate[panel] === "default") {
+          if (
+            _panelsTemplate[panel] === "allintabs" ||
+            _panelsTemplate[panel] === "default"
+          ) {
             panel_header.attr("i18n", "layers." + firstlayer_id);
           }
 
@@ -1049,8 +1058,8 @@ var info = (function () {
           feature.getProperties()[l.fields[0]];
       }
 
-      if(!title) {
-        console.warn("Invalid tooltip field: check configuration !")
+      if (!title) {
+        console.warn("Invalid tooltip field: check configuration !");
       } else {
         const popup = _featureTooltip.getElement();
 
@@ -1061,15 +1070,14 @@ var info = (function () {
 
         const popover = new bootstrap.Popover(popup, {
           container: popup,
-          placement: 'top',
+          placement: "top",
           animation: false,
           html: true,
-          content: title, 
-          template: mviewer.templates.popover, 
+          content: title,
+          template: mviewer.templates.popover,
         });
         popover.show();
       }
-      
     }
   };
 
