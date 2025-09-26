@@ -1,22 +1,23 @@
 <style>
+  :host,
+  :root {
+    --font-family: var(--bs-body-font-family);
+  }
+
   #panoramaxDragContainer {
     position: absolute;
-    top: 60px;
+    top: calc(var(--mv-navbar-h) + 5px);
+    height: calc(100% - var(--mv-navbar-h) - 20px);
     right: 10px;
     width: calc(
       100% - 280px
     ); /* Width computed in JS as well for handling sidebar toggling */
-    height: calc(100% - 80px);
     pointer-events: none;
     left: 10px;
   }
 
   #panoramaxPhotoViewerContainer {
     position: absolute;
-    top: 60px;
-    left: 310px;
-    width: 20%;
-    height: 30%;
     display: none;
     border: 5px solid white;
     resize: both;
@@ -109,7 +110,7 @@
     }
 
     #panoramaxPhotoViewerContainer {
-      bottom: 80px !important;
+      bottom: 125px !important;
       right: 0 !important;
       left: 0 !important;
       top: unset !important;
@@ -132,7 +133,7 @@
     }
 
     #panoramaxPhotoViewerContainer.pnx-mv-full {
-      top: 100px !important;
+      top: 115px !important;
       height: unset !important;
     }
 
@@ -177,16 +178,16 @@
           id="panoramaxOpen"
           class="pnx-mv-btn"
           title="Voir sur Panoramax">
-          <span class="glyphicon glyphicon-map-marker"></span>
+          <i class="fas fa-map-marker-alt"></i>
         </a>
         <button id="panoramaxDrag" class="pnx-mv-btn" title="Déplacer la photo">
-          <span class="glyphicon glyphicon-move"></span>
+          <i class="fas fa-arrows-alt"></i>
         </button>
         <button id="panoramaxFullscreen" class="pnx-mv-btn" title="Agrandir la photo">
-          <span class="fas fa-expand"></span>
+          <i class="fas fa-expand"></i>
         </button>
         <button id="panoramaxClose" class="pnx-mv-btn" title="Fermer la photo">
-          <span class="glyphicon glyphicon-remove"></span>
+          <i class="fas fa-times"></i>
         </button>
       </div>
     </pnx-photo-viewer>

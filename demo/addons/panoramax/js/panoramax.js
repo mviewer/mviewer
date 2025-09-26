@@ -46,7 +46,7 @@ var panoramax = (function () {
    */
   var _initToolbarBtn = () => {
     var button = [
-      '<button id="panoramaxBtn" title href="#" type="button" class="btn btn-default btn-raised" data-original-title="Panoramax" data-toggle="tooltip">' +
+      '<button id="panoramaxBtn" title href="#" type="button" class="btn btn-light" data-original-title="Panoramax" data-toggle="tooltip">' +
         '<span class="fas fa-street-view"></span>' +
         "</button>",
     ].join("");
@@ -216,10 +216,10 @@ var panoramax = (function () {
         _pnxMapFiltersContainer = document.createElement("li");
         _pnxMapFiltersContainer.classList.add("list-group-item-pnx", "mv-layer-details"); //"list-group-item");
         _pnxMapFiltersContainer.innerHTML = `
-          <div class="row layerdisplay-title">
+          <div class="layerdisplay-title">
             <a>Panoramax</a>
             <a href="#" class="mv-layer-remove" aria-label="close"title="" i18n="theme.layers.remove" data-original-title="Supprimer">
-              <span class="glyphicon glyphicon-remove"></span>
+              <i class="ri-close-large-line"></i>
             </a>
           </div>
           <div class="mv-layer-options">
@@ -234,8 +234,8 @@ var panoramax = (function () {
               ${noFilterUser ? "" : "user-search"}
             ></pnx-map-filters-menu>
           </div>
-          <a href="#" aria-label="Options" onclick="mviewer.toggleLayerOptions(this);" title="" i18n="theme.layers.options" class="icon-options" data-original-title="Options">
-              <span class="state-icon glyphicon glyphicon-chevron-down"></span>
+          <a href="#" aria-label="Options" onclick="mviewer.toggleLayerOptions(this);" i18n="theme.layers.options" class="icon-options" data-bs-original-title="Options">
+              <i class="state-icon ri-arrow-down-line"></i>
           </a>
         `;
 
