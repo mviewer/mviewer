@@ -1,11 +1,13 @@
 /*
     * 
     * Mviewer - print.css
-    * Propriétés de style pour impression depuis un navigateur
+    * Style properties for printing from a browser
+	* Compatible with Bootstrap 5.3
     *
 */
 
-/* Suppression des blocs inutiles */
+/* Removal of unnecessary blocks */
+
 #mv-navbar,
 #sidebar-wrapper,
 #zoomtoolbar,
@@ -19,7 +21,8 @@
 	display: none;
 }
 
-/* Gestion de la carte */
+/* Map */
+
 #map {
 	top: 0px;
 	left: 0px;
@@ -29,7 +32,8 @@
 	z-index: 1000 !important;
 }
 
-/* Gestion de la légende */
+/* Legend */
+
 #legend {
 	top: 10pt;
 	left: 10pt;
@@ -54,7 +58,7 @@
 	max-width: 300px;
 }
 
-/* Gestion de l'interrogation */
+/* Get Features */
 
 #right-panel,
 #bottom-panel {
