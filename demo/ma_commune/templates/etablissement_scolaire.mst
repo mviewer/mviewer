@@ -1,9 +1,0 @@
-{{#features}}
-	<li class="item" id="{{feature_ol_uid}}">
-		<h2 class="rb-title-feature">{{appellation_officielle}}</h2>
-		<p class="rb-text-feature">		
-            <span style="font-weight:bold"> Adresse :</span> {{adresse_uai}} {{code_postal_uai}} {{localite_acheminement_uai}}<br/>
-            <span style="font-weight:bold"> Type :</span> {{denomination_principale}}<br/>
-		</p>
-	</li>
-{{/features}}

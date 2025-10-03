@@ -1,9 +1,0 @@
-{{#features}}
-	<li class="item" id="{{feature_ol_uid}}">
-		<h2 class="rb-title-feature">{{nom}}</h2>
-		<p class="rb-text-feature">		
-            <span style="font-weight:bold"> Adresse :</span> {{adresse_postale}}<br/>
-            <span style="font-weight:bold"> Type :</span> {{type_equipement_ou_lieu}}<br/>
-		</p>
-	</li>
-{{/features}}

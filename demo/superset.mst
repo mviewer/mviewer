@@ -1,8 +1,0 @@
-{{#features}}
-        <li class="item" id="{{feature_ol_uid}}">
-			<h3 class="rb-title-feature">{{nom}}</h3>
-                <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="https://superset.bretagne.bzh/superset/dashboard/pepci/?siren={{code_epci}}&standalone=3"></iframe>
-                </div>
-        </li>
-{{/features}}

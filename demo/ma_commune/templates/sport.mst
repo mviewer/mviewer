@@ -1,9 +1,0 @@
-{{#features}}
-	<li class="item" id="{{feature_ol_uid}}">
-		<h2 class="rb-title-feature">{{inst_nom}}</h2>
-		<p class="rb-text-feature">		
-            <span style="font-weight:bold"> Adresse :</span> {{inst_adresse}} {{inst_cp}} {{inst_com_nom}}<br/>
-            <span style="font-weight:bold"> Type :</span> {{equip_type_famille}}<br/>
-		</p>
-	</li>
-{{/features}}
