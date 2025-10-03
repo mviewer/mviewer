@@ -1,0 +1,6 @@
+[submodule "demo"]
+	path = demo
+	url = https://github.com/mviewer/mviewer-demo.git
+[submodule "addons"]
+	path = addons
+	url = https://github.com/mviewer/mviewer-addons.git
