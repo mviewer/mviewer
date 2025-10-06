@@ -806,7 +806,7 @@ var configuration = (function () {
               }
             }
             oLayer.customcontrol = layer.customcontrol === "true" ? true : false;
-            oLayer.customcontrolpath = layer.customcontrolpath || "customcontrols";
+            oLayer.customcontrolpath = layer.customcontrolpath || "demo/customcontrols";
             oLayer.metadatacsw = layer["metadata_csw"];
             if (oLayer.metadata) {
               oLayer.summary =
@@ -1033,7 +1033,7 @@ var configuration = (function () {
             } // end import
 
             if (oLayer.type === "customlayer") {
-              var hook_url = "customLayers/" + oLayer.id + ".js";
+              var hook_url = "demo/customlayers/" + oLayer.id + ".js";
               if (oLayer.url && oLayer.url.slice(-3) === ".js") {
                 hook_url = oLayer.url;
               }

@@ -43,7 +43,7 @@ Ce module d'extension permet de répondre à deux cas d'usage :
 
 	<extensions>
     	<extension type="javascript" src="chart.js"/>
-    	<extension type="component" id="graph3d" path="demo/addons"/>
+    	<extension type="component" id="graph3d" path="addons"/>
 	</extensions>
 
 Extension filtre sur nom de la couche
@@ -60,10 +60,10 @@ Il faut pour cela ajouter ceci dans votre XML :
 .. code-block:: xml
 
     <extensions>    
-        <extension type="component" id="layerfilter" path="demo/addons"/>
+        <extension type="component" id="layerfilter" path="addons"/>
     </extensions>
 
-Plus d’informations sur la configuration : https://github.com/mviewer/mviewer/blob/master/demo/addons/layerfilter/README.md
+Plus d’informations sur la configuration : https://github.com/mviewer/mviewer/blob/master/addons/layerfilter/README.md
 
 Extension plein écran
 --------------------
@@ -81,7 +81,7 @@ Cette extension permet d'afficher la carte en plein écran comme ceci :
 .. code-block:: xml
 
     <extensions>    
-        <extension type="component" id="fullscreen" path="demo/addons"/>
+        <extension type="component" id="fullscreen" path="addons"/>
     </extensions>
 
 
@@ -100,7 +100,7 @@ Cett extension permet d'ajouter la possibilité de calculer des isochrones dans 
 .. code-block:: xml
 
     <extensions>    
-        <extension type="component" id="isochroneAddon" path="demo/addons"/>
+        <extension type="component" id="isochroneAddon" path="addons"/>
     </extensions>
 
 Extension ajout couche temporaire
@@ -124,10 +124,10 @@ Cette extension permet d'ajouter une couche dans votre mviewer. Attention, la co
 .. code-block:: xml
 
     <extensions>    
-        <extension type="component" id="fileimport" path="demo/addons"/>
+        <extension type="component" id="fileimport" path="addons"/>
     </extensions>
 
-| Puis une couche au niveau de l'import donc voici un exemple (plus d'info sur la conf https://github.com/mviewer/mviewer/tree/master/demo/addons/fileimport) :
+| Puis une couche au niveau de l'import donc voici un exemple (plus d'info sur la conf https://github.com/mviewer/mviewer/tree/master/addons/fileimport) :
 
 .. code-block:: xml
 
@@ -173,7 +173,7 @@ Elle nécessite plusieurs prérequis :
 	<application
 		id="livre_lecture"
 
-* il faut compléter le fichier demo/addons/filter/config.json en y ajoutant vos options de recherche et en mettant en début de liste le même id que dans votre XML. Exemple ici avec au début la configuration du positionnement de la fenêtre et ensuite les recherches par couches
+* il faut compléter le fichier addons/filter/config.json en y ajoutant vos options de recherche et en mettant en début de liste le même id que dans votre XML. Exemple ici avec au début la configuration du positionnement de la fenêtre et ensuite les recherches par couches
 
 .. code-block:: javascript
 
@@ -213,7 +213,7 @@ Elle nécessite plusieurs prérequis :
 .. code-block:: xml
 
 	<extensions>
-			<extension type="component" id="filter" path="demo/addons"/>
+			<extension type="component" id="filter" path="addons"/>
 	</extensions>
 
 
@@ -235,7 +235,7 @@ Elle nécessite plusieurs prérequis :
 	      "updateOnChange": true
             },...
 
-Plus d'informations sur la configuration : https://github.com/mviewer/mviewer/tree/master/demo/addons/filter
+Plus d'informations sur la configuration : https://github.com/mviewer/mviewer/tree/master/addons/filter
 
 Extension zoomToArea
 --------------------
@@ -267,7 +267,7 @@ Comme tous les plugins, vous devez ajouter dans le fichier de configuration de v
 .. code-block:: xml
 
 	<extensions>
-			<extension type="component" id="zoomToArea" path="demo/addons"/>
+			<extension type="component" id="zoomToArea" path="addons"/>
 	</extensions>
 
 La configuration du plugin est accessible dans le fichier ``config.json`` du répertoire ``addon/zoomToArea``. Ce répertoire peut être localisé différemment selon votre organisation.
@@ -330,7 +330,7 @@ Pour fonctionner, le plugin a besoin des paramètres suivants :
 **Exemple**
 
 Vous pouvez retrouver un exemple complet dans les dossiers suivants :
--   Fichier de configuration du plugin : ``demo/addons/zoomToArea/config.json``
+-   Fichier de configuration du plugin : ``addons/zoomToArea/config.json``
 -   Fichier de configuration de la carte : ``demo/zoomtoarea.xml``
 
 Visible également sur la page des démonstrations mviewer.
@@ -372,7 +372,7 @@ Par défaut, print extension est disponible dans le dossier ``/demo/addons``. Il
 .. code-block:: xml
 
 	<extensions>
-	  <extension type="component" id="print" path="demo/addons"/>
+	  <extension type="component" id="print" path="addons"/>
 	</extensions>
 
 2. Ajout d'un id mviewer dans le bloc application de votre conf XML :
@@ -381,7 +381,7 @@ Par défaut, print extension est disponible dans le dossier ``/demo/addons``. Il
 
 	<application id="mon_app" title="A super title" />
 
-3. Ajout de votre application dans le fichier de conf ``demo/addons/print/config.json`` :
+3. Ajout de votre application dans le fichier de conf ``addons/print/config.json`` :
 
 .. code-block:: json
 
@@ -409,7 +409,7 @@ Voici un exemple :
 	"options": {
 	  "mviewer": {
 		"mon_app": {
-			"printLayouts": "demo/addons/print/layouts/standard.json",
+			"printLayouts": "addons/print/layouts/standard.json",
 			"ownerLogo": "https://avatars.githubusercontent.com/u/114171481?s=400&u=7fcf63ac01887ece3f5f2d5527e92c10527c7a91&v=4",
 			"ownerInfos": "Voici la carte"
 		}
@@ -418,7 +418,7 @@ Voici un exemple :
 
 **Personnalisation du modèle**
 
-Pour la personnalisation du modèle, se référer à la documentation ici https://github.com/mviewer/mviewer/tree/master/demo/addons/print#layout-with-a-json-template
+Pour la personnalisation du modèle, se référer à la documentation ici https://github.com/mviewer/mviewer/tree/master/addons/print#layout-with-a-json-template
 
 Extension trackview
 -------------------
@@ -440,7 +440,7 @@ Il est nécessaire d'ajouter les lignes de code ci-dessous afin d'ajouter l'exte
 .. code-block:: xml
 
 	<extensions>
-	  <extension type="component" id="trackview" path="demo/addons"/>
+	  <extension type="component" id="trackview" path="addons"/>
 	</extensions>
 
 2. Utilisation d'un ID unique
@@ -466,7 +466,7 @@ Il est essentiel de renseigner le même id que précédemment pour assurer le bo
 
 **Personnalisation de l'extension**
 
-Pour plus d'informations sur la personnalisation de cette extension, veuillez consulter la documentation complète à l'adresse suivante : https://github.com/mviewer/mviewer/tree/master/demo/addons/trackview/readme.md
+Pour plus d'informations sur la personnalisation de cette extension, veuillez consulter la documentation complète à l'adresse suivante : https://github.com/mviewer/mviewer/tree/master/addons/trackview/readme.md
 
 Extension streetview
 --------------------
@@ -482,7 +482,7 @@ Pour cela, il suffit d’ajouter ceci dans votre fichier XML :
 .. code-block:: xml
 
     <extensions>    
-        <extension type="component" id="streetview" path="demo/addons"/>
+        <extension type="component" id="streetview" path="addons"/>
     </extensions>
 
-Pour plus d'informations sur le fonctionnement de cette extension, veuillez consulter la documentation complète à l'adresse suivante : https://github.com/mviewer/mviewer/tree/develop/demo/addons/streetview/README.md
+Pour plus d'informations sur le fonctionnement de cette extension, veuillez consulter la documentation complète à l'adresse suivante : https://github.com/mviewer/mviewer/tree/develop/addons/streetview/README.md

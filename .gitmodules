@@ -1,6 +1,8 @@
 [submodule "demo"]
 	path = demo
 	url = https://github.com/mviewer/mviewer-demo.git
+	branch = main
 [submodule "addons"]
 	path = addons
 	url = https://github.com/mviewer/mviewer-addons.git
+	branch = main

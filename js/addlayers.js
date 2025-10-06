@@ -244,7 +244,7 @@ var addlayers = (function () {
     if (!_loaded) {
       _map = mviewer.getMap();
       // load server list config
-      fetch("data/ogc_csw_server.json")
+      fetch("demo/data/ogc_csw_server.json")
         .then((response) => response.json())
         .catch(function (error) {
           mviewer.alert(

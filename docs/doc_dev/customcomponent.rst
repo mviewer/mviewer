@@ -134,7 +134,7 @@ Dans le fichier de configuration, il faut ajouter la ligne en surbrillance.
     :emphasize-lines: 2
 
     <extensions>
-        <extension type="component" id="fullscreen" path="demo/addons"/>
+        <extension type="component" id="fullscreen" path="addons"/>
     </extensions>
 
 
