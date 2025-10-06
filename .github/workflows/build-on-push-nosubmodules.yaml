@@ -1,5 +1,8 @@
 name: "Build & Push Docker image -lite for master and develop branch"
 
+permissions:
+  contents: read
+
 on:
   push:
     branches:

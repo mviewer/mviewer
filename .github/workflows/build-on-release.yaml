@@ -1,4 +1,8 @@
 name: "Build & push docker image on release"
+
+permissions:
+  contents: read
+
 on:
   release:
     types:
