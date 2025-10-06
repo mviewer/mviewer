@@ -78,7 +78,7 @@ Vous pourrez créer des nouvelles branches et modifier le code sans impacter le 
 
 - Réalisez un clone (copie) du code mviewer sur votre ordinateur en collant l'URL précédente::
 
-        git clone https://github.com/MON_ORG/mviewer.git
+        git clone https://github.com/MON_ORG/mviewer.git --recurse-submodules
 
 
 .. image:: ../_images/contrib/cloneurl.PNG

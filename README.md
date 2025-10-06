@@ -13,9 +13,12 @@ Liens utiles :
 
 ## Déploiement
 
+> Les commandes spécifique au clone sont détaillées dans la [documentation mviewer](https://mviewerdoc.readthedocs.io/fr/latest/doc_tech/deploy.html)
+
 Le déploiement se passe en trois étapes :
 
-- Cloner le projet dans le dossier de votre choix
+- Identifier votre besoin : souhaitez-vous une version sans addons et sans fichiers de démonstration ou bien une version complète ?
+- Cloner le projet dans le dossier de votre choix avec la commandes qui correspond à votre besoin
 - Copier ce dossier dans le dossier /var/www/ ( ou autres dossiers de déploiement Apache)
   Vous avez maintenant un visualiseur géographique fonctionnel avec les couches de la Région Bretagne
 - Si vous souhaitez publier vos propres couches/thèmes, modifiez le fichier `apps/default.xml`
@@ -42,10 +45,10 @@ nvm install 19
 nvm use 19
 ```
 
-**2. Clone du code source**
+**2. Clone du code source et sous-modules**
 
 ```
-git clone https://github.com/geobretagne/mviewer.git
+git clone https://github.com/geobretagne/mviewer.git --recurse-submodules
 cd mviewer
 ```
 

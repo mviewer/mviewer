@@ -53,7 +53,7 @@ Déployer la documentation en local
 ::
 
     cd /home/user/pierre/git/
-    git clone https://github.com/mon_compte_github/mviewer.git
+    git clone https://github.com/mon_compte_github/mviewer.git --recurse-submodules
 
 *L'URL de votre fork est disponible en cliquant sur "Clone or download"*
 

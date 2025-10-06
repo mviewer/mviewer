@@ -10,11 +10,10 @@ Installer MVIEWER
 Mviewer est une application web développée en HTML / CSS / JAVASCRIPT. Elle nécessite simplement d'être déployée sur un serveur WEB qui peut être APACHE, NGINX, TOMCAT...
 
 
-Avec un serveur web Apache
-**************************
+Exemple avec un serveur web Apache
+**********************************
 
 .. WARNING:: Prérequis : disposer d'une instance **Apache**
-
 
 
 Clonage des sources et déploiement
@@ -25,14 +24,17 @@ L'objectif est de copier les sources depuis github.com dans le répertoire web d
 Avec git
 ----------
 
-Dans un terminal, après vous être placé dans le dossier web Apache, exécuter la commande **git** suivante.
+Dans un terminal, après vous être placé dans le dossier web Apache, exécuter la commande **git** suivante pour récupérer toutes les sources (addons et démonstrations également).
 
 .. code-block:: bash
 
-	git clone https://github.com/mviewer/mviewer.git
+	git clone https://github.com/mviewer/mviewer.git --recurse-submodules
+
 
 Sans git
 ----------
+
+.. WARNING:: Avec cette méthode, vous devrez récupérer les addons et les démonstrations manuellement selon vos besoins
 
 Télécharger ce `fichier zip <https://github.com/mviewer/mviewer/archive/master.zip>`_ présent sur la page d'accueil du dépôt mviewer sur GitHub : https://github.com/mviewer/mviewer
 
@@ -41,6 +43,28 @@ Dézipper le contenu du  zip dans le dossier web Apache **/var/www/** *(ou autre
 .. image:: ../_images/dev/deploy/mviewer_master.png
               :alt: Zip folder
               :align: center
+
+Dans le répertoire obtenu, vous ne disposerez pas des répertoires /addons, ni du répertoire /demo.
+
+Si ces répertoires vous intéresse, vous devez les récupérer manuellement. Nous décrivons ci-dessous les étapes à suivre.
+
+Sans git - récupérer les demos
+------------------------------
+
+Télécharger ce `fichier zip <https://github.com/mviewer/mviewer-demo/archive/main.zip>`_ présent sur la page d'accueil du dépôt mviewer sur GitHub : https://github.com/mviewer/mviewer-demo
+
+Dézipper le contenu du  zip dans le dossier web Apache **/var/www/mviewer** *(ou autres dossiers de déploiement Apache selon l'emplacement du mviewer)*.
+Ce répertoire doit absolument se nommer **demo** et doit être accessible dans **mviewer/demo**.
+
+Sans git - récupérer les addons
+-------------------------------
+
+Télécharger ce `fichier zip <https://github.com/mviewer/mviewer-addons/archive/main.zip>`_ présent sur la page d'accueil du dépôt mviewer sur GitHub : https://github.com/mviewer/mviewer-addons
+
+Dézipper le contenu du  zip dans le dossier web Apache **/var/www/mviewer** *(ou autres dossiers de déploiement Apache selon l'emplacement du mviewer)*.
+Ce répertoire doit absolument se nommer **addons** et doit être accessible dans **mviewer/addons**.
+
+.. WARNING:: Prérequis : disposer d'une instance **Apache** Le dernier chapitre de cette page vous permettra d'avoir plus d'information sur ces versions complète ou légère du mviewer.
 
 
 Test navigateur
@@ -177,3 +201,90 @@ Configuration et adaptations
 ****************************
 
 Si vous souhaitez publier vos propres couches/thèmes ou bien ajouter/supprimer certaines fonctionnalités, veuillez consulter la page ":ref:`configxml`".
+
+Déployer selon vos besoins
+**************************
+
+Mviewer dispose à présent de deux versions selon vos besoins : simple ou complette.
+
+En effet, les répertoires **/demo** et **/addons** auparavant fournis par défaut sont maintenant séparés du code source via des sous-modules :
+
+- https://github.com/mviewer/mviewer-demo
+- https://github.com/mviewer/mviewer-addons
+
+
+Objectif
+========
+
+Un premier objectif est de vous permettre d'installer un mviewer simple et fonctionnel sans fichiers superflux en vous laissant la possibilité d'installer une version complète mais plus lourde.
+
+L'objectif est de pouvoir avoir un mviewer plus léger et donc moins gourmand en ressources.
+
+Cette orientation est par ailleurs cohérente avec les bonnes pratiques du mviewer qui sont de placer vos cartes et vos ressources dans le répertoire **/apps**, indépendamment du fonctionnement du mviewer.
+
+Vous pouvez donc uniquement installer mviewer sans ces sous-modules
+
+Déployer une version simple
+===========================
+
+Vous pouvez suive les procédures décrites en haut de cette page avec ou sans Git.
+
+.. code-block:: bash
+
+	git clone https://github.com/mviewer/mviewer.git
+
+Déployer une version complète
+=============================
+
+Un mviewer complet est utile dans plusieurs cas de figure, pour les développements, pour tester les démonstrations ou bien disposer du catalogue présent dans le répertoire **/demo**.
+
+Pour déployer une version complète, vous devez utiliser Git. Le téléchargement ne permet pas de récupérer les sous-modules dans le ZIP.
+
+- Récupérer tous le code source avec les sous-modules
+
+.. code-block:: bash
+
+	git clone https://github.com/mviewer/mviewer.git --recurse-submodules
+
+- Récupérer unique le sous-module **/addons** et non les démonstrations
+
+Cette commande est pratique si vous souhaitez obtenir tous les addons à la racine du /mviewer.
+
+.. code-block:: bash
+
+	git clone https://github.com/mviewer/mviewer.git
+    cd mviewer
+    git submodule update --init -- addons
+
+Déployer une version simple avec les addons utiles
+==================================================
+
+Vous pouvez n'avoir besoin que de deux ou trois addons.
+Dans ce cas, nous vous conseillons de :
+
+1. cloner une version simple sans /addons ni /demo
+
+.. code-block:: bash
+
+	git clone https://github.com/mviewer/mviewer.git 
+
+2. cloner dans un autre répertoire les addons 
+
+.. code-block:: bash
+
+	git clone https://github.com/mviewer/mviewer-addons.git 
+
+3. Copier les addons de votre choix dans le répertoire **/mviewer/apps**
+
+
+Ici, imaginons que nous souhaitions uniquement récupérer l'extension **Filter**.
+Avec Linux, voici les commandes de copier/coller à suivre :
+
+.. code-block:: bash
+
+	cd [chemin_personnalise]/mviewer-addons
+    cp -pr filter [chemin_personnalise]/mviewer/apps
+
+L'extension **Filter** sera donc localisée dans **[chemin_personnalise]/mviewer/apps/Filter**.
+Vous pourrez renseigner son répertoire **apps/filter** de manière habituelle dans le XML.
+
