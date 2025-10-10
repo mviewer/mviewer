@@ -1727,11 +1727,20 @@ li.mv-nav-item {
 	border-radius: 0.6em;
 	text-transform: uppercase;
 	border: 1px solid #d1d1d1;
+	font-size: smaller;
 }
 
 .langList a .flag-icon,
 #lang-selector a .flag-icon {
 	border-radius: 1em;
+}
+
+.flag-icon {
+	max-width: 20px;
+}
+
+li.mv-translate {
+	margin-right: 10px;
 }
 
 .langList a:hover,

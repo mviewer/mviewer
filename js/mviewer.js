@@ -1901,6 +1901,8 @@ mviewer = (function () {
   const getLangNameAutonym = (langCode) =>
     new Intl.DisplayNames([langCode], { type: "language" }).of(langCode);
 
+  const getLangImage = (langCode) => `img/flag-icons/${langCode}.svg`;
+
   var _configureTranslate = function (dic) {
     var lang = configuration.getLang();
     var languages = configuration.getLanguages();
@@ -1941,13 +1943,14 @@ mviewer = (function () {
         // help popup only
         // set to right padding to take into account language dropdown menu syle
         langitems.push(
-          '<li type="button" class="mv-translate""><a class="dropdown-item" href="#" idlang="' +
-            language +
-            '"><span style="margin-right: 5px;" class="flag-icon flag-icon-squared flag-icon-' +
-            icon +
-            '"></span><span>' +
-            getLangNameAutonym(language) +
-            "</span></a></li>"
+          `<li type="button" class="mv-translate"">
+            <a class="dropdown-item" href="#" idlang="${language}">
+              <span style="margin-right: 5px;" class="">
+                <img src="${getLangImage(language)}" alt="${language}" class="flag-icon">
+              </span>
+              <span class="lang-txt">${getLangNameAutonym(language)}</span>
+            </a>
+          <li>`
         );
       });
 
