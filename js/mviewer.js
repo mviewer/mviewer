@@ -1950,7 +1950,7 @@ mviewer = (function () {
               </span>
               <span class="lang-txt">${getLangNameAutonym(language)}</span>
             </a>
-          <li>`
+          </li>`
         );
       });
 

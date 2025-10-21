@@ -1706,12 +1706,9 @@ li.mv-nav-item {
 	display: block !important;
 }
 
-#lang-selector .dropdown-menu {
-	min-width: 6em;
-}
-
 #lang-selector li a {
 	text-transform: uppercase;
+	font-size: small;
 }
 
 .langList {
@@ -1727,16 +1724,15 @@ li.mv-nav-item {
 	border-radius: 0.6em;
 	text-transform: uppercase;
 	border: 1px solid #d1d1d1;
-	font-size: smaller;
 }
 
 .langList a .flag-icon,
 #lang-selector a .flag-icon {
-	border-radius: 1em;
+	border-radius: 5px;
 }
 
 .flag-icon {
-	max-width: 20px;
+	max-width: 25px;
 }
 
 li.mv-translate {
