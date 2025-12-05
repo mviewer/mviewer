@@ -2695,6 +2695,28 @@ mviewer = (function () {
           linkParams[key] = encodeURIComponent(API[key]);
         }
       }
+      // remove calculated params and preserve other incoming URL params (e.g. custom flags) in the shared link
+      const excludedKeys = new Set(
+        Object.entries({
+          x: API.x,
+          y: API.y,
+          z: API.z,
+          l: API.l,
+          lb: API.lb,
+          config: API.config,
+          lang: API.lang,
+          wmc: API.wmc,
+          mode: API.mode,
+          file: API.file,
+          xfield: API.xfield,
+          yfield: API.yfield,
+        }).map(([key]) => key)
+      );
+      for (const [key, value] of Object.entries(API)) {
+        if (excludedKeys.has(key)) continue;
+        if (linkParams[key] !== undefined) continue;
+        linkParams[key] = encodeURIComponent(value);
+      }
 
       function params(data) {
         return Object.keys(data)
