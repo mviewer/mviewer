@@ -1,2 +1,2 @@
-docutils==0.18.1
-sphinx<6
+mkdocs>=1.5,<2
+mkdocs-material>=9,<10

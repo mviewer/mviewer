@@ -1,9 +1,21 @@
-# mviewer.doc
-**mviewer** documentation.
+# Documentation mviewer
+Documentation **mviewer** générée avec **MkDocs** et le thème
+**Material**.
 
-This documentation is based on the two following free and open-source tools :
+## Démarrer
 
-* Sphinx : http://www.sphinx-doc.org/en/stable/
-* ReadTheDocs : https://readthedocs.org/
+```bash
+pip install -r docs/requirements.txt
+mkdocs serve
+```
 
-The result is visible here : http://mviewerdoc.readthedocs.io/fr/latest/
+La commande `mkdocs serve` lance un serveur local avec rechargement à
+chaud à l'adresse <http://127.0.0.1:8000>.
+
+## Build statique
+
+```bash
+mkdocs build
+```
+
+Le site statique est généré dans le répertoire `site/`.
