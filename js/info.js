@@ -1447,6 +1447,14 @@ var info = (function () {
   };
 
   /**
+   * Public Method: getClickCoordinates
+   * @returns {Array|null} last click coordinates used for query
+   */
+  var _getClickCoordinates = function () {
+    return _clickCoordinates;
+  };
+
+  /**
    * Public Method: _getQueriedFeatures
    *
    */
@@ -1466,6 +1474,7 @@ var info = (function () {
     formatHTMLContent: createContentHtml,
     templateHTMLContent: applyTemplate,
     addQueryableLayer: _addQueryableLayer,
+    getClickCoordinates: _getClickCoordinates,
     getQueriedFeatures: _getQueriedFeatures,
   };
 })();

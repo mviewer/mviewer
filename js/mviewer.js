@@ -2663,12 +2663,20 @@ mviewer = (function () {
 
     setPermalink: function () {
       var c = _map.getView().getCenter();
+      const queriedFeatures = info.getQueriedFeatures ? info.getQueriedFeatures() : [];
+      const clickCoords = info.getClickCoordinates ? info.getClickCoordinates() : null;
+      if (queriedFeatures && queriedFeatures.length && clickCoords) {
+        c = clickCoords;
+      }
       var linkParams = {};
       if (!API.wmc) {
         linkParams.x = encodeURIComponent(Math.round(c[0]));
         linkParams.y = encodeURIComponent(Math.round(c[1]));
         linkParams.z = encodeURIComponent(_map.getView().getZoom());
         linkParams.l = encodeURIComponent(_getVisibleOverLayers());
+      }
+      if (queriedFeatures && queriedFeatures.length) {
+        linkParams.query = "true";
       }
       linkParams.lb = encodeURIComponent(this.getActiveBaseLayer());
       if (API.config) {
