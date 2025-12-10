@@ -320,7 +320,8 @@ html {
 	bottom:0;
 }
 
-.mode-u #map {
+.mode-u #map, 
+.mode-s.xs #map {
 	height: 100%;
 }
 
