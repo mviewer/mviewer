@@ -72,7 +72,7 @@ Options liées à la recherche d'adresse *(olscompletion)* et/ou à la recherche
 
 * ``localities`` *(optionnel)* : Utilisation du service d'adresse olscompletion : true ou false (defaut = true).
 * ``features`` *(optionnel)* : Utilisation du service de recherche d'entités elasticsearch ou fuse : true ou false (defaut = true).
-* ``bbox`` *(optionnel)* : Recherche d'adresse et/ou d'entitées limitée à l'emprise de la carte : true ou false (defaut = false).
+* ``bbox`` *(optionnel)* : Recherche d'adresse et/ou d'entitées limitée à l'emprise de la carte : true ou false (defaut = false). Avec un service olscompletion de type ``completion`` les résultats sont filtrés à l'intérieur de l'emprise ; pour les autres types (``search``/BAN) la bbox sert uniquement à ordonner la réponse.
 * ``querymaponclick`` *(optionnel)* : Interroge la carte après sélection d'un résultat dans la liste : true ou false - defaut = false.
 * ``marker`` *(optionnel)* : Afficher ou non un icône sur le résultat de la recherche d'adresse : true ou false (defaut = true).
 * ``static`` *(optionnel)* : En lien avec le paramètre doctypes. Active ou désactive la recherche associée à des documents requêtés systématiquement, indépendamment des couches affichées : true ou false (defaut = false).
