@@ -430,11 +430,12 @@
             </div>
             <div class="modal-body">
               <ul id="searchparameters">
-                <li class="mv-param-item" onclick="search.toggleParameter(this)">
+                <li
+                  class="mv-param-item"
+                  id="param_search_bbox"
+                  onclick="search.toggleParameter(this)">
                   <a href="#">
-                    <span
-                      id="param_search_bbox"
-                      class="state-icon far mv-unchecked"></span>
+                    <span class="state-icon far mv-unchecked"></span>
                     <div style="display: inline" i18n="search.modal.extent.text">
                       Rechercher dans l'emprise de la carte
                     </div>
