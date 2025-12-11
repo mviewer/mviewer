@@ -112,16 +112,29 @@ mviewer = (function () {
   };
 
   var _applyPermalink = function () {
+    let center = null;
+    let queryRequested = false;
     //Get  x, y & z url parameters if exists
     if (API.x && API.y && API.z) {
-      var center = [parseFloat(API.x), parseFloat(API.y)];
+      center = [parseFloat(API.x), parseFloat(API.y)];
       var zoom = parseInt(API.z);
       _map.getView().setCenter(center);
       _map.getView().setZoom(zoom);
+      // Flag a queryMap call if requested via URL (e.g. ?query=true)
+      queryRequested = ["true", "1", "yes", "on"].includes(
+        (API.query || "").toString().toLowerCase()
+      );
     }
     //get visible layers
     if (API.l) {
       _setVisibleOverLayers(API.l);
+    }
+    // Trigger queryMap after layers are applied to ensure info queries hit active layers
+    if (queryRequested && center && typeof info?.queryMap === "function") {
+      info.queryMap({
+        coordinate: center,
+        pixel: _map.getPixelFromCoordinate(center),
+      });
     }
   };
 
