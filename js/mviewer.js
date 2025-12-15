@@ -1264,18 +1264,14 @@ mviewer = (function () {
     legendmini =
       legendmini != null ? (legendmini && legendmini === "true") || false : legendmini;
 
-    if (panelMini) {
-      // hide all panels
+    if (panelMini === true) {
       mviewer.toggleMenu(false);
+    }
+    
+    if (legendmini === true) {
       mviewer.toggleLegend(false);
     }
-    if (!legendmini && panelMini && legendmini != null) {
-      // hide legend panel
-      mviewer.toggleLegend(false);
-    } else if (legendmini && !panelMini && legendmini != null) {
-      // display legend panel
-      mviewer.toggleLegend(false);
-    }
+
     $("#menu").html(htmlListGroup);
     initMenu();
     // Open theme item if set to collapsed=false
