@@ -957,7 +957,7 @@ mviewer = (function () {
    * Gère le placement et le comportement de la légende
    */
   var manageLegend = function (displayMode) {
-    var isSimpleMode = (displayMode === "s" || displayMode === "u");
+    var isSimpleMode = displayMode === "s" || displayMode === "u";
     var isMobile = configuration.getConfiguration().mobile === true;
 
     $("#btn-mode-su-menu").off("click");
@@ -1024,7 +1024,7 @@ mviewer = (function () {
     if ($.fn.easyDrag) {
       $panel.easyDrag({
         handle: ".card-header",
-        container: $("#map")
+        container: $("#map"),
       });
     }
 
@@ -1101,7 +1101,7 @@ mviewer = (function () {
         $("#bottom-panel").removeClass("active");
       }
       if (displayMode) {
-        $("#wrapper, #main").addClass("mode-" + displayMode);        
+        $("#wrapper, #main").addClass("mode-" + displayMode);
         if (displayMode === "u") {
           $("#mv-navbar").remove();
         }
@@ -1267,7 +1267,7 @@ mviewer = (function () {
     if (panelMini === true) {
       mviewer.toggleMenu(false);
     }
-    
+
     if (legendmini === true) {
       mviewer.toggleLegend(false);
     }
