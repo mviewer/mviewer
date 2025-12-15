@@ -953,6 +953,115 @@ mviewer = (function () {
   };
 
   /**
+   * Private Method: _manageLegend
+   * Gère le placement et le comportement de la légende
+   */
+  var manageLegend = function (displayMode) {
+    var isSimpleMode = (displayMode === "s" || displayMode === "u");
+    var isMobile = configuration.getConfiguration().mobile === true;
+
+    $("#btn-mode-su-menu").off("click");
+    $("#legend-panel .btn-close").off("click");
+
+    if (!isSimpleMode) {
+      if (isMobile) {
+        $("#legend").appendTo("#legend-modal .modal-body");
+        $("#legend-panel").hide();
+      } else {
+        $("#legend").appendTo("#layers-container-box");
+        $("#legend-panel").hide();
+      }
+      return;
+    }
+
+    // Mode s/u + mobile > Modale
+    if (isMobile) {
+      $("#legend").appendTo("#legend-modal .modal-body");
+      $("#legend-panel").hide();
+
+      var $btn = $("#btn-mode-su-menu");
+      if (!$btn.length) {
+        $("#page-content-wrapper").append(`
+          <a
+            id="btn-mode-su-menu"
+            class="btn btn-primary"
+            type="button"
+            href="#"
+            data-bs-toggle="modal"
+            data-bs-target="#legend-modal"
+            title="Afficher la légende"
+            i18n="data.toggle">
+            <i class="ri-equalizer-fill"></i>
+            <span i18n="data.toggle"> Afficher la légende</span>
+          </a>
+        `);
+      } else {
+        $btn.attr("data-bs-toggle", "modal");
+        $btn.attr("data-bs-target", "#legend-modal");
+        $btn.attr("href", "#");
+      }
+      return;
+    }
+
+    // Mode s/u + DESKTOP > Panel drag
+    var $panel = $("#legend-panel");
+    if (!$panel.length) {
+      $("#main").append(`
+        <div id="legend-panel" class="legend-panel card">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <span i18n="legend.modal.title">Légende</span>
+            <button type="button" class="btn-close"></button>
+          </div>
+          <div class="legendPanel-body"></div>
+        </div>
+      `);
+      $panel = $("#legend-panel");
+    }
+
+    $("#legend").appendTo("#legend-panel .legendPanel-body");
+
+    // Draggable via easyDrag si dispo
+    if ($.fn.easyDrag) {
+      $panel.easyDrag({
+        handle: ".card-header",
+        container: $("#map")
+      });
+    }
+
+    var $btn = $("#btn-mode-su-menu");
+    if (!$btn.length) {
+      $("#page-content-wrapper").append(`
+        <a
+          id="btn-mode-su-menu"
+          class="btn btn-primary"
+          type="button"
+          title="Afficher la légende"
+          i18n="data.toggle">
+          <i class="ri-equalizer-fill"></i>
+          <span i18n="data.toggle"> Afficher la légende</span>
+        </a>
+      `);
+      $btn = $("#btn-mode-su-menu");
+    }
+
+    $btn.removeAttr("data-bs-toggle data-bs-target href");
+
+    $btn.on("click", function (e) {
+      e.preventDefault();
+      $("#legend-panel").toggle();
+    });
+
+    $("#legend-panel .btn-close").on("click", function () {
+      $("#legend-panel").hide();
+    });
+
+    var legendmini = configuration.getConfiguration().themes.legendmini || null;
+    legendmini =
+      legendmini != null ? (legendmini && legendmini === "true") || false : legendmini;
+    $panel.toggle(!legendmini);
+  };
+
+  /**
    * Private Method: _updateMedia
    *
    */
@@ -984,7 +1093,6 @@ mviewer = (function () {
     if (s === "xs") {
       $("#wrapper, #main").removeClass("xl").addClass("xs");
       $("#menu").appendTo("#thematic-modal .modal-body");
-      $("#legend").appendTo("#legend-modal .modal-body");
       configuration.getConfiguration().mobile = true;
       if ($("#right-panel").hasClass("active")) {
         $("#right-panel").removeClass("active");
@@ -993,20 +1101,7 @@ mviewer = (function () {
         $("#bottom-panel").removeClass("active");
       }
       if (displayMode) {
-        $("#wrapper, #main").addClass("mode-" + displayMode);
-        $("#page-content-wrapper").append(`
-                    <a
-                        id="btn-mode-su-menu"
-                        class="btn btn-primary"
-                        type="button"
-                        href="#"
-                        data-bs-toggle="modal"
-                        data-bs-target="#legend-modal"
-                        title="Afficher la légende"
-                        i18n="data.toggle">
-                        <i class="ri-equalizer-fill"></i>
-                        <span i18n="data.toggle"> Afficher la légende</span>
-                    </a>`);
+        $("#wrapper, #main").addClass("mode-" + displayMode);        
         if (displayMode === "u") {
           $("#mv-navbar").remove();
         }
@@ -1016,19 +1111,16 @@ mviewer = (function () {
       }
     } else {
       $("#wrapper, #main").removeClass("xs").addClass("xl");
+      configuration.getConfiguration().mobile = false;
       if (displayMode !== "s" || displayMode !== "u") {
         $("#menu").appendTo("#sidebar-wrapper");
         $("#legend").appendTo("#layers-container-box");
       }
       if (displayMode === "s") {
         $("#searchtool").appendTo("#searchtool_nav");
-        $("#legend").appendTo("#legend-modal .modal-body");
       }
-      if (displayMode === "u") {
-        $("#legend").appendTo("#legend-modal .modal-body");
-      }
-      configuration.getConfiguration().mobile = false;
     }
+    manageLegend(displayMode);
   };
 
   /**
@@ -1045,22 +1137,7 @@ mviewer = (function () {
         $("#searchtool").appendTo("#main");
         $("#searchtool").removeClass("navbar-form");
       }
-      if (API.mode === "u" || API.mode === "s") {
-        $("#legend").appendTo("#legend-modal .modal-body");
-        $("#page-content-wrapper").append(`
-                    <a
-                        id="btn-mode-su-menu"
-                        class="btn btn-primary"
-                        type="button"
-                        href="#"
-                        data-bs-toggle="modal"
-                        data-bs-target="#legend-modal"
-                        title="Afficher la légende"
-                        i18n="data.toggle">
-                        <i class="ri-equalizer-fill"></i>
-                        <span i18n="data.toggle"> Afficher la légende</span>
-                    </a>`);
-      }
+
       $("#wrapper, #main").addClass("mode-" + displayMode);
     }
     if ($(window).width() < 992) {
@@ -1070,6 +1147,16 @@ mviewer = (function () {
       _mediaSize = "xl";
       configuration.getConfiguration().mobile = false;
     }
+    if (configuration.getConfiguration().mobile) {
+      $("#thematic-modal .modal-body").append(
+        '<ul class="sidebar-nav nav-pills nav-stacked" id="menu"></ul>'
+      );
+    } else {
+      $("#sidebar-wrapper").append(
+        '<ul class="sidebar-nav nav-pills nav-stacked" id="menu"></ul>'
+      );
+    }
+    manageLegend(displayMode);
     if (_mediaSize === "xs") {
       _updateViewPort("xs", displayMode);
     }
@@ -1088,18 +1175,9 @@ mviewer = (function () {
       if (s !== _bsize) {
         _bsize = s;
         _updateMedia(_bsize, displayMode);
+        manageLegend(displayMode);
       }
     });
-    if (configuration.getConfiguration().mobile) {
-      $("#thematic-modal .modal-body").append(
-        '<ul class="sidebar-nav nav-pills nav-stacked" id="menu"></ul>'
-      );
-      $("#legend").appendTo("#legend-modal .modal-body");
-    } else {
-      $("#sidebar-wrapper").append(
-        '<ul class="sidebar-nav nav-pills nav-stacked" id="menu"></ul>'
-      );
-    }
   };
 
   /**
