@@ -346,22 +346,51 @@ var search = (function () {
     // OpenLS or IGN services
     if (_searchparams.localities) {
       if (["ign", "completion", "geoportail"].includes(_olsCompletionType)) {
-        displaySearchList(
-          `${_olsCompletionUrl}?text=${value}&type=StreetAddress,PositionOfInterest&ter=5`,
-          _olsCompletionType
-        );
+        const parameters = {
+          text: value,
+          type: "StreetAddress,PositionOfInterest",
+          ter: 5,
+        };
+        if (_searchparams.bbox) {
+          const extent = _map.getView().calculateExtent(_map.getSize());
+          const extent4326 = ol.proj.transformExtent(
+            extent,
+            _projection.getCode(),
+            _proj4326
+          );
+          parameters.bbox = extent4326.join(",");
+          const center = ol.extent.getCenter(extent4326);
+          parameters.lon = center[0];
+          parameters.lat = center[1];
+        }
+        const searchUrl = new URL(_olsCompletionUrl);
+        Object.entries(parameters).forEach(([key, val]) => {
+          if (val !== undefined && val !== null) {
+            searchUrl.searchParams.append(key, val);
+          }
+        });
+        displaySearchList(searchUrl.toString(), _olsCompletionType);
       } else if (["ban", "search"].includes(_olsCompletionType)) {
         var parameters = { q: value, limit: 5 };
         if (_searchparams.bbox) {
-          var center = _map.getView().getCenter();
-          var center = ol.proj.transform(center, _projection.getCode(), _proj4326);
+          var extent = _map.getView().calculateExtent(_map.getSize());
+          var extent4326 = ol.proj.transformExtent(
+            extent,
+            _projection.getCode(),
+            _proj4326
+          );
+          parameters.bbox = extent4326.join(",");
+          var center = ol.extent.getCenter(extent4326);
           parameters.lon = center[0];
           parameters.lat = center[1];
         }
         // create URL
         const searchUrl = new URL(_olsCompletionUrl);
-        searchUrl.searchParams.append("q", parameters.q);
-        searchUrl.searchParams.append("limit", parameters.limit);
+        Object.entries(parameters).forEach(([key, val]) => {
+          if (val !== undefined && val !== null) {
+            searchUrl.searchParams.append(key, val);
+          }
+        });
         const searchUrlString = searchUrl.toString();
         // display result
         displaySearchList(searchUrlString, _olsCompletionType);
@@ -1141,6 +1170,11 @@ var search = (function () {
     _projection = mviewer.getProjection();
     _overLayers = mviewer.getLayers();
     var sparams = configuration.searchparameters || false;
+    const asBool = (val, fallback) => {
+      if (val === true || val === "true") return true;
+      if (val === false || val === "false") return false;
+      return fallback;
+    };
     if (configuration.olscompletion) {
       _olsCompletionUrl = configuration.olscompletion.url;
       $("#adresse-attribution").text(configuration.olscompletion.attribution);
@@ -1233,13 +1267,19 @@ var search = (function () {
     if (!_olsCompletionUrl) {
       _searchparams.localities = false;
     }
-    if (sparams && sparams.bbox && sparams.localities && sparams.features) {
-      _searchparams.bbox = sparams.bbox === "true";
-      _searchparams.localities = sparams.localities === "true";
-      _searchparams.features = sparams.features === "true";
-      _searchparams.static = sparams.static === "true";
-      _searchparams.querymaponclick = sparams.querymaponclick === "true";
-      _searchparams.closeafterclick = sparams.closeafterclick === "true";
+    if (sparams) {
+      _searchparams.bbox = asBool(sparams.bbox, _searchparams.bbox);
+      _searchparams.localities = asBool(sparams.localities, _searchparams.localities);
+      _searchparams.features = asBool(sparams.features, _searchparams.features);
+      _searchparams.static = asBool(sparams.static, _searchparams.static);
+      _searchparams.querymaponclick = asBool(
+        sparams.querymaponclick,
+        _searchparams.querymaponclick
+      );
+      _searchparams.closeafterclick = asBool(
+        sparams.closeafterclick,
+        _searchparams.closeafterclick
+      );
       _searchparams.searchmaxzoomlevel = sparams.searchmaxzoomlevel
         ? sparams.searchmaxzoomlevel
         : 15;
