@@ -18,8 +18,7 @@ mviewer = (function () {
 
   proj4.defs(
     "EPSG:2154",
-    "+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 " +
-      "+units=m +no_defs"
+    `+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs`
   );
 
   ol.proj.proj4.register(proj4);
@@ -223,7 +222,7 @@ mviewer = (function () {
       return url;
     }
     // same domain
-    else if (url.indexOf(location.protocol + "//" + location.host) === 0) {
+    else if (url.indexOf(`${location.protocol}//${location.host}`) === 0) {
       return url;
     } else {
       if (optionalProxy) {
@@ -525,7 +524,7 @@ mviewer = (function () {
   };
 
   var _deleteLayer = function (layername) {
-    $("[data-layerid='" + layername + "']").remove();
+    $(`[data-layerid='${layername}']`).remove();
     _map.removeLayer(_overLayers[layername].layer);
     delete _overLayers[layername];
   };
@@ -573,7 +572,7 @@ mviewer = (function () {
         scale = _calculateScale(_map.getView().getResolution());
       }
       // TODO: this line of code is not robust since OGC parameter names are not case sensitive
-      legendUrl = legendUrl.split("&scale=")[0] += "&scale=" + scale;
+      legendUrl = `${legendUrl.split("&scale=")[0]}&scale=${scale}`;
     }
     return legendUrl;
   };
@@ -587,8 +586,8 @@ mviewer = (function () {
 
   var _drawVectorLegend = function (layerid, items) {
     //Remove classic getLegendUrl
-    $("#legend-" + layerid).remove();
-    var canvas = document.getElementById("vector-legend-" + layerid);
+    $(`#legend-${layerid}`).remove();
+    var canvas = document.getElementById(`vector-legend-${layerid}`);
     if (canvas) {
       var marginTop = 15;
       var marginLeft = 15;
@@ -983,23 +982,19 @@ mviewer = (function () {
         success: function (result) {
           var summary = "";
           if ($(result).find("dct\\:abstract, abstract").length > 0) {
-            summary = "<p>" + $(result).find("dct\\:abstract, abstract").text() + "</p>";
+            summary = `<p>${$(result).find("dct\\:abstract, abstract").text()}</p>`;
           } else {
-            summary =
-              "<p>" +
-              $(result)
-                .find("gmd\\:identificationInfo, identificationInfo")
-                .find("gmd\\:MD_DataIdentification,  MD_DataIdentification")
-                .find("gmd\\:abstract, abstract")
-                .find("gco\\:CharacterString, CharacterString")
-                .text() +
-              "</p>";
+            summary = `<p>${$(result)
+              .find("gmd\\:identificationInfo, identificationInfo")
+              .find("gmd\\:MD_DataIdentification,  MD_DataIdentification")
+              .find("gmd\\:abstract, abstract")
+              .find("gco\\:CharacterString, CharacterString")
+              .text()}</p>`;
           }
           if (_overLayers[this.layer].metadata) {
-            summary +=
-              '<a href="' +
-              _overLayers[this.layer].metadata +
-              '" i18n="legend.moreinfo" target="_blank">En savoir plus</a>';
+            summary += `<a href="${
+              _overLayers[this.layer].metadata
+            }" i18n="legend.moreinfo" target="_blank">En savoir plus</a>`;
           }
           _overLayers[this.layer].summary = summary;
 
@@ -1362,7 +1357,7 @@ mviewer = (function () {
         }
       );
       if (expanded_theme.length > 0) {
-        $("#theme-layers-" + expanded_theme[0].id + ">a").click();
+        $(`#theme-layers-${expanded_theme[0].id}>a`).click();
       }
     }
     //Add remove and add layers button on them
@@ -1387,21 +1382,16 @@ mviewer = (function () {
 
   // manage display for vector legend
   var _setVectorLegendStatus = (layer, visible) => {
-    var panel = $("#vector-legend-" + layer.id);
-    var cl = "hide" + layer.id;
+    var panel = $(`#vector-legend-${layer.id}`);
+    var cl = `hide${layer.id}`;
     if (visible) {
       panel.removeClass("hidden");
-      panel
-        .parents()
-        .find("." + cl)
-        .remove();
+      panel.parents().find(`.${cl}`).remove();
     } else {
       panel.addClass("hidden");
-      if (!panel.parents().find("." + cl).length) {
+      if (!panel.parents().find(`.${cl}`).length) {
         var img = `<img class="${cl} img-responsive" src="img/invisible.png" style="max-width:30%">`;
-        $("#vector-legend-" + layer.id)
-          .parent()
-          .append(img);
+        $(`#vector-legend-${layer.id}`).parent().append(img);
       }
     }
   };
@@ -1409,7 +1399,7 @@ mviewer = (function () {
   // manage static legend display
   var _setUrlLegendStatus = function (layer, visible) {
     var legendUrl = _getlegendurl(layer);
-    var panel = $("#legend-" + layer.id);
+    var panel = $(`#legend-${layer.id}`);
     if (visible) {
       panel.attr("src", legendUrl);
       panel.closest("li").removeClass("glyphicon mv-invisible");
@@ -1422,7 +1412,7 @@ mviewer = (function () {
   var _setLayerLegend = function (layer, scale) {
     if (layer.dynamiclegend) {
       var legendUrl = _getlegendurl(layer, scale);
-      $("#legend-" + layer.id).attr("src", legendUrl);
+      $(`#legend-${layer.id}`).attr("src", legendUrl);
     }
   };
 
@@ -1439,7 +1429,7 @@ mviewer = (function () {
   };
 
   var _setThemeStatus = function (id, prop) {
-    var theme = $("#theme-layers-" + id);
+    var theme = $(`#theme-layers-${id}`);
     if (!prop) {
       prop = _getThemeStatus(id);
     }
@@ -1458,7 +1448,7 @@ mviewer = (function () {
   };
 
   _getThemeStatus = function (id) {
-    var theme = $("#theme-layers-" + id);
+    var theme = $(`#theme-layers-${id}`);
     var nbLayers = theme.find("input").length;
     var visLayers = theme.find("input[value='true']").length;
     var status = "";
@@ -1756,7 +1746,7 @@ mviewer = (function () {
     });
     if (errorLayers.length > 0) {
       mviewer.alert(
-        "Couche(s) " + errorLayers.join(", ") + " non disponible(s)",
+        `Couche(s) ${errorLayers.join(", ")} non disponible(s)`,
         "alert-danger"
       );
     }
@@ -1780,8 +1770,7 @@ mviewer = (function () {
         var l = layer.layer;
         if (
           l &&
-          $(".list-group-item.mv-layer-details[data-layerid='" + layer.id + "']")
-            .length === 0
+          $(`.list-group-item.mv-layer-details[data-layerid='${layer.id}']`).length === 0
         ) {
           l.src ? l.src.setVisible(true) : l.setVisible(true);
           mviewer.addLayer(layer);
@@ -1800,7 +1789,7 @@ mviewer = (function () {
     var showLayer = function (layerControler, layerOptions) {
       layerControler.checked = true;
       layerControler.visiblebydefault = true;
-      var li = $(".mv-nav-item[data-layerid='" + layerControler.layerid + "']");
+      var li = $(`.mv-nav-item[data-layerid='${layerControler.layerid}']`);
       var sourceParams = _getWmsSourceParams(layerControler);
       if (layerOptions.style && layerControler.type === "wms") {
         if (sourceParams) {
@@ -1816,7 +1805,7 @@ mviewer = (function () {
       mviewer.toggleLayer(li);
       if (layerOptions.time && layerControler.type === "wms") {
         //layerControler.layer.getSource().getParams()['TIME'] = layerOptions.time;
-        var timeControl = $("#" + layerControler.layerid + "-layer-timefilter");
+        var timeControl = $(`#${layerControler.layerid}-layer-timefilter`);
         if (timeControl.hasClass("mv-slider-timer")) {
           timeControl.slider(
             "setValue",

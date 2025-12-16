@@ -164,15 +164,12 @@ var info = (function () {
           .css("display", "");
 
         // do NOT use .show() as it will set display to something we dont want
-        $(tmp)
-          .find("li.item.mst_" + configuration.getLang())
-          .first()
-          .addClass("active");
+        $(tmp).find(`li.item.mst_${configuration.getLang()}`).first().addClass("active");
 
         // hide other languages slides
         $(tmp)
           .find("li.item")
-          .not(".mst_" + configuration.getLang())
+          .not(`.mst_${configuration.getLang()}`)
           .addClass("hidden-item")
           .removeClass("item");
 
@@ -192,16 +189,16 @@ var info = (function () {
         configuration.getLanguages().includes(lang_to_add)
       ) {
         $(tmp)
-          .find("li.item.mst_" + lang_to_add)
+          .find(`li.item.mst_${lang_to_add}`)
           .each(function (i, item) {
-            $(item).attr("data-counter", i + 1 + "/" + featurescount);
+            $(item).attr("data-counter", `${i + 1}/${featurescount}`);
             $(item).addClass("carousel-item");
           });
       } else {
         $(tmp)
           .find("li.item")
           .each(function (i, item) {
-            $(item).attr("data-counter", i + 1 + "/" + featurescount);
+            $(item).attr("data-counter", `${i + 1}/${featurescount}`);
             $(item).addClass("carousel-item");
           });
       }
@@ -306,7 +303,7 @@ var info = (function () {
                   _overLayers[l] &&
                   _panelsTemplate[_overLayers[l].infospanel] == "allintabs"
                 ) {
-                  l = l + "_#" + f_idx;
+                  l = `${l}_#${f_idx}`;
                   f_idx++;
                 }
                 vectorLayers[l] = { features: [] };
@@ -384,7 +381,7 @@ var info = (function () {
                 if (l.template) {
                   // actually provided multiple mst
                   languages.forEach(function (lang) {
-                    var template_field_name = "template_" + lang;
+                    var template_field_name = `template_${lang}`;
                     if (l[template_field_name]) {
                       html_result.push(applyTemplate(features, l, lang));
                     } else {
@@ -605,8 +602,8 @@ var info = (function () {
             break;
           default:
             mviewer.toast(
-              "" + name + "",
-              "Format de réponse non pris en charge : " + contentType + " "
+              `${name}`,
+              `Format de réponse non pris en charge : ${contentType} `
             );
         }
         if (html) {
@@ -615,7 +612,7 @@ var info = (function () {
           // Be carefull .carrousel renamed to mv-features
           var features = $(layerResponse).find(".mv-features li").addClass("item");
           if (features.length == 0) {
-            html_result.push('<li class="item active">' + layerResponse + "</li>");
+            html_result.push(`<li class="item active">${layerResponse}</li>`);
           } else {
             $(features).each(function (i, feature) {
               html_result.push(feature);
@@ -657,7 +654,7 @@ var info = (function () {
                     if (languages.length > 1) {
                       // multiple languages
                       languages.forEach(function (lang) {
-                        var template_field_name = "template_" + lang;
+                        var template_field_name = `template_${lang}`;
                         if (layerinfos[template_field_name]) {
                           html_result.push(applyTemplate([feature], layerinfos, lang));
                         } else if (
@@ -688,7 +685,7 @@ var info = (function () {
                   if (languages.length > 1) {
                     // multiple languages
                     languages.forEach(function (lang) {
-                      var template_field_name = "template_" + lang;
+                      var template_field_name = `template_${lang}`;
                       if (layerinfos[template_field_name]) {
                         html_result.push(applyTemplate(features, layerinfos, lang));
                       } else if (
@@ -723,7 +720,7 @@ var info = (function () {
                 manyfeatures: false,
                 nbfeatures: 1,
                 name: name,
-                layerid: layerid + "_" + i,
+                layerid: `${layerid}_${i}`,
                 initiallayerid: layerid,
                 theme_icon: theme_icon,
                 html: html_result[i],
@@ -772,7 +769,7 @@ var info = (function () {
               view
             );
           }
-          $("#" + panel + " .popup-content").append(template);
+          $(`#${panel} .popup-content`).append(template);
 
           // the following code is to link the information panel's title to the layer name, so that a translation is always possible without having to retireve dictionnary
 
@@ -785,13 +782,13 @@ var info = (function () {
                 : firstLayer.layerid;
           }
 
-          let panel_header = $("#" + panel + " .mv-header h6");
+          let panel_header = $(`#${panel} .mv-header h6`);
 
           if (
             _panelsTemplate[panel] === "allintabs" ||
             _panelsTemplate[panel] === "default"
           ) {
-            panel_header.attr("i18n", "layers." + firstlayer_id);
+            panel_header.attr("i18n", `layers.${firstlayer_id}`);
           }
 
           // default
@@ -826,7 +823,7 @@ var info = (function () {
           // info panel layer selection onhover's text
           if (configuration.getLanguages().length > 1) {
             // update every tab in the layer's selection title according to the layer selection left tab title, with reverse in order to keep the panel's title same as first layer
-            $("#" + panel + " .nav-tabs li")
+            $(`#${panel} .nav-tabs li`)
               .toArray()
               .reverse()
               .forEach(function (item, index) {
@@ -851,11 +848,11 @@ var info = (function () {
               $(_featureTooltip.getElement()).popover("hide");
             }
           } else {
-            if (!$("#" + panel).hasClass("active")) {
-              $("#" + panel).toggleClass("active");
+            if (!$(`#${panel}`).hasClass("active")) {
+              $(`#${panel}`).toggleClass("active");
             }
           }
-          $("#" + panel + " .popup-content iframe[class!='chartjs-hidden-iframe']").each(
+          $(`#${panel} .popup-content iframe[class!='chartjs-hidden-iframe']`).each(
             function (index) {
               $(this).on("load", function () {
                 $(this).closest("li").find(".mv-iframe-indicator").hide();
@@ -871,10 +868,10 @@ var info = (function () {
                 );
             }
           );
-          $("#" + panel + " .popup-content img").click(function () {
+          $(`#${panel} .popup-content img`).click(function () {
             mviewer.popupPhoto($(this).attr("src"));
           });
-          $("#" + panel + " .popup-content img")
+          $(`#${panel} .popup-content img`)
             .on("vmouseover", function () {
               $(this).css("cursor", "pointer");
             })
@@ -914,7 +911,7 @@ var info = (function () {
             });
           }
         } else {
-          $("#" + panel).removeClass("active");
+          $(`#${panel}`).removeClass("active");
         }
         // highlight features and sub feature
         if (_queriedFeatures[0] && _queriedFeatures[0].get("features")) {
@@ -959,7 +956,7 @@ var info = (function () {
           layer: request.layerinfos,
           beforeSend: function (req) {
             if (_ba_ident)
-              req.setRequestHeader("Authorization", "Basic " + btoa(_ba_ident));
+              req.setRequestHeader("Authorization", `Basic ${btoa(_ba_ident)}`);
           },
           success: function (response, textStatus, request) {
             featureInfoByLayer.push({
@@ -1174,10 +1171,7 @@ var info = (function () {
         feature.getProperties().title ||
         feature.getProperties().name ||
         feature.getProperties()[fields[0]];
-      var li =
-        '<li id="' +
-        feature.ol_uid +
-        '" class="item" ><div class="gml-item" ><div class="gml-item-title">';
+      var li = `<li id="${feature.ol_uid}" class="item" ><div class="gml-item" ><div class="gml-item-title">`;
       if (typeof featureTitle != "undefined") {
         li += featureTitle;
       }
@@ -1193,33 +1187,25 @@ var info = (function () {
             (fieldValue.indexOf("http://") == 0 || fieldValue.indexOf("https://") == 0)
           ) {
             if (fieldValue.toLowerCase().match(/(.jpg|.png|.bmp)/)) {
-              li +=
-                "<a onclick=\"mviewer.popupPhoto('" +
-                fieldValue +
-                "')\" >" +
-                '<img class="popphoto" src="' +
-                fieldValue +
-                '" alt="image..." ></a>';
+              li += `<a onclick="mviewer.popupPhoto('${fieldValue}')" ><img class="popphoto" src="${fieldValue}" alt="image..." ></a>`;
             } else {
-              li +=
-                '<p><a href="' +
-                fieldValue +
-                '" target="_blank">' +
-                _getAlias(f, aliases, fields) +
-                "</a></p>";
+              li += `<p><a href="${fieldValue}" target="_blank">${_getAlias(
+                f,
+                aliases,
+                fields
+              )}</a></p>`;
             }
           } else {
-            li +=
-              '<div class="gml-item-field"><div class="gml-item-field-name">' +
-              _getAlias(f, aliases, fields) +
-              '</div><div class="gml-item-field-value" > ' +
-              fieldValue +
-              "</div></div>";
+            li += `<div class="gml-item-field"><div class="gml-item-field-name">${_getAlias(
+              f,
+              aliases,
+              fields
+            )}</div><div class="gml-item-field-value" > ${fieldValue}</div></div>`;
           }
         }
       });
       li += "</div></li>";
-      html += $(li)[0].outerHTML + "\n";
+      html += `${$(li)[0].outerHTML}\n`;
     });
     return _customizeHTML(html, features.length);
   };
@@ -1231,7 +1217,7 @@ var info = (function () {
    */
 
   var applyTemplate = function (olfeatures, olayer, lang = "") {
-    var tpl = olayer["template" + (lang == "" ? "" : "_" + lang)];
+    var tpl = olayer[`template${lang == "" ? "" : `_${lang}`}`];
     var _json = function (str) {
       var result = null;
       try {

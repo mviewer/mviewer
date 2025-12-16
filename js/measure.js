@@ -162,9 +162,9 @@ var measure = (function () {
     }
     var output;
     if (length > 100) {
-      output = Math.round((length / 1000) * 100) / 100 + " " + "km";
+      output = `${Math.round((length / 1000) * 100) / 100} km`;
     } else {
-      output = Math.round(length * 100) / 100 + " " + "m";
+      output = `${Math.round(length * 100) / 100} m`;
     }
     return output;
   };
@@ -183,11 +183,11 @@ var measure = (function () {
     if (area < 0.0001) {
       output = 0;
     } else if (area < 10000) {
-      output = Math.round(area * 100) / 100 + " " + "m<sup>2</sup>";
+      output = `${Math.round(area * 100) / 100} m<sup>2</sup>`;
     } else if (area < 1000000) {
-      output = Math.round((area / 10000) * 100) / 100 + " " + "ha";
+      output = `${Math.round((area / 10000) * 100) / 100} ha`;
     } else if (area >= 1000000) {
-      output = Math.round((area / 1000000) * 100) / 100 + " " + "km<sup>2</sup>";
+      output = `${Math.round((area / 1000000) * 100) / 100} km<sup>2</sup>`;
     }
 
     return output;
