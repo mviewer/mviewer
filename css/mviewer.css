@@ -603,14 +603,6 @@ img.mv-logo {
 	background-color: color-mix(in srgb, var(--mv-color-primary) 10%, white);
 }
 
-a#searchparams {
-	position: fixed;
-	right: 252px;
-	top: .1em;
-	border-radius: 4px;
-	padding-bottom: .15em;
-}
-
 #searchparameters {
 	padding: 0;
 }
@@ -1865,7 +1857,7 @@ li.mv-nav-item {
 	justify-content: flex-start;
 	border: 1px solid #d1d1d1;
 	padding: 0.5em .5em;
-	border-radius: .7em;
+	border-radius: var(--bs-border-radius);
 }
 
 #urlShare__link {
@@ -1883,7 +1875,7 @@ li.mv-nav-item {
 #blockIframe>.textEdit {
 	border: 1px solid #d1d1d1;
 	padding: 0.5em .5em;
-	border-radius: .7em;
+	border-radius: var(--bs-border-radius);
 	font-family: monospace;
 	font-size: smaller;
 	word-break: break-all;
@@ -1895,7 +1887,7 @@ li.mv-nav-item {
 	max-width: 280px;
 	min-width: 230px;
 	padding: 1em;
-	border-radius: .5em;
+	border-radius: var(--bs-border-radius);
 	position: fixed;
 	top: calc(10px + var(--mv-navbar-h));
 	right: 6em;
@@ -2178,7 +2170,55 @@ body:has(>#main.mode-s) #layers-container-box-header>.btn {
 .xs.mode-u #btn-mode-su-menu {
 	font-size: 1em;
 	padding: 6px 10px;
-	border-radius: 6px;
+	border-radius: var(--bs-border-radius);
+}
+
+/* Legend panel to mode s and u */
+
+#legend-panel {
+	position: fixed;
+	top: 4em;
+	left: 1em;
+	overflow-y: auto;
+	overflow-x: hidden;
+	min-width: 230px;
+	max-width: 260px;
+}
+
+.mode-s #legend-panel {
+	top: calc(var(--mv-navbar-h) + 4em);
+}
+
+#legend-panel .card-header {
+    background-color: #ffffff;
+    font-weight: 500;
+    color: #515151b3;
+    text-transform: uppercase;
+    font-size: small;
+}
+
+#legend-panel .card-header .btn-close{
+    font-size: smaller;
+}
+
+#legend-panel #legend {
+    font-size: 0.85em;
+}
+
+#legend-panel #layers-container {
+    display: block;
+}
+
+#legend-panel #layers-container li {
+    border: none;
+}
+
+#legend-panel #layers-container li:not(:last-child) {
+    border-bottom: var(--bs-list-group-border-width) solid var(--bs-list-group-border-color)
+}
+
+#legend-panel #layers-container-box-header {
+    display: none;
 }
 
 /* New nav mobile */
