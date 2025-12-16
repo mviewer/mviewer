@@ -214,7 +214,7 @@ var configuration = (function () {
             external_overwrite: external_overwrite,
             success: function (response, textStatus, request) {
               //Si thématique externe récupérée, on la charge dans la configuration courante
-              var node = $(response).find("theme#" + this.themeId);
+              var node = $(response).find(`theme#${this.themeId}`);
               if (node.length > 0) {
                 const theme_element = node[0];
                 //overwrite theme name and layers visiblility
@@ -229,29 +229,20 @@ var configuration = (function () {
                     .querySelectorAll("layer")
                     .forEach((l) => l.setAttribute("visible", "false"));
                 }
-                $(conf)
-                  .find("theme#" + this.themeId)
-                  .replaceWith(node);
+                $(conf).find(`theme#${this.themeId}`).replaceWith(node);
               } else {
-                $(conf)
-                  .find("theme#" + this.themeId)
-                  .remove();
+                $(conf).find(`theme#${this.themeId}`).remove();
                 console.log(
-                  "La thématique " +
-                    this.themeId +
-                    " n'a pu être trouvée dans " +
-                    this.url
+                  `La thématique ${this.themeId} n'a pu être trouvée dans ${this.url}`
                 );
               }
             },
             error: function (xhr, status, error) {
               //Si la thématique n'est pas récupérable, on supprime la thématique dans la configuration courante
               console.log(
-                this.url + " n'est pas accessible. La thématique n'a pu être chargée"
+                `${this.url} n'est pas accessible. La thématique n'a pu être chargée`
               );
-              $(conf)
-                .find("theme#" + this.themeId)
-                .remove();
+              $(conf).find(`theme#${this.themeId}`).remove();
             },
           })
         );
@@ -334,7 +325,7 @@ var configuration = (function () {
   };
 
   var _load = function (conf) {
-    console.log("Mviewer version " + VERSION);
+    console.log(`Mviewer version ${VERSION}`);
 
     // set infos bar text
     $("#mviewerinfosbar").append(VERSION);
@@ -362,7 +353,7 @@ var configuration = (function () {
       $(".mv-title").append(title);
     }
     if (conf.application.stats === "true" && conf.application.statsurl) {
-      $.get(conf.application.statsurl + "?app=" + document.title);
+      $.get(`${conf.application.statsurl}?app=${document.title}`);
     }
     if (conf.application.logo) {
       $(".mv-logo").attr("src", conf.application.logo);
@@ -515,7 +506,7 @@ var configuration = (function () {
       var ajaxFunction = function () {
         // Préparation des requêtes Ajax pour récupérer les thématiques externes
         wmcs.forEach(function (url, idx) {
-          var wmcid = "wmc" + idx;
+          var wmcid = `wmc${idx}`;
           requests.push(
             $.ajax({
               url: mviewer.ajaxURL(url, _proxy),
@@ -543,7 +534,7 @@ var configuration = (function () {
                 nbOverLayers += Object.keys(wmc.layers).length;
               },
               error: function (xhr, status, error) {
-                console.log("WMC " + this.url + " not found");
+                console.log(`WMC ${this.url} not found`);
               },
             })
           );
@@ -594,7 +585,7 @@ var configuration = (function () {
           icon = test;
         } else {
           // use 4.6.3 notation eg. "fa fa-school". deprecated.
-          icon = "fa fa-" + test;
+          icon = `fa fa-${test}`;
         }
         _themes[themeid] = {};
         _themes[themeid].id = themeid;
@@ -692,7 +683,7 @@ var configuration = (function () {
             var _overLayers = mviewer.getLayers();
             if (_overLayers[clean_ident]) {
               doublons[clean_ident] += 1;
-              mvid = clean_ident + "dbl" + doublons[clean_ident];
+              mvid = `${clean_ident}dbl${doublons[clean_ident]}`;
             } else {
               mvid = clean_ident;
               doublons[clean_ident] = 0;
@@ -849,8 +840,8 @@ var configuration = (function () {
                     oLayer[template_url_field_name] = template;
                   }).fail(() => {
                     const msg = correctUrl
-                      ? "failed to load " + lang + " template through api"
-                      : "failed to load " + lang + " template through filesystem";
+                      ? `failed to load ${lang} template through api`
+                      : `failed to load ${lang} template through filesystem`;
                     console.log(msg);
                   });
                 });
@@ -931,22 +922,21 @@ var configuration = (function () {
             if (oLayer.customcontrol) {
               var customcontrolpath = oLayer.customcontrolpath;
               $.ajax({
-                url: customcontrolpath + "/" + oLayer.id + ".js",
+                url: `${customcontrolpath}/${oLayer.id}.js`,
                 layer: oLayer.id,
                 dataType: "script",
                 success: function (customLayer, textStatus, request) {
                   $.ajax({
-                    url: customcontrolpath + "/" + this.layer + ".html",
+                    url: `${customcontrolpath}/${this.layer}.html`,
                     layer: oLayer.id,
                     dataType: "text",
                     success: function (html) {
                       mviewer.customControls[this.layer].form = html;
                       if (
-                        $('.mv-layer-details[data-layerid="' + this.layer + '"]')
-                          .length === 1
+                        $(`.mv-layer-details[data-layerid="${this.layer}"]`).length === 1
                       ) {
                         //append the existing mv-layers-details panel
-                        $('.mv-layer-details[data-layerid="' + this.layer + '"]')
+                        $(`.mv-layer-details[data-layerid="${this.layer}"]`)
                           .find(".mv-custom-controls")
                           .append(html);
                         mviewer.customControls[this.layer].init();
@@ -1033,7 +1023,7 @@ var configuration = (function () {
             } // end import
 
             if (oLayer.type === "customlayer") {
-              var hook_url = "demo/customlayers/" + oLayer.id + ".js";
+              var hook_url = `demo/customlayers/${oLayer.id}.js`;
               if (oLayer.url && oLayer.url.slice(-3) === ".js") {
                 hook_url = oLayer.url;
               }
@@ -1120,7 +1110,7 @@ var configuration = (function () {
       var _layer_id = $("#layer-id").val();
       sessionStorage.removeItem(_service_url);
       if ($("#user").val() != "" && $("#pass").val() != "")
-        sessionStorage.setItem(_service_url, $("#user").val() + ":" + $("#pass").val());
+        sessionStorage.setItem(_service_url, `${$("#user").val()}:${$("#pass").val()}`);
 
       $("#loginpanel").modal("hide");
       // Refresh du layer
@@ -1188,7 +1178,7 @@ var configuration = (function () {
         xhr.responseType = "blob";
         xhr.open("GET", src);
 
-        xhr.setRequestHeader("Authorization", "Basic " + window.btoa(_ba_ident));
+        xhr.setRequestHeader("Authorization", `Basic ${window.btoa(_ba_ident)}`);
         xhr.addEventListener("loadend", function (evt) {
           var data = this.response;
           if (this.status == "401") {
@@ -1237,26 +1227,26 @@ var configuration = (function () {
 
     source.set("layerid", oLayer.layerid);
     source.on("imageloadstart", function (event) {
-      $("#loading-" + event.target.get("layerid")).show();
+      $(`#loading-${event.target.get("layerid")}`).show();
     });
 
     source.on("imageloadend", function (event) {
-      $("#loading-" + event.target.get("layerid")).hide();
+      $(`#loading-${event.target.get("layerid")}`).hide();
     });
 
     source.on("imageloaderror", function (event) {
-      $("#loading-" + event.target.get("layerid")).hide();
+      $(`#loading-${event.target.get("layerid")}`).hide();
     });
     source.on("tileloadstart", function (event) {
-      $("#loading-" + event.target.get("layerid")).show();
+      $(`#loading-${event.target.get("layerid")}`).show();
     });
 
     source.on("tileloadend", function (event) {
-      $("#loading-" + event.target.get("layerid")).hide();
+      $(`#loading-${event.target.get("layerid")}`).hide();
     });
 
     source.on("tileloaderror", function (event) {
-      $("#loading-" + event.target.get("layerid")).hide();
+      $(`#loading-${event.target.get("layerid")}`).hide();
     });
     mviewer.processLayer(oLayer, l);
   };

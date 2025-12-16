@@ -528,8 +528,7 @@ var addlayers = (function () {
           $("#addlayers_results_loading").hide();
         },
         function onError(jqXHR, textStatus, errorThrown) {
-          var message =
-            "Problème réseau pour intérroger <strong>" + url + "</strong><br>";
+          var message = `Problème réseau pour intérroger <strong>${url}</strong><br>`;
           if (jqXHR.responseText) {
             message += jqXHR.responseText;
           }
@@ -538,7 +537,7 @@ var addlayers = (function () {
         }
       )
       .catch(function errorHandler(error) {
-        var message = "Problème réseau pour intérroger <strong>" + url + "</strong><br>";
+        var message = `Problème réseau pour intérroger <strong>${url}</strong><br>`;
         _error(message);
         $("#addlayers_results_loading").hide();
       });
@@ -574,11 +573,7 @@ var addlayers = (function () {
     let startPos = _pagingInfos.currentPage * _pagingInfos.pageSize + 1;
     const params = `?request=GetRecords&service=CSW&version=2.0.2&typeNames=csw:Record&resultType=results&maxRecords=${_pagingInfos.pageSize}&startPosition=${startPos}&ELEMENTSETNAME=full`;
     const filter = encodeURIComponent(filterTxt);
-    const url =
-      _urlCsw +
-      params +
-      "&constraintLanguage=CQL_TEXT&CONSTRAINT_LANGUAGE_VERSION=1.1.0&CONSTRAINT=" +
-      filter;
+    const url = `${_urlCsw}${params}&constraintLanguage=CQL_TEXT&CONSTRAINT_LANGUAGE_VERSION=1.1.0&CONSTRAINT=${filter}`;
     // Show
     addLayersResultsLoading.style.display = "block";
     _ajaxPromise({
@@ -589,8 +584,7 @@ var addlayers = (function () {
       .then(
         function onSuccess(data) {
           if (data.indexOf("ExceptionReport") > 0) {
-            let message =
-              "Problème réseau pour intérroger <strong>" + url + "</strong><br>";
+            let message = `Problème réseau pour intérroger <strong>${url}</strong><br>`;
             message += data;
             _error(message);
             return;
@@ -609,8 +603,7 @@ var addlayers = (function () {
           addLayersResultsLoading.style.display = "none";
         },
         function onError(jqXHR, textStatus, errorThrown) {
-          var message =
-            "Problème réseau pour intérroger <strong>" + url + "</strong><br>";
+          var message = `Problème réseau pour intérroger <strong>${url}</strong><br>`;
           if (jqXHR.responseText) {
             message += jqXHR.responseText;
           }
@@ -620,7 +613,7 @@ var addlayers = (function () {
         }
       )
       .catch(function errorHandler(error) {
-        var message = "Problème réseau pour intérroger <strong>" + url + "<strong><br>";
+        var message = `Problème réseau pour intérroger <strong>${url}<strong><br>`;
         _error(message);
         // Hide
         addLayersResultsLoading.style.display = "none";
