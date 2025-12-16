@@ -2118,6 +2118,10 @@ body:has(>#main.mode-s) #layers-container-box-header>.btn {
 	left: 1em;
 }
 
+.mode-u.xs #btn-mode-su-menu {
+	display: block!important;
+}
+
 .mode-u:not(.xs) #searchtool {
 	position: fixed;
 	top: 1em;
@@ -2177,7 +2181,7 @@ body:has(>#main.mode-s) #layers-container-box-header>.btn {
 
 #legend-panel {
 	position: fixed;
-	top: 4em;
+	top: 1em;
 	left: 1em;
 	overflow-y: auto;
 	overflow-x: hidden;
@@ -2186,7 +2190,7 @@ body:has(>#main.mode-s) #layers-container-box-header>.btn {
 }
 
 .mode-s #legend-panel {
-	top: calc(var(--mv-navbar-h) + 4em);
+	top: calc(var(--mv-navbar-h) + 1em);
 }
 
 #legend-panel .card-header {
@@ -2218,6 +2222,10 @@ body:has(>#main.mode-s) #layers-container-box-header>.btn {
 }
 
 #legend-panel #layers-container-box-header {
+    display: none;
+}
+
+:has(#legend-panel.open) #btn-mode-su-menu {
     display: none;
 }
 

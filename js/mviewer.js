@@ -1007,7 +1007,7 @@ mviewer = (function () {
     var $panel = $("#legend-panel");
     if (!$panel.length) {
       $("#main").append(`
-        <div id="legend-panel" class="legend-panel card">
+        <div id="legend-panel" class="legend-panel card open">
           <div class="card-header d-flex justify-content-between align-items-center">
             <span i18n="legend.modal.title">Légende</span>
             <button type="button" class="btn-close"></button>
@@ -1048,11 +1048,14 @@ mviewer = (function () {
 
     $btn.on("click", function (e) {
       e.preventDefault();
-      $("#legend-panel").toggle();
+      const $legend = $("#legend-panel");
+      $legend.toggle();
+      $legend.toggleClass("open", $legend.is(":visible"));
     });
 
     $("#legend-panel .btn-close").on("click", function () {
       $("#legend-panel").hide();
+      $("#legend-panel").removeClass("open");
     });
 
     var legendmini = configuration.getConfiguration().themes.legendmini || null;
