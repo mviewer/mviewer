@@ -2675,7 +2675,11 @@ mviewer = (function () {
         linkParams.z = encodeURIComponent(_map.getView().getZoom());
         linkParams.l = encodeURIComponent(_getVisibleOverLayers());
       }
-      if (queriedFeatures && queriedFeatures.length) {
+      const infoPanelVisible =
+        $("#right-panel").hasClass("active") ||
+        $("#bottom-panel").hasClass("active") ||
+        $("#modal-panel").hasClass("show");
+      if (queriedFeatures && queriedFeatures.length && infoPanelVisible) {
         linkParams.query = "true";
       }
       linkParams.lb = encodeURIComponent(this.getActiveBaseLayer());
