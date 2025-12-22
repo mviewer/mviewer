@@ -110,8 +110,8 @@ Elément enfant de ``<baselayers>`` permettant le paramétrage de chaque fond de
 		label="OpenStreetMap"
 		title="OpenSTreetMap"
 		thumbgallery="img/basemap/osm.png"
-		url="http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-		attribution="Données : les contributeurs d'&lt;a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a 	href='http://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>"
+		url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+		attribution="Données : les contributeurs d'&lt;a href='https://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a 	href='https://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>"
 		visible="true"/>
 
 

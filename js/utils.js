@@ -5,7 +5,7 @@ var utils = (function () {
 
   /**
    * Public Method: lonlat2osmtile
-   * from http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#Zoom_levels
+   * from https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#Zoom_levels
    *
    */
   //Not used but great
@@ -18,7 +18,7 @@ var utils = (function () {
         2) *
         Math.pow(2, zoom)
     );
-    var osmtile = "http://tile.openstreetmap.org/" + zoom + "/" + x + "/" + y + ".png";
+    var osmtile = "https://tile.openstreetmap.org/" + zoom + "/" + x + "/" + y + ".png";
     return osmtile;
   };
 
