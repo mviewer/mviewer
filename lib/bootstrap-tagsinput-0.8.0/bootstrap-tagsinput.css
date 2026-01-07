@@ -47,7 +47,6 @@
 .bootstrap-tagsinput .tag [data-role="remove"] {
   margin-left: 8px;
   cursor: pointer;
-  color: white;
 }
 .bootstrap-tagsinput .tag [data-role="remove"]:after {
   content: "x";
