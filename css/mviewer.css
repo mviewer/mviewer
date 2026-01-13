@@ -2266,3 +2266,7 @@ body:has(>#main.mode-s) #layers-container-box-header>.btn {
 	background-color: var(--mv-color-primary-100);
 	color: var(--mv-color-primary);
 }
+
+.bootstrap-tagsinput .tag [data-role="remove"] {
+  color: white;
+}
