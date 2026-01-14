@@ -1155,19 +1155,21 @@ var configuration = (function () {
     };
     var source;
     if (oLayer.filter) {
-      wms_params["CQL_FILTER"] = oLayer.filter;
+      mviewer.setWmsFilterParam(oLayer, wms_params, oLayer.filter);
     }
     if (
       oLayer.attributefilter &&
       oLayer.attributefilterenabled &&
       oLayer.attributevalues.length > 1
     ) {
-      wms_params["CQL_FILTER"] = mviewer.makeCQL_Filter(
+      var filterExpression = mviewer.makeWmsFilterExpression(
+        oLayer,
         oLayer.attributefield,
         oLayer.attributeoperator,
         oLayer.attributevalues[0],
         oLayer.wildcardpattern
       );
+      mviewer.setWmsFilterParam(oLayer, wms_params, filterExpression);
     }
     if (oLayer.sld) {
       wms_params["SLD"] = oLayer.sld;

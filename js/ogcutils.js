@@ -1,3 +1,9 @@
+/**
+ * Append query params to a base URI.
+ * @param {string} uri
+ * @param {Object} params
+ * @returns {string}
+ */
 // This function has been mainly copied from appendParams from OpenLayers
 function appendParams(uri, params) {
   const keyParams = [];
@@ -15,19 +21,24 @@ function appendParams(uri, params) {
   return uri + qs;
 }
 
+/**
+ * Parse "key:value,key:value" into a params object.
+ * @param {string} owsOptionsString
+ * @returns {Object|undefined}
+ */
 function getParamsFromOwsOptionsString(owsOptionsString) {
   if (owsOptionsString === undefined) {
     return undefined;
   }
 
-  var params = {};
-  var kvArray = owsOptionsString.split(",");
+  const params = {};
+  const kvArray = owsOptionsString.split(",");
 
   kvArray.forEach(function (kv) {
     if (kv.includes(":")) {
-      let splited = kv.split(":");
-      let key = splited[0];
-      let value = splited.slice(1).join(":");
+      const splited = kv.split(":");
+      const key = splited[0];
+      const value = splited.slice(1).join(":");
       if (key !== "") {
         params[key] = value;
       }
@@ -37,15 +48,21 @@ function getParamsFromOwsOptionsString(owsOptionsString) {
   return params;
 }
 
+/**
+ * Build GetCapabilities URL for a WMS service.
+ * @param {string} serviceUri
+ * @param {Object} [params]
+ * @returns {string|undefined}
+ */
 function getCapUrl(serviceUri, params) {
   if (serviceUri === undefined) {
     return undefined;
   }
 
   // transform to uppercase param keys
-  var uppercaseParams = {};
-  for (var key in params) {
-    var upperKey = key.toUpperCase();
+  const uppercaseParams = {};
+  for (const key in params) {
+    const upperKey = key.toUpperCase();
     uppercaseParams[upperKey] = params[key];
   }
 
@@ -62,15 +79,21 @@ function getCapUrl(serviceUri, params) {
   return appendParams(serviceUri, defaultParams);
 }
 
+/**
+ * Build GetLegendGraphic URL for a WMS service.
+ * @param {string} serviceUri
+ * @param {Object} [params]
+ * @returns {string|undefined}
+ */
 function getLegendGraphicUrl(serviceUri, params) {
   if (serviceUri === undefined) {
     return undefined;
   }
 
   // transform to uppercase param keys
-  var uppercaseParams = {};
-  for (var key in params) {
-    var upperKey = key.toUpperCase();
+  const uppercaseParams = {};
+  for (const key in params) {
+    const upperKey = key.toUpperCase();
     uppercaseParams[upperKey] = params[key];
   }
 
@@ -93,4 +116,210 @@ function getLegendGraphicUrl(serviceUri, params) {
   }
 
   return appendParams(serviceUri, defaultParams);
+}
+
+/**
+ * WMS filter param keys.
+ * @type {{cql: string, filter: string}}
+ */
+// WMS filter helpers for GeoServer/QGIS Server/MapServer.
+const WMS_FILTER_PARAM_KEYS = {
+  cql: "CQL_FILTER",
+  filter: "FILTER",
+};
+
+/**
+ * Escape string for RegExp usage.
+ * @param {string} value
+ * @returns {string}
+ */
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/**
+ * Detect QGIS Server URLs.
+ * @param {string} url
+ * @returns {boolean}
+ */
+function isQgisServer(url) {
+  return /qgis|qgs/i.test(url || "");
+}
+
+/**
+ * Detect MapServer URLs.
+ * @param {string} url
+ * @returns {boolean}
+ */
+function isMapServer(url) {
+  return /mapserv(\\.exe)?|mapserver/i.test(url || "");
+}
+
+/**
+ * Pick the WMS filter parameter key for a layer.
+ * @param {Object} layerDefinition
+ * @returns {string}
+ */
+function getWmsFilterParamKey(layerDefinition) {
+  const explicit = layerDefinition && layerDefinition.filterparam;
+  if (explicit) {
+    const normalized = explicit.toString().trim().toUpperCase();
+    if (
+      normalized === WMS_FILTER_PARAM_KEYS.cql ||
+      normalized === WMS_FILTER_PARAM_KEYS.filter
+    ) {
+      return normalized;
+    }
+  }
+  const url = layerDefinition && layerDefinition.url;
+  if (isQgisServer(url) || isMapServer(url)) {
+    return WMS_FILTER_PARAM_KEYS.filter;
+  }
+  return WMS_FILTER_PARAM_KEYS.cql;
+}
+
+/**
+ * Check if FILTER param needs layername prefix.
+ * @param {Object} layerDefinition
+ * @returns {boolean}
+ */
+function shouldPrefixFilter(layerDefinition) {
+  return getWmsFilterParamKey(layerDefinition) === WMS_FILTER_PARAM_KEYS.filter;
+}
+
+/**
+ * Remove layername prefix from a WMS filter expression.
+ * @param {Object} layerDefinition
+ * @param {string} filterValue
+ * @returns {string}
+ */
+function stripLayerPrefixFromFilter(layerDefinition, filterValue) {
+  if (!filterValue || !shouldPrefixFilter(layerDefinition)) {
+    return filterValue;
+  }
+  const layerName = layerDefinition && layerDefinition.layername;
+  if (!layerName) {
+    return filterValue;
+  }
+  const pattern = new RegExp("^" + escapeRegExp(layerName) + "\\s*:\\s*", "i");
+  return filterValue.replace(pattern, "");
+}
+
+/**
+ * Build FILTER/CQL_FILTER param value with optional layer prefix.
+ * @param {Object} layerDefinition
+ * @param {string} filterExpression
+ * @returns {string}
+ */
+function buildWmsFilterParamValue(layerDefinition, filterExpression) {
+  if (!filterExpression || !shouldPrefixFilter(layerDefinition)) {
+    return filterExpression;
+  }
+  const layerName = layerDefinition && layerDefinition.layername;
+  if (!layerName) {
+    return filterExpression;
+  }
+  const trimmed = filterExpression.trim();
+  const pattern = new RegExp("^" + escapeRegExp(layerName) + "\\s*:\\s*", "i");
+  if (pattern.test(trimmed)) {
+    return trimmed;
+  }
+  return layerName + ":" + trimmed;
+}
+
+/**
+ * Read the filter expression from WMS params (CQL_FILTER or FILTER).
+ * @param {Object} layerDefinition
+ * @param {Object} params
+ * @returns {string}
+ */
+function getWmsFilterExpression(layerDefinition, params) {
+  if (!params) {
+    return "";
+  }
+  const paramKey = getWmsFilterParamKey(layerDefinition);
+  let filterValue = params[paramKey];
+  if (!filterValue) {
+    const fallbackKey =
+      paramKey === WMS_FILTER_PARAM_KEYS.cql
+        ? WMS_FILTER_PARAM_KEYS.filter
+        : WMS_FILTER_PARAM_KEYS.cql;
+    filterValue = params[fallbackKey];
+  }
+  return stripLayerPrefixFromFilter(layerDefinition, filterValue || "");
+}
+
+/**
+ * Set WMS filter param on a params object.
+ * @param {Object} layerDefinition
+ * @param {Object} params
+ * @param {string} filterExpression
+ * @returns {void}
+ */
+function setWmsFilterParam(layerDefinition, params, filterExpression) {
+  if (!params) {
+    return;
+  }
+  delete params[WMS_FILTER_PARAM_KEYS.cql];
+  delete params[WMS_FILTER_PARAM_KEYS.filter];
+  if (!filterExpression) {
+    return;
+  }
+  const paramKey = getWmsFilterParamKey(layerDefinition);
+  params[paramKey] = buildWmsFilterParamValue(layerDefinition, filterExpression);
+}
+
+/**
+ * Quote a field name for FILTER syntax (QGIS/MapServer).
+ * @param {Object} layerDefinition
+ * @param {string} fieldName
+ * @returns {string}
+ */
+function formatFilterFieldName(layerDefinition, fieldName) {
+  if (!fieldName) {
+    return fieldName;
+  }
+  if (getWmsFilterParamKey(layerDefinition) !== WMS_FILTER_PARAM_KEYS.filter) {
+    return fieldName;
+  }
+  if (/^\".*\"$/.test(fieldName)) {
+    return fieldName;
+  }
+  return `"${fieldName.replace(/\"/g, '""')}"`;
+}
+
+/**
+ * Build a WMS filter expression for a single field.
+ * @param {Object} layerDefinition
+ * @param {string} fieldName
+ * @param {string} operator
+ * @param {string} value
+ * @param {string} [wildcardpattern]
+ * @returns {string}
+ */
+function makeWmsFilterExpression(
+  layerDefinition,
+  fieldName,
+  operator,
+  value,
+  wildcardpattern
+) {
+  if (!fieldName || value === undefined || value === null) {
+    return "";
+  }
+  const safeValue = value.toString().replaceAll("'", "''");
+  const formattedField = formatFilterFieldName(layerDefinition, fieldName);
+  if (operator == "=") {
+    return formattedField + " = " + "'" + safeValue + "'";
+  }
+  if (operator == "like") {
+    const pattern = wildcardpattern || "%value%";
+    const formattedValue = pattern.replace("value", safeValue);
+    const keyword =
+      getWmsFilterParamKey(layerDefinition) === WMS_FILTER_PARAM_KEYS.filter
+        ? "LIKE"
+        : "like";
+    return `${formattedField} ${keyword} '${formattedValue}'`;
+  }
+  return "";
 }
