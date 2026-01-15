@@ -41,6 +41,12 @@ var info = (function () {
   var _queryableLayers = [];
 
   /**
+   * Property: VECTOR_HIT_TOLERANCE
+   * Pixel tolerance for vector selection (custom layers).
+   */
+  const VECTOR_HIT_TOLERANCE = 4;
+
+  /**
    * Property: _clickCoordinates
    * {Array} Coordinate of the queryMap click
    */
@@ -264,11 +270,13 @@ var info = (function () {
     //Request vector layers only if snaping interaction doesn't exists
     if (queryType === "map" && !snapActive) {
       var pixel = evt.pixel;
-      var vectorLayers = {};
-      var format = new ol.format.GeoJSON();
-      var f_idx = 0;
+    var vectorLayers = {};
+    var format = new ol.format.GeoJSON();
+    var f_idx = 0;
 
-      _map.forEachFeatureAtPixel(pixel, function (feature, layer) {
+      _map.forEachFeatureAtPixel(
+        pixel,
+        function (feature, layer) {
         var l = layer.get("mviewerid");
         if (
           l &&
@@ -299,7 +307,9 @@ var info = (function () {
             }
           }
         }
-      });
+        },
+        { hitTolerance: VECTOR_HIT_TOLERANCE }
+      );
 
       for (var layerid in vectorLayers) {
         var originLayer =
