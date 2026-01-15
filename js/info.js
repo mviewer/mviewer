@@ -270,43 +270,43 @@ var info = (function () {
     //Request vector layers only if snaping interaction doesn't exists
     if (queryType === "map" && !snapActive) {
       var pixel = evt.pixel;
-    var vectorLayers = {};
-    var format = new ol.format.GeoJSON();
-    var f_idx = 0;
+      var vectorLayers = {};
+      var format = new ol.format.GeoJSON();
+      var f_idx = 0;
 
       _map.forEachFeatureAtPixel(
         pixel,
         function (feature, layer) {
-        var l = layer.get("mviewerid");
-        if (
-          l &&
-          l != "featureoverlay" &&
-          l != "selectoverlay" &&
-          l != "subselectoverlay" &&
-          l != "elasticsearch"
-        ) {
-          var queryable = _overLayers[l].queryable;
-          if (queryable) {
-            if (layer.get("infohighlight")) {
-              _queriedFeatures.push(feature);
-            } else {
-              showPin = true;
-            }
-            if (vectorLayers[l] && vectorLayers[l].features) {
-              vectorLayers[l].features.push(feature);
-            } else {
-              if (
-                _overLayers[l] &&
-                _panelsTemplate[_overLayers[l].infospanel] == "allintabs"
-              ) {
-                l = l + "_#" + f_idx;
-                f_idx++;
+          var l = layer.get("mviewerid");
+          if (
+            l &&
+            l != "featureoverlay" &&
+            l != "selectoverlay" &&
+            l != "subselectoverlay" &&
+            l != "elasticsearch"
+          ) {
+            var queryable = _overLayers[l].queryable;
+            if (queryable) {
+              if (layer.get("infohighlight")) {
+                _queriedFeatures.push(feature);
+              } else {
+                showPin = true;
               }
-              vectorLayers[l] = { features: [] };
-              vectorLayers[l].features.push(feature);
+              if (vectorLayers[l] && vectorLayers[l].features) {
+                vectorLayers[l].features.push(feature);
+              } else {
+                if (
+                  _overLayers[l] &&
+                  _panelsTemplate[_overLayers[l].infospanel] == "allintabs"
+                ) {
+                  l = l + "_#" + f_idx;
+                  f_idx++;
+                }
+                vectorLayers[l] = { features: [] };
+                vectorLayers[l].features.push(feature);
+              }
             }
           }
-        }
         },
         { hitTolerance: VECTOR_HIT_TOLERANCE }
       );
