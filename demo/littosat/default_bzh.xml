@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <application id="littosat_bzh" title="Littosat Bretagne" mouseposition="true" logo="demo/littosat/img/logo_littosatBzh.png" titlehelp=" " showhelp="true" help="demo/littosat/home.html" measuretools="true" exportpng="true" style="demo/littosat/css/littosat_styleapp.css" togglealllayersfromtheme="true"/>
+    <mapoptions maxzoom="16" projection="EPSG:3857" center="-220750.13768758904,6144925.57790189" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
+
+    <baselayers style="default"><!-- style="default"||gallery" -->
+        <baselayer  type="fake" id="fake" label="Carroyage" title="Carroyage" thumbgallery="img/basemap/grid.png" visible="false"  />
+        <baselayer  type="OSM" id="darkmatter" label="Dark Matter" title="CartoDb" thumbgallery="img/basemap/darkmatter.png"
+            url="https://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png" maxzoom="20"
+            visible="false" attribution="Map tiles by  &lt;a href='https://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="OSM" id="positron" label="Positron" title="CartoDb" thumbgallery="img/basemap/positron.png"
+            url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20"
+            visible="true" attribution="Map tiles by  &lt;a href='https://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="OSM" id="osm1" label="OpenStreetMap" title="OpenStreetMap" thumbgallery="img/basemap/osm.png"
+            url="https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution="© MapQuest. Données : les contributeurs d'&lt;a href='https://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='https://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" visible="false"/>
+    </baselayers>
+    <proxy url=""/>
+    <olscompletion url="https://api-adresse.data.gouv.fr/search/" type="ban"/>
+    <searchparameters bbox="false" localities="true" features="false" />
+    <extensions>
+        <extension type="component" id="seasons-selector" path="demo/addons"/>
+    </extensions>
+    <themes>
+        <theme name="Mosaïque d'images"  collapsed="true" id="high_tide" icon="fas fa-water">
+            <group name="Marée haute" id="high_tide_grp">
+                <layer id="high_tide" name="Marée haute: couleurs naturelles" visible="true" queryable="false"
+                       style="" opacity="1" tiled="true" expanded="true"
+                       attribution="Source : contient des données Sentinel Copernicus modifiées par Hytech Imaging."
+                       timefilter="true" timeinterval="month" timecontrol="slider" timevalues="201911,202002,202005,202008,202011,202102,202105,202108,202205,202208,202211,202302,202305,202308,202311" timelabels="🍂 2019,❄️ 2020,🌷 2020,☀️ 2020,🍂 2020,❄️ 2021,🌷 2021,☀️ 2021,🌷 2022,☀️ 2022,🍂 2022,❄️ 2023,🌷 2023,☀️ 2023,🍂 2023"
+                       legendurl="demo/littosat/img/lgd_couleursNat.png" metadata="https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/04edd257-36a1-47ab-8768-4541f676a3a0"
+                       url="{{service_bzh}}"/>
+                <layer id="high_tide_cir" name="Marée haute: couleurs infrarouge" visible="false" queryable="false"
+                       style="" opacity="1" tiled="true" expanded="true"
+                       attribution="Source : contient des données Sentinel Copernicus modifiées par Hytech Imaging."
+                       timefilter="true" timeinterval="month" timecontrol="slider" timevalues="201911,202002,202005,202008,202011,202102,202105,202108,202205,202208,202211,202302,202305,202308,202311" timelabels="🍂 2019,❄️ 2020,🌷 2020,☀️ 2020,🍂 2020,❄️ 2021,🌷 2021,☀️ 2021,🌷 2022,☀️ 2022,🍂 2022,❄️ 2023,🌷 2023,☀️ 2023,🍂 2023"
+                       legendurl="demo/littosat/img/lgd_infrarouge.png" metadata="https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/04edd257-36a1-47ab-8768-4541f676a3a0"
+                       url="{{service_bzh}}"/>
+                <layer id="high_tide_ndvi" name="Marée haute: indice de végétation" visible="false" queryable="false"
+                       style="" opacity="1" tiled="true" expanded="true"
+                       legendurl="resources/ndvi_legend.png" metadata="https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/04edd257-36a1-47ab-8768-4541f676a3a0"
+                       attribution="Source : contient des données Sentinel Copernicus modifiées par Hytech Imaging."
+                       timefilter="true" timeinterval="month" timecontrol="slider" timevalues="201911,202002,202005,202008,202011,202102,202105,202108,202205,202208,202211,202302,202305,202308,202311" timelabels="🍂 2019,❄️ 2020,🌷 2020,☀️ 2020,🍂 2020,❄️ 2021,🌷 2021,☀️ 2021,🌷 2022,☀️ 2022,🍂 2022,❄️ 2023,🌷 2023,☀️ 2023,🍂 2023"
+                       url="{{service_bzh}}"/>
+            </group>
+            <group name="Marée basse" id="low_tide_grp">
+                <layer id="low_tide" name="Marée basse: couleurs naturelles " visible="false" queryable="false"
+                       style="" opacity="1" tiled="true" expanded="true"
+                       timefilter="true" timeinterval="month" timecontrol="slider" timevalues="201911,202002,202005,202008,202011,202102,202105,202108,202205,202208,202211,202302,202305,202308,202311" timelabels="🍂 2019,❄️ 2020,🌷 2020,☀️ 2020,🍂 2020,❄️ 2021,🌷 2021,☀️ 2021,🌷 2022,☀️ 2022,🍂 2022,❄️ 2023,🌷 2023,☀️ 2023,🍂 2023"
+                       attribution="Source : contient des données Sentinel Copernicus modifiées par Hytech Imaging."
+                       legendurl="demo/littosat/img/lgd_couleursNat.png" metadata="https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/04edd257-36a1-47ab-8768-4541f676a3a0"
+                       url="{{service_bzh}}"/>
+                <layer id="low_tide_cir" name="Marée basse: couleurs infrarouge " visible="false" queryable="false"
+                       style="" opacity="1" tiled="true" expanded="true"
+                       attribution="Source : contient des données Sentinel Copernicus modifiées par Hytech Imaging."
+                       timefilter="true" timeinterval="month" timecontrol="slider" timevalues="201911,202002,202005,202008,202011,202102,202105,202108,202205,202208,202211,202302,202305,202308,202311" timelabels="🍂 2019,❄️ 2020,🌷 2020,☀️ 2020,🍂 2020,❄️ 2021,🌷 2021,☀️ 2021,🌷 2022,☀️ 2022,🍂 2022,❄️ 2023,🌷 2023,☀️ 2023,🍂 2023"
+                       legendurl="demo/littosat/img/lgd_infrarouge.png" metadata="https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/04edd257-36a1-47ab-8768-4541f676a3a0"
+                       url="{{service_bzh}}"/>
+                <layer id="low_tide_ndvi" name="Marée basse: indice de végétation " visible="false" queryable="false"
+                       style="" opacity="1" tiled="true" expanded="true"
+                       attribution="Source : contient des données Sentinel Copernicus modifiées par Hytech Imaging."
+                       legendurl="resources/ndvi_legend.png" metadata="https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/04edd257-36a1-47ab-8768-4541f676a3a0"
+                       timefilter="true" timeinterval="month" timecontrol="slider" timevalues="201911,202002,202005,202008,202011,202102,202105,202108,202205,202208,202211,202302,202305,202308,202311" timelabels="🍂 2019,❄️ 2020,🌷 2020,☀️ 2020,🍂 2020,❄️ 2021,🌷 2021,☀️ 2021,🌷 2022,☀️ 2022,🍂 2022,❄️ 2023,🌷 2023,☀️ 2023,🍂 2023"
+                       url="{{service_bzh}}"/>
+                <layer id="low_tide_rbottom" name="Marée basse: réflectance du fond" visible="false" queryable="false"
+                       style="" opacity="1" tiled="true" expanded="true"
+                       legendurl="demo/littosat/img/lgd_reflFond.png" metadata="https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/04edd257-36a1-47ab-8768-4541f676a3a0"
+                       attribution="Source : contient des données Sentinel Copernicus modifiées par Hytech Imaging."
+                       timefilter="true" timeinterval="month" timecontrol="slider" timevalues="201911,202011,202205,202208,202211,202302,202305,202308,202311" timelabels="🍂 2019,🍂 2020,🌷 2022,☀️ 2022,🍂 2022,❄️ 2023,🌷 2023,☀️ 2023,🍂 2023"
+                       url="{{service_bzh}}"/>
+            </group>
+        </theme>
+        <theme name="Limites" collapsed="true" id="limits" icon="fas fa-grip-lines">
+            <layer id="LimiteTerreMer_FXX" name="Terre-Mer" visible="false" queryable="false"
+                   attribution = "source : BD Topage®"
+                   metadata = "https://geo.data.gouv.fr/fr/datasets/3bb657ad65a3d917b90e35300a3b8c209aca006c"
+                   style="" opacity="1" tiled="false"
+                   legendurl="resources/empty_legend.png"
+                   url="{{service_bzh}}"/>
+        </theme>
+        <theme name="Litto3D" collapsed="true" id="litto3d">
+            <layer id="litto3d" name="Litto3D" visible="false" queryable="false"
+                   attribution = "source : SHOM"
+                   metadata = "https://services.data.shom.fr/support/fr/geoservices/WMS"
+                   style="" opacity="1" tiled="false"
+                   legendurl="resources/legende_litto3d.png"
+                   url="{{service_bzh}}"/>
+        </theme>
+        <theme name="Herbier" collapsed="true" id="herbier" icon="fas fa-seedling">
+            <layer id="herbiers_ofb" name="Inventaire des données des herbiers de zostères en France métropolitaine"
+                   visible="false" queryable="false"
+                   attribution = "source : OFB"
+                   metadata = "https://data.ofb.fr/catalogue/srv/fre/catalog.search#/metadata/c6f8ddbc-a9d2-4563-8bba-cf45a6281400"
+                   style="" opacity="1" tiled="false"
+                   legendurl="resources/legende_herbier.png"
+                   url="{{service_bzh}}"/>
+        </theme>
+    </themes>
+</config>

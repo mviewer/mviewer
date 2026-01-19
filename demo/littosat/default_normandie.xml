@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <application id="littosat_normandie" title="Littosat Normandie" mouseposition="true" logo="https://littosat.hytech-imaging.fr/littosat-normandie/resources/icon_oeil_hytech_imaging.png" titlehelp=" " showhelp="true" help="demo/littosat/info.html" measuretools="true" exportpng="true" style="demo/littosat/css/littoviz.css" togglealllayersfromtheme="true"/>
+    <mapoptions maxzoom="16" projection="EPSG:3857" center="22398.35944155958713964, 6356276.84812058974057436" zoom="8" projextent="-20037508.342789244, -20037508.342789244, 20037508.342789244, 20037508.342789244" />
+
+    <baselayers style="default"><!-- style="default"||gallery" -->
+        <baselayer  type="fake" id="fake" label="Carroyage" title="Carroyage" thumbgallery="img/basemap/grid.png" visible="false"  />
+        <baselayer  type="OSM" id="darkmatter" label="Dark Matter" title="CartoDb" thumbgallery="img/basemap/darkmatter.png"
+            url="https://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png" maxzoom="20"
+            visible="false" attribution="Map tiles by  &lt;a href='https://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="OSM" id="positron" label="Positron" title="CartoDb" thumbgallery="img/basemap/positron.png"
+            url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" maxzoom="20"
+            visible="true" attribution="Map tiles by  &lt;a href='https://cartodb.com/attributions'>CartoDb &lt;/a>, under  &lt;a href='https://creativecommons.org/licenses/by/3.0/'>CC BY 3.0 &lt;/a>" />
+        <baselayer  type="OSM" id="osm1" label="OpenStreetMap" title="OpenStreetMap" thumbgallery="img/basemap/osm.png"
+            url="https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution="© MapQuest. Données : les contributeurs d'&lt;a href='https://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='https://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" visible="false"/>
+    </baselayers>
+    <proxy url=""/>
+    <olscompletion url="https://api-adresse.data.gouv.fr/search/" type="ban"/>
+    <searchparameters bbox="false" localities="true" features="false" />
+    <extensions>
+        <extension type="component" id="seasons-selector" path="demo/addons"/>
+    </extensions>
+    <themes>
+        <theme name="Mosaïque d'images"  collapsed="true" id="high_tide" icon="fas fa-water">
+            <group name="Marée haute" id="high_tide_grp">
+                <layer id="high_tide" name="Marée haute: couleurs naturelles" visible="false" queryable="false"
+                       style="" opacity="1" tiled="true" expanded="true"
+                       attribution="Source : contient des données Sentinel Copernicus modifiées par Hytech Imaging."
+                       timefilter="true" timeinterval="month" timecontrol="slider" timelabels="🌷 2023,☀️ 2023,🍂 2023" timevalues="202303,202306,202309"
+                       legendurl="https://littosat.hytech-imaging.fr/littosat-normandie/resources/empty_legend.png" metadata="https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/04edd257-36a1-47ab-8768-4541f676a3a0"
+                       url="{{service_normandie}}"/>
+                <layer id="high_tide_cir" name="Marée haute: couleurs infrarouge" visible="true" queryable="false"
+                       style="" opacity="1" tiled="true" expanded="true"
+                       attribution="Source : contient des données Sentinel Copernicus modifiées par Hytech Imaging."
+                       timefilter="true" timeinterval="month" timecontrol="slider" timelabels="🌷 2023,☀️ 2023,🍂 2023" timevalues="202303,202306,202309"
+                       legendurl="https://littosat.hytech-imaging.fr/littosat-normandie/resources/empty_legend.png" metadata="https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/04edd257-36a1-47ab-8768-4541f676a3a0"
+                       url="{{service_normandie}}"/>
+                <layer id="high_tide_ndvi" name="Marée haute: indice de végétation" visible="false" queryable="false"
+                       style="" opacity="1" tiled="true" expanded="true"
+                       legendurl="https://littosat.hytech-imaging.fr/littosat-normandie/resources/ndvi_legend.png" metadata="https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/04edd257-36a1-47ab-8768-4541f676a3a0"
+                       attribution="Source : contient des données Sentinel Copernicus modifiées par Hytech Imaging."
+                       timefilter="true" timeinterval="month" timecontrol="slider" timelabels="🌷 2023,☀️ 2023,🍂 2023" timevalues="202303,202306,202309"
+                       url="{{service_normandie}}"/>
+            </group>
+            <group name="Marée basse" id="low_tide_grp">
+                <layer id="low_tide" name="Marée basse: couleurs naturelles " visible="false" queryable="false"
+                       style="" opacity="1" tiled="true" expanded="true"
+                       timefilter="true" timeinterval="month" timecontrol="slider" timelabels="🌷 2023,☀️ 2023,🍂 2023" timevalues="202303,202306,202309"
+                       attribution="Source : contient des données Sentinel Copernicus modifiées par Hytech Imaging."
+                       legendurl="https://littosat.hytech-imaging.fr/littosat-normandie/resources/empty_legend.png" metadata="https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/04edd257-36a1-47ab-8768-4541f676a3a0"
+                       url="{{service_normandie}}"/>
+                <layer id="low_tide_cir" name="Marée basse: couleurs infrarouge " visible="false" queryable="false"
+                       style="" opacity="1" tiled="true" expanded="true"
+                       attribution="Source : contient des données Sentinel Copernicus modifiées par Hytech Imaging."
+                       timefilter="true" timeinterval="month" timecontrol="slider" timelabels="🌷 2023,☀️ 2023,🍂 2023" timevalues="202303,202306,202309"
+                       legendurl="https://littosat.hytech-imaging.fr/littosat-normandie/resources/empty_legend.png" metadata="https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/04edd257-36a1-47ab-8768-4541f676a3a0"
+                       url="{{service_normandie}}"/>
+                <layer id="low_tide_ndvi" name="Marée basse: indice de végétation " visible="false" queryable="false"
+                       style="" opacity="1" tiled="true" expanded="true"
+                       attribution="Source : contient des données Sentinel Copernicus modifiées par Hytech Imaging."
+                       legendurl="https://littosat.hytech-imaging.fr/littosat-normandie/resources/ndvi_legend.png" metadata="https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/04edd257-36a1-47ab-8768-4541f676a3a0"
+                       timefilter="true" timeinterval="month" timecontrol="slider" timelabels="🌷 2023,☀️ 2023,🍂 2023" timevalues="202303,202306,202309"
+                       url="{{service_normandie}}"/>
+                <layer id="low_tide_rbottom" name="Marée basse: réflectance du fond" visible="false" queryable="false"
+                       style="" opacity="1" tiled="true" expanded="true"
+                       legendurl="https://littosat.hytech-imaging.fr/littosat-normandie/resources/empty_legend.png" metadata="https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/04edd257-36a1-47ab-8768-4541f676a3a0"
+                       attribution="Source : contient des données Sentinel Copernicus modifiées par Hytech Imaging."
+                       timefilter="true" timeinterval="month" timecontrol="slider" timelabels="🌷 2023,☀️ 2023,🍂 2023" timevalues="202303,202306,202309"
+                       url="{{service_normandie}}"/>
+            </group>
+        </theme>
+        <theme name="Limites" collapsed="true" id="limits" icon="fas fa-grip-lines">
+            <layer id="LimiteTerreMer_FXX" name="Terre-Mer" visible="false" queryable="false"
+                   attribution = "source : BD Topage®"
+                   metadata = "https://geo.data.gouv.fr/fr/datasets/3bb657ad65a3d917b90e35300a3b8c209aca006c"
+                   style="" opacity="1" tiled="false"
+                   legendurl="https://littosat.hytech-imaging.fr/littosat-normandie/resources/empty_legend.png"
+                   url="{{service_normandie}}"/>
+        </theme>
+    </themes>
+</config>

@@ -1,0 +1,156 @@
+/*
+* Plugin 
+* Feuille de style
+*/ 
+
+/** Propriété qui masque le slider temporel au sein de la légende pour chaque couche */
+
+#legend .form-group-seasons-timer{
+    display: none;
+}
+
+/**/ 
+
+#seasonPanel {
+    position: fixed!important;
+    padding-top: 0px !important;
+	z-index: 900;
+	max-width: 43rem;
+    width: 43rem;
+	background-color: #FFFFFF;
+	display: block;
+	border: none !important;
+	padding: 1.5rem;
+	box-shadow: 0 2px 20px 0 rgb(0 0 0 / 10%), 0 2px 20px 0 rgb(0 0 0 / 10%);
+	border-radius: 10px;
+	font-family: var(--myfont);
+}
+
+/* Icône pour fermer le panel */
+
+a.closeSeasonPanel {
+	font-size: 40px;
+	font-weight: 400;
+	color: rgba(27, 37, 80, 0.2);
+	position: absolute;
+	top: 0px;
+	right: 25px;
+	cursor: default;
+}
+
+a.closeSeasonPanel:hover {
+	color: rgba(27, 37, 80, 0.6);
+}
+
+/* Titre */
+.seasonPanelHeader {
+	margin: 20px 0 15px;
+    display: flex;
+    align-content: stretch;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+}
+
+.seasonPanelHeader svg {
+	color: rgba(27, 37, 80);
+    margin-right: 5px;
+}
+
+.seasonPanelTitleHeader {
+	font-size: 18px;
+    font-weight: 700;
+    color: var(--mycolor);
+    margin: 0;
+}
+
+/* Blocs des stats */
+
+#seasonPanelContent {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.seasonPanelText {
+    max-width: 100px;
+    margin-right: 10px;
+    font-size: 9px;
+}
+
+.seasonButton {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: stretch;
+    align-items: center;
+    justify-content: center;
+}
+.seasonYear {
+    font-size: 15px;
+}
+.seasonButton, .seasonButtonList {
+    margin-right: 5px;
+    background-color: white;
+    border-color: rgba(204, 204, 204, 0.5);
+    color: rgb(116 116 116 / 70%);
+    font-family: system-ui;
+    font-size: 12px;
+    height: 60px;
+    width: 70px;
+    border-radius: 0.7em;
+}
+
+.seasonList .dropdown-menu {
+    min-width: 50px;
+    padding: 5px;
+}
+
+.seasonPanelLeft .btn {
+    background-color: transparent;
+    font-size: smaller;
+    color: grey;
+    font-style: italic;
+    padding: 0px;
+    display: inline-flex;
+    flex-direction: row;
+    align-content: space-around;
+    align-items: center;
+}
+
+.seasonSelector[selected="true"] {
+	background-color: rgba(32,42,84, 0.1);
+	color: black;
+    pointer-events: none;
+}
+
+#resetSeasonPanel svg {
+ margin-right: 2px;
+}
+
+.rowBadges {
+    margin-top: 8px;
+}
+
+span.badge.seasonBadge {
+    display: inline-flex;
+    /* justify-content: center; */
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    background-color: #202a543d;
+    font-size: 10px;
+    border-radius: 5px;
+    color: #202a54;
+    border: none;
+    font-family: var(--myfont);
+}
+
+span.badge.seasonBadge svg {
+    margin-right: 2px
+}
+
+.seasonYearEL {
+    cursor: default;
+}

@@ -1,0 +1,38 @@
+{
+    "type": "module",
+    "js": [
+        "js/main.js", "lib/jquery.easyDrag.min.js"
+    ],
+    "css": ["css/main.css"],
+    "html": "seasons-selector.html",
+    "target": "page-content-wrapper",
+    "options": {
+        "littosat_bzh": {
+            "years": [2019, 2020, 2021, 2022, 2023, 2024],
+            "separator": "",
+            "timePattern": "{year}{season}",
+            "seasons": [
+                {"id":0, "label":"Hiver", "value": "02"},
+                {"id":1, "label":"Printemps", "value": "05"},
+                {"id":2, "label": "Eté", "value": "08"},
+                {"id":3, "label": "Automne", "value": "11"}
+            ],
+            "layersId": ["high_tide", "high_tide_cir", "high_tide_ndvi", "low_tide", "low_tide_cir", "low_tide_ndvi", "low_tide_rbottom"]
+        },
+        "littosat_normandie": {
+            "default": {
+                "year": "2023",
+                "season": "08"
+            },
+            "fromCapabilities": true,
+            "separator": "-",
+            "timePattern": "{year}{season}",
+            "seasons": [
+                {"id":1, "label":"Printemps", "value": "05"},
+                {"id":2, "label": "Eté", "value": "08"},
+                {"id":3, "label": "Automne", "value": "11"}
+            ],
+            "layersId": ["high_tide", "high_tide_cir", "high_tide_ndvi", "low_tide", "low_tide_cir", "low_tide_ndvi", "low_tide_rbottom"]
+        }
+    }
+}

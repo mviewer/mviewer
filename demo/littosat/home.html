@@ -1,0 +1,430 @@
+<!--HOME-->
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="generator" content="HTML Tidy for HTML5 for Windows version 5.4.0">
+	<style>
+		/** Modification de la taille de la fenêtre aide **/
+		@media (min-width: 992px) {
+			#help .modal-lg {
+				width: 1200px;
+			}
+		}
+
+		#help .homeHeader {
+			background-image: url(demo/littosat/img/littosat_background.png);
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+			border-top-left-radius: 12px;
+			border-top-right-radius: 12px;
+			color: white;
+		}
+
+		.homeHeader img {
+			width: 30%;
+		}
+
+		#help .modal-body {
+			padding: 0;
+		}
+
+		#help .modal-header {
+			padding: 0;
+		}
+
+		#help .modal-header .close {
+			position: absolute;
+			top: 0.8em;
+			right: 1em;
+			z-index: 5;
+			color: white;
+			font-size: 3em;
+			opacity: 1;
+			font-weight: 100;
+		}
+
+		#help .modal-content {
+			border-radius: 14px!important;
+		}
+
+		.container__homeHeader {
+			padding: 4em 4em 1em;
+		}
+
+		#help {
+			font-family: var(--myfont);
+		}
+
+		.homeTitle {
+			font-size: x-large;
+			line-height: 1.1;
+		}
+
+		.homeClose {
+			margin: 2em 0;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		.homeClose a {
+			font-size: larger;
+		}
+
+		.homeClose .btnHome {
+			background-color: var(--mycolor);
+			color: white;
+			padding: 8px 12px;
+			border-radius: 6px;
+			margin-right: 1em;
+		}
+
+		.homeClose .btnHome:hover {
+			opacity: .9;
+		}
+
+		.homeHeader .nav.nav-pills {
+			margin-top: 2em;
+			border: none;
+		}
+
+
+		.homeHeader .nav.nav-pills a {
+			font-size: 1.1em;
+			text-transform: uppercase;
+			padding: 5px 0;
+			margin-right: 3em;
+			color: white;
+		}
+
+		.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover, .nav-pills>li>a:hover {
+			background-color: #f0f8ff00;
+			border-bottom: 2px solid white;
+		}
+
+		.homeContent {
+			padding: 2em 4em;
+		}
+
+		.homeContent .tab-pane p {
+			font-size: larger;
+		}
+
+		.homeContent .tab-pane h3 {
+			font-weight: 700;
+			color: var(--mycolor);
+		}
+
+		.logos__tabCell img {
+			max-width: 100px;
+			max-height: 100px;
+		}
+
+		.logos__tabCell {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			align-content: center;
+			align-items: center;
+			justify-content: space-evenly;
+			margin-bottom: 2em;
+		}
+
+		.dataItem {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			align-items: center;
+			justify-content: flex-start;
+			align-content: center;
+			margin: 2em 0;
+		}
+
+		.dataItem img {
+			width: 7em;
+			margin-right: 2em;
+		}
+
+		.helpItem {
+			display: flex;
+			flex-direction: row;
+			align-content: center;
+			align-items: center;
+			justify-content: flex-start;
+			margin: 2em 0;
+		}
+
+		.helpItem img {
+			width: 250px;
+			margin-right: 2em;
+		}
+
+		.helpItem .highlightText {
+			font-weight: bold;
+		}
+
+		.helpItem p {
+			margin: 0;
+		}
+
+		/* XS mode */
+		.xs .navbar-collapse {
+			background-color: var(--mycolor);
+		}
+
+		.xs #mv-navbar {
+			padding: 5px 0px;
+		}
+
+		.xs .mv-nav a {
+			color: white!important;
+		}
+
+		.xs .navbar-toggle {
+			color: white;
+		}
+
+		.xs .homeContent {
+			padding: 10px;
+		}
+
+		.xs .container__homeHeader {
+			padding: 25px;
+		}
+
+		.xs .homeContent {
+			padding: 25px;
+		}
+
+		.xs .container__homeHeader {
+			padding: 25px;
+		}
+
+		.xs .helpItem {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+	</style>
+</head>
+
+<body>
+
+	<!-- Title -->
+	<div class="homeHeader">
+		<div class="container__homeHeader">
+			<img src="demo/littosat/img/logo__littosat.png"/>
+			<div class="homeTitle">Tableau de bord satellitaire de suivi des paramètres de l’environnement littoral</div>
+			<ul class="nav nav-pills" role="tablist">
+				<li role="presentation" class="active">
+					<a href="#h_tab1" aria-controls="profile" role="tab" data-toggle="tab">Comment ça marche ?</a>
+				</li>
+				<li role="presentation">
+					<a href="#h_tab2" aria-controls="profile" role="tab" data-toggle="tab">Les données</a>
+				</li>
+				<li role="presentation">
+					<a href="#h_tab3" aria-controls="profile" role="tab" data-toggle="tab">Fournisseurs et partenaires</a>
+				</li>
+				<li role="presentation">
+					<a href="#h_tab4" aria-controls="profile" role="tab" data-toggle="tab">Contactez-nous</a>
+				</li>	
+			</ul>
+		</div>		
+	</div>
+	<!-- /.Title -->
+
+	<div class="homeContent">
+		<div class="tab-content">
+			<!-- TAB1 -->
+			<div role="tabpanel" class="tab-pane active" id="h_tab1">
+				<h3>Comment ça marche ?</h3>
+				<h4>Explorez le territoire côtier au rythme des saisons et des marées avec les mosaïques d’images tidal-S2 marée basse et marée haute à 10 m de résolution.</h4>
+				<div class="helpListBlock">
+					<div class="helpItem">		
+						<img src="demo/littosat/img/home_explain_1.png"/>
+						<div style="width: 70%;">
+							<p class="highlightText">							
+								Suivez les évolutions saisonnières de la végétation de la zone intertidale à l’aide de l’indice de végétation ivi-S2.
+							</p>
+							<p>
+								Cochez dans le panneau à gauche la ou les couche(s) tidal-S2 et ivi-S2 à afficher <br>
+								Choisissez sur la fenêtre « Temporalité » l’année et la saison, les couches tidal-S2 et ivi-S2 se synchronisent automatiquement<br>
+								Vous pouvez déplacer et réduire la fenêtre « Temporalité » en cliquant sur la croix grise, et l’afficher de nouveau en cliquant sur l’icône calendrier en haut à droite de la carte<br>
+								Pour supprimer une couche de la carte, cliquez sur la croix bleue à droite de la fenêtre de gauche<br>
+							</p>
+						</div>
+					</div>
+					<div class="helpItem">		
+						<img src="demo/littosat/img/home_explain_2.png"/>
+						<div style="width: 70%;">
+							<p class="highlightText">							
+								Affichez les variations inter-annuelles et intra-annuelles de la végétation de la zone intertidale à l’aide des cartes de différence de l’indice de végétation saisonnier diff-ivi-S2
+							</p>
+							<p>
+								Cochez dans le panneau à gauche la couche diff-ivi-S2<br>
+								La barre temporelle vous permet de choisir une saison de départ et une saison d’arrivée<br>
+								<i>L'application Littosat Bretagne met à disposition gratuitement les produits tidal-S2 et ivi-S2 pour les saisons de l'automne 2019 à l’automne 2023 / du printemps à l’automne 2023. Elles sont produites par Hytech-imaging à partir d’images Sentinel 2 (S2). Il est  possible d'étendre la période depuis 2017 jusqu'à la dernière saison écoulée.</i>
+							</p>
+						</div>
+					</div>
+					<div class="helpItem">		
+						<img src="demo/littosat/img/home_explain_3.png"/>
+						<div style="width: 70%;">
+							<p class="highlightText">							
+								Superposez les produits saisonniers à des inventaires thématiques (herbiers, spartine, habitats intertidaux, …) afin de remonter le temps ou de visualiser des dynamiques phénologiques au sein des emprises de ces habitats.
+							</p>
+							<p>
+								Cochez dans le panneau à gauche la couche d’inventaire<br>
+								La barre d’opacité vous permet par exemple de visualiser par transparence l’ivi-S2 de cet habitat à différentes dates
+							</p>
+						</div>
+					</div>
+					<div class="helpItem">		
+						<img src="demo/littosat/img/noimg_large.png"/>
+						<div style="width: 70%;">
+							<p class="highlightText">							
+								Superposez les produits saisonniers à des données de bathymétrie afin d’appréhender le relief, qui vient enrichir la lecture des produits saisonniers tidal-S2 ou ivi-S2.
+							</p>
+							<p>
+								Cochez dans le panneau à gauche la couche Litto3D<br>
+								Cochez dans le panneau à gauche la couche ivi-2 marée basse<br>
+								La barre d’opacité vous permet par exemple de visualiser par transparence le relief sous la couche d’indice de végétation ivi-S2 et aide à son interprétation<br>
+								<i>L’application Littosat Bretagne distribue les flux Litto3D fournis par le Shom</i>
+							</p>
+						</div>
+					</div>
+					<div class="helpItem">		
+						<img src="demo/littosat/img/noimg_large.png"/>
+						<div style="width: 70%;">
+							<p class="highlightText">							
+								Comparez avec d’autres images commerciales, complémentaires car plus précises spatialement, mais disponibles plus ponctuellement et sans prise en compte des critères de marée : les mosaïques annuelles Spot à 1,5 m de résolution et les images ponctuelles Pléiades à 50 cm de résolution.
+							</p>
+							<p>
+								Cochez dans le panneau à gauche la couche Spot ou Pléiades<br>
+								La barre temporelle vous permet de sélectionner l’année<br>
+								<i>L’application Littosat Bretagne distribue les flux fournis par l’IGN et disponibles grâce au dispositif DINAMIS</i>
+							</p>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			<!-- /.TAB1 -->
+
+			<!-- TAB2 -->
+			<div role="tabpanel" class="tab-pane" id="h_tab2">
+				<h3>Les données Littosat© </h3>
+				<div class="dataListBlock">
+					<div class="dataItem">
+						<img src="demo/littosat/img/noimg.png"/>
+						<div>
+							<h4>tidal-S2 marée basse</h4>
+							<p>
+								Mosaïques d’images Sentinel 2 à marée basse avec la plus faible couverture nuageuse possible. Mise à jour saisonnière et résolution spatiale de 10 mètres. 
+							Source : Hytech-imaging, contient des données Sentinel Copernicus modifiées 
+							<a href="https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/04edd257-36a1-47ab-8768-4541f676a3a0" target="_blank">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11 11V17H13V11H11ZM11 7V9H13V7H11Z"></path></svg>
+							</a>
+							</p>
+						</div>
+					</div>
+					<div class="dataItem">
+						<img src="demo/littosat/img/noimg.png"/>
+						<div>
+							<h4>tidal-S2 marée haute</h4>
+							<p>
+								Mosaïques d’images Sentinel 2 à marée haute avec la plus faible couverture nuageuse possible. Mise à jour saisonnière et résolution spatiale de 10 mètres. Source : Hytech-imaging, contient des données Sentinel Copernicus modifiées 
+							<a href="https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/04edd257-36a1-47ab-8768-4541f676a3a0" target="_blank">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11 11V17H13V11H11ZM11 7V9H13V7H11Z"></path></svg>
+							</a>
+							</p>
+						</div>
+					</div>
+					<div class="dataItem">
+						<img src="demo/littosat/img/noimg.png"/>
+						<div>
+							<h4>ivi-S2 marée basse</h4>
+							<p>
+								Végétation de la zone intertidale émergée à marée basse mise en évidence par un indice de végétation. Les zones immergées et nuageuses sont masquées. Mise à jour saisonnière et résolution spatiale de 10 mètres. Source : Hytech-imaging, contient des données Sentinel Copernicus modifiées  
+							<a href="https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/04edd257-36a1-47ab-8768-4541f676a3a0" target="_blank">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11 11V17H13V11H11ZM11 7V9H13V7H11Z"></path></svg>
+							</a>
+							</p>
+						</div>
+					</div>
+					<div class="dataItem">
+						<img src="demo/littosat/img/noimg.png"/>
+						<div>
+							<h4>ivi-S2 marée haute</h4>
+							<p>
+								Végétation de la zone intertidale émergée à marée haute mise en évidence par un indice de végétation. Les zones immergées et nuageuses sont masquées. Mise à jour saisonnière et résolution spatiale de 10 mètres. Source : Hytech-imaging, contient des données Sentinel Copernicus modifiées 
+							<a href="https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/04edd257-36a1-47ab-8768-4541f676a3a0" target="_blank">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11 11V17H13V11H11ZM11 7V9H13V7H11Z"></path></svg>
+							</a>
+							</p>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<!-- /.TAB2 -->
+
+			<!-- TAB3 -->
+			<div role="tabpanel" class="tab-pane" id="h_tab3">
+				<h3>Fournisseurs et partenaires</h3>
+				<div class="logos__tabCell">					
+					<img src="demo/littosat/img/logo_hytech-imaging.png"/>
+					<img src="demo/littosat/img/04_logo_ofb.jpg"/>
+					<img src="demo/littosat/img/logo_shom.png"/>
+					<img src="demo/littosat/img/logo-PNMI.png"/>					
+					<img src="demo/littosat/img/logo-PNRA.jpg"/>
+					<img src="demo/littosat/img/logo_SCO.png"/>
+					<img src="demo/littosat/img/logo_cnes.png"/>
+					<img src="demo/littosat/img/logo_IRISPACE.bmp"/>
+				</div>				
+				<p>
+					Littosat Bretagne est une initiative labellisée Space for Climate Observatory (SCO). Elle vise à
+					doter les gestionnaires de territoires littoraux et d’aires marines protégées d’un tableau de bord
+					permettant le suivi en temps peu différé de l’évolution spatiale de la végétation côtière, alimenté
+					par de nouvelles données issues d’images satellitaires. Le projet proposera des produits
+					satellitaires inédits, une interface de visualisation et des fonctions de détection de changement.<br><br>
+					L’application est développée par Hytech-imaging.
+						<br>Responsable de la publication : Hytech-imaging
+						<br>Editeur : Hytech-imaging
+						<br>Graphisme : Hytech-imaging
+						<br>Technologies utilisées : Littosat Bretagne s'appuie sur la solution mviewer
+						<br>Version 1.1.0
+						<br>Date 02/2024
+						<br>Serveur web: NGINX
+						<br>Serveur BDD: PostgreSQL
+						<br>Serveur cartographique: QGIS-Server
+						<br>Frameworks JS: OpenLayers - Proj4 - JQuery - Bootstrap - Chart JS
+				</p>
+			</div>
+
+			<!-- /.TAB3 -->
+
+			<!-- TAB4 -->
+			<div role="tabpanel" class="tab-pane" id="h_tab4">
+				<h3>Contactez-nous</h3>
+				<p>Vous êtes intéressé par Littosat et souhaitez en savoir plus, contactez-nous <b><a href="mailto:info@hytech-imaging.fr">info@hytech-imaging.fr</a></b></p>
+
+			</div>
+			<!-- /.TAB4 -->
+		</div>
+		<div class="homeClose">
+			<div>
+				<a href="" class="btnHome" data-dismiss="modal">Accéder à l'application</a>
+				<a href="https://hytech-imaging.fr/littosat/" target="_blank">En savoir plus</a>
+			</div>			
+			<a href="https://hytech-imaging.fr/" target="_blank"><img style="width: 150px;" src="demo/littosat/img/logo_hytechHorizontal.png"/></a>
+		</div>
+	</div>
+	
+
+</body>
+
+</html>
