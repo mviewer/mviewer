@@ -209,8 +209,8 @@ Paramètres pour gérer le filtre attributaire (liste déroulante) des couches W
 * ``attributelabel``:  Texte à afficher pour chaque atttribut de la liste déroulante associée.
 * ``attributestylesync``: Booléen qui précise s'il convient d'appliquer un style (sld) spécifique lors du filtre attributaire. Dans ce cas la convention est la suivante : nom_style@attributevalue ou url_style_externe@attributevalue.sld.
 * ``attributefilterenabled``: Booléen précisant si le filtre est activé par défaut (avec la première valeur de la liste attributevalues). Si cette option n'est pas activée, une valeur "Par défaut" apparaît dans la liste et ne filtre pas les données. Valeur par défaut = false.
-* ``attributeoperator`` : Opérateur utilisé pour construire le filtre. (= ou like). Defaut = "=". Attention dans le cas de like, le wildcard est harcodé : %
-* ``wildcardpattern`` : Pattern à utiliser pour les filtre utilisant l'opérateur like. Defaut = "%value%, autres possibilités "%value" et "value%".
+* ``attributeoperator`` : Opérateur utilisé pour construire le filtre OGC (XML) : ``=``, ``like``, ``<``, ``>``, ``<=``, ``>=``, ``!=``. Defaut = ``=``. Par défaut, la comparaison est insensible à la casse.
+* ``wildcardpattern`` : Pattern à utiliser pour les filtres utilisant l'opérateur ``like``. Defaut = ``%value%``. Autres possibilités : ``%value`` et ``value%``.
 
 Si vous souhaitez effectuer un filtre sur plusieurs couches, voir :ref:`configcustomcontrol`
 
@@ -314,5 +314,4 @@ Cet élément optionnel, permet d'associer un template type Mustache (https://gi
 **Paramètres**
 
 * ``url`` :guilabel:`studio` : paramètre obligatoire de type url qui indique l'emplacement du template à utiliser.
-
 

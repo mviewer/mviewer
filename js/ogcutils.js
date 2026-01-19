@@ -287,39 +287,3 @@ function formatFilterFieldName(layerDefinition, fieldName) {
   }
   return `"${fieldName.replace(/\"/g, '""')}"`;
 }
-
-/**
- * Build a WMS filter expression for a single field.
- * @param {Object} layerDefinition
- * @param {string} fieldName
- * @param {string} operator
- * @param {string} value
- * @param {string} [wildcardpattern]
- * @returns {string}
- */
-function makeWmsFilterExpression(
-  layerDefinition,
-  fieldName,
-  operator,
-  value,
-  wildcardpattern
-) {
-  if (!fieldName || value === undefined || value === null) {
-    return "";
-  }
-  const safeValue = value.toString().replaceAll("'", "''");
-  const formattedField = formatFilterFieldName(layerDefinition, fieldName);
-  if (operator == "=") {
-    return formattedField + " = " + "'" + safeValue + "'";
-  }
-  if (operator == "like") {
-    const pattern = wildcardpattern || "%value%";
-    const formattedValue = pattern.replace("value", safeValue);
-    const keyword =
-      getWmsFilterParamKey(layerDefinition) === WMS_FILTER_PARAM_KEYS.filter
-        ? "LIKE"
-        : "like";
-    return `${formattedField} ${keyword} '${formattedValue}'`;
-  }
-  return "";
-}

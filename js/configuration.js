@@ -1154,6 +1154,7 @@ var configuration = (function () {
       TRANSPARENT: true,
     };
     var source;
+    var attributeOgcFilter = null;
     if (oLayer.filter) {
       mviewer.setWmsFilterParam(oLayer, wms_params, oLayer.filter);
     }
@@ -1162,14 +1163,38 @@ var configuration = (function () {
       oLayer.attributefilterenabled &&
       oLayer.attributevalues.length > 1
     ) {
-      var filterExpression = mviewer.makeWmsFilterExpression(
-        oLayer,
-        oLayer.attributefield,
-        oLayer.attributeoperator,
-        oLayer.attributevalues[0],
-        oLayer.wildcardpattern
-      );
-      mviewer.setWmsFilterParam(oLayer, wms_params, filterExpression);
+      var attributeValue = oLayer.attributevalues[0];
+      if (attributeValue !== "all") {
+        var operator = oLayer.attributeoperator;
+        var ogcOperator = null;
+        if (operator == "=") {
+          ogcOperator = "EqualTo";
+        } else if (operator == "like") {
+          ogcOperator = "isLike";
+        } else if (operator == "<") {
+          ogcOperator = "lessThan";
+        } else if (operator == ">") {
+          ogcOperator = "GreatherThan";
+        } else if (operator == "<=") {
+          ogcOperator = "LessThanOrEqualTo";
+        } else if (operator == ">=") {
+          ogcOperator = "GreaterThanOrEqualTo";
+        } else if (operator == "!=" || operator == "<>") {
+          ogcOperator = "NotEqualTo";
+        }
+        if (ogcOperator) {
+          var filterDefinition = {
+            operator: ogcOperator,
+            field: oLayer.attributefield,
+            value: attributeValue,
+          };
+          if (ogcOperator === "isLike") {
+            var pattern = oLayer.wildcardpattern || "%value%";
+            filterDefinition.pattern = pattern.replace("value", attributeValue);
+          }
+          attributeOgcFilter = buildOgcFilter(filterDefinition);
+        }
+      }
     }
     if (oLayer.sld) {
       wms_params["SLD"] = oLayer.sld;
@@ -1235,6 +1260,10 @@ var configuration = (function () {
           source: source,
         });
         break;
+    }
+
+    if (attributeOgcFilter) {
+      updateOgcSourceWithFilter(attributeOgcFilter, source);
     }
 
     source.set("layerid", oLayer.layerid);

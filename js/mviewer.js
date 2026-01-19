@@ -3650,20 +3650,6 @@ mviewer = (function () {
       setWmsFilterParam(layerDefinition, params, filterExpression);
     },
 
-    makeCQL_Filter: function (fld, operator, value, wildcardpattern) {
-      var cql_filter = "";
-      if (operator == "=") {
-        cql_filter = fld + " = " + "'" + value.replaceAll("'", "''") + "'";
-      } else if (operator == "like") {
-        cql_filter = `${fld} like '%${value.replaceAll("'", "''")}%'`;
-      }
-      return cql_filter;
-    },
-
-    makeWmsFilterExpression: function (layerDefinition, fld, operator, value, wildcard) {
-      return makeWmsFilterExpression(layerDefinition, fld, operator, value, wildcard);
-    },
-
     setLayerAttribute: function (layerid, attributeValue, selectCtrl) {
       var _layerDefinition = _overLayers[layerid];
       var _source = _layerDefinition.layer.getSource();
@@ -3672,16 +3658,38 @@ mviewer = (function () {
         return;
       }
       if (attributeValue === "all") {
-        mviewer.setWmsFilterParam(_layerDefinition, sourceParams, null);
+        updateOgcSourceWithFilter(null, _source);
       } else {
-        var filterExpression = this.makeWmsFilterExpression(
-          _layerDefinition,
-          _layerDefinition.attributefield,
-          _layerDefinition.attributeoperator,
-          attributeValue,
-          _layerDefinition.wildcardpattern
-        );
-        mviewer.setWmsFilterParam(_layerDefinition, sourceParams, filterExpression);
+        var operator = _layerDefinition.attributeoperator;
+        var ogcOperator = null;
+        if (operator == "=") {
+          ogcOperator = "EqualTo";
+        } else if (operator == "like") {
+          ogcOperator = "isLike";
+        } else if (operator == "<") {
+          ogcOperator = "lessThan";
+        } else if (operator == ">") {
+          ogcOperator = "GreatherThan";
+        } else if (operator == "<=") {
+          ogcOperator = "LessThanOrEqualTo";
+        } else if (operator == ">=") {
+          ogcOperator = "GreaterThanOrEqualTo";
+        } else if (operator == "!=" || operator == "<>") {
+          ogcOperator = "NotEqualTo";
+        }
+        if (ogcOperator) {
+          var filterDefinition = {
+            operator: ogcOperator,
+            field: _layerDefinition.attributefield,
+            value: attributeValue,
+          };
+          if (ogcOperator === "isLike") {
+            var pattern = _layerDefinition.wildcardpattern || "%value%";
+            filterDefinition.pattern = pattern.replace("value", attributeValue);
+          }
+          var ogcFilter = buildOgcFilter(filterDefinition);
+          updateOgcSourceWithFilter(ogcFilter, _source);
+        }
       }
       if (_layerDefinition.attributestylesync) {
         //need update legend ad style applied to the layer
@@ -3722,6 +3730,9 @@ mviewer = (function () {
           .data("legendurl", legendUrl);
       }
       _source.updateParams({ dc: new Date().valueOf() });
+      if (typeof _source.refresh === "function") {
+        _source.refresh();
+      }
       _source.changed();
       $(
         '.mv-layer-details[data-layerid="' +
