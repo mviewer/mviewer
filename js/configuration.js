@@ -1285,6 +1285,7 @@ var configuration = (function () {
   };
 
   return {
+    parseOwsOptions: getParamsFromOwsOptionsString,
     parseXML: _parseXML,
     getExtensions: _getExtensions,
     load: _load,

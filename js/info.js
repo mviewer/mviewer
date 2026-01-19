@@ -435,7 +435,7 @@ var info = (function () {
         if (layer && featureid) {
           // create new cql to insert feature id
           attributeFilter = _overLayers[layer].searchid + "%3D%27" + featureid + "%27";
-          // create new cql filter
+          // create new layer features filter
           urlParams.delete(filterParamKey);
           var filterExpression = mviewer.getWmsFilterExpression(layerInfo, {
             [filterParamKey]: cql || "",

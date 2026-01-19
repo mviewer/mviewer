@@ -467,6 +467,8 @@ mviewer = (function () {
       STYLE: layer.style,
       FORMAT: "image/png",
       TRANSPARENT: true,
+      // add options from layer xml config
+      ...configuration.parseOwsOptions(layer.owslegendoptions),
     };
 
     if (layer.sld) {
@@ -2271,7 +2273,8 @@ mviewer = (function () {
   };
 
   var _getWmsSourceParams = function (layerDefinition) {
-    var layer = layerDefinition && layerDefinition.layer ? layerDefinition.layer : layerDefinition;
+    var layer =
+      layerDefinition && layerDefinition.layer ? layerDefinition.layer : layerDefinition;
     if (!layer || typeof layer.getSource !== "function") {
       return null;
     }
@@ -3372,10 +3375,7 @@ mviewer = (function () {
       oLayer.layer.setVisible(true);
       //Only for second and more loads
       var sourceParams = _getWmsSourceParams(oLayer);
-      var activeFilter = mviewer.getWmsFilterExpression(
-        oLayer,
-        sourceParams
-      );
+      var activeFilter = mviewer.getWmsFilterExpression(oLayer, sourceParams);
       if (oLayer.attributefilter && activeFilter) {
         var wildcard = oLayer.wildcardpattern.split("value")[0];
         var reg = new RegExp(wildcard + "|'", "g");
