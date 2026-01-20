@@ -80,6 +80,7 @@ mviewer = (function () {
     }
   });
 
+
   _events.registerConfLoadedListener(function (val) {
     if (_events.overLayersLoaded === _events.overLayersTotal && val === true) {
       $(document).trigger("layersLoaded");
@@ -3377,24 +3378,49 @@ mviewer = (function () {
       var sourceParams = _getWmsSourceParams(oLayer);
       var activeFilter = mviewer.getWmsFilterExpression(oLayer, sourceParams);
       if (oLayer.attributefilter && activeFilter) {
-        var wildcard = oLayer.wildcardpattern.split("value")[0];
-        var reg = new RegExp(wildcard + "|'", "g");
-        var activeAttributeValue = activeFilter
-          .split(oLayer.attributeoperator)[1]
-          .replace(reg, "")
-          .trim();
-        $(
-          "#" +
-            layer.layerid +
-            "-attributes-selector option[value='" +
-            activeAttributeValue +
-            "']"
-        ).prop("selected", true);
-        $(
-          '.mv-layer-details[data-layerid="' +
-            layer.layerid +
-            '"] .layerdisplay-subtitle .selected-attribute span'
-        ).text(activeAttributeValue);
+        var activeAttributeValue = null;
+        if (activeFilter.trim().charAt(0) === "<") {
+          activeAttributeValue = getOgcFilterLiteralValue(
+            activeFilter,
+            oLayer.wildcardpattern
+          );
+        } else {
+          var wildcard = (oLayer.wildcardpattern || "%value%").split("value")[0];
+          var reg = new RegExp(wildcard + "|'", "g");
+          var parts = activeFilter.split(oLayer.attributeoperator);
+          if (parts.length > 1) {
+            activeAttributeValue = parts[1].replace(reg, "").trim();
+          }
+        }
+        var selectCtrl = $("#" + layer.layerid + "-attributes-selector")[0];
+        if (!activeAttributeValue && selectCtrl) {
+          activeAttributeValue = selectCtrl.options[selectCtrl.selectedIndex].value;
+        }
+        if (activeAttributeValue) {
+          $(
+            "#" +
+              layer.layerid +
+              "-attributes-selector option[value='" +
+              activeAttributeValue +
+              "']"
+          ).prop("selected", true);
+          var optionEl = $(
+            "#" +
+              layer.layerid +
+              "-attributes-selector option[value='" +
+              activeAttributeValue +
+              "']"
+          );
+          var activeLabel =
+            optionEl.length && optionEl.attr("label")
+              ? optionEl.attr("label")
+              : activeAttributeValue;
+          $(
+            '.mv-layer-details[data-layerid="' +
+              layer.layerid +
+              '"] .layerdisplay-subtitle .selected-attribute span'
+          ).text(activeLabel);
+        }
       }
 
       var activeStyle = false;
@@ -3592,11 +3618,29 @@ mviewer = (function () {
         //var attributeValue = $("#"+ layerid + "-attributes-selector").val();
         var attributeValue = "all";
         var styleBase = style.split("@")[0];
-        var activeFilter = mviewer.getWmsFilterExpression(_layerDefinition, sourceParams);
-        if (activeFilter) {
-          attributeValue = activeFilter
-            .split(" " + _layerDefinition.attributeoperator + " ")[1]
-            .replace(/\'/g, "");
+        var selectCtrl = $("#" + layerid + "-attributes-selector")[0];
+        if (selectCtrl && selectCtrl.selectedIndex >= 0) {
+          attributeValue = selectCtrl.options[selectCtrl.selectedIndex].value;
+        } else {
+          var activeFilter = mviewer.getWmsFilterExpression(_layerDefinition, sourceParams);
+          if (activeFilter) {
+            if (activeFilter.trim().charAt(0) === "<") {
+              attributeValue = getOgcFilterLiteralValue(
+                activeFilter,
+                _layerDefinition.wildcardpattern
+              );
+            } else {
+              var parts = activeFilter.split(
+                " " + _layerDefinition.attributeoperator + " "
+              );
+              if (parts.length > 1) {
+                attributeValue = parts[1].replace(/\'/g, "");
+              }
+            }
+          }
+        }
+        if (!attributeValue) {
+          attributeValue = "all";
         }
         if (attributeValue != "all") {
           style = [styleBase, "@", attributeValue.toLowerCase().sansAccent()].join("");

@@ -185,6 +185,47 @@ function buildOgcFilters(definitions = [], operator = "and") {
 }
 
 /**
+ * Read the first ogc:Literal value from a filter XML string.
+ * @param {string} filterXml
+ * @param {string} [wildcardpattern]
+ * @returns {string|null}
+ */
+function getOgcFilterLiteralValue(filterXml, wildcardpattern) {
+  if (!filterXml || filterXml.trim().charAt(0) !== "<") {
+    return null;
+  }
+  try {
+    const doc = new DOMParser().parseFromString(filterXml, "text/xml");
+    const literal =
+      doc.getElementsByTagName("ogc:Literal")[0] ||
+      doc.getElementsByTagName("Literal")[0];
+    if (!literal) {
+      return null;
+    }
+    let value = literal.textContent;
+    if (value === null || value === undefined) {
+      return null;
+    }
+    const pattern = wildcardpattern || "%value%";
+    if (pattern.indexOf("value") === -1) {
+      return value;
+    }
+    const parts = pattern.split("value");
+    const prefix = parts[0];
+    const suffix = parts[1] || "";
+    if (prefix && value.indexOf(prefix) === 0) {
+      value = value.slice(prefix.length);
+    }
+    if (suffix && value.lastIndexOf(suffix) === value.length - suffix.length) {
+      value = value.slice(0, value.length - suffix.length);
+    }
+    return value;
+  } catch (e) {
+    return null;
+  }
+}
+
+/**
  * Applies an OGC filter (AND / OR) to an OGC source.
  * Clears any CQL filter before setting the FILTER param.
  * @param {{operator: 'AND'|'OR', filters: Array}} ogcFilter
