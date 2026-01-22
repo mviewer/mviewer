@@ -101,10 +101,8 @@ function formatFilterLiteral(value) {
 function buildFilterExpression(definition, serverType) {
   if (!definition) return "";
   const operator = normalizeOgcOperator(definition.operator);
-  const propertyName =
-    definition.field || definition.propertyName || definition.property;
-  const matchCase =
-    definition.matchCase === undefined ? false : definition.matchCase;
+  const propertyName = definition.field || definition.propertyName || definition.property;
+  const matchCase = definition.matchCase === undefined ? false : definition.matchCase;
   const fieldName =
     serverType === WMS_SERVER_TYPES.qgis
       ? formatQgisFieldName(propertyName)
@@ -142,14 +140,7 @@ function buildFilterExpression(definition, serverType) {
         return "intersects(" + fieldName + ", make_bbox(" + bboxArgs + srsArg + "))";
       }
       const srsSuffix = srsName ? ", '" + escapeFilterLiteral(srsName) + "'" : "";
-      return (
-        "BBOX(" +
-        fieldName +
-        ", " +
-        extent.join(", ") +
-        srsSuffix +
-        ")"
-      );
+      return "BBOX(" + fieldName + ", " + extent.join(", ") + srsSuffix + ")";
     }
     case "islike": {
       if (!fieldName) return "";
@@ -247,19 +238,14 @@ function buildOgcFilter(definition) {
   if (!definition) return null;
 
   const operator = normalizeOgcOperator(definition.operator);
-  const propertyName =
-    definition.field || definition.propertyName || definition.property;
-  const matchCase =
-    definition.matchCase === undefined ? false : definition.matchCase;
+  const propertyName = definition.field || definition.propertyName || definition.property;
+  const matchCase = definition.matchCase === undefined ? false : definition.matchCase;
 
   switch (operator) {
     case "or": {
-      const filters = (definition.filters || [])
-        .map(buildOgcFilter)
-        .filter(Boolean);
+      const filters = (definition.filters || []).map(buildOgcFilter).filter(Boolean);
       if (!filters.length) return null;
-      const filter =
-        filters.length === 1 ? filters[0] : ol.format.filter.or(...filters);
+      const filter = filters.length === 1 ? filters[0] : ol.format.filter.or(...filters);
       return attachFilterDefinition(filter, definition);
     }
     case "not": {
@@ -282,8 +268,7 @@ function buildOgcFilter(definition) {
       const pattern =
         definition.pattern !== undefined ? definition.pattern : definition.value;
       if (!propertyName || pattern === undefined) return null;
-      const wildCard =
-        definition.wildCard !== undefined ? definition.wildCard : "%";
+      const wildCard = definition.wildCard !== undefined ? definition.wildCard : "%";
       const singleChar =
         definition.singleChar !== undefined ? definition.singleChar : "_";
       const escapeChar =
@@ -302,10 +287,7 @@ function buildOgcFilter(definition) {
     }
     case "isnull": {
       if (!propertyName) return null;
-      return attachFilterDefinition(
-        ol.format.filter.isNull(propertyName),
-        definition
-      );
+      return attachFilterDefinition(ol.format.filter.isNull(propertyName), definition);
     }
     case "equalto": {
       if (!propertyName) return null;
@@ -339,22 +321,14 @@ function buildOgcFilter(definition) {
     case "lessthanorequalto": {
       if (!propertyName) return null;
       return attachFilterDefinition(
-        ol.format.filter.lessThanOrEqualTo(
-          propertyName,
-          definition.value,
-          matchCase
-        ),
+        ol.format.filter.lessThanOrEqualTo(propertyName, definition.value, matchCase),
         definition
       );
     }
     case "greaterthanorequalto": {
       if (!propertyName) return null;
       return attachFilterDefinition(
-        ol.format.filter.greaterThanOrEqualTo(
-          propertyName,
-          definition.value,
-          matchCase
-        ),
+        ol.format.filter.greaterThanOrEqualTo(propertyName, definition.value, matchCase),
         definition
       );
     }
@@ -391,12 +365,10 @@ function buildOgcFilters(definitions = [], operator = "and") {
   if (!filters.length) return null;
   const logical = normalizeOgcOperator(operator);
   if (logical === "or") {
-    const filter =
-      filters.length === 1 ? filters[0] : ol.format.filter.or(...filters);
+    const filter = filters.length === 1 ? filters[0] : ol.format.filter.or(...filters);
     return attachFilterDefinition(filter, { operator: "or", filters: definitions });
   }
-  const filter =
-    filters.length === 1 ? filters[0] : ol.format.filter.and(...filters);
+  const filter = filters.length === 1 ? filters[0] : ol.format.filter.and(...filters);
   return attachFilterDefinition(filter, { operator: "and", filters: definitions });
 }
 
@@ -454,8 +426,7 @@ function updateOgcSourceWithFilter(filter, source) {
   const format = ol.format.WFS;
   const serverType = normalizeServerType(source.get?.("servertype"));
   const filterDefinition = filter && filter.__mviewerDefinition;
-  const shouldClearCql =
-    serverType === WMS_SERVER_TYPES.geoserver || serverType === "";
+  const shouldClearCql = serverType === WMS_SERVER_TYPES.geoserver || serverType === "";
   const shouldClearFilter = true;
 
   if (!filter) {
@@ -479,8 +450,7 @@ function updateOgcSourceWithFilter(filter, source) {
   }
 
   if (
-    (serverType === WMS_SERVER_TYPES.geoserver ||
-      serverType === WMS_SERVER_TYPES.qgis) &&
+    (serverType === WMS_SERVER_TYPES.geoserver || serverType === WMS_SERVER_TYPES.qgis) &&
     filterDefinition
   ) {
     const expression = buildFilterExpression(filterDefinition, serverType);

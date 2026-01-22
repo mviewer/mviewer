@@ -80,7 +80,6 @@ mviewer = (function () {
     }
   });
 
-
   _events.registerConfLoadedListener(function (val) {
     if (_events.overLayersLoaded === _events.overLayersTotal && val === true) {
       $(document).trigger("layersLoaded");
@@ -3622,7 +3621,10 @@ mviewer = (function () {
         if (selectCtrl && selectCtrl.selectedIndex >= 0) {
           attributeValue = selectCtrl.options[selectCtrl.selectedIndex].value;
         } else {
-          var activeFilter = mviewer.getWmsFilterExpression(_layerDefinition, sourceParams);
+          var activeFilter = mviewer.getWmsFilterExpression(
+            _layerDefinition,
+            sourceParams
+          );
           if (activeFilter) {
             if (activeFilter.trim().charAt(0) === "<") {
               attributeValue = getOgcFilterLiteralValue(

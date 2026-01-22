@@ -204,10 +204,7 @@ function getWmsFilterParamKey(layerDefinition) {
     }
   }
   const serverType = getLayerServerType(layerDefinition);
-  if (
-    serverType === WMS_SERVER_TYPES.qgis ||
-    serverType === WMS_SERVER_TYPES.ogc
-  ) {
+  if (serverType === WMS_SERVER_TYPES.qgis || serverType === WMS_SERVER_TYPES.ogc) {
     return WMS_FILTER_PARAM_KEYS.filter;
   }
   return WMS_FILTER_PARAM_KEYS.cql;
@@ -259,7 +256,7 @@ function buildWmsFilterParamValue(layerDefinition, filterExpression) {
   if (pattern.test(trimmed)) {
     return trimmed;
   }
-  if(layerDefinition?.servertype === WMS_SERVER_TYPES.ogc) {
+  if (layerDefinition?.servertype === WMS_SERVER_TYPES.ogc) {
     return trimmed;
   }
   return layerName + ":" + trimmed;

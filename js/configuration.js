@@ -1162,7 +1162,6 @@ var configuration = (function () {
     var source;
     var attributeOgcFilter = null;
     if (oLayer.filter) {
-      console.log("here:")
       mviewer.setWmsFilterParam(oLayer, wms_params, oLayer.filter);
     }
     if (
