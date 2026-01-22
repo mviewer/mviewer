@@ -113,7 +113,15 @@ Paramètres pour gérer l'affichage de la couche
 * ``dynamiclegend`` :guilabel:`studio` : Booléen précisant si la légende est liée à l'échelle de la carte et si elle nécessite d'être actualisée à chaque changement d'échelle de la carte.
 * ``exclusive`` :guilabel:`studio` :  Booléen stipulant si la couche est exclusive. Si la valeur est "true", l'affichage de cette couche masquera automatiquement toutes les autres couches ayant ce paramètre activé.
 * ``legendurl`` :guilabel:`studio` : Url permettant de récupérer la légende. Si non défini, c'est un GetLegendGraphic qui est effectué.
-* ``filter`` :guilabel:`studio` : Expression CQL permettant de filtrer la couche ex: insee=35000 Ou INTERSECT(the_geom, POINT (-74.817265 40.5296504)) (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial).
+* ``servertype``: Permet d'indiquer le serveur de la couche (valeurs possibles : qgis|geoserver|ogc) pour la syntaxe du paramètre `filter`. `geoserver` par défaut.
+* ``filter``: Expression pour ajouter un filtre WMS (CQL ou Qgis Filter ou OGC). Les expressions OGC Filter Encoding fonctionnent avec le servertype `ogc` (https://www.ogc.org/standards/filter/)
+
+        * ``Avec GeoServer``: Par défaut si `servertype` absent, l'expression doit être du CQL. Ex: insee=35000 Ou INTERSECT(the_geom, POINT (-74.817265 40.5296504)) (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial)
+        * ``Avec Qgis Server``: L'expression doit être compatible Qgis Filter. Ex: countries:"name" = 'France' (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial)
+        * ``Avec MapServer``: L'expression doit être compatible OGC Filter Encoding. Ex: <Filter><PropertyIsEqualTo><PropertyName>NAME</PropertyName><Literal>Halifax</Literal></PropertyIsEqualTo></Filter> (https://mapserver.org/ogc/filter_encoding.html#tests)
+
+        * ``Echappement``: Dans tous les cas, l'expression devra être échapée  (https://www.w3.org/TR/xml/#syntax) !
+
 * ``filterstyle`` :guilabel:`studio` : pour les couches de type vector-tms uniquement. Il permet de ne pas conserver, dans le style, la représentation de certaines couches. Cela permet donc de ne pas représenter un type de données présent dans le flux tuilé vectoriel. Il faut indiquer ici le nom d'une ou de plusieurs couches référencées dans la propriété "source-layer" du fichier de style au format JSON. Lorsque plusieurs couches sont à ajouter, le séparateur est la virgule et sans espace.
 * ``toplayer`` :guilabel:`studio` : Booléan stipulant si la couche est affichée au premier plan sur la carte. La valeur par défaut est false. Si plusieurs couches sont en toplayer, elles seront affichées dans l’ordre d’écriture du XML.
 * ``expanded`` :guilabel:`studio` : Booléan précisant si le panneau de la couche est agrandi au démarrage. La valeur par défaut est false.

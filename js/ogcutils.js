@@ -129,6 +129,38 @@ const WMS_FILTER_PARAM_KEYS = {
 };
 
 /**
+ * Normalize server type value.
+ * @param {string} value
+ * @returns {string}
+ */
+function normalizeServerType(value) {
+  const normalized = (value || "").toString().trim().toLowerCase();
+  return WMS_SERVER_TYPES[normalized] || "";
+}
+
+/**
+ * Resolve server type for a layer definition.
+ * @param {Object} layerDefinition
+ * @returns {string}
+ */
+function getLayerServerType(layerDefinition) {
+  if (layerDefinition && layerDefinition.servertype) {
+    const explicit = normalizeServerType(layerDefinition.servertype);
+    if (explicit) {
+      return explicit;
+    }
+  }
+  const url = layerDefinition && layerDefinition.url;
+  if (isQgisServer(url)) {
+    return WMS_SERVER_TYPES.qgis;
+  }
+  if (isMapServer(url)) {
+    return WMS_SERVER_TYPES.ogc;
+  }
+  return WMS_SERVER_TYPES.geoserver;
+}
+
+/**
  * Escape string for RegExp usage.
  * @param {string} value
  * @returns {string}
@@ -171,8 +203,11 @@ function getWmsFilterParamKey(layerDefinition) {
       return normalized;
     }
   }
-  const url = layerDefinition && layerDefinition.url;
-  if (isQgisServer(url) || isMapServer(url)) {
+  const serverType = getLayerServerType(layerDefinition);
+  if (
+    serverType === WMS_SERVER_TYPES.qgis ||
+    serverType === WMS_SERVER_TYPES.ogc
+  ) {
     return WMS_FILTER_PARAM_KEYS.filter;
   }
   return WMS_FILTER_PARAM_KEYS.cql;
@@ -222,6 +257,9 @@ function buildWmsFilterParamValue(layerDefinition, filterExpression) {
   const trimmed = filterExpression.trim();
   const pattern = new RegExp("^" + escapeRegExp(layerName) + "\\s*:\\s*", "i");
   if (pattern.test(trimmed)) {
+    return trimmed;
+  }
+  if(layerDefinition?.servertype === WMS_SERVER_TYPES.ogc) {
     return trimmed;
   }
   return layerName + ":" + trimmed;

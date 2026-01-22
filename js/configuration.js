@@ -701,6 +701,12 @@ var configuration = (function () {
             oLayer.icon = icon;
             oLayer.layername = layerId;
             oLayer.type = layer.type || "wms";
+            if (layer.servertype) {
+              const serverType = layer.servertype.toString().trim().toLowerCase();
+              if (["qgis", "geoserver", "ogc"].includes(serverType)) {
+                oLayer.servertype = serverType;
+              }
+            }
             oLayer.theme = themeid;
             oLayer.rank = layerRank;
             oLayer.index = layer.index ? parseFloat(layer.index) : null;
@@ -1156,6 +1162,7 @@ var configuration = (function () {
     var source;
     var attributeOgcFilter = null;
     if (oLayer.filter) {
+      console.log("here:")
       mviewer.setWmsFilterParam(oLayer, wms_params, oLayer.filter);
     }
     if (
@@ -1242,6 +1249,9 @@ var configuration = (function () {
           tileLoadFunction: customWmsImageLoader,
           params: wms_params,
         });
+        if (oLayer.servertype) {
+          source.set("servertype", oLayer.servertype);
+        }
 
         l = new ol.layer.Tile({
           source: source,
@@ -1255,6 +1265,9 @@ var configuration = (function () {
           imageLoadFunction: customWmsImageLoader,
           params: wms_params,
         });
+        if (oLayer.servertype) {
+          source.set("servertype", oLayer.servertype);
+        }
 
         l = new ol.layer.Image({
           source: source,
