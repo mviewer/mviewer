@@ -97,6 +97,12 @@ var info = (function () {
   var _queriedFeatures;
 
   /**
+   * Property: _hasQueryResult
+   * Boolean flag to track if last query produced any result (including text/html).
+   */
+  var _hasQueryResult = false;
+
+  /**
    * Property: _firstlayerFeatures
    * Array of ol.Feature
    * Used to store features of firstlayer retrieved on click
@@ -229,6 +235,7 @@ var info = (function () {
     $(".popup-content").html("");
     _queriedFeatures = [];
     _firstlayerFeatures = [];
+    _hasQueryResult = false;
     var showPin = false;
     var queryType = "map"; // default behaviour
     mviewer.clickedCoordinates = { x: 0, y: 0 };
@@ -731,6 +738,7 @@ var info = (function () {
       for (var panel in views) {
         infoLayers = infoLayers.concat(views[panel].layers);
       }
+      _hasQueryResult = infoLayers.length > 0;
       mviewer.setInfoLayers(infoLayers);
 
       $.each(views, function (panel, view) {
@@ -1473,6 +1481,14 @@ var info = (function () {
   };
 
   /**
+   * Public Method: hasQueryResult
+   * @returns {boolean}
+   */
+  var _hasQueryResultGetter = function () {
+    return _hasQueryResult === true;
+  };
+
+  /**
    * Public Method: clearQueryState
    * Reset query-related state so permalink doesn't reuse stale click info.
    */
@@ -1480,6 +1496,7 @@ var info = (function () {
     _queriedFeatures = [];
     _firstlayerFeatures = [];
     _clickCoordinates = null;
+    _hasQueryResult = false;
   };
 
   return {
@@ -1496,6 +1513,7 @@ var info = (function () {
     addQueryableLayer: _addQueryableLayer,
     getClickCoordinates: _getClickCoordinates,
     getQueriedFeatures: _getQueriedFeatures,
+    hasQueryResult: _hasQueryResultGetter,
     clearQueryState: _clearQueryState,
   };
 })();
