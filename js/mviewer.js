@@ -2739,7 +2739,11 @@ mviewer = (function () {
       var c = _map.getView().getCenter();
       const queriedFeatures = info.getQueriedFeatures ? info.getQueriedFeatures() : [];
       const clickCoords = info.getClickCoordinates ? info.getClickCoordinates() : null;
-      if (queriedFeatures && queriedFeatures.length && clickCoords) {
+      const infoPanelVisible =
+        $("#right-panel").hasClass("active") ||
+        $("#bottom-panel").hasClass("active") ||
+        $("#modal-panel").hasClass("show");
+      if (queriedFeatures && queriedFeatures.length && clickCoords && infoPanelVisible) {
         c = clickCoords;
       }
       var linkParams = {};
@@ -2749,10 +2753,6 @@ mviewer = (function () {
         linkParams.z = encodeURIComponent(_map.getView().getZoom());
         linkParams.l = encodeURIComponent(_getVisibleOverLayers());
       }
-      const infoPanelVisible =
-        $("#right-panel").hasClass("active") ||
-        $("#bottom-panel").hasClass("active") ||
-        $("#modal-panel").hasClass("show");
       if (queriedFeatures && queriedFeatures.length && infoPanelVisible) {
         linkParams.query = "true";
       }

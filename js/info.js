@@ -1472,6 +1472,16 @@ var info = (function () {
     return _queriedFeatures;
   };
 
+  /**
+   * Public Method: clearQueryState
+   * Reset query-related state so permalink doesn't reuse stale click info.
+   */
+  var _clearQueryState = function () {
+    _queriedFeatures = [];
+    _firstlayerFeatures = [];
+    _clickCoordinates = null;
+  };
+
   return {
     init: init,
     enable: enable,
@@ -1486,5 +1496,6 @@ var info = (function () {
     addQueryableLayer: _addQueryableLayer,
     getClickCoordinates: _getClickCoordinates,
     getQueriedFeatures: _getQueriedFeatures,
+    clearQueryState: _clearQueryState,
   };
 })();

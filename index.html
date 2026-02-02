@@ -1150,6 +1150,15 @@
         });
         $("#right-panel .btn-close,#bottom-panel .btn-close").click(function () {
           mviewer.hideLocation();
+          if (window.info && typeof window.info.clearQueryState === "function") {
+            window.info.clearQueryState();
+          }
+        });
+        $("#modal-panel").on("hidden.bs.modal", function () {
+          if (window.info && typeof window.info.clearQueryState === "function") {
+            window.info.clearQueryState();
+          }
+          mviewer.hideLocation();
         });
       });
     </script>
