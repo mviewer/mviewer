@@ -2553,13 +2553,22 @@ mviewer = (function () {
       );
       // only keep id and reverse to get order as we need on map
       mapLayers = mapLayers.map((layer) => layer.getProperties().mviewerid).reverse();
-      // now, we could order legend by map layers
-      $(`#layers-container>li[data-layerid]`).each((i, li) => {
-        // get legend element
-        var legendLayerId = $(li).attr("data-layerid");
-        // get map position
-        mviewer.setLegendLayerPos(legendLayerId, mapLayers.indexOf(legendLayerId));
-      });
+
+      // filter to only keep layer to show in legend panel
+      mapLayers = mapLayers.filter((id) => mviewer.getLayer(id).showintoc !== false);
+
+      // now, we could order legend by map layers only
+      const divLayersInLegends = [
+        ...document.querySelectorAll("#layers-container > li[data-layerid]"),
+      ];
+
+      // only reorder legend if legend's items are fully available
+      if (divLayersInLegends.length == mapLayers.length) {
+        divLayersInLegends.forEach((li) => {
+          const legendLayerId = li.getAttribute("data-layerid");
+          mviewer.setLegendLayerPos(legendLayerId, mapLayers.indexOf(legendLayerId));
+        });
+      }
     },
 
     /**
@@ -2609,21 +2618,23 @@ mviewer = (function () {
       // count themes layers
       var themes = configuration.getConfiguration().themes.theme;
       var topLayersByTheme = [];
-      themes.forEach((e) => {
-        if (e.group && e.group.length) {
-          countLayers += e.group.map((d) => d.layer.length).reduce((a, b) => a + b, 0);
-          e.group.forEach((g) => {
+      themes.forEach((theme) => {
+        if (theme.group && theme.group.length) {
+          countLayers += theme.group
+            .map((d) => d.layer.length)
+            .reduce((a, b) => a + b, 0);
+          theme.group.forEach((g) => {
             topLayersByTheme = [
               ...topLayersByTheme,
               ...g.layer.filter((x) => x.toplayer === "true"),
             ];
           });
         }
-        if (e.layer && e.layer.length) {
-          countLayers += e.layer.length;
+        if (theme.layer && theme.layer.length) {
+          countLayers += theme.layer.length;
           topLayersByTheme = [
             ...topLayersByTheme,
-            ...e.layer.filter((x) => x.toplayer === "true"),
+            ...theme.layer.filter((x) => x.toplayer === "true"),
           ];
         }
       });
@@ -2632,8 +2643,8 @@ mviewer = (function () {
       // parse top layers by xml order and be sur to dlisplay in this order
       topLayersByXmlOrder.forEach((id) => {
         var layer = mviewer.getLayer(id).layer;
-        if (!layer) return; // no top layer to display
 
+        if (!layer) return; // no top layer to display
         // set first layer over others theme or background layers and before system layers
         mviewer.reorderLayer(layer, countLayers);
       });
