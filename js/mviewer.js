@@ -2759,7 +2759,10 @@ mviewer = (function () {
         linkParams.z = encodeURIComponent(_map.getView().getZoom());
         linkParams.l = encodeURIComponent(_getVisibleOverLayers());
       }
-      if (infoPanelVisible && (hasQueryResult || (queriedFeatures && queriedFeatures.length))) {
+      if (
+        infoPanelVisible &&
+        (hasQueryResult || (queriedFeatures && queriedFeatures.length))
+      ) {
         linkParams.query = "true";
       }
       linkParams.lb = encodeURIComponent(this.getActiveBaseLayer());
