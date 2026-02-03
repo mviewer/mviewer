@@ -41,6 +41,12 @@ var info = (function () {
   var _queryableLayers = [];
 
   /**
+   * Property: VECTOR_HIT_TOLERANCE
+   * Pixel tolerance for vector selection (custom layers).
+   */
+  const VECTOR_HIT_TOLERANCE = 4;
+
+  /**
    * Property: _clickCoordinates
    * {Array} Coordinate of the queryMap click
    */
@@ -89,6 +95,12 @@ var info = (function () {
    * Used to store features retrieved on click
    */
   var _queriedFeatures;
+
+  /**
+   * Property: _hasQueryResult
+   * Boolean flag to track if last query produced any result (including text/html).
+   */
+  var _hasQueryResult = false;
 
   /**
    * Property: _firstlayerFeatures
@@ -223,6 +235,7 @@ var info = (function () {
     $(".popup-content").html("");
     _queriedFeatures = [];
     _firstlayerFeatures = [];
+    _hasQueryResult = false;
     var showPin = false;
     var queryType = "map"; // default behaviour
     mviewer.clickedCoordinates = { x: 0, y: 0 };
@@ -268,38 +281,42 @@ var info = (function () {
       var format = new ol.format.GeoJSON();
       var f_idx = 0;
 
-      _map.forEachFeatureAtPixel(pixel, function (feature, layer) {
-        var l = layer.get("mviewerid");
-        if (
-          l &&
-          l != "featureoverlay" &&
-          l != "selectoverlay" &&
-          l != "subselectoverlay" &&
-          l != "elasticsearch"
-        ) {
-          var queryable = _overLayers[l].queryable;
-          if (queryable) {
-            if (layer.get("infohighlight")) {
-              _queriedFeatures.push(feature);
-            } else {
-              showPin = true;
-            }
-            if (vectorLayers[l] && vectorLayers[l].features) {
-              vectorLayers[l].features.push(feature);
-            } else {
-              if (
-                _overLayers[l] &&
-                _panelsTemplate[_overLayers[l].infospanel] == "allintabs"
-              ) {
-                l = l + "_#" + f_idx;
-                f_idx++;
+      _map.forEachFeatureAtPixel(
+        pixel,
+        function (feature, layer) {
+          var l = layer.get("mviewerid");
+          if (
+            l &&
+            l != "featureoverlay" &&
+            l != "selectoverlay" &&
+            l != "subselectoverlay" &&
+            l != "elasticsearch"
+          ) {
+            var queryable = _overLayers[l].queryable;
+            if (queryable) {
+              if (layer.get("infohighlight")) {
+                _queriedFeatures.push(feature);
+              } else {
+                showPin = true;
               }
-              vectorLayers[l] = { features: [] };
-              vectorLayers[l].features.push(feature);
+              if (vectorLayers[l] && vectorLayers[l].features) {
+                vectorLayers[l].features.push(feature);
+              } else {
+                if (
+                  _overLayers[l] &&
+                  _panelsTemplate[_overLayers[l].infospanel] == "allintabs"
+                ) {
+                  l = l + "_#" + f_idx;
+                  f_idx++;
+                }
+                vectorLayers[l] = { features: [] };
+                vectorLayers[l].features.push(feature);
+              }
             }
           }
-        }
-      });
+        },
+        { hitTolerance: VECTOR_HIT_TOLERANCE }
+      );
 
       for (var layerid in vectorLayers) {
         var originLayer =
@@ -721,6 +738,7 @@ var info = (function () {
       for (var panel in views) {
         infoLayers = infoLayers.concat(views[panel].layers);
       }
+      _hasQueryResult = infoLayers.length > 0;
       mviewer.setInfoLayers(infoLayers);
 
       $.each(views, function (panel, view) {
@@ -1447,11 +1465,38 @@ var info = (function () {
   };
 
   /**
+   * Public Method: getClickCoordinates
+   * @returns {Array|null} last click coordinates used for query
+   */
+  var _getClickCoordinates = function () {
+    return _clickCoordinates;
+  };
+
+  /**
    * Public Method: _getQueriedFeatures
    *
    */
   var _getQueriedFeatures = function () {
     return _queriedFeatures;
+  };
+
+  /**
+   * Public Method: hasQueryResult
+   * @returns {boolean}
+   */
+  var _hasQueryResultGetter = function () {
+    return _hasQueryResult === true;
+  };
+
+  /**
+   * Public Method: clearQueryState
+   * Reset query-related state so permalink doesn't reuse stale click info.
+   */
+  var _clearQueryState = function () {
+    _queriedFeatures = [];
+    _firstlayerFeatures = [];
+    _clickCoordinates = null;
+    _hasQueryResult = false;
   };
 
   return {
@@ -1466,6 +1511,9 @@ var info = (function () {
     formatHTMLContent: createContentHtml,
     templateHTMLContent: applyTemplate,
     addQueryableLayer: _addQueryableLayer,
+    getClickCoordinates: _getClickCoordinates,
     getQueriedFeatures: _getQueriedFeatures,
+    hasQueryResult: _hasQueryResultGetter,
+    clearQueryState: _clearQueryState,
   };
 })();

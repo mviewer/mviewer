@@ -5,3 +5,5 @@
 templates.js
 **/.git
 demo/tile/*
+**/addons
+**/demo

@@ -102,6 +102,7 @@ mviewer = (function () {
       mviewer.setBaseLayer(configuration.getDefaultBaseLayer());
     }
     _showCheckedLayers();
+    _runPendingPermalinkQuery();
   };
 
   var _applyUrlParameters = function () {
@@ -129,13 +130,86 @@ mviewer = (function () {
     if (API.l) {
       _setVisibleOverLayers(API.l);
     }
-    // Trigger queryMap after layers are applied to ensure info queries hit active layers
-    if (queryRequested && center && typeof info?.queryMap === "function") {
-      info.queryMap({
-        coordinate: center,
-        pixel: _map.getPixelFromCoordinate(center),
-      });
+    if (queryRequested && center) {
+      _queuePermalinkQuery(center);
     }
+  };
+
+  var _pendingPermalinkQuery = null;
+
+  var _queuePermalinkQuery = function (center) {
+    _pendingPermalinkQuery = { center: center };
+  };
+
+  var _waitForVectorSources = function (sources) {
+    return new Promise(function (resolve) {
+      if (!sources.length) {
+        resolve();
+        return;
+      }
+      var pending = new Set(sources);
+      var keys = [];
+      var onSourceReady = function (source) {
+        pending.delete(source);
+        if (pending.size === 0) {
+          cleanup();
+          resolve();
+        }
+      };
+      var cleanup = function () {
+        keys.forEach(function (key) {
+          ol.Observable.unByKey(key);
+        });
+      };
+      sources.forEach(function (source) {
+        if (source.getState && source.getState() === "ready") {
+          onSourceReady(source);
+          return;
+        }
+        keys.push(
+          source.on("change", function () {
+            if (source.getState && source.getState() === "ready") {
+              onSourceReady(source);
+            }
+          })
+        );
+      });
+    });
+  };
+
+  var _runPendingPermalinkQuery = function () {
+    if (
+      !_pendingPermalinkQuery ||
+      !_pendingPermalinkQuery.center ||
+      typeof info?.queryMap !== "function"
+    ) {
+      return;
+    }
+    var center = _pendingPermalinkQuery.center;
+    _pendingPermalinkQuery = null;
+    var sources = [];
+    Object.keys(_overLayers).forEach(function (layerId) {
+      var layer = _overLayers[layerId];
+      if (!layer || !layer.queryable || !layer.layer) {
+        return;
+      }
+      if (layer.checked !== true) {
+        return;
+      }
+      var source = layer.layer.getSource && layer.layer.getSource();
+      if (source instanceof ol.source.Vector) {
+        sources.push(source);
+      }
+    });
+    _waitForVectorSources(sources).then(function () {
+      _map.once("rendercomplete", function () {
+        info.queryMap({
+          coordinate: center,
+          pixel: _map.getPixelFromCoordinate(center),
+        });
+      });
+      _map.render();
+    });
   };
 
   /**
@@ -2663,12 +2737,33 @@ mviewer = (function () {
 
     setPermalink: function () {
       var c = _map.getView().getCenter();
+      const queriedFeatures = info.getQueriedFeatures ? info.getQueriedFeatures() : [];
+      const hasQueryResult =
+        typeof info?.hasQueryResult === "function" ? info.hasQueryResult() : false;
+      const clickCoords = info.getClickCoordinates ? info.getClickCoordinates() : null;
+      const infoPanelVisible =
+        $("#right-panel").hasClass("active") ||
+        $("#bottom-panel").hasClass("active") ||
+        $("#modal-panel").hasClass("show");
+      if (
+        clickCoords &&
+        infoPanelVisible &&
+        (hasQueryResult || (queriedFeatures && queriedFeatures.length))
+      ) {
+        c = clickCoords;
+      }
       var linkParams = {};
       if (!API.wmc) {
         linkParams.x = encodeURIComponent(Math.round(c[0]));
         linkParams.y = encodeURIComponent(Math.round(c[1]));
         linkParams.z = encodeURIComponent(_map.getView().getZoom());
         linkParams.l = encodeURIComponent(_getVisibleOverLayers());
+      }
+      if (
+        infoPanelVisible &&
+        (hasQueryResult || (queriedFeatures && queriedFeatures.length))
+      ) {
+        linkParams.query = "true";
       }
       linkParams.lb = encodeURIComponent(this.getActiveBaseLayer());
       if (API.config) {
@@ -2694,6 +2789,29 @@ mviewer = (function () {
         if (key.match(reg)) {
           linkParams[key] = encodeURIComponent(API[key]);
         }
+      }
+      // remove calculated params and preserve other incoming URL params (e.g. custom flags) in the shared link
+      const excludedKeys = new Set(
+        Object.entries({
+          x: API.x,
+          y: API.y,
+          z: API.z,
+          l: API.l,
+          lb: API.lb,
+          config: API.config,
+          lang: API.lang,
+          wmc: API.wmc,
+          mode: API.mode,
+          file: API.file,
+          xfield: API.xfield,
+          yfield: API.yfield,
+          query: API.query,
+        }).map(([key]) => key)
+      );
+      for (const [key, value] of Object.entries(API)) {
+        if (excludedKeys.has(key)) continue;
+        if (linkParams[key] !== undefined) continue;
+        linkParams[key] = encodeURIComponent(value);
       }
 
       function params(data) {
