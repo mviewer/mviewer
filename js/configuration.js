@@ -701,6 +701,12 @@ var configuration = (function () {
             oLayer.icon = icon;
             oLayer.layername = layerId;
             oLayer.type = layer.type || "wms";
+            if (layer.servertype) {
+              const serverType = layer.servertype.toString().trim().toLowerCase();
+              if (["qgis", "geoserver", "ogc"].includes(serverType)) {
+                oLayer.servertype = serverType;
+              }
+            }
             oLayer.theme = themeid;
             oLayer.rank = layerRank;
             oLayer.index = layer.index ? parseFloat(layer.index) : null;
@@ -1154,20 +1160,47 @@ var configuration = (function () {
       TRANSPARENT: true,
     };
     var source;
+    var attributeOgcFilter = null;
     if (oLayer.filter) {
-      wms_params["CQL_FILTER"] = oLayer.filter;
+      mviewer.setWmsFilterParam(oLayer, wms_params, oLayer.filter);
     }
     if (
       oLayer.attributefilter &&
       oLayer.attributefilterenabled &&
       oLayer.attributevalues.length > 1
     ) {
-      wms_params["CQL_FILTER"] = mviewer.makeCQL_Filter(
-        oLayer.attributefield,
-        oLayer.attributeoperator,
-        oLayer.attributevalues[0],
-        oLayer.wildcardpattern
-      );
+      var attributeValue = oLayer.attributevalues[0];
+      if (attributeValue !== "all") {
+        var operator = oLayer.attributeoperator;
+        var ogcOperator = null;
+        if (operator == "=") {
+          ogcOperator = "EqualTo";
+        } else if (operator == "like") {
+          ogcOperator = "isLike";
+        } else if (operator == "<") {
+          ogcOperator = "lessThan";
+        } else if (operator == ">") {
+          ogcOperator = "GreatherThan";
+        } else if (operator == "<=") {
+          ogcOperator = "LessThanOrEqualTo";
+        } else if (operator == ">=") {
+          ogcOperator = "GreaterThanOrEqualTo";
+        } else if (operator == "!=" || operator == "<>") {
+          ogcOperator = "NotEqualTo";
+        }
+        if (ogcOperator) {
+          var filterDefinition = {
+            operator: ogcOperator,
+            field: oLayer.attributefield,
+            value: attributeValue,
+          };
+          if (ogcOperator === "isLike") {
+            var pattern = oLayer.wildcardpattern || "%value%";
+            filterDefinition.pattern = pattern.replace("value", attributeValue);
+          }
+          attributeOgcFilter = buildOgcFilter(filterDefinition);
+        }
+      }
     }
     if (oLayer.sld) {
       wms_params["SLD"] = oLayer.sld;
@@ -1215,6 +1248,9 @@ var configuration = (function () {
           tileLoadFunction: customWmsImageLoader,
           params: wms_params,
         });
+        if (oLayer.servertype) {
+          source.set("servertype", oLayer.servertype);
+        }
 
         l = new ol.layer.Tile({
           source: source,
@@ -1228,11 +1264,18 @@ var configuration = (function () {
           imageLoadFunction: customWmsImageLoader,
           params: wms_params,
         });
+        if (oLayer.servertype) {
+          source.set("servertype", oLayer.servertype);
+        }
 
         l = new ol.layer.Image({
           source: source,
         });
         break;
+    }
+
+    if (attributeOgcFilter) {
+      updateOgcSourceWithFilter(attributeOgcFilter, source);
     }
 
     source.set("layerid", oLayer.layerid);
@@ -1283,6 +1326,7 @@ var configuration = (function () {
   };
 
   return {
+    parseOwsOptions: getParamsFromOwsOptionsString,
     parseXML: _parseXML,
     getExtensions: _getExtensions,
     load: _load,

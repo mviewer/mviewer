@@ -445,14 +445,26 @@ var info = (function () {
             _map.getView().getProjection(),
             params
           );
+        var layerInfo = _overLayers[visibleLayers[i].get("mviewerid")];
+        var filterParamKey = mviewer.getWmsFilterParamKey(layerInfo);
         urlParams = new URLSearchParams(url);
-        cql = new URLSearchParams(url).get("CQL_FILTER");
+        cql = urlParams.get(filterParamKey);
         if (layer && featureid) {
           // create new cql to insert feature id
           attributeFilter = _overLayers[layer].searchid + "%3D%27" + featureid + "%27";
-          // create new cql filter
-          urlParams.delete("CQL_FILTER");
-          cql = `&CQL_FILTER=${cql || ""}${cql ? " AND " : ""}${attributeFilter}`;
+          // create new layer features filter
+          urlParams.delete(filterParamKey);
+          var filterExpression = mviewer.getWmsFilterExpression(layerInfo, {
+            [filterParamKey]: cql || "",
+          });
+          var combinedFilter = `${filterExpression || ""}${
+            filterExpression ? " AND " : ""
+          }${attributeFilter}`;
+          var filterParamValue = mviewer.buildWmsFilterParamValue(
+            layerInfo,
+            combinedFilter
+          );
+          cql = `&${filterParamKey}=${filterParamValue}`;
           // force to decode to string result and avoid unreadable params
           url = decodeURIComponent(urlParams.toString()) + cql;
         }
@@ -1233,8 +1245,11 @@ var info = (function () {
     var activeAttributeValue = false;
     // if attributeControl is used for this layer, get the active attribute value and
     // set this value as property like 'value= true'. This allows use this value in Mustache template
-    if (olayer.attributefilter && olayer.layer.getSource().getParams()["CQL_FILTER"]) {
-      var activeFilter = olayer.layer.getSource().getParams()["CQL_FILTER"];
+    var activeFilter = mviewer.getWmsFilterExpression(
+      olayer,
+      olayer.layer.getSource().getParams()
+    );
+    if (olayer.attributefilter && activeFilter) {
       activeAttributeValue = activeFilter
         .split(olayer.attributeoperator)
         .map((e) => e.replace(/[\' ]/g, ""))[1];

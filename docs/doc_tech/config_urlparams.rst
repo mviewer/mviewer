@@ -148,7 +148,7 @@ Ce type utilise un service OGC API Feature et la capacité de filtrer :
 https://portal.ogc.org/files/96288
 
 
-Vous pouvez tout configurer dans l'URL et ajouter des filtres et opprateurs compatibles via le paramètre `filter=`.
+Vous pouvez tout configurer dans l'URL et ajouter des filtres et oppérateurs compatibles via le paramètre `filter=`.
 
 .. warning::
     N'oubliez pas que les paramètres d'URL doivent être encodés !

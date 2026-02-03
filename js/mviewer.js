@@ -541,6 +541,8 @@ mviewer = (function () {
       STYLE: layer.style,
       FORMAT: "image/png",
       TRANSPARENT: true,
+      // add options from layer xml config
+      ...configuration.parseOwsOptions(layer.owslegendoptions),
     };
 
     if (layer.sld) {
@@ -1658,21 +1660,22 @@ mviewer = (function () {
         layerparams.push(item.layerid);
         if (item.type === "wms") {
           //get current style if many styles
-          var source = item.layer.getSource();
-          if (item.styles && source.getParams().STYLES) {
-            layerparams.push(source.getParams().STYLES.trim());
+          var sourceParams = _getWmsSourceParams(item);
+          if (item.styles && sourceParams && sourceParams.STYLES) {
+            layerparams.push(sourceParams.STYLES.trim());
           } else {
             layerparams.push("");
           }
           //get current filter if necessary
-          if (item.attributefilter && source.getParams()["CQL_FILTER"]) {
-            layerparams.push(source.getParams()["CQL_FILTER"].trim());
+          var activeFilter = mviewer.getWmsFilterExpression(item, sourceParams);
+          if (item.attributefilter && activeFilter) {
+            layerparams.push(activeFilter.trim());
           } else {
             layerparams.push("");
           }
           //get current time filter if necessary
-          if (item.timefilter && source.getParams()["TIME"]) {
-            layerparams.push(source.getParams()["TIME"]);
+          if (item.timefilter && sourceParams && sourceParams["TIME"]) {
+            layerparams.push(sourceParams["TIME"]);
           }
         }
 
@@ -1694,7 +1697,7 @@ mviewer = (function () {
     var layersWithOptions = {};
     layers.forEach(function (layer, i) {
       //search layer by id or by name in overLayers collection
-      //layer with options - layername*style*cql_filter*time
+      //layer with options - layername*style*filter*time
       var layerWithOptions = layer.split("*");
       var richLayer = {};
       var layerIdOrName = layerWithOptions[0];
@@ -1792,13 +1795,16 @@ mviewer = (function () {
       layerControler.checked = true;
       layerControler.visiblebydefault = true;
       var li = $(".mv-nav-item[data-layerid='" + layerControler.layerid + "']");
+      var sourceParams = _getWmsSourceParams(layerControler);
       if (layerOptions.style && layerControler.type === "wms") {
-        layerControler.layer.getSource().getParams()["STYLES"] = layerOptions.style;
+        if (sourceParams) {
+          sourceParams["STYLES"] = layerOptions.style;
+        }
         layerControler.style = layerOptions.style;
         layerControler.legendurl = _getlegendurl(layerControler);
       }
       if (layerOptions.filter && layerControler.type === "wms") {
-        layerControler.layer.getSource().getParams()["CQL_FILTER"] = layerOptions.filter;
+        mviewer.setWmsFilterParam(layerControler, sourceParams, layerOptions.filter);
         layerControler.filter = layerOptions.filter;
       }
       mviewer.toggleLayer(li);
@@ -2338,6 +2344,19 @@ mviewer = (function () {
       result = _elementTranslate(result);
     }
     return result;
+  };
+
+  var _getWmsSourceParams = function (layerDefinition) {
+    var layer =
+      layerDefinition && layerDefinition.layer ? layerDefinition.layer : layerDefinition;
+    if (!layer || typeof layer.getSource !== "function") {
+      return null;
+    }
+    var source = layer.getSource();
+    if (!source || typeof source.getParams !== "function") {
+      return null;
+    }
+    return source.getParams();
   };
 
   /*
@@ -3473,31 +3492,57 @@ mviewer = (function () {
       var oLayer = _overLayers[layer.layerid];
       oLayer.layer.setVisible(true);
       //Only for second and more loads
-      if (oLayer.attributefilter && oLayer.layer.getSource().getParams()["CQL_FILTER"]) {
-        var activeFilter = oLayer.layer.getSource().getParams()["CQL_FILTER"];
-        var wildcard = oLayer.wildcardpattern.split("value")[0];
-        var reg = new RegExp(wildcard + "|'", "g");
-        var activeAttributeValue = activeFilter
-          .split(oLayer.attributeoperator)[1]
-          .replace(reg, "")
-          .trim();
-        $(
-          "#" +
-            layer.layerid +
-            "-attributes-selector option[value='" +
-            activeAttributeValue +
-            "']"
-        ).prop("selected", true);
-        $(
-          '.mv-layer-details[data-layerid="' +
-            layer.layerid +
-            '"] .layerdisplay-subtitle .selected-attribute span'
-        ).text(activeAttributeValue);
+      var sourceParams = _getWmsSourceParams(oLayer);
+      var activeFilter = mviewer.getWmsFilterExpression(oLayer, sourceParams);
+      if (oLayer.attributefilter && activeFilter) {
+        var activeAttributeValue = null;
+        if (activeFilter.trim().charAt(0) === "<") {
+          activeAttributeValue = getOgcFilterLiteralValue(
+            activeFilter,
+            oLayer.wildcardpattern
+          );
+        } else {
+          var wildcard = (oLayer.wildcardpattern || "%value%").split("value")[0];
+          var reg = new RegExp(wildcard + "|'", "g");
+          var parts = activeFilter.split(oLayer.attributeoperator);
+          if (parts.length > 1) {
+            activeAttributeValue = parts[1].replace(reg, "").trim();
+          }
+        }
+        var selectCtrl = $("#" + layer.layerid + "-attributes-selector")[0];
+        if (!activeAttributeValue && selectCtrl) {
+          activeAttributeValue = selectCtrl.options[selectCtrl.selectedIndex].value;
+        }
+        if (activeAttributeValue) {
+          $(
+            "#" +
+              layer.layerid +
+              "-attributes-selector option[value='" +
+              activeAttributeValue +
+              "']"
+          ).prop("selected", true);
+          var optionEl = $(
+            "#" +
+              layer.layerid +
+              "-attributes-selector option[value='" +
+              activeAttributeValue +
+              "']"
+          );
+          var activeLabel =
+            optionEl.length && optionEl.attr("label")
+              ? optionEl.attr("label")
+              : activeAttributeValue;
+          $(
+            '.mv-layer-details[data-layerid="' +
+              layer.layerid +
+              '"] .layerdisplay-subtitle .selected-attribute span'
+          ).text(activeLabel);
+        }
       }
 
       var activeStyle = false;
-      if (oLayer.type === "wms" && oLayer.layer.getSource().getParams()["STYLES"]) {
-        activeStyle = oLayer.layer.getSource().getParams()["STYLES"];
+      if (oLayer.type === "wms" && sourceParams && sourceParams["STYLES"]) {
+        activeStyle = sourceParams["STYLES"];
         var refStyle = activeStyle;
         //update legend image if nec.
         var res = mviewer.getMap().getView().getResolution();
@@ -3681,16 +3726,41 @@ mviewer = (function () {
       var _layerDefinition = _overLayers[layerid];
       var styleRef = style;
       var _source = _layerDefinition.layer.getSource();
+      var sourceParams = _getWmsSourceParams(_layerDefinition);
+      if (!sourceParams || typeof _source.updateParams !== "function") {
+        return;
+      }
       if (_layerDefinition.attributefilter && _layerDefinition.attributestylesync) {
         //Récupère la valeur active de la liste déroulante
         //var attributeValue = $("#"+ layerid + "-attributes-selector").val();
         var attributeValue = "all";
         var styleBase = style.split("@")[0];
-        if (_source.getParams().CQL_FILTER) {
-          attributeValue = _source
-            .getParams()
-            .CQL_FILTER.split(" " + _layerDefinition.attributeoperator + " ")[1]
-            .replace(/\'/g, "");
+        var selectCtrl = $("#" + layerid + "-attributes-selector")[0];
+        if (selectCtrl && selectCtrl.selectedIndex >= 0) {
+          attributeValue = selectCtrl.options[selectCtrl.selectedIndex].value;
+        } else {
+          var activeFilter = mviewer.getWmsFilterExpression(
+            _layerDefinition,
+            sourceParams
+          );
+          if (activeFilter) {
+            if (activeFilter.trim().charAt(0) === "<") {
+              attributeValue = getOgcFilterLiteralValue(
+                activeFilter,
+                _layerDefinition.wildcardpattern
+              );
+            } else {
+              var parts = activeFilter.split(
+                " " + _layerDefinition.attributeoperator + " "
+              );
+              if (parts.length > 1) {
+                attributeValue = parts[1].replace(/\'/g, "");
+              }
+            }
+          }
+        }
+        if (!attributeValue) {
+          attributeValue = "all";
         }
         if (attributeValue != "all") {
           style = [styleBase, "@", attributeValue.toLowerCase().sansAccent()].join("");
@@ -3700,10 +3770,10 @@ mviewer = (function () {
         if (!/.(sld|SLD)$/.test(style)) {
           style += ".sld";
         }
-        _source.getParams()["SLD"] = style;
+        sourceParams["SLD"] = style;
         _layerDefinition.sld = style;
       } else {
-        _source.getParams()["STYLES"] = style;
+        sourceParams["STYLES"] = style;
         _layerDefinition.style = style;
       }
       _source.updateParams({ dc: new Date().valueOf() });
@@ -3728,29 +3798,62 @@ mviewer = (function () {
         .data("legendurl", legendUrl);
     },
 
-    makeCQL_Filter: function (fld, operator, value, wildcardpattern) {
-      var cql_filter = "";
-      if (operator == "=") {
-        cql_filter = fld + " = " + "'" + value.replaceAll("'", "''") + "'";
-      } else if (operator == "like") {
-        cql_filter = `${fld} like '%${value.replaceAll("'", "''")}%'`;
-      }
-      return cql_filter;
+    getWmsFilterParamKey: function (layerDefinition) {
+      return getWmsFilterParamKey(layerDefinition);
+    },
+
+    buildWmsFilterParamValue: function (layerDefinition, filterExpression) {
+      return buildWmsFilterParamValue(layerDefinition, filterExpression);
+    },
+
+    getWmsFilterExpression: function (layerDefinition, params) {
+      return getWmsFilterExpression(layerDefinition, params);
+    },
+
+    setWmsFilterParam: function (layerDefinition, params, filterExpression) {
+      setWmsFilterParam(layerDefinition, params, filterExpression);
     },
 
     setLayerAttribute: function (layerid, attributeValue, selectCtrl) {
       var _layerDefinition = _overLayers[layerid];
       var _source = _layerDefinition.layer.getSource();
+      var sourceParams = _getWmsSourceParams(_layerDefinition);
+      if (!sourceParams || typeof _source.updateParams !== "function") {
+        return;
+      }
       if (attributeValue === "all") {
-        delete _source.getParams()["CQL_FILTER"];
+        updateOgcSourceWithFilter(null, _source);
       } else {
-        var cql_filter = this.makeCQL_Filter(
-          _layerDefinition.attributefield,
-          _layerDefinition.attributeoperator,
-          attributeValue,
-          _layerDefinition.wildcardpattern
-        );
-        _source.getParams()["CQL_FILTER"] = cql_filter;
+        var operator = _layerDefinition.attributeoperator;
+        var ogcOperator = null;
+        if (operator == "=") {
+          ogcOperator = "EqualTo";
+        } else if (operator == "like") {
+          ogcOperator = "isLike";
+        } else if (operator == "<") {
+          ogcOperator = "lessThan";
+        } else if (operator == ">") {
+          ogcOperator = "GreatherThan";
+        } else if (operator == "<=") {
+          ogcOperator = "LessThanOrEqualTo";
+        } else if (operator == ">=") {
+          ogcOperator = "GreaterThanOrEqualTo";
+        } else if (operator == "!=" || operator == "<>") {
+          ogcOperator = "NotEqualTo";
+        }
+        if (ogcOperator) {
+          var filterDefinition = {
+            operator: ogcOperator,
+            field: _layerDefinition.attributefield,
+            value: attributeValue,
+          };
+          if (ogcOperator === "isLike") {
+            var pattern = _layerDefinition.wildcardpattern || "%value%";
+            filterDefinition.pattern = pattern.replace("value", attributeValue);
+          }
+          var ogcFilter = buildOgcFilter(filterDefinition);
+          updateOgcSourceWithFilter(ogcFilter, _source);
+        }
       }
       if (_layerDefinition.attributestylesync) {
         //need update legend ad style applied to the layer
@@ -3773,10 +3876,10 @@ mviewer = (function () {
         }
         if (_layerDefinition.sld) {
           newStyle += ".sld";
-          _source.getParams()["SLD"] = newStyle;
+          sourceParams["SLD"] = newStyle;
           _layerDefinition.sld = newStyle;
         } else {
-          _source.getParams()["STYLES"] = newStyle;
+          sourceParams["STYLES"] = newStyle;
           _layerDefinition.style = newStyle;
         }
         var legendUrl = _getlegendurl(_layerDefinition);
@@ -3791,6 +3894,9 @@ mviewer = (function () {
           .data("legendurl", legendUrl);
       }
       _source.updateParams({ dc: new Date().valueOf() });
+      if (typeof _source.refresh === "function") {
+        _source.refresh();
+      }
       _source.changed();
       $(
         '.mv-layer-details[data-layerid="' +
@@ -3816,7 +3922,11 @@ mviewer = (function () {
       }
       var _layerDefinition = _overLayers[layerid];
       var _source = _layerDefinition.layer.getSource();
-      _source.getParams()["TIME"] = filter_time;
+      var sourceParams = _getWmsSourceParams(_layerDefinition);
+      if (!sourceParams || typeof _source.updateParams !== "function") {
+        return;
+      }
+      sourceParams["TIME"] = filter_time;
       $(".mv-time-player-selection[data-layerid='" + layerid + "']").text("Patientez...");
       var key = _source.on("imageloadend", function () {
         ol.Observable.unByKey(key);
