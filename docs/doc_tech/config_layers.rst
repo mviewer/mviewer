@@ -248,8 +248,11 @@ Par défaut, les couches sont affichées sur la carte par ordre d'appararition d
 L'utilisateur a la possibilité d'utiliser les paramètres suivants pour forcer l'affichage au démarrage de l'application :
 
 * ``toplayer`` :guilabel:`studio` : Ce paramètre va forcer l'affichage de la couche au dessus des autres couches.
-Si plusieurs toplayers sont renseignés dans le fichier de configuration, toutes les toplayers seront au dessus et selon l'ordre d'apparition dans la configuration XML.
+
 Si une couche a un toplayer et un index de renseigné, l'index est ignoré.
+
+Si plusieurs toplayers sont renseignés dans le fichier de configuration, l'ordre d'affichage est inversé par rapport à l'ordre d'apparition dans le XML. Ce fonctionnement correspond à une logique d'empilement.
+La première couche est ajouté sur la carte, la seconde ensuite par dessus et ainsi de suite...
 
 * ``index`` :guilabel:`studio` : L'objectif de ce paramètre est donc d'afficher la légende de façon identique à l'affichage sur la carte à l'initialisation de la carte.
 
@@ -268,14 +271,15 @@ Si deux couches ont le même index dans un même fichier de configuration XML, p
 
 * ``showintoc`` :guilabel:`studio`
 
-Avec ce paramètre renseigné, les paramètres index et toplayer sont également pris en compte pour l'affichage sur la carte.
+Ce paramètre est fonctionnel avec les paramètres index ou toplayer car il ne gère pas l'ordre sur la carte. Il impactera l'affichage de la couche dans TOC ou dans la légende car la couche ne sera affichée que sur la carte et nulle part ailleurs. 
 
 .. code-block:: xml
        :linenos:
 
 	   <layer   index="1" />
-           <layer   index="2" toplayer="true" showintoc="true"/>
-           <layer   index="3" />
+           <layer   index="2" showintoc="true"/>
+           <layer   toplayer="true" showintoc="true"/>
+           <layer   index="4" />
 
 * couches sans index, sans toplayer, sans showintoc
 
@@ -289,7 +293,7 @@ Avec ce paramètre renseigné, les paramètres index et toplayer sont également
            <layer />
 
 Pour le cas primaire où aucun paramètre n'est renseigné, c'est l'ordre d'apparition dans le fichier de configuration XML qui permet de définir l'ordre d'affichage des couches au démarrage.
-Dans le cas où une configuration XML comprend des couches avec le paramètre `index` et / ou `toplayer` et des couches sans aucun de ces paramètres, alors les couches sans paramètre respectent ce principe.
+Dans le cas où une configuration XML comprend des couches avec le paramètre `index` ou `toplayer` et des couches sans aucun de ces paramètres, alors les couches sans paramètre respectent ce principe.
 
 On retrouvera donc en premier les toplayer, ensuite les couches avec index et enfin les couches sans index.
 Pour rappel, les couches avec un index en doublon et placée en seconde position dans le XML sont considérée sans index et sont concernées par ce mécanisme d'affichage. Elles s'afficheront donc selon les autres couches sans paramètres dans l'ordre d'apparition dans XML.
