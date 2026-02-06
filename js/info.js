@@ -1250,9 +1250,9 @@ var info = (function () {
       olayer.layer.getSource().getParams()
     );
     if (olayer.attributefilter && activeFilter) {
-      activeAttributeValue = activeFilter
-        .split(olayer.attributeoperator)
-        .map((e) => e.replace(/[\' ]/g, ""))[1];
+      const xml = new DOMParser().parseFromString(activeFilter, "text/xml");
+      const ns = "http://www.opengis.net/ogc";
+      activeAttributeValue = xml.getElementsByTagNameNS(ns, "Literal")[0]?.textContent;
     }
     olfeatures.forEach(function (feature) {
       olayer.jsonfields.forEach(function (fld) {
