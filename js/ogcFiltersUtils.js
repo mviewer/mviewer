@@ -621,16 +621,6 @@ function parseCqlToDefinition(cql) {
 function serializeOgcFilterToXml(filter) {
   if (!filter) return null;
   try {
-    // const format = new ol.format.WFS();
-    // const writeFilter =
-    //   typeof format.writeFilter === "function"
-    //     ? format.writeFilter.bind(format)
-    //     : typeof ol.format.WFS.writeFilter === "function"
-    //       ? ol.format.WFS.writeFilter
-    //       : null;
-    // if (!writeFilter) {
-    //   return null;
-    // }
     const xmlNode = ol.format.WFS.writeFilter(filter);
     return new XMLSerializer().serializeToString(xmlNode);
   } catch (e) {
