@@ -300,7 +300,11 @@ function setWmsFilterParam(layerDefinition, params, filterExpression) {
   if (!filterExpression) {
     return;
   }
-  const paramKey = getWmsFilterParamKey(layerDefinition);
+  let paramKey = getWmsFilterParamKey(layerDefinition);
+  // force FILTER key if expression contains XML
+  if (filterExpression.trim().charAt(0) === "<") {
+    paramKey = WMS_FILTER_PARAM_KEYS.filter;
+  }
   params[paramKey] = buildWmsFilterParamValue(layerDefinition, filterExpression);
 }
 

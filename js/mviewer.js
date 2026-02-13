@@ -1668,6 +1668,8 @@ mviewer = (function () {
           }
           //get current filter if necessary
           var activeFilter = mviewer.getWmsFilterExpression(item, sourceParams);
+          // pass filte to CQL format to get shortest URI
+          activeFilter = ogcToCql(activeFilter);
           if (item.attributefilter && activeFilter) {
             layerparams.push(activeFilter.trim());
           } else {
@@ -1690,7 +1692,7 @@ mviewer = (function () {
    *
    */
 
-  var _setVisibleOverLayers = function (lst) {
+  var _setVisibleOverLayers = function (lst, isCql) {
     var errors = [];
     var errorLayers = [];
     var layers = lst.split(",");
@@ -1707,6 +1709,7 @@ mviewer = (function () {
           break;
         case 3:
           richLayer.style = layerWithOptions[1];
+          // cql from URI
           richLayer.filter = layerWithOptions[2];
           break;
         case 4:
@@ -1714,6 +1717,9 @@ mviewer = (function () {
           richLayer.filter = layerWithOptions[2];
           richLayer.time = layerWithOptions[3];
           break;
+      }
+      if (richLayer.filter) {
+        richLayer.filter = cqlToOGC(richLayer.filter, true);
       }
 
       var l = false;
@@ -1739,7 +1745,7 @@ mviewer = (function () {
       layersWithOptions[richLayer.layerid] = richLayer;
 
       if (l) {
-        l.src ? l.src.setVisible(true) : l.setVisible(true);
+        l.getSource() ? l.setVisible(true) : l.setVisible(true);
       } else {
         errors.push(i);
       }
