@@ -49,6 +49,31 @@ function getParamsFromOwsOptionsString(owsOptionsString) {
 }
 
 /**
+ * Fetch and parse a WMS GetCapabilities response as XML.
+ * @param {{url: string, owsParams?: Object}} layer
+ * @returns {Promise<Document>}
+ * @throws {Error} If HTTP request fails or XML is invalid
+ */
+function getCapabilities(layer) {
+  const url = getCapUrl(layer.url, layer.owsParams);
+  return fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`GetCapabilities request failed with status ${response.status}`);
+      }
+      return response.text();
+    })
+    .then((text) => {
+      const xml = new DOMParser().parseFromString(text, "text/xml");
+      const parserError = xml.querySelector("parsererror");
+      if (parserError) {
+        throw new Error("Invalid XML returned by GetCapabilities request");
+      }
+      return xml;
+    });
+}
+
+/**
  * Build GetCapabilities URL for a WMS service.
  * @param {string} serviceUri
  * @param {Object} [params]
@@ -61,54 +86,17 @@ function getCapUrl(serviceUri, params) {
 
   // transform to uppercase param keys
   const uppercaseParams = {};
-  for (const key in params) {
-    const upperKey = key.toUpperCase();
-    uppercaseParams[upperKey] = params[key];
+  if (params !== undefined) {
+    for (const key in params) {
+      const upperKey = key.toUpperCase();
+      uppercaseParams[upperKey] = params[key];
+    }
   }
 
   const defaultParams = {
     SERVICE: "WMS",
     VERSION: "1.3.0",
     REQUEST: "GetCapabilities",
-  };
-
-  if (params !== undefined) {
-    Object.assign(defaultParams, uppercaseParams);
-  }
-
-  return appendParams(serviceUri, defaultParams);
-}
-
-/**
- * Build GetLegendGraphic URL for a WMS service.
- * @param {string} serviceUri
- * @param {Object} [params]
- * @returns {string|undefined}
- */
-function getLegendGraphicUrl(serviceUri, params) {
-  if (serviceUri === undefined) {
-    return undefined;
-  }
-
-  // transform to uppercase param keys
-  const uppercaseParams = {};
-  for (const key in params) {
-    const upperKey = key.toUpperCase();
-    uppercaseParams[upperKey] = params[key];
-  }
-
-  const defaultParams = {
-    SERVICE: "WMS",
-    VERSION: "1.3.0",
-    REQUEST: "GetLegendGraphic",
-    SLD_VERSION: "1.1.0",
-    FORMAT: encodeURIComponent("image/png"),
-    WIDTH: "30",
-    HEIGHT: "20",
-    LEGEND_OPTIONS: encodeURIComponent(
-      "fontName:Open Sans;fontAntiAliasing:true;fontColor:0x777777;fontSize:10;dpi:96"
-    ),
-    TRANSPARENT: true,
   };
 
   if (params !== undefined) {
