@@ -691,6 +691,8 @@ var configuration = (function () {
                   if (!oLayer.legendurl) {
                     oLayer.legendurl = mviewer.getLegendUrl(oLayer);
                   }
+                }).catch(() => {
+                  console.log("GetCapabilities error : ", layer.id)
                 });
             }
             Object.assign(oLayer, layer);
