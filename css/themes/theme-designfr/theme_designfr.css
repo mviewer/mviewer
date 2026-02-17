@@ -1,16 +1,13 @@
 /** 
     * Feuille de style CSS - Visualiseur cartographique Mviewer
     * Version 4
-
     * Thème - Système de Design de l'etat 
-
 **/
-
-/* -- Généralités -- */
 
 /**
 * Import de la librairie DSFR-V1.14.3
 **/
+
 @import url(dsfr-v1.14.3/dist/dsfr.min.css);
 @import url(dsfr-v1.14.3/dist/utility/icons/icons.min.css);
 
@@ -109,6 +106,7 @@
 }
 
 /*  Définition des variables */
+
 :root {
 	--bf950: #ececfe;
 	--bf500: #000091;
@@ -125,149 +123,161 @@
 	--g200: #f0f0f0;
 	--g100: #f8f8f8;
 	--g100-active: #5b5b5b;
+	--bs-navbar-brand-padding-y: 10px;
+	--underline-img: var(--idle);
+
+	/* Mviewer */
+	
 	--mvcustom-font: 'Marianne', sans-serif;
+	--mvcustom-navbar-h: 80px;
+	--mvcustom-color-primary: var(--bf500);
+	--mvcustom-navbar-color: #fff;
+	--mvcustom-navbar-colorbody: var(--g700);
+	--mvcustom-border-radius: 0px;
 }
 
-/* Page de chargement */
+/* -- Généralités -- */
+
+input:focus,
+select:focus {
+	outline: 2px solid var(--im-525) !important;
+}
+
+li {
+	padding-bottom: 0;
+}
+
+select {
+	color: var(--g700) !important;
+	background-color: var(--g200) !important;
+	border: none !important;
+	box-shadow: inset 0 -2px 0 0 var(--g600) !important;
+	border-top-left-radius: 5px !important;
+	border-top-right-radius: 5px !important;
+	background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' viewBox='0 0 24 24' ><path fill='%231e1e1e' d='M12,13.1l5-4.9l1.4,1.4L12,15.9L5.6,9.5l1.4-1.4L12,13.1z'/></svg>") no-repeat right #ddd0;
+	background-size: 20px;
+	-webkit-appearance: none;
+}
+
+a.btn.btn-light:hover {
+	background-color: #f6f6f6 !important;
+}
+
+/**
+ * Page de chargement
+ */
+
 #loader-subtitle {
-	color: var(--bf500) !important;
+	color: var(--bf500);
 }
 
 /**
  * Navbar
  */
-:root {
-	--mvcustom-navbar-h: 82px;
-	--mvcustom-navbar-color: #fff;
-	--mvcustom-navbar-colorbody:var(--g700);
-	--bs-navbar-brand-padding-y: 10px;
-	--underline-img:var(--idle);
-}
+
 #mv-navbar {
 	box-shadow: 0px 0px 30px 3px rgb(0 0 0 / 26%);
-	border-width: 2px;
-}
-#mv-navbar a.navbar-brand, .mv-title {
-	color: var(--g700);
-	font-family: var(--myfont);
-	font-weight: 600;
-}
-img.mv-logo {
-	max-height: 65px !important;
-    margin-top: -10px !important;
 }
 
-/* Icône menu */
-.navbar-brand.menu-toggle span {
-	content: url(dsfr-v1.14.3/dist/icons/system/menu-fill.svg);
+#mv-navbar .mv-title {
+	font-weight: 600;
 }
 
 /**
  * Barre de recherche
  */
-:root {
-	--mvcustom-border-radius: 0px;
+#searchfield {
+	background-color: var(--g200);
+	border-bottom: 2px solid var(--bf500) !important;
+	border-top-left-radius: 5px !important;
 }
+
 #searchtool .btn {
 	border-top-right-radius: 5px !important;
 	background-color: var(--bf500) !important;
 	border-bottom: 2px solid var(--bf500) !important;
 	border-right: 2px solid var(--bf500) !important;
-}
-.ri-more-2-fill::before {
-	font-family: "remixicon";
-  	content: "\f0d1" !important;
-	color: #fff;
-}
-input#searchfield {
-	background-color: var(--g200);
-	border-bottom: 2px solid var(--bf500) !important;
-	border-top-left-radius: 5px !important;
-}
-input#searchfield:focus {
-	outline: 2px solid var(--im-525) !important;
+	color: white;
 }
 
 /* Résultats de la recherche */
-#searchresults {
-	top: 82px !important;
-}
+
 .searchresults-title {
 	background-color: var(--bf500) !important;
-	color: #fff !important;
+	color: white !important;
 }
-.search-header {
-	color: var(--g100-active) !important;
-	font-size: 13px;
-	font-weight: 500;
+
+.searchresults-title .btn-close {
+	filter: invert(1);
 }
-#searchresults a.list-group-item {
-	color: var(--g700) !important;
-	font-size: 11px !important;
-}
-#searchresults a.list-group-item:hover {
-	background-color: var(--g1000-hover) !important;
+
+.searchresults-title .btn-close:hover {
+	background: none;
 }
 
 /**
- * Bouton vers le panneau d'aide / Accueil
+ * Accueil
  */
-.fa-home::before {  
-	font-family: "remixicon";
-	content: "\ee1d" !important;
-	color: var(--bf500) !important;
-	font-weight: 400;
-	font-size: 20px;
-}
+
 #iconhelp {
-	background-color: var(--bf950) !important;
+	background: none;
+	color: var(--mv-color-primary);
+	border: none;
+	font-size: x-large;
+}
+
+#iconhelp:hover {
+	background-color: var(--bf200-bf300);
 }
 
 /**
  * Menu des couches
  */
-/* Titre des thématiques */
+
 #menu>li>a {
 	background-color: #fff !important;
 	border: none !important;
 }
+
 #menu>li>a:hover {
 	background-color: var(--g1000-hover) !important;
 	border: none !important;
 }
 
-
-/* Titre des couches */
 #menu .mv-nav-item a {
 	color: var(--g700) !important;
 }
+
 #menu .mv-nav-item a:hover {
 	color: var(--bf500) !important;
 	border-right: 3px solid var(--bf500);
 	border-left: none !important;
 }
-.mv-checked::before {
-	font-family: "remixicon";
-	content: "\F050" !important;
+
+#menu .opened .badge {
+	color: var(--bf500) !important;
+	background-color: var(--bf200-bf300) !important;
 }
+
 
 /**
  * Légende
  */
-.ri-list-unordered::before {
-	font-family: "remixicon";
-  	content: "\eeba";
+
+#layers-container-box-header a:hover {
+	background-color: color-mix(in srgb, var(--mv-color-primary) 80%, white);
 }
 
 /**
  * Fond de plan 
  */
 
-/* Crédits */
-.ol-attribution.ol-unselectable.ol-control {
-	font-family: var(--myfont);
+#basemapslist li.active {
+	border: 2.5px solid var(--bf500);
 }
+
+/* Crédits */
+
 .ol-attribution.ol-unselectable.ol-control a {
 	color: var(--bf500)
 }
- 
