@@ -1865,7 +1865,7 @@ li.mv-nav-item {
 	justify-content: flex-start;
 	border: 1px solid #d1d1d1;
 	padding: 0.5em .5em;
-	border-radius: .7em;
+	border-radius: var(--bs-border-radius);
 }
 
 #urlShare__link {
@@ -1883,7 +1883,7 @@ li.mv-nav-item {
 #blockIframe>.textEdit {
 	border: 1px solid #d1d1d1;
 	padding: 0.5em .5em;
-	border-radius: .7em;
+	border-radius: var(--bs-border-radius);
 	font-family: monospace;
 	font-size: smaller;
 	word-break: break-all;
@@ -2210,7 +2210,7 @@ body:has(>#main.mode-s) #layers-container-box-header>.btn {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border-radius: 0.5em;
+	border-radius: var(--bs-border-radius);
 }
 
 #mvNavbarMobile a:hover,
