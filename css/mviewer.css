@@ -588,8 +588,8 @@ img.mv-logo {
 	min-width: 220px;
 	position: fixed;
 	right: 6em;
-	top: 6em;
-	z-index: 5;
+	top: calc(var(--mv-navbar-h) - 10px);
+	z-index: 1500;
 }
 
 .searchresults-title {
