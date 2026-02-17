@@ -159,9 +159,92 @@ select {
 	-webkit-appearance: none;
 }
 
+input[type=radio] {
+    height: 1.5rem;
+    margin: 0;
+    opacity: 0;
+    position: absolute;
+    width: 1.5rem
+}
+
+input[type=radio]+div, input[type=radio]+label {
+    align-items: flex-start;
+    background-image: radial-gradient(transparent 10px,var(--border-active-blue-france) 11px,transparent 12px);
+    background-position: calc(-.25rem + 1px) calc(-.25rem + 1px),calc(-.25rem + 1px) calc(-.25rem + 1px);
+    background-repeat: no-repeat,no-repeat;
+    background-size: 1.875rem 1.875rem,1.875rem 1.875rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-left: 2rem
+}
+
+input[type=radio]:checked+div, input[type=radio]:checked+label {
+    background-image: radial-gradient(transparent 10px,var(--border-active-blue-france) 11px,transparent 12px),radial-gradient(var(--background-active-blue-france) 5px,transparent 6px)
+}
+
+input[type=radio]+div:before, input[type=radio]+label:before {
+    border-radius: 1.5rem;
+    content: "";
+    height: 1.5rem;
+    margin-left: -2rem;
+    position: absolute;
+    top: 0;
+    width: 1.5rem
+}
+
 a.btn.btn-light:hover {
 	background-color: #f6f6f6 !important;
 }
+
+/* Modal */
+
+.modal-content {
+    border: none!important
+}
+
+#main:not(.xs) .modal-header {
+    padding: 2rem 2rem .5rem 2rem!important;
+}
+
+#main:not(.xs) .modal-body {
+    padding: .5rem 2rem 2rem 2rem!important;
+}
+
+.modal-header {
+    border: none!important
+}
+
+.modal-title {
+    font-weight: 700;
+}
+
+.modal .btn-close::before {
+	content: "Fermer ";
+}
+
+.modal .btn-close {
+	color: var(--bf500);
+	opacity: 1;
+	font-size: 16px;
+	font-weight: 600;
+	width: auto;
+	background-position: right 5px center!important;
+	background-size: 11px!important;
+	padding-right: 1.2em!important;
+	display: flex;
+	align-items: center;
+    background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000091'><path d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/></svg>");
+	background-repeat: no-repeat;	
+	border-radius: var(--bs-border-radius);
+}
+
+.modal .btn-close:hover {
+	color: var(--bf500);
+	opacity: 1;
+}
+
+/* -- Components -- */
 
 /**
  * Page de chargement
@@ -280,4 +363,17 @@ a.btn.btn-light:hover {
 
 .ol-attribution.ol-unselectable.ol-control a {
 	color: var(--bf500)
+}
+
+/* Modal - Share */
+
+.iconShare__list > [target=_blank]:after{
+	width:0;
+}
+
+/* Panel */
+
+.mv-header, .mv-header h6 {
+    font-size: 0.95em !important;
+    color: var(--bf500);
 }
