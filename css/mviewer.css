@@ -331,6 +331,10 @@ html {
 	right: auto !important;
 }
 
+.xs .ol-attribution {
+    max-width: 60%;
+}
+
 .ol-attribution.ol-uncollapsible {
 	border-radius: 4px;
 }
@@ -2259,7 +2263,7 @@ body:has(>#main.mode-s) #layers-container-box-header>.btn {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border-radius: 0.5em;
+	border-radius: var(--bs-border-radius);
 }
 
 #mvNavbarMobile a:hover,
