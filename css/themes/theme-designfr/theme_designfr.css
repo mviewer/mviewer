@@ -147,7 +147,11 @@ li {
 	padding-bottom: 0;
 }
 
-select {
+hr {
+    padding: 0;
+}
+
+select.form-select {
 	color: var(--g700) !important;
 	background-color: var(--g200) !important;
 	border: none !important;
@@ -157,6 +161,14 @@ select {
 	background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' viewBox='0 0 24 24' ><path fill='%231e1e1e' d='M12,13.1l5-4.9l1.4,1.4L12,15.9L5.6,9.5l1.4-1.4L12,13.1z'/></svg>") no-repeat right #ddd0;
 	background-size: 20px;
 	-webkit-appearance: none;
+}
+
+input.form-control:not([type="color"]) {
+    background-color: var(--g200);
+    border-bottom: 2px solid var(--g600) !important;
+    border-top-left-radius: 5px !important;
+    border-top-right-radius: 5px !important;
+    border: none;
 }
 
 input[type=radio] {
@@ -193,12 +205,63 @@ input[type=radio]+div:before, input[type=radio]+label:before {
     width: 1.5rem
 }
 
+/* Checkbox */
+
+.form-check > div {
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+    margin: 5px 0;
+}
+
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  margin: 0;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  background-color: #fff;
+  margin: 0;
+  width: 1.15em;
+  height: 1.15em;
+  border: 1px solid var(--bf500);
+  border-radius: 0.15em;
+  transform: translateY(-0.075em);
+}
+
+input[type="checkbox"] {
+  display: grid;
+  place-content: center;
+}
+
+input[type="checkbox"]::before {
+  content: "";
+  width: 0.9em;
+  height: 0.9em;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em var(--form-control-color);
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+
+/* Btn */
+
 a.btn.btn-light:hover {
 	background-color: #f6f6f6 !important;
 }
 
 .btn.btn-primary:hover {
     background-color: color-mix(in srgb, var(--mv-color-primary) 80%, white)!important;
+}
+
+.btn.btn-outline-primary {
+    --bs-btn-hover-color: var(--mv-color-primary);
 }
 
 /* Modal */
@@ -223,11 +286,11 @@ a.btn.btn-light:hover {
     font-weight: 700;
 }
 
-.modal .btn-close::before {
+.modal .modal-header .btn-close::before {
 	content: "Fermer ";
 }
 
-.modal .btn-close {
+.modal .modal-header .btn-close {
 	color: var(--bf500);
 	opacity: 1;
 	font-size: 16px;
@@ -243,7 +306,7 @@ a.btn.btn-light:hover {
 	border-radius: var(--bs-border-radius);
 }
 
-.modal .btn-close:hover {
+.modal .modal-header .btn-close:hover {
 	color: var(--bf500);
 	opacity: 1;
 }
@@ -345,7 +408,6 @@ a.btn.btn-light:hover {
 	color: var(--bf500) !important;
 	background-color: var(--bf200-bf300) !important;
 }
-
 
 /**
  * Légende
@@ -452,4 +514,75 @@ a.carousel-control-prev, a.carousel-control-next {
 
 li.mv-translate:hover {
     background-color: var(--g1000-hover);
+}
+
+/** 
+** PLUGINS
+*/
+
+/* Filtre */
+
+#advancedFilter {
+    font-size: .9em;
+}
+
+.advancedFilter .filterCheck__list .form-check-label {
+    border-radius: 0!important;
+    color: var(--bf500)!important;
+    background-color: var(--bf200-bf300)!important;
+}
+
+.advancedFilter .filterCheck__list .form-check-label-checked, 
+.advancedFilter .filterCheck__list .form-check-label:hover {
+    color: white!important;
+    background-color: var(--bf500)!important;
+}
+
+.advancedFilter .bootstrap-tagsinput {
+	color: var(--g700) !important;
+	background-color: var(--g200) !important;
+	border: none !important;
+	box-shadow: inset 0 -2px 0 0 var(--g600) !important;
+	border-top-left-radius: 5px !important;
+	border-top-right-radius: 5px !important;
+	
+}
+
+.advancedFilter .bootstrap-tagsinput .tag{
+    border-radius: 0!important;
+	font-size: .85em;
+	padding: 3px;
+	line-height: 1.5;
+}
+
+/* Layer Filter */
+
+#layerfilter-field {
+    background-color: var(--g200);
+    border-bottom: 2px solid var(--bf500) !important;
+    border-top-left-radius: 5px !important;
+    border-top-right-radius: 5px !important;
+    border: none;
+}
+
+/* File import */ 
+
+#drop_zone {
+    border-radius: 0;
+    font-size: small!important;
+}
+
+#drop_zone p{
+    font-size: small!important;
+}
+
+#geocoding-modal .list-group-item:hover {
+    background-color: var(--g1000-hover) !important;
+    color: currentColor;
+}
+
+/* Isochrone */
+
+#isochronePanel {
+    font-size: .9em;
 }
