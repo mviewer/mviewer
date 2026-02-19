@@ -269,7 +269,7 @@ function buildWmsFilterParamValue(layerDefinition, filterExpression) {
  * @returns {string}
  */
 function getWmsFilterExpression(layerDefinition, params) {
-  if (!params) {
+  if (layerDefinition.type !== "wms" || !params) {
     return "";
   }
   const paramKey = getWmsFilterParamKey(layerDefinition);
