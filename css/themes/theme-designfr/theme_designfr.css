@@ -151,6 +151,10 @@ hr {
     padding: 0;
 }
 
+p {
+    line-height: normal;
+}
+
 select.form-select {
 	color: var(--g700) !important;
 	background-color: var(--g200) !important;
@@ -319,6 +323,12 @@ a.btn.btn-light:hover {
 
 #loader-subtitle {
 	color: var(--bf500);
+}
+
+/* Loading */ 
+
+#loading-indicator i {
+    color: var(--mv-color-primary);
 }
 
 /**
@@ -545,7 +555,6 @@ li.mv-translate:hover {
 	box-shadow: inset 0 -2px 0 0 var(--g600) !important;
 	border-top-left-radius: 5px !important;
 	border-top-right-radius: 5px !important;
-	
 }
 
 .advancedFilter .bootstrap-tagsinput .tag{
