@@ -357,11 +357,16 @@ html {
 	z-index: 100;
 }
 
-#page-content-wrapper:has(#bottom-panel.active) .ol-attribution.ol-unselectable.ol-control,
-#page-content-wrapper:has(#bottom-panel.active) .ol-scale-line.ol-unselectable {
-	margin-bottom: var(--mv-bottompanel-size);
-	transition: 0.5s;
+#page-content-wrapper:has(#bottom-panel.active) .ol-attribution {
+	bottom: calc(3em + var(--mv-bottompanel-size))!important;
+	transition: 0.5s ease;
 }
+
+#page-content-wrapper:has(#bottom-panel.active) .ol-scale-line.ol-unselectable {
+	bottom: calc(1em + var(--mv-bottompanel-size));
+	transition: 0.5s ease;
+}
+
 
 /* Map-pins */
 
@@ -466,7 +471,7 @@ html {
 
 #page-content-wrapper:has(#bottom-panel.active) #backgroundlayerstoolbar-gallery,
 #page-content-wrapper:has(#bottom-panel.active) #backgroundlayerstoolbar-default {
-	margin-bottom: var(--mv-bottompanel-size);
+	bottom: calc(1em + var(--mv-bottompanel-size));
 	transition: 0.5s;
 }
 
@@ -484,7 +489,7 @@ html {
 }
 
 #page-content-wrapper:has(#bottom-panel.active) #mouse-position {
-	margin-bottom: var(--mv-bottompanel-size);
+	bottom: calc(1em + var(--mv-bottompanel-size));
 	transition: 0.5s;
 }
 
