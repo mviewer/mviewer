@@ -2063,7 +2063,7 @@ mviewer = (function () {
         zoom = maxzoom;
       }
       if (geometry.getType() === "Polygon") {
-        coordinates = geometry.getInteriorPoints().getCoordinates();
+        coordinates = geometry.getInteriorPoint().getCoordinates();
       } else if (geometry.getType() === "MultiPolygon") {
         coordinates = geometry.getInteriorPoints().getPoint(0).getCoordinates();
       }
