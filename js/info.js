@@ -1245,9 +1245,10 @@ var info = (function () {
     var activeAttributeValue = false;
     // if attributeControl is used for this layer, get the active attribute value and
     // set this value as property like 'value= true'. This allows use this value in Mustache template
+    // ! only works with wms
     var activeFilter = mviewer.getWmsFilterExpression(
       olayer,
-      olayer.layer.getSource().getParams()
+      olayer.layer.getSource()?.getParams?.()
     );
     if (olayer.attributefilter && activeFilter) {
       const xml = new DOMParser().parseFromString(activeFilter, "text/xml");
