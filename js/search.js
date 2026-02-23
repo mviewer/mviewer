@@ -1426,7 +1426,6 @@ var search = (function () {
     let coordsForQueryMap = ol.proj.transform([lon, lat], _proj4326, mapProjection);
 
     let duration = 1000;
-    let animate = "true";
 
     _sourceOverlay.clear();
 
@@ -1438,20 +1437,15 @@ var search = (function () {
         configuration.getConfiguration().searchparameters.animate &&
         configuration.getConfiguration().searchparameters.animate !== "true"
       ) {
-        animate = "false";
+        duration = 0;
       }
     }
 
-    if (animate === "true") {
-      mapView.animate({
-        center: center,
-        zoom: zoom,
-        duration: duration,
-      });
-    } else {
-      mapView.setCenter(center);
-      mapView.setZoom(zoom);
-    }
+    mapView.animate({
+      center: center,
+      zoom: zoom,
+      duration: duration,
+    });
 
     if (queryMap) {
       _triggerQueryMap(coordsForQueryMap, duration + 100);
