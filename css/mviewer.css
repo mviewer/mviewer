@@ -357,11 +357,7 @@ html {
 	z-index: 100;
 }
 
-#page-content-wrapper:has(#bottom-panel.active) .ol-attribution {
-	margin-bottom: var(--mv-bottompanel-size)!important;
-	transition: 0.5s;
-}
-
+#page-content-wrapper:has(#bottom-panel.active) .ol-attribution,
 #page-content-wrapper:has(#bottom-panel.active) .ol-scale-line.ol-unselectable {
 	margin-bottom: var(--mv-bottompanel-size);
 	transition: 0.5s;
