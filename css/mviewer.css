@@ -358,13 +358,13 @@ html {
 }
 
 #page-content-wrapper:has(#bottom-panel.active) .ol-attribution {
-	bottom: calc(3em + var(--mv-bottompanel-size))!important;
-	transition: 0.5s ease;
+	margin-bottom: var(--mv-bottompanel-size)!important;
+	transition: 0.5s;
 }
 
 #page-content-wrapper:has(#bottom-panel.active) .ol-scale-line.ol-unselectable {
-	bottom: calc(1em + var(--mv-bottompanel-size));
-	transition: 0.5s ease;
+	margin-bottom: var(--mv-bottompanel-size);
+	transition: 0.5s;
 }
 
 
@@ -471,7 +471,7 @@ html {
 
 #page-content-wrapper:has(#bottom-panel.active) #backgroundlayerstoolbar-gallery,
 #page-content-wrapper:has(#bottom-panel.active) #backgroundlayerstoolbar-default {
-	bottom: calc(1em + var(--mv-bottompanel-size));
+	margin-bottom: var(--mv-bottompanel-size);
 	transition: 0.5s;
 }
 
@@ -489,7 +489,7 @@ html {
 }
 
 #page-content-wrapper:has(#bottom-panel.active) #mouse-position {
-	bottom: calc(1em + var(--mv-bottompanel-size));
+	margin-bottom: var(--mv-bottompanel-size);
 	transition: 0.5s;
 }
 
