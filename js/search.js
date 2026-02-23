@@ -1425,15 +1425,33 @@ var search = (function () {
     let mapProjection = mapView.getProjection().getCode();
     let coordsForQueryMap = ol.proj.transform([lon, lat], _proj4326, mapProjection);
 
+    let duration = 1000;
+    let animate = "true";
+
     _sourceOverlay.clear();
 
-    let duration = 3000;
+    if (configuration.getConfiguration().searchparameters) {
+      if (configuration.getConfiguration().searchparameters.duration) {
+        duration = parseInt(configuration.getConfiguration().searchparameters.duration);
+      }
+      if (
+        configuration.getConfiguration().searchparameters.animate &&
+        configuration.getConfiguration().searchparameters.animate !== "true"
+      ) {
+        animate = "false";
+      }
+    }
 
-    mapView.animate({
-      center: center,
-      zoom: zoom,
-      duration: duration,
-    });
+    if (animate === "true") {
+      mapView.animate({
+        center: center,
+        zoom: zoom,
+        duration: duration,
+      });
+    } else {
+      mapView.setCenter(center);
+      mapView.setZoom(zoom);
+    }
 
     if (queryMap) {
       _triggerQueryMap(coordsForQueryMap, duration + 100);
