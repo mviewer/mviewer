@@ -222,21 +222,12 @@ input[type="checkbox"] {
   -webkit-appearance: none;
   appearance: none;
   background-color: #fff;
-  margin: 0;
-}
-
-input[type="checkbox"] {
-  appearance: none;
-  background-color: #fff;
-  margin: 0;
+  margin: 3px 0;
   width: 1.15em;
   height: 1.15em;
   border: 1px solid var(--bf500);
   border-radius: 0.15em;
   transform: translateY(-0.075em);
-}
-
-input[type="checkbox"] {
   display: grid;
   place-content: center;
 }
@@ -262,10 +253,6 @@ a.btn.btn-light:hover {
 
 .btn.btn-primary:hover {
     background-color: color-mix(in srgb, var(--mv-color-primary) 80%, white)!important;
-}
-
-.btn.btn-outline-primary {
-    --bs-btn-hover-color: var(--mv-color-primary);
 }
 
 /* Modal */
@@ -313,6 +300,34 @@ a.btn.btn-light:hover {
 .modal .modal-header .btn-close:hover {
 	color: var(--bf500);
 	opacity: 1;
+}
+
+table.fr__table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+}
+
+.fr__table thead {
+  background-color: #eeeeee;
+}
+
+.fr__table th, td {
+  padding: 8px;
+  text-align: left;
+}
+
+.fr__table th {
+  font-weight: 600;
+  color: #333;
+}
+
+.fr__table tbody tr:nth-child(even) {
+  background-color: #f5f5f5;
+}
+
+.fr__table tbody tr:hover {
+  background-color: #eaeaeae0;
 }
 
 /* -- Components -- */

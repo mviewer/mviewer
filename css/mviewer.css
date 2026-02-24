@@ -776,7 +776,7 @@ img.mv-logo {
 .mv-layer-details .icon-options {
 	text-align: center;
 	display: block;
-	color: var(--mv-color-body);
+	color: currentColor;
 }
 
 .mv-layer-options label,
@@ -785,7 +785,7 @@ img.mv-logo {
 .mv-layer-options-attribution-date,
 .text-big-legend {
 	font-size: 0.9em;
-	color: var(--mv-color-body);
+	color: currentColor;
 }
 
 .mv-layer-options-attribution {
