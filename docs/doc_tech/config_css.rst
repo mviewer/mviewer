@@ -166,8 +166,8 @@ Ces variables rendent le thème facilement modifiable et cohérent, sans avoir �
 
 **Taille des fenêtres d'interrogation**
 
-* ``--mvcustom-rightpanel-size`` : largeur du panneau droit (en ``%`` ou ``px``)
-* ``--mvcustom-bottompanel-size`` : hauteur du panneau inférieur (en ``%`` ou ``px``)
+* ``--mvcustom-rightpanel-size`` : largeur du panneau droit (en ``%`` ou ``vw`` ou ``px``)
+* ``--mvcustom-bottompanel-size`` : hauteur du panneau inférieur (en ``vh`` ou ``px``)
 
 **Navbar (barre de navigation)**
 
