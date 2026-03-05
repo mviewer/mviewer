@@ -538,9 +538,15 @@ html {
 
 .mv-title {
 	font-size: large;
-	font-weight: 500;
-	line-height: 1;
-	white-space: normal;
+    font-weight: 500;
+    line-height: 1;
+    white-space: normal;
+    max-width: 500px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .menu-toggle {
