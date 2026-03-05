@@ -154,6 +154,24 @@ p {
 	line-height: normal;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    color: var(--g800);
+}
+
+h1 { font-size: 40px!important; }
+h2 { font-size: 32px!important; }
+h3 { font-size: 28px!important; }
+h4 { font-size: 24px!important; }
+h5 { font-size: 22px!important; }
+h6 { font-size: 20px!important; }
+
+.xs h1 { font-size: 32px!important; }
+.xs h2 { font-size: 28px!important; }
+.xs h3 { font-size: 24px!important; }
+.xs h4 { font-size: 22px!important; }
+.xs h5 { font-size: 20px!important; }
+.xs h6 { font-size: 18px!important; }
+
 /* ===== Formulaires ===== */
 
 select.form-select {
