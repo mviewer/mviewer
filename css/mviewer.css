@@ -357,11 +357,12 @@ html {
 	z-index: 100;
 }
 
-#page-content-wrapper:has(#bottom-panel.active) .ol-attribution.ol-unselectable.ol-control,
+#page-content-wrapper:has(#bottom-panel.active) .ol-attribution,
 #page-content-wrapper:has(#bottom-panel.active) .ol-scale-line.ol-unselectable {
 	margin-bottom: var(--mv-bottompanel-size);
 	transition: 0.5s;
 }
+
 
 /* Map-pins */
 
