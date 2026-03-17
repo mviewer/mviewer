@@ -1,0 +1,56 @@
+name: Propagate release to submodules
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  dispatch-submodules:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout mviewer
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate release tag is on master
+        id: validate
+        run: |
+          TAG="${{ github.event.release.tag_name }}"
+
+          git fetch origin master --tags
+
+          TAG_SHA=$(git rev-list -n 1 "$TAG")
+          if [ -z "$TAG_SHA" ]; then
+            echo "Tag $TAG introuvable"
+            exit 1
+          fi
+
+          if git merge-base --is-ancestor "$TAG_SHA" origin/master; then
+            echo "valid=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Le tag $TAG n'est pas issu de master"
+            exit 1
+          fi
+
+      - name: Trigger mviewer-addons release workflow
+        env:
+          GH_TOKEN: ${{ secrets.MVIEWER_ORG_SECRET_1 }}
+        run: |
+          gh workflow run release-from-parent.yml \
+            --repo mviewer/mviewer-addons \
+            --ref main \
+            -f version="${{ github.event.release.tag_name }}"
+
+      - name: Trigger mviewer-demo release workflow
+        env:
+          GH_TOKEN: ${{ secrets.MVIEWER_ORG_SECRET_1 }}
+        run: |
+          gh workflow run release-from-parent.yml \
+            --repo mviewer/mviewer-demo \
+            --ref main \
+            -f version="${{ github.event.release.tag_name }}"
