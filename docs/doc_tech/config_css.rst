@@ -56,9 +56,6 @@ Remarque
 Le thème DSFR
 -------------
 
-.. warning::
-    **Non compatible avec mviewer 4.0** - Pour utiliser le thème DSFR, vous devez rester sur la version **3.15** ou utiliser un thème par défaut.
-
 Mviewer propose un thème dédié au **Design Système de l’État Français (DSFR)**, permettant d’appliquer facilement la charte graphique de l’administration.
 
 Le thème reprend tous les codes et principes recommandés par le système de Design (DSFR) : couleurs, typographies.  
@@ -74,26 +71,27 @@ Pour mobiliser ce thème au sein d'une application mviewer, configurez le fichie
 
     <application
         logo='css/themes/theme-designfr/repfr-logo.png'
-        favicon='css/themes/theme-designfr/dsfr-v1.6.0/dist/favicon/favicon.ico'
+        favicon='css/themes/theme-designfr/dsfr-v1.14.3/dist/favicon/favicon.ico'
         style='css/themes/theme-designfr/theme_designfr.css'
     />
 
 Les ressources du thème sont situées dans le dossier ``css/themes/theme-designfr``.
 
-Optionnel
-^^^^^^^^^
+Optionnel - Utiliser l'API Js
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Si vous souhaitez mobiliser des éléments d’interface disponibles au sein de la librairie DSFR dans votre page d’accueil, templates ou customcontrols, insérez les scripts associés sous forme d’extensions mviewer ::
+Si vous souhaitez mobiliser des éléments d’interface disponibles au sein de la librairie DSFR dans votre page d’accueil, templates ou customcontrols, insérez le plugin dsfr-loader à votre application sous forme d’extension mviewer ::
 
     <extensions>
-        <extension type="javascript" src="css/themes/theme-designfr/dsfr-v1.6.0/dist/dsfr.module.min.js"/>
-        <extension type="javascript" src="css/themes/theme-designfr/dsfr-v1.6.0/dist/dsfr.nomodule.min.js"/>
+        <extension type="component" id="dsfr-loader" path="css/themes/theme-designfr/"/>
     </extensions>
+
+.. warning::
+    **Version 4.0** - Le chargement du DSFR n’est plus effectué via les scripts déclarés dans les extensions mviewer. Il est désormais réalisé via un plugin dédié qui injecte dynamiquement les versions module et nomodule de la librairie. Cette évolution permet de respecter les recommandations officielles du DSFR et d’assurer une meilleure compatibilité avec mviewer 4 et son DOM dynamique..
 
 Remarque
 ^^^^^^^^
 • Un exemple est disponible dans ``demo/theme-designfr/theme-designfr.xml``  
-• Ce thème n’est pas compatible avec toutes les options d’affichage (ex : templates “brut” ou certains plugins).  
 • Le thème DSFR est fourni tel quel pour respecter les recommandations officielles ; il est déconseillé de le modifier.
 
 Créer un thème personnalisé (mviewer ≥ 4)
