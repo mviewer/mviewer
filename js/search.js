@@ -1425,7 +1425,7 @@ var search = (function () {
     let mapProjection = mapView.getProjection().getCode();
     let coordsForQueryMap = ol.proj.transform([lon, lat], _proj4326, mapProjection);
 
-    let duration = 1000;
+    let duration = 2000;
 
     _sourceOverlay.clear();
 
