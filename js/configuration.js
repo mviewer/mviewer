@@ -390,7 +390,7 @@ var configuration = (function () {
       $("#btnHelpMob").remove();
     }
     if (conf.application.titlehelp) {
-      $("#help h4.modal-title").text(conf.application.titlehelp);
+      $("#help h5.modal-title").text(conf.application.titlehelp);
     }
     if (conf.application.iconhelp) {
       $("#iconhelp i").attr("class", conf.application.iconhelp);

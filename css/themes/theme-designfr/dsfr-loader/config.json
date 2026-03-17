@@ -1,0 +1,6 @@
+{
+  "js": ["dsfr-loader.js"],
+  "css": "",
+  "html": "dsfr-loader.html",
+  "target": "main"
+}

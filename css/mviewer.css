@@ -331,6 +331,10 @@ html {
 	right: auto !important;
 }
 
+.xs .ol-attribution {
+    max-width: 60%;
+}
+
 .ol-attribution.ol-uncollapsible {
 	border-radius: 4px;
 }
@@ -429,6 +433,7 @@ html {
 	background-image: url("../img/basemap/osm.png");
 	height: 45px;
 	width: 45px;
+	background-size: cover;
 	border-radius: var(--bs-border-radius);
 	border: 2px solid #f8f8f8;
 	box-shadow: 0px 0px 30px 3px rgba(200, 200, 200, 0.5);
@@ -534,9 +539,15 @@ html {
 
 .mv-title {
 	font-size: large;
-	font-weight: 500;
-	line-height: 1;
-	white-space: normal;
+    font-weight: 500;
+    line-height: 1;
+    white-space: normal;
+    max-width: 500px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .menu-toggle {
@@ -589,8 +600,8 @@ img.mv-logo {
 	min-width: 220px;
 	position: fixed;
 	right: 6em;
-	top: 6em;
-	z-index: 5;
+	top: calc(var(--mv-navbar-h) - 10px);
+	z-index: 1500;
 }
 
 .searchresults-title {
@@ -772,7 +783,7 @@ img.mv-logo {
 .mv-layer-details .icon-options {
 	text-align: center;
 	display: block;
-	color: var(--mv-color-body);
+	color: currentColor;
 }
 
 .mv-layer-options label,
@@ -781,7 +792,7 @@ img.mv-logo {
 .mv-layer-options-attribution-date,
 .text-big-legend {
 	font-size: 0.9em;
-	color: var(--mv-color-body);
+	color: currentColor;
 }
 
 .mv-layer-options-attribution {
@@ -1719,7 +1730,7 @@ li.mv-nav-item {
 
 .langList a {
 	padding: 4px 10px;
-	border-radius: 0.6em;
+	border-radius: var(--bs-border-radius);
 	text-transform: uppercase;
 	border: 1px solid #d1d1d1;
 }
@@ -2259,7 +2270,7 @@ body:has(>#main.mode-s) #layers-container-box-header>.btn {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border-radius: 0.5em;
+	border-radius: var(--bs-border-radius);
 }
 
 #mvNavbarMobile a:hover,
