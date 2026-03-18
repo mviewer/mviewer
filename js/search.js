@@ -1425,9 +1425,21 @@ var search = (function () {
     let mapProjection = mapView.getProjection().getCode();
     let coordsForQueryMap = ol.proj.transform([lon, lat], _proj4326, mapProjection);
 
+    let duration = 2000;
+
     _sourceOverlay.clear();
 
-    let duration = 3000;
+    if (configuration.getConfiguration().searchparameters) {
+      if (configuration.getConfiguration().searchparameters.duration) {
+        duration = parseInt(configuration.getConfiguration().searchparameters.duration);
+      }
+      if (
+        configuration.getConfiguration().searchparameters.animate &&
+        configuration.getConfiguration().searchparameters.animate !== "true"
+      ) {
+        duration = 0;
+      }
+    }
 
     mapView.animate({
       center: center,
