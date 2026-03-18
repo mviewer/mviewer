@@ -25,7 +25,7 @@ export const getFeatures = (parameters, url) => {
         // default proj data infos to reproject
         if (dataProjCode && dataProjCode !== "3857") {
           options = {
-            dataProjection: dataSrs || "EPSG:" + dataProjCode,
+            dataProjection: dataSrs || `EPSG:${dataProjCode}`,
           };
         }
         const features = new ol.format.GeoJSON({

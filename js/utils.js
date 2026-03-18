@@ -35,7 +35,7 @@ var utils = (function () {
         slds.forEach(function (sld, i) {
           if (!regexp.test(sld)) {
             test = 0;
-            console.log("sld " + sld + "\nnon valide pour la couche " + name);
+            console.log(`sld ${sld}\nnon valide pour la couche ${name}`);
           }
         });
       }
@@ -59,7 +59,7 @@ var utils = (function () {
         if (!allowedwilcards.includes(wildcards)) {
           test = 0;
           console.log(
-            "pattern " + layer.wildcardpattern + "\nnon valide pour la couche " + name
+            `pattern ${layer.wildcardpattern}\nnon valide pour la couche ${name}`
           );
         }
       }
@@ -75,12 +75,7 @@ var utils = (function () {
           if (theme.icon.indexOf(" ") === -1) {
             test = 0;
             console.log(
-              "Problème Icone thématique " +
-                theme.name +
-                " : " +
-                theme.icon +
-                "\nnotation dépréciée avec font-awesome 5.6.3. Utiliser une notation du type 'fas fa-" +
-                theme.icon
+              `Problème Icone thématique ${theme.name} : ${theme.icon}\nnotation dépréciée avec font-awesome 5.6.3. Utiliser une notation du type 'fas fa-${theme.icon}`
             );
           }
         }
@@ -99,7 +94,7 @@ var utils = (function () {
           duplicates.push(name);
         } else {
           test = 0;
-          console.log("doublon " + name + " in layers");
+          console.log(`doublon ${name} in layers`);
         }
       }
     });
@@ -116,7 +111,7 @@ var utils = (function () {
     });
     if (visibleBaseLayers !== 1) {
       test = 0;
-      console.log(visibleBaseLayers + " baselayer(s) visible(s)");
+      console.log(`${visibleBaseLayers} baselayer(s) visible(s)`);
     }
     return test;
   };
@@ -165,7 +160,7 @@ var utils = (function () {
     nbtests += 1;
 
     //Résultats tests
-    console.log("tests config :" + (score / nbtests === 1));
+    console.log(`tests config :${score / nbtests === 1}`);
   };
 
   var _initWMTSMatrixsets = function (projection) {
@@ -176,11 +171,11 @@ var utils = (function () {
     for (var z = 0; z < 22; ++z) {
       // generate resolutions and matrixIds arrays for this GEOSERVER WMTS
       _WMTSTileResolutions["EPSG:3857"][z] = size / Math.pow(2, z);
-      _WMTSTileMatrix["EPSG:3857"][z] = "EPSG:3857:" + z;
+      _WMTSTileMatrix["EPSG:3857"][z] = `EPSG:3857:${z}`;
       _WMTSTileResolutions["EPSG:4326"][z] = size / Math.pow(2, z);
-      _WMTSTileMatrix["EPSG:4326"][z] = "EPSG:4326:" + z;
+      _WMTSTileMatrix["EPSG:4326"][z] = `EPSG:4326:${z}`;
       _WMTSTileResolutions["EPSG:2154"][z] = size / Math.pow(2, z);
-      _WMTSTileMatrix["EPSG:2154"][z] = "EPSG:2154:" + z;
+      _WMTSTileMatrix["EPSG:2154"][z] = `EPSG:2154:${z}`;
     }
     for (var z = 0; z < 20; ++z) {
       // generate resolutions and matrixIds arrays for this GEOPORTAIL WMTS

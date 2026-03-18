@@ -320,37 +320,37 @@ mviewer.templates.featureInfo.accordion = `
     </div>
 </div>`;
 
-mviewer.templates.featureInfo.allintabs = [
-  '<div id="{{panel}}-selector">',
-  '<div class="row featureInfo_allintabs">',
-  '<div class="col-md-12">',
-  '<div class="tabs-left">',
-  '<ul class="nav nav-tabs flex-column">',
-  "{{#layers}}",
-  '<li title="{{name}}" class="nav-item" data-layerid="{{layerid}}" {{#initiallayerid}}initiallayerid="{{initiallayerid}}" {{/initiallayerid}}>',
-  '<a class="nav-link {{#firstlayer}}active{{/firstlayer}}" onclick="mviewer.setInfoPanelTitle(this,\'{{panel}}\',\'layers.{{initiallayerid}}\');" title="{{name}}" i18n="layers.{{initiallayerid}}" href="#slide-{{panel}}-{{id}}" data-bs-toggle="tab">',
-  '<span class="fa {{theme_icon}}"></span>',
-  '{{#multiple}}<span class="item-number">{{index}}</spanclass>{{/multiple}}',
-  "</a>",
-  "</li>",
-  "{{/layers}}",
-  "</ul>",
-  '<div class="tab-content">',
-  "{{#layers}}",
-  '<div  role="tabpanel" class="{{#firstlayer}}active in {{/firstlayer}}tab-pane" id="slide-{{panel}}-{{id}}" >',
-  '<div id="carousel-{{panel}}-{{id}}" div class="carousel slide" data-bs-interval="false">',
-  '<ul class="carousel-inner" role="listbox">',
-  "{{{html}}}",
-  "</ul>",
-  "</div>",
-  "</div>",
-  "{{/layers}}",
-  "</div>",
-  "</div>",
-  "</div>",
-  "</div>",
-  "</div>",
-].join("");
+mviewer.templates.featureInfo.allintabs = `
+<div id="{{panel}}-selector">
+  <div class="row featureInfo_allintabs">
+    <div class="col-md-12">
+      <div class="tabs-left">
+        <ul class="nav nav-tabs flex-column">
+        {{#layers}}
+          <li title="{{name}}" class="nav-item" data-layerid="{{layerid}}" {{#initiallayerid}}initiallayerid="{{initiallayerid}}" {{/initiallayerid}}>
+            <a class="nav-link {{#firstlayer}}active{{/firstlayer}}" onclick="mviewer.setInfoPanelTitle(this,'{{panel}}','layers.{{initiallayerid}}');" title="{{name}}" i18n="layers.{{initiallayerid}}" href="#slide-{{panel}}-{{id}}" data-bs-toggle="tab">
+              <span class="fa {{theme_icon}}"></span>
+              {{#multiple}}<span class="item-number">{{index}}</spanclass>{{/multiple}}
+            </a>
+          </li>
+        {{/layers}}
+        </ul>
+        <div class="tab-content">
+        {{#layers}}
+          <div  role="tabpanel" class="{{#firstlayer}}active in {{/firstlayer}}tab-pane" id="slide-{{panel}}-{{id}}" >
+            <div id="carousel-{{panel}}-{{id}}" div class="carousel slide" data-bs-interval="false">
+              <ul class="carousel-inner" role="listbox">
+              {{{html}}}
+              </ul>
+            </div>
+          </div>
+        {{/layers}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
 
 mviewer.templates.ctrlSensor = `
 <ul class="p-0 my-2" style="list-style-type:none;">

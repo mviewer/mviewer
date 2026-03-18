@@ -792,56 +792,26 @@ var search = (function () {
                   geometry: geom.transform("EPSG:4326", "EPSG:3857"),
                   title: title,
                 });
-                action_click = "mviewer.zoomToFeature('feature." + i + "');";
-                feature.setId("feature." + i);
+                action_click = `mviewer.zoomToFeature('feature.${i}');`;
+                feature.setId(`feature.${i}`);
                 _sourceEls.addFeature(feature);
-                action_over = "mviewer.showFeature('feature." + i + "');";
+                action_over = `mviewer.showFeature('feature.${i}');`;
               } else {
-                action_click =
-                  "mviewer.zoomToLocation(" +
-                  point[0] +
-                  "," +
-                  point[1] +
-                  ",14," +
-                  _searchparams.querymaponclick +
-                  ");";
-                action_over =
-                  "mviewer.flash(" + "'EPSG:4326'," + point[0] + "," + point[1] + ");";
+                action_click = `mviewer.zoomToLocation(${point[0]},${point[1]},14,${_searchparams.querymaponclick});`;
+                action_over = `mviewer.flash('EPSG:4326',${point[0]},${point[1]});`;
               }
               if (_overLayers[data.hits.hits[i]._type]) {
-                action_click +=
-                  "mviewer.tools.info.queryLayer(" +
-                  point[0] +
-                  "," +
-                  point[1] +
-                  ",'EPSG:4326','" +
-                  data.hits.hits[i]._type +
-                  "','" +
-                  data.hits.hits[i]._id +
-                  "');";
-                action_over =
-                  "mviewer.flash(" + "'EPSG:4326'," + point[0] + "," + point[1] + ");";
+                action_click += `mviewer.tools.info.queryLayer(${point[0]},${point[1]},'EPSG:4326','${data.hits.hits[i]._type}','${data.hits.hits[i]._id}');`;
+                action_over = `mviewer.flash('EPSG:4326',${point[0]},${point[1]});`;
               }
 
-              str +=
-                '<a class="elasticsearch list-group-item  list-group-item-action" href="#" ' +
-                'onclick="' +
-                action_click +
-                '" ' +
-                'onmouseover="' +
-                action_over +
-                '" ' +
-                'title="(' +
-                data.hits.hits[i]._type +
-                ") " +
-                $.map(data.hits.hits[i]._source, function (el) {
-                  if (typeof el === "string") {
-                    return el;
-                  }
-                }).join(", \n") +
-                '">' +
-                title +
-                "</a>";
+              str += `<a class="elasticsearch list-group-item  list-group-item-action" href="#" onclick="${action_click}" onmouseover="${action_over}" title="(${
+                data.hits.hits[i]._type
+              }) ${$.map(data.hits.hits[i]._source, function (el) {
+                if (typeof el === "string") {
+                  return el;
+                }
+              }).join(", \n")}">${title}</a>`;
             }
             $(".elasticsearch").remove();
             if (nb > 0) {
@@ -850,9 +820,7 @@ var search = (function () {
           },
           error: function (xhr, ajaxOptions, thrownError) {
             mviewer.alert(
-              "Problème avec l'instance Elasticsearch.\n" +
-                thrownError +
-                "\n Désactivation du service.",
+              `Problème avec l'instance Elasticsearch.\n${thrownError}\n Désactivation du service.`,
               "alert-warning"
             );
             _searchparams.features = false;
@@ -996,7 +964,7 @@ var search = (function () {
                     geometry: geom.transform(_proj4326, _map.getView().getProjection()),
                     title: title,
                   });
-                  feature.setId("feature." + indexId + "." + j);
+                  feature.setId(`feature.${indexId}.${j}`);
                   _sourceEls.addFeature(feature);
 
                   action_click += `mviewer.animateToFeature(${JSON.stringify([
@@ -1008,18 +976,11 @@ var search = (function () {
                   //If index has the same name than a mviewer layer make the query on layer
                   if (_overLayers[indexId] && _searchparams.querymaponclick) {
                     _overLayers[indexId].searchid = _elasticSearchLinkid.get(indexId);
-                    action_click +=
-                      "mviewer.tools.info.queryLayer(" +
-                      xyz.lon +
-                      "," +
-                      xyz.lat +
-                      ",'" +
-                      _proj4326 +
-                      "','" +
-                      indexId +
-                      "','" +
-                      currentFeature._source[_elasticSearchLinkid.get(indexId)] +
-                      "');";
+                    action_click += `mviewer.tools.info.queryLayer(${xyz.lon},${
+                      xyz.lat
+                    },'${_proj4326}','${indexId}','${
+                      currentFeature._source[_elasticSearchLinkid.get(indexId)]
+                    }');`;
                   }
 
                   let action_over = "";
@@ -1029,34 +990,17 @@ var search = (function () {
                     //action_over = "mviewer.zoomToInitialExtent();";
                   }
 
-                  action_over +=
-                    "mviewer.flash(" +
-                    "'" +
-                    _proj4326 +
-                    "'," +
-                    xyz.lon +
-                    "," +
-                    xyz.lat +
-                    ");";
-                  str +=
-                    '<a class="elasticsearch list-group-item" href="#" ' +
-                    'onclick="' +
-                    action_click +
-                    '" ' +
-                    'onmouseover="' +
-                    action_over +
-                    '" ' +
-                    'title="' +
-                    $.map(currentFeature._source, function (value, key) {
+                  action_over += `mviewer.flash('${_proj4326}',${xyz.lon},${xyz.lat});`;
+                  str += `<a class="elasticsearch list-group-item" href="#" onclick="${action_click}" onmouseover="${action_over}" title="${$.map(
+                    currentFeature._source,
+                    function (value, key) {
                       if (!titleDisplayKey.length || titleDisplayKey.includes(key)) {
                         if (typeof value === "string") {
                           return value;
                         }
                       }
-                    }).join(" \n") +
-                    '">' +
-                    title +
-                    "</a>";
+                    }
+                  ).join(" \n")}">${title}</a>`;
                 }
 
                 if (nb > 0) {
@@ -1065,9 +1009,7 @@ var search = (function () {
               },
               error: function (xhr, ajaxOptions, thrownError) {
                 mviewer.alert(
-                  "Problème avec l'instance Elasticsearch.\n" +
-                    thrownError +
-                    "\n Désactivation du service.",
+                  `Problème avec l'instance Elasticsearch.\n${thrownError}\n Désactivation du service.`,
                   "alert-warning"
                 );
                 _searchparams.features = false;

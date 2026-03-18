@@ -105,9 +105,7 @@ class SensorFeature {
         .catch((r) => {
           reject();
           console.log(
-            "Fail to request thing whith [" +
-              feature.getProperties().mviewerid +
-              "] layer"
+            `Fail to request thing whith [${feature.getProperties().mviewerid}] layer`
           );
           return null;
         });
