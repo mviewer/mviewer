@@ -8,7 +8,7 @@ var configuration = (function () {
 
   // Mviewer version a saisir manuellement
 
-  var VERSION = "4.0";
+  var VERSION = "4.1";
 
   var _showhelp_startup = false;
 
