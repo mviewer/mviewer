@@ -1,0 +1,73 @@
+name: Check submodule releases from develop
+
+on:
+  pull_request_target:
+    branches:
+      - develop
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - labeled
+
+permissions:
+  contents: read
+
+jobs:
+  sync-submodule-releases:
+    if: contains(github.event.pull_request.labels.*.name, 'check release')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check latest releases and sync missing ones
+        env:
+          GH_TOKEN: ${{ secrets.MVIEWER_ORG_SECRET_1 }}
+          MVIEWER_REPO: mviewer/mviewer
+          ADDONS_REPO: mviewer/mviewer-addons
+          DEMO_REPO: mviewer/mviewer-demo
+          RELEASE_TARGET: main
+        run: |
+          set -euo pipefail
+
+          get_latest_release_tag() {
+            local repo="$1"
+            gh api "repos/${repo}/releases/latest" --jq '.tag_name' 2>/dev/null || true
+          }
+
+          create_release_if_missing() {
+            local repo="$1"
+            local tag="$2"
+
+            if gh release view "$tag" --repo "$repo" >/dev/null 2>&1; then
+              echo "Release ${tag} already exists in ${repo}"
+              return 0
+            fi
+
+            echo "Creating release ${tag} in ${repo}"
+            gh release create "$tag" \
+              --repo "$repo" \
+              --target "$RELEASE_TARGET" \
+              --title "$tag" \
+              --notes "Release synchronized from ${MVIEWER_REPO} (${tag})"
+          }
+
+          MVIEWER_TAG="$(get_latest_release_tag "$MVIEWER_REPO")"
+          ADDONS_TAG="$(get_latest_release_tag "$ADDONS_REPO")"
+          DEMO_TAG="$(get_latest_release_tag "$DEMO_REPO")"
+
+          if [ -z "$MVIEWER_TAG" ]; then
+            echo "No release found in ${MVIEWER_REPO}"
+            exit 1
+          fi
+
+          echo "Latest ${MVIEWER_REPO} release: ${MVIEWER_TAG}"
+          echo "Latest ${ADDONS_REPO} release: ${ADDONS_TAG:-<none>}"
+          echo "Latest ${DEMO_REPO} release: ${DEMO_TAG:-<none>}"
+
+          if [ "$ADDONS_TAG" = "$MVIEWER_TAG" ] && [ "$DEMO_TAG" = "$MVIEWER_TAG" ]; then
+            echo "Submodule releases are already aligned with ${MVIEWER_TAG}"
+            exit 0
+          fi
+
+          create_release_if_missing "$ADDONS_REPO" "$MVIEWER_TAG"
+          create_release_if_missing "$DEMO_REPO" "$MVIEWER_TAG"
