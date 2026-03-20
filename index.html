@@ -968,6 +968,7 @@
     <script type="module" src="js/urlParams/urlParams.js"></script>
     <script type="module" src="js/cookies/main.js"></script>
     <script>
+      // Startup 1. Synchronously checks that core modules are available before continuing.
       if (
         typeof mviewer == "undefined" ||
         typeof configuration == "undefined" ||
@@ -979,6 +980,7 @@
     <script type="text/javascript" src="lib/olms/8.2.1/olms.js"></script>
 
     <script type="text/javascript">
+      // Startup 2. Synchronously initializes Bootstrap UI helpers declared in the HTML.
       const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
       const popoverList = [...popoverTriggerList].map(
         (popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl)
@@ -990,6 +992,8 @@
       var API = {};
       $(document).ready(function () {
         "use strict";
+
+        // Startup 3. Runs on DOM ready and reads URL parameters used for startup.
         if (window.location.search) {
           $.extend(
             API,
@@ -1035,26 +1039,29 @@
         // Save the config file path in the API object
         API.config = configFile;
 
+        // Startup 4. Starts the asynchronous load of the main configuration.
         var theme = API.theme ? API.theme : null;
 
         $.ajax({
           url: configFile + "?_dc=" + new Date().getTime(),
           dataType: "xml",
           success: function (xml) {
+            // Async A1. After the config XML is fetched, registers callbacks for later app events.
             $(document).on("layersLoaded", function (e) {
+              // Async B1. Runs when layers are actually loaded and applies their final display order.
               mviewer.overLayersReady();
               mviewer.showLayersByAttrOrder(mviewer.getLayersAttribute("rank"));
               mviewer.orderLayerByIndex();
             });
-            //load conf
             $(document).on("configurationCompleted", function (e, eData) {
+              // Async B2. Runs when configuration parsing is complete, then starts async env loading.
               // load env var
               configuration.getEnvData(
                 configFile.replace(".xml", ".json"),
                 defaultEnvFile
               );
-              // load config on env var available
               document.addEventListener("environementInfosAvailable", (r) => {
+                // Async C1. Runs when environment data is available and builds the final app state.
                 // set mviewer en from environment file
                 mviewer.env = { ...r.detail };
                 //get JSON conf from xml;
@@ -1085,6 +1092,7 @@
                 }
                 configuration.load(_conf);
                 $(document).trigger("ready-for-component");
+                // Async D1. Finishes visual startup after a short delay.
                 setTimeout(function () {
                   $("#loading-page").addClass("hidden");
                   $("#main").css("opacity", 1).hide();
@@ -1097,11 +1105,13 @@
               $("#map").focus();
             });
             $(document).on("applicationExtended", function (e, eData) {
+              // Async B3. Runs after extensions are loaded to complete configuration.
               configuration.complete(eData.xml);
             });
             configuration.getExtensions(xml);
           }, // fin success config
           error: function (request, status, error) {
+            // Async A2. Handles config loading failure and redirects to the matching error page.
             const is404 = request.statusCode().status === 404 ? "404" : "";
             const is400 = status === "parsererror" ? "400" : "";
 
@@ -1124,6 +1134,7 @@
           },
         });
 
+        // Startup 5. Registers drag-and-drop behavior for layer reordering.
         Sortable.create(document.getElementById("layers-container"), {
           handle: ".layerdisplay-title",
           draggable: ".draggable",
@@ -1149,6 +1160,8 @@
             mviewer.orderLayer(actionMove);
           },
         });
+
+        // Startup 6. Registers panel close handlers that clear the current query state.
         $("#right-panel .btn-close,#bottom-panel .btn-close").click(function () {
           mviewer.hideLocation();
           if (window.info && typeof window.info.clearQueryState === "function") {
