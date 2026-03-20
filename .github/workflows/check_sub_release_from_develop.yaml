@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   sync-submodule-releases:
-    if: contains(github.event.pull_request.labels.*.name, 'check release')
+    if: contains(github.event.pull_request.labels.*.name, 'check_release')
     runs-on: ubuntu-latest
 
     steps:
