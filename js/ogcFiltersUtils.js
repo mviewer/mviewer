@@ -1025,7 +1025,11 @@ function getOgcFilterLiteralValue(filterXml, wildcardpattern) {
     if (prefix && value.indexOf(prefix) === 0) {
       value = value.slice(prefix.length);
     }
-    if (suffix && value.lastIndexOf(suffix) === value.length - suffix.length) {
+    if (
+      suffix &&
+      value.lastIndexOf(suffix) !== -1 &&
+      value.lastIndexOf(suffix) === value.length - suffix.length
+    ) {
       value = value.slice(0, value.length - suffix.length);
     }
     return value;
