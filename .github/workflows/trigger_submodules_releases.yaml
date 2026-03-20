@@ -41,7 +41,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.MVIEWER_ORG_SECRET_1 }}
         run: |
-          gh workflow run release-from-parent.yml \
+          gh workflow run release_from_mviewer.yml \
             --repo mviewer/mviewer-addons \
             --ref main \
             -f version="${{ github.event.release.tag_name }}"
@@ -50,7 +50,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.MVIEWER_ORG_SECRET_1 }}
         run: |
-          gh workflow run release-from-parent.yml \
+          gh workflow run release_from_mviewer.yml \
             --repo mviewer/mviewer-demo \
             --ref main \
             -f version="${{ github.event.release.tag_name }}"
