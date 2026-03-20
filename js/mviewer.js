@@ -18,8 +18,7 @@ mviewer = (function () {
 
   proj4.defs(
     "EPSG:2154",
-    "+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 " +
-      "+units=m +no_defs"
+    `+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs`
   );
 
   ol.proj.proj4.register(proj4);
@@ -102,6 +101,7 @@ mviewer = (function () {
       mviewer.setBaseLayer(configuration.getDefaultBaseLayer());
     }
     _showCheckedLayers();
+    _runPendingPermalinkQuery();
   };
 
   var _applyUrlParameters = function () {
@@ -112,17 +112,103 @@ mviewer = (function () {
   };
 
   var _applyPermalink = function () {
+    let center = null;
+    let queryRequested = false;
     //Get  x, y & z url parameters if exists
     if (API.x && API.y && API.z) {
-      var center = [parseFloat(API.x), parseFloat(API.y)];
+      center = [parseFloat(API.x), parseFloat(API.y)];
       var zoom = parseInt(API.z);
       _map.getView().setCenter(center);
       _map.getView().setZoom(zoom);
+      // Flag a queryMap call if requested via URL (e.g. ?query=true)
+      queryRequested = ["true", "1", "yes", "on"].includes(
+        (API.query || "").toString().toLowerCase()
+      );
     }
     //get visible layers
     if (API.l) {
       _setVisibleOverLayers(API.l);
     }
+    if (queryRequested && center) {
+      _queuePermalinkQuery(center);
+    }
+  };
+
+  var _pendingPermalinkQuery = null;
+
+  var _queuePermalinkQuery = function (center) {
+    _pendingPermalinkQuery = { center: center };
+  };
+
+  var _waitForVectorSources = function (sources) {
+    return new Promise(function (resolve) {
+      if (!sources.length) {
+        resolve();
+        return;
+      }
+      var pending = new Set(sources);
+      var keys = [];
+      var onSourceReady = function (source) {
+        pending.delete(source);
+        if (pending.size === 0) {
+          cleanup();
+          resolve();
+        }
+      };
+      var cleanup = function () {
+        keys.forEach(function (key) {
+          ol.Observable.unByKey(key);
+        });
+      };
+      sources.forEach(function (source) {
+        if (source.getState && source.getState() === "ready") {
+          onSourceReady(source);
+          return;
+        }
+        keys.push(
+          source.on("change", function () {
+            if (source.getState && source.getState() === "ready") {
+              onSourceReady(source);
+            }
+          })
+        );
+      });
+    });
+  };
+
+  var _runPendingPermalinkQuery = function () {
+    if (
+      !_pendingPermalinkQuery ||
+      !_pendingPermalinkQuery.center ||
+      typeof info?.queryMap !== "function"
+    ) {
+      return;
+    }
+    var center = _pendingPermalinkQuery.center;
+    _pendingPermalinkQuery = null;
+    var sources = [];
+    Object.keys(_overLayers).forEach(function (layerId) {
+      var layer = _overLayers[layerId];
+      if (!layer || !layer.queryable || !layer.layer) {
+        return;
+      }
+      if (layer.checked !== true) {
+        return;
+      }
+      var source = layer.layer.getSource && layer.layer.getSource();
+      if (source instanceof ol.source.Vector) {
+        sources.push(source);
+      }
+    });
+    _waitForVectorSources(sources).then(function () {
+      _map.once("rendercomplete", function () {
+        info.queryMap({
+          coordinate: center,
+          pixel: _map.getPixelFromCoordinate(center),
+        });
+      });
+      _map.render();
+    });
   };
 
   /**
@@ -136,7 +222,7 @@ mviewer = (function () {
       return url;
     }
     // same domain
-    else if (url.indexOf(location.protocol + "//" + location.host) === 0) {
+    else if (url.indexOf(`${location.protocol}//${location.host}`) === 0) {
       return url;
     } else {
       if (optionalProxy) {
@@ -438,7 +524,7 @@ mviewer = (function () {
   };
 
   var _deleteLayer = function (layername) {
-    $("[data-layerid='" + layername + "']").remove();
+    $(`[data-layerid='${layername}']`).remove();
     _map.removeLayer(_overLayers[layername].layer);
     delete _overLayers[layername];
   };
@@ -454,6 +540,8 @@ mviewer = (function () {
       STYLE: layer.style,
       FORMAT: "image/png",
       TRANSPARENT: true,
+      // add options from layer xml config
+      ...configuration.parseOwsOptions(layer.owslegendoptions),
     };
 
     if (layer.sld) {
@@ -484,7 +572,7 @@ mviewer = (function () {
         scale = _calculateScale(_map.getView().getResolution());
       }
       // TODO: this line of code is not robust since OGC parameter names are not case sensitive
-      legendUrl = legendUrl.split("&scale=")[0] += "&scale=" + scale;
+      legendUrl = `${legendUrl.split("&scale=")[0]}&scale=${scale}`;
     }
     return legendUrl;
   };
@@ -498,8 +586,8 @@ mviewer = (function () {
 
   var _drawVectorLegend = function (layerid, items) {
     //Remove classic getLegendUrl
-    $("#legend-" + layerid).remove();
-    var canvas = document.getElementById("vector-legend-" + layerid);
+    $(`#legend-${layerid}`).remove();
+    var canvas = document.getElementById(`vector-legend-${layerid}`);
     if (canvas) {
       var marginTop = 15;
       var marginLeft = 15;
@@ -894,23 +982,19 @@ mviewer = (function () {
         success: function (result) {
           var summary = "";
           if ($(result).find("dct\\:abstract, abstract").length > 0) {
-            summary = "<p>" + $(result).find("dct\\:abstract, abstract").text() + "</p>";
+            summary = `<p>${$(result).find("dct\\:abstract, abstract").text()}</p>`;
           } else {
-            summary =
-              "<p>" +
-              $(result)
-                .find("gmd\\:identificationInfo, identificationInfo")
-                .find("gmd\\:MD_DataIdentification,  MD_DataIdentification")
-                .find("gmd\\:abstract, abstract")
-                .find("gco\\:CharacterString, CharacterString")
-                .text() +
-              "</p>";
+            summary = `<p>${$(result)
+              .find("gmd\\:identificationInfo, identificationInfo")
+              .find("gmd\\:MD_DataIdentification,  MD_DataIdentification")
+              .find("gmd\\:abstract, abstract")
+              .find("gco\\:CharacterString, CharacterString")
+              .text()}</p>`;
           }
           if (_overLayers[this.layer].metadata) {
-            summary +=
-              '<a href="' +
-              _overLayers[this.layer].metadata +
-              '" i18n="legend.moreinfo" target="_blank">En savoir plus</a>';
+            summary += `<a href="${
+              _overLayers[this.layer].metadata
+            }" i18n="legend.moreinfo" target="_blank">En savoir plus</a>`;
           }
           _overLayers[this.layer].summary = summary;
 
@@ -937,6 +1021,118 @@ mviewer = (function () {
       mviewer.customLayers[oLayer.id].config = oLayer;
     }
     _events.overLayersLoaded += 1;
+  };
+
+  /**
+   * Private Method: _manageLegend
+   * Gère le placement et le comportement de la légende
+   */
+  var manageLegend = function (displayMode) {
+    var isSimpleMode = displayMode === "s" || displayMode === "u";
+    var isMobile = configuration.getConfiguration().mobile === true;
+
+    $("#btn-mode-su-menu").off("click");
+    $("#legend-panel .btn-close").off("click");
+
+    if (!isSimpleMode) {
+      if (isMobile) {
+        $("#legend").appendTo("#legend-modal .modal-body");
+        $("#legend-panel").hide();
+      } else {
+        $("#legend").appendTo("#layers-container-box");
+        $("#legend-panel").hide();
+      }
+      return;
+    }
+
+    // Mode s/u + mobile > Modale
+    if (isMobile) {
+      $("#legend").appendTo("#legend-modal .modal-body");
+      $("#legend-panel").hide();
+
+      var $btn = $("#btn-mode-su-menu");
+      if (!$btn.length) {
+        $("#page-content-wrapper").append(`
+          <a
+            id="btn-mode-su-menu"
+            class="btn btn-primary"
+            type="button"
+            href="#"
+            data-bs-toggle="modal"
+            data-bs-target="#legend-modal"
+            title="Afficher la légende"
+            i18n="data.toggle">
+            <i class="ri-equalizer-fill"></i>
+            <span i18n="data.toggle"> Afficher la légende</span>
+          </a>
+        `);
+      } else {
+        $btn.attr("data-bs-toggle", "modal");
+        $btn.attr("data-bs-target", "#legend-modal");
+        $btn.attr("href", "#");
+      }
+      return;
+    }
+
+    // Mode s/u + DESKTOP > Panel drag
+    var $panel = $("#legend-panel");
+    if (!$panel.length) {
+      $("#main").append(`
+        <div id="legend-panel" class="legend-panel card open">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <span i18n="legend.modal.title">Légende</span>
+            <button type="button" class="btn-close"></button>
+          </div>
+          <div class="legendPanel-body"></div>
+        </div>
+      `);
+      $panel = $("#legend-panel");
+    }
+
+    $("#legend").appendTo("#legend-panel .legendPanel-body");
+
+    // Draggable via easyDrag si dispo
+    if ($.fn.easyDrag) {
+      $panel.easyDrag({
+        handle: ".card-header",
+        container: $("#map"),
+      });
+    }
+
+    var $btn = $("#btn-mode-su-menu");
+    if (!$btn.length) {
+      $("#page-content-wrapper").append(`
+        <a
+          id="btn-mode-su-menu"
+          class="btn btn-primary"
+          type="button"
+          title="Afficher la légende"
+          i18n="data.toggle">
+          <i class="ri-equalizer-fill"></i>
+          <span i18n="data.toggle"> Afficher la légende</span>
+        </a>
+      `);
+      $btn = $("#btn-mode-su-menu");
+    }
+
+    $btn.removeAttr("data-bs-toggle data-bs-target href");
+
+    $btn.on("click", function (e) {
+      e.preventDefault();
+      const $legend = $("#legend-panel");
+      $legend.toggle();
+      $legend.toggleClass("open", $legend.is(":visible"));
+    });
+
+    $("#legend-panel .btn-close").on("click", function () {
+      $("#legend-panel").hide();
+      $("#legend-panel").removeClass("open");
+    });
+
+    var legendmini = configuration.getConfiguration().themes.legendmini || null;
+    legendmini =
+      legendmini != null ? (legendmini && legendmini === "true") || false : legendmini;
+    $panel.toggle(!legendmini);
   };
 
   /**
@@ -971,7 +1167,6 @@ mviewer = (function () {
     if (s === "xs") {
       $("#wrapper, #main").removeClass("xl").addClass("xs");
       $("#menu").appendTo("#thematic-modal .modal-body");
-      $("#legend").appendTo("#legend-modal .modal-body");
       configuration.getConfiguration().mobile = true;
       if ($("#right-panel").hasClass("active")) {
         $("#right-panel").removeClass("active");
@@ -981,19 +1176,6 @@ mviewer = (function () {
       }
       if (displayMode) {
         $("#wrapper, #main").addClass("mode-" + displayMode);
-        $("#page-content-wrapper").append(`
-                    <a
-                        id="btn-mode-su-menu"
-                        class="btn btn-primary"
-                        type="button"
-                        href="#"
-                        data-bs-toggle="modal"
-                        data-bs-target="#legend-modal"
-                        title="Afficher la légende"
-                        i18n="data.toggle">
-                        <i class="ri-equalizer-fill"></i>
-                        <span i18n="data.toggle"> Afficher la légende</span>
-                    </a>`);
         if (displayMode === "u") {
           $("#mv-navbar").remove();
         }
@@ -1003,19 +1185,16 @@ mviewer = (function () {
       }
     } else {
       $("#wrapper, #main").removeClass("xs").addClass("xl");
+      configuration.getConfiguration().mobile = false;
       if (displayMode !== "s" || displayMode !== "u") {
         $("#menu").appendTo("#sidebar-wrapper");
         $("#legend").appendTo("#layers-container-box");
       }
       if (displayMode === "s") {
         $("#searchtool").appendTo("#searchtool_nav");
-        $("#legend").appendTo("#legend-modal .modal-body");
       }
-      if (displayMode === "u") {
-        $("#legend").appendTo("#legend-modal .modal-body");
-      }
-      configuration.getConfiguration().mobile = false;
     }
+    manageLegend(displayMode);
   };
 
   /**
@@ -1032,22 +1211,7 @@ mviewer = (function () {
         $("#searchtool").appendTo("#main");
         $("#searchtool").removeClass("navbar-form");
       }
-      if (API.mode === "u" || API.mode === "s") {
-        $("#legend").appendTo("#legend-modal .modal-body");
-        $("#page-content-wrapper").append(`
-                    <a
-                        id="btn-mode-su-menu"
-                        class="btn btn-primary"
-                        type="button"
-                        href="#"
-                        data-bs-toggle="modal"
-                        data-bs-target="#legend-modal"
-                        title="Afficher la légende"
-                        i18n="data.toggle">
-                        <i class="ri-equalizer-fill"></i>
-                        <span i18n="data.toggle"> Afficher la légende</span>
-                    </a>`);
-      }
+
       $("#wrapper, #main").addClass("mode-" + displayMode);
     }
     if ($(window).width() < 992) {
@@ -1057,6 +1221,16 @@ mviewer = (function () {
       _mediaSize = "xl";
       configuration.getConfiguration().mobile = false;
     }
+    if (configuration.getConfiguration().mobile) {
+      $("#thematic-modal .modal-body").append(
+        '<ul class="sidebar-nav nav-pills nav-stacked" id="menu"></ul>'
+      );
+    } else {
+      $("#sidebar-wrapper").append(
+        '<ul class="sidebar-nav nav-pills nav-stacked" id="menu"></ul>'
+      );
+    }
+    manageLegend(displayMode);
     if (_mediaSize === "xs") {
       _updateViewPort("xs", displayMode);
     }
@@ -1075,18 +1249,9 @@ mviewer = (function () {
       if (s !== _bsize) {
         _bsize = s;
         _updateMedia(_bsize, displayMode);
+        manageLegend(displayMode);
       }
     });
-    if (configuration.getConfiguration().mobile) {
-      $("#thematic-modal .modal-body").append(
-        '<ul class="sidebar-nav nav-pills nav-stacked" id="menu"></ul>'
-      );
-      $("#legend").appendTo("#legend-modal .modal-body");
-    } else {
-      $("#sidebar-wrapper").append(
-        '<ul class="sidebar-nav nav-pills nav-stacked" id="menu"></ul>'
-      );
-    }
   };
 
   /**
@@ -1173,18 +1338,14 @@ mviewer = (function () {
     legendmini =
       legendmini != null ? (legendmini && legendmini === "true") || false : legendmini;
 
-    if (panelMini) {
-      // hide all panels
+    if (panelMini === true) {
       mviewer.toggleMenu(false);
+    }
+
+    if (legendmini === true) {
       mviewer.toggleLegend(false);
     }
-    if (!legendmini && panelMini && legendmini != null) {
-      // hide legend panel
-      mviewer.toggleLegend(false);
-    } else if (legendmini && !panelMini && legendmini != null) {
-      // display legend panel
-      mviewer.toggleLegend(false);
-    }
+
     $("#menu").html(htmlListGroup);
     initMenu();
     // Open theme item if set to collapsed=false
@@ -1196,7 +1357,7 @@ mviewer = (function () {
         }
       );
       if (expanded_theme.length > 0) {
-        $("#theme-layers-" + expanded_theme[0].id + ">a").click();
+        $(`#theme-layers-${expanded_theme[0].id}>a`).click();
       }
     }
     //Add remove and add layers button on them
@@ -1221,21 +1382,16 @@ mviewer = (function () {
 
   // manage display for vector legend
   var _setVectorLegendStatus = (layer, visible) => {
-    var panel = $("#vector-legend-" + layer.id);
-    var cl = "hide" + layer.id;
+    var panel = $(`#vector-legend-${layer.id}`);
+    var cl = `hide${layer.id}`;
     if (visible) {
       panel.removeClass("hidden");
-      panel
-        .parents()
-        .find("." + cl)
-        .remove();
+      panel.parents().find(`.${cl}`).remove();
     } else {
       panel.addClass("hidden");
-      if (!panel.parents().find("." + cl).length) {
+      if (!panel.parents().find(`.${cl}`).length) {
         var img = `<img class="${cl} img-responsive" src="img/invisible.png" style="max-width:30%">`;
-        $("#vector-legend-" + layer.id)
-          .parent()
-          .append(img);
+        $(`#vector-legend-${layer.id}`).parent().append(img);
       }
     }
   };
@@ -1243,7 +1399,7 @@ mviewer = (function () {
   // manage static legend display
   var _setUrlLegendStatus = function (layer, visible) {
     var legendUrl = _getlegendurl(layer);
-    var panel = $("#legend-" + layer.id);
+    var panel = $(`#legend-${layer.id}`);
     if (visible) {
       panel.attr("src", legendUrl);
       panel.closest("li").removeClass("glyphicon mv-invisible");
@@ -1256,7 +1412,7 @@ mviewer = (function () {
   var _setLayerLegend = function (layer, scale) {
     if (layer.dynamiclegend) {
       var legendUrl = _getlegendurl(layer, scale);
-      $("#legend-" + layer.id).attr("src", legendUrl);
+      $(`#legend-${layer.id}`).attr("src", legendUrl);
     }
   };
 
@@ -1273,7 +1429,7 @@ mviewer = (function () {
   };
 
   var _setThemeStatus = function (id, prop) {
-    var theme = $("#theme-layers-" + id);
+    var theme = $(`#theme-layers-${id}`);
     if (!prop) {
       prop = _getThemeStatus(id);
     }
@@ -1292,7 +1448,7 @@ mviewer = (function () {
   };
 
   _getThemeStatus = function (id) {
-    var theme = $("#theme-layers-" + id);
+    var theme = $(`#theme-layers-${id}`);
     var nbLayers = theme.find("input").length;
     var visLayers = theme.find("input[value='true']").length;
     var status = "";
@@ -1494,21 +1650,24 @@ mviewer = (function () {
         layerparams.push(item.layerid);
         if (item.type === "wms") {
           //get current style if many styles
-          var source = item.layer.getSource();
-          if (item.styles && source.getParams().STYLES) {
-            layerparams.push(source.getParams().STYLES.trim());
+          var sourceParams = _getWmsSourceParams(item);
+          if (item.styles && sourceParams && sourceParams.STYLES) {
+            layerparams.push(sourceParams.STYLES.trim());
           } else {
             layerparams.push("");
           }
           //get current filter if necessary
-          if (item.attributefilter && source.getParams()["CQL_FILTER"]) {
-            layerparams.push(source.getParams()["CQL_FILTER"].trim());
+          var activeFilter = mviewer.getWmsFilterExpression(item, sourceParams);
+          // pass filte to CQL format to get shortest URI
+          activeFilter = ogcToCql(activeFilter);
+          if (item.attributefilter && activeFilter) {
+            layerparams.push(activeFilter.trim());
           } else {
             layerparams.push("");
           }
           //get current time filter if necessary
-          if (item.timefilter && source.getParams()["TIME"]) {
-            layerparams.push(source.getParams()["TIME"]);
+          if (item.timefilter && sourceParams && sourceParams["TIME"]) {
+            layerparams.push(sourceParams["TIME"]);
           }
         }
 
@@ -1523,14 +1682,14 @@ mviewer = (function () {
    *
    */
 
-  var _setVisibleOverLayers = function (lst) {
+  var _setVisibleOverLayers = function (lst, isCql) {
     var errors = [];
     var errorLayers = [];
     var layers = lst.split(",");
     var layersWithOptions = {};
     layers.forEach(function (layer, i) {
       //search layer by id or by name in overLayers collection
-      //layer with options - layername*style*cql_filter*time
+      //layer with options - layername*style*filter*time
       var layerWithOptions = layer.split("*");
       var richLayer = {};
       var layerIdOrName = layerWithOptions[0];
@@ -1540,6 +1699,7 @@ mviewer = (function () {
           break;
         case 3:
           richLayer.style = layerWithOptions[1];
+          // cql from URI
           richLayer.filter = layerWithOptions[2];
           break;
         case 4:
@@ -1547,6 +1707,9 @@ mviewer = (function () {
           richLayer.filter = layerWithOptions[2];
           richLayer.time = layerWithOptions[3];
           break;
+      }
+      if (richLayer.filter) {
+        richLayer.filter = cqlToOGC(richLayer.filter, true);
       }
 
       var l = false;
@@ -1572,7 +1735,7 @@ mviewer = (function () {
       layersWithOptions[richLayer.layerid] = richLayer;
 
       if (l) {
-        l.src ? l.src.setVisible(true) : l.setVisible(true);
+        l.getSource() ? l.setVisible(true) : l.setVisible(true);
       } else {
         errors.push(i);
       }
@@ -1583,7 +1746,7 @@ mviewer = (function () {
     });
     if (errorLayers.length > 0) {
       mviewer.alert(
-        "Couche(s) " + errorLayers.join(", ") + " non disponible(s)",
+        `Couche(s) ${errorLayers.join(", ")} non disponible(s)`,
         "alert-danger"
       );
     }
@@ -1607,8 +1770,7 @@ mviewer = (function () {
         var l = layer.layer;
         if (
           l &&
-          $(".list-group-item.mv-layer-details[data-layerid='" + layer.id + "']")
-            .length === 0
+          $(`.list-group-item.mv-layer-details[data-layerid='${layer.id}']`).length === 0
         ) {
           l.src ? l.src.setVisible(true) : l.setVisible(true);
           mviewer.addLayer(layer);
@@ -1627,20 +1789,23 @@ mviewer = (function () {
     var showLayer = function (layerControler, layerOptions) {
       layerControler.checked = true;
       layerControler.visiblebydefault = true;
-      var li = $(".mv-nav-item[data-layerid='" + layerControler.layerid + "']");
+      var li = $(`.mv-nav-item[data-layerid='${layerControler.layerid}']`);
+      var sourceParams = _getWmsSourceParams(layerControler);
       if (layerOptions.style && layerControler.type === "wms") {
-        layerControler.layer.getSource().getParams()["STYLES"] = layerOptions.style;
+        if (sourceParams) {
+          sourceParams["STYLES"] = layerOptions.style;
+        }
         layerControler.style = layerOptions.style;
         layerControler.legendurl = _getlegendurl(layerControler);
       }
       if (layerOptions.filter && layerControler.type === "wms") {
-        layerControler.layer.getSource().getParams()["CQL_FILTER"] = layerOptions.filter;
+        mviewer.setWmsFilterParam(layerControler, sourceParams, layerOptions.filter);
         layerControler.filter = layerOptions.filter;
       }
       mviewer.toggleLayer(li);
       if (layerOptions.time && layerControler.type === "wms") {
         //layerControler.layer.getSource().getParams()['TIME'] = layerOptions.time;
-        var timeControl = $("#" + layerControler.layerid + "-layer-timefilter");
+        var timeControl = $(`#${layerControler.layerid}-layer-timefilter`);
         if (timeControl.hasClass("mv-slider-timer")) {
           timeControl.slider(
             "setValue",
@@ -1887,7 +2052,7 @@ mviewer = (function () {
         zoom = maxzoom;
       }
       if (geometry.getType() === "Polygon") {
-        coordinates = geometry.getInteriorPoints().getCoordinates();
+        coordinates = geometry.getInteriorPoint().getCoordinates();
       } else if (geometry.getType() === "MultiPolygon") {
         coordinates = geometry.getInteriorPoints().getPoint(0).getCoordinates();
       }
@@ -2174,6 +2339,19 @@ mviewer = (function () {
       result = _elementTranslate(result);
     }
     return result;
+  };
+
+  var _getWmsSourceParams = function (layerDefinition) {
+    var layer =
+      layerDefinition && layerDefinition.layer ? layerDefinition.layer : layerDefinition;
+    if (!layer || typeof layer.getSource !== "function") {
+      return null;
+    }
+    var source = layer.getSource();
+    if (!source || typeof source.getParams !== "function") {
+      return null;
+    }
+    return source.getParams();
   };
 
   /*
@@ -2463,13 +2641,22 @@ mviewer = (function () {
       );
       // only keep id and reverse to get order as we need on map
       mapLayers = mapLayers.map((layer) => layer.getProperties().mviewerid).reverse();
-      // now, we could order legend by map layers
-      $(`#layers-container>li[data-layerid]`).each((i, li) => {
-        // get legend element
-        var legendLayerId = $(li).attr("data-layerid");
-        // get map position
-        mviewer.setLegendLayerPos(legendLayerId, mapLayers.indexOf(legendLayerId));
-      });
+
+      // filter to only keep layer to show in legend panel
+      mapLayers = mapLayers.filter((id) => mviewer.getLayer(id).showintoc !== false);
+
+      // now, we could order legend by map layers only
+      const divLayersInLegends = [
+        ...document.querySelectorAll("#layers-container > li[data-layerid]"),
+      ];
+
+      // only reorder legend if legend's items are fully available
+      if (divLayersInLegends.length == mapLayers.length) {
+        divLayersInLegends.forEach((li) => {
+          const legendLayerId = li.getAttribute("data-layerid");
+          mviewer.setLegendLayerPos(legendLayerId, mapLayers.indexOf(legendLayerId));
+        });
+      }
     },
 
     /**
@@ -2519,21 +2706,23 @@ mviewer = (function () {
       // count themes layers
       var themes = configuration.getConfiguration().themes.theme;
       var topLayersByTheme = [];
-      themes.forEach((e) => {
-        if (e.group && e.group.length) {
-          countLayers += e.group.map((d) => d.layer.length).reduce((a, b) => a + b, 0);
-          e.group.forEach((g) => {
+      themes.forEach((theme) => {
+        if (theme.group && theme.group.length) {
+          countLayers += theme.group
+            .map((d) => d.layer.length)
+            .reduce((a, b) => a + b, 0);
+          theme.group.forEach((g) => {
             topLayersByTheme = [
               ...topLayersByTheme,
               ...g.layer.filter((x) => x.toplayer === "true"),
             ];
           });
         }
-        if (e.layer && e.layer.length) {
-          countLayers += e.layer.length;
+        if (theme.layer && theme.layer.length) {
+          countLayers += theme.layer.length;
           topLayersByTheme = [
             ...topLayersByTheme,
-            ...e.layer.filter((x) => x.toplayer === "true"),
+            ...theme.layer.filter((x) => x.toplayer === "true"),
           ];
         }
       });
@@ -2542,8 +2731,8 @@ mviewer = (function () {
       // parse top layers by xml order and be sur to dlisplay in this order
       topLayersByXmlOrder.forEach((id) => {
         var layer = mviewer.getLayer(id).layer;
-        if (!layer) return; // no top layer to display
 
+        if (!layer) return; // no top layer to display
         // set first layer over others theme or background layers and before system layers
         mviewer.reorderLayer(layer, countLayers);
       });
@@ -2573,12 +2762,33 @@ mviewer = (function () {
 
     setPermalink: function () {
       var c = _map.getView().getCenter();
+      const queriedFeatures = info.getQueriedFeatures ? info.getQueriedFeatures() : [];
+      const hasQueryResult =
+        typeof info?.hasQueryResult === "function" ? info.hasQueryResult() : false;
+      const clickCoords = info.getClickCoordinates ? info.getClickCoordinates() : null;
+      const infoPanelVisible =
+        $("#right-panel").hasClass("active") ||
+        $("#bottom-panel").hasClass("active") ||
+        $("#modal-panel").hasClass("show");
+      if (
+        clickCoords &&
+        infoPanelVisible &&
+        (hasQueryResult || (queriedFeatures && queriedFeatures.length))
+      ) {
+        c = clickCoords;
+      }
       var linkParams = {};
       if (!API.wmc) {
         linkParams.x = encodeURIComponent(Math.round(c[0]));
         linkParams.y = encodeURIComponent(Math.round(c[1]));
         linkParams.z = encodeURIComponent(_map.getView().getZoom());
         linkParams.l = encodeURIComponent(_getVisibleOverLayers());
+      }
+      if (
+        infoPanelVisible &&
+        (hasQueryResult || (queriedFeatures && queriedFeatures.length))
+      ) {
+        linkParams.query = "true";
       }
       linkParams.lb = encodeURIComponent(this.getActiveBaseLayer());
       if (API.config) {
@@ -2604,6 +2814,29 @@ mviewer = (function () {
         if (key.match(reg)) {
           linkParams[key] = encodeURIComponent(API[key]);
         }
+      }
+      // remove calculated params and preserve other incoming URL params (e.g. custom flags) in the shared link
+      const excludedKeys = new Set(
+        Object.entries({
+          x: API.x,
+          y: API.y,
+          z: API.z,
+          l: API.l,
+          lb: API.lb,
+          config: API.config,
+          lang: API.lang,
+          wmc: API.wmc,
+          mode: API.mode,
+          file: API.file,
+          xfield: API.xfield,
+          yfield: API.yfield,
+          query: API.query,
+        }).map(([key]) => key)
+      );
+      for (const [key, value] of Object.entries(API)) {
+        if (excludedKeys.has(key)) continue;
+        if (linkParams[key] !== undefined) continue;
+        linkParams[key] = encodeURIComponent(value);
       }
 
       function params(data) {
@@ -3265,31 +3498,57 @@ mviewer = (function () {
       var oLayer = _overLayers[layer.layerid];
       oLayer.layer.setVisible(true);
       //Only for second and more loads
-      if (oLayer.attributefilter && oLayer.layer.getSource().getParams()["CQL_FILTER"]) {
-        var activeFilter = oLayer.layer.getSource().getParams()["CQL_FILTER"];
-        var wildcard = oLayer.wildcardpattern.split("value")[0];
-        var reg = new RegExp(wildcard + "|'", "g");
-        var activeAttributeValue = activeFilter
-          .split(oLayer.attributeoperator)[1]
-          .replace(reg, "")
-          .trim();
-        $(
-          "#" +
-            layer.layerid +
-            "-attributes-selector option[value='" +
-            activeAttributeValue +
-            "']"
-        ).prop("selected", true);
-        $(
-          '.mv-layer-details[data-layerid="' +
-            layer.layerid +
-            '"] .layerdisplay-subtitle .selected-attribute span'
-        ).text(activeAttributeValue);
+      var sourceParams = _getWmsSourceParams(oLayer);
+      var activeFilter = mviewer.getWmsFilterExpression(oLayer, sourceParams);
+      if (oLayer.attributefilter && activeFilter) {
+        var activeAttributeValue = null;
+        if (activeFilter.trim().charAt(0) === "<") {
+          activeAttributeValue = getOgcFilterLiteralValue(
+            activeFilter,
+            oLayer.wildcardpattern
+          );
+        } else {
+          var wildcard = (oLayer.wildcardpattern || "%value%").split("value")[0];
+          var reg = new RegExp(wildcard + "|'", "g");
+          var parts = activeFilter.split(oLayer.attributeoperator);
+          if (parts.length > 1) {
+            activeAttributeValue = parts[1].replace(reg, "").trim();
+          }
+        }
+        var selectCtrl = $("#" + layer.layerid + "-attributes-selector")[0];
+        if (!activeAttributeValue && selectCtrl) {
+          activeAttributeValue = selectCtrl.options[selectCtrl.selectedIndex].value;
+        }
+        if (activeAttributeValue) {
+          $(
+            "#" +
+              layer.layerid +
+              "-attributes-selector option[value='" +
+              activeAttributeValue +
+              "']"
+          ).prop("selected", true);
+          var optionEl = $(
+            "#" +
+              layer.layerid +
+              "-attributes-selector option[value='" +
+              activeAttributeValue +
+              "']"
+          );
+          var activeLabel =
+            optionEl.length && optionEl.attr("label")
+              ? optionEl.attr("label")
+              : activeAttributeValue;
+          $(
+            '.mv-layer-details[data-layerid="' +
+              layer.layerid +
+              '"] .layerdisplay-subtitle .selected-attribute span'
+          ).text(activeLabel);
+        }
       }
 
       var activeStyle = false;
-      if (oLayer.type === "wms" && oLayer.layer.getSource().getParams()["STYLES"]) {
-        activeStyle = oLayer.layer.getSource().getParams()["STYLES"];
+      if (oLayer.type === "wms" && sourceParams && sourceParams["STYLES"]) {
+        activeStyle = sourceParams["STYLES"];
         var refStyle = activeStyle;
         //update legend image if nec.
         var res = mviewer.getMap().getView().getResolution();
@@ -3473,16 +3732,41 @@ mviewer = (function () {
       var _layerDefinition = _overLayers[layerid];
       var styleRef = style;
       var _source = _layerDefinition.layer.getSource();
+      var sourceParams = _getWmsSourceParams(_layerDefinition);
+      if (!sourceParams || typeof _source.updateParams !== "function") {
+        return;
+      }
       if (_layerDefinition.attributefilter && _layerDefinition.attributestylesync) {
         //Récupère la valeur active de la liste déroulante
         //var attributeValue = $("#"+ layerid + "-attributes-selector").val();
         var attributeValue = "all";
         var styleBase = style.split("@")[0];
-        if (_source.getParams().CQL_FILTER) {
-          attributeValue = _source
-            .getParams()
-            .CQL_FILTER.split(" " + _layerDefinition.attributeoperator + " ")[1]
-            .replace(/\'/g, "");
+        var selectCtrl = $("#" + layerid + "-attributes-selector")[0];
+        if (selectCtrl && selectCtrl.selectedIndex >= 0) {
+          attributeValue = selectCtrl.options[selectCtrl.selectedIndex].value;
+        } else {
+          var activeFilter = mviewer.getWmsFilterExpression(
+            _layerDefinition,
+            sourceParams
+          );
+          if (activeFilter) {
+            if (activeFilter.trim().charAt(0) === "<") {
+              attributeValue = getOgcFilterLiteralValue(
+                activeFilter,
+                _layerDefinition.wildcardpattern
+              );
+            } else {
+              var parts = activeFilter.split(
+                " " + _layerDefinition.attributeoperator + " "
+              );
+              if (parts.length > 1) {
+                attributeValue = parts[1].replace(/\'/g, "");
+              }
+            }
+          }
+        }
+        if (!attributeValue) {
+          attributeValue = "all";
         }
         if (attributeValue != "all") {
           style = [styleBase, "@", attributeValue.toLowerCase().sansAccent()].join("");
@@ -3492,10 +3776,10 @@ mviewer = (function () {
         if (!/.(sld|SLD)$/.test(style)) {
           style += ".sld";
         }
-        _source.getParams()["SLD"] = style;
+        sourceParams["SLD"] = style;
         _layerDefinition.sld = style;
       } else {
-        _source.getParams()["STYLES"] = style;
+        sourceParams["STYLES"] = style;
         _layerDefinition.style = style;
       }
       _source.updateParams({ dc: new Date().valueOf() });
@@ -3520,29 +3804,62 @@ mviewer = (function () {
         .data("legendurl", legendUrl);
     },
 
-    makeCQL_Filter: function (fld, operator, value, wildcardpattern) {
-      var cql_filter = "";
-      if (operator == "=") {
-        cql_filter = fld + " = " + "'" + value.replaceAll("'", "''") + "'";
-      } else if (operator == "like") {
-        cql_filter = `${fld} like '%${value.replaceAll("'", "''")}%'`;
-      }
-      return cql_filter;
+    getWmsFilterParamKey: function (layerDefinition) {
+      return getWmsFilterParamKey(layerDefinition);
+    },
+
+    buildWmsFilterParamValue: function (layerDefinition, filterExpression) {
+      return buildWmsFilterParamValue(layerDefinition, filterExpression);
+    },
+
+    getWmsFilterExpression: function (layerDefinition, params) {
+      return getWmsFilterExpression(layerDefinition, params);
+    },
+
+    setWmsFilterParam: function (layerDefinition, params, filterExpression) {
+      setWmsFilterParam(layerDefinition, params, filterExpression);
     },
 
     setLayerAttribute: function (layerid, attributeValue, selectCtrl) {
       var _layerDefinition = _overLayers[layerid];
       var _source = _layerDefinition.layer.getSource();
+      var sourceParams = _getWmsSourceParams(_layerDefinition);
+      if (!sourceParams || typeof _source.updateParams !== "function") {
+        return;
+      }
       if (attributeValue === "all") {
-        delete _source.getParams()["CQL_FILTER"];
+        updateOgcSourceWithFilter(null, _source);
       } else {
-        var cql_filter = this.makeCQL_Filter(
-          _layerDefinition.attributefield,
-          _layerDefinition.attributeoperator,
-          attributeValue,
-          _layerDefinition.wildcardpattern
-        );
-        _source.getParams()["CQL_FILTER"] = cql_filter;
+        var operator = _layerDefinition.attributeoperator;
+        var ogcOperator = null;
+        if (operator == "=") {
+          ogcOperator = "EqualTo";
+        } else if (operator == "like") {
+          ogcOperator = "isLike";
+        } else if (operator == "<") {
+          ogcOperator = "lessThan";
+        } else if (operator == ">") {
+          ogcOperator = "GreatherThan";
+        } else if (operator == "<=") {
+          ogcOperator = "LessThanOrEqualTo";
+        } else if (operator == ">=") {
+          ogcOperator = "GreaterThanOrEqualTo";
+        } else if (operator == "!=" || operator == "<>") {
+          ogcOperator = "NotEqualTo";
+        }
+        if (ogcOperator) {
+          var filterDefinition = {
+            operator: ogcOperator,
+            field: _layerDefinition.attributefield,
+            value: attributeValue,
+          };
+          if (ogcOperator === "isLike") {
+            var pattern = _layerDefinition.wildcardpattern || "%value%";
+            filterDefinition.pattern = pattern.replace("value", attributeValue);
+          }
+          var ogcFilter = buildOgcFilter(filterDefinition);
+          updateOgcSourceWithFilter(ogcFilter, _source);
+        }
       }
       if (_layerDefinition.attributestylesync) {
         //need update legend ad style applied to the layer
@@ -3565,10 +3882,10 @@ mviewer = (function () {
         }
         if (_layerDefinition.sld) {
           newStyle += ".sld";
-          _source.getParams()["SLD"] = newStyle;
+          sourceParams["SLD"] = newStyle;
           _layerDefinition.sld = newStyle;
         } else {
-          _source.getParams()["STYLES"] = newStyle;
+          sourceParams["STYLES"] = newStyle;
           _layerDefinition.style = newStyle;
         }
         var legendUrl = _getlegendurl(_layerDefinition);
@@ -3583,6 +3900,9 @@ mviewer = (function () {
           .data("legendurl", legendUrl);
       }
       _source.updateParams({ dc: new Date().valueOf() });
+      if (typeof _source.refresh === "function") {
+        _source.refresh();
+      }
       _source.changed();
       $(
         '.mv-layer-details[data-layerid="' +
@@ -3608,7 +3928,11 @@ mviewer = (function () {
       }
       var _layerDefinition = _overLayers[layerid];
       var _source = _layerDefinition.layer.getSource();
-      _source.getParams()["TIME"] = filter_time;
+      var sourceParams = _getWmsSourceParams(_layerDefinition);
+      if (!sourceParams || typeof _source.updateParams !== "function") {
+        return;
+      }
+      sourceParams["TIME"] = filter_time;
       $(".mv-time-player-selection[data-layerid='" + layerid + "']").text("Patientez...");
       var key = _source.on("imageloadend", function () {
         ol.Observable.unByKey(key);

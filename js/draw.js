@@ -341,7 +341,7 @@ let draw = (function () {
     // Creation of new HTML element
     let drawTooltipElt = document.createElement("input");
     drawTooltipElt.className = "drawTooltip";
-    drawTooltipElt.setAttribute("id", "drawTooltip-" + feature.id_);
+    drawTooltipElt.setAttribute("id", `drawTooltip-${feature.id_}`);
     drawTooltipElt.setAttribute("oninput", "this.setAttribute('size',this.value.length)");
     drawTooltipElt.type = "text";
     drawTooltipElt.value = feature.getProperties().label;
@@ -454,7 +454,7 @@ let draw = (function () {
       .getElementById("drawingPanelInfoLabel")
       .addEventListener("input", function () {
         let inputUser = document.getElementById("drawingPanelInfoLabel").value;
-        document.getElementById("drawTooltip-" + _currentFeature.id_).value = inputUser;
+        document.getElementById(`drawTooltip-${_currentFeature.id_}`).value = inputUser;
         _currentFeature.set("label", inputUser);
       });
   };
@@ -485,7 +485,7 @@ let draw = (function () {
   let _addDrawInteraction = function (type) {
     // if interaction exist disabled it and change button style
     if (_currentDrawType == type) {
-      document.getElementById("draw" + _currentDrawType).classList.remove("active");
+      document.getElementById(`draw${_currentDrawType}`).classList.remove("active");
       _map.removeInteraction(_drawInt);
       _currentDrawType = null;
       _map.removeInteraction(_snapInter);
@@ -494,11 +494,11 @@ let draw = (function () {
       }
     } else {
       if (_currentDrawType) {
-        document.getElementById("draw" + _currentDrawType).classList.remove("active");
+        document.getElementById(`draw${_currentDrawType}`).classList.remove("active");
         _map.removeInteraction(_drawInt);
       }
       _currentDrawType = type;
-      document.getElementById("draw" + _currentDrawType).classList.add("active");
+      document.getElementById(`draw${_currentDrawType}`).classList.add("active");
 
       _drawInt = new DeleteOnRightClick({
         source: _sourceDraw,
@@ -611,7 +611,7 @@ let draw = (function () {
             _map.un("pointermove", _pointerMoveHandler);
             $(_helpTooltipMessage).addClass("hidden");
             _map.removeInteraction(_helpTooltip);
-            document.getElementById("draw" + _currentDrawType).classList.remove("active");
+            document.getElementById(`draw${_currentDrawType}`).classList.remove("active");
             _currentDrawType = null;
           }
 
@@ -677,15 +677,15 @@ let draw = (function () {
     }
     let output;
     if (length > 100) {
-      output = Math.round((length / 1000) * 100) / 100 + " " + "km";
+      output = `${Math.round((length / 1000) * 100) / 100} km`;
     } else {
-      output = Math.round(length * 100) / 100 + " " + "m";
+      output = `${Math.round(length * 100) / 100} m`;
     }
 
     let lineMsg = mviewer.lang
       ? mviewer.lang[mviewer.lang.lang]("draw.measure.line")
       : "Longueur : ";
-    document.getElementById("drawingPanelLength").innerHTML = lineMsg + output;
+    document.getElementById("drawingPanelLength").innerHTML = `${lineMsg}${output}`;
     return output;
   };
 
@@ -702,17 +702,17 @@ let draw = (function () {
     if (area < 0.0001) {
       output = 0;
     } else if (area < 10000) {
-      output = Math.round(area * 100) / 100 + " " + "m<sup>2</sup>";
+      output = `${Math.round(area * 100) / 100} m<sup>2</sup>`;
     } else if (area < 1000000) {
-      output = Math.round((area / 10000) * 100) / 100 + " " + "ha";
+      output = `${Math.round((area / 10000) * 100) / 100} ha`;
     } else if (area >= 1000000) {
-      output = Math.round((area / 1000000) * 100) / 100 + " " + "km<sup>2</sup>";
+      output = `${Math.round((area / 1000000) * 100) / 100} km<sup>2</sup>`;
     }
 
     let AreaMsg = mviewer.lang
       ? mviewer.lang[mviewer.lang.lang]("draw.measure.area")
       : "Aire : ";
-    document.getElementById("drawingPanelArea").innerHTML = AreaMsg + output;
+    document.getElementById("drawingPanelArea").innerHTML = `${AreaMsg}${output}`;
     return output;
   };
 

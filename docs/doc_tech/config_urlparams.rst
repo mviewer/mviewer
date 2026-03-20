@@ -41,6 +41,15 @@ Ce paramétrage dynamique est rendu possible en ajoutant à l'URL mviewer les pa
 * &q=layer%3Didf:COMMUNES_IDF%26filter%3DCODE_INSEE%3D77177&qtype=features
 * &q=layer%3Dbzh:COMMUNES_BZH%26filter%3DPOP_MUN_17%3E7000%20AND%20DENSITE%20%3E500%26bbox%3D2.318017,48.907152,2.350675,48.918123%26service%3Dhttps://my.map.server.fr/geoserver&qtype=features
 
+Lancer automatiquement une requête d'information (QueryMap)
+-----------------------------------------------------------
+
+Si l'URL fournit aussi des coordonnées et un niveau de zoom (`x`, `y`, `z`), vous pouvez demander à mviewer de lancer un `queryMap` sur ce point dès l'ouverture en ajoutant le paramètre booléen `query` :
+
+* `?x=700000&y=6600000&z=10&query=true`
+
+Les valeurs `true`, `1`, `yes` ou `on` sont interprétées comme vraies. La requête est exécutée juste après le recadrage.
+
 **Syntaxe**
 
 .. code-block:: xml
@@ -139,7 +148,7 @@ Ce type utilise un service OGC API Feature et la capacité de filtrer :
 https://portal.ogc.org/files/96288
 
 
-Vous pouvez tout configurer dans l'URL et ajouter des filtres et opprateurs compatibles via le paramètre `filter=`.
+Vous pouvez tout configurer dans l'URL et ajouter des filtres et oppérateurs compatibles via le paramètre `filter=`.
 
 .. warning::
     N'oubliez pas que les paramètres d'URL doivent être encodés !

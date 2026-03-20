@@ -430,11 +430,12 @@
             </div>
             <div class="modal-body">
               <ul id="searchparameters">
-                <li class="mv-param-item" onclick="search.toggleParameter(this)">
+                <li
+                  class="mv-param-item"
+                  id="param_search_bbox"
+                  onclick="search.toggleParameter(this)">
                   <a href="#">
-                    <span
-                      id="param_search_bbox"
-                      class="state-icon far mv-unchecked"></span>
+                    <span class="state-icon far mv-unchecked"></span>
                     <div style="display: inline" i18n="search.modal.extent.text">
                       Rechercher dans l'emprise de la carte
                     </div>
@@ -946,6 +947,7 @@
     <script type="text/javascript" src="js/extend.js"></script>
     <script type="text/javascript" src="js/utils.js"></script>
     <script type="text/javascript" src="js/ogcutils.js"></script>
+    <script type="text/javascript" src="js/ogcFiltersUtils.js"></script>
     <script type="text/javascript" src="js/configuration.js"></script>
     <script type="text/javascript" src="js/zoom.js"></script>
     <script type="text/javascript" src="js/measure.js"></script>
@@ -1149,9 +1151,19 @@
         });
         $("#right-panel .btn-close,#bottom-panel .btn-close").click(function () {
           mviewer.hideLocation();
+          if (window.info && typeof window.info.clearQueryState === "function") {
+            window.info.clearQueryState();
+          }
+        });
+        $("#modal-panel").on("hidden.bs.modal", function () {
+          if (window.info && typeof window.info.clearQueryState === "function") {
+            window.info.clearQueryState();
+          }
+          mviewer.hideLocation();
         });
       });
     </script>
+    <script type="text/javascript" src="lib/jquery.easyDrag.min.js"></script>
     <script type="text/javascript" src="lib/simple-slidebar/slidebar_menu.js"></script>
   </body>
 </html>

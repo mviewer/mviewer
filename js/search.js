@@ -346,22 +346,51 @@ var search = (function () {
     // OpenLS or IGN services
     if (_searchparams.localities) {
       if (["ign", "completion", "geoportail"].includes(_olsCompletionType)) {
-        displaySearchList(
-          `${_olsCompletionUrl}?text=${value}&type=StreetAddress,PositionOfInterest&ter=5`,
-          _olsCompletionType
-        );
+        const parameters = {
+          text: value,
+          type: "StreetAddress,PositionOfInterest",
+          ter: 5,
+        };
+        if (_searchparams.bbox) {
+          const extent = _map.getView().calculateExtent(_map.getSize());
+          const extent4326 = ol.proj.transformExtent(
+            extent,
+            _projection.getCode(),
+            _proj4326
+          );
+          parameters.bbox = extent4326.join(",");
+          const center = ol.extent.getCenter(extent4326);
+          parameters.lon = center[0];
+          parameters.lat = center[1];
+        }
+        const searchUrl = new URL(_olsCompletionUrl);
+        Object.entries(parameters).forEach(([key, val]) => {
+          if (val !== undefined && val !== null) {
+            searchUrl.searchParams.append(key, val);
+          }
+        });
+        displaySearchList(searchUrl.toString(), _olsCompletionType);
       } else if (["ban", "search"].includes(_olsCompletionType)) {
         var parameters = { q: value, limit: 5 };
         if (_searchparams.bbox) {
-          var center = _map.getView().getCenter();
-          var center = ol.proj.transform(center, _projection.getCode(), _proj4326);
+          var extent = _map.getView().calculateExtent(_map.getSize());
+          var extent4326 = ol.proj.transformExtent(
+            extent,
+            _projection.getCode(),
+            _proj4326
+          );
+          parameters.bbox = extent4326.join(",");
+          var center = ol.extent.getCenter(extent4326);
           parameters.lon = center[0];
           parameters.lat = center[1];
         }
         // create URL
         const searchUrl = new URL(_olsCompletionUrl);
-        searchUrl.searchParams.append("q", parameters.q);
-        searchUrl.searchParams.append("limit", parameters.limit);
+        Object.entries(parameters).forEach(([key, val]) => {
+          if (val !== undefined && val !== null) {
+            searchUrl.searchParams.append(key, val);
+          }
+        });
         const searchUrlString = searchUrl.toString();
         // display result
         displaySearchList(searchUrlString, _olsCompletionType);
@@ -763,56 +792,26 @@ var search = (function () {
                   geometry: geom.transform("EPSG:4326", "EPSG:3857"),
                   title: title,
                 });
-                action_click = "mviewer.zoomToFeature('feature." + i + "');";
-                feature.setId("feature." + i);
+                action_click = `mviewer.zoomToFeature('feature.${i}');`;
+                feature.setId(`feature.${i}`);
                 _sourceEls.addFeature(feature);
-                action_over = "mviewer.showFeature('feature." + i + "');";
+                action_over = `mviewer.showFeature('feature.${i}');`;
               } else {
-                action_click =
-                  "mviewer.zoomToLocation(" +
-                  point[0] +
-                  "," +
-                  point[1] +
-                  ",14," +
-                  _searchparams.querymaponclick +
-                  ");";
-                action_over =
-                  "mviewer.flash(" + "'EPSG:4326'," + point[0] + "," + point[1] + ");";
+                action_click = `mviewer.zoomToLocation(${point[0]},${point[1]},14,${_searchparams.querymaponclick});`;
+                action_over = `mviewer.flash('EPSG:4326',${point[0]},${point[1]});`;
               }
               if (_overLayers[data.hits.hits[i]._type]) {
-                action_click +=
-                  "mviewer.tools.info.queryLayer(" +
-                  point[0] +
-                  "," +
-                  point[1] +
-                  ",'EPSG:4326','" +
-                  data.hits.hits[i]._type +
-                  "','" +
-                  data.hits.hits[i]._id +
-                  "');";
-                action_over =
-                  "mviewer.flash(" + "'EPSG:4326'," + point[0] + "," + point[1] + ");";
+                action_click += `mviewer.tools.info.queryLayer(${point[0]},${point[1]},'EPSG:4326','${data.hits.hits[i]._type}','${data.hits.hits[i]._id}');`;
+                action_over = `mviewer.flash('EPSG:4326',${point[0]},${point[1]});`;
               }
 
-              str +=
-                '<a class="elasticsearch list-group-item  list-group-item-action" href="#" ' +
-                'onclick="' +
-                action_click +
-                '" ' +
-                'onmouseover="' +
-                action_over +
-                '" ' +
-                'title="(' +
-                data.hits.hits[i]._type +
-                ") " +
-                $.map(data.hits.hits[i]._source, function (el) {
-                  if (typeof el === "string") {
-                    return el;
-                  }
-                }).join(", \n") +
-                '">' +
-                title +
-                "</a>";
+              str += `<a class="elasticsearch list-group-item  list-group-item-action" href="#" onclick="${action_click}" onmouseover="${action_over}" title="(${
+                data.hits.hits[i]._type
+              }) ${$.map(data.hits.hits[i]._source, function (el) {
+                if (typeof el === "string") {
+                  return el;
+                }
+              }).join(", \n")}">${title}</a>`;
             }
             $(".elasticsearch").remove();
             if (nb > 0) {
@@ -821,9 +820,7 @@ var search = (function () {
           },
           error: function (xhr, ajaxOptions, thrownError) {
             mviewer.alert(
-              "Problème avec l'instance Elasticsearch.\n" +
-                thrownError +
-                "\n Désactivation du service.",
+              `Problème avec l'instance Elasticsearch.\n${thrownError}\n Désactivation du service.`,
               "alert-warning"
             );
             _searchparams.features = false;
@@ -967,7 +964,7 @@ var search = (function () {
                     geometry: geom.transform(_proj4326, _map.getView().getProjection()),
                     title: title,
                   });
-                  feature.setId("feature." + indexId + "." + j);
+                  feature.setId(`feature.${indexId}.${j}`);
                   _sourceEls.addFeature(feature);
 
                   action_click += `mviewer.animateToFeature(${JSON.stringify([
@@ -979,18 +976,11 @@ var search = (function () {
                   //If index has the same name than a mviewer layer make the query on layer
                   if (_overLayers[indexId] && _searchparams.querymaponclick) {
                     _overLayers[indexId].searchid = _elasticSearchLinkid.get(indexId);
-                    action_click +=
-                      "mviewer.tools.info.queryLayer(" +
-                      xyz.lon +
-                      "," +
-                      xyz.lat +
-                      ",'" +
-                      _proj4326 +
-                      "','" +
-                      indexId +
-                      "','" +
-                      currentFeature._source[_elasticSearchLinkid.get(indexId)] +
-                      "');";
+                    action_click += `mviewer.tools.info.queryLayer(${xyz.lon},${
+                      xyz.lat
+                    },'${_proj4326}','${indexId}','${
+                      currentFeature._source[_elasticSearchLinkid.get(indexId)]
+                    }');`;
                   }
 
                   let action_over = "";
@@ -1000,34 +990,17 @@ var search = (function () {
                     //action_over = "mviewer.zoomToInitialExtent();";
                   }
 
-                  action_over +=
-                    "mviewer.flash(" +
-                    "'" +
-                    _proj4326 +
-                    "'," +
-                    xyz.lon +
-                    "," +
-                    xyz.lat +
-                    ");";
-                  str +=
-                    '<a class="elasticsearch list-group-item" href="#" ' +
-                    'onclick="' +
-                    action_click +
-                    '" ' +
-                    'onmouseover="' +
-                    action_over +
-                    '" ' +
-                    'title="' +
-                    $.map(currentFeature._source, function (value, key) {
+                  action_over += `mviewer.flash('${_proj4326}',${xyz.lon},${xyz.lat});`;
+                  str += `<a class="elasticsearch list-group-item" href="#" onclick="${action_click}" onmouseover="${action_over}" title="${$.map(
+                    currentFeature._source,
+                    function (value, key) {
                       if (!titleDisplayKey.length || titleDisplayKey.includes(key)) {
                         if (typeof value === "string") {
                           return value;
                         }
                       }
-                    }).join(" \n") +
-                    '">' +
-                    title +
-                    "</a>";
+                    }
+                  ).join(" \n")}">${title}</a>`;
                 }
 
                 if (nb > 0) {
@@ -1036,9 +1009,7 @@ var search = (function () {
               },
               error: function (xhr, ajaxOptions, thrownError) {
                 mviewer.alert(
-                  "Problème avec l'instance Elasticsearch.\n" +
-                    thrownError +
-                    "\n Désactivation du service.",
+                  `Problème avec l'instance Elasticsearch.\n${thrownError}\n Désactivation du service.`,
                   "alert-warning"
                 );
                 _searchparams.features = false;
@@ -1141,6 +1112,11 @@ var search = (function () {
     _projection = mviewer.getProjection();
     _overLayers = mviewer.getLayers();
     var sparams = configuration.searchparameters || false;
+    const asBool = (val, fallback) => {
+      if (val === true || val === "true") return true;
+      if (val === false || val === "false") return false;
+      return fallback;
+    };
     if (configuration.olscompletion) {
       _olsCompletionUrl = configuration.olscompletion.url;
       $("#adresse-attribution").text(configuration.olscompletion.attribution);
@@ -1233,13 +1209,19 @@ var search = (function () {
     if (!_olsCompletionUrl) {
       _searchparams.localities = false;
     }
-    if (sparams && sparams.bbox && sparams.localities && sparams.features) {
-      _searchparams.bbox = sparams.bbox === "true";
-      _searchparams.localities = sparams.localities === "true";
-      _searchparams.features = sparams.features === "true";
-      _searchparams.static = sparams.static === "true";
-      _searchparams.querymaponclick = sparams.querymaponclick === "true";
-      _searchparams.closeafterclick = sparams.closeafterclick === "true";
+    if (sparams) {
+      _searchparams.bbox = asBool(sparams.bbox, _searchparams.bbox);
+      _searchparams.localities = asBool(sparams.localities, _searchparams.localities);
+      _searchparams.features = asBool(sparams.features, _searchparams.features);
+      _searchparams.static = asBool(sparams.static, _searchparams.static);
+      _searchparams.querymaponclick = asBool(
+        sparams.querymaponclick,
+        _searchparams.querymaponclick
+      );
+      _searchparams.closeafterclick = asBool(
+        sparams.closeafterclick,
+        _searchparams.closeafterclick
+      );
       _searchparams.searchmaxzoomlevel = sparams.searchmaxzoomlevel
         ? sparams.searchmaxzoomlevel
         : 15;
@@ -1385,9 +1367,21 @@ var search = (function () {
     let mapProjection = mapView.getProjection().getCode();
     let coordsForQueryMap = ol.proj.transform([lon, lat], _proj4326, mapProjection);
 
+    let duration = 2000;
+
     _sourceOverlay.clear();
 
-    let duration = 3000;
+    if (configuration.getConfiguration().searchparameters) {
+      if (configuration.getConfiguration().searchparameters.duration) {
+        duration = parseInt(configuration.getConfiguration().searchparameters.duration);
+      }
+      if (
+        configuration.getConfiguration().searchparameters.animate &&
+        configuration.getConfiguration().searchparameters.animate !== "true"
+      ) {
+        duration = 0;
+      }
+    }
 
     mapView.animate({
       center: center,
