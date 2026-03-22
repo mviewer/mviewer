@@ -565,7 +565,7 @@ mviewer = (function () {
     } else if (layer.legendurl && layer.styles && layer.styles.split(",").length === 1) {
       legendUrl = layer.legendurl;
     } else if (layer.type !== "vector-tms") {
-      legendUrl = getLegendGraphicUrl(layer.url, _getLegendParams(layer));
+      legendUrl = getLegendGraphicUrl(layer, _getLegendParams(layer));
     }
     if (layer.dynamiclegend) {
       if (!scale) {

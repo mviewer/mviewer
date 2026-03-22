@@ -648,36 +648,44 @@ var configuration = (function () {
           }
 
           if (layer) {
+            var mvid;
+            var oLayer = {};
             /* to escape group without layer */
             layerRank += 1;
             var layerId = layer.id;
+            oLayer.legendurl = layer.legendurl ? layer.legendurl : "";
+            if (oLayer.legendurl === "false") {
+              oLayer.legendurl = "";
+            }
             if (layer.url) {
               var getCapRequestUrl = getCapUrl(layer.url);
               var secureLayer =
                 layer.secure === "true" || layer.secure == "global" ? true : false;
-              if (secureLayer) {
-                $.ajax({
-                  dataType: "xml",
-                  layer: layerId,
-                  url: mviewer.ajaxURL(getCapRequestUrl),
-                  success: function (result) {
-                    //Find layer in capabilities
-                    var name = this.layer;
-                    var layer = $(result)
+              // call getCapabilities and process necessary
+              fetch(getCapRequestUrl)
+                .then((x) => x.text())
+                .then((result) => {
+                  layer.capabilities = result;
+                  if (secureLayer) {
+                    let layerFromCapa = $(layer.capabilities)
                       .find("Layer>Name")
                       .filter(function () {
-                        return $(this).text() == name;
+                        return $(this).text() == layer.id;
                       });
-                    if (layer.length === 0) {
+                    if (layerFromCapa.length === 0) {
                       //remove this layer from map and panel
-                      mviewer.deleteLayer(this.layer);
+                      mviewer.deleteLayer(layer.id);
                     }
-                  },
+                  }
+                  oLayer.capabilities = result;
+
+                  if (!oLayer.legendurl) {
+                    oLayer.legendurl = mviewer.getLegendUrl(oLayer);
+                  }
+                }).catch(() => {
+                  console.log("GetCapabilities error : ", layer.id)
                 });
-              }
             }
-            var mvid;
-            var oLayer = {};
             Object.assign(oLayer, layer);
             var clean_ident = layerId.replace(/:|,| |\./g, "");
             var _overLayers = mviewer.getLayers();
@@ -885,12 +893,6 @@ var configuration = (function () {
                 : true;
             oLayer.showintoc =
               layer.showintoc && layer.showintoc === "false" ? false : true;
-            oLayer.legendurl = layer.legendurl
-              ? layer.legendurl
-              : mviewer.getLegendUrl(oLayer);
-            if (oLayer.legendurl === "false") {
-              oLayer.legendurl = "";
-            }
             oLayer.useproxy = layer.useproxy === "true" ? true : false;
             if (layer.fields) {
               oLayer.fields = layer.fields.split(",");
@@ -924,7 +926,6 @@ var configuration = (function () {
               if (layer.authorization != "")
                 sessionStorage.setItem(oLayer.url, layer.authorization);
             }
-
             if (oLayer.customcontrol) {
               var customcontrolpath = oLayer.customcontrolpath;
               $.ajax({
