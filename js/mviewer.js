@@ -118,8 +118,12 @@ mviewer = (function () {
     if (API.x && API.y && API.z) {
       center = [parseFloat(API.x), parseFloat(API.y)];
       var zoom = parseInt(API.z);
-      _map.getView().setCenter(center);
-      _map.getView().setZoom(zoom);
+      if (_extent === null) {
+        _map.getView().setCenter(center);
+        _map.getView().setZoom(zoom);
+      } else {
+        _setExtent();
+      }
       // Flag a queryMap call if requested via URL (e.g. ?query=true)
       queryRequested = ["true", "1", "yes", "on"].includes(
         (API.query || "").toString().toLowerCase()
@@ -253,6 +257,21 @@ mviewer = (function () {
    */
 
   var _center = null;
+
+  /**
+   * Property: _extent
+   *
+   */
+
+  var _extent = null;
+
+  /**
+   * Property: _zoom
+   *
+   */
+
+  var _zoom = null;
+
   /**
    * Property: _rotation
    *
@@ -362,6 +381,44 @@ mviewer = (function () {
     _proxy = configuration.getProxy();
   };
 
+  var _setExtent = function () {
+    function getPadding(isModeU, isModeS, isMobile, isToggled) {
+      const pbMobile = parseFloat(
+        getComputedStyle(document.documentElement).getPropertyValue(
+          "--mv-navbar-mobile-h"
+        )
+      );
+      const ptSearchtool = document.getElementById("searchtool").clientHeight;
+      if (isModeU) {
+        return [ptSearchtool + 10, 0, 0, 0];
+      }
+      if (isMobile) {
+        return [ptSearchtool, 0, pbMobile, 0];
+      }
+      if (isModeS) {
+        return [ptSearchtool, 0, pbMobile, 0];
+      }
+      if (isToggled) {
+        return [0, 50, 0, 0];
+      }
+      return [0, 250, 0, 0];
+    }
+
+    if (_extent !== null) {
+      const isMobile = window.innerWidth < 992;
+      const isModeU = API.mode === "u";
+      const isModeS = API.mode === "s";
+      const isToggled = $(".menu-toggle").hasClass("closed");
+
+      const padding = getPadding(isModeU, isModeS, isMobile, isToggled);
+
+      _map.getView().fit(_extent, {
+        size: _map.getSize(),
+        padding: padding,
+      });
+    }
+  };
+
   var _initMap = function (mapoptions) {
     _zoom = parseInt(mapoptions.zoom) || 8;
     if (mapoptions.rotation === "true") {
@@ -385,6 +442,16 @@ mviewer = (function () {
           }),
         });
     }
+    _extent = mapoptions.extent
+      ? ol.proj.transformExtent(
+          mapoptions.extent.split(",").map(function (item) {
+            return parseFloat(item);
+          }),
+          "EPSG:3857",
+          mapoptions.projection
+        )
+      : null;
+
     utils.initWMTSMatrixsets(_projection);
     var overlays = [];
     // init marker to create overlay on great marker
@@ -442,22 +509,6 @@ mviewer = (function () {
           : undefined,
       }),
     });
-
-    var extent = mapoptions.extent
-      ? ol.proj.transformExtent(
-          mapoptions.extent.split(",").map(function (item) {
-            return parseFloat(item);
-          }),
-          "EPSG:3857",
-          mapoptions.projection
-        )
-      : null;
-
-    if (extent !== null) {
-      _map.getView().fit(extent, {
-        size: _map.getSize(),
-      });
-    }
 
     const mapReadyEvent = new CustomEvent("map-ready", {
       detail: {
@@ -2426,8 +2477,12 @@ mviewer = (function () {
      */
 
     zoomToInitialExtent: function () {
-      _map.getView().setCenter(_center);
-      _map.getView().setZoom(_zoom);
+      if (_extent == null) {
+        _map.getView().setCenter(_center);
+        _map.getView().setZoom(_zoom);
+      } else {
+        _setExtent();
+      }
     },
 
     /**
@@ -2906,6 +2961,7 @@ mviewer = (function () {
       _initGeolocation();
       _initTools();
       _initShare();
+      _setExtent();
     },
 
     customLayers: {},
