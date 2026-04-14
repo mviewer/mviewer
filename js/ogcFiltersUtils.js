@@ -1039,6 +1039,34 @@ function getOgcFilterLiteralValue(filterXml, wildcardpattern) {
 }
 
 /**
+ * Build a QGIS FILTER expression with the correct layer prefix if required.
+ * @param {string} expression
+ * @param {ol.source.TileWMS|ol.source.ImageWMS} source
+ * @returns {string}
+ */
+function buildQgisFilterExpression(expression, source) {
+  if (!expression || !source) {
+    return expression;
+  }
+  const params = source.getParams?.();
+  const layerName = params?.LAYERS || params?.layers;
+  if (!layerName) {
+    return expression;
+  }
+  const trimmed = expression.trim();
+  const prefix = layerName.toString().split(",")[0].trim();
+  if (!prefix) {
+    return expression;
+  }
+  const escapedPrefix = prefix.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const pattern = new RegExp("^" + escapedPrefix + "\\s*:\\s*", "i");
+  if (pattern.test(trimmed)) {
+    return trimmed;
+  }
+  return prefix + ":" + trimmed;
+}
+
+/**
  * Applies an OGC filter (AND / OR) to an OGC source.
  * Chooses FILTER or CQL_FILTER based on the server type.
  * @param {{operator: 'AND'|'OR', filters: Array}} ogcFilter
@@ -1083,7 +1111,7 @@ function updateOgcSourceWithFilter(filter, source) {
       if (serverType === WMS_SERVER_TYPES.geoserver) {
         source.updateParams({ CQL_FILTER: expression });
       } else {
-        source.updateParams({ FILTER: expression });
+        source.updateParams({ FILTER: buildQgisFilterExpression(expression, source) });
       }
       return;
     }
