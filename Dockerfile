@@ -5,7 +5,7 @@ WORKDIR /src
 RUN git clone --recurse-submodules https://github.com/mviewer/mviewer.git -b master .
 
 # Final nginx image
-FROM nginx:alpine
+FROM nginxinc/nginx-unprivileged:1.29-alpine3.23
 
 # Copy content and submodule
 COPY --from=gitstage /src /usr/share/nginx/html
