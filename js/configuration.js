@@ -1064,10 +1064,17 @@ var configuration = (function () {
     if (conf.application.exportpng === "true" && document.getElementById("exportpng")) {
       var exportPNGElement = document.getElementById("exportpng");
       if ("download" in exportPNGElement) {
+        var exportPngReady = false;
         exportPNGElement.addEventListener(
           "click",
           function (e) {
-            _map.once("postcompose", function (event) {
+            if (exportPngReady) {
+              exportPngReady = false;
+              return;
+            }
+
+            e.preventDefault();
+            _map.once("rendercomplete", function () {
               try {
                 var mapCanvas = document.createElement("canvas");
                 var size = _map.getSize();
@@ -1082,9 +1089,11 @@ var configuration = (function () {
                       var transform = canvas.style.transform;
                       // Get the transform parameters from the style's transform matrix
                       var matrix = transform
-                        .match(/^matrix\(([^\(]*)\)$/)[1]
-                        .split(",")
-                        .map(Number);
+                        ? transform
+                            .match(/^matrix\(([^\(]*)\)$/)[1]
+                            .split(",")
+                            .map(Number)
+                        : [1, 0, 0, 1, 0, 0];
                       // Apply the transform to the export map context
                       CanvasRenderingContext2D.prototype.setTransform.apply(
                         mapContext,
@@ -1095,11 +1104,13 @@ var configuration = (function () {
                   }
                 );
                 exportPNGElement.href = mapCanvas.toDataURL("image/png");
+                exportPngReady = true;
+                exportPNGElement.click();
               } catch (err) {
                 mviewer.alert(err, "alert-info");
               }
             });
-            _map.renderSync();
+            _map.render();
           },
           false
         );
