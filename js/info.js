@@ -1096,14 +1096,11 @@ var info = (function () {
       }
 
       if (!title) {
-        console.warn(
-          "Invalid tooltip field configuration",
-          {
-            layerId: l.layerid || l.id || feature.get("mviewerid"),
-            tooltipField: tooltipcontent || (l.fields && l.fields[0]) || null,
-            availableFields: Object.keys(feature.getProperties()),
-          }
-        );
+        console.warn("Invalid tooltip field configuration", {
+          layerId: l.layerid || l.id || feature.get("mviewerid"),
+          tooltipField: tooltipcontent || (l.fields && l.fields[0]) || null,
+          availableFields: Object.keys(feature.getProperties()),
+        });
       } else {
         const popup = _featureTooltip.getElement();
 
