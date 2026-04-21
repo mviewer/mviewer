@@ -974,7 +974,7 @@ var configuration = (function () {
                   format: new ol.format.MVT(),
                   ...defaultZoom,
                 }),
-                declutter: false,
+                declutter: configurationUtils.normalizeDeclutter(oLayer.declutter, false),
               });
               l = vecLayer;
 
@@ -1003,6 +1003,7 @@ var configuration = (function () {
                   url: layer.url,
                   format: new ol.format.GeoJSON(),
                 }),
+                declutter: configurationUtils.normalizeDeclutter(oLayer.declutter, false),
               });
               if (oLayer.style && mviewer.featureStyles[oLayer.style]) {
                 l.setStyle(mviewer.featureStyles[oLayer.style]);
@@ -1020,6 +1021,7 @@ var configuration = (function () {
                   url: layer.url,
                   format: new ol.format.KML(),
                 }),
+                declutter: configurationUtils.normalizeDeclutter(oLayer.declutter, false),
               });
               mviewer.processLayer(oLayer, l);
             } // end kml
@@ -1310,6 +1312,7 @@ var configuration = (function () {
     const conf = configuration.getConfiguration();
     const vectorLayer = new ol.layer.Vector({
       source: new ol.source.Vector(),
+      declutter: configurationUtils.normalizeDeclutter(oLayer.declutter, false),
     });
     if (layer.projections) {
       oLayer.projections = layer.projections;

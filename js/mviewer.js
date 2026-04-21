@@ -1495,7 +1495,7 @@ mviewer = (function () {
             maxZoom: baselayer.maxzoom,
             minZoom: baselayer.minZoom,
           }),
-          declutter: false,
+          declutter: configurationUtils.normalizeDeclutter(baselayer.declutter, false),
         });
         l = vecLayer;
         _backgroundLayers.push(l);
