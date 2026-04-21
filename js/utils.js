@@ -234,6 +234,120 @@ var utils = (function () {
     return template_url;
   };
 
+  var _warnedProjectionPairs = {};
+
+  /**
+   * Resolve a projection from an OpenLayers projection instance or a projection code.
+   * @param {ol.proj.Projection|string|null|undefined} projectionLike
+   * @returns {ol.proj.Projection|null}
+   */
+  var _resolveProjection = function (projectionLike) {
+    if (!projectionLike) {
+      return null;
+    }
+
+    if (typeof projectionLike.getCode === "function") {
+      return projectionLike;
+    }
+
+    if (typeof projectionLike === "string") {
+      return ol.proj.get(projectionLike) || null;
+    }
+
+    return null;
+  };
+
+  /**
+   * Warn once when a projection transformation cannot be applied because a projection is missing.
+   * @param {ol.proj.Projection|string|null|undefined} source
+   * @param {ol.proj.Projection|string|null|undefined} destination
+   * @returns {void}
+   */
+  var _warnProjectionFallback = function (source, destination) {
+    var sourceCode =
+      source && typeof source.getCode === "function"
+        ? source.getCode()
+        : source || "unknown";
+    var destinationCode =
+      destination && typeof destination.getCode === "function"
+        ? destination.getCode()
+        : destination || "unknown";
+    var key = [sourceCode, destinationCode].join("->");
+
+    if (_warnedProjectionPairs[key]) {
+      return;
+    }
+
+    _warnedProjectionPairs[key] = true;
+    console.warn(
+      `Projection transformation skipped because a projection is not registered: ${key}`
+    );
+  };
+
+  /**
+   * Transform coordinates only when both projections are registered.
+   * Falls back to a shallow copy of the original coordinates otherwise.
+   * @param {Array<number>} coordinate
+   * @param {ol.proj.Projection|string|null|undefined} source
+   * @param {ol.proj.Projection|string|null|undefined} destination
+   * @returns {Array<number>}
+   */
+  var _transformCoordinateSafe = function (coordinate, source, destination) {
+    var resolvedSource = _resolveProjection(source);
+    var resolvedDestination = _resolveProjection(destination);
+
+    if (!resolvedSource || !resolvedDestination) {
+      _warnProjectionFallback(source, destination);
+      return coordinate && coordinate.slice ? coordinate.slice() : coordinate;
+    }
+
+    return ol.proj.transform(coordinate, resolvedSource, resolvedDestination);
+  };
+
+  /**
+   * Transform an extent only when both projections are registered.
+   * Falls back to a shallow copy of the original extent otherwise.
+   * @param {ol.Extent} extent
+   * @param {ol.proj.Projection|string|null|undefined} source
+   * @param {ol.proj.Projection|string|null|undefined} destination
+   * @returns {ol.Extent}
+   */
+  var _transformExtentSafe = function (extent, source, destination) {
+    var resolvedSource = _resolveProjection(source);
+    var resolvedDestination = _resolveProjection(destination);
+
+    if (!resolvedSource || !resolvedDestination) {
+      _warnProjectionFallback(source, destination);
+      return extent && extent.slice ? extent.slice() : extent;
+    }
+
+    return ol.proj.transformExtent(extent, resolvedSource, resolvedDestination);
+  };
+
+  /**
+   * Transform a geometry clone only when both projections are registered.
+   * Falls back to a cloned geometry without reprojection otherwise.
+   * @param {ol.geom.Geometry} geometry
+   * @param {ol.proj.Projection|string|null|undefined} source
+   * @param {ol.proj.Projection|string|null|undefined} destination
+   * @returns {ol.geom.Geometry}
+   */
+  var _transformGeometrySafe = function (geometry, source, destination) {
+    if (!geometry) {
+      return geometry;
+    }
+
+    var resolvedSource = _resolveProjection(source);
+    var resolvedDestination = _resolveProjection(destination);
+
+    if (!resolvedSource || !resolvedDestination) {
+      _warnProjectionFallback(source, destination);
+      return geometry.clone();
+    }
+
+    return geometry.clone().transform(resolvedSource, resolvedDestination);
+  };
+
   return {
     lonlat2osmtile: _lonlat2osmtile,
     testConfiguration: _testConfiguration,
@@ -243,5 +357,9 @@ var utils = (function () {
     calculateZoomExtent: _calculateZoomExtent,
     zoomToFeaturesExtent: _zoomToFeaturesExtent,
     getTemplateUrl: _getTemplateUrl,
+    resolveProjection: _resolveProjection,
+    transformCoordinateSafe: _transformCoordinateSafe,
+    transformExtentSafe: _transformExtentSafe,
+    transformGeometrySafe: _transformGeometrySafe,
   };
 })();

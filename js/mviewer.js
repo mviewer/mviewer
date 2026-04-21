@@ -417,7 +417,11 @@ mviewer = (function () {
           target: document.getElementById("mouse-position"),
           coordinateFormat: function (coordinate) {
             let getCoord = ol.coordinate.toStringHDMS(
-              ol.proj.transform(coordinate, _projection.getCode(), "EPSG:4326")
+              utils.transformCoordinateSafe(
+                coordinate,
+                _projection.getCode(),
+                "EPSG:4326"
+              )
             );
             let coordStr = getCoord.replace(/ /g, "").replace("N", "N - ");
             return coordStr;
@@ -444,7 +448,7 @@ mviewer = (function () {
     });
 
     var extent = mapoptions.extent
-      ? ol.proj.transformExtent(
+      ? utils.transformExtentSafe(
           mapoptions.extent.split(",").map(function (item) {
             return parseFloat(item);
           }),
@@ -1860,7 +1864,7 @@ mviewer = (function () {
     wmc_extent.miny = parseInt($(wmc).find("General > BoundingBox").attr("miny"));
     wmc_extent.maxx = parseInt($(wmc).find("General > BoundingBox").attr("maxx"));
     wmc_extent.maxy = parseInt($(wmc).find("General > BoundingBox").attr("maxy"));
-    var map_extent = ol.proj.transformExtent(
+    var map_extent = utils.transformExtentSafe(
       [wmc_extent.minx, wmc_extent.miny, wmc_extent.maxx, wmc_extent.maxy],
       wmc_extent.srs,
       _projection.getCode()
@@ -2045,7 +2049,7 @@ mviewer = (function () {
       xyz = { lon: coordinates[0], lat: coordinates[1], zoom: maxzoom || 15 };
     } else {
       var extent = geometry.getExtent();
-      var projExtent = ol.proj.transformExtent(extent, proj, _projection.getCode());
+      var projExtent = utils.transformExtentSafe(extent, proj, _projection.getCode());
       var resolution = _map.getView().getResolutionForExtent(projExtent, _map.getSize());
       var zoom = parseInt(_map.getView().getZoomForResolution(resolution));
       if (maxzoom && zoom > maxzoom) {
@@ -2380,7 +2384,11 @@ mviewer = (function () {
         source = vectorLayer.getSource();
       }
       var geom = new ol.geom.Point(
-        ol.proj.transform([x, y], proj, _map.getView().getProjection().getCode())
+        utils.transformCoordinateSafe(
+          [x, y],
+          proj,
+          _map.getView().getProjection().getCode()
+        )
       );
       var feature = new ol.Feature(geom);
       source.addFeature(feature);
@@ -2936,7 +2944,11 @@ mviewer = (function () {
       if (_sourceOverlay) {
         _sourceOverlay.clear();
       }
-      var ptResult = ol.proj.transform([x, y], srs || "EPSG:4326", _projection.getCode());
+      var ptResult = utils.transformCoordinateSafe(
+        [x, y],
+        srs || "EPSG:4326",
+        _projection.getCode()
+      );
       if (configuration.getConfiguration().searchparameters) {
         duration = parseInt(configuration.getConfiguration().searchparameters.duration);
         if (!duration) {
@@ -2973,7 +2985,7 @@ mviewer = (function () {
     showLocation: function (proj, x, y, showMarker) {
       //marker
       $("#mv_marker").hide();
-      var ptResult = ol.proj.transform([x, y], proj, _projection.getCode());
+      var ptResult = utils.transformCoordinateSafe([x, y], proj, _projection.getCode());
       if (showMarker != false || showMarker === undefined) {
         _marker.setPosition(ptResult);
         $("#mv_marker").show();

@@ -236,7 +236,11 @@ var info = (function () {
     var showPin = false;
     var queryType = "map"; // default behaviour
     mviewer.clickedCoordinates = { x: 0, y: 0 };
-    var coord = ol.proj.transform(evt.coordinate, _projection.getCode(), "EPSG:4326");
+    var coord = utils.transformCoordinateSafe(
+      evt.coordinate,
+      _projection.getCode(),
+      "EPSG:4326"
+    );
     mviewer.clickedCoordinates.x = coord[0];
     mviewer.clickedCoordinates.y = coord[1];
     var views = {
@@ -1092,7 +1096,14 @@ var info = (function () {
       }
 
       if (!title) {
-        console.warn("Invalid tooltip field: check configuration !");
+        console.warn(
+          "Invalid tooltip field configuration",
+          {
+            layerId: l.layerid || l.id || feature.get("mviewerid"),
+            tooltipField: tooltipcontent || (l.fields && l.fields[0]) || null,
+            availableFields: Object.keys(feature.getProperties()),
+          }
+        );
       } else {
         const popup = _featureTooltip.getElement();
 
@@ -1345,7 +1356,7 @@ var info = (function () {
 
   var queryLayer = function (x, y, proj, layer, featureid) {
     (x, y, 16);
-    var pt = ol.proj.transform([x, y], proj, _projection.getCode());
+    var pt = utils.transformCoordinateSafe([x, y], proj, _projection.getCode());
     var p = _map.getPixelFromCoordinate(pt);
     $("#loading-indicator").show();
     _queryMap(
