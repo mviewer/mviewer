@@ -3549,7 +3549,12 @@ mviewer = (function () {
       }
 
       var activeStyle = false;
-      if (oLayer.type === "wms" && !oLayer.xyz && sourceParams && sourceParams["STYLES"]) {
+      if (
+        oLayer.type === "wms" &&
+        !oLayer.xyz &&
+        sourceParams &&
+        sourceParams["STYLES"]
+      ) {
         activeStyle = sourceParams["STYLES"];
         var refStyle = activeStyle;
         //update legend image if nec.
