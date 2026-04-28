@@ -48,7 +48,7 @@ nvm use 19
 **2. Clone du code source et sous-modules**
 
 ```
-git clone https://github.com/geobretagne/mviewer.git --recurse-submodules
+git clone --recurse-submodules https://github.com/mviewer/mviewer.git
 cd mviewer
 ```
 
