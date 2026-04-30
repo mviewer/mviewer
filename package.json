@@ -5,7 +5,8 @@
   "main": "index.html",
   "scripts": {
     "start": "vite --port=5051 --cors=true",
-    "scan": "node security-scripts/security-audit.js",
+    "scan": "node scans/security-audit.js",
+    "scan:rgaa": "node scans/rgaa-scan.js",
     "pretty": "prettier --write \"./index.html\" \"./mviewer.i18n.json\" \"./js/**/*.{js,json}\" \"./demo/**/*.{js,json}\" \"./demo/customcontrols/*.{js,json}\" \"./demo/customlayers/*.{js,json}\"",
     "prettier-check": "prettier --check \"./index.html\" \"./mviewer.i18n.json\" \"./js/**/*.{js,json}\" \"./demo/**/*.{js,json}\" \"./demo/customcontrols/*.{js,json}\" \"./demo/customlayers/*.{js,json}\""
   },

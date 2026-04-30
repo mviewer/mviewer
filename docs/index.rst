@@ -132,7 +132,7 @@ Cette section propose les informations nécessaires pour migrer votre installati
 Sécurité et scan de vulnérabilités
 ----------------------------------
 
-Cette section décrit le scan de sécurité JavaScript intégré au dépôt, qui permet de détecter les bibliothèques JavaScript vulnérables utilisées dans le projet. Le scan repose sur `Retire.js <https://retirejs.github.io/retire.js/>`_ et sur le script ``security-scripts/security-audit.js``.
+Cette section décrit le scan de sécurité JavaScript intégré au dépôt, qui permet de détecter les bibliothèques JavaScript vulnérables utilisées dans le projet. Le scan repose sur `Retire.js <https://retirejs.github.io/retire.js/>`_ et sur le script ``scans/security-audit.js``.
 
 .. toctree::
    :hidden:
