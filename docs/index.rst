@@ -137,7 +137,7 @@ Cette section décrit le scan de sécurité JavaScript intégré au dépôt, qui
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: Sécurité & scan de vulnérabilités
+   :caption: Scans RGAA & vulnérabilités
 
    doc_security/scan.rst
 
