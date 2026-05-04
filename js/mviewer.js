@@ -2066,6 +2066,15 @@ mviewer = (function () {
   const getLangNameAutonym = (langCode) =>
     new Intl.DisplayNames([langCode], { type: "language" }).of(langCode);
 
+  var _mviewerDefaultI18nKeysByLang = {};
+
+  var _setMviewerDefaultI18nKeys = function (dic) {
+    _mviewerDefaultI18nKeysByLang = {};
+    Object.entries(dic || {}).forEach(function (l) {
+      _mviewerDefaultI18nKeysByLang[l[0]] = Object.keys(l[1] || {});
+    });
+  };
+
   var _configureTranslate = function (dic) {
     var lang = configuration.getLang();
     var languages = configuration.getLanguages();
@@ -2234,7 +2243,10 @@ mviewer = (function () {
         $.ajax({
           url: defaultFile,
           dataType: "json",
-          success: _configureTranslate,
+          success: function (dic) {
+            _setMviewerDefaultI18nKeys(dic);
+            _configureTranslate(dic);
+          },
           error: function () {
             console.log("Error: can't load JSON lang file!");
           },
@@ -2244,6 +2256,7 @@ mviewer = (function () {
           function (a, b) {
             var globalDic = a[0];
             var extraDic = b[0];
+            _setMviewerDefaultI18nKeys(globalDic);
             $.extend(true, globalDic, extraDic);
             _configureTranslate(globalDic);
           },
@@ -2274,39 +2287,32 @@ mviewer = (function () {
     var _element = $(element);
 
     // get mviewer default i18n keys
-    var mviewer_default_i18n_keys = [];
-    var defaultI18nFile = "mviewer.i18n.json";
-    $.get(defaultI18nFile).done(function (dic) {
-      mviewer_default_i18n_keys = Object.keys(dic[lang]);
-
-      _element.find("[i18n]").each((i, el) => {
-        let is_mviewer_translation = mviewer_default_i18n_keys.includes(
-          $(el).attr("i18n")
-        ); // dont show the i18n id in debug mode if the element's translationis provided by mviewer
-        let find = false;
-        let tr = mviewer.lang[lang]($(el).attr("i18n"));
-        htmlType.forEach((att) => {
-          if ($(el).attr(att) && tr) {
-            $(el).attr(att, tr);
-            find = true;
-          }
-        });
-
-        var debug_translation = new URLSearchParams(window.location.href)
-          .get("debug_translation")
-          ?.match(/[a-zA-Z0-9]+/)[0];
-
-        if (!find && $(el).text().indexOf("{{") === -1) {
-          if (debug_translation === "true" && !is_mviewer_translation) {
-            // debug mode, used to see the generated i18n ids to create the i18n json dictionnary
-            // dont show i18n keys for translations already provided by mviewer
-            $(el).text($(el).attr("i18n"));
-          } else if (!(tr === $(el).attr("i18n"))) {
-            // if tranlsation exists
-            $(el).text(tr);
-          } // else do nothing, keep the innertext already there
+    var mviewer_default_i18n_keys = _mviewerDefaultI18nKeysByLang[lang] || [];
+    _element.find("[i18n]").each((i, el) => {
+      let is_mviewer_translation = mviewer_default_i18n_keys.includes($(el).attr("i18n")); // dont show the i18n id in debug mode if the element's translationis provided by mviewer
+      let find = false;
+      let tr = mviewer.lang[lang]($(el).attr("i18n"));
+      htmlType.forEach((att) => {
+        if ($(el).attr(att) && tr) {
+          $(el).attr(att, tr);
+          find = true;
         }
       });
+
+      var debug_translation = new URLSearchParams(window.location.href)
+        .get("debug_translation")
+        ?.match(/[a-zA-Z0-9]+/)[0];
+
+      if (!find && $(el).text().indexOf("{{") === -1) {
+        if (debug_translation === "true" && !is_mviewer_translation) {
+          // debug mode, used to see the generated i18n ids to create the i18n json dictionnary
+          // dont show i18n keys for translations already provided by mviewer
+          $(el).text($(el).attr("i18n"));
+        } else if (!(tr === $(el).attr("i18n"))) {
+          // if tranlsation exists
+          $(el).text(tr);
+        } // else do nothing, keep the innertext already there
+      }
     });
     _element.find("[data-bs-content]").each((i, el) => {
       var content = $("<div></div>").append($(el).attr("data-bs-content"));
