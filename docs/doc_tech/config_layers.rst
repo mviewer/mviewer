@@ -117,6 +117,7 @@ Paramètres pour gérer l'affichage de la couche
 * ``filter``: Expression pour ajouter un filtre WMS (CQL ou Qgis Filter ou OGC). Les expressions OGC Filter Encoding fonctionnent avec le servertype `ogc` (https://www.ogc.org/standards/filter/)
 
         * ``Avec GeoServer``: Par défaut si `servertype` absent, l'expression doit être du CQL. Ex: insee=35000 Ou INTERSECT(the_geom, POINT (-74.817265 40.5296504)) (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial)
+        * ``Avec geOrchestra Gateway``: Les filtres CQL transmis dans l'URL doivent être encodés pour être correctement traités par la gateway Spring. Par exemple, ``CQL_FILTER=CODE_INSEE_DU_DEPARTEMENT='77'`` doit être transmis sous la forme ``CQL_FILTER=CODE_INSEE_DU_DEPARTEMENT%3D%2777%27``.
         * ``Avec Qgis Server``: L'expression doit être compatible Qgis Filter. Ex: countries:"name" = 'France' (http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html#cql-tutorial)
         * ``Avec MapServer``: L'expression doit être compatible OGC Filter Encoding. Ex: <Filter><PropertyIsEqualTo><PropertyName>NAME</PropertyName><Literal>Halifax</Literal></PropertyIsEqualTo></Filter> (https://mapserver.org/ogc/filter_encoding.html#tests)
 
@@ -326,4 +327,3 @@ Cet élément optionnel, permet d'associer un template type Mustache (https://gi
 **Paramètres**
 
 * ``url`` :guilabel:`studio` : paramètre obligatoire de type url qui indique l'emplacement du template à utiliser.
-
