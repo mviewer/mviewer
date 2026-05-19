@@ -885,6 +885,8 @@ var configuration = (function () {
                 : true;
             oLayer.showintoc =
               layer.showintoc && layer.showintoc === "false" ? false : true;
+            oLayer.imagelegend =
+              layer.legendurl && layer.legendurl !== "false" ? true : false;
             oLayer.legendurl = layer.legendurl
               ? layer.legendurl
               : mviewer.getLegendUrl(oLayer);
@@ -1004,7 +1006,20 @@ var configuration = (function () {
                   format: new ol.format.GeoJSON(),
                 }),
               });
-              if (oLayer.style && mviewer.featureStyles[oLayer.style]) {
+              if (oLayer.styleurl) {
+                layerStyleJson
+                  .loadAndApply(l, oLayer.styleurl)
+                  .then(function (definition) {
+                    if (!oLayer.imagelegend) {
+                      oLayer.legend = layerStyleJson.createLegend(definition);
+                      oLayer.vectorlegend = true;
+                      mviewer.drawVectorLegend(oLayer.layerid, oLayer.legend.items);
+                    }
+                  })
+                  .catch(function (error) {
+                    console.log(`error loading style JSON ${oLayer.styleurl} : ${error}`);
+                  });
+              } else if (oLayer.style && mviewer.featureStyles[oLayer.style]) {
                 l.setStyle(mviewer.featureStyles[oLayer.style]);
               }
               mviewer.processLayer(oLayer, l);
