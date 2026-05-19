@@ -104,7 +104,11 @@ const createClusterStyle = (definition, helpers) => {
 
     if (count <= 1) {
       return new ol.style.Style(
-        createPointStyleOptions(definition.single || { type: "point" }, features[0] || feature, helpers)
+        createPointStyleOptions(
+          definition.single || { type: "point" },
+          features[0] || feature,
+          helpers
+        )
       );
     }
 

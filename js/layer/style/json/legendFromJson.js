@@ -85,9 +85,10 @@ const createLegendItems = (definition, helpers) => {
       createLegendFeature("Point"),
       helpers
     );
-    const clusterStyle = createClusterStyle(definition, helpers)(
-      createClusterFeature(getClusterLegendCount(definition))
-    );
+    const clusterStyle = createClusterStyle(
+      definition,
+      helpers
+    )(createClusterFeature(getClusterLegendCount(definition)));
 
     return [
       {
