@@ -871,6 +871,7 @@ var configuration = (function () {
             oLayer.checked = layer.visible === "true" ? true : false;
             oLayer.visiblebydefault = oLayer.checked ? true : false;
             oLayer.tiled = layer.tiled === "true" ? true : false;
+            oLayer.xyz = layer.xyz === "true" ? true : false;
             oLayer.dynamiclegend = layer.dynamiclegend === "true" ? true : false;
             oLayer.vectorlegend = layer.vectorlegend === "true" ? true : false;
             oLayer.nohighlight =
@@ -1229,42 +1230,83 @@ var configuration = (function () {
       }
     }
 
-    switch (oLayer.tiled) {
-      case true:
-        wms_params["TILED"] = true;
-        source = new ol.source.TileWMS({
-          url: oLayer.url,
-          crossOrigin: _crossorigin,
-          tileLoadFunction: customWmsImageLoader,
-          params: wms_params,
-        });
-        if (oLayer.servertype) {
-          source.set("servertype", oLayer.servertype);
-        }
+    function customXyzTileLoader(tile, src) {
+      if (oLayer.useproxy) {
+        src = _proxy + encodeURIComponent(src);
+      }
 
-        l = new ol.layer.Tile({
-          source: source,
-        });
-        break;
+      var _ba_ident = sessionStorage.getItem(oLayer.url);
+      if (_ba_ident && _ba_ident != "") {
+        var xhr = new XMLHttpRequest();
+        xhr.responseType = "blob";
+        xhr.open("GET", src);
 
-      case false:
-        source = new ol.source.ImageWMS({
-          url: oLayer.url,
-          crossOrigin: _crossorigin,
-          imageLoadFunction: customWmsImageLoader,
-          params: wms_params,
+        xhr.setRequestHeader("Authorization", `Basic ${window.btoa(_ba_ident)}`);
+        xhr.addEventListener("loadend", function () {
+          var data = this.response;
+          if (this.status == "401") {
+            tile.getImage().src = _blankSrc;
+          } else if (data && data !== undefined) {
+            tile.getImage().src = URL.createObjectURL(data);
+          }
         });
-        if (oLayer.servertype) {
-          source.set("servertype", oLayer.servertype);
-        }
-
-        l = new ol.layer.Image({
-          source: source,
-        });
-        break;
+        xhr.onload = function () {
+          tile.getImage().src = src;
+        };
+        xhr.send();
+      } else {
+        tile.getImage().src = src;
+      }
     }
 
-    if (attributeOgcFilter) {
+    if (oLayer.xyz) {
+      source = new ol.source.XYZ({
+        url: oLayer.url,
+        crossOrigin: _crossorigin,
+        tileLoadFunction: customXyzTileLoader,
+      });
+      l = new ol.layer.Tile({
+        source: source,
+      });
+      oLayer.queryable = false;
+    } else {
+      switch (oLayer.tiled) {
+        case true:
+          wms_params["TILED"] = true;
+          source = new ol.source.TileWMS({
+            url: oLayer.url,
+            crossOrigin: _crossorigin,
+            tileLoadFunction: customWmsImageLoader,
+            params: wms_params,
+          });
+          if (oLayer.servertype) {
+            source.set("servertype", oLayer.servertype);
+          }
+
+          l = new ol.layer.Tile({
+            source: source,
+          });
+          break;
+
+        case false:
+          source = new ol.source.ImageWMS({
+            url: oLayer.url,
+            crossOrigin: _crossorigin,
+            imageLoadFunction: customWmsImageLoader,
+            params: wms_params,
+          });
+          if (oLayer.servertype) {
+            source.set("servertype", oLayer.servertype);
+          }
+
+          l = new ol.layer.Image({
+            source: source,
+          });
+          break;
+      }
+    }
+
+    if (attributeOgcFilter && !oLayer.xyz) {
       updateOgcSourceWithFilter(attributeOgcFilter, source);
     }
 

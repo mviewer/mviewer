@@ -564,6 +564,8 @@ mviewer = (function () {
       legendUrl = layer.legendurl;
     } else if (layer.legendurl && layer.styles && layer.styles.split(",").length === 1) {
       legendUrl = layer.legendurl;
+    } else if (layer.xyz) {
+      legendUrl = "";
     } else if (layer.type !== "vector-tms") {
       legendUrl = getLegendGraphicUrl(layer.url, _getLegendParams(layer));
     }
@@ -1648,7 +1650,7 @@ mviewer = (function () {
       var layerparams = [];
       if (item.layer.getVisible() && item.showintoc) {
         layerparams.push(item.layerid);
-        if (item.type === "wms") {
+        if (item.type === "wms" && !item.xyz) {
           //get current style if many styles
           var sourceParams = _getWmsSourceParams(item);
           if (item.styles && sourceParams && sourceParams.STYLES) {
@@ -1791,19 +1793,19 @@ mviewer = (function () {
       layerControler.visiblebydefault = true;
       var li = $(`.mv-nav-item[data-layerid='${layerControler.layerid}']`);
       var sourceParams = _getWmsSourceParams(layerControler);
-      if (layerOptions.style && layerControler.type === "wms") {
+      if (layerOptions.style && layerControler.type === "wms" && !layerControler.xyz) {
         if (sourceParams) {
           sourceParams["STYLES"] = layerOptions.style;
         }
         layerControler.style = layerOptions.style;
         layerControler.legendurl = _getlegendurl(layerControler);
       }
-      if (layerOptions.filter && layerControler.type === "wms") {
+      if (layerOptions.filter && layerControler.type === "wms" && !layerControler.xyz) {
         mviewer.setWmsFilterParam(layerControler, sourceParams, layerOptions.filter);
         layerControler.filter = layerOptions.filter;
       }
       mviewer.toggleLayer(li);
-      if (layerOptions.time && layerControler.type === "wms") {
+      if (layerOptions.time && layerControler.type === "wms" && !layerControler.xyz) {
         //layerControler.layer.getSource().getParams()['TIME'] = layerOptions.time;
         var timeControl = $(`#${layerControler.layerid}-layer-timefilter`);
         if (timeControl.hasClass("mv-slider-timer")) {
@@ -3547,7 +3549,12 @@ mviewer = (function () {
       }
 
       var activeStyle = false;
-      if (oLayer.type === "wms" && sourceParams && sourceParams["STYLES"]) {
+      if (
+        oLayer.type === "wms" &&
+        !oLayer.xyz &&
+        sourceParams &&
+        sourceParams["STYLES"]
+      ) {
         activeStyle = sourceParams["STYLES"];
         var refStyle = activeStyle;
         //update legend image if nec.

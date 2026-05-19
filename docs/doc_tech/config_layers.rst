@@ -102,6 +102,7 @@ Paramètres pour gérer l'affichage de la couche
 * ``visible`` :guilabel:`studio` :  Booléen stipulant si la couche est visible par défaut.
 * ``opacity`` :guilabel:`studio` : Opacité de la couche (1 par défaut).
 * ``tiled`` :guilabel:`studio` : Booléen stipulant si on désire un affichage tuilé de la couche. Très utile pour affichage de grosses couches.
+* ``xyz`` : Booléen optionnel. Si ``true`` sur une couche ``type="wms"``, mviewer charge l'URL comme un flux raster XYZ (`{z}/{x}/{y}`) au lieu d'émettre des requêtes WMS. Dans ce mode, les paramètres WMS et le GetFeatureInfo ne s'appliquent pas.
 * ``style`` :guilabel:`studio` : Style(s) de la couche. Si plusieurs styles , utiliser la virgule comme séparateur. Si la couche est de type wms, il faut faire référence à un style sld. Si la couche est de type geojson, il faut faire référence à un style définit dans lib/featurestyles.js. Si la couche est de type vector-tms, le style correspond à la valeur indiquée en tant que première clé de la propriété "sources" du fichier de style au format JSON. Si la couche est de type customlayer, le style n'est pas défini ici.
 * ``styleurl`` :guilabel:`studio` : pour les couches de type vector-tms uniquement, il indique l'URL vers le fichier de style au format JSON.
 * ``styletitle`` :guilabel:`studio` : Titres à utiliser pour la liste des styles associés.
