@@ -156,8 +156,12 @@ var measure = (function () {
     var length = 0;
     var coordinates = line.getCoordinates();
     for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
-      var c1 = ol.proj.transform(coordinates[i], _projection, "EPSG:4326");
-      var c2 = ol.proj.transform(coordinates[i + 1], _projection, "EPSG:4326");
+      var c1 = utils.transformCoordinateSafe(coordinates[i], _projection, "EPSG:4326");
+      var c2 = utils.transformCoordinateSafe(
+        coordinates[i + 1],
+        _projection,
+        "EPSG:4326"
+      );
       length += _wgs84Sphere.getDistance(c1, c2);
     }
     var output;

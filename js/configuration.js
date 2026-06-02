@@ -8,7 +8,7 @@ var configuration = (function () {
 
   // Mviewer version a saisir manuellement
 
-  var VERSION = "4.1";
+  var VERSION = "4.2-snapshot";
 
   var _showhelp_startup = false;
 
@@ -975,7 +975,7 @@ var configuration = (function () {
                   format: new ol.format.MVT(),
                   ...defaultZoom,
                 }),
-                declutter: false,
+                declutter: configurationUtils.normalizeDeclutter(oLayer.declutter, false),
               });
               l = vecLayer;
 
@@ -1004,6 +1004,7 @@ var configuration = (function () {
                   url: layer.url,
                   format: new ol.format.GeoJSON(),
                 }),
+                declutter: configurationUtils.normalizeDeclutter(oLayer.declutter, false),
               });
               if (oLayer.style && mviewer.featureStyles[oLayer.style]) {
                 l.setStyle(mviewer.featureStyles[oLayer.style]);
@@ -1021,6 +1022,7 @@ var configuration = (function () {
                   url: layer.url,
                   format: new ol.format.KML(),
                 }),
+                declutter: configurationUtils.normalizeDeclutter(oLayer.declutter, false),
               });
               mviewer.processLayer(oLayer, l);
             } // end kml
@@ -1065,10 +1067,17 @@ var configuration = (function () {
     if (conf.application.exportpng === "true" && document.getElementById("exportpng")) {
       var exportPNGElement = document.getElementById("exportpng");
       if ("download" in exportPNGElement) {
+        var exportPngReady = false;
         exportPNGElement.addEventListener(
           "click",
           function (e) {
-            _map.once("postcompose", function (event) {
+            if (exportPngReady) {
+              exportPngReady = false;
+              return;
+            }
+
+            e.preventDefault();
+            _map.once("rendercomplete", function () {
               try {
                 var mapCanvas = document.createElement("canvas");
                 var size = _map.getSize();
@@ -1083,9 +1092,11 @@ var configuration = (function () {
                       var transform = canvas.style.transform;
                       // Get the transform parameters from the style's transform matrix
                       var matrix = transform
-                        .match(/^matrix\(([^\(]*)\)$/)[1]
-                        .split(",")
-                        .map(Number);
+                        ? transform
+                            .match(/^matrix\(([^\(]*)\)$/)[1]
+                            .split(",")
+                            .map(Number)
+                        : [1, 0, 0, 1, 0, 0];
                       // Apply the transform to the export map context
                       CanvasRenderingContext2D.prototype.setTransform.apply(
                         mapContext,
@@ -1096,11 +1107,13 @@ var configuration = (function () {
                   }
                 );
                 exportPNGElement.href = mapCanvas.toDataURL("image/png");
+                exportPngReady = true;
+                exportPNGElement.click();
               } catch (err) {
                 mviewer.alert(err, "alert-info");
               }
             });
-            _map.renderSync();
+            _map.render();
           },
           false
         );
@@ -1341,6 +1354,7 @@ var configuration = (function () {
     const conf = configuration.getConfiguration();
     const vectorLayer = new ol.layer.Vector({
       source: new ol.source.Vector(),
+      declutter: configurationUtils.normalizeDeclutter(oLayer.declutter, false),
     });
     if (layer.projections) {
       oLayer.projections = layer.projections;

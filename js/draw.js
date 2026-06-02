@@ -671,8 +671,12 @@ let draw = (function () {
     let length = 0;
 
     for (let i = 0, ii = coordinates.length - 1; i < ii; ++i) {
-      let c1 = ol.proj.transform(coordinates[i], _projection, "EPSG:4326");
-      let c2 = ol.proj.transform(coordinates[i + 1], _projection, "EPSG:4326");
+      let c1 = utils.transformCoordinateSafe(coordinates[i], _projection, "EPSG:4326");
+      let c2 = utils.transformCoordinateSafe(
+        coordinates[i + 1],
+        _projection,
+        "EPSG:4326"
+      );
       length += _wgs84Sphere.getDistance(c1, c2);
     }
     let output;

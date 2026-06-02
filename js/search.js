@@ -353,7 +353,7 @@ var search = (function () {
         };
         if (_searchparams.bbox) {
           const extent = _map.getView().calculateExtent(_map.getSize());
-          const extent4326 = ol.proj.transformExtent(
+          const extent4326 = utils.transformExtentSafe(
             extent,
             _projection.getCode(),
             _proj4326
@@ -374,7 +374,7 @@ var search = (function () {
         var parameters = { q: value, limit: 5 };
         if (_searchparams.bbox) {
           var extent = _map.getView().calculateExtent(_map.getSize());
-          var extent4326 = ol.proj.transformExtent(
+          var extent4326 = utils.transformExtentSafe(
             extent,
             _projection.getCode(),
             _proj4326
@@ -645,7 +645,11 @@ var search = (function () {
     if (searchableLayers.length > 0 || (_searchparams.static && _elasticSearchDocTypes)) {
       var queryLayers = [];
       var currentExtent = _map.getView().calculateExtent(_map.getSize());
-      var pe = ol.proj.transformExtent(currentExtent, _projection.getCode(), "EPSG:4326");
+      var pe = utils.transformExtentSafe(
+        currentExtent,
+        _projection.getCode(),
+        "EPSG:4326"
+      );
       for (var i = 0; i < searchableLayers.length; i++) {
         queryLayers.push({
           type: { value: searchableLayers[i].getSource().getParams()["LAYERS"] },
@@ -789,7 +793,7 @@ var search = (function () {
               var title = data.hits.hits[i]._source.title;
               if (geomtype !== "Point") {
                 var feature = new ol.Feature({
-                  geometry: geom.transform("EPSG:4326", "EPSG:3857"),
+                  geometry: utils.transformGeometrySafe(geom, "EPSG:4326", "EPSG:3857"),
                   title: title,
                 });
                 action_click = `mviewer.zoomToFeature('feature.${i}');`;
@@ -889,7 +893,7 @@ var search = (function () {
           // Only add geofilter if required in search params
           if (_searchparams.bbox) {
             var currentExtent = _map.getView().calculateExtent(_map.getSize());
-            var projectedMapExtent = ol.proj.transformExtent(
+            var projectedMapExtent = utils.transformExtentSafe(
               currentExtent,
               _projection.getCode(),
               _proj4326
@@ -961,7 +965,11 @@ var search = (function () {
 
                   // always zoom on feature
                   let feature = new ol.Feature({
-                    geometry: geom.transform(_proj4326, _map.getView().getProjection()),
+                    geometry: utils.transformGeometrySafe(
+                      geom,
+                      _proj4326,
+                      _map.getView().getProjection()
+                    ),
                     title: title,
                   });
                   feature.setId(`feature.${indexId}.${j}`);
@@ -1074,10 +1082,11 @@ var search = (function () {
                 var geojsonFeature = geojsonFormat.writeFeatureObject(feature);
                 var prop = geojsonFeature.properties;
                 if (feature.getGeometry()) {
-                  var wgs84Geom = feature
-                    .getGeometry()
-                    .clone()
-                    .transform(mapProj, "EPSG:4326");
+                  var wgs84Geom = utils.transformGeometrySafe(
+                    feature.getGeometry(),
+                    mapProj,
+                    "EPSG:4326"
+                  );
                   prop.geometry = geojsonFormat.writeGeometryObject(wgs84Geom);
                   prop.fusesearchresult = oLayer.fusesearchresult;
                 } else {
@@ -1365,7 +1374,11 @@ var search = (function () {
 
     let mapView = _map.getView();
     let mapProjection = mapView.getProjection().getCode();
-    let coordsForQueryMap = ol.proj.transform([lon, lat], _proj4326, mapProjection);
+    let coordsForQueryMap = utils.transformCoordinateSafe(
+      [lon, lat],
+      _proj4326,
+      mapProjection
+    );
 
     let duration = 2000;
 
@@ -1410,7 +1423,7 @@ var search = (function () {
     let extent = geom.getExtent();
     let viewExtent =
       sourceProj && sourceProj !== mapProjection
-        ? ol.proj.transformExtent(extent, sourceProj, mapProjection)
+        ? utils.transformExtentSafe(extent, sourceProj, mapProjection)
         : extent;
 
     let center = ol.extent.getCenter(viewExtent);
