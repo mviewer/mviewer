@@ -216,6 +216,7 @@ Paramètres pour gérer le filtre attributaire (liste déroulante) des couches W
 * ``attributefilter`` :guilabel:`studio` :  Booléen précisant si on active la sélection attributaire par menu déroulant.
 * ``attributefield`` :guilabel:`studio` : Nom du champ à utiliser avec le contrôle attributefilter.
 * ``attributevalues`` :guilabel:`studio` : Valeurs de la sélection attributaire séparées par des virgules.
+* ``attributealias``:  Noms affichsé dans la carte pour chaque valeur attributaire séparées par des virgules. [optionnel]
 * ``attributelabel``:  Titre donnée à la liste des filtres.
 * ``attributestylesync``: Booléen qui précise s'il convient d'appliquer un style (sld) spécifique lors du filtre attributaire. Dans ce cas la convention est la suivante : nom_style@attributevalue ou url_style_externe@attributevalue.sld.
 * ``attributefilterenabled``: Booléen précisant si le filtre est activé par défaut (avec la première valeur de la liste attributevalues). Si cette option n'est pas activée, une valeur "Par défaut" apparaît dans la liste et ne filtre pas les données. Valeur par défaut = false.
