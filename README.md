@@ -109,9 +109,30 @@ docker run --rm -p8080:8080 -v/chemin/vers/repertoire_de_configurations_xml:/usr
 
 La seule contrainte étant que le chemin doit être indiqué à docker de manière absolue.
 
-Par ailleurs, une composition docker est disponible dans le dépot git de
-[mviewerstudio](https://github.com/geobretagne/mviewerstudio), incluant mviewer
-et mviewerstudio.
+### Docker Compose
+
+Le dépôt contient également un fichier `docker-compose.yml` pour lancer mviewer avec un proxy Nginx en frontal.
+
+```bash
+docker compose up --build
+```
+
+Par défaut, l'application est accessible sur `http://localhost:8080/mviewer/`.
+
+Le service `www` expose le port HTTP et redirige les requêtes vers le service `mviewer`.
+Le dossier local `./apps` est monté en lecture seule dans les deux conteneurs pour permettre de charger vos configurations XML sans reconstruire l'image.
+
+Vous pouvez personnaliser le port publié et le nom d'hôte Nginx via des variables d'environnement :
+
+```bash
+HTTP_PORT=8090 NGINX_HOST=localhost docker compose up --build
+```
+
+Pour arrêter la composition :
+
+```bash
+docker compose down
+```
 
 ## Fichier apps/default.xml
 
