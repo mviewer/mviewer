@@ -30,7 +30,7 @@
     "vite": "^8.0.13"
   },
   "devDependencies": {
-    "prettier": "^3.8.3",
+    "prettier": "^3.8.4",
     "retire": "^5.4.2"
   }
 }
