@@ -1369,9 +1369,6 @@ li.mv-nav-item {
 	padding-right: 10px;
 }
 
-#right-panel .carousel-inner {
-	padding: 0 0 0 5px;
-}
 
 #right-panel-selector,
 #right-panel-selector .row,
@@ -1384,7 +1381,7 @@ li.mv-nav-item {
 #carousel-right-panel-1,
 #right-panel .item.active,
 #right-panel .carousel-inner {
-	height: 100%;
+	padding: 0 0 0 5px;
 }
 
 /* Bottom */
