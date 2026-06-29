@@ -2246,11 +2246,12 @@ mviewer = (function () {
           },
         });
       } else {
-        $.when($.getJSON(defaultFile), $.getJSON(extraFile)).then(
-          function (a, b) {
-            var globalDic = a[0];
-            var extraDic = b[0];
-            $.extend(true, globalDic, extraDic);
+        Promise.all([
+          fetch(defaultFile).then((r) => r.json()),
+          fetch(extraFile).then((r) => r.json()),
+        ]).then(
+          function ([globalDic, extraDic]) {
+            utils.deepExtend(globalDic, extraDic);
             _configureTranslate(globalDic);
           },
           function () {
@@ -4113,7 +4114,7 @@ mviewer = (function () {
     },
 
     alert: function (msg, cls, ms) {
-      (_message(msg, cls), ms);
+      _message(msg, cls), ms;
     },
 
     toast: function (title, msg) {
