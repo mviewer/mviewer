@@ -746,7 +746,7 @@ var info = (function () {
       _hasQueryResult = infoLayers.length > 0;
       mviewer.setInfoLayers(infoLayers);
 
-      $.each(views, function (panel, view) {
+      for (const [panel, view] of Object.entries(views)) {
         if (view.layers.length > 0) {
           view.layers = orderViewsLayersByMap(views[panel].layers);
           view.layers[0].firstlayer = true;
@@ -931,7 +931,7 @@ var info = (function () {
         } else {
           $("#mv_marker").hide();
         }
-      });
+      }
       $("#loading-indicator").hide();
       search.clearSearchField();
       _mvReady = true;
@@ -1378,11 +1378,11 @@ var info = (function () {
         configuration.getConfiguration().application.templatebottominfopanel;
     }
     _sourceOverlay = mviewer.getSourceOverlay();
-    $.each(_overLayers, function (i, layer) {
+    for (const layer of Object.values(_overLayers)) {
       if (layer.queryable) {
         _addQueryableLayer(layer);
       }
-    });
+    }
   };
 
   /**

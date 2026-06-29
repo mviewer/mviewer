@@ -1265,13 +1265,12 @@ mviewer = (function () {
   var _initDataList = function () {
     var htmlListGroup = "";
     var reverse_themes = [];
-    var crossorigin = "";
     _themes = configuration.getThemes();
     var topics = false;
     if (API.topics) {
       topics = API.topics.split(",");
     }
-    $.each(_themes, function (id, theme) {
+    Object.values(_themes).forEach(function (theme) {
       if (topics) {
         if (topics.indexOf(theme.id) >= 0) {
           reverse_themes.push(theme);
@@ -1281,7 +1280,7 @@ mviewer = (function () {
       }
     });
 
-    $.each(reverse_themes.reverse(), function (id, theme) {
+    reverse_themes.reverse().forEach(function (theme) {
       var reverse_layers = [];
       var groups = [];
       var classes = [];
@@ -1304,16 +1303,16 @@ mviewer = (function () {
       //GROUPS
       if (_themes[theme.id].groups) {
         classes.push("level-1");
-        $.each(_themes[theme.id].groups, function (id, group) {
+        Object.values(_themes[theme.id].groups).forEach(function (group) {
           var grp = { title: group.name, layers: [] };
-          $.each(group.layers, function (id, layer) {
+          Object.values(group.layers).forEach(function (layer) {
             if (layer.showintoc) {
               grp.layers.unshift(layer);
             }
           });
           groups.push(grp);
         });
-        $.each(_themes[theme.id].layers, function (id, layer) {
+        Object.values(_themes[theme.id].layers).forEach(function (layer) {
           if (layer.showintoc) {
             reverse_layers.push(layer);
           }
@@ -1324,7 +1323,7 @@ mviewer = (function () {
         // view.cls = classes.join(" ");
         //NO GROUPS
       } else {
-        $.each(_themes[theme.id].layers, function (id, layer) {
+        Object.values(_themes[theme.id].layers).forEach(function (layer) {
           if (layer.showintoc) {
             reverse_layers.push(layer);
           }
@@ -1416,13 +1415,13 @@ mviewer = (function () {
   };
 
   var _updateLayersScaleDependancy = function (scale) {
-    $.each(_scaledDependantLayers, function (i, item) {
+    _scaledDependantLayers.forEach(function (item) {
       _setLayerScaleStatus(item, scale);
     });
   };
 
   var _updateLegendsScaleDependancy = function (scale) {
-    $.each(_scaledDependantLayersLegend, function (i, item) {
+    _scaledDependantLayersLegend.forEach(function (item) {
       _setLayerLegend(item, scale);
     });
   };
@@ -1643,7 +1642,7 @@ mviewer = (function () {
 
   var _getVisibleOverLayers = function () {
     var layers = [];
-    $.each(_overLayers, function (i, item) {
+    Object.values(_overLayers).forEach(function (item) {
       var layerparams = [];
       if (item.layer.getVisible() && item.showintoc) {
         layerparams.push(item.layerid);
@@ -1759,23 +1758,21 @@ mviewer = (function () {
    */
 
   var _showCheckedLayers = function () {
-    var checkedLayers = $.map(_overLayers, function (layer, index) {
-      if (layer.checked) {
-        return layer;
-      }
-    });
-    $.each(checkedLayers, function (index, layer) {
-      if (layer) {
-        var l = layer.layer;
-        if (
-          l &&
-          $(`.list-group-item.mv-layer-details[data-layerid='${layer.id}']`).length === 0
-        ) {
-          l.src ? l.src.setVisible(true) : l.setVisible(true);
-          mviewer.addLayer(layer);
+    Object.values(_overLayers)
+      .filter((l) => l.checked)
+      .forEach(function (layer) {
+        if (layer) {
+          var l = layer.layer;
+          if (
+            l &&
+            $(`.list-group-item.mv-layer-details[data-layerid='${layer.id}']`).length ===
+              0
+          ) {
+            l.src ? l.src.setVisible(true) : l.setVisible(true);
+            mviewer.addLayer(layer);
+          }
         }
-      }
-    });
+      });
   };
 
   /**
@@ -1823,8 +1820,8 @@ mviewer = (function () {
       }
       layerControler.visiblebydefault = false;
     };
-    $.each(_themes, function (i, theme) {
-      $.each(theme.layers, function (j, l) {
+    Object.values(_themes).forEach(function (theme) {
+      Object.values(theme.layers).forEach(function (l) {
         if (layersWithOptions[l.layerid]) {
           var options = layersWithOptions[l.layerid];
           showLayer(l, options);
@@ -1832,8 +1829,8 @@ mviewer = (function () {
           hideLayer(l);
         }
       });
-      $.each(theme.groups, function (g, group) {
-        $.each(group.layers, function (i, l) {
+      Object.values(theme.groups).forEach(function (group) {
+        Object.values(group.layers).forEach(function (l) {
           if (layersWithOptions[l.layerid]) {
             var options = layersWithOptions[l.layerid];
             showLayer(l, options);
@@ -2205,8 +2202,8 @@ mviewer = (function () {
 
     mviewer.lang = {};
     //load i18n for all languages availables
-    Object.entries(dic).forEach(function (l) {
-      mviewer.lang[l[0]] = i18n.create({ values: l[1] });
+    Object.entries(dic).forEach(function ([lang, values]) {
+      mviewer.lang[lang] = i18n.create({ values });
     });
     if (mviewer.lang[lang]) {
       mviewer.tr = mviewer.lang[lang];
@@ -2488,7 +2485,7 @@ mviewer = (function () {
           });
         }
       }
-      $.each(_backgroundLayers, function (id, layer) {
+      _backgroundLayers.forEach(function (layer) {
         var opt = configuration.getConfiguration().baselayers.style;
         var elem =
           opt === "gallery"
@@ -3089,7 +3086,7 @@ mviewer = (function () {
         services: [],
         layers: [],
       };
-      $.each(_overLayers, function (i, layer) {
+      Object.values(_overLayers).forEach(function (layer) {
         if (layer.layer.getVisible()) {
           var layername = layer.id;
           params.layers.push({
@@ -4140,15 +4137,15 @@ mviewer = (function () {
       }
       if (visibility) {
         if (theme.groups) {
-          $.each(theme.groups, function (key, group) {
-            $.each(group.layers, function (key, layer) {
+          Object.values(theme.groups).forEach(function (group) {
+            Object.values(group.layers).forEach(function (layer) {
               if (!layer.layer.getVisible()) {
                 mviewer.addLayer(layer);
               }
             });
           });
         } else {
-          $.each(theme.layers, function (key, layer) {
+          Object.values(theme.layers).forEach(function (layer) {
             if (!layer.layer.getVisible()) {
               mviewer.addLayer(layer);
             }
@@ -4156,19 +4153,19 @@ mviewer = (function () {
         }
       } else {
         if (theme.groups) {
-          $.each(theme.groups, function (key, group) {
-            $.each(group.layers, function (key, layer) {
+          Object.values(theme.groups).forEach(function (group) {
+            for (const [key, layer] of Object.entries(group.layers)) {
               if (layer.layer.getVisible()) {
                 mviewer.removeLayer($(".mv-layer-details[data-layerid='" + key + "']"));
               }
-            });
+            }
           });
         } else {
-          $.each(theme.layers, function (key, layer) {
+          for (const [key, layer] of Object.entries(theme.layers)) {
             if (layer.layer.getVisible()) {
               mviewer.removeLayer($(".mv-layer-details[data-layerid='" + key + "']"));
             }
-          });
+          }
         }
       }
       _setThemeStatus(themeid);

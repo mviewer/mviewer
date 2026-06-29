@@ -408,7 +408,7 @@ var addlayers = (function () {
    */
   var _showLayerList = function (layerList, parentDiv) {
     parentDiv.empty();
-    $.each(layerList, function (id, layer) {
+    layerList.forEach(function (layer) {
       let btn = $('<button class="vcenter"><i class="ri-add-circle-line"></i></button>');
 
       let childContainerRow = $(`<div class="row"></div>`);

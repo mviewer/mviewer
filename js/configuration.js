@@ -507,7 +507,7 @@ var configuration = (function () {
               dataType: "xml",
               success: function (response, textStatus, request) {
                 var wmc = mviewer.parseWMCResponse(response, this.wmcid);
-                $.each(wmc.layers, function (idx, layer) {
+                wmc.layers.forEach(function (layer) {
                   mviewer.processLayer(layer, layer.layer);
                 });
                 processedWMC += 1;
