@@ -345,7 +345,7 @@ var configuration = (function () {
       $(".mv-title").append(title);
     }
     if (conf.application.stats === "true" && conf.application.statsurl) {
-      $.get(`${conf.application.statsurl}?app=${document.title}`);
+      fetch(`${conf.application.statsurl}?app=${document.title}`);
     }
     if (conf.application.logo) {
       $(".mv-logo").attr("src", conf.application.logo);
@@ -807,7 +807,6 @@ var configuration = (function () {
 
               /* to implement this i will add template_{lang} field to the layer object
                 in any case, the system will try to find all the templates and save them in the layer properties
-                
                 */
 
               var languages = configuration.getLanguages();
@@ -820,22 +819,33 @@ var configuration = (function () {
               const uniqLang = configuration.getLang().length === 1;
               if (uniqLang || layer.template.url.endsWith(".mst")) {
                 //NORMAL CASE, conditions: [mst extension at the end of the url]"
-                $.get(mviewer.ajaxURL(layer.template.url, _proxy), function (template) {
-                  oLayer.template = template;
-                });
+                fetch(mviewer.ajaxURL(layer.template.url, _proxy))
+                  .then((response) => {
+                    if (!response.ok) throw new Error(response.statusText);
+                    return response.text();
+                  })
+                  .then((template) => {
+                    oLayer.template = template;
+                  });
               } else {
                 languages.forEach(function (lang) {
                   let correctUrl = isUrl(layer.template.url);
                   var template_url_field_name = `template_${lang}`;
                   let template_url = utils.getTemplateUrl(lang, layer, correctUrl);
-                  $.get(mviewer.ajaxURL(template_url, _proxy), function (template) {
-                    oLayer[template_url_field_name] = template;
-                  }).fail(() => {
-                    const msg = correctUrl
-                      ? `failed to load ${lang} template through api`
-                      : `failed to load ${lang} template through filesystem`;
-                    console.log(msg);
-                  });
+                  fetch(mviewer.ajaxURL(layer.template.url, _proxy))
+                    .then((response) => {
+                      if (!response.ok) throw new Error(response.statusText);
+                      return response.text();
+                    })
+                    .then((template) => {
+                      oLayer[template_url_field_name] = template;
+                    })
+                    .catch(() => {
+                      const msg = correctUrl
+                        ? `failed to load ${lang} template through api`
+                        : `failed to load ${lang} template through filesystem`;
+                      console.log(msg);
+                    });
                 });
               }
             } else {
