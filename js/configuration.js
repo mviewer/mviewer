@@ -117,48 +117,47 @@ var configuration = (function () {
     return _conf;
   };
 
-  var _getExtensions = function (conf) {
-    //load javascript extensions and trigger applicationExtended when all is done
-    var extensions = $(conf).find("extension[type='javascript']");
-    var requests = [];
-    var ajaxFunction = function () {
-      extensions.toArray().forEach(function (extension) {
-        var src = $(extension).attr("src");
-        var type = $(extension).attr("type");
-        var proxy = false;
-        requests.push(
-          $.ajax({
-            url: mviewer.ajaxURL(src, proxy),
-            crossDomain: true,
-            dataType: "script",
-            error: function (xhr, status, error) {
-              alert("error extension");
-            },
-          })
-        );
-      });
-    };
+  function loadExtensionScript(src) {
+    return new Promise(function (resolve, reject) {
+      let script = document.createElement("script");
+      script.src = mviewer.ajaxURL(src, false);
+      script.crossOrigin = "anonymous";
+      script.onload = () => resolve(script);
+      script.onerror = (err) => {
+        alert("error extension");
+        reject(err);
+      };
+      document.head.appendChild(script);
+    });
+  }
 
-    $.when
-      .apply(new ajaxFunction(), requests)
-      .done(function (result) {
-        //Lorsque toutes les ressources externes sont récupérées,
-        // on déclanche le trigger applicationExtended
-        $(document).trigger("applicationExtended", { xml: conf });
-      })
-      .fail(function (err) {
-        // Si une erreur a été rencontrée, on déclanche le même trigger
-        $(document).trigger("applicationExtended", { xml: conf });
-      });
+  var _getExtensions = function (xmlConf) {
+    // load javascript extensions and trigger applicationExtended when all is done
+    const extensions = Array.from(
+      xmlConf.querySelectorAll("extension[type='javascript']")
+    );
+
+    const requests = extensions.map(function (extension) {
+      const src = extension.getAttribute("src");
+      return loadExtensionScript(src);
+    });
+
+    // Lorsque toutes les ressources externes sont récupérées,
+    // on déclanche le trigger applicationExtended
+    Promise.allSettled(requests).then(function () {
+      $(document).trigger("applicationExtended", { xml: xmlConf });
+    });
 
     //load components
     //each component is rendered in Component constructor;
     //When all is done, trigger componentLoaded event
     $(document).on("ready-for-component", () => {
-      var components = $(conf).find("extension[type='component']");
-      components.toArray().forEach(function (component) {
-        var id = $(component).attr("id");
-        var path = $(component).attr("path");
+      const components = Array.from(
+        xmlConf.querySelectorAll("extension[type='component']")
+      );
+      components.forEach(function (component) {
+        const id = component.getAttribute("id");
+        const path = component.getAttribute("path");
         if (path && id) {
           mviewer.customComponents[id] = new Component(id, path);
         }
@@ -249,18 +248,11 @@ var configuration = (function () {
       });
     };
 
-    $.when
-      .apply(new ajaxFunction(), requests)
-      .done(function (result) {
-        //Lorsque toutes les thématiques externes sont récupérées,
-        // on initialise le chargement de l'application avec le trigger configurationCompleted
-        $(document).trigger("configurationCompleted", { xml: conf });
-      })
-      .fail(function (err) {
-        // Si une erreur a été rencontrée, initialise également le chargement de l'application
-        // avec le trigger configurationCompleted
-        $(document).trigger("configurationCompleted", { xml: conf });
-      });
+    Promise.allSettled(requests).then(function () {
+      // Lorsque toutes les thématiques externes sont récupérées,
+      // on initialise le chargement de l'application avec le trigger configurationCompleted
+      $(document).trigger("configurationCompleted", { xml: conf });
+    });
   };
   /**
    *
@@ -541,16 +533,10 @@ var configuration = (function () {
         });
       };
 
-      $.when
-        .apply(new ajaxFunction(), requests)
-        .done(function (result) {
-          mviewer.events().overLayersTotal = nbOverLayers;
-          mviewer.events().confLoaded = true;
-        })
-        .fail(function (err) {
-          mviewer.events().overLayersTotal = nbOverLayers;
-          mviewer.events().confLoaded = true;
-        });
+      Promise.allSettled(requests).then(function () {
+        mviewer.events().overLayersTotal = nbOverLayers;
+        mviewer.events().confLoaded = true;
+      });
     } else if (conf.themes.theme !== undefined) {
       var themes = conf.themes.theme;
       var nbOverLayers = 0;
