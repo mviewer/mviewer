@@ -424,9 +424,7 @@ var info = (function () {
     if (layer) {
       visibleLayers.push(_overLayers[layer].layer);
     } else {
-      visibleLayers = $.grep(_queryableLayers, function (l, i) {
-        return l.getVisible();
-      });
+      visibleLayers = _queryableLayers.filter((l) => l.getVisible());
     }
     $(".popup-content").html("");
     _clickCoordinates = evt.coordinate;

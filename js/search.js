@@ -638,8 +638,8 @@ var search = (function () {
    * @deprecated
    */
   var _sendPrevious6ElasticsearchRequest = function (val, versionELS) {
-    var sendQuery = true;
-    var searchableLayers = $.grep(_searchableElasticsearchLayers, function (l, i) {
+    let sendQuery = true;
+    const searchableLayers = _searchableElasticsearchLayers.filter(function (l) {
       return l.getVisible();
     });
     if (searchableLayers.length > 0 || (_searchparams.static && _elasticSearchDocTypes)) {
@@ -857,9 +857,7 @@ var search = (function () {
     else {
       let sendQuery = true;
       // We can have several layers with one elk index each
-      let searchableLayers = $.grep(_searchableElasticsearchLayers, function (l, i) {
-        return l.getVisible();
-      });
+      let searchableLayers = _searchableElasticsearchLayers.filter((l) => l.getVisible());
 
       // send request only if at least one layer is searcheable or elastic search in standalone mode
       if (searchableLayers.length > 0 || _searchparams.static) {
