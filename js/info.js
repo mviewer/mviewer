@@ -1163,16 +1163,13 @@ var info = (function () {
     var html = "";
     var counter = 0;
     features.forEach(function (feature) {
-      var nbimg = 0;
       counter += 1;
       var attributes = feature.getProperties();
       var fields = olayer.fields
         ? olayer.fields
-        : $.map(attributes, function (value, key) {
-            if (typeof value !== "object") {
-              return key;
-            }
-          });
+        : Object.entries(attributes)
+            .filter(([_, value]) => typeof value !== "object")
+            .map(([key]) => key);
       var featureTitle =
         feature.getProperties().title ||
         feature.getProperties().name ||
