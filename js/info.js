@@ -588,18 +588,12 @@ var info = (function () {
             }
             break;
           case "application/vnd.ogc.gml":
-            if ($.isXMLDoc(layerResponse)) {
-              xml = layerResponse;
-            } else {
-              xml = $.parseXML(layerResponse);
-            }
-            break;
           case "application/vnd.esri.wms_raw_xml":
           case "application/vnd.esri.wms_featureinfo_xml":
-            if ($.isXMLDoc(layerResponse)) {
+            if (layerResponse instanceof Document) {
               xml = layerResponse;
             } else {
-              xml = $.parseXML(layerResponse);
+              xml = new DOMParser().parseFromString(layerResponse, "text/xml");
             }
             break;
           default:
