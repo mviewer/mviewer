@@ -1102,10 +1102,9 @@
               });
               $("#map").focus();
             });
-            $(document).on("applicationExtended", function (e, eData) {
-              // Async B3. Runs after extensions are loaded to complete configuration.
-              configuration.complete(eData.xml);
-            });
+            document.addEventListener("applicationExtended", ({ detail }) =>
+              configuration.complete(detail.xml)
+            );
             configuration.getExtensions(xml);
           }, // fin success config
           error: function (request, status, error) {

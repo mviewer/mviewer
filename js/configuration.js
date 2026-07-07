@@ -145,7 +145,11 @@ var configuration = (function () {
     // Lorsque toutes les ressources externes sont récupérées,
     // on déclanche le trigger applicationExtended
     Promise.allSettled(requests).then(function () {
-      $(document).trigger("applicationExtended", { xml: xmlConf });
+      document.dispatchEvent(
+        new CustomEvent("applicationExtended", {
+          detail: { xml: xmlConf },
+        })
+      );
     });
 
     //load components
@@ -874,8 +878,8 @@ var configuration = (function () {
               layer.type === "sensorthings"
                 ? "false"
                 : layer.nohighlight === "true"
-                  ? true
-                  : false;
+                ? true
+                : false;
             oLayer.infohighlight =
               layer.type === "sensorthings" || layer.infohighlight === "false"
                 ? false
