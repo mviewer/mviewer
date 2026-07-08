@@ -192,65 +192,51 @@ var configuration = (function () {
         }
       });
 
-    var requests = [];
-    var ajaxFunction = function () {
-      // Préparation des requêtes Ajax pour récupérer les thématiques externes
-      extraConf.toArray().forEach(function (theme) {
-        var url = $(theme).attr("url");
-        var id = $(theme).attr("id");
-        const external_overwrite = {
-          name: $(theme).attr("name"),
-          layersvisibility: $(theme).attr("layersvisibility") || "default",
-        };
-        var proxy = false;
-        if (
-          $(conf).find("proxy").attr("url") &&
-          $(conf).find("proxy").attr("url") != ""
-        ) {
-          proxy = $(conf).find("proxy").attr("url");
-        }
-        requests.push(
-          $.ajax({
-            url: mviewer.ajaxURL(url, proxy),
-            crossDomain: true,
-            themeId: id,
-            external_overwrite: external_overwrite,
-            success: function (response, textStatus, request) {
-              //Si thématique externe récupérée, on la charge dans la configuration courante
-              var node = $(response).find(`theme#${this.themeId}`);
-              if (node.length > 0) {
-                const theme_element = node[0];
-                //overwrite theme name and layers visiblility
-                theme_element.setAttribute("name", this.external_overwrite.name);
-                //overwrite layers visiblility
-                if (this.external_overwrite.layersvisibility == "all") {
-                  theme_element
-                    .querySelectorAll("layer")
-                    .forEach((l) => l.setAttribute("visible", "true"));
-                } else if (this.external_overwrite.layersvisibility == "none") {
-                  theme_element
-                    .querySelectorAll("layer")
-                    .forEach((l) => l.setAttribute("visible", "false"));
-                }
-                $(conf).find(`theme#${this.themeId}`).replaceWith(node);
-              } else {
-                $(conf).find(`theme#${this.themeId}`).remove();
-                console.log(
-                  `La thématique ${this.themeId} n'a pu être trouvée dans ${this.url}`
-                );
-              }
-            },
-            error: function (xhr, status, error) {
-              //Si la thématique n'est pas récupérable, on supprime la thématique dans la configuration courante
-              console.log(
-                `${this.url} n'est pas accessible. La thématique n'a pu être chargée`
-              );
-              $(conf).find(`theme#${this.themeId}`).remove();
-            },
-          })
-        );
-      });
-    };
+    const requests = Array.from(extraConf).map(function (theme) {
+      const url = theme.getAttribute("url");
+      const id = theme.getAttribute("id");
+      const external_overwrite = {
+        name: theme.getAttribute("name"),
+        layersvisibility: theme.getAttribute("layersvisibility") || "default",
+      };
+      let proxy = false;
+      const proxyUrl = conf.querySelector("proxy")?.getAttribute("url");
+      if (proxyUrl) {
+        proxy = proxyUrl;
+      }
+
+      return fetch(mviewer.ajaxURL(url, proxy))
+        .then((response) => {
+          if (!response.ok) throw new Error(`${url} non accessible`);
+          return response.text();
+        })
+        .then((text) => {
+          const xmlDoc = new DOMParser().parseFromString(text, "text/xml");
+          const node = xmlDoc.querySelector(`theme#${id}`);
+          if (node) {
+            // overwrite theme name
+            node.setAttribute("name", external_overwrite.name);
+            // overwrite layers visibility
+            if (external_overwrite.layersvisibility === "all") {
+              node
+                .querySelectorAll("layer")
+                .forEach((l) => l.setAttribute("visible", "true"));
+            } else if (external_overwrite.layersvisibility === "none") {
+              node
+                .querySelectorAll("layer")
+                .forEach((l) => l.setAttribute("visible", "false"));
+            }
+            conf.querySelector(`theme#${id}`)?.replaceWith(node);
+          } else {
+            conf.querySelector(`theme#${id}`)?.remove();
+            console.log(`La thématique ${id} n'a pu être trouvée dans ${url}`);
+          }
+        })
+        .catch(() => {
+          console.log(`${url} n'est pas accessible. La thématique n'a pu être chargée`);
+          conf.querySelector(`theme#${id}`)?.remove();
+        });
+    });
 
     Promise.allSettled(requests).then(function () {
       // Lorsque toutes les thématiques externes sont récupérées,
