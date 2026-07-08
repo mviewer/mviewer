@@ -75,7 +75,7 @@ var configuration = (function () {
   };
 
   var _parseXML = function (xml) {
-    var _conf = $.xml2json(xml);
+    var { config: _conf } = utils.xmlToJson(xml);
     // transtype baselayer, theme, group, layer
     //those types should be array
     //if type is object, push it into new Array
