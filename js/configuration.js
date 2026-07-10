@@ -864,8 +864,8 @@ var configuration = (function () {
               layer.type === "sensorthings"
                 ? "false"
                 : layer.nohighlight === "true"
-                ? true
-                : false;
+                  ? true
+                  : false;
             oLayer.infohighlight =
               layer.type === "sensorthings" || layer.infohighlight === "false"
                 ? false

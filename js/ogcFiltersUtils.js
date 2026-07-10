@@ -655,8 +655,8 @@ function cqlToOGC(cqlFilter, asStringBoolean = false) {
         typeof format.readFilter === "function"
           ? format.readFilter.bind(format)
           : typeof ol.format.WFS.readFilter === "function"
-          ? ol.format.WFS.readFilter
-          : null;
+            ? ol.format.WFS.readFilter
+            : null;
       if (!readFilter) {
         return null;
       }
