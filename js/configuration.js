@@ -75,7 +75,7 @@ var configuration = (function () {
   };
 
   var _parseXML = function (xml) {
-    var { config: _conf } = utils.xmlToJson(xml);
+    const _conf = utils.xmlToJson(xml);
     // transtype baselayer, theme, group, layer
     //those types should be array
     //if type is object, push it into new Array
@@ -121,7 +121,6 @@ var configuration = (function () {
     return new Promise(function (resolve, reject) {
       let script = document.createElement("script");
       script.src = mviewer.ajaxURL(src, false);
-      script.crossOrigin = "anonymous";
       script.onload = () => resolve(script);
       script.onerror = (err) => {
         alert("error extension");

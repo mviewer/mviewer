@@ -33,7 +33,7 @@ export function xmlToJson(xml) {
     // Parcours des enfants éléments
     for (const child of children) {
       if (child.nodeType !== 1) continue; // ignore texte/commentaires
-      const childName = child.nodeName;
+      const childName = child.localName || child.nodeName;
       const parsedChild = parseNode(child);
 
       if (obj[childName] === undefined) {
@@ -51,5 +51,5 @@ export function xmlToJson(xml) {
   }
 
   const root = xml.documentElement;
-  return { [root.nodeName]: parseNode(root) };
+  return parseNode(root);
 }
