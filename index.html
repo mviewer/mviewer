@@ -933,9 +933,6 @@
       src="lib/jquery/base/1.10.2/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="lib/geotiff/geotiff.js"></script>
     <script type="text/javascript" src="lib/ol/ol.js"></script>
-    <script
-      type="text/javascript"
-      src="lib/jquery/base/plugins/xml2json/jquery.xml2json.js"></script>
     <script type="text/javascript" src="lib/Sortable/1.4.2/Sortable.min.js"></script>
     <script
       type="text/javascript"
@@ -976,6 +973,7 @@
     <script type="text/javascript" src="js/sensorFeature.js"></script>
     <script type="module" src="js/urlParams/urlParams.js"></script>
     <script type="module" src="js/cookies/main.js"></script>
+    <script type="module" src="js/utils/main.js"></script>
     <script>
       // Startup 1. Synchronously checks that core modules are available before continuing.
       if (
@@ -998,34 +996,22 @@
       const tooltipList = [...tooltipTriggerList].map(
         (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
       );
-      var API = {};
+      let API = {};
       $(document).ready(function () {
         "use strict";
 
         // Startup 3. Runs on DOM ready and reads URL parameters used for startup.
         if (window.location.search) {
-          $.extend(
-            API,
-            $.parseJSON(
-              '{"' +
-                decodeURIComponent(
-                  window.location.search
-                    .substring(1)
-                    .replace(/&/g, '","')
-                    .replace(/=/g, '":"')
-                ) +
-                '"}'
-            )
-          );
+          const params = Object.fromEntries(new URLSearchParams(window.location.search));
+          Object.assign(API, params);
         }
-
         // Search for a config param
-        var configFile = API.config;
-        var defaultEnvFile = API.env || "apps/settings.json";
+        let configFile = API.config;
+        const defaultEnvFile = API.env || "apps/settings.json";
 
         // If no config param, search for a fragment (#)
         if (!API.config) {
-          var fragment = window.location.hash.split("#")[1];
+          const fragment = window.location.hash.split("#")[1];
           if (fragment) {
             configFile = fragment;
             if (!configFile.startsWith("/")) {
@@ -1049,7 +1035,7 @@
         API.config = configFile;
 
         // Startup 4. Starts the asynchronous load of the main configuration.
-        var theme = API.theme ? API.theme : null;
+        const theme = API.theme ? API.theme : null;
 
         $.ajax({
           url: configFile + "?_dc=" + new Date().getTime(),
@@ -1074,8 +1060,8 @@
                 // set mviewer en from environment file
                 mviewer.env = { ...r.detail };
                 //get JSON conf from xml;
-                var _conf = configuration.parseXML(eData.xml);
-                var style = "css/themes/default.css";
+                const _conf = configuration.parseXML(eData.xml);
+                let style = "css/themes/default.css";
                 if (
                   !theme &&
                   _conf.application.style &&
@@ -1088,7 +1074,7 @@
                 $("head").prepend(
                   '<link rel="stylesheet" href="' + style + '" type="text/css" />'
                 );
-                var title = "";
+                let title = "";
                 if (_conf.application.title) {
                   title = _conf.application.title;
                   $("#loader-subtitle").empty();
@@ -1113,10 +1099,9 @@
               });
               $("#map").focus();
             });
-            $(document).on("applicationExtended", function (e, eData) {
-              // Async B3. Runs after extensions are loaded to complete configuration.
-              configuration.complete(eData.xml);
-            });
+            document.addEventListener("applicationExtended", ({ detail }) =>
+              configuration.complete(detail.xml)
+            );
             configuration.getExtensions(xml);
           }, // fin success config
           error: function (request, status, error) {
@@ -1146,14 +1131,14 @@
           draggable: ".draggable",
           filter: ".toplayer",
           onUpdate: function (evt) {
-            var actionMove = {
+            let actionMove = {
               layerName: $(evt.item).attr("data-layerid"),
               layerRef: "",
               action: "",
             };
-            var itemsList = $(evt.from).find(".list-group-item");
+            const itemsList = $(evt.from).find(".list-group-item");
             //New position in the list
-            var newPos = evt.newIndex;
+            const newPos = evt.newIndex;
             if (newPos < itemsList.length - 1) {
               //Get the under layer name
               actionMove.layerRef = $(itemsList[newPos + 1]).attr("data-layerid");

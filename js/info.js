@@ -424,9 +424,7 @@ var info = (function () {
     if (layer) {
       visibleLayers.push(_overLayers[layer].layer);
     } else {
-      visibleLayers = $.grep(_queryableLayers, function (l, i) {
-        return l.getVisible();
-      });
+      visibleLayers = _queryableLayers.filter((l) => l.getVisible());
     }
     $(".popup-content").html("");
     _clickCoordinates = evt.coordinate;
@@ -590,18 +588,12 @@ var info = (function () {
             }
             break;
           case "application/vnd.ogc.gml":
-            if ($.isXMLDoc(layerResponse)) {
-              xml = layerResponse;
-            } else {
-              xml = $.parseXML(layerResponse);
-            }
-            break;
           case "application/vnd.esri.wms_raw_xml":
           case "application/vnd.esri.wms_featureinfo_xml":
-            if ($.isXMLDoc(layerResponse)) {
+            if (layerResponse instanceof Document) {
               xml = layerResponse;
             } else {
-              xml = $.parseXML(layerResponse);
+              xml = new DOMParser().parseFromString(layerResponse, "text/xml");
             }
             break;
           default:
@@ -754,7 +746,7 @@ var info = (function () {
       _hasQueryResult = infoLayers.length > 0;
       mviewer.setInfoLayers(infoLayers);
 
-      $.each(views, function (panel, view) {
+      for (const [panel, view] of Object.entries(views)) {
         if (view.layers.length > 0) {
           view.layers = orderViewsLayersByMap(views[panel].layers);
           view.layers[0].firstlayer = true;
@@ -939,7 +931,7 @@ var info = (function () {
         } else {
           $("#mv_marker").hide();
         }
-      });
+      }
       $("#loading-indicator").hide();
       search.clearSearchField();
       _mvReady = true;
@@ -1165,16 +1157,13 @@ var info = (function () {
     var html = "";
     var counter = 0;
     features.forEach(function (feature) {
-      var nbimg = 0;
       counter += 1;
       var attributes = feature.getProperties();
       var fields = olayer.fields
         ? olayer.fields
-        : $.map(attributes, function (value, key) {
-            if (typeof value !== "object") {
-              return key;
-            }
-          });
+        : Object.entries(attributes)
+            .filter(([_, value]) => typeof value !== "object")
+            .map(([key]) => key);
       var featureTitle =
         feature.getProperties().title ||
         feature.getProperties().name ||
@@ -1389,11 +1378,11 @@ var info = (function () {
         configuration.getConfiguration().application.templatebottominfopanel;
     }
     _sourceOverlay = mviewer.getSourceOverlay();
-    $.each(_overLayers, function (i, layer) {
+    for (const layer of Object.values(_overLayers)) {
       if (layer.queryable) {
         _addQueryableLayer(layer);
       }
-    });
+    }
   };
 
   /**

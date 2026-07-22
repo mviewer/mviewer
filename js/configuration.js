@@ -75,7 +75,7 @@ var configuration = (function () {
   };
 
   var _parseXML = function (xml) {
-    var _conf = $.xml2json(xml);
+    const _conf = utils.xmlToJson(xml);
     // transtype baselayer, theme, group, layer
     //those types should be array
     //if type is object, push it into new Array
@@ -117,48 +117,50 @@ var configuration = (function () {
     return _conf;
   };
 
-  var _getExtensions = function (conf) {
-    //load javascript extensions and trigger applicationExtended when all is done
-    var extensions = $(conf).find("extension[type='javascript']");
-    var requests = [];
-    var ajaxFunction = function () {
-      extensions.toArray().forEach(function (extension) {
-        var src = $(extension).attr("src");
-        var type = $(extension).attr("type");
-        var proxy = false;
-        requests.push(
-          $.ajax({
-            url: mviewer.ajaxURL(src, proxy),
-            crossDomain: true,
-            dataType: "script",
-            error: function (xhr, status, error) {
-              alert("error extension");
-            },
-          })
-        );
-      });
-    };
+  function loadExtensionScript(src) {
+    return new Promise(function (resolve, reject) {
+      let script = document.createElement("script");
+      script.src = mviewer.ajaxURL(src, false);
+      script.onload = () => resolve(script);
+      script.onerror = (err) => {
+        alert("error extension");
+        reject(err);
+      };
+      document.head.appendChild(script);
+    });
+  }
 
-    $.when
-      .apply(new ajaxFunction(), requests)
-      .done(function (result) {
-        //Lorsque toutes les ressources externes sont récupérées,
-        // on déclanche le trigger applicationExtended
-        $(document).trigger("applicationExtended", { xml: conf });
-      })
-      .fail(function (err) {
-        // Si une erreur a été rencontrée, on déclanche le même trigger
-        $(document).trigger("applicationExtended", { xml: conf });
-      });
+  var _getExtensions = function (xmlConf) {
+    // load javascript extensions and trigger applicationExtended when all is done
+    const extensions = Array.from(
+      xmlConf.querySelectorAll("extension[type='javascript']")
+    );
+
+    const requests = extensions.map(function (extension) {
+      const src = extension.getAttribute("src");
+      return loadExtensionScript(src);
+    });
+
+    // Lorsque toutes les ressources externes sont récupérées,
+    // on déclanche le trigger applicationExtended
+    Promise.allSettled(requests).then(function () {
+      document.dispatchEvent(
+        new CustomEvent("applicationExtended", {
+          detail: { xml: xmlConf },
+        })
+      );
+    });
 
     //load components
     //each component is rendered in Component constructor;
     //When all is done, trigger componentLoaded event
     $(document).on("ready-for-component", () => {
-      var components = $(conf).find("extension[type='component']");
-      components.toArray().forEach(function (component) {
-        var id = $(component).attr("id");
-        var path = $(component).attr("path");
+      const components = Array.from(
+        xmlConf.querySelectorAll("extension[type='component']")
+      );
+      components.forEach(function (component) {
+        const id = component.getAttribute("id");
+        const path = component.getAttribute("path");
         if (path && id) {
           mviewer.customComponents[id] = new Component(id, path);
         }
@@ -189,78 +191,57 @@ var configuration = (function () {
         }
       });
 
-    var requests = [];
-    var ajaxFunction = function () {
-      // Préparation des requêtes Ajax pour récupérer les thématiques externes
-      extraConf.toArray().forEach(function (theme) {
-        var url = $(theme).attr("url");
-        var id = $(theme).attr("id");
-        const external_overwrite = {
-          name: $(theme).attr("name"),
-          layersvisibility: $(theme).attr("layersvisibility") || "default",
-        };
-        var proxy = false;
-        if (
-          $(conf).find("proxy").attr("url") &&
-          $(conf).find("proxy").attr("url") != ""
-        ) {
-          proxy = $(conf).find("proxy").attr("url");
-        }
-        requests.push(
-          $.ajax({
-            url: mviewer.ajaxURL(url, proxy),
-            crossDomain: true,
-            themeId: id,
-            external_overwrite: external_overwrite,
-            success: function (response, textStatus, request) {
-              //Si thématique externe récupérée, on la charge dans la configuration courante
-              var node = $(response).find(`theme#${this.themeId}`);
-              if (node.length > 0) {
-                const theme_element = node[0];
-                //overwrite theme name and layers visiblility
-                theme_element.setAttribute("name", this.external_overwrite.name);
-                //overwrite layers visiblility
-                if (this.external_overwrite.layersvisibility == "all") {
-                  theme_element
-                    .querySelectorAll("layer")
-                    .forEach((l) => l.setAttribute("visible", "true"));
-                } else if (this.external_overwrite.layersvisibility == "none") {
-                  theme_element
-                    .querySelectorAll("layer")
-                    .forEach((l) => l.setAttribute("visible", "false"));
-                }
-                $(conf).find(`theme#${this.themeId}`).replaceWith(node);
-              } else {
-                $(conf).find(`theme#${this.themeId}`).remove();
-                console.log(
-                  `La thématique ${this.themeId} n'a pu être trouvée dans ${this.url}`
-                );
-              }
-            },
-            error: function (xhr, status, error) {
-              //Si la thématique n'est pas récupérable, on supprime la thématique dans la configuration courante
-              console.log(
-                `${this.url} n'est pas accessible. La thématique n'a pu être chargée`
-              );
-              $(conf).find(`theme#${this.themeId}`).remove();
-            },
-          })
-        );
-      });
-    };
+    const requests = Array.from(extraConf).map(function (theme) {
+      const url = theme.getAttribute("url");
+      const id = theme.getAttribute("id");
+      const external_overwrite = {
+        name: theme.getAttribute("name"),
+        layersvisibility: theme.getAttribute("layersvisibility") || "default",
+      };
+      let proxy = false;
+      const proxyUrl = conf.querySelector("proxy")?.getAttribute("url");
+      if (proxyUrl) {
+        proxy = proxyUrl;
+      }
 
-    $.when
-      .apply(new ajaxFunction(), requests)
-      .done(function (result) {
-        //Lorsque toutes les thématiques externes sont récupérées,
-        // on initialise le chargement de l'application avec le trigger configurationCompleted
-        $(document).trigger("configurationCompleted", { xml: conf });
-      })
-      .fail(function (err) {
-        // Si une erreur a été rencontrée, initialise également le chargement de l'application
-        // avec le trigger configurationCompleted
-        $(document).trigger("configurationCompleted", { xml: conf });
-      });
+      return fetch(mviewer.ajaxURL(url, proxy))
+        .then((response) => {
+          if (!response.ok) throw new Error(`${url} non accessible`);
+          return response.text();
+        })
+        .then((text) => {
+          const xmlDoc = new DOMParser().parseFromString(text, "text/xml");
+          const node = xmlDoc.querySelector(`theme#${id}`);
+          if (node) {
+            // overwrite theme name
+            node.setAttribute("name", external_overwrite.name);
+            // overwrite layers visibility
+            if (external_overwrite.layersvisibility === "all") {
+              node
+                .querySelectorAll("layer")
+                .forEach((l) => l.setAttribute("visible", "true"));
+            } else if (external_overwrite.layersvisibility === "none") {
+              node
+                .querySelectorAll("layer")
+                .forEach((l) => l.setAttribute("visible", "false"));
+            }
+            conf.querySelector(`theme#${id}`)?.replaceWith(node);
+          } else {
+            conf.querySelector(`theme#${id}`)?.remove();
+            console.log(`La thématique ${id} n'a pu être trouvée dans ${url}`);
+          }
+        })
+        .catch(() => {
+          console.log(`${url} n'est pas accessible. La thématique n'a pu être chargée`);
+          conf.querySelector(`theme#${id}`)?.remove();
+        });
+    });
+
+    Promise.allSettled(requests).then(function () {
+      // Lorsque toutes les thématiques externes sont récupérées,
+      // on initialise le chargement de l'application avec le trigger configurationCompleted
+      $(document).trigger("configurationCompleted", { xml: conf });
+    });
   };
   /**
    *
@@ -353,7 +334,7 @@ var configuration = (function () {
       $(".mv-title").append(title);
     }
     if (conf.application.stats === "true" && conf.application.statsurl) {
-      $.get(`${conf.application.statsurl}?app=${document.title}`);
+      fetch(`${conf.application.statsurl}?app=${document.title}`);
     }
     if (conf.application.logo) {
       $(".mv-logo").attr("src", conf.application.logo);
@@ -515,7 +496,7 @@ var configuration = (function () {
               dataType: "xml",
               success: function (response, textStatus, request) {
                 var wmc = mviewer.parseWMCResponse(response, this.wmcid);
-                $.each(wmc.layers, function (idx, layer) {
+                wmc.layers.forEach(function (layer) {
                   mviewer.processLayer(layer, layer.layer);
                 });
                 processedWMC += 1;
@@ -541,16 +522,10 @@ var configuration = (function () {
         });
       };
 
-      $.when
-        .apply(new ajaxFunction(), requests)
-        .done(function (result) {
-          mviewer.events().overLayersTotal = nbOverLayers;
-          mviewer.events().confLoaded = true;
-        })
-        .fail(function (err) {
-          mviewer.events().overLayersTotal = nbOverLayers;
-          mviewer.events().confLoaded = true;
-        });
+      Promise.allSettled(requests).then(function () {
+        mviewer.events().overLayersTotal = nbOverLayers;
+        mviewer.events().confLoaded = true;
+      });
     } else if (conf.themes.theme !== undefined) {
       var themes = conf.themes.theme;
       var nbOverLayers = 0;
@@ -821,10 +796,9 @@ var configuration = (function () {
 
               /* to implement this i will add template_{lang} field to the layer object
                 in any case, the system will try to find all the templates and save them in the layer properties
-                
                 */
 
-              var languages = configuration.getLanguages();
+              const languages = configuration.getLanguages();
 
               // used jquery validator's url regex
               const isUrl = (str) =>
@@ -834,22 +808,33 @@ var configuration = (function () {
               const uniqLang = configuration.getLang().length === 1;
               if (uniqLang || layer.template.url.endsWith(".mst")) {
                 //NORMAL CASE, conditions: [mst extension at the end of the url]"
-                $.get(mviewer.ajaxURL(layer.template.url, _proxy), function (template) {
-                  oLayer.template = template;
-                });
+                fetch(mviewer.ajaxURL(layer.template.url, _proxy))
+                  .then((response) => {
+                    if (!response.ok) throw new Error(response.statusText);
+                    return response.text();
+                  })
+                  .then((template) => {
+                    oLayer.template = template;
+                  });
               } else {
                 languages.forEach(function (lang) {
                   let correctUrl = isUrl(layer.template.url);
                   var template_url_field_name = `template_${lang}`;
                   let template_url = utils.getTemplateUrl(lang, layer, correctUrl);
-                  $.get(mviewer.ajaxURL(template_url, _proxy), function (template) {
-                    oLayer[template_url_field_name] = template;
-                  }).fail(() => {
-                    const msg = correctUrl
-                      ? `failed to load ${lang} template through api`
-                      : `failed to load ${lang} template through filesystem`;
-                    console.log(msg);
-                  });
+                  fetch(mviewer.ajaxURL(template_url, _proxy))
+                    .then((response) => {
+                      if (!response.ok) throw new Error(response.statusText);
+                      return response.text();
+                    })
+                    .then((template) => {
+                      oLayer[template_url_field_name] = template;
+                    })
+                    .catch(() => {
+                      const msg = correctUrl
+                        ? `failed to load ${lang} template through api`
+                        : `failed to load ${lang} template through filesystem`;
+                      console.log(msg);
+                    });
                 });
               }
             } else {

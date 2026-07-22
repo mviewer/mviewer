@@ -638,8 +638,8 @@ var search = (function () {
    * @deprecated
    */
   var _sendPrevious6ElasticsearchRequest = function (val, versionELS) {
-    var sendQuery = true;
-    var searchableLayers = $.grep(_searchableElasticsearchLayers, function (l, i) {
+    let sendQuery = true;
+    const searchableLayers = _searchableElasticsearchLayers.filter(function (l) {
       return l.getVisible();
     });
     if (searchableLayers.length > 0 || (_searchparams.static && _elasticSearchDocTypes)) {
@@ -811,11 +811,9 @@ var search = (function () {
 
               str += `<a class="elasticsearch list-group-item  list-group-item-action" href="#" onclick="${action_click}" onmouseover="${action_over}" title="(${
                 data.hits.hits[i]._type
-              }) ${$.map(data.hits.hits[i]._source, function (el) {
-                if (typeof el === "string") {
-                  return el;
-                }
-              }).join(", \n")}">${title}</a>`;
+              }) ${Object.values(data.hits.hits[i]._source)
+                .filter((el) => typeof el === "string")
+                .join(", \n")}}">${title}</a>`;
             }
             $(".elasticsearch").remove();
             if (nb > 0) {
@@ -857,9 +855,7 @@ var search = (function () {
     else {
       let sendQuery = true;
       // We can have several layers with one elk index each
-      let searchableLayers = $.grep(_searchableElasticsearchLayers, function (l, i) {
-        return l.getVisible();
-      });
+      let searchableLayers = _searchableElasticsearchLayers.filter((l) => l.getVisible());
 
       // send request only if at least one layer is searcheable or elastic search in standalone mode
       if (searchableLayers.length > 0 || _searchparams.static) {
@@ -952,14 +948,16 @@ var search = (function () {
 
                   let extentCenter = _getCenterWithExtent(geom, _proj4326);
 
-                  var title = "";
-                  title += $.map(currentFeature._source, function (value, key) {
-                    if (!mouseOverField.length || mouseOverField.includes(key)) {
-                      if (typeof value === "string") {
-                        return value;
-                      }
-                    }
-                  }).join(" - ");
+                  let title = "";
+                  title += Object.entries(currentFeature._source)
+                    .filter(([key, value]) => {
+                      return (
+                        (!mouseOverField.length || mouseOverField.includes(key)) &&
+                        typeof value === "string"
+                      );
+                    })
+                    .map(([_, value]) => value)
+                    .join(" - ");
 
                   let action_click = "";
 
@@ -999,16 +997,17 @@ var search = (function () {
                   }
 
                   action_over += `mviewer.flash('${_proj4326}',${xyz.lon},${xyz.lat});`;
-                  str += `<a class="elasticsearch list-group-item" href="#" onclick="${action_click}" onmouseover="${action_over}" title="${$.map(
-                    currentFeature._source,
-                    function (value, key) {
-                      if (!titleDisplayKey.length || titleDisplayKey.includes(key)) {
-                        if (typeof value === "string") {
-                          return value;
-                        }
-                      }
-                    }
-                  ).join(" \n")}">${title}</a>`;
+                  str += `<a class="elasticsearch list-group-item" href="#" onclick="${action_click}" onmouseover="${action_over}" title="${Object.entries(
+                    currentFeature._source
+                  )
+                    .filter(([key, value]) => {
+                      return (
+                        (!titleDisplayKey.length || titleDisplayKey.includes(key)) &&
+                        typeof value === "string"
+                      );
+                    })
+                    .map(([key, value]) => value)
+                    .join(" \n")}">${title}</a>`;
                 }
 
                 if (nb > 0) {
@@ -1098,9 +1097,7 @@ var search = (function () {
                 j.push(prop);
               });
 
-              var list = $.map(j, function (el) {
-                return el;
-              });
+              const list = [...j];
               _fuseSearchData[oLayer.id] = new Fuse(list, options);
               //remove listener when data is loaded
               ol.Observable.unByKey(_listener);
