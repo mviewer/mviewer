@@ -798,7 +798,7 @@ var configuration = (function () {
                 in any case, the system will try to find all the templates and save them in the layer properties
                 */
 
-              var languages = configuration.getLanguages();
+              const languages = configuration.getLanguages();
 
               // used jquery validator's url regex
               const isUrl = (str) =>
@@ -821,7 +821,7 @@ var configuration = (function () {
                   let correctUrl = isUrl(layer.template.url);
                   var template_url_field_name = `template_${lang}`;
                   let template_url = utils.getTemplateUrl(lang, layer, correctUrl);
-                  fetch(mviewer.ajaxURL(layer.template.url, _proxy))
+                  fetch(mviewer.ajaxURL(template_url, _proxy))
                     .then((response) => {
                       if (!response.ok) throw new Error(response.statusText);
                       return response.text();
