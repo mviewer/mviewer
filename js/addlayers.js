@@ -1,6 +1,9 @@
 var capabilitiesParser = (function () {
   /**
-   * public Method: _parseCSW. Used to parse response of a GetRecords
+   * Parse a CSW GetRecords response into a normalized list of WMS layers.
+   * @param {string} data - Raw XML response returned by the CSW service.
+   * @param {string} url - URL of the CSW request.
+   * @returns {{nbTotalResults: number, nextRecord: number, layers: Array<Object>}} Parsed layers and paging metadata.
    */
   var _parseCSW = function (data, url) {
     data = data.replace(/csw:/g, "");
@@ -93,7 +96,10 @@ var capabilitiesParser = (function () {
   };
 
   /**
-   * public Method: _parse. Used to parse response of a Capabilities
+   * Parse a WMS capabilities document and enrich the returned structure with layer metadata.
+   * @param {string} data - Raw WMS capabilities XML.
+   * @param {string} url - URL of the WMS capabilities request.
+   * @returns {Object} Parsed capabilities object enriched with layer info.
    */
   var _parse = function (data, url) {
     data = data.replace(/https:\/\/www.opengis/g, "http://www.opengis");
@@ -107,7 +113,11 @@ var capabilitiesParser = (function () {
   };
 
   /**
-   * private Method: _addWmsInfosLayer. Post process Capabilities to adapt all response types
+   * Post-process WMS capabilities data to normalize layer metadata across service versions.
+   * @param {Object} capa - Parsed capabilities object.
+   * @param {Object} xmlCapabilities - XML capabilities converted to JSON.
+   * @param {string} rawData - Raw XML payload used for compatibility checks.
+   * @returns {void}
    */
   var _addWmsInfosLayer = function (capa, xmlCapabilities, rawData) {
     if (capa.Capability.Layer.Layer) {
@@ -153,7 +163,9 @@ var capabilitiesParser = (function () {
     }
   };
   /**
-   * private Method: _xmlToJson. Transform XML doc to JSON
+   * Convert an XML document into a JavaScript object.
+   * @param {Node} xml - XML node to transform.
+   * @returns {Object} JSON-like representation of the XML tree.
    */
   var _xmlToJson = function (xml) {
     let obj = {};
@@ -237,14 +249,27 @@ var addlayers = (function () {
   };
 
   /**
-   * Public Method: _init exported as init
-   * @param {ol.Map}
+   * Resolve the JSON configuration file used for the add-layers server list.
+   * @returns {string} Relative URL of the server configuration JSON file.
+   */
+  var _getServerConfigUrl = function () {
+    const appConfig = configuration.getConfiguration()?.application;
+    if (appConfig?.addlayerconfig) {
+      return appConfig.addlayerconfig;
+    }
+    return "demo/data/ogc_csw_server.json";
+  };
+
+  /**
+   * Initialize the add-layers tool, load the server list and bind the UI events.
+   * @returns {void}
    */
   var _init = function () {
     if (!_loaded) {
       _map = mviewer.getMap();
       // load server list config
-      fetch("demo/data/ogc_csw_server.json")
+      const serverConfigUrl = _getServerConfigUrl();
+      fetch(mviewer.ajaxURL(serverConfigUrl, false))
         .then((response) => response.json())
         .catch(function (error) {
           mviewer.alert(
@@ -335,8 +360,8 @@ var addlayers = (function () {
   };
 
   /**
-   * _toggle. used to enable/disable this tool
-   * public version of this method is toggle
+   * Show or hide the add-layers panel.
+   * @returns {void}
    */
   var _toggle = function () {
     _addlayersEnabled = !_addlayersEnabled;
@@ -346,8 +371,8 @@ var addlayers = (function () {
   };
 
   /**
-   * public Method: _connect. Used to connect to the OGC server selected,
-   * list and display all layers
+   * Connect to the manually entered WMS service and display the available layers.
+   * @returns {void}
    */
   var _connect = function () {
     _url = document.getElementById("addLayers_service_url").value;
@@ -355,6 +380,11 @@ var addlayers = (function () {
     _connectServer();
   };
 
+  /**
+   * Display an error message in the add-layers results panel.
+   * @param {string} textContent - Error message to render.
+   * @returns {void}
+   */
   var _error = function (textContent) {
     let addLayersResults = document.getElementById("addlayers_results");
     addLayersResults.innerHTML = "";
@@ -364,8 +394,11 @@ var addlayers = (function () {
   };
 
   /**
-   * _message Show message method.
-   * @param {String} msg
+   * Render an alert message inside the given parent container.
+   * @param {string} msg - Message to display.
+   * @param {string} cls - Bootstrap alert class to apply.
+   * @param {HTMLElement} parentDiv - Container that will receive the message.
+   * @returns {void}
    */
   var _message = function (msg, cls, parentDiv) {
     var item = document.createElement("div");
@@ -395,7 +428,9 @@ var addlayers = (function () {
     // parentDiv.append(item);
   };
   /**
-   * private Method: _ajaxPromise. Used to get a Promise from an ajax call
+   * Wrap an AJAX call in a Promise.
+   * @param {Object} options - jQuery AJAX options.
+   * @returns {Promise} Promise resolved or rejected with the AJAX result.
    */
   var _ajaxPromise = function (options) {
     return new Promise(function (resolve, reject) {
@@ -404,7 +439,10 @@ var addlayers = (function () {
   };
 
   /**
-   * private Method: _showLayerList. Used to render HTML from a layerList
+   * Render the list of layers returned by a capabilities request.
+   * @param {Array<Object>} layerList - Layer descriptors to display.
+   * @param {HTMLElement} parentDiv - Container where the layer list is appended.
+   * @returns {void}
    */
   var _showLayerList = function (layerList, parentDiv) {
     parentDiv.empty();
@@ -465,7 +503,10 @@ var addlayers = (function () {
   };
 
   /**
-   * public Method: _addLayer. Used to add layer to the map when user click on the button
+   * Add a selected layer to the map and register it as queryable.
+   * @param {Object} layer - Layer descriptor returned by the WMS/CSW capabilities parser.
+   * @param {HTMLElement} [btn] - Optional button element updated after the layer is added.
+   * @returns {void}
    */
   var _addLayer = function (layer, btn) {
     let wmsUrl = _url;
@@ -507,8 +548,9 @@ var addlayers = (function () {
   };
 
   /**
-   * private Method: _getCapabilities. Used to retrieve a layer list
-   * by querying an OGC getCapabilities Service
+   * Query a WMS capabilities endpoint and display the returned layers.
+   * @param {string} url - Capabilities URL to request.
+   * @returns {void}
    */
   var _getCapabilities = function (url) {
     $("#addlayers_results_loading").show();
@@ -543,8 +585,8 @@ var addlayers = (function () {
       });
   };
   /**
-   * private Method: _connectCsw. Used to retrieve a layer list
-   * by querying a CSW Service
+   * Query a CSW service and display the layers matching the selected filter.
+   * @returns {void}
    */
   var _connectCsw = function () {
     // _urlCsw = $("#addLayers_service_url_csw").val();
@@ -620,6 +662,10 @@ var addlayers = (function () {
       });
   };
 
+  /**
+   * Reset the current add-layers UI state and clear the result panel.
+   * @returns {void}
+   */
   var _clearTab = () => {
     const addLayersResults = document.getElementById("addlayers_results");
     const serverListWms = document.getElementById("addLayers_service_url_select");
@@ -645,6 +691,10 @@ var addlayers = (function () {
     }
   };
 
+  /**
+   * Hide the current alert message displayed in the results panel.
+   * @returns {void}
+   */
   var _clearErrorMessage = () => {
     let divAlert = document.getElementById("divAlertAddLayers");
 
@@ -654,7 +704,8 @@ var addlayers = (function () {
   };
 
   /**
-   * public Method: _previousPage. Used when a user ask for previous page
+   * Move to the previous page of CSW results.
+   * @returns {void}
    */
   var _previousPage = function () {
     _pagingInfos.currentPage -= 1;
@@ -662,7 +713,8 @@ var addlayers = (function () {
   };
 
   /**
-   * public Method: _nextPage. Used when a user ask for next page
+   * Move to the next page of CSW results.
+   * @returns {void}
    */
   var _nextPage = function () {
     _pagingInfos.currentPage += 1;
@@ -670,7 +722,8 @@ var addlayers = (function () {
   };
 
   /**
-   * private Method: _addPager. add pagination buttons to result list
+   * Add pagination controls under the CSW result list.
+   * @returns {void}
    */
   var _addPager = function () {
     $("#addlayers_results_pager").empty();
@@ -691,8 +744,8 @@ var addlayers = (function () {
   };
 
   /**
-   * private Method: _connectServer. Used to get url and check and
-   * process it before calling getCapabilities
+   * Prepare and validate a WMS URL before requesting its capabilities.
+   * @returns {void}
    */
   var _connectServer = function () {
     let capabilitiesUrl = _url.trim();
