@@ -76,7 +76,10 @@ Pour afficher le panneau d'ajout de données dans l'interface, il faut activer l
 
    <application addlayerstools="true" />
 
-Dans un fichier de configuration, cette option active l'outil pour l'application concernée. Le fichier XML ne contient pas la définition des couches à charger ; il sert surtout à rendre l'outil disponible dans l'interface. Une fois l'outil activé, l'utilisateur peut choisir une couche depuis le panneau, ou bien une couche peut être ajoutée automatiquement au chargement de la carte grâce au paramètre d'URL ``addLayer``.
+Dans un fichier de configuration, cette option active l'outil pour l'application concernée. Le fichier XML ne contient pas la définition des couches à charger ; il sert surtout à rendre l'outil disponible dans l'interface.
+Une fois l'outil activé, l'utilisateur peut choisir une couche depuis le panneau, ou bien une couche peut être ajoutée automatiquement au chargement de la carte grâce au paramètre d'URL ``addLayer``.
+
+La liste des flux OGC proposés dans le panneau n'est pas configurable depuis ce fichier de configuration : elle est définie en dur dans l'application, via le code JavaScript associé à l'outil. En pratique, le fichier XML permet uniquement d'activer l'outil, alors que le contenu des serveurs et des services proposés reste fixé dans la base applicative.
 
 Le paramètre d'URL ``addLayer`` accepte un objet JSON encodé contenant les informations suivantes :
 
