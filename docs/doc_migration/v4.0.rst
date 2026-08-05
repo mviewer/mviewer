@@ -45,11 +45,53 @@ La mise à jour de Bootstrap entraîne une évolution importante des classes HTM
 Pour les mises à jour de vos composants, référez-vous à la documentation officielle Bootstrap 5.  
 📄 https://getbootstrap.com/docs/5.3/getting-started/introduction/
 
+.. warning::
+    **Différence de taille de police par défaut entre Bootstrap 3 et 5**
+
+    Bootstrap 3 utilise une taille de police racine (root font-size) de **12,5px**, tandis que Bootstrap 5 utilise **16px**.
+
+    Conséquence : les propriétés ``rem`` dans vos templates et composants seront interprétées différemment, ce qui entraîne un affichage **plus gros** dans la nouvelle version. Les textes affichés dans le panneau d'interrogation et les pages HTML d'accueil peuvent paraître décalés ou cassés lors de la migration.
+
+    ➡️ Vérifiez le rendu de vos templates et adaptez les valeurs d'unités (``rem``, ``em``) selon vos besoins.
+
 **Fin des Glyphicons → Passage aux Remix Icons**
 
 Les Glyphicons ne sont plus fournis.
 
 ➡️ Utilisez Remix Icons (recommandé) ou Font Awesome pour vos plugins, templates et composants personnalisés.
+
+**Exemple : intégrer un bouton dans la toolbar de droite**
+
+.. list-table:: Avant / Après
+   :header-rows: 1
+
+   * - Élément
+     - Avant (Bootstrap 3)
+     - Après (Bootstrap 5)
+   * - Classes du bouton
+     - ``btn btn-default btn-raised btn-sm``
+     - ``btn btn-light``
+   * - Bibliothèque d'icônes
+     - Font Awesome (``fas fa-*``)
+     - Remix Icons (``ri-*-line``)
+
+**Code HTML avant (mviewer 3.x)**
+
+.. code-block:: html
+
+    <a class="btn btn-default btn-raised btn-sm" type="button" id="mon-btn" title="Titre">
+        <span class="fas fa-history"></span>
+    </a>
+
+**Code HTML après (mviewer 4.x)**
+
+.. code-block:: html
+
+    <a class="btn btn-light" type="button" id="mon-btn" title="Titre">
+        <span class="ri-history-line"></span>
+    </a>
+
+💡 Utilisez ``var(--mv-color-primary)`` pour les couleurs d'état actif au lieu de valeurs hardcodées dans votre CSS.
 
 **Introduction des variables CSS pour la gestion du thème**
 
@@ -78,6 +120,16 @@ Mviewer utilise désormais la police système par défaut.
 **Organisation des ressources**
 
 Les répertoires ``/demo`` et ``/demo/addons`` sont maintenant des sous-modules Git. Vous pourrez les mettre à jour, cibler des versions spécifiques ou bien utiliser vos propres branches comme un projet Git classique.
+
+.. list-table:: Chemins des addons : avant / après
+   :header-rows: 1
+
+   * - Élément
+     - Ancien chemin (mviewer 3.x)
+     - Nouveau chemin (mviewer 4.x)
+   * - Chemin dans le XML de config
+     - ``path="demo/addons"``
+     - ``path="apps/addons"``
 
 Étapes de migration
 -------------------
@@ -211,6 +263,26 @@ Si votre application contient des **éléments personnalisés (style CSS, page d
 
 .. warning::
     La font Roboto n’est plus disponible. Veuillez supprimer les propriétés ``.css`` associées dans votre template ou intégrer la font dans votre application.
+
+**Avez-vous une page d'aide avec des onglets (tabs) ?**
+
+❌ Non : je passe à l'étape d'après
+
+✔️ Oui :
+
+La structure HTML des onglets a changé entre Bootstrap 3 et Bootstrap 5 :
+
+.. list-table:: Changements pour les onglets Bootstrap 5
+   :header-rows: 1
+
+   * - Élément
+     - Bootstrap 3 (ancien)
+     - Bootstrap 5 (nouveau)
+   * - Attribut toggle
+     - ``data-toggle="tab"``
+     - ``data-bs-toggle="tab"``
+
+➡️ Vérifiez et mettez à jour tous vos fichiers HTML contenant des onglets (pages d'aide, modals, etc.).
 
 Gestion d'un thème personnalisé
 -------------------------------
