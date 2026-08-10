@@ -151,11 +151,15 @@ var search = (function () {
    */
 
   var _clearSearchResults = function () {
-    $("#searchresults .list-group-item")
-      .not(".search-header, .searchresults-title")
-      .remove();
-    $("#searchresults .search-header").addClass("hidden");
-    $("#searchresults").hide();
+    document
+      .querySelectorAll(
+        "#searchresults .list-group-item:not(.search-header, .searchresults-title)"
+      )
+      .forEach((element) => element.remove());
+    document.querySelectorAll("#searchresults .search-header").forEach((element) => {
+      element.classList.add("hidden");
+    });
+    document.querySelector("#searchresults")?.style.setProperty("display", "none");
   };
 
   /**
@@ -163,16 +167,18 @@ var search = (function () {
    */
   var _initSearchMarker = function (searchparams) {
     if (searchparams && searchparams.imgurl) {
-      $(".mv_marker_svg").remove();
-      $(".mv_marker_img").attr("style", `max-width:${searchparams.imgwidth || "50px"}`);
-      $(".mv_marker_img").attr("src", searchparams.imgurl || "");
+      document.querySelectorAll(".mv_marker_svg").forEach((element) => element.remove());
+      document.querySelectorAll(".mv_marker_img").forEach((element) => {
+        element.style.maxWidth = searchparams.imgwidth || "50px";
+        element.setAttribute("src", searchparams.imgurl || "");
+      });
     } else {
-      $(".mv_marker_img").remove();
-      var defaultPath = $("#mv_marker").children("path");
-      defaultPath.css(
-        "fill",
-        (searchparams && searchparams.svgcolor) || defaultPath.css("fill")
-      );
+      document.querySelectorAll(".mv_marker_img").forEach((element) => element.remove());
+      const defaultPath = document.querySelector("#mv_marker path");
+      if (defaultPath) {
+        defaultPath.style.fill =
+          (searchparams && searchparams.svgcolor) || getComputedStyle(defaultPath).fill;
+      }
     }
   };
 
@@ -183,7 +189,8 @@ var search = (function () {
 
   var _clearSearchField = function () {
     _clearSearchResults();
-    $("#searchfield").val("");
+    const searchField = document.querySelector("#searchfield");
+    if (searchField) searchField.value = "";
   };
 
   /**
@@ -194,18 +201,20 @@ var search = (function () {
    */
   var _showResults = function (results, resultsType) {
     if (resultsType) {
-      var searchHeader = $(`.search-${resultsType}`);
-      searchHeader.removeClass("hidden");
-      searchHeader.after(results);
+      const searchHeader = document.querySelector(`.search-${resultsType}`);
+      searchHeader?.classList.remove("hidden");
+      searchHeader?.insertAdjacentHTML("afterend", results);
     } else {
-      $("#searchresults").append(results);
+      document.querySelector("#searchresults")?.insertAdjacentHTML("beforeend", results);
     }
     if (_searchparams.closeafterclick) {
-      $("#searchresults .list-group-item").click(function () {
-        $(".searchresults-title .btn-close").trigger("click");
+      document.querySelectorAll("#searchresults .list-group-item").forEach((item) => {
+        item.addEventListener("click", () => {
+          document.querySelector(".searchresults-title .btn-close")?.click();
+        });
       });
     }
-    $("#searchresults").show();
+    document.querySelector("#searchresults")?.style.setProperty("display", "block");
   };
 
   /**
@@ -215,7 +224,9 @@ var search = (function () {
   var _initSearch = function () {
     let timeoutId;
     const timeoutToWait = 500;
-    $("#searchtool a").attr("title", "Effacer");
+    document.querySelectorAll("#searchtool a").forEach((element) => {
+      element.setAttribute("title", "Effacer");
+    });
     if (_searchparams.features || _searchparams.static) {
       _sourceEls = new ol.source.Vector();
       var vector = new ol.layer.Vector({
@@ -226,23 +237,25 @@ var search = (function () {
       _map.addLayer(vector);
     }
 
-    $(".searchresults-title .btn-close").click(function () {
-      _clearSearchField();
-      if (_sourceEls) {
-        _sourceEls.clear();
-      }
+    document.querySelectorAll(".searchresults-title .btn-close").forEach((button) => {
+      button.addEventListener("click", function () {
+        _clearSearchField();
+        if (_sourceEls) {
+          _sourceEls.clear();
+        }
+      });
     });
 
     // isPasting and keydown are here to avoid Ctrl+V to trigger the keyup function TWICE
     let isPasting = false;
 
-    $(document).on("keydown", (event) => {
+    document.addEventListener("keydown", (event) => {
       if (event.ctrlKey && event.key === "v") {
         isPasting = true;
       }
     });
 
-    $(document).on("keyup", "#searchfield", function (e) {
+    document.querySelector("#searchfield")?.addEventListener("keyup", function (e) {
       // TIMEOUT will avoid one request by keyup
       clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
@@ -254,24 +267,30 @@ var search = (function () {
         }
 
         // Detect entrer key
-        if (e.keyCode == 13 && $("#searchresults a").length > 1) {
-          let firstitem = $("#searchresults").find("a")[1];
-          $(firstitem).trigger("click");
+        const resultLinks = document.querySelectorAll("#searchresults a");
+        if (e.keyCode == 13 && resultLinks.length > 1) {
+          resultLinks[1].click();
           return;
         }
-        let chars = $(this).val().trim().length;
+        let chars = this.value.trim().length;
         if (!chars) {
           return;
           // Do not launch search if less than x chars
         } else if (chars < 3) {
-          $("#searchresults .list-group-item")
-            .not(".search-header, .searchresults-title")
-            .remove();
-          $("#searchresults .search-header").addClass("hidden");
+          document
+            .querySelectorAll(
+              "#searchresults .list-group-item:not(.search-header, .searchresults-title)"
+            )
+            .forEach((element) => element.remove());
+          document
+            .querySelectorAll("#searchresults .search-header")
+            .forEach((element) => {
+              element.classList.add("hidden");
+            });
         }
         // Launch search
         else {
-          _search($(this).val());
+          _search(this.value);
         }
       }, timeoutToWait);
     });
@@ -335,7 +354,7 @@ var search = (function () {
               ${props?.label || res[i].fulltext}
           </a>`;
     }
-    $(searchType).remove();
+    document.querySelectorAll(searchType).forEach((element) => element.remove());
     _showResults(str, "locations");
   };
   /**
@@ -444,7 +463,7 @@ var search = (function () {
    *
    */
   var _sendFuseRequest = function (val) {
-    $(".fuse").remove();
+    document.querySelectorAll(".fuse").forEach((element) => element.remove());
 
     var searchableLayers = _searchableFuseLayers.filter(
       (e) => e.getVisible() && _fuseSearchData[e.get("mviewerid")]
@@ -815,7 +834,9 @@ var search = (function () {
                 .filter((el) => typeof el === "string")
                 .join(", \n")}}">${title}</a>`;
             }
-            $(".elasticsearch").remove();
+            document
+              .querySelectorAll(".elasticsearch")
+              .forEach((element) => element.remove());
             if (nb > 0) {
               _showResults(str, "entities");
             }
@@ -827,9 +848,12 @@ var search = (function () {
             );
             _searchparams.features = false;
             _searchparams.static = false;
-            $("#param_search_features span")
-              .removeClass("mv-checked")
-              .addClass("mv-unchecked");
+            document
+              .querySelectorAll("#param_search_features span")
+              .forEach((element) => {
+                element.classList.remove("mv-checked");
+                element.classList.add("mv-unchecked");
+              });
           },
         });
       }
@@ -860,7 +884,9 @@ var search = (function () {
       // send request only if at least one layer is searcheable or elastic search in standalone mode
       if (searchableLayers.length > 0 || _searchparams.static) {
         // clean previous search and feature
-        $(".elasticsearch").remove();
+        document
+          .querySelectorAll(".elasticsearch")
+          .forEach((element) => element.remove());
         _sourceEls.clear();
 
         // for each layer searcheable and visible layer launch elk search
@@ -1021,9 +1047,12 @@ var search = (function () {
                 );
                 _searchparams.features = false;
                 _searchparams.static = false;
-                $("#param_search_features span")
-                  .removeClass("mv-checked")
-                  .addClass("mv-unchecked");
+                document
+                  .querySelectorAll("#param_search_features span")
+                  .forEach((element) => {
+                    element.classList.remove("mv-checked");
+                    element.classList.add("mv-unchecked");
+                  });
               },
             });
           }
@@ -1125,7 +1154,9 @@ var search = (function () {
     };
     if (configuration.olscompletion) {
       _olsCompletionUrl = configuration.olscompletion.url;
-      $("#adresse-attribution").text(configuration.olscompletion.attribution);
+      const addressAttribution = document.querySelector("#adresse-attribution");
+      if (addressAttribution)
+        addressAttribution.textContent = configuration.olscompletion.attribution;
       _olsCompletionType = configuration.olscompletion.type || "geoportail";
     }
     // only one elastic index to stay compatible with older version
@@ -1234,30 +1265,43 @@ var search = (function () {
     }
 
     if (_searchparams.localities === false && _searchparams.features === false) {
-      $("#searchtool").remove();
+      document.querySelector("#searchtool")?.remove();
     }
     if (_searchparams.bbox) {
-      $("#param_search_bbox span").removeClass("mv-unchecked").addClass("mv-checked");
+      document.querySelectorAll("#param_search_bbox span").forEach((element) => {
+        element.classList.remove("mv-unchecked");
+        element.classList.add("mv-checked");
+      });
     }
     if (_searchparams.localities) {
-      $("#param_search_localities span")
-        .removeClass("mv-unchecked")
-        .addClass("mv-checked");
+      document.querySelectorAll("#param_search_localities span").forEach((element) => {
+        element.classList.remove("mv-unchecked");
+        element.classList.add("mv-checked");
+      });
     } else {
-      $("#param_search_localities").remove();
+      document.querySelector("#param_search_localities")?.remove();
     }
     if (_searchparams.features) {
-      $("#param_search_features span").removeClass("mv-unchecked").addClass("mv-checked");
+      document.querySelectorAll("#param_search_features span").forEach((element) => {
+        element.classList.remove("mv-unchecked");
+        element.classList.add("mv-checked");
+      });
     } else {
-      $("#param_search_features").remove();
+      document.querySelector("#param_search_features")?.remove();
     }
 
     if (_searchparams.features === false) {
-      $("#searchparameters .searchfeatures").remove(".searchfeatures");
+      document
+        .querySelectorAll("#searchparameters .searchfeatures")
+        .forEach((element) => element.remove());
     }
     if (sparams.inputlabel) {
       var label = configuration.searchparameters.inputlabel;
-      $("#searchfield").attr("placeholder", label).attr("title", label);
+      const searchField = document.querySelector("#searchfield");
+      if (searchField) {
+        searchField.setAttribute("placeholder", label);
+        searchField.setAttribute("title", label);
+      }
     }
     _searchparams.marker = sparams.marker ? sparams.marker === "true" || false : true;
     _initSearch();
@@ -1268,13 +1312,15 @@ var search = (function () {
    * @param {*} li
    */
   var _toggleParameter = function (li) {
-    var span = $(li).find("span");
+    const span = li.querySelector("span");
     var parameter = false;
-    if (span.hasClass("mv-unchecked") === true) {
-      span.removeClass("mv-unchecked").addClass("mv-checked");
+    if (span?.classList.contains("mv-unchecked") === true) {
+      span.classList.remove("mv-unchecked");
+      span.classList.add("mv-checked");
       parameter = true;
     } else {
-      span.removeClass("mv-checked").addClass("mv-unchecked");
+      span?.classList.remove("mv-checked");
+      span?.classList.add("mv-unchecked");
     }
     switch (li.id) {
       case "param_search_bbox":
@@ -1323,7 +1369,7 @@ var search = (function () {
 
     _map.getView().fit(boundingExtent, {
       size: _map.getSize(),
-      padding: [0, $("#sidebar-wrapper").width(), 0, 0],
+      padding: [0, document.querySelector("#sidebar-wrapper").offsetWidth, 0, 0],
       duration: duration,
     });
 
