@@ -911,11 +911,11 @@ mviewer = (function () {
 
   var _initShare = function () {
     var displayMode = API.mode || "d";
-    $("#mv-display-mode input")
-      .filter('[value="' + displayMode + '"]')
-      .attr("checked", true);
-    $("#mv-display-mode input").change(function () {
-      mviewer.setPermalink();
+    document
+      .querySelector(`#mv-display-mode input[value="${displayMode}"]`)
+      ?.setAttribute("checked", "true");
+    document.querySelectorAll("#mv-display-mode input").forEach((input) => {
+      input.addEventListener("change", () => mviewer.setPermalink());
     });
   };
 
@@ -1071,8 +1071,9 @@ mviewer = (function () {
     var isSimpleMode = displayMode === "s" || displayMode === "u";
     var isMobile = configuration.getConfiguration().mobile === true;
 
-    $("#btn-mode-su-menu").off("click");
-    $("#legend-panel .btn-close").off("click");
+    manageLegend.eventsController?.abort();
+    manageLegend.eventsController = new AbortController();
+    const eventOptions = { signal: manageLegend.eventsController.signal };
 
     if (!isSimpleMode) {
       if (isMobile) {
@@ -1157,17 +1158,25 @@ mviewer = (function () {
 
     $btn.removeAttr("data-bs-toggle data-bs-target href");
 
-    $btn.on("click", function (e) {
-      e.preventDefault();
-      const $legend = $("#legend-panel");
-      $legend.toggle();
-      $legend.toggleClass("open", $legend.is(":visible"));
-    });
+    document.querySelector("#btn-mode-su-menu")?.addEventListener(
+      "click",
+      function (e) {
+        e.preventDefault();
+        const $legend = $("#legend-panel");
+        $legend.toggle();
+        $legend.toggleClass("open", $legend.is(":visible"));
+      },
+      eventOptions
+    );
 
-    $("#legend-panel .btn-close").on("click", function () {
-      $("#legend-panel").hide();
-      $("#legend-panel").removeClass("open");
-    });
+    document.querySelector("#legend-panel .btn-close")?.addEventListener(
+      "click",
+      function () {
+        $("#legend-panel").hide();
+        $("#legend-panel").removeClass("open");
+      },
+      eventOptions
+    );
 
     var legendmini = configuration.getConfiguration().themes.legendmini || null;
     legendmini =
@@ -1274,8 +1283,8 @@ mviewer = (function () {
     if (_mediaSize === "xs") {
       _updateViewPort("xs", displayMode);
     }
-    $(window).resize(function () {
-      var w = $(this).width();
+    window.addEventListener("resize", function () {
+      var w = window.innerWidth;
       var s = "";
       if (w < 768) {
         s = "xs";
@@ -1393,14 +1402,16 @@ mviewer = (function () {
         .getConfiguration()
         .themes.theme.filter((obj) => obj.collapsed === "false");
       if (expanded_theme.length > 0) {
-        $(`#theme-layers-${expanded_theme[0].id}>a`).click();
+        document.querySelector(`#theme-layers-${expanded_theme[0].id}>a`)?.click();
       }
     }
     //Add remove and add layers button on them
     if (
       configuration.getConfiguration().application.togglealllayersfromtheme === "true"
     ) {
-      $(".toggle-theme-layers").on("click", mviewer.toggleAllThemeLayers);
+      document.querySelectorAll(".toggle-theme-layers").forEach((button) => {
+        button.addEventListener("click", mviewer.toggleAllThemeLayers);
+      });
     }
   };
 
