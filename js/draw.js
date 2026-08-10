@@ -176,8 +176,8 @@ let draw = (function () {
       buttonOptions = [buttonOptions, "</div>"].join("");
     }
 
-    $("#toolstoolbar").append(button);
-    $(buttonOptions).insertAfter("#drawBtn");
+    document.querySelector("#toolstoolbar")?.insertAdjacentHTML("beforeend", button);
+    document.querySelector("#drawBtn")?.insertAdjacentHTML("afterend", buttonOptions);
   };
 
   /**
@@ -229,7 +229,7 @@ let draw = (function () {
     }
     // remove help overlay and interaction
     _map.un("pointermove", _pointerMoveHandler);
-    $(_helpTooltipMessage).addClass("hidden");
+    _helpTooltipMessage?.classList.add("hidden");
     _map.removeInteraction(_helpTooltip);
 
     // remove all drawned feature
@@ -246,7 +246,7 @@ let draw = (function () {
       _map.removeInteraction(_helpTooltip);
     }
     _sourceDraw.removeFeature(_currentFeature);
-    $("#drawingPanelInfo").addClass("hidden");
+    document.querySelector("#drawingPanelInfo")?.classList.add("hidden");
   };
 
   /**
@@ -266,9 +266,8 @@ let draw = (function () {
       document.getElementById("drawPolygon").classList.remove("active");
     }
 
-    //TODO remove Jquery
-    $("#drawoptions").hide();
-    $("#drawingPanelInfo").addClass("hidden");
+    document.querySelector("#drawoptions")?.style.setProperty("display", "none");
+    document.querySelector("#drawingPanelInfo")?.classList.add("hidden");
 
     if (document.getElementById("inputButton")) {
       document.getElementById("inputButton").value = "";
@@ -394,7 +393,7 @@ let draw = (function () {
     }
     _helpTooltipMessage.innerHTML = helpMsg;
     _helpTooltip.setPosition(evt.coordinate);
-    $(_helpTooltipMessage).removeClass("hidden");
+    _helpTooltipMessage.classList.remove("hidden");
   };
 
   /**
@@ -433,21 +432,24 @@ let draw = (function () {
           </div>
         </div>
         <div class="drawingPanel__body">
-          <div id="drawingPanelPosition" class="content" />
-          <div id="drawingPanelLength" class="content" />
-          <div id="drawingPanelArea" class="content" />
-          <div id="drawingPanelHelp" class="content" />
+          <div id="drawingPanelPosition" class="content"></div>
+          <div id="drawingPanelLength" class="content"></div>
+          <div id="drawingPanelArea" class="content"></div>
+          <div id="drawingPanelHelp" class="content"></div>
         </div>
         <div id="drawingPanelExport" class="drawingPanel__footer">
           <button id="dpExportBtn" i18n="draw.button.export" class="btn btn-primary btn-sm" disabled onclick="draw.export();">Enregister le projet</button>
         </div>
       </div>`;
 
-    let existingPanelInfo = $("#drawingPanelInfo");
-    if (existingPanelInfo.length) {
-      existingPanelInfo.replaceWith(panelInfo);
+    const existingPanelInfo = document.querySelector("#drawingPanelInfo");
+    if (existingPanelInfo) {
+      existingPanelInfo.insertAdjacentHTML("afterend", panelInfo);
+      existingPanelInfo.remove();
     } else {
-      $("#page-content-wrapper").append(panelInfo);
+      document
+        .querySelector("#page-content-wrapper")
+        ?.insertAdjacentHTML("beforeend", panelInfo);
     }
 
     document
@@ -529,8 +531,8 @@ let draw = (function () {
       if (_config.help == "true") {
         _createHelpTooltip();
         _map.on("pointermove", _pointerMoveHandler);
-        $(_map.getViewport()).on("mouseout", function () {
-          $(_helpTooltipMessage).addClass("hidden");
+        _map.getViewport().addEventListener("mouseout", function () {
+          _helpTooltipMessage?.classList.add("hidden");
         });
       }
 
@@ -593,8 +595,12 @@ let draw = (function () {
           }
 
           if (type === "Point") {
-            document.getElementById("drawingPanelPosition").innerHTML =
-              ol.coordinate.toStringHDMS(ol.proj.toLonLat(coordinates));
+            const drawingPanelPosition = document.getElementById("drawingPanelPosition");
+            if (drawingPanelPosition) {
+              drawingPanelPosition.textContent = ol.coordinate.toStringHDMS(
+                ol.proj.toLonLat(coordinates)
+              );
+            }
           }
 
           if (_config.help == "true") {
@@ -603,13 +609,14 @@ let draw = (function () {
             helpMsg = mviewer.lang
               ? mviewer.lang[mviewer.lang.lang]("draw.help.panel")
               : helpMsg;
-            document.getElementById("drawingPanelHelp").innerHTML = helpMsg;
+            const drawingPanelHelp = document.getElementById("drawingPanelHelp");
+            if (drawingPanelHelp) drawingPanelHelp.innerHTML = helpMsg;
           }
 
           if (_config.singleDraw == "true") {
             _map.removeInteraction(_drawInt);
             _map.un("pointermove", _pointerMoveHandler);
-            $(_helpTooltipMessage).addClass("hidden");
+            _helpTooltipMessage?.classList.add("hidden");
             _map.removeInteraction(_helpTooltip);
             document.getElementById(`draw${_currentDrawType}`).classList.remove("active");
             _currentDrawType = null;
@@ -653,7 +660,8 @@ let draw = (function () {
     if (geometry.getType() === "Point") {
       let position = geometry.getCoordinates();
       let outputMeasureDraw = ol.coordinate.toStringHDMS(ol.proj.toLonLat(position));
-      document.getElementById("drawingPanelPosition").innerHTML = outputMeasureDraw;
+      const drawingPanelPosition = document.getElementById("drawingPanelPosition");
+      if (drawingPanelPosition) drawingPanelPosition.textContent = outputMeasureDraw;
     } else if (geometry.getType() === "LineString") {
       _measureDrawLength(geometry.getCoordinates());
     } else if (geometry.getType() === "Polygon") {
@@ -689,7 +697,8 @@ let draw = (function () {
     let lineMsg = mviewer.lang
       ? mviewer.lang[mviewer.lang.lang]("draw.measure.line")
       : "Longueur : ";
-    document.getElementById("drawingPanelLength").innerHTML = `${lineMsg}${output}`;
+    const drawingPanelLength = document.getElementById("drawingPanelLength");
+    if (drawingPanelLength) drawingPanelLength.textContent = `${lineMsg}${output}`;
     return output;
   };
 
@@ -716,7 +725,8 @@ let draw = (function () {
     let AreaMsg = mviewer.lang
       ? mviewer.lang[mviewer.lang.lang]("draw.measure.area")
       : "Aire : ";
-    document.getElementById("drawingPanelArea").innerHTML = `${AreaMsg}${output}`;
+    const drawingPanelArea = document.getElementById("drawingPanelArea");
+    if (drawingPanelArea) drawingPanelArea.innerHTML = `${AreaMsg}${output}`;
     return output;
   };
 
