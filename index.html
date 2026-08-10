@@ -1124,10 +1124,14 @@
                   const main = document.querySelector("#main");
                   loadingPage.classList.add("hidden");
                   main.style.display = "";
-                  main.animate([{ opacity: 0 }, { opacity: 1 }], {
+                  const fadeIn = main.animate([{ opacity: 0 }, { opacity: 1 }], {
                     duration: 1500,
                     fill: "forwards",
                   });
+                  fadeIn.onfinish = () => {
+                    main.style.opacity = "1";
+                    fadeIn.cancel();
+                  };
                   loadingPage.style.display = "none";
                   mviewer.getMap().updateSize();
                   mviewer.initToolTip();
