@@ -362,7 +362,7 @@ mviewer = (function () {
     if (mapoptions.rotation === "true") {
       _rotation = true;
     } else {
-      $("#northbtn").remove();
+      document.querySelector("#northbtn")?.remove();
     }
     _center = mapoptions.center.split(",").map(Number);
     //Projection
@@ -387,7 +387,7 @@ mviewer = (function () {
     //Create overlay (red pin) used by showLocation method
     _marker = new ol.Overlay({
       positioning: "bottom-center",
-      element: $("#mv_marker")[0],
+      element: document.querySelector("#mv_marker"),
       stopEvent: false,
     });
     overlays.push(_marker);
@@ -487,7 +487,7 @@ mviewer = (function () {
         "</div>",
       ].join("")
     );
-    $("#alerts-zone").append(item);
+    document.querySelector("#alerts-zone")?.append(item);
 
     setTimeout(function () {
       item.alert("close");
@@ -525,7 +525,9 @@ mviewer = (function () {
   };
 
   var _deleteLayer = function (layername) {
-    $(`[data-layerid='${layername}']`).remove();
+    document
+      .querySelectorAll(`[data-layerid='${layername}']`)
+      .forEach((element) => element.remove());
     _map.removeLayer(_overLayers[layername].layer);
     delete _overLayers[layername];
   };
@@ -591,7 +593,7 @@ mviewer = (function () {
 
   var _drawVectorLegend = function (layerid, items) {
     //Remove classic getLegendUrl
-    $(`#legend-${layerid}`).remove();
+    document.querySelector(`#legend-${layerid}`)?.remove();
     var canvas = document.getElementById(`vector-legend-${layerid}`);
     var layer = _overLayers[layerid];
     if (canvas && layer?.sld && ["csv", "geojson", "kml"].includes(layer.type)) {
