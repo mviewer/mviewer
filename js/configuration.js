@@ -155,7 +155,7 @@ var configuration = (function () {
     //load components
     //each component is rendered in Component constructor;
     //When all is done, trigger componentLoaded event
-    $(document).on("ready-for-component", () => {
+    document.addEventListener("ready-for-component", () => {
       const components = Array.from(
         xmlConf.querySelectorAll("extension[type='component']")
       );
@@ -241,7 +241,9 @@ var configuration = (function () {
     Promise.allSettled(requests).then(function () {
       // Lorsque toutes les thématiques externes sont récupérées,
       // on initialise le chargement de l'application avec le trigger configurationCompleted
-      $(document).trigger("configurationCompleted", { xml: conf });
+      document.dispatchEvent(
+        new CustomEvent("configurationCompleted", { detail: { xml: conf } })
+      );
     });
   };
   /**

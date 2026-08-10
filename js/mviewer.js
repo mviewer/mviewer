@@ -75,13 +75,13 @@ mviewer = (function () {
 
   _events.registerOverLayersLoadedListener(function (val) {
     if (val === _events.overLayersTotal && _events.confLoaded === true) {
-      $(document).trigger("layersLoaded");
+      document.dispatchEvent(new CustomEvent("layersLoaded"));
     }
   });
 
   _events.registerConfLoadedListener(function (val) {
     if (_events.overLayersLoaded === _events.overLayersTotal && val === true) {
-      $(document).trigger("layersLoaded");
+      document.dispatchEvent(new CustomEvent("layersLoaded"));
     }
   });
 
