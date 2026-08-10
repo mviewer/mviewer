@@ -180,17 +180,10 @@ var configuration = (function () {
      */
 
     //Recherche des thématiques externes
-    var extraConf = $(conf)
-      .find("theme")
-      .filter(function (idx, theme) {
-        if (
-          $(theme).attr("id") &&
-          $(theme).attr("url") &&
-          $(theme).attr("url").indexOf("http") > -1
-        ) {
-          return theme;
-        }
-      });
+    const extraConf = Array.from(conf.querySelectorAll("theme")).filter((theme) => {
+      const url = theme.getAttribute("url");
+      return theme.getAttribute("id") && url && url.indexOf("http") > -1;
+    });
 
     const requests = Array.from(extraConf).map(function (theme) {
       const url = theme.getAttribute("url");
@@ -312,7 +305,7 @@ var configuration = (function () {
     console.log(`Mviewer version ${VERSION}`);
 
     // set infos bar text
-    $("#mviewerinfosbar").append(VERSION);
+    document.querySelector("#mviewerinfosbar")?.append(VERSION);
 
     _configuration = conf;
     utils.testConfiguration(conf);
@@ -333,21 +326,25 @@ var configuration = (function () {
       var title = API.title || conf.application.title;
       document.title = title;
       title = conf.application.htmltitle || title;
-      $(".mv-title").text("");
-      $(".mv-title").append(title);
+      document.querySelectorAll(".mv-title").forEach((element) => {
+        element.textContent = title;
+      });
     }
     if (conf.application.stats === "true" && conf.application.statsurl) {
       fetch(`${conf.application.statsurl}?app=${document.title}`);
     }
     if (conf.application.logo) {
-      $(".mv-logo").attr("src", conf.application.logo);
+      document.querySelectorAll(".mv-logo").forEach((element) => {
+        element.setAttribute("src", conf.application.logo);
+      });
     }
     if (conf.application.nologo === "true") {
       document.querySelector(".mv-logo").remove();
     }
     if (location.hash && !location.search) {
-      $(".mv-title").attr("href", location.hash);
-      $(".navbar-brand").attr("href", location.hash);
+      document.querySelectorAll(".mv-title, .navbar-brand").forEach((element) => {
+        element.setAttribute("href", location.hash);
+      });
     }
     if (conf.application.showhelp === "true" && conf.application.help) {
       _showhelp_startup = true;
@@ -361,14 +358,17 @@ var configuration = (function () {
       }
     }
     if (!conf.application.help) {
-      $("#iconhelp").remove();
-      $("#btnHelpMob").remove();
+      document.querySelector("#iconhelp")?.remove();
+      document.querySelector("#btnHelpMob")?.remove();
     }
     if (conf.application.titlehelp) {
-      $("#help h5.modal-title").text(conf.application.titlehelp);
+      const helpTitle = document.querySelector("#help h5.modal-title");
+      if (helpTitle) helpTitle.textContent = conf.application.titlehelp;
     }
     if (conf.application.iconhelp) {
-      $("#iconhelp i").attr("class", conf.application.iconhelp);
+      document
+        .querySelector("#iconhelp i")
+        ?.setAttribute("class", conf.application.iconhelp);
     }
     if (conf.application.coordinates === "true") {
       _captureCoordinates = true;
@@ -379,24 +379,26 @@ var configuration = (function () {
     }
     if (conf.application.exportpng === "true") {
       _crossorigin = "anonymous";
-      $("#exportpng").show();
+      document.querySelector("#exportpng")?.style.setProperty("display", "");
     } else {
-      $("#exportpng").remove();
+      document.querySelector("#exportpng")?.remove();
     }
     if (!conf.application.mouseposition || conf.application.mouseposition === "false") {
-      $("#mouse-position").hide();
+      document.querySelector("#mouse-position")?.style.setProperty("display", "none");
     }
     if (!conf.application.geoloc || !(conf.application.geoloc === "true")) {
-      $("#geolocbtn").remove();
+      document.querySelector("#geolocbtn")?.remove();
     }
     if (!conf.application.studio || conf.application.studio === "false") {
-      $("#studiolink").remove();
+      document.querySelector("#studiolink")?.remove();
     }
     if (!conf.application.mapprint || conf.application.mapprint === "false") {
-      $("#mapprint").remove();
+      document.querySelector("#mapprint")?.remove();
     }
     if (conf.application.home) {
-      $(".mv-logo").parent().attr("href", conf.application.home);
+      document.querySelectorAll(".mv-logo").forEach((logo) => {
+        logo.parentElement?.setAttribute("href", conf.application.home);
+      });
     }
 
     //map options
@@ -417,17 +419,24 @@ var configuration = (function () {
         success: function (response) {
           //test georchestra proxy
           if (response.proxy == "true") {
-            $("#login-box").show();
-            $("#login-box-mob").show();
+            document.querySelector("#login-box")?.style.setProperty("display", "");
+            document.querySelector("#login-box-mob")?.style.setProperty("display", "");
             let title = mviewer.lang ? mviewer.tr("tbar.right.logout") : "Se déconnecter";
             if (response.user != "") {
-              $("#login").attr("href", _authentification.logouturl);
-              $("#login-box-mob").attr("href", _authentification.logouturl);
-              $("#login").attr("title", title);
-              $("#login-box-mob").attr("title", title);
-              $("#login i")[0].className = "ri-lock-fill";
-              $("#login-box-mob i")[0].className = "ri-lock-fill";
-              $("#login-box>span").text(response.user);
+              document
+                .querySelector("#login")
+                ?.setAttribute("href", _authentification.logouturl);
+              document
+                .querySelector("#login-box-mob")
+                ?.setAttribute("href", _authentification.logouturl);
+              document.querySelector("#login")?.setAttribute("title", title);
+              document.querySelector("#login-box-mob")?.setAttribute("title", title);
+              const loginIcon = document.querySelector("#login i");
+              if (loginIcon) loginIcon.className = "ri-lock-fill";
+              const mobileLoginIcon = document.querySelector("#login-box-mob i");
+              if (mobileLoginIcon) mobileLoginIcon.className = "ri-lock-fill";
+              const loginUser = document.querySelector("#login-box > span");
+              if (loginUser) loginUser.textContent = response.user;
             } else {
               var url = "";
               if (location.search == "") {
@@ -435,8 +444,8 @@ var configuration = (function () {
               } else {
                 url = location.href + _authentification.loginurl.replace("?", "&");
               }
-              $("#login").attr("href", url);
-              $("#login-box-mob").attr("href", url);
+              document.querySelector("#login")?.setAttribute("href", url);
+              document.querySelector("#login-box-mob")?.setAttribute("href", url);
             }
           } else {
             console.log(
@@ -453,9 +462,9 @@ var configuration = (function () {
     //baselayertoolbar
     var baselayerControlStyle = conf.baselayers.style;
     if (baselayerControlStyle === "gallery") {
-      $("#backgroundlayerstoolbar-default").remove();
+      document.querySelector("#backgroundlayerstoolbar-default")?.remove();
     } else {
-      $("#backgroundlayerstoolbar-gallery").remove();
+      document.querySelector("#backgroundlayerstoolbar-gallery")?.remove();
     }
     conf.baselayers.baselayer.forEach(function (bl) {
       if (bl.visible === "true") {
@@ -463,18 +472,23 @@ var configuration = (function () {
       }
       mviewer.createBaseLayer(bl);
       if (baselayerControlStyle === "gallery") {
-        $("#basemapslist").append(
-          Mustache.render(mviewer.templates.backgroundLayerControlGallery, bl)
-        );
+        document
+          .querySelector("#basemapslist")
+          ?.insertAdjacentHTML(
+            "beforeend",
+            Mustache.render(mviewer.templates.backgroundLayerControlGallery, bl)
+          );
       }
     });
     if (baselayerControlStyle === "gallery") {
-      $("#basemapslist li").tooltip({
-        placement: "left",
-        trigger: "hover",
-        html: true,
-        container: "body",
-        template: mviewer.templates.tooltip,
+      document.querySelectorAll("#basemapslist li").forEach((element) => {
+        new bootstrap.Tooltip(element, {
+          placement: "left",
+          trigger: "hover",
+          html: true,
+          container: "body",
+          template: mviewer.templates.tooltip,
+        });
       });
     }
 
@@ -511,7 +525,12 @@ var configuration = (function () {
                 _themes[wmcid].icon = "fas fa-chevron-circle-right";
                 _map.getView().fit(wmc.extent, {
                   size: _map.getSize(),
-                  padding: [0, $("#sidebar-wrapper").width(), 0, 0],
+                  padding: [
+                    0,
+                    document.querySelector("#sidebar-wrapper").offsetWidth,
+                    0,
+                    0,
+                  ],
                 });
                 _themes[wmcid].layers = wmc.layers;
                 _themes[wmcid].name = wmc.title;
@@ -578,7 +597,6 @@ var configuration = (function () {
           });
         }
         _themes[themeid].layers = {};
-        var layersXml = $(this).find("layer");
         var layers = [];
         if (theme.layer) {
           layers = theme.layer;
@@ -641,12 +659,10 @@ var configuration = (function () {
                   success: function (result) {
                     //Find layer in capabilities
                     var name = this.layer;
-                    var layer = $(result)
-                      .find("Layer>Name")
-                      .filter(function () {
-                        return $(this).text() == name;
-                      });
-                    if (layer.length === 0) {
+                    const layer = Array.from(
+                      result.querySelectorAll("Layer > Name")
+                    ).find((element) => element.textContent === name);
+                    if (!layer) {
                       //remove this layer from map and panel
                       mviewer.deleteLayer(this.layer);
                     }
@@ -927,13 +943,14 @@ var configuration = (function () {
                     dataType: "text",
                     success: function (html) {
                       mviewer.customControls[this.layer].form = html;
-                      if (
-                        $(`.mv-layer-details[data-layerid="${this.layer}"]`).length === 1
-                      ) {
+                      const layerDetails = document.querySelector(
+                        `.mv-layer-details[data-layerid="${this.layer}"]`
+                      );
+                      if (layerDetails) {
                         //append the existing mv-layers-details panel
-                        $(`.mv-layer-details[data-layerid="${this.layer}"]`)
-                          .find(".mv-custom-controls")
-                          .append(html);
+                        layerDetails
+                          .querySelector(".mv-custom-controls")
+                          ?.insertAdjacentHTML("beforeend", html);
                         mviewer.customControls[this.layer].init();
                       }
                     },
@@ -1285,27 +1302,30 @@ var configuration = (function () {
           false
         );
       } else {
-        $("#exportpng").hide();
+        document.querySelector("#exportpng")?.style.setProperty("display", "none");
       }
     } else {
-      $("#exportpng").hide();
+      document.querySelector("#exportpng")?.style.setProperty("display", "none");
     }
 
     // Infos de connexion pour les couches à accès restreint
-    $("#savelogin").click(function () {
-      var _service_url = $("#service-url").val();
-      var _layer_id = $("#layer-id").val();
+    document.querySelector("#savelogin").addEventListener("click", function () {
+      var _service_url = document.querySelector("#service-url").value;
+      var _layer_id = document.querySelector("#layer-id").value;
       sessionStorage.removeItem(_service_url);
       if (mviewer.getLayers()[_layer_id].secure === "apikey") {
-        const apiKey = $("#api-key").val();
+        const apiKey = document.querySelector("#api-key").value;
         const apiKeyStorageKey = `${_service_url}:api-key`;
         sessionStorage.removeItem(apiKeyStorageKey);
         if (apiKey) sessionStorage.setItem(apiKeyStorageKey, apiKey);
-      } else if ($("#user").val() != "" && $("#pass").val() != "") {
-        sessionStorage.setItem(_service_url, `${$("#user").val()}:${$("#pass").val()}`);
+      } else {
+        const user = document.querySelector("#user").value;
+        const password = document.querySelector("#pass").value;
+        if (user != "" && password != "")
+          sessionStorage.setItem(_service_url, `${user}:${password}`);
       }
 
-      $("#loginpanel").modal("hide");
+      bootstrap.Modal.getOrCreateInstance(document.querySelector("#loginpanel")).hide();
       // Refresh du layer
       _map.getLayers().forEach(function (lyr) {
         if (_layer_id == lyr.get("mviewerid")) {
@@ -1321,7 +1341,7 @@ var configuration = (function () {
     }
 
     if (_showhelp_startup && localStorage.getItem("helpCheckBox") !== "true") {
-      $("#help").modal("show");
+      bootstrap.Modal.getOrCreateInstance(document.querySelector("#help")).show();
     }
 
     if (!API.wmc) {
@@ -1498,26 +1518,38 @@ var configuration = (function () {
 
     source.set("layerid", oLayer.layerid);
     source.on("imageloadstart", function (event) {
-      $(`#loading-${event.target.get("layerid")}`).show();
+      document
+        .querySelector(`#loading-${event.target.get("layerid")}`)
+        ?.style.setProperty("display", "");
     });
 
     source.on("imageloadend", function (event) {
-      $(`#loading-${event.target.get("layerid")}`).hide();
+      document
+        .querySelector(`#loading-${event.target.get("layerid")}`)
+        ?.style.setProperty("display", "none");
     });
 
     source.on("imageloaderror", function (event) {
-      $(`#loading-${event.target.get("layerid")}`).hide();
+      document
+        .querySelector(`#loading-${event.target.get("layerid")}`)
+        ?.style.setProperty("display", "none");
     });
     source.on("tileloadstart", function (event) {
-      $(`#loading-${event.target.get("layerid")}`).show();
+      document
+        .querySelector(`#loading-${event.target.get("layerid")}`)
+        ?.style.setProperty("display", "");
     });
 
     source.on("tileloadend", function (event) {
-      $(`#loading-${event.target.get("layerid")}`).hide();
+      document
+        .querySelector(`#loading-${event.target.get("layerid")}`)
+        ?.style.setProperty("display", "none");
     });
 
     source.on("tileloaderror", function (event) {
-      $(`#loading-${event.target.get("layerid")}`).hide();
+      document
+        .querySelector(`#loading-${event.target.get("layerid")}`)
+        ?.style.setProperty("display", "none");
     });
     mviewer.processLayer(oLayer, l);
   };
