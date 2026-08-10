@@ -327,7 +327,8 @@ var configuration = (function () {
       document.title = title;
       title = conf.application.htmltitle || title;
       document.querySelectorAll(".mv-title").forEach((element) => {
-        element.textContent = title;
+        element.replaceChildren();
+        element.insertAdjacentHTML("afterbegin", title);
       });
     }
     if (conf.application.stats === "true" && conf.application.statsurl) {
