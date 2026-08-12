@@ -60,9 +60,10 @@ class AdvancedCustomControl {
 }
 
 class Component {
-  constructor(id, path) {
+  constructor(id, path, properties = {}) {
     this.id = id;
     this.path = `${path}/${this.id}/`;
+    this.properties = properties;
     this.config = {};
     this.load();
   }
