@@ -169,28 +169,25 @@ class Component {
     const getConfig = function (url) {
       return fetch(url)
         .then(handleErrors)
-        .then((response) => response.json())
-        .catch(function (error) {
-          console.log(error);
-        });
+        .then((response) => response.json());
     };
 
     const setConfig = function (config) {
       return new Promise((resolve, reject) => {
         that.config = config || {};
         that.options = that.getOptions(that.config.options);
-        that.config.options = that.options;
         resolve(that.config);
       });
     };
 
     const getScripts = function (config) {
-      if (config) {
-        const requests = config.js.map((url) =>
-          loadScript(that.path + url, config?.type)
+      if (!config || !Array.isArray(config.js)) {
+        return Promise.reject(
+          new Error("Invalid component configuration: missing js array")
         );
-        return Promise.all(requests);
       }
+      const requests = config.js.map((url) => loadScript(that.path + url, config.type));
+      return Promise.all(requests);
     };
 
     const loadScript = function (src, type = "text/javascript") {
@@ -287,20 +284,12 @@ class Component {
       ) /* download all scripts from config.js array */
       .then((loadEvents) => getHTML()) /* download html file from config.html */
       .then((text) => setHTML(text))
-      .catch((e) => console.log(e)) /* store html body in config variable */
       .then((html) => render(html))
-      .catch((e) =>
-        console.log(e)
-      ) /* render html body in target element from config.target */
       .then((target) => dispatch())
-      .catch((e) => console.log(e)) /* dispatch componentLoaded event */
       .then((event) => {
-        if (event) {
-          console.log(`${that.id} is successfully loaded`);
-        } else {
-          console.log(`Error : ${that.id} is not loaded`);
-        }
-      });
+        console.log(`${that.id} is successfully loaded`);
+      })
+      .catch((error) => console.error(`Unable to load component "${that.id}".`, error));
   }
 }
 
