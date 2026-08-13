@@ -140,9 +140,10 @@ class Component {
     const configuredOptions = this.getApplicationOptions(options);
     const urlProperties = Object.fromEntries(
       Array.from(new URLSearchParams(window.location.search))
-        .filter(([name]) =>
-          Object.prototype.hasOwnProperty.call(configuredOptions, name) ||
-          Object.prototype.hasOwnProperty.call(this.properties, name)
+        .filter(
+          ([name]) =>
+            Object.prototype.hasOwnProperty.call(configuredOptions, name) ||
+            Object.prototype.hasOwnProperty.call(this.properties, name)
         )
         .map(([name, value]) => [name, this.parseUrlValue(value)])
     );
