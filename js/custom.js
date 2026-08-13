@@ -60,9 +60,10 @@ class AdvancedCustomControl {
 }
 
 class Component {
-  constructor(id, path, properties = {}) {
+  constructor(id, path, properties = {}, configPath = "") {
     this.id = id;
     this.path = `${path}/${this.id}/`;
+    this.configPath = configPath || `${this.path}config.json`;
     this.properties = properties;
     this.urlProperties = this.getUrlProperties();
     this.config = {};
@@ -164,8 +165,8 @@ class Component {
       return response;
     };
 
-    const getConfig = function (path) {
-      return fetch(path + "config.json")
+    const getConfig = function (url) {
+      return fetch(url)
         .then(handleErrors)
         .then((response) => response.json())
         .catch(function (error) {
@@ -278,7 +279,7 @@ class Component {
       });
     };
 
-    getConfig(this.path) /* get config.json file */
+    getConfig(this.configPath) /* get configured config.json file */
       .then((json) => setConfig(json)) /* store json body in config variable */
       .then((config) =>
         getScripts(config)

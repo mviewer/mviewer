@@ -161,9 +161,10 @@ var configuration = (function () {
       components.forEach(function (component) {
         const id = component.getAttribute("id");
         const path = component.getAttribute("path");
+        const configPath = component.getAttribute("config");
         const properties = Object.fromEntries(
           Array.from(component.attributes)
-            .filter(({ name }) => !["id", "path", "type"].includes(name))
+            .filter(({ name }) => !["id", "path", "type", "config"].includes(name))
             .map(({ name, value }) => [name, value])
         );
         // read extensions options from xml config
@@ -176,10 +177,12 @@ var configuration = (function () {
             ])
         );
         if (path && id) {
-          mviewer.customComponents[id] = new Component(id, path, {
-            ...properties,
-            ...xmlOptions,
-          });
+          mviewer.customComponents[id] = new Component(
+            id,
+            path,
+            { ...properties, ...xmlOptions },
+            configPath
+          );
         }
       });
     });
