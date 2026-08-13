@@ -114,6 +114,7 @@ class Component {
     const mviewerOptions = options.mviewer?.[applicationId];
     const mviewersOptions = options.mviewers?.[applicationId];
     const applicationOptions = options[applicationId];
+    const componentOptions = options[this.id];
 
     if (mviewerOptions && typeof mviewerOptions === "object") {
       return mviewerOptions;
@@ -123,6 +124,9 @@ class Component {
     }
     if (applicationOptions && typeof applicationOptions === "object") {
       return applicationOptions;
+    }
+    if (componentOptions && typeof componentOptions === "object") {
+      return componentOptions;
     }
     return options;
   }
