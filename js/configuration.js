@@ -167,14 +167,13 @@ var configuration = (function () {
             .filter(({ name }) => !["id", "path", "type", "config"].includes(name))
             .map(({ name, value }) => [name, value])
         );
-        // read extensions options from xml config
+        // Read nested extension options through the shared XML-to-JSON utility.
+        const componentConfiguration = utils.xmlToJson(component);
+        const configuredOptions = componentConfiguration.config?.options?.option || [];
         const xmlOptions = Object.fromEntries(
-          Array.from(component.querySelectorAll("config > options > option"))
-            .filter((option) => option.hasAttribute("name"))
-            .map((option) => [
-              option.getAttribute("name"),
-              option.getAttribute("value") || option.textContent.trim(),
-            ])
+          (Array.isArray(configuredOptions) ? configuredOptions : [configuredOptions])
+            .filter((option) => option && typeof option === "object" && option.name)
+            .map((option) => [option.name, option.value ?? option["#text"] ?? ""])
         );
         if (path && id) {
           mviewer.customComponents[id] = new Component(

@@ -32,7 +32,8 @@ Comment faire ?
 Un composant personnalisé - **customComponent** - est un dossier physique disposant d'un fichier obligatoire ``config.json`` qui identifie toutes les ressources à charger. Les ressources sont de 3 types :
 
 - ``html`` --> html à charger
-- ``css`` --> feuille de style à charger
+- ``css`` --> feuille(s) de style à charger, optionnelle. Cette propriété peut être
+  une chaîne (``"style.css"``) ou une liste de fichiers CSS.
 - ``js`` --> liste de fichiers javascripts à charger
 
 Exemple d'arborescence : ::
@@ -82,9 +83,61 @@ Voici un extrait de la configuration xml :
 
     <config>
         <extensions>
-            <extension type="component" id="3d" path="demo/components"/>
+            <extension type="component" id="3d" path="addons"/>
         </extensions>
     </config>
+
+
+Configurer un composant depuis le XML ou l'URL
+------------------------------------------------
+
+Les possibilités de configuration sont les suivantes :
+
+- **Choisir le fichier de configuration.**
+
+Par défaut, mviewer charge ``{path}/{id}/config.json``. L'attribut optionnel ``config`` permet de désigner un autre fichier, relatif à l'application ou sous la forme d'une URL absolue :
+
+  .. code-block:: XML
+
+      <extension
+          type="component"
+          id="print"
+          path="addons"
+          config="demo/print-config.json"/>
+
+  Les ressources déclarées dans ce fichier (``js``, ``css`` et ``html``) restent relatives au dossier du composant défini par ``path`` et ``id``.
+
+- **Définir des options dans le XML.**
+
+Elles permettent d'adapter un composant à une application sans modifier son fichier ``config.json`` :
+
+  .. code-block:: XML
+
+      <extension type="component" id="print" path="addons">
+          <config>
+              <options>
+                  <option name="printLayouts" value="addons/print/layouts/standard.json"/>
+                  <option name="ownerInfos" value="Cette carte a été réalisée pour mon organisation"/>
+              </options>
+          </config>
+      </extension>
+
+- **Surcharger les options depuis l'URL.**
+
+Les options résolues sont exposées aux scripts du composant dans ``mviewer.customComponents["mon-composant"].options``. Elles sont fusionnées dans l'ordre de priorité suivant :
+
+  #. paramètres de l'URL ;
+  #. options déclarées dans le XML ;
+  #. options du ``config.json``.
+
+  Les paramètres d'URL sont préfixés par l'identifiant du composant afin d'éviter les collisions. Par exemple, pour l'addon ``isochroneAddon`` :
+
+  .. code-block:: text
+
+      https://monsite.fr/mviewer/?config=demo/ign.xml&isochroneAddon.isoTitle=foobar&isochroneAddon.isochroneUrl=https%3A%2F%2Fdata.geopf.fr%2Fnavigation%2Fisochrone
+
+  Les valeurs peuvent être des chaînes ou des valeurs JSON encodées. Elles ne sont jamais exécutées comme du JavaScript.
+  Pour transmettre une URL comme valeur, encodez-la avec ``encodeURIComponent`` : ``https://data.geopf.fr/navigation/isochrone`` devient ``https%3A%2F%2Fdata.geopf.fr%2Fnavigation%2Fisochrone``. Cet encodage est indispensable si l'URL contient des caractères réservés, notamment ``?``, ``&`` ou ``#``.
 
 
 Exemples
