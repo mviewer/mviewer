@@ -166,8 +166,20 @@ var configuration = (function () {
             .filter(({ name }) => !["id", "path", "type"].includes(name))
             .map(({ name, value }) => [name, value])
         );
+        // read extensions options from xml config
+        const xmlOptions = Object.fromEntries(
+          Array.from(component.querySelectorAll("config > options > option"))
+            .filter((option) => option.hasAttribute("name"))
+            .map((option) => [
+              option.getAttribute("name"),
+              option.getAttribute("value") || option.textContent.trim(),
+            ])
+        );
         if (path && id) {
-          mviewer.customComponents[id] = new Component(id, path, properties);
+          mviewer.customComponents[id] = new Component(id, path, {
+            ...properties,
+            ...xmlOptions,
+          });
         }
       });
     });

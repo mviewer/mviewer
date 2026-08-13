@@ -64,8 +64,94 @@ class Component {
     this.id = id;
     this.path = `${path}/${this.id}/`;
     this.properties = properties;
+    this.urlProperties = this.getUrlProperties();
     this.config = {};
+    this.options = {};
     this.load();
+  }
+
+  /**
+   * Get URL options declared as `<component-id>.<property>`.
+   * For example: `?print.ownerInfos=Ma%20carte`.
+   *
+   * @returns {object}
+   */
+  getUrlProperties() {
+    const prefix = `${this.id}.`;
+    const searchParams = new URLSearchParams(window.location.search);
+
+    return Array.from(searchParams).reduce((properties, [name, value]) => {
+      if (name.startsWith(prefix)) {
+        properties[name.slice(prefix.length)] = this.parseUrlValue(value);
+      }
+      return properties;
+    }, {});
+  }
+
+  /**
+   * Parse JSON URL values while preserving regular strings.
+   *
+   * @param {string} value URL parameter value.
+   * @returns {*} Parsed JSON value, or the original string.
+   */
+  parseUrlValue(value) {
+    try {
+      return JSON.parse(value);
+    } catch (error) {
+      return value;
+    }
+  }
+
+  /**
+   * Resolve addon options for the current application.
+   *
+   * @param {object} options Options from config.json.
+   * @returns {object}
+   */
+  getApplicationOptions(options = {}) {
+    const applicationId = configuration.getConfiguration()?.application?.id;
+    const mviewerOptions = options.mviewer?.[applicationId];
+    const mviewersOptions = options.mviewers?.[applicationId];
+    const applicationOptions = options[applicationId];
+
+    if (mviewerOptions && typeof mviewerOptions === "object") {
+      return mviewerOptions;
+    }
+    if (mviewersOptions && typeof mviewersOptions === "object") {
+      return mviewersOptions;
+    }
+    if (applicationOptions && typeof applicationOptions === "object") {
+      return applicationOptions;
+    }
+    return options;
+  }
+
+  /**
+   * Merge addon options with URL > XML > config.json precedence.
+   *
+   * Unprefixed URL parameters are accepted only when their name is already
+   * defined by the addon configuration or the XML extension declaration.
+   *
+   * @param {object} options Options from config.json.
+   * @returns {object}
+   */
+  getOptions(options = {}) {
+    const configuredOptions = this.getApplicationOptions(options);
+    const urlProperties = Object.fromEntries(
+      Array.from(new URLSearchParams(window.location.search))
+        .filter(([name]) =>
+          Object.prototype.hasOwnProperty.call(configuredOptions, name) ||
+          Object.prototype.hasOwnProperty.call(this.properties, name)
+        )
+        .map(([name, value]) => [name, this.parseUrlValue(value)])
+    );
+
+    return {
+      ...configuredOptions,
+      ...this.properties,
+      ...urlProperties,
+      ...this.urlProperties,
+    };
   }
 
   load() {
@@ -89,7 +175,9 @@ class Component {
 
     const setConfig = function (config) {
       return new Promise((resolve, reject) => {
-        that.config = config;
+        that.config = config || {};
+        that.options = that.getOptions(that.config.options);
+        that.config.options = that.options;
         resolve(that.config);
       });
     };
