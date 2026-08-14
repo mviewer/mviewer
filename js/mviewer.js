@@ -512,7 +512,7 @@ mviewer = (function () {
     toast.innerHTML = `
         <div class="toast-header">
           <strong class="me-auto">${title}</strong>
-          <button type="button" class="btn-close${cls ? " btn-close-white" : ""}" data-bs-dismiss="toast" aria-label="Fermer"></button>
+          <button type="button" class="btn-close${cls ? " btn-close-white" : ""}" data-bs-dismiss="toast" aria-label="${mviewer.tr("toast.close")}"></button>
         </div>
         <div class="toast-body">
           ${msg}
@@ -567,7 +567,7 @@ mviewer = (function () {
       legendUrl = layer.legendurl;
     } else if (layer.xyz) {
       legendUrl = "";
-    } else if (layer.type !== "vector-tms") {
+    } else if (!["vector-tms", "csv", "geojson"].includes(layer.type)) {
       legendUrl = getLegendGraphicUrl(layer.url, _getLegendParams(layer));
     }
     if (layer.dynamiclegend) {

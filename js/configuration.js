@@ -1013,6 +1013,11 @@ var configuration = (function () {
                     return response.text();
                   })
                   .then(csv => {
+                    if (!csv.trim()) {
+                      const error = new Error("Empty CSV");
+                      error.code = "empty-csv";
+                      throw error;
+                    }
                     Papa.parse(csv, {
                       header: true,
                       skipEmptyLines: true,
@@ -1062,6 +1067,14 @@ var configuration = (function () {
                             features.push(feature);
                           }
                         });
+                        if (features.length === 0) {
+                          mviewer.toast(
+                            "<i class='fas fa-exclamation-triangle'></i> " + mviewer.tr("layer.csv.error.empty.title"),
+                            mviewer.tr("layer.csv.error.empty.message") + ` <strong>${oLayer.id}</strong>`,
+                            "text-bg-warning"
+                          );
+                          return;
+                        }
                         // add features to the vector source
                         this.addFeatures(features);
                       }
@@ -1069,7 +1082,21 @@ var configuration = (function () {
                   })
                   .catch(error => {
                     console.error("Error occurred while fetching CSV data:", error);
-                    if (error.status === 403) {
+                    if (error.status === 404) {
+                      mviewer.toast(
+                        "<i class='fas fa-exclamation-triangle'></i> " + mviewer.tr("layer.csv.error.not_found.title"),
+                        mviewer.tr("layer.csv.error.not_found.message") + ` <strong>${oLayer.id}</strong>`,
+                        "text-bg-warning"
+                      );
+                      return;
+                    } else if (error.code === "empty-csv") {
+                      mviewer.toast(
+                        "<i class='fas fa-exclamation-triangle'></i> " + mviewer.tr("layer.csv.error.empty.title"),
+                        mviewer.tr("layer.csv.error.empty.message") + ` <strong>${oLayer.id}</strong>`,
+                        "text-bg-warning"
+                      );
+                      return;
+                    } else if (error.status === 403) {
                       mviewer.toast(
                         "<i class='fas fa-ban'></i> " + mviewer.tr("layer.csv.error.access.title"),
                         mviewer.tr("layer.csv.error.access.message") + ` <strong>${oLayer.id}</strong>`,
