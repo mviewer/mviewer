@@ -498,11 +498,13 @@ mviewer = (function () {
    * _messageToast Show toast method.
    * @param {String} title
    * @param {String} msg
+   * @param {Number} delay
+   * @param {String} cls Bootstrap color utility class (for example, text-bg-danger)
    */
 
-  var _messageToast = function (title, msg, delay) {
+  var _messageToast = function (title, msg, delay, cls) {
     const toast = document.createElement("div");
-    toast.className = "toast";
+    toast.className = `toast ${cls || ""}`;
     toast.setAttribute("role", "alert");
     toast.setAttribute("aria-live", "assertive");
     toast.setAttribute("aria-atomic", "true");
@@ -510,7 +512,7 @@ mviewer = (function () {
     toast.innerHTML = `
         <div class="toast-header">
           <strong class="me-auto">${title}</strong>
-          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fermer"></button>
+          <button type="button" class="btn-close${cls ? " btn-close-white" : ""}" data-bs-dismiss="toast" aria-label="Fermer"></button>
         </div>
         <div class="toast-body">
           ${msg}
@@ -4109,8 +4111,8 @@ mviewer = (function () {
       (_message(msg, cls), ms);
     },
 
-    toast: function (title, msg) {
-      _messageToast(title, msg);
+    toast: function (title, msg, cls, delay) {
+      _messageToast(title, msg, delay, cls);
     },
 
     legendSize: function (img) {

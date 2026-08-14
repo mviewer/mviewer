@@ -983,14 +983,102 @@ var configuration = (function () {
             if (oLayer.type === "wms") {
               _processWmsLayer(oLayer);
             } //end wms
-            if (oLayer.type === "geojson") {
+            if (oLayer.type === "geojson" || (oLayer.type === "csv" && Papa?.parse)) {
+              let geoJsonVectorOptions = {
+                url: layer.url,
+                format: new ol.format.GeoJSON()
+              };
+              // if CSV type, we need to parse it and convert to GeoJSON
+              if (oLayer.type === "csv") {
+                geoJsonVectorOptions = {
+                  loader: function (extent, resolution, projection) {
+                    fetch(layer.url)
+                  .then(response => {
+                    if (!response.ok) {
+                      const error = new Error(`HTTP ${response.status}`);
+                      error.status = response.status;
+                      throw error;
+                    }
+                    return response.text();
+                  })
+                  .then(csv => {
+                    Papa.parse(csv, {
+                      header: true,
+                      skipEmptyLines: true,
+
+                      complete: result => {
+                        const geoJSON = new ol.format.GeoJSON();
+                        const wkt = new ol.format.WKT();
+                        const features = [];
+                        const dataProjection = (oLayer.srs || "EPSG:4326");
+                        result.data.forEach(row => {
+                          let geometry;
+                          if (!layer.geojsonField) {
+                            const lon = parseFloat(row[layer.xfield || "longitude"]);
+                            const lat = parseFloat(row[layer.yfield || "latitude"]);
+                            if (Number.isFinite(lon) && Number.isFinite(lat)) {
+                              geometry = new ol.geom.Point(
+                                ol.proj.transform([lon, lat], dataProjection, projection)
+                              );
+                            }
+                          } else {
+                            // Read geometry from a GeoJSON or WKT field
+                            const geomField = row[layer.geojsonField];
+                            if (geomField) {
+                              try {
+                                // automatic geojson ok WKT format detection from field content
+                                geometry = geomField.trim().startsWith("{")
+                                  ? geoJSON.readGeometry(geomField, {
+                                      dataProjection: dataProjection,
+                                      featureProjection: projection,
+                                    })
+                                  : wkt.readGeometry(geomField, {
+                                      dataProjection: dataProjection,
+                                      featureProjection: projection,
+                                    });
+                              } catch (error) {
+                                console.warn("Unable to read CSV geometry", error);
+                              }
+                            }
+                          }
+                          // create feature only if geometry is valid
+                          if (geometry) {
+                            const feature = new ol.Feature(row);
+                            feature.setGeometry(geometry);
+                            features.push(feature);
+                          }
+                        });
+                        // add features to the vector source
+                        this.addFeatures(features);
+                      }
+                    });
+                  })
+                  .catch(error => {
+                    console.error("Error occurred while fetching CSV data:", error);
+                    if (error.status === 403) {
+                      mviewer.toast(
+                        "<i class='fas fa-ban'></i> Accès refusé",
+                        `Accès refusé pour l'id de couche : <strong>${oLayer.id}</strong>`,
+                        "text-bg-danger"
+                      );
+                      return;
+                    } else {
+                      mviewer.toast(
+                        "<i class='fas fa-exclamation-triangle'></i> Erreur",
+                        `Une erreur est survenue pour l'id de couche : <strong>${oLayer.id}</strong>`,
+                        "text-bg-warning"
+                      );
+                    }
+                  });
+                  },
+                };
+              }
+              // create vector layer with geojson source
               l = new ol.layer.Vector({
-                source: new ol.source.Vector({
-                  url: layer.url,
-                  format: new ol.format.GeoJSON(),
-                }),
+                source: new ol.source.Vector(geoJsonVectorOptions),
                 declutter: configurationUtils.normalizeDeclutter(oLayer.declutter, false),
               });
+              // set default style if defined in configuration
               if (oLayer.style && mviewer.featureStyles[oLayer.style]) {
                 l.setStyle(mviewer.featureStyles[oLayer.style]);
               }
