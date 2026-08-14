@@ -1054,7 +1054,10 @@ var configuration = (function () {
                           }
                           // create feature only if geometry is valid
                           if (geometry) {
-                            const feature = new ol.Feature(row);
+                            const properties = { ...row };
+                            // reserved openLayers field name
+                            delete properties.geometry;
+                            const feature = new ol.Feature(properties);
                             feature.setGeometry(geometry);
                             features.push(feature);
                           }
