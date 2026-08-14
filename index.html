@@ -1182,5 +1182,12 @@
     <script type="text/javascript" src="lib/jquery.easyDrag.min.js"></script>
     <script type="text/javascript" src="lib/simple-slidebar/slidebar_menu.js"></script>
     <script type="text/javascript" src="lib/papaparse/papaparse.min.js"></script>
+    <script type="module">
+      import SldStyleParser from "https://esm.sh/geostyler-sld-parser";
+      import OpenLayersParser from "https://esm.sh/geostyler-openlayers-parser";
+
+      window.SldStyleParser = SldStyleParser;
+      window.OpenLayersParser = OpenLayersParser;
+    </script>
   </body>
 </html>

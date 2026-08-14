@@ -59,6 +59,8 @@ var configuration = (function () {
   const _blankSrc =
     "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
 
+
+  const vectorLayerType = ["csv", "geojson", "kml"];
   /**
    * Usefull to decode string encoded hex code
    * @param {string} str
@@ -1130,6 +1132,12 @@ var configuration = (function () {
                 l.setStyle(mviewer.featureStyles[oLayer.style]);
               }
               mviewer.processLayer(oLayer, l);
+              if (vectorLayerType.includes(oLayer.type) && oLayer.sld) {
+                oLayer.sldStylePromise = utils.sldFile2VectorLayer(oLayer.sld, oLayer.id);
+                oLayer.sldStylePromise.catch((error) => {
+                  console.error(`Unable to apply SLD style for layer ${oLayer.id}:`, error);
+                });
+              }
             } // end geojson
             // ->- sensortings layer
             if (oLayer.type === "sensorthings") {
@@ -1145,6 +1153,12 @@ var configuration = (function () {
                 declutter: configurationUtils.normalizeDeclutter(oLayer.declutter, false),
               });
               mviewer.processLayer(oLayer, l);
+              if (oLayer.sld) {
+                oLayer.sldStylePromise = utils.sldFile2VectorLayer(oLayer.sld, oLayer.id);
+                oLayer.sldStylePromise.catch((error) => {
+                  console.error(`Unable to apply SLD style for layer ${oLayer.id}:`, error);
+                });
+              }
             } // end kml
 
             if (oLayer.type === "import") {

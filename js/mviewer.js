@@ -584,13 +584,45 @@ mviewer = (function () {
   /**
    * _drawVectorLegend draw vector legend  method.
    * @param {String} layerid
-   * @param {Array} items. Array of {styles:ol.styles , label: string, geometry: Point|Polygon|LineString)
+   * @param {Array} [items] Array of {styles:ol.styles , label: string, geometry: Point|Polygon|LineString).
+   * When a CSV, GeoJSON or KML layer has an SLD, its cached SLD content is used
+   * to render the legend instead of drawing OpenLayers styles.
    */
 
   var _drawVectorLegend = function (layerid, items) {
     //Remove classic getLegendUrl
     $(`#legend-${layerid}`).remove();
     var canvas = document.getElementById(`vector-legend-${layerid}`);
+    var layer = _overLayers[layerid];
+    if (canvas && layer?.sld && ["csv", "geojson", "kml"].includes(layer.type)) {
+      var sldContent = layer.layer?.get("sldContent");
+      var sldContentPromise;
+      if (sldContent) {
+        sldContentPromise = Promise.resolve(sldContent);
+      } else if (layer.sldStylePromise) {
+        sldContentPromise = layer.sldStylePromise.then((vectorLayer) =>
+          vectorLayer.get("sldContent")
+        );
+      } else {
+        sldContentPromise = fetch(layer.sld).then((response) => {
+          if (!response.ok) {
+            throw new Error(`Unable to load SLD file: ${layer.sld}`);
+          }
+          return response.text();
+        });
+      }
+
+      sldContentPromise
+        .then(utils.sld2Legend)
+        .then((sldCanvas) => {
+          canvas.width = sldCanvas.width;
+          canvas.height = sldCanvas.height;
+          canvas.getContext("2d").drawImage(sldCanvas, 0, 0);
+        })
+        .catch((error) => console.error(`Unable to draw SLD legend for ${layerid}:`, error));
+      return;
+    }
+
     if (canvas) {
       var marginTop = 15;
       var marginLeft = 15;
@@ -3269,6 +3301,10 @@ mviewer = (function () {
       //Dynamic vector Legend
       if (layer.vectorlegend && layer.legend && layer.legend.items) {
         _drawVectorLegend(layer.layerid, layer.legend.items);
+      }
+
+      if (layer.sld && ["csv", "geojson", "kml"].includes(layer.type)) {
+        _drawVectorLegend(layer.layerid);
       }
 
       _setLayerScaleStatus(layer, _calculateScale(_map.getView().getResolution()));
