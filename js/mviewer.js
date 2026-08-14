@@ -619,7 +619,9 @@ mviewer = (function () {
           canvas.height = sldCanvas.height;
           canvas.getContext("2d").drawImage(sldCanvas, 0, 0);
         })
-        .catch((error) => console.error(`Unable to draw SLD legend for ${layerid}:`, error));
+        .catch((error) =>
+          console.error(`Unable to draw SLD legend for ${layerid}:`, error)
+        );
       return;
     }
 

@@ -8,7 +8,9 @@ export const sld2VectorLayer = async (sldString, vectorLayerId) => {
     throw new Error(`Vector layer "${vectorLayerId}" was not found.`);
   }
 
-  const { output: geoStylerStyle, errors } = await new SldStyleParser().readStyle(sldString);
+  const { output: geoStylerStyle, errors } = await new SldStyleParser().readStyle(
+    sldString
+  );
   if (errors) {
     throw errors[0];
   }
