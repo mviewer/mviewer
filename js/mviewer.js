@@ -3123,11 +3123,20 @@ mviewer = (function () {
     setLoginInfo: function (ctx) {
       var _layer_id = ctx.id.split("#")[1];
       var _service_url = mviewer.getLayers()[_layer_id].url;
+      var isApiKey = mviewer.getLayers()[_layer_id].secure === "apikey";
       $("#login-panel-service-url").html("<small><i>" + _service_url + "</i></small>");
       $("#service-url").val(_service_url);
       $("#layer-id").val(_layer_id);
-      if (sessionStorage.getItem(_service_url))
+      $("#login-credentials").toggle(!isApiKey);
+      $("#api-key-group").toggle(isApiKey);
+      $("#pass").val("");
+      // API key authentication is stored for the session and prefilled when available.
+      if (isApiKey) {
+        $("#api-key").val(sessionStorage.getItem(`${_service_url}:api-key`) || "");
+      } else if (sessionStorage.getItem(_service_url)) {
+        // basic auth case, we store user:pass in sessionStorage
         $("#user").val(sessionStorage.getItem(_service_url).split(":")[0]);
+      }
     },
 
     /**
@@ -3224,7 +3233,7 @@ mviewer = (function () {
 
       if (layer.secure) {
         view.secure = layer.secure === "true" ? "global" : layer.secure;
-        if (layer.secure == "layer") view.secure_layer = true;
+        if (layer.secure == "layer" || layer.secure == "apikey") view.secure_layer = true;
       }
 
       var item = _renderHTMLFromTemplate(mviewer.templates.layerControl, view);

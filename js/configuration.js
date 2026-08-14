@@ -992,7 +992,18 @@ var configuration = (function () {
               if (oLayer.type === "csv") {
                 geoJsonVectorOptions = {
                   loader: function (extent, resolution, projection) {
-                    fetch(layer.url)
+                    const fetchOptions = {};
+                    if (layer.secure === "apikey") {
+                      const apiKey = sessionStorage.getItem(`${layer.url}:api-key`);
+                      if (apiKey) fetchOptions.headers = { Authorization: `Bearer ${apiKey}` };
+                    }
+                    let requestUrl = layer.url;
+                    const proxyUrl = layer.proxyurl || (layer.useproxy === "true" ? _proxy : "");
+                    if (proxyUrl) {
+                      const externalUrl = new URL(layer.url);
+                      requestUrl = `${proxyUrl.replace(/\/$/, "")}${externalUrl.pathname}${externalUrl.search}`;
+                    }
+                    fetch(requestUrl, fetchOptions)
                   .then(response => {
                     if (!response.ok) {
                       const error = new Error(`HTTP ${response.status}`);
@@ -1057,15 +1068,21 @@ var configuration = (function () {
                     console.error("Error occurred while fetching CSV data:", error);
                     if (error.status === 403) {
                       mviewer.toast(
-                        "<i class='fas fa-ban'></i> Accès refusé",
-                        `Accès refusé pour l'id de couche : <strong>${oLayer.id}</strong>`,
+                        "<i class='fas fa-ban'></i> " + mviewer.tr("layer.csv.error.access.title"),
+                        mviewer.tr("layer.csv.error.access.message") + ` <strong>${oLayer.id}</strong>`,
                         "text-bg-danger"
                       );
                       return;
+                    } else if (!error.status && error instanceof TypeError) {
+                      mviewer.toast(
+                        "<i class='fas fa-exclamation-triangle'></i> " + mviewer.tr("layer.csv.error.cors.title"),
+                        mviewer.tr("layer.csv.error.cors.message") + ` <strong>${oLayer.id}</strong>`,
+                        "text-bg-danger"
+                      );
                     } else {
                       mviewer.toast(
-                        "<i class='fas fa-exclamation-triangle'></i> Erreur",
-                        `Une erreur est survenue pour l'id de couche : <strong>${oLayer.id}</strong>`,
+                        "<i class='fas fa-exclamation-triangle'></i> " + mviewer.tr("layer.csv.error.title"),
+                        mviewer.tr("layer.csv.error.message") + ` <strong>${oLayer.id}</strong>`,
                         "text-bg-warning"
                       );
                     }
@@ -1202,8 +1219,14 @@ var configuration = (function () {
       var _service_url = $("#service-url").val();
       var _layer_id = $("#layer-id").val();
       sessionStorage.removeItem(_service_url);
-      if ($("#user").val() != "" && $("#pass").val() != "")
+      if (mviewer.getLayers()[_layer_id].secure === "apikey") {
+        const apiKey = $("#api-key").val();
+        const apiKeyStorageKey = `${_service_url}:api-key`;
+        sessionStorage.removeItem(apiKeyStorageKey);
+        if (apiKey) sessionStorage.setItem(apiKeyStorageKey, apiKey);
+      } else if ($("#user").val() != "" && $("#pass").val() != "") {
         sessionStorage.setItem(_service_url, `${$("#user").val()}:${$("#pass").val()}`);
+      }
 
       $("#loginpanel").modal("hide");
       // Refresh du layer

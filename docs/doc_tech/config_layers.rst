@@ -183,7 +183,15 @@ Plus d'informations sur le type de couche OGC SensorThings :
 Paramètres pour les couches non WMS
 =======================================
 
-* ``type``: Type de la couche (wms|geojson|kml|vector-tms|sensorthings|customlayer|import) default=wms. Si customlayer est défini, il faut instancier un Layer OpenLayers dans un fichier javascript ayant pour nom l'id de la couche (voir ":ref:`configfuse`"). Ce fichier js doit être placé dans le répertoire customlayers/. Pour le type import l'extension `fileimport` doit être activée.
+* ``type``: Type de la couche (wms|geojson|kml|vector-tms|sensorthings|customlayer|import|csv) default=wms.
+    * ``wms`` : couche WMS classique (OGC).
+    * ``geojson`` : couche vectorielle au format GeoJSON.
+    * ``kml`` : couche vectorielle au format KML.
+    * ``vector-tms`` : couche vectorielle au format tuilé vectoriel (VectorTile) avec un style au format JSON.
+    * ``csv`` : couche vectorielle au format CSV. Certains CSV peuvent utiliser une authentification (e.g grist et le mode secure="apikey" à utiliser de préférence avec un proxy !)
+    * ``sensorthings`` : couche de type OGC SensorThings.
+    * ``customlayer`` : couche vectorielle personnalisée. Si customlayer est défini, il faut instancier un Layer OpenLayers dans un fichier javascript ayant pour nom l'id de la couche (voir ":ref:`configfuse`"). Ce fichier js doit être placé dans le répertoire customlayers/.
+    * ``import`` : couche vectorielle importée par l'utilisateur. Le format de la couche importée peut être GeoJSON, KML ou GPX. Le style de la couche importée est défini dans le fichier featurestyles.js. L’extension fileimport doit être obligatoirement activée.
 * ``tooltip``: Pour les couches de type vecteur uniquement. Booléen précisant si les entités de la couche sont affichées sous forme d'infobulle au survol de la souris. (Les infobulles ne fonctionnent qu'avec une seule couche à la fois). Valeur par défaut = false.
 * ``tooltipenabled``: Précise la couche prioritaire pour l'affichage des infobulles.
 * ``tooltipcontent``: Chaîne de caractères décrivant l'information à afficher dans les infobulles. Cette chaîne contient soit le nom d'un champ de la couche soit un template Mustache (code html) combinant plusieurs noms de champs. Exemple : ``tooltipcontent="{{name}} - ({{city}})"``.
@@ -242,6 +250,7 @@ Autres paramètres
     * ``public`` : (ou paramètre absent), l'accès à la couche est public
     * ``global`` : l'accès à la couche est contrainte par le CAS geoserver. Un test est effectué pour savoir si la couche est accessible. Si ce n'est pas le cas, la couche est retirée du panneau et de la carte.
     * ``layer`` : l'accès à la couche nécessite une authentification sur le service (WMS). Un bouton "cadenas" est ajouté dans la légende pour cette couche. Au clic sur ce bouton, un formulaire est affiché permettant de saisir des identifiants d'accès qui seront envoyés à chaque appel au service.
+    * ``apikey`` : l'accès à la couche nécessite une authentification via une clé API. Un bouton "cadenas" est ajouté dans la légende pour cette couche. Au clic sur ce bouton, un formulaire est affiché permettant de saisir la clé API qui sera envoyée à chaque appel au service.
 
 * ``authorization`` : Permet d'indiquer des identifiants par défaut si secure est à "layer"
 * ``useproxy`` :guilabel:`studio` : Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de crossOrigin lorsque CORS n'est pas activé sur le serveur distant.
@@ -249,8 +258,76 @@ Autres paramètres
 * ``owslegendoptions`` : Pour une couche WMS, Permet de personnaliser certains paramètres des requêtes GetLegend. Exemple Qgis serveur : "LAYERTITLE:false,ITEMFONTSIZE:15".
 * ``infopanel`` : Permet d'indiquer quel panel d'interrogation utiliser parmis top-panel ou bottom-panel ou modal-panel. Exemple: `infopanel="bottom-panel"`.
 
+Zoom sur le paramétrage d'une couche provenant de Grist
+=======================================================
+
+Une couche Grist est exposée sous forme de CSV. Si le document n'est pas public, la couche doit utiliser ``secure="apikey"``.
+Le cadenas affiché dans la légende ouvre un formulaire de saisie de la clé API. La clé est ensuite conservée dans le stockage de session du navigateur et les requêtes CSV utilisent l'en-tête ``Authorization: Bearer <clé-api>``.
+
+De l'autre côté, le serveur qui héberge Grist doit autoriser les requêtes CORS provenant de l'application.
+Si ce n'est pas le cas, vous pouvez utiliser un proxy (e.g Nginx).
+
+L'exemple ci-dessous utilise un proxy inverse Nginx servi sous le chemin ``/grist/``.
+Le paramètre ``useproxy="true"`` redirige l'URL Grist vers le proxy défini via ``<proxy>``.
+L'attribut ``url`` de la couche reste l'URL Grist d'origine.
+
+.. code-block:: xml
+
+       <proxy url="https://mon-proxy.exemple/grist/"/>
+
+.. code-block:: xml
+       :linenos:
+
+       <layer type="csv" id="csvType" name="Couche Grist"
+           visible="true"
+           queryable="true"
+           useproxy="true"
+           secure="apikey"
+           xfield="LONGITUDE"
+           yfield="LATITUDE"
+           srs="EPSG:4326"
+           tooltipcontent="{{CODE_FINESS}}"
+           url="https://grist.numerique.gouv.fr/o/docs/api/docs/<id_doc>/download/csv?viewSection=4&amp;tableId=<id_table>"
+           tooltip="true"
+           searchable="true"
+           searchengine="fuse"
+           fusesearchkeys="nom,adresse"
+           fusesearchresult="{{CODE_FINESS}}">
+       </layer>
+
+Avec cette configuration, la requête suivante :
+
+.. code-block:: text
+
+       https://grist.numerique.gouv.fr/o/docs/api/docs/<id_doc>/download/csv?tableId=<id_table>
+
+est appelée par le navigateur via :
+
+.. code-block:: text
+
+       https://mywebsite/grist/o/docs/api/docs/<id_doc>/download/csv?viewSection=4&tableId=<id_table>
+
+Le proxy doit transmettre l'en-tête d'autorisation à Grist. Voici un exemple minimal de configuration Nginx :
+
+.. code-block:: nginx
+
+       location /grist/ {
+           proxy_pass https://grist.numerique.gouv.fr/;
+           proxy_ssl_server_name on;
+           proxy_set_header Host grist.numerique.gouv.fr;
+           proxy_set_header Authorization $http_authorization;
+       }
+
+Si mviewer et le proxy sont sur des origines différentes, le proxy doit aussi retourner les en-têtes CORS appropriés, notamment :
+
+* ``Access-Control-Allow-Origin``
+* ``Access-Control-Allow-Headers`` (incluant ``Authorization``).
+
+Pour un usage local, l'origine doit correspondre exactement à celle de mviewer (par exemple ``http://localhost:5051``).
+Vous pouvez aussi utiliser ``*`` pour autoriser toutes les origines, mais cette syntaxe n'est pas recommandé pour un usage en production.
+
 Zoom sur le paramétrage de gestion de l'ordre d'affichage des couches
-====================
+=====================================================================
 
 .. code-block:: xml
        :linenos:
