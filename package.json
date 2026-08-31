@@ -31,6 +31,6 @@
   },
   "devDependencies": {
     "prettier": "^3.9.6",
-    "retire": "^5.4.2"
+    "retire": "^5.7.0"
   }
 }
