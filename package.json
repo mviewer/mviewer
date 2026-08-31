@@ -27,7 +27,7 @@
   },
   "homepage": ".",
   "dependencies": {
-    "vite": "^8.2.1"
+    "vite": "^8.2.2"
   },
   "devDependencies": {
     "prettier": "^3.9.6",
