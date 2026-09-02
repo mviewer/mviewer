@@ -50,6 +50,8 @@ export function xmlToJson(xml) {
     return obj;
   }
 
-  const root = xml.documentElement;
+  // Accept either an XML document or an element. Component configuration is
+  // parsed directly from its <extension> element.
+  const root = xml.documentElement || xml;
   return parseNode(root);
 }

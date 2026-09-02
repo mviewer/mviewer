@@ -161,8 +161,27 @@ var configuration = (function () {
       components.forEach(function (component) {
         const id = component.getAttribute("id");
         const path = component.getAttribute("path");
+        const configPath = component.getAttribute("config");
+        const properties = Object.fromEntries(
+          Array.from(component.attributes)
+            .filter(({ name }) => !["id", "path", "type", "config"].includes(name))
+            .map(({ name, value }) => [name, value])
+        );
+        // Read nested extension options through the shared XML-to-JSON utility.
+        const componentConfiguration = utils.xmlToJson(component);
+        const configuredOptions = componentConfiguration.config?.options?.option || [];
+        const xmlOptions = Object.fromEntries(
+          (Array.isArray(configuredOptions) ? configuredOptions : [configuredOptions])
+            .filter((option) => option && typeof option === "object" && option.name)
+            .map((option) => [option.name, option.value ?? option["#text"] ?? ""])
+        );
         if (path && id) {
-          mviewer.customComponents[id] = new Component(id, path);
+          mviewer.customComponents[id] = new Component(
+            id,
+            path,
+            { ...properties, ...xmlOptions },
+            configPath
+          );
         }
       });
     });

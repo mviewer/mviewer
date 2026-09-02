@@ -60,11 +60,104 @@ class AdvancedCustomControl {
 }
 
 class Component {
-  constructor(id, path) {
+  constructor(id, path, properties = {}, configPath = "") {
     this.id = id;
     this.path = `${path}/${this.id}/`;
+    this.configPath = configPath || `${this.path}config.json`;
+    this.properties = properties;
+    this.urlProperties = this.getUrlProperties();
     this.config = {};
+    this.options = {};
     this.load();
+  }
+
+  /**
+   * Get URL options declared as `<component-id>.<property>`.
+   * For example: `?print.ownerInfos=Ma%20carte`.
+   *
+   * @returns {object}
+   */
+  getUrlProperties() {
+    const prefix = `${this.id}.`;
+    const searchParams = new URLSearchParams(window.location.search);
+
+    return Array.from(searchParams).reduce((properties, [name, value]) => {
+      if (name.startsWith(prefix)) {
+        properties[name.slice(prefix.length)] = this.parseUrlValue(value);
+      }
+      return properties;
+    }, {});
+  }
+
+  /**
+   * Parse JSON URL values while preserving regular strings.
+   *
+   * @param {string} value URL parameter value.
+   * @returns {*} Parsed JSON value, or the original string.
+   */
+  parseUrlValue(value) {
+    try {
+      return JSON.parse(value);
+    } catch (error) {
+      return value;
+    }
+  }
+
+  /**
+   * Resolve addon options for the current application.
+   *
+   * @param {object} options Options from config.json.
+   * @returns {object}
+   */
+  getApplicationOptions(options = {}) {
+    const applicationId = configuration.getConfiguration()?.application?.id;
+    const mviewerOptions = options.mviewer?.[applicationId];
+    const mviewersOptions = options.mviewers?.[applicationId];
+    const applicationOptions = options[applicationId];
+    const componentOptions = options[this.id];
+
+    if (mviewerOptions && typeof mviewerOptions === "object") {
+      return mviewerOptions;
+    }
+    if (mviewersOptions && typeof mviewersOptions === "object") {
+      return mviewersOptions;
+    }
+    if (applicationOptions && typeof applicationOptions === "object") {
+      return applicationOptions;
+    }
+    if (componentOptions && typeof componentOptions === "object") {
+      return componentOptions;
+    }
+    return options;
+  }
+
+  /**
+   * Merge addon options with URL > XML > config.json precedence.
+   *
+   * Unprefixed URL parameters are accepted only when their name is already
+   * defined by the addon configuration or the XML extension declaration.
+   *
+   * @param {object} options Options from config.json.
+   * @returns {object}
+   */
+  getOptions(options = {}) {
+    const configuredOptions = this.getApplicationOptions(options);
+    const urlProperties = Object.fromEntries(
+      Array.from(new URLSearchParams(window.location.search))
+        .filter(
+          ([name]) =>
+            Object.prototype.hasOwnProperty.call(configuredOptions, name) ||
+            Object.prototype.hasOwnProperty.call(this.properties, name)
+        )
+        .map(([name, value]) => [name, this.parseUrlValue(value)])
+    );
+
+    return {
+      ...configuredOptions,
+      ...this.properties,
+      ...urlProperties,
+      ...this.urlProperties,
+    };
   }
 
   load() {
@@ -77,29 +170,28 @@ class Component {
       return response;
     };
 
-    const getConfig = function (path) {
-      return fetch(path + "config.json")
+    const getConfig = function (url) {
+      return fetch(url)
         .then(handleErrors)
-        .then((response) => response.json())
-        .catch(function (error) {
-          console.log(error);
-        });
+        .then((response) => response.json());
     };
 
     const setConfig = function (config) {
       return new Promise((resolve, reject) => {
-        that.config = config;
+        that.config = config || {};
+        that.options = that.getOptions(that.config.options);
         resolve(that.config);
       });
     };
 
     const getScripts = function (config) {
-      if (config) {
-        const requests = config.js.map((url) =>
-          loadScript(that.path + url, config?.type)
+      if (!config || !Array.isArray(config.js)) {
+        return Promise.reject(
+          new Error("Invalid component configuration: missing js array")
         );
-        return Promise.all(requests);
       }
+      const requests = config.js.map((url) => loadScript(that.path + url, config.type));
+      return Promise.all(requests);
     };
 
     const loadScript = function (src, type = "text/javascript") {
@@ -189,27 +281,19 @@ class Component {
       });
     };
 
-    getConfig(this.path) /* get config.json file */
+    getConfig(this.configPath) /* get configured config.json file */
       .then((json) => setConfig(json)) /* store json body in config variable */
       .then((config) =>
         getScripts(config)
       ) /* download all scripts from config.js array */
       .then((loadEvents) => getHTML()) /* download html file from config.html */
       .then((text) => setHTML(text))
-      .catch((e) => console.log(e)) /* store html body in config variable */
       .then((html) => render(html))
-      .catch((e) =>
-        console.log(e)
-      ) /* render html body in target element from config.target */
       .then((target) => dispatch())
-      .catch((e) => console.log(e)) /* dispatch componentLoaded event */
       .then((event) => {
-        if (event) {
-          console.log(`${that.id} is successfully loaded`);
-        } else {
-          console.log(`Error : ${that.id} is not loaded`);
-        }
-      });
+        console.log(`${that.id} is successfully loaded`);
+      })
+      .catch((error) => console.error(`Unable to load component "${that.id}".`, error));
   }
 }
 
