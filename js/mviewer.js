@@ -1475,7 +1475,10 @@ mviewer = (function () {
 
   // manage display for vector legend
   var _setVectorLegendStatus = (layer, visible) => {
-    var panel = document.querySelector(`#vector-legend-${layer.id}`);
+    var panel = document.getElementById(`vector-legend-${layer.id}`);
+    if (!panel) {
+      return;
+    }
     var cl = `hide${layer.id}`;
     if (visible) {
       panel.classList.remove("hidden");
@@ -1494,7 +1497,10 @@ mviewer = (function () {
   // manage static legend display
   var _setUrlLegendStatus = function (layer, visible) {
     var legendUrl = _getlegendurl(layer);
-    var panel = document.querySelector(`#legend-${layer.id}`);
+    var panel = document.getElementById(`legend-${layer.id}`);
+    if (!panel) {
+      return;
+    }
     if (visible) {
       panel.src = legendUrl;
       panel.closest("li")?.classList.remove("glyphicon", "mv-invisible");
