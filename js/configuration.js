@@ -1132,7 +1132,7 @@ var configuration = (function () {
       mviewer.setBaseLayer(_defaultBaseLayer);
     }
 
-     if (_showhelp_startup && localStorage.getItem("helpCheckBox") !== "true") {
+    if (_showhelp_startup && localStorage.getItem("helpCheckBox") !== "true") {
       const helpModal = document.getElementById("help");
 
       // different value into modal
@@ -1140,9 +1140,9 @@ var configuration = (function () {
         /**
          * This fixes issue mviewer:
          * https://github.com/mviewer/mviewer/issues/948
-         * 
+         *
          * Bootstrap focuses the modal after opening it. Keep that focus without moving the document containing the iframe.
-         * 
+         *
          */
         helpModal.focus = function () {
           HTMLElement.prototype.focus.call(this, { preventScroll: true });
