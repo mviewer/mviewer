@@ -1345,7 +1345,13 @@ var configuration = (function () {
       const helpModal = document.getElementById("help");
 
       if (window.self !== window.top) {
-        // Keep Bootstrap's modal focus without scrolling the iframe's parent document (#948).
+        /**
+         * This fixes issue mviewer:
+         * https://github.com/mviewer/mviewer/issues/948
+         *
+         * Bootstrap focuses the modal after opening it. Keep that focus without moving the document containing the iframe.
+         *
+         */
         helpModal.focus = function () {
           HTMLElement.prototype.focus.call(this, { preventScroll: true });
         };
