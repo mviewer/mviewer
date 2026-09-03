@@ -1342,7 +1342,15 @@ var configuration = (function () {
     }
 
     if (_showhelp_startup && localStorage.getItem("helpCheckBox") !== "true") {
-      bootstrap.Modal.getOrCreateInstance(document.querySelector("#help")).show();
+      const helpModal = document.getElementById("help");
+
+      if (window.self !== window.top) {
+        // Keep Bootstrap's modal focus without scrolling the iframe's parent document (#948).
+        helpModal.focus = function () {
+          HTMLElement.prototype.focus.call(this, { preventScroll: true });
+        };
+      }
+      bootstrap.Modal.getOrCreateInstance(helpModal).show();
     }
 
     if (!API.wmc) {
