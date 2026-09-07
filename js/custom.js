@@ -108,10 +108,17 @@ class Component {
             }))
             .filter((r) => r.status === "rejected");
 
-          if (failed.length > 0) {
-            console.warn(
-              `Warning: ${failed.length} script(s) failed to load for ${that.id}:`,
-              failed.map((f) => `${f.url} - ${f.reason}`)
+          if (failed.length === 1) {
+            mviewer.toast(
+              "Erreur",
+              `Le script <b>${failed[0].url}</b> n'a pas pu être chargé pour le composant ${that.id} :<br />
+              <i>${failed[0].reason}</i>`
+            );
+          } else if (failed.length > 1) {
+            mviewer.toast(
+              "Erreur",
+              `${failed.length} scripts n'ont pu être chargés pour le composant ${that.id} :
+              <i>${failed.map((f) => `<i><br />${f.url} - ${f.reason}</i>`)}`
             );
           }
           return results;
