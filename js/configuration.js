@@ -415,9 +415,15 @@ var configuration = (function () {
       _authentification.url = conf.authentification.url;
       _authentification.loginurl = conf.authentification.loginurl;
       _authentification.logouturl = conf.authentification.logouturl;
-      $.ajax({
-        url: _authentification.url,
-        success: function (response) {
+      fetch(_authentification.url, {
+        headers: { Accept: "application/json, text/javascript, */*; q=0.01" },
+      })
+        .then((response) => {
+          if (!response.ok)
+            throw new Error(`HTTP ${response.status} ${response.statusText}`);
+          return response.json();
+        })
+        .then(function (response) {
           //test georchestra proxy
           if (response.proxy == "true") {
             document.querySelector("#login-box")?.style.setProperty("display", "");
@@ -456,8 +462,8 @@ var configuration = (function () {
               ].join("\n")
             );
           }
-        },
-      });
+        })
+        .catch((error) => console.error(error));
     }
 
     //baselayertoolbar
@@ -502,48 +508,54 @@ var configuration = (function () {
       var nbOverLayers = 0;
 
       var requests = [];
-      var ajaxFunction = function () {
-        // Préparation des requêtes Ajax pour récupérer les thématiques externes
-        wmcs.forEach(function (url, idx) {
-          var wmcid = `wmc${idx}`;
-          requests.push(
-            $.ajax({
-              url: mviewer.ajaxURL(url, _proxy),
-              crossDomain: true,
-              wmcid: wmcid,
-              dataType: "xml",
-              success: function (response, textStatus, request) {
-                var wmc = mviewer.parseWMCResponse(response, this.wmcid);
-                wmc.layers.forEach(function (layer) {
-                  mviewer.processLayer(layer, layer.layer);
-                });
-                processedWMC += 1;
-                _themes[wmcid] = {};
-                _themes[wmcid].collapsed = false;
-                _themes[wmcid].id = wmcid;
-                _themes[wmcid].name = wmc.title;
-                _themes[wmcid].layers = {};
-                _themes[wmcid].icon = "fas fa-chevron-circle-right";
-                _map.getView().fit(wmc.extent, {
-                  size: _map.getSize(),
-                  padding: [
-                    0,
-                    document.querySelector("#sidebar-wrapper").offsetWidth,
-                    0,
-                    0,
-                  ],
-                });
-                _themes[wmcid].layers = wmc.layers;
-                _themes[wmcid].name = wmc.title;
-                nbOverLayers += Object.keys(wmc.layers).length;
-              },
-              error: function (xhr, status, error) {
-                console.log(`WMC ${this.url} not found`);
-              },
+      // Récupération des thématiques externes avant de signaler la fin du chargement.
+      wmcs.forEach(function (url, idx) {
+        var wmcid = `wmc${idx}`;
+        requests.push(
+          fetch(mviewer.ajaxURL(url, _proxy), {
+            headers: { Accept: "application/xml, text/xml, */*; q=0.01" },
+          })
+            .then((response) => {
+              if (!response.ok)
+                throw new Error(`HTTP ${response.status} ${response.statusText}`);
+              return response.text();
             })
-          );
-        });
-      };
+            .then((text) => {
+              const xml = new DOMParser().parseFromString(text, "text/xml");
+              if (xml.querySelector("parsererror"))
+                throw new Error("Invalid XML response");
+              return xml;
+            })
+            .then(function (response) {
+              var wmc = mviewer.parseWMCResponse(response, wmcid);
+              wmc.layers.forEach(function (layer) {
+                mviewer.processLayer(layer, layer.layer);
+              });
+              processedWMC += 1;
+              _themes[wmcid] = {};
+              _themes[wmcid].collapsed = false;
+              _themes[wmcid].id = wmcid;
+              _themes[wmcid].name = wmc.title;
+              _themes[wmcid].layers = {};
+              _themes[wmcid].icon = "fas fa-chevron-circle-right";
+              _map.getView().fit(wmc.extent, {
+                size: _map.getSize(),
+                padding: [
+                  0,
+                  document.querySelector("#sidebar-wrapper").offsetWidth,
+                  0,
+                  0,
+                ],
+              });
+              _themes[wmcid].layers = wmc.layers;
+              _themes[wmcid].name = wmc.title;
+              nbOverLayers += Object.keys(wmc.layers).length;
+            })
+            .catch(function (error) {
+              console.log(`WMC ${mviewer.ajaxURL(url, _proxy)} not found`);
+            })
+        );
+      });
 
       Promise.allSettled(requests).then(function () {
         mviewer.events().overLayersTotal = nbOverLayers;
@@ -653,22 +665,32 @@ var configuration = (function () {
               var secureLayer =
                 layer.secure === "true" || layer.secure == "global" ? true : false;
               if (secureLayer) {
-                $.ajax({
-                  dataType: "xml",
-                  layer: layerId,
-                  url: mviewer.ajaxURL(getCapRequestUrl),
-                  success: function (result) {
+                fetch(mviewer.ajaxURL(getCapRequestUrl), {
+                  headers: { Accept: "application/xml, text/xml, */*; q=0.01" },
+                })
+                  .then((response) => {
+                    if (!response.ok)
+                      throw new Error(`HTTP ${response.status} ${response.statusText}`);
+                    return response.text();
+                  })
+                  .then((text) => {
+                    const xml = new DOMParser().parseFromString(text, "text/xml");
+                    if (xml.querySelector("parsererror"))
+                      throw new Error("Invalid XML response");
+                    return xml;
+                  })
+                  .then(function (result) {
                     //Find layer in capabilities
-                    var name = this.layer;
+                    var name = layerId;
                     const layer = Array.from(
                       result.querySelectorAll("Layer > Name")
                     ).find((element) => element.textContent === name);
                     if (!layer) {
                       //remove this layer from map and panel
-                      mviewer.deleteLayer(this.layer);
+                      mviewer.deleteLayer(layerId);
                     }
-                  },
-                });
+                  })
+                  .catch((error) => console.error(error));
               }
             }
             var mvid;
@@ -933,34 +955,43 @@ var configuration = (function () {
 
             if (oLayer.customcontrol) {
               var customcontrolpath = oLayer.customcontrolpath;
-              $.ajax({
-                url: `${customcontrolpath}/${oLayer.id}.js`,
-                layer: oLayer.id,
-                dataType: "script",
-                success: function (customLayer, textStatus, request) {
-                  $.ajax({
-                    url: `${customcontrolpath}/${this.layer}.html`,
-                    layer: oLayer.id,
-                    dataType: "text",
-                    success: function (html) {
-                      mviewer.customControls[this.layer].form = html;
+              fetch(`${customcontrolpath}/${oLayer.id}.js`)
+                .then((response) => {
+                  if (!response.ok)
+                    throw new Error(`HTTP ${response.status} ${response.statusText}`);
+                  return response.text();
+                })
+                .then((source) => {
+                  const script = document.createElement("script");
+                  script.textContent = source;
+                  document.head.appendChild(script);
+                  script.remove();
+                })
+                .then(function () {
+                  fetch(`${customcontrolpath}/${oLayer.id}.html`)
+                    .then((response) => {
+                      if (!response.ok)
+                        throw new Error(`HTTP ${response.status} ${response.statusText}`);
+                      return response.text();
+                    })
+                    .then(function (html) {
+                      mviewer.customControls[oLayer.id].form = html;
                       const layerDetails = document.querySelector(
-                        `.mv-layer-details[data-layerid="${this.layer}"]`
+                        `.mv-layer-details[data-layerid="${oLayer.id}"]`
                       );
                       if (layerDetails) {
                         //append the existing mv-layers-details panel
                         layerDetails
                           .querySelector(".mv-custom-controls")
                           ?.insertAdjacentHTML("beforeend", html);
-                        mviewer.customControls[this.layer].init();
+                        mviewer.customControls[oLayer.id].init();
                       }
-                    },
-                  });
-                },
-                error: function () {
+                    })
+                    .catch((error) => console.error(error));
+                })
+                .catch(function (error) {
                   alert("error customControl");
-                },
-              });
+                });
             }
 
             themeLayers[oLayer.id] = oLayer;
@@ -1221,10 +1252,19 @@ var configuration = (function () {
               if (oLayer.url && oLayer.url.slice(-3) === ".js") {
                 hook_url = oLayer.url;
               }
-              $.ajax({
-                url: mviewer.ajaxURL(hook_url),
-                dataType: "script",
-                success: function (customLayer, textStatus, request) {
+              fetch(mviewer.ajaxURL(hook_url))
+                .then((response) => {
+                  if (!response.ok)
+                    throw new Error(`HTTP ${response.status} ${response.statusText}`);
+                  return response.text();
+                })
+                .then((source) => {
+                  const script = document.createElement("script");
+                  script.textContent = source;
+                  document.head.appendChild(script);
+                  script.remove();
+                })
+                .then(function () {
                   if (mviewer.customLayers[oLayer.id].layer) {
                     var l = mviewer.customLayers[oLayer.id].layer;
                     if (oLayer.style && mviewer.featureStyles[oLayer.style]) {
@@ -1232,11 +1272,10 @@ var configuration = (function () {
                     }
                     mviewer.processLayer(oLayer, l);
                   }
-                },
-                error: function (request, textStatus, error) {
+                })
+                .catch(function (error) {
                   console.log(`error with custom Layer ${oLayer.id} : ${error}`);
-                },
-              });
+                });
             }
             if (layer.group) {
               _themes[themeid].groups[layer.group].layers[oLayer.id] = oLayer;
