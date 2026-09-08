@@ -233,7 +233,9 @@
                     title="Fermer"
                     i18n="right.panel.close"
                     aria-label="Close"
-                    onclick="$('#bottom-panel').toggleClass('active')"></button>
+                    onclick="
+                      document.querySelector('#bottom-panel').classList.toggle('active')
+                    "></button>
                 </div>
                 <div class="popup-content mv-panel-queryable"></div>
               </div>
@@ -247,7 +249,9 @@
                     title="Fermer"
                     i18n="right.panel.close"
                     aria-label="Close"
-                    onclick="$('#right-panel').toggleClass('active')"></button>
+                    onclick="
+                      document.querySelector('#right-panel').classList.toggle('active')
+                    "></button>
                 </div>
                 <div class="popup-content mv-panel-queryable"></div>
               </div>
@@ -977,6 +981,7 @@
     <script type="text/javascript" src="js/addlayers.js"></script>
     <script type="text/javascript" src="js/info.js"></script>
     <script type="text/javascript" src="js/search.js"></script>
+    <script type="text/javascript" src="js/utils/slideToggle.js"></script>
     <script type="text/javascript" src="js/mviewer.js"></script>
     <script type="text/javascript" src="js/templates.js"></script>
     <script type="text/javascript" src="js/featurestyles.js"></script>
@@ -1012,7 +1017,7 @@
         (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
       );
       let API = {};
-      $(document).ready(function () {
+      document.addEventListener("DOMContentLoaded", function () {
         "use strict";
 
         // Startup 3. Runs on DOM ready and reads URL parameters used for startup.
@@ -1052,18 +1057,30 @@
         // Startup 4. Starts the asynchronous load of the main configuration.
         const theme = API.theme ? API.theme : null;
 
-        $.ajax({
-          url: configFile + "?_dc=" + new Date().getTime(),
-          dataType: "xml",
-          success: function (xml) {
+        fetch(configFile + "?_dc=" + new Date().getTime())
+          .then((response) => {
+            if (!response.ok) {
+              const error = new Error(response.statusText);
+              error.status = response.status;
+              throw error;
+            }
+            return response.text();
+          })
+          .then((xmlText) => {
+            const xml = new DOMParser().parseFromString(xmlText, "application/xml");
+            if (xml.querySelector("parsererror")) {
+              const error = new Error("Invalid XML configuration");
+              error.type = "parsererror";
+              throw error;
+            }
             // Async A1. After the config XML is fetched, registers callbacks for later app events.
-            $(document).on("layersLoaded", function (e) {
+            document.addEventListener("layersLoaded", function () {
               // Async B1. Runs when layers are actually loaded and applies their final display order.
               mviewer.overLayersReady();
               mviewer.showLayersByAttrOrder(mviewer.getLayersAttribute("rank"));
               mviewer.orderLayerByIndex();
             });
-            $(document).on("configurationCompleted", function (e, eData) {
+            document.addEventListener("configurationCompleted", function (event) {
               // Async B2. Runs when configuration parsing is complete, then starts async env loading.
               // load env var
               configuration.getEnvData(
@@ -1075,7 +1092,7 @@
                 // set mviewer en from environment file
                 mviewer.env = { ...r.detail };
                 //get JSON conf from xml;
-                const _conf = configuration.parseXML(eData.xml);
+                const _conf = configuration.parseXML(event.detail.xml);
                 let style = "css/themes/default.css";
                 if (
                   !theme &&
@@ -1086,14 +1103,14 @@
                 } else if (theme) {
                   style = "css/themes/" + theme + ".css";
                 }
-                $("head").prepend(
-                  '<link rel="stylesheet" href="' + style + '" type="text/css" />'
+                document.head.insertAdjacentHTML(
+                  "afterbegin",
+                  `<link rel="stylesheet" href="${style}">`
                 );
                 let title = "";
                 if (_conf.application.title) {
                   title = _conf.application.title;
-                  $("#loader-subtitle").empty();
-                  $("#loader-subtitle").append(title);
+                  document.querySelector("#loader-subtitle").textContent = title;
                 }
                 if (_conf.application.favicon) {
                   let ico = _conf.application.favicon;
@@ -1101,44 +1118,53 @@
                   favicon.attributes.href.value = ico;
                 }
                 configuration.load(_conf);
-                $(document).trigger("ready-for-component");
+                document.dispatchEvent(new CustomEvent("ready-for-component"));
                 // Async D1. Finishes visual startup after a short delay.
                 setTimeout(function () {
-                  $("#loading-page").addClass("hidden");
-                  $("#main").css("opacity", 1).hide();
-                  $("#main").fadeIn(1500);
-                  $("#loading-page").hide();
+                  const loadingPage = document.querySelector("#loading-page");
+                  const main = document.querySelector("#main");
+                  loadingPage.classList.add("hidden");
+                  main.style.display = "";
+                  const fadeIn = main.animate([{ opacity: 0 }, { opacity: 1 }], {
+                    duration: 1500,
+                    fill: "forwards",
+                  });
+                  fadeIn.onfinish = () => {
+                    main.style.opacity = "1";
+                    fadeIn.cancel();
+                  };
+                  loadingPage.style.display = "none";
                   mviewer.getMap().updateSize();
                   mviewer.initToolTip();
                 }, 2000);
               });
-              $("#map").focus();
+              document.querySelector("#map").focus();
             });
             document.addEventListener("applicationExtended", ({ detail }) =>
               configuration.complete(detail.xml)
             );
             configuration.getExtensions(xml);
-          }, // fin success config
-          error: function (request, status, error) {
+          })
+          .catch((error) => {
             // Async A2. Handles config loading failure and redirects to the matching error page.
-            const is404 = request.statusCode().status === 404 ? "404" : "";
-            const is400 = status === "parsererror" ? "400" : "";
+            const is404 = error.status === 404 ? "404" : "";
+            const is400 = error.type === "parsererror" ? "400" : "";
 
             if (API.debug === "true") {
               document.querySelector("#loader-title").innerHTML =
                 `<i class="fa fa-code" aria-hidden="true"></i> code ${is404 || is400}`;
               return;
             }
-            if (request.statusCode().status === 404) {
-              $("#error h1").text(`Erreur ${request.statusCode().status} : ${error}`);
+            if (error.status === 404) {
+              document.querySelector("#error h1").textContent =
+                `Erreur ${error.status} : ${error.message}`;
               document.location.href = "pages/error_404.html?xml=" + configFile;
-            } else if (status === "parsererror") {
+            } else if (error.type === "parsererror") {
               document.location.href = "pages/error_400.html?xml=" + configFile;
             }
-            $("#error").show();
-            $("#loading-page").hide();
-          },
-        });
+            document.querySelector("#error").style.display = "block";
+            document.querySelector("#loading-page").style.display = "none";
+          });
 
         // Startup 5. Registers drag-and-drop behavior for layer reordering.
         Sortable.create(document.getElementById("layers-container"), {
@@ -1147,20 +1173,20 @@
           filter: ".toplayer",
           onUpdate: function (evt) {
             let actionMove = {
-              layerName: $(evt.item).attr("data-layerid"),
+              layerName: evt.item.getAttribute("data-layerid"),
               layerRef: "",
               action: "",
             };
-            const itemsList = $(evt.from).find(".list-group-item");
+            const itemsList = evt.from.querySelectorAll(".list-group-item");
             //New position in the list
             const newPos = evt.newIndex;
             if (newPos < itemsList.length - 1) {
               //Get the under layer name
-              actionMove.layerRef = $(itemsList[newPos + 1]).attr("data-layerid");
+              actionMove.layerRef = itemsList[newPos + 1].getAttribute("data-layerid");
               actionMove.action = "up";
             } else {
               //Get the over layer name
-              actionMove.layerRef = $(itemsList[newPos - 1]).attr("data-layerid");
+              actionMove.layerRef = itemsList[newPos - 1].getAttribute("data-layerid");
               actionMove.action = "down";
             }
             mviewer.orderLayer(actionMove);
@@ -1168,18 +1194,24 @@
         });
 
         // Startup 6. Registers panel close handlers that clear the current query state.
-        $("#right-panel .btn-close,#bottom-panel .btn-close").click(function () {
-          mviewer.hideLocation();
-          if (window.info && typeof window.info.clearQueryState === "function") {
-            window.info.clearQueryState();
-          }
-        });
-        $("#modal-panel").on("hidden.bs.modal", function () {
-          if (window.info && typeof window.info.clearQueryState === "function") {
-            window.info.clearQueryState();
-          }
-          mviewer.hideLocation();
-        });
+        document
+          .querySelectorAll("#right-panel .btn-close, #bottom-panel .btn-close")
+          .forEach((button) =>
+            button.addEventListener("click", function () {
+              mviewer.hideLocation();
+              if (window.info && typeof window.info.clearQueryState === "function") {
+                window.info.clearQueryState();
+              }
+            })
+          );
+        document
+          .querySelector("#modal-panel")
+          .addEventListener("hidden.bs.modal", function () {
+            if (window.info && typeof window.info.clearQueryState === "function") {
+              window.info.clearQueryState();
+            }
+            mviewer.hideLocation();
+          });
       });
     </script>
     <script type="text/javascript" src="lib/jquery.easyDrag.min.js"></script>

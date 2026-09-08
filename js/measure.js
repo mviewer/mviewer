@@ -143,7 +143,7 @@ var measure = (function () {
     }
     _helpMeasureTooltipMessage.innerHTML = helpMsg;
     _helpMeasureTooltip.setPosition(evt.coordinate);
-    $(_helpMeasureTooltipMessage).removeClass("hidden");
+    _helpMeasureTooltipMessage.classList.remove("hidden");
   };
 
   /**
@@ -239,10 +239,10 @@ var measure = (function () {
    */
 
   var _clearMeasureTool = function () {
-    $("#measurelinebtn").removeClass("active");
-    $("#measurebtn").removeClass("active");
-    $("#measureareabtn").removeClass("active");
-    $("#drawtoolsoptions").hide();
+    document.querySelector("#measurelinebtn")?.classList.remove("active");
+    document.querySelector("#measurebtn")?.classList.remove("active");
+    document.querySelector("#measureareabtn")?.classList.remove("active");
+    document.querySelector("#drawtoolsoptions")?.style.setProperty("display", "none");
   };
 
   /**
@@ -252,7 +252,9 @@ var measure = (function () {
 
   var _clearOldMeasures = function () {
     _sourceMesure.clear();
-    $(".tooltip-measure-static").remove();
+    document
+      .querySelectorAll(".tooltip-measure-static")
+      .forEach((element) => element.remove());
   };
 
   /* PUBLIC */
@@ -264,17 +266,17 @@ var measure = (function () {
    */
 
   var _addMeasureInteraction = function (type) {
-    $("#drawtoolsoptions").show();
-    $("#measurebtn").addClass("active");
+    document.querySelector("#drawtoolsoptions")?.style.setProperty("display", "");
+    document.querySelector("#measurebtn")?.classList.add("active");
     if (type === "LineString") {
-      $("#measurelinebtn").addClass("active");
+      document.querySelector("#measurelinebtn")?.classList.add("active");
     } else if (type === "Polygon") {
-      $("#measureareabtn").addClass("active");
+      document.querySelector("#measureareabtn")?.classList.add("active");
     }
 
     _map.on("pointermove", _pointerMoveHandler);
-    $(_map.getViewport()).on("mouseout", function () {
-      $(_helpMeasureTooltipMessage).addClass("hidden");
+    _map.getViewport().addEventListener("mouseout", function () {
+      _helpMeasureTooltipMessage?.classList.add("hidden");
     });
     _draw = new ol.interaction.Draw({
       source: _sourceMesure,
@@ -418,8 +420,9 @@ var measure = (function () {
       "</button>",
       "</div>",
     ].join("");
-    $("#toolstoolbar").prepend(button);
-    $(buttonoptions).insertAfter("#toolstoolbar");
+    const toolsToolbar = document.querySelector("#toolstoolbar");
+    toolsToolbar?.insertAdjacentHTML("afterbegin", button);
+    toolsToolbar?.insertAdjacentHTML("afterend", buttonoptions);
 
     _map.addLayer(vector);
 

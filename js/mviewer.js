@@ -75,13 +75,13 @@ mviewer = (function () {
 
   _events.registerOverLayersLoadedListener(function (val) {
     if (val === _events.overLayersTotal && _events.confLoaded === true) {
-      $(document).trigger("layersLoaded");
+      document.dispatchEvent(new CustomEvent("layersLoaded"));
     }
   });
 
   _events.registerConfLoadedListener(function (val) {
     if (_events.overLayersLoaded === _events.overLayersTotal && val === true) {
-      $(document).trigger("layersLoaded");
+      document.dispatchEvent(new CustomEvent("layersLoaded"));
     }
   });
 
@@ -362,7 +362,7 @@ mviewer = (function () {
     if (mapoptions.rotation === "true") {
       _rotation = true;
     } else {
-      $("#northbtn").remove();
+      document.querySelector("#northbtn")?.remove();
     }
     _center = mapoptions.center.split(",").map(Number);
     //Projection
@@ -387,7 +387,7 @@ mviewer = (function () {
     //Create overlay (red pin) used by showLocation method
     _marker = new ol.Overlay({
       positioning: "bottom-center",
-      element: $("#mv_marker")[0],
+      element: document.querySelector("#mv_marker"),
       stopEvent: false,
     });
     overlays.push(_marker);
@@ -479,18 +479,20 @@ mviewer = (function () {
    */
 
   var _message = function (msg, cls, duration = 5000) {
-    var item = $(
-      [
-        '<div class="alert ' + cls + ' alert-dismissible" role="alert">',
-        '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
-        mviewer.tr(msg),
-        "</div>",
-      ].join("")
-    );
-    $("#alerts-zone").append(item);
+    const item = document
+      .createRange()
+      .createContextualFragment(
+        [
+          '<div class="alert ' + cls + ' alert-dismissible" role="alert">',
+          '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+          mviewer.tr(msg),
+          "</div>",
+        ].join("")
+      ).firstElementChild;
+    document.querySelector("#alerts-zone")?.append(item);
 
     setTimeout(function () {
-      item.alert("close");
+      bootstrap.Alert.getOrCreateInstance(item).close();
     }, duration);
   };
 
@@ -525,7 +527,9 @@ mviewer = (function () {
   };
 
   var _deleteLayer = function (layername) {
-    $(`[data-layerid='${layername}']`).remove();
+    document
+      .querySelectorAll(`[data-layerid='${layername}']`)
+      .forEach((element) => element.remove());
     _map.removeLayer(_overLayers[layername].layer);
     delete _overLayers[layername];
   };
@@ -591,7 +595,7 @@ mviewer = (function () {
 
   var _drawVectorLegend = function (layerid, items) {
     //Remove classic getLegendUrl
-    $(`#legend-${layerid}`).remove();
+    document.querySelector(`#legend-${layerid}`)?.remove();
     var canvas = document.getElementById(`vector-legend-${layerid}`);
     var layer = _overLayers[layerid];
     if (canvas && layer?.sld && ["csv", "geojson", "kml"].includes(layer.type)) {
@@ -909,11 +913,11 @@ mviewer = (function () {
 
   var _initShare = function () {
     var displayMode = API.mode || "d";
-    $("#mv-display-mode input")
-      .filter('[value="' + displayMode + '"]')
-      .attr("checked", true);
-    $("#mv-display-mode input").change(function () {
-      mviewer.setPermalink();
+    document
+      .querySelector(`#mv-display-mode input[value="${displayMode}"]`)
+      ?.setAttribute("checked", "true");
+    document.querySelectorAll("#mv-display-mode input").forEach((input) => {
+      input.addEventListener("change", () => mviewer.setPermalink());
     });
   };
 
@@ -928,7 +932,9 @@ mviewer = (function () {
         url: configuration.getConfiguration().application.help,
         dataType: "text",
         success: function (html) {
-          $("#help .modal-body").append(html);
+          document
+            .querySelector("#help .modal-body")
+            ?.insertAdjacentHTML("beforeend", html);
         },
       });
     }
@@ -941,11 +947,13 @@ mviewer = (function () {
    */
 
   var _mapChange = function (e) {
-    if ($("#sharepanel-popup").css("visibility") === "visible") {
+    const sharePanel = document.querySelector("#sharepanel-popup");
+    if (sharePanel && getComputedStyle(sharePanel).visibility === "visible") {
       mviewer.setPermalink();
     }
-    if (search.options.features && $("#searchfield").val()) {
-      search.sendElasticsearchRequest($("#searchfield").val());
+    const searchField = document.querySelector("#searchfield");
+    if (search.options.features && searchField?.value) {
+      search.sendElasticsearchRequest(searchField.value);
     }
   };
 
@@ -1019,15 +1027,12 @@ mviewer = (function () {
         url: _ajaxURL(oLayer.metadatacsw),
         success: function (result) {
           var summary = "";
-          if ($(result).find("dct\\:abstract, abstract").length > 0) {
-            summary = `<p>${$(result).find("dct\\:abstract, abstract").text()}</p>`;
+          const getXmlText = (selector) =>
+            result.querySelector(selector)?.textContent || "";
+          if (result.querySelector("dct\\:abstract, abstract")) {
+            summary = `<p>${getXmlText("dct\\:abstract, abstract")}</p>`;
           } else {
-            summary = `<p>${$(result)
-              .find("gmd\\:identificationInfo, identificationInfo")
-              .find("gmd\\:MD_DataIdentification,  MD_DataIdentification")
-              .find("gmd\\:abstract, abstract")
-              .find("gco\\:CharacterString, CharacterString")
-              .text()}</p>`;
+            summary = `<p>${getXmlText("gmd\\:identificationInfo gmd\\:MD_DataIdentification gmd\\:abstract gco\\:CharacterString, identificationInfo MD_DataIdentification abstract CharacterString")}</p>`;
           }
           if (_overLayers[this.layer].metadata) {
             summary += `<a href="${
@@ -1037,20 +1042,23 @@ mviewer = (function () {
           _overLayers[this.layer].summary = summary;
 
           var modifiedDate =
-            $(result).find("dct\\:modified, modified").text() ||
-            $(result).find("dct\\:created, created").text();
+            getXmlText("dct\\:modified, modified") ||
+            getXmlText("dct\\:created, created");
           _overLayers[this.layer].modifiedDate = modifiedDate;
 
           //use source from metadata as attribution if conf is set to "metadata"
           if (_overLayers[this.layer].attribution === "metadata") {
-            var source = $(result).find("dc\\:source, source").text();
+            var source = getXmlText("dc\\:source, source");
             _overLayers[this.layer].attribution = `Source : ${source}`;
-            $(`#${this.layer}-attribution`).text(`Source : ${source}`);
+            document.querySelector(`#${this.layer}-attribution`).textContent =
+              `Source : ${source}`;
           }
 
           //update visible layers on the map
-          $(`#${this.layer}-layer-summary`).attr("data-bs-content", summary);
-          $(`#${this.layer}-date`).text(modifiedDate);
+          document
+            .querySelector(`#${this.layer}-layer-summary`)
+            ?.setAttribute("data-bs-content", summary);
+          document.querySelector(`#${this.layer}-date`).textContent = modifiedDate;
         },
       });
     }
@@ -1068,29 +1076,37 @@ mviewer = (function () {
   var manageLegend = function (displayMode) {
     var isSimpleMode = displayMode === "s" || displayMode === "u";
     var isMobile = configuration.getConfiguration().mobile === true;
+    const moveLegendTo = (selector) => {
+      const legend = document.querySelector("#legend");
+      const target = document.querySelector(selector);
+      if (legend && target) target.append(legend);
+    };
 
-    $("#btn-mode-su-menu").off("click");
-    $("#legend-panel .btn-close").off("click");
+    manageLegend.eventsController?.abort();
+    manageLegend.eventsController = new AbortController();
+    const eventOptions = { signal: manageLegend.eventsController.signal };
 
     if (!isSimpleMode) {
       if (isMobile) {
-        $("#legend").appendTo("#legend-modal .modal-body");
-        $("#legend-panel").hide();
+        moveLegendTo("#legend-modal .modal-body");
+        document.querySelector("#legend-panel")?.style.setProperty("display", "none");
       } else {
-        $("#legend").appendTo("#layers-container-box");
-        $("#legend-panel").hide();
+        moveLegendTo("#layers-container-box");
+        document.querySelector("#legend-panel")?.style.setProperty("display", "none");
       }
       return;
     }
 
     // Mode s/u + mobile > Modale
     if (isMobile) {
-      $("#legend").appendTo("#legend-modal .modal-body");
-      $("#legend-panel").hide();
+      moveLegendTo("#legend-modal .modal-body");
+      document.querySelector("#legend-panel")?.style.setProperty("display", "none");
 
-      var $btn = $("#btn-mode-su-menu");
-      if (!$btn.length) {
-        $("#page-content-wrapper").append(`
+      let button = document.querySelector("#btn-mode-su-menu");
+      if (!button) {
+        document.querySelector("#page-content-wrapper")?.insertAdjacentHTML(
+          "beforeend",
+          `
           <a
             id="btn-mode-su-menu"
             class="btn btn-primary"
@@ -1103,19 +1119,22 @@ mviewer = (function () {
             <i class="ri-equalizer-fill"></i>
             <span i18n="data.toggle"> Afficher la légende</span>
           </a>
-        `);
+        `
+        );
       } else {
-        $btn.attr("data-bs-toggle", "modal");
-        $btn.attr("data-bs-target", "#legend-modal");
-        $btn.attr("href", "#");
+        button.setAttribute("data-bs-toggle", "modal");
+        button.setAttribute("data-bs-target", "#legend-modal");
+        button.setAttribute("href", "#");
       }
       return;
     }
 
     // Mode s/u + DESKTOP > Panel drag
-    var $panel = $("#legend-panel");
-    if (!$panel.length) {
-      $("#main").append(`
+    let panel = document.querySelector("#legend-panel");
+    if (!panel) {
+      document.querySelector("#main")?.insertAdjacentHTML(
+        "beforeend",
+        `
         <div id="legend-panel" class="legend-panel card open">
           <div class="card-header d-flex justify-content-between align-items-center">
             <span i18n="legend.modal.title">Légende</span>
@@ -1123,23 +1142,26 @@ mviewer = (function () {
           </div>
           <div class="legendPanel-body"></div>
         </div>
-      `);
-      $panel = $("#legend-panel");
+      `
+      );
+      panel = document.querySelector("#legend-panel");
     }
 
-    $("#legend").appendTo("#legend-panel .legendPanel-body");
+    moveLegendTo("#legend-panel .legendPanel-body");
 
     // Draggable via easyDrag si dispo
     if ($.fn.easyDrag) {
-      $panel.easyDrag({
+      $(panel).easyDrag({
         handle: ".card-header",
         container: $("#map"),
       });
     }
 
-    var $btn = $("#btn-mode-su-menu");
-    if (!$btn.length) {
-      $("#page-content-wrapper").append(`
+    let button = document.querySelector("#btn-mode-su-menu");
+    if (!button) {
+      document.querySelector("#page-content-wrapper")?.insertAdjacentHTML(
+        "beforeend",
+        `
         <a
           id="btn-mode-su-menu"
           class="btn btn-primary"
@@ -1149,28 +1171,43 @@ mviewer = (function () {
           <i class="ri-equalizer-fill"></i>
           <span i18n="data.toggle"> Afficher la légende</span>
         </a>
-      `);
-      $btn = $("#btn-mode-su-menu");
+      `
+      );
+      button = document.querySelector("#btn-mode-su-menu");
     }
 
-    $btn.removeAttr("data-bs-toggle data-bs-target href");
+    button?.removeAttribute("data-bs-toggle");
+    button?.removeAttribute("data-bs-target");
+    button?.removeAttribute("href");
 
-    $btn.on("click", function (e) {
-      e.preventDefault();
-      const $legend = $("#legend-panel");
-      $legend.toggle();
-      $legend.toggleClass("open", $legend.is(":visible"));
-    });
+    document.querySelector("#btn-mode-su-menu")?.addEventListener(
+      "click",
+      function (e) {
+        e.preventDefault();
+        const legendPanel = document.querySelector("#legend-panel");
+        if (legendPanel) {
+          const isHidden = getComputedStyle(legendPanel).display === "none";
+          legendPanel.style.display = isHidden ? "block" : "none";
+          legendPanel.classList.toggle("open", isHidden);
+        }
+      },
+      eventOptions
+    );
 
-    $("#legend-panel .btn-close").on("click", function () {
-      $("#legend-panel").hide();
-      $("#legend-panel").removeClass("open");
-    });
+    document.querySelector("#legend-panel .btn-close")?.addEventListener(
+      "click",
+      function () {
+        const legendPanel = document.querySelector("#legend-panel");
+        legendPanel?.style.setProperty("display", "none");
+        legendPanel?.classList.remove("open");
+      },
+      eventOptions
+    );
 
     var legendmini = configuration.getConfiguration().themes.legendmini || null;
     legendmini =
       legendmini != null ? (legendmini && legendmini === "true") || false : legendmini;
-    $panel.toggle(!legendmini);
+    if (panel) panel.style.display = legendmini ? "none" : "block";
   };
 
   /**
@@ -1203,33 +1240,45 @@ mviewer = (function () {
   var _updateViewPort = function (s, displayMode) {
     _mediaSize = s;
     if (s === "xs") {
-      $("#wrapper, #main").removeClass("xl").addClass("xs");
-      $("#menu").appendTo("#thematic-modal .modal-body");
+      document.querySelectorAll("#wrapper, #main").forEach((element) => {
+        element.classList.remove("xl");
+        element.classList.add("xs");
+      });
+      document
+        .querySelector("#thematic-modal .modal-body")
+        ?.append(document.querySelector("#menu"));
       configuration.getConfiguration().mobile = true;
-      if ($("#right-panel").hasClass("active")) {
-        $("#right-panel").removeClass("active");
-      }
-      if ($("#bottom-panel").hasClass("active")) {
-        $("#bottom-panel").removeClass("active");
-      }
+      document.querySelector("#right-panel")?.classList.remove("active");
+      document.querySelector("#bottom-panel")?.classList.remove("active");
       if (displayMode) {
-        $("#wrapper, #main").addClass("mode-" + displayMode);
+        document
+          .querySelectorAll("#wrapper, #main")
+          .forEach((element) => element.classList.add("mode-" + displayMode));
         if (displayMode === "u") {
-          $("#mv-navbar").remove();
+          document.querySelector("#mv-navbar")?.remove();
         }
         if (displayMode === "s") {
-          $("#searchtool").appendTo("#main");
+          document.querySelector("#main")?.append(document.querySelector("#searchtool"));
         }
       }
     } else {
-      $("#wrapper, #main").removeClass("xs").addClass("xl");
+      document.querySelectorAll("#wrapper, #main").forEach((element) => {
+        element.classList.remove("xs");
+        element.classList.add("xl");
+      });
       configuration.getConfiguration().mobile = false;
       if (displayMode !== "s" || displayMode !== "u") {
-        $("#menu").appendTo("#sidebar-wrapper");
-        $("#legend").appendTo("#layers-container-box");
+        document
+          .querySelector("#sidebar-wrapper")
+          ?.append(document.querySelector("#menu"));
+        document
+          .querySelector("#layers-container-box")
+          ?.append(document.querySelector("#legend"));
       }
       if (displayMode === "s") {
-        $("#searchtool").appendTo("#searchtool_nav");
+        document
+          .querySelector("#searchtool_nav")
+          ?.append(document.querySelector("#searchtool"));
       }
     }
     manageLegend(displayMode);
@@ -1246,13 +1295,15 @@ mviewer = (function () {
       displayMode = API.mode;
       if (API.mode === "u") {
         //Show searchtool on main div
-        $("#searchtool").appendTo("#main");
-        $("#searchtool").removeClass("navbar-form");
+        document.querySelector("#main")?.append(document.querySelector("#searchtool"));
+        document.querySelector("#searchtool")?.classList.remove("navbar-form");
       }
 
-      $("#wrapper, #main").addClass("mode-" + displayMode);
+      document
+        .querySelectorAll("#wrapper, #main")
+        .forEach((element) => element.classList.add("mode-" + displayMode));
     }
-    if ($(window).width() < 992) {
+    if (window.innerWidth < 992) {
       _mediaSize = "xs";
       configuration.getConfiguration().mobile = true;
     } else {
@@ -1260,20 +1311,26 @@ mviewer = (function () {
       configuration.getConfiguration().mobile = false;
     }
     if (configuration.getConfiguration().mobile) {
-      $("#thematic-modal .modal-body").append(
-        '<ul class="sidebar-nav nav-pills nav-stacked" id="menu"></ul>'
-      );
+      document
+        .querySelector("#thematic-modal .modal-body")
+        ?.insertAdjacentHTML(
+          "beforeend",
+          '<ul class="sidebar-nav nav-pills nav-stacked" id="menu"></ul>'
+        );
     } else {
-      $("#sidebar-wrapper").append(
-        '<ul class="sidebar-nav nav-pills nav-stacked" id="menu"></ul>'
-      );
+      document
+        .querySelector("#sidebar-wrapper")
+        ?.insertAdjacentHTML(
+          "beforeend",
+          '<ul class="sidebar-nav nav-pills nav-stacked" id="menu"></ul>'
+        );
     }
     manageLegend(displayMode);
     if (_mediaSize === "xs") {
       _updateViewPort("xs", displayMode);
     }
-    $(window).resize(function () {
-      var w = $(this).width();
+    window.addEventListener("resize", function () {
+      var w = window.innerWidth;
       var s = "";
       if (w < 768) {
         s = "xs";
@@ -1383,7 +1440,7 @@ mviewer = (function () {
       mviewer.toggleLegend(false);
     }
 
-    $("#menu").html(htmlListGroup);
+    document.querySelector("#menu").innerHTML = htmlListGroup;
     initMenu();
     // Open theme item if set to collapsed=false
     if (configuration.getConfiguration().themes.theme !== undefined) {
@@ -1391,14 +1448,16 @@ mviewer = (function () {
         .getConfiguration()
         .themes.theme.filter((obj) => obj.collapsed === "false");
       if (expanded_theme.length > 0) {
-        $(`#theme-layers-${expanded_theme[0].id}>a`).click();
+        document.querySelector(`#theme-layers-${expanded_theme[0].id}>a`)?.click();
       }
     }
     //Add remove and add layers button on them
     if (
       configuration.getConfiguration().application.togglealllayersfromtheme === "true"
     ) {
-      $(".toggle-theme-layers").on("click", mviewer.toggleAllThemeLayers);
+      document.querySelectorAll(".toggle-theme-layers").forEach((button) => {
+        button.addEventListener("click", mviewer.toggleAllThemeLayers);
+      });
     }
   };
 
@@ -1416,16 +1475,21 @@ mviewer = (function () {
 
   // manage display for vector legend
   var _setVectorLegendStatus = (layer, visible) => {
-    var panel = $(`#vector-legend-${layer.id}`);
+    var panel = document.getElementById(`vector-legend-${layer.id}`);
+    if (!panel) {
+      return;
+    }
     var cl = `hide${layer.id}`;
     if (visible) {
-      panel.removeClass("hidden");
-      panel.parents().find(`.${cl}`).remove();
+      panel.classList.remove("hidden");
+      panel.parentElement?.parentElement
+        ?.querySelectorAll(`.${cl}`)
+        .forEach((element) => element.remove());
     } else {
-      panel.addClass("hidden");
-      if (!panel.parents().find(`.${cl}`).length) {
+      panel.classList.add("hidden");
+      if (!panel.parentElement?.parentElement?.querySelector(`.${cl}`)) {
         var img = `<img class="${cl} img-responsive" src="img/invisible.png" style="max-width:30%">`;
-        $(`#vector-legend-${layer.id}`).parent().append(img);
+        panel.parentElement?.insertAdjacentHTML("beforeend", img);
       }
     }
   };
@@ -1433,20 +1497,26 @@ mviewer = (function () {
   // manage static legend display
   var _setUrlLegendStatus = function (layer, visible) {
     var legendUrl = _getlegendurl(layer);
-    var panel = $(`#legend-${layer.id}`);
+    var panel = document.getElementById(`legend-${layer.id}`);
+    if (!panel) {
+      return;
+    }
     if (visible) {
-      panel.attr("src", legendUrl);
-      panel.closest("li").removeClass("glyphicon mv-invisible");
+      panel.src = legendUrl;
+      panel.closest("li")?.classList.remove("glyphicon", "mv-invisible");
     } else {
-      panel.attr("src", "img/invisible.png");
-      panel.closest("li").addClass("glyphicon mv-invisible");
+      panel.src = "img/invisible.png";
+      panel.closest("li")?.classList.add("glyphicon", "mv-invisible");
     }
   };
 
   var _setLayerLegend = function (layer, scale) {
     if (layer.dynamiclegend) {
       var legendUrl = _getlegendurl(layer, scale);
-      $(`#legend-${layer.id}`).attr("src", legendUrl);
+      const legend = document.querySelector(`#legend-${layer.id}`);
+      if (legend) {
+        legend.src = legendUrl;
+      }
     }
   };
 
@@ -1463,28 +1533,34 @@ mviewer = (function () {
   };
 
   var _setThemeStatus = function (id, prop) {
-    var theme = $(`#theme-layers-${id}`);
+    var theme = document.querySelector(`#theme-layers-${id}`);
     if (!prop) {
       prop = _getThemeStatus(id);
     }
     switch (prop.status) {
       case "empty":
-        theme.removeClass("half full").addClass(prop.status);
+        theme.classList.remove("half", "full");
+        theme.classList.add(prop.status);
         break;
       case "full":
-        theme.removeClass("half empty").addClass(prop.status);
+        theme.classList.remove("half", "empty");
+        theme.classList.add(prop.status);
         break;
       case "half":
-        theme.removeClass("empty full").addClass(prop.status);
+        theme.classList.remove("empty", "full");
+        theme.classList.add(prop.status);
         break;
     }
-    theme.find(".toggle-theme-layers .badge").text([prop.visible, prop.all].join("/"));
+    theme.querySelector(".toggle-theme-layers .badge").textContent = [
+      prop.visible,
+      prop.all,
+    ].join("/");
   };
 
   _getThemeStatus = function (id) {
-    var theme = $(`#theme-layers-${id}`);
-    var nbLayers = theme.find("input").length;
-    var visLayers = theme.find("input[value='true']").length;
+    var theme = document.querySelector(`#theme-layers-${id}`);
+    var nbLayers = theme.querySelectorAll("input").length;
+    var visLayers = theme.querySelectorAll("input[value='true']").length;
     var status = "";
     if (visLayers === 0) {
       status = "empty";
@@ -1801,8 +1877,9 @@ mviewer = (function () {
           var l = layer.layer;
           if (
             l &&
-            $(`.list-group-item.mv-layer-details[data-layerid='${layer.id}']`).length ===
-              0
+            !document.querySelector(
+              `.list-group-item.mv-layer-details[data-layerid='${layer.id}']`
+            )
           ) {
             l.src ? l.src.setVisible(true) : l.setVisible(true);
             mviewer.addLayer(layer);
@@ -1821,7 +1898,9 @@ mviewer = (function () {
     var showLayer = function (layerControler, layerOptions) {
       layerControler.checked = true;
       layerControler.visiblebydefault = true;
-      var li = $(`.mv-nav-item[data-layerid='${layerControler.layerid}']`);
+      var li = document.querySelector(
+        `.mv-nav-item[data-layerid='${layerControler.layerid}']`
+      );
       var sourceParams = _getWmsSourceParams(layerControler);
       if (layerOptions.style && layerControler.type === "wms" && !layerControler.xyz) {
         if (sourceParams) {
@@ -1837,8 +1916,10 @@ mviewer = (function () {
       mviewer.toggleLayer(li);
       if (layerOptions.time && layerControler.type === "wms" && !layerControler.xyz) {
         //layerControler.layer.getSource().getParams()['TIME'] = layerOptions.time;
-        var timeControl = $(`#${layerControler.layerid}-layer-timefilter`);
-        if (timeControl.hasClass("mv-slider-timer")) {
+        var timeControl = document.querySelector(
+          `#${layerControler.layerid}-layer-timefilter`
+        );
+        if (timeControl?.classList.contains("mv-slider-timer")) {
           timeControl.slider(
             "setValue",
             layerControler.timevalues.indexOf(layerOptions.time),
@@ -1885,118 +1966,130 @@ mviewer = (function () {
 
   var _parseWMCResponse = function (response, wmcid) {
     var crossorigin = configuration.getCrossorigin();
-    var wmc = $("ViewContext", response);
+    var wmc = response.querySelector("ViewContext");
     var wmc_extent = {};
-    wmc_extent.srs = $(wmc).find("General > BoundingBox").attr("SRS");
-    wmc_extent.minx = parseInt($(wmc).find("General > BoundingBox").attr("minx"));
-    wmc_extent.miny = parseInt($(wmc).find("General > BoundingBox").attr("miny"));
-    wmc_extent.maxx = parseInt($(wmc).find("General > BoundingBox").attr("maxx"));
-    wmc_extent.maxy = parseInt($(wmc).find("General > BoundingBox").attr("maxy"));
+    const boundingBox = wmc.querySelector("General > BoundingBox");
+    wmc_extent.srs = boundingBox.getAttribute("SRS");
+    wmc_extent.minx = parseInt(boundingBox.getAttribute("minx"));
+    wmc_extent.miny = parseInt(boundingBox.getAttribute("miny"));
+    wmc_extent.maxx = parseInt(boundingBox.getAttribute("maxx"));
+    wmc_extent.maxy = parseInt(boundingBox.getAttribute("maxy"));
     var map_extent = utils.transformExtentSafe(
       [wmc_extent.minx, wmc_extent.miny, wmc_extent.maxx, wmc_extent.maxy],
       wmc_extent.srs,
       _projection.getCode()
     );
-    var title = $(wmc).find("General > Title").text() || $(wmc).attr("id");
+    var title =
+      wmc.querySelector("General > Title")?.textContent || wmc.getAttribute("id");
     var themeLayers = {};
     var layerRank = 0;
-    $(wmc)
-      .find("LayerList > Layer")
-      .each(function () {
-        layerRank += 1;
-        // we only consider queryable layers
-        if ($(this).attr("queryable") == "1") {
-          var oLayer = {};
-          oLayer.checked = $(this).attr("hidden") === "0" ? true : false;
-          oLayer.id = $(this).children("Name").text();
-          oLayer.rank = layerRank;
-          oLayer.infospanel = "right-panel";
-          oLayer.layerid = $(this).children("Name").text();
-          oLayer.layername = oLayer.id;
-          oLayer.name = $(this).children("Title").text();
-          oLayer.title = $(this).children("Title").text();
-          oLayer.attribution = $(this).find("attribution").find("Title").text() || "";
-          oLayer.metadata = $(this)
-            .find("MetadataURL > OnlineResource")
-            .attr("xlink:href");
-          //fixme
-          if (oLayer.metadata && oLayer.metadata.search("geonetwork") > 1) {
-            var mdid = oLayer.metadata.split("#/metadata/")[1];
-            oLayer.metadatacsw =
-              oLayer.metadata.substring(0, oLayer.metadata.search("geonetwork")) +
-              "geonetwork/srv/eng/csw?SERVICE=CSW&VERSION=2.0.2&REQUEST=GetRecordById&elementSetName=full&ID=" +
-              mdid;
+    wmc.querySelectorAll("LayerList > Layer").forEach(function (layerElement) {
+      layerRank += 1;
+      // we only consider queryable layers
+      if (layerElement.getAttribute("queryable") == "1") {
+        var oLayer = {};
+        oLayer.checked = layerElement.getAttribute("hidden") === "0";
+        oLayer.id = layerElement.querySelector(":scope > Name")?.textContent;
+        oLayer.rank = layerRank;
+        oLayer.infospanel = "right-panel";
+        oLayer.layerid = layerElement.querySelector(":scope > Name")?.textContent;
+        oLayer.layername = oLayer.id;
+        oLayer.name = layerElement.querySelector(":scope > Title")?.textContent;
+        oLayer.title = layerElement.querySelector(":scope > Title")?.textContent;
+        oLayer.attribution =
+          layerElement.querySelector("attribution Title")?.textContent || "";
+        oLayer.metadata = layerElement
+          .querySelector("MetadataURL > OnlineResource")
+          ?.getAttribute("xlink:href");
+        //fixme
+        if (oLayer.metadata && oLayer.metadata.search("geonetwork") > 1) {
+          var mdid = oLayer.metadata.split("#/metadata/")[1];
+          oLayer.metadatacsw =
+            oLayer.metadata.substring(0, oLayer.metadata.search("geonetwork")) +
+            "geonetwork/srv/eng/csw?SERVICE=CSW&VERSION=2.0.2&REQUEST=GetRecordById&elementSetName=full&ID=" +
+            mdid;
+        }
+        oLayer.style = layerElement.querySelector(
+          "StyleList > Style[current='1'] > Name"
+        )?.textContent;
+        oLayer.sld = layerElement
+          .querySelector("StyleList > Style[current='1'] > SLD > OnlineResource")
+          ?.getAttribute("xlink:href");
+        if (
+          !oLayer.sld &&
+          layerElement.querySelectorAll("StyleList > Style > Name").length > 1
+        ) {
+          oLayer.styles = [...layerElement.querySelectorAll("StyleList > Style > Name")]
+            .map((name) => name.textContent)
+            .join(",");
+          oLayer.stylesalias = oLayer.styles;
+        }
+        oLayer.url = layerElement
+          .querySelector("Server > OnlineResource")
+          ?.getAttribute("xlink:href");
+        oLayer.queryable = true;
+        oLayer.infoformat = "text/html";
+        oLayer.format = layerElement.querySelector(
+          "FormatList > Format[current='1']"
+        )?.textContent;
+        oLayer.visiblebydefault = oLayer.checked;
+        oLayer.tiled = false;
+        oLayer.legendurl = _getlegendurl(oLayer);
+        oLayer.opacity = parseFloat(
+          layerElement.querySelector("opacity")?.textContent || "1"
+        );
+        var minscale = parseFloat(
+          layerElement.querySelector("MinScaleDenominator")?.textContent
+        );
+        var maxscale = parseFloat(
+          layerElement.querySelector("MaxScaleDenominator")?.textContent
+        );
+        if (!isNaN(minscale) || !isNaN(maxscale)) {
+          oLayer.scale = {};
+          if (!isNaN(minscale)) {
+            oLayer.scale.min = minscale;
           }
-          oLayer.style = $(this).find("StyleList  > Style[current='1'] > Name").text();
-          oLayer.sld = $(this)
-            .find("StyleList  > Style[current='1'] > SLD > OnlineResource")
-            .attr("xlink:href");
-          if (!oLayer.sld && $(this).find("StyleList  > Style > Name").length > 1) {
-            oLayer.styles = $(this)
-              .find("StyleList  > Style > Name")
-              .map(function (id, name) {
-                return $(name).text();
-              })
-              .toArray()
-              .join(",");
-            oLayer.stylesalias = oLayer.styles;
-          }
-          oLayer.url = $(this).find("Server > OnlineResource").attr("xlink:href");
-          oLayer.queryable = true;
-          oLayer.infoformat = "text/html";
-          oLayer.format = $(this).find("FormatList  > Format[current='1']").text();
-          oLayer.visiblebydefault = oLayer.checked;
-          oLayer.tiled = false;
-          oLayer.legendurl = _getlegendurl(oLayer);
-          oLayer.opacity = parseFloat($(this).find("opacity").text() || "1");
-          var minscale = parseFloat($(this).find("MinScaleDenominator").text());
-          var maxscale = parseFloat($(this).find("MaxScaleDenominator").text());
-          if (!isNaN(minscale) || !isNaN(maxscale)) {
-            oLayer.scale = {};
-            if (!isNaN(minscale)) {
-              oLayer.scale.min = minscale;
-            }
-            if (!isNaN(maxscale)) {
-              oLayer.scale.max = maxscale;
-            }
-          }
-
-          oLayer.theme = wmcid;
-          themeLayers[oLayer.id] = oLayer;
-          var wms_params = {
-            LAYERS: oLayer.id,
-            STYLES: oLayer.style,
-            FORMAT: "image/png",
-            TRANSPARENT: true,
-          };
-          if (oLayer.sld) {
-            wms_params["SLD"] = oLayer.sld;
-          }
-          var l = new ol.layer.Image({
-            source: new ol.source.ImageWMS({
-              url: oLayer.url,
-              crossOrigin: crossorigin,
-              params: wms_params,
-            }),
-          });
-
-          l.setVisible(oLayer.checked);
-          l.setOpacity(oLayer.opacity);
-          if (oLayer.scale && oLayer.scale.max) {
-            l.setMaxResolution(_convertScale2Resolution(oLayer.scale.max));
-          }
-          if (oLayer.scale && oLayer.scale.min) {
-            l.setMinResolution(_convertScale2Resolution(oLayer.scale.min));
-          }
-          l.set("name", oLayer.name);
-          l.set("mviewerid", oLayer.id);
-          themeLayers[oLayer.id].layer = l;
-          _overLayers[oLayer.id] = themeLayers[oLayer.id];
-          if (oLayer.scale) {
-            _scaledDependantLayers.push(oLayer);
+          if (!isNaN(maxscale)) {
+            oLayer.scale.max = maxscale;
           }
         }
-      });
+
+        oLayer.theme = wmcid;
+        themeLayers[oLayer.id] = oLayer;
+        var wms_params = {
+          LAYERS: oLayer.id,
+          STYLES: oLayer.style,
+          FORMAT: "image/png",
+          TRANSPARENT: true,
+        };
+        if (oLayer.sld) {
+          wms_params["SLD"] = oLayer.sld;
+        }
+        var l = new ol.layer.Image({
+          source: new ol.source.ImageWMS({
+            url: oLayer.url,
+            crossOrigin: crossorigin,
+            params: wms_params,
+          }),
+        });
+
+        l.setVisible(oLayer.checked);
+        l.setOpacity(oLayer.opacity);
+        if (oLayer.scale && oLayer.scale.max) {
+          l.setMaxResolution(_convertScale2Resolution(oLayer.scale.max));
+        }
+        if (oLayer.scale && oLayer.scale.min) {
+          l.setMinResolution(_convertScale2Resolution(oLayer.scale.min));
+        }
+        l.set("name", oLayer.name);
+        l.set("mviewerid", oLayer.id);
+        themeLayers[oLayer.id].layer = l;
+        _overLayers[oLayer.id] = themeLayers[oLayer.id];
+        if (oLayer.scale) {
+          _scaledDependantLayers.push(oLayer);
+        }
+      }
+    });
     return { title: title, extent: map_extent, layers: themeLayers };
   };
 
@@ -2150,90 +2243,125 @@ mviewer = (function () {
 
       // if help popup only
       if (showHelp) {
-        $("#lang-button, #lang-selector").addClass("enabled");
-        $("#lang-body>ul").append(langitems.join(""));
-        $("#lang-selector>ul").append(langitems.join(""));
-        $("#help .modal-body").append(
-          '<ul class="langList">' + langitems.join("") + "</ul>"
-        );
+        document
+          .querySelectorAll("#lang-button, #lang-selector")
+          .forEach((element) => element.classList.add("enabled"));
+        document
+          .querySelector("#lang-body>ul")
+          ?.insertAdjacentHTML("beforeend", langitems.join(""));
+        document
+          .querySelector("#lang-selector>ul")
+          ?.insertAdjacentHTML("beforeend", langitems.join(""));
+        document
+          .querySelector("#help .modal-body")
+          ?.insertAdjacentHTML(
+            "beforeend",
+            '<ul class="langList">' + langitems.join("") + "</ul>"
+          );
       } else {
         // display selector or modal according to device
-        $("#lang-button, #lang-selector").addClass("enabled");
-        $("#lang-body>ul").append(langitems.join(""));
-        $("#lang-selector>ul").append(langitems.join(""));
+        document
+          .querySelectorAll("#lang-button, #lang-selector")
+          .forEach((element) => element.classList.add("enabled"));
+        document
+          .querySelector("#lang-body>ul")
+          ?.insertAdjacentHTML("beforeend", langitems.join(""));
+        document
+          .querySelector("#lang-selector>ul")
+          ?.insertAdjacentHTML("beforeend", langitems.join(""));
       }
-      $(".mv-translate a").click(function () {
-        let activeLangItemsOld = document.querySelectorAll(".mv-translate a.activeLang");
-        activeLangItemsOld.forEach((i) => {
-          i.classList.remove("activeLang");
-        });
-        let langElementItems = document.querySelectorAll(
-          '[idlang="' + $(this).attr("idlang") + '"]'
-        );
-        langElementItems.forEach((i) => {
-          i.classList.add("activeLang");
-        });
-        _changeLanguage($(this).attr("idlang"));
+      document.querySelectorAll(".mv-translate a").forEach((link) =>
+        link.addEventListener("click", function () {
+          let activeLangItemsOld = document.querySelectorAll(
+            ".mv-translate a.activeLang"
+          );
+          activeLangItemsOld.forEach((i) => {
+            i.classList.remove("activeLang");
+          });
+          let langElementItems = document.querySelectorAll(
+            '[idlang="' + this.getAttribute("idlang") + '"]'
+          );
+          langElementItems.forEach((i) => {
+            i.classList.add("activeLang");
+          });
+          _changeLanguage(this.getAttribute("idlang"));
 
-        if (languages.length > 1) {
-          // only make items hidden if there are multiple languages
+          if (languages.length > 1) {
+            // only make items hidden if there are multiple languages
 
-          //hide current lang mst and show new mst
+            //hide current lang mst and show new mst
 
-          // close lang selector
-          if (configuration.getConfiguration().mobile) {
-            $("#lang-popup").modal("hide");
-          } else {
-            $(".mv-translate").removeClass("active");
-          }
-
-          var available_info_panels = [];
-
-          var all_panels_selectors = ["#right-panel", "#bottom-panel", "#modal-panel"];
-          all_panels_selectors.forEach((selector) => {
-            full_selector = selector + " .popup-content";
-            if ($(full_selector).html() && $(full_selector).html().trim() !== "") {
-              // add panel selector to the array
-              available_info_panels.push(selector);
+            // close lang selector
+            if (configuration.getConfiguration().mobile) {
+              $("#lang-popup").modal("hide");
+            } else {
+              document
+                .querySelectorAll(".mv-translate")
+                .forEach((element) => element.classList.remove("active"));
             }
-          });
-          // in case no panel selector  found, defaults to right panel
-          if (available_info_panels.length === 0) {
-            available_info_panels = ["#right-panel"];
+
+            var available_info_panels = [];
+
+            var all_panels_selectors = ["#right-panel", "#bottom-panel", "#modal-panel"];
+            all_panels_selectors.forEach((selector) => {
+              full_selector = selector + " .popup-content";
+              if (document.querySelector(full_selector)?.innerHTML.trim() !== "") {
+                // add panel selector to the array
+                available_info_panels.push(selector);
+              }
+            });
+            // in case no panel selector  found, defaults to right panel
+            if (available_info_panels.length === 0) {
+              available_info_panels = ["#right-panel"];
+            }
+
+            // apply translations to all panels
+            available_info_panels.forEach((info_panel_selector_to_use) => {
+              // hide other languages slides
+              document
+                .querySelectorAll(
+                  `${info_panel_selector_to_use} .carousel-inner li.item:not(.mst_${configuration.getLang()})`
+                )
+                .forEach((element) => {
+                  element.classList.add("hidden-item");
+                  element.classList.remove("item");
+                });
+              // show those of the new language
+              document
+                .querySelectorAll(
+                  `${info_panel_selector_to_use} .carousel-inner li.mst_${this.getAttribute("idlang")}`
+                )
+                .forEach((element) => {
+                  element.classList.add("item");
+                  element.classList.remove("hidden-item");
+                });
+              // find inside div with id right-panel the div with class carousel-inner and hide all divs that contain item inside of it
+              document
+                .querySelectorAll(`${info_panel_selector_to_use} .carousel-inner li.item`)
+                .forEach((element) => {
+                  element.style.display = "none";
+                });
+
+              // show the div that contains the clicked language in its class
+              document
+                .querySelectorAll(
+                  `${info_panel_selector_to_use} .carousel-inner li.item.mst_${this.getAttribute("idlang")}`
+                )
+                .forEach((element) => {
+                  element.style.display = "";
+                });
+              //close panel if opened to trigger reload
+              document
+                .querySelector(info_panel_selector_to_use)
+                ?.classList.remove("active");
+              // unselect points
+              mviewer.hideLocation();
+            });
+
+            document.querySelector("#mv_marker")?.style.setProperty("display", "none");
           }
-
-          // apply translations to all panels
-          available_info_panels.forEach((info_panel_selector_to_use) => {
-            // hide other languages slides
-            $(info_panel_selector_to_use)
-              .find(".carousel-inner")
-              .find("li.item")
-              .not(".mst_" + configuration.getLang())
-              .addClass("hidden-item")
-              .removeClass("item");
-            // show those of the new language
-            $(info_panel_selector_to_use)
-              .find(".carousel-inner")
-              .find("li.mst_" + $(this).attr("idlang"))
-              .addClass("item")
-              .removeClass("hidden-item");
-            // find inside div with id right-panel the div with class carousel-inner and hide all divs that contain item inside of it
-            $(info_panel_selector_to_use).find(".carousel-inner").find("li.item").hide();
-
-            // show the div that contains the clicked language in its class
-            $(info_panel_selector_to_use)
-              .find(".carousel-inner")
-              .find("li.item.mst_" + $(this).attr("idlang"))
-              .show();
-            //close panel if opened to trigger reload
-            $(info_panel_selector_to_use).removeClass("active");
-            // unselect points
-            mviewer.hideLocation();
-          });
-
-          $("#mv_marker").hide();
-        }
-      });
+        })
+      );
     }
 
     mviewer.lang = {};
@@ -2290,7 +2418,7 @@ mviewer = (function () {
 
   /**
    * Translate DOM elements
-   * @param element String - tag to identify DOM elements to translate
+   * @param {string|HTMLElement} element CSS selector, HTML fragment, or element to translate.
    */
 
   var _elementTranslate = function (element) {
@@ -2304,7 +2432,17 @@ mviewer = (function () {
       "value",
       "data-bs-original-title",
     ];
-    var _element = $(element);
+    const isHtmlFragment = typeof element === "string" && element.trim().startsWith("<");
+    let rootElement;
+    if (isHtmlFragment) {
+      const container = document.createElement("div");
+      // Native HTML parsing does not support self-closing canvas elements.
+      container.innerHTML = element.replace(/<canvas([^>]*)\/>/g, "<canvas$1></canvas>");
+      rootElement = container.firstElementChild;
+    } else {
+      rootElement =
+        element instanceof HTMLElement ? element : document.querySelector(element);
+    }
 
     // get mviewer default i18n keys
     var mviewer_default_i18n_keys = [];
@@ -2314,15 +2452,15 @@ mviewer = (function () {
       .then(function (dic) {
         mviewer_default_i18n_keys = Object.keys(dic[lang]);
 
-        _element.find("[i18n]").each((i, el) => {
+        rootElement?.querySelectorAll("[i18n]").forEach((el) => {
           let is_mviewer_translation = mviewer_default_i18n_keys.includes(
-            $(el).attr("i18n")
+            el.getAttribute("i18n")
           ); // dont show the i18n id in debug mode if the element's translationis provided by mviewer
           let find = false;
-          let tr = mviewer.lang[lang]($(el).attr("i18n"));
+          let tr = mviewer.lang[lang](el.getAttribute("i18n"));
           htmlType.forEach((att) => {
-            if ($(el).attr(att) && tr) {
-              $(el).attr(att, tr);
+            if (el.hasAttribute(att) && tr) {
+              el.setAttribute(att, tr);
               find = true;
             }
           });
@@ -2331,29 +2469,30 @@ mviewer = (function () {
             .get("debug_translation")
             ?.match(/[a-zA-Z0-9]+/)[0];
 
-          if (!find && $(el).text().indexOf("{{") === -1) {
+          if (!find && el.textContent.indexOf("{{") === -1) {
             if (debug_translation === "true" && !is_mviewer_translation) {
               // debug mode, used to see the generated i18n ids to create the i18n json dictionnary
               // dont show i18n keys for translations already provided by mviewer
-              $(el).text($(el).attr("i18n"));
-            } else if (!(tr === $(el).attr("i18n"))) {
+              el.textContent = el.getAttribute("i18n");
+            } else if (!(tr === el.getAttribute("i18n"))) {
               // if tranlsation exists
-              $(el).text(tr);
+              el.textContent = tr;
             } // else do nothing, keep the innertext already there
           }
         });
       });
-    _element.find("[data-bs-content]").each((i, el) => {
-      var content = $("<div></div>").append($(el).attr("data-bs-content"));
-      content.find("[i18n]").each((i, contentEl) => {
-        let tr = mviewer.lang[lang]($(contentEl).attr("i18n"));
-        if ($(contentEl).text().indexOf("{{") === -1) {
-          $(contentEl).text(tr);
-          $(el).attr("data-bs-content", content[0].outerHTML);
+    rootElement?.querySelectorAll("[data-bs-content]").forEach((el) => {
+      const content = document.createElement("div");
+      content.innerHTML = el.getAttribute("data-bs-content");
+      content.querySelectorAll("[i18n]").forEach((contentEl) => {
+        let tr = mviewer.lang[lang](contentEl.getAttribute("i18n"));
+        if (contentEl.textContent.indexOf("{{") === -1) {
+          contentEl.textContent = tr;
+          el.setAttribute("data-bs-content", content.outerHTML);
         }
       });
     });
-    var ret = element === "body" ? true : _element[0].outerHTML;
+    var ret = element === "body" ? true : rootElement?.outerHTML;
     return ret;
   };
 
@@ -2492,7 +2631,10 @@ mviewer = (function () {
      */
 
     setBaseLayer: function (baseLayerId) {
-      if ($(".mini").length == 1 && $(".no-active").length > 0) {
+      if (
+        document.querySelectorAll(".mini").length == 1 &&
+        document.querySelectorAll(".no-active").length > 0
+      ) {
         mviewer.bgtoogle();
         return;
       }
@@ -2511,9 +2653,13 @@ mviewer = (function () {
         var thumb =
           configuration.getConfiguration().baselayers.baselayer[nexid].thumbgallery;
         var title = configuration.getConfiguration().baselayers.baselayer[nexid].label;
-        $("#backgroundlayersbtn").css("background-image", 'url("' + thumb + '")');
+        const backgroundLayersButton = document.querySelector("#backgroundlayersbtn");
+        backgroundLayersButton?.style.setProperty(
+          "background-image",
+          'url("' + thumb + '")'
+        );
         if (!configuration.getConfiguration().mobile) {
-          $("#backgroundlayersbtn").attr("title", title);
+          backgroundLayersButton?.setAttribute("title", title);
           $("#backgroundlayersbtn").tooltip("dispose").tooltip({
             placement: "left",
             trigger: "hover",
@@ -2527,14 +2673,17 @@ mviewer = (function () {
         var opt = configuration.getConfiguration().baselayers.style;
         var elem =
           opt === "gallery"
-            ? $("#" + layer.get("blid") + "_btn").closest("li")
-            : $("#" + layer.get("blid") + "_btn");
+            ? document.querySelector("#" + layer.get("blid") + "_btn")?.closest("li")
+            : document.querySelector("#" + layer.get("blid") + "_btn");
+        if (!elem) {
+          return;
+        }
         if (layer.getVisible()) {
-          elem.removeClass("no-active");
-          elem.addClass("active");
+          elem.classList.remove("no-active");
+          elem.classList.add("active");
         } else {
-          elem.removeClass("active");
-          elem.addClass("no-active");
+          elem.classList.remove("active");
+          elem.classList.add("no-active");
         }
       });
       mviewer.bgtoogle();
@@ -2560,7 +2709,11 @@ mviewer = (function () {
     },
 
     bgtoogle: function () {
-      $("#backgroundlayerstoolbar-gallery .no-active").toggle();
+      document
+        .querySelectorAll("#backgroundlayerstoolbar-gallery .no-active")
+        .forEach((element) => {
+          element.hidden = !element.hidden;
+        });
       //$("#backgroundlayerstoolbar-gallery .bglt-btn").toggleClass("mini");
     },
 
@@ -2648,16 +2801,20 @@ mviewer = (function () {
      */
     setLegendLayerPos: function (layerId, position) {
       if (layerId) {
-        var legendItem = $(`#layers-container>li[data-layerid="${layerId}"]`);
+        var legendItem = document.querySelector(
+          `#layers-container>li[data-layerid="${layerId}"]`
+        );
         // change layer position into legend
         switch (position) {
           case 0:
             // first element
-            $("#layers-container").prepend(legendItem);
+            document.querySelector("#layers-container")?.prepend(legendItem);
             break;
           default:
             // others
-            legendItem.insertBefore($(`#layers-container li:eq(${position})`));
+            document
+              .querySelectorAll("#layers-container li")
+              [position]?.before(legendItem);
             break;
         }
       }
@@ -2806,9 +2963,9 @@ mviewer = (function () {
         typeof info?.hasQueryResult === "function" ? info.hasQueryResult() : false;
       const clickCoords = info.getClickCoordinates ? info.getClickCoordinates() : null;
       const infoPanelVisible =
-        $("#right-panel").hasClass("active") ||
-        $("#bottom-panel").hasClass("active") ||
-        $("#modal-panel").hasClass("show");
+        document.querySelector("#right-panel")?.classList.contains("active") ||
+        document.querySelector("#bottom-panel")?.classList.contains("active") ||
+        document.querySelector("#modal-panel")?.classList.contains("show");
       if (
         clickCoords &&
         infoPanelVisible &&
@@ -2839,7 +2996,9 @@ mviewer = (function () {
       if (API.wmc) {
         linkParams.wmc = API.wmc;
       }
-      linkParams.mode = $("input[name=mv-display-mode]:checked").val();
+      linkParams.mode = document.querySelector(
+        "input[name=mv-display-mode]:checked"
+      )?.value;
 
       if (API.file) {
         linkParams.file = encodeURIComponent(API.file);
@@ -2898,11 +3057,9 @@ mviewer = (function () {
       document.getElementById("btnShareLinkedin").setAttribute("href", urlLinkedin);
       document.getElementById("btnShareWhatapp").setAttribute("href", urlWhatapp);
       document.getElementById("btnShareFacebook").setAttribute("href", urlFacebook);
-      $("#permaqr").attr(
-        "src",
+      document.querySelector("#permaqr").src =
         "https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=" +
-          encodeURIComponent(url)
-      );
+        encodeURIComponent(url);
       var urlIframe = `<iframe width="800" height="500" style="border:none;" src="${url}"></iframe>`;
       document.getElementById("urlIframeShare").innerText = urlIframe;
       return url;
@@ -2961,7 +3118,7 @@ mviewer = (function () {
      */
 
     popupPhoto: function (src) {
-      $("#imagepopup").find("img").attr("src", src);
+      document.querySelector("#imagepopup img").src = src;
       $("#imagepopup").modal("show");
     },
 
@@ -3015,11 +3172,11 @@ mviewer = (function () {
 
     showLocation: function (proj, x, y, showMarker) {
       //marker
-      $("#mv_marker").hide();
+      document.querySelector("#mv_marker")?.style.setProperty("display", "none");
       var ptResult = utils.transformCoordinateSafe([x, y], proj, _projection.getCode());
       if (showMarker != false || showMarker === undefined) {
         _marker.setPosition(ptResult);
-        $("#mv_marker").show();
+        document.querySelector("#mv_marker")?.style.removeProperty("display");
       }
       _map.render();
     },
@@ -3061,8 +3218,8 @@ mviewer = (function () {
      */
 
     geoloc: function () {
-      if (!$("#geolocbtn").hasClass("enabled")) {
-        $("#geolocbtn").addClass("enabled");
+      if (!document.querySelector("#geolocbtn")?.classList.contains("enabled")) {
+        document.querySelector("#geolocbtn")?.classList.add("enabled");
         _geolocation.setTracking(true);
         _geolocation.once("change", function (evt) {
           _map.getView().setZoom(18);
@@ -3087,7 +3244,7 @@ mviewer = (function () {
           _sourceGeolocation.addFeature(accuracyFeature);
         });
       } else {
-        $("#geolocbtn").removeClass("enabled");
+        document.querySelector("#geolocbtn")?.classList.remove("enabled");
         _geolocation.setTracking(false);
         _sourceGeolocation.clear();
       }
@@ -3111,7 +3268,7 @@ mviewer = (function () {
     hideLocation: function () {
       _sourceSelectOverlay.clear();
       _sourceSubSelectOverlay.clear();
-      $("#mv_marker").hide();
+      document.querySelector("#mv_marker")?.style.setProperty("display", "none");
     },
 
     /**
@@ -3135,8 +3292,8 @@ mviewer = (function () {
         }
       });
       if (params.layers.length > 0) {
-        $("#georchestraFormData").val(JSON.stringify(params));
-        $("#georchestraForm").submit();
+        document.querySelector("#georchestraFormData").value = JSON.stringify(params);
+        document.querySelector("#georchestraForm").submit();
       }
     },
 
@@ -3158,18 +3315,22 @@ mviewer = (function () {
       var _layer_id = ctx.id.split("#")[1];
       var _service_url = mviewer.getLayers()[_layer_id].url;
       var isApiKey = mviewer.getLayers()[_layer_id].secure === "apikey";
-      $("#login-panel-service-url").html("<small><i>" + _service_url + "</i></small>");
-      $("#service-url").val(_service_url);
-      $("#layer-id").val(_layer_id);
-      $("#login-credentials").toggle(!isApiKey);
-      $("#api-key-group").toggle(isApiKey);
-      $("#pass").val("");
+      document.querySelector("#login-panel-service-url").innerHTML =
+        "<small><i>" + _service_url + "</i></small>";
+      document.querySelector("#service-url").value = _service_url;
+      document.querySelector("#layer-id").value = _layer_id;
+      document.querySelector("#login-credentials").style.display = isApiKey ? "none" : "";
+      document.querySelector("#api-key-group").style.display = isApiKey ? "" : "none";
+      document.querySelector("#pass").value = "";
       // API key authentication is stored for the session and prefilled when available.
       if (isApiKey) {
-        $("#api-key").val(sessionStorage.getItem(`${_service_url}:api-key`) || "");
+        document.querySelector("#api-key").value =
+          sessionStorage.getItem(`${_service_url}:api-key`) || "";
       } else if (sessionStorage.getItem(_service_url)) {
         // basic auth case, we store user:pass in sessionStorage
-        $("#user").val(sessionStorage.getItem(_service_url).split(":")[0]);
+        document.querySelector("#user").value = sessionStorage
+          .getItem(_service_url)
+          .split(":")[0];
       }
     },
 
@@ -3195,8 +3356,10 @@ mviewer = (function () {
       if (layer.exclusive) {
         //remove previous exclusive layer if exists
         if (_exclusiveLayer) {
-          var el = $(".mv-layer-details[data-layerid='" + _exclusiveLayer + "']");
-          if (el.length > 0) {
+          var el = document.querySelector(
+            ".mv-layer-details[data-layerid='" + _exclusiveLayer + "']"
+          );
+          if (el) {
             mviewer.removeLayer(el);
           }
         }
@@ -3270,22 +3433,31 @@ mviewer = (function () {
         if (layer.secure == "layer" || layer.secure == "apikey") view.secure_layer = true;
       }
 
-      var item = _renderHTMLFromTemplate(mviewer.templates.layerControl, view);
+      // The layer template contains a self-closing canvas. Unlike jQuery's HTML
+      // parser, the native parser treats it as an open canvas and nests the legend image.
+      const layerControlHtml = _renderHTMLFromTemplate(
+        mviewer.templates.layerControl,
+        view
+      ).replace(/<canvas([^>]*)\/>/g, "<canvas$1></canvas>");
+      const itemFragment = document
+        .createRange()
+        .createContextualFragment(layerControlHtml);
+      const item = itemFragment.firstElementChild;
       if (
         layer.customcontrol &&
         mviewer.customControls[layer.layerid] &&
         mviewer.customControls[layer.layerid].form
       ) {
-        item = $(item)
-          .find(".mv-custom-controls")
-          .append(mviewer.customControls[layer.layerid].form)
-          .closest(".mv-layer-details");
+        item
+          .querySelector(".mv-custom-controls")
+          ?.insertAdjacentHTML("beforeend", mviewer.customControls[layer.layerid].form);
       }
 
-      if (_topLayer && $("#layers-container .toplayer").length > 0) {
-        $("#layers-container .toplayer").last().after(item);
+      if (_topLayer && document.querySelector("#layers-container .toplayer")) {
+        const topLayers = document.querySelectorAll("#layers-container .toplayer");
+        topLayers[topLayers.length - 1]?.after(item);
       } else {
-        $("#layers-container").prepend(item);
+        document.querySelector("#layers-container")?.prepend(item);
       }
 
       //Dynamic vector Legend
@@ -3310,6 +3482,7 @@ mviewer = (function () {
       }
 
       _setLayerScaleStatus(layer, _calculateScale(_map.getView().getResolution()));
+      _setLayerLegend(layer, _calculateScale(_map.getView().getResolution()));
       $("#" + layer.layerid + "-layer-opacity").slider({});
       $("#" + layer.layerid + "-layer-summary").popover({
         container: "body",
@@ -3337,9 +3510,13 @@ mviewer = (function () {
           ticks = _createPseudoTicks(layer.timevalues);
           if (layer.timecontrol === "slider") {
             default_value = parseInt(ticks_labels[ticks_labels.length - 1]);
-            $(".mv-time-player-selection[data-layerid='" + layer.layerid + "']").text(
-              default_value
-            );
+            document
+              .querySelectorAll(
+                ".mv-time-player-selection[data-layerid='" + layer.layerid + "']"
+              )
+              .forEach((element) => {
+                element.textContent = default_value;
+              });
           } else if (layer.timecontrol === "slider-range") {
             default_value = [0, layer.timevalues.length - 1];
             //Set wms filter to see all data and not only the last
@@ -3431,13 +3608,17 @@ mviewer = (function () {
 
         if (layer.timecontrol === "slider") {
           //Activate the time player
-          $('.mv-time-player[data-layerid="' + layer.layerid + '"]').click(function (e) {
-            var ctrl = e.currentTarget;
-            $(ctrl).toggleClass("active");
-            if ($(ctrl).hasClass("active")) {
-              mviewer.playLayerTime($(ctrl).attr("data-layerid"), ctrl);
-            }
-          });
+          document
+            .querySelectorAll('.mv-time-player[data-layerid="' + layer.layerid + '"]')
+            .forEach((control) =>
+              control.addEventListener("click", (event) => {
+                const ctrl = event.currentTarget;
+                ctrl.classList.toggle("active");
+                if (ctrl.classList.contains("active")) {
+                  mviewer.playLayerTime(ctrl.getAttribute("data-layerid"), ctrl);
+                }
+              })
+            );
 
           // slider-range
         } else if (layer.timecontrol === "slider-range") {
@@ -3446,10 +3627,14 @@ mviewer = (function () {
             .removeClass("form-group-timer")
             .addClass("form-group-timer-range");
           //Remove time player
-          $('.mv-time-player[data-layerid="' + layer.layerid + '"]').remove();
+          document
+            .querySelectorAll('.mv-time-player[data-layerid="' + layer.layerid + '"]')
+            .forEach((element) => element.remove());
         } else {
           //Remove time player
-          $('.mv-time-player[data-layerid="' + layer.layerid + '"]').remove();
+          document
+            .querySelectorAll('.mv-time-player[data-layerid="' + layer.layerid + '"]')
+            .forEach((element) => element.remove());
         }
       }
 
@@ -3539,13 +3724,13 @@ mviewer = (function () {
         });
       }
       //End Time filter
-      if ($("#layers-container").find("li").length > 1) {
+      if (document.querySelectorAll("#layers-container li").length > 1) {
         //set Layer to top on the map
         var actionMove = {
           layerName: layer.layerid,
-          layerRef: $("#layers-container li[data-layerid='" + layer.layerid + "']")
-            .next()
-            .attr("data-layerid"),
+          layerRef: document
+            .querySelector("#layers-container li[data-layerid='" + layer.layerid + "']")
+            ?.nextElementSibling?.getAttribute("data-layerid"),
           action: "up",
         };
 
@@ -3571,34 +3756,27 @@ mviewer = (function () {
             activeAttributeValue = parts[1].replace(reg, "").trim();
           }
         }
-        var selectCtrl = $("#" + layer.layerid + "-attributes-selector")[0];
+        var selectCtrl = document.querySelector(
+          "#" + layer.layerid + "-attributes-selector"
+        );
         if (!activeAttributeValue && selectCtrl) {
           activeAttributeValue = selectCtrl.options[selectCtrl.selectedIndex].value;
         }
         if (activeAttributeValue) {
-          $(
-            "#" +
-              layer.layerid +
-              "-attributes-selector option[value='" +
-              activeAttributeValue +
-              "']"
-          ).prop("selected", true);
-          var optionEl = $(
+          var optionEl = document.querySelector(
             "#" +
               layer.layerid +
               "-attributes-selector option[value='" +
               activeAttributeValue +
               "']"
           );
-          var activeLabel =
-            optionEl.length && optionEl.attr("label")
-              ? optionEl.attr("label")
-              : activeAttributeValue;
-          $(
+          if (optionEl) optionEl.selected = true;
+          var activeLabel = optionEl?.getAttribute("label") || activeAttributeValue;
+          document.querySelector(
             '.mv-layer-details[data-layerid="' +
               layer.layerid +
               '"] .layerdisplay-subtitle .selected-attribute span'
-          ).text(activeLabel);
+          ).textContent = activeLabel;
         }
       }
 
@@ -3617,64 +3795,77 @@ mviewer = (function () {
         var scale = (res * ppi) / 0.0254;
         if (layer.scale && scale >= layer.scale.min && scale <= layer.scale.max) {
           var legendUrl = _getlegendurl(layer);
-          $("#legend-" + layer.layerid).attr("src", legendUrl);
+          document.querySelector("#legend-" + layer.layerid).src = legendUrl;
         }
       }
       if (oLayer.styles) {
-        var selectCtrl = $("#" + layer.layerid + "-styles-selector")[0];
+        var selectCtrl = document.querySelector("#" + layer.layerid + "-styles-selector");
         if (activeStyle) {
-          var selectedStyle = $(
+          var selectedStyle = document.querySelector(
             "#" +
               layer.layerid +
               "-styles-selector option[value*='" +
               activeStyle.split("@")[0] +
               "']"
-          ).prop("selected", true);
+          );
+          if (selectedStyle) selectedStyle.selected = true;
         }
-        $(
+        document.querySelector(
           '.mv-layer-details[data-layerid="' +
             layer.layerid +
             '"] .layerdisplay-subtitle .selected-sld span'
-        ).text(selectCtrl.options[selectCtrl.selectedIndex].label);
+        ).textContent = selectCtrl.options[selectCtrl.selectedIndex].label;
       } else {
-        $(
-          '.mv-layer-details[data-layerid="' +
-            layer.layerid +
-            '"] .layerdisplay-subtitle .selected-sld'
-        ).remove();
+        document
+          .querySelector(
+            '.mv-layer-details[data-layerid="' +
+              layer.layerid +
+              '"] .layerdisplay-subtitle .selected-sld'
+          )
+          ?.remove();
       }
 
       if (!oLayer.attributefilter) {
-        $(
-          '.mv-layer-details[data-layerid="' +
-            layer.layerid +
-            '"] .layerdisplay-subtitle .selected-attribute'
-        ).remove();
+        document
+          .querySelector(
+            '.mv-layer-details[data-layerid="' +
+              layer.layerid +
+              '"] .layerdisplay-subtitle .selected-attribute'
+          )
+          ?.remove();
       }
       if (!oLayer.attributefilter && !oLayer.styles) {
-        $(
-          '.mv-layer-details[data-layerid="' + layer.layerid + '"] .layerdisplay-subtitle'
-        ).remove();
+        document
+          .querySelector(
+            '.mv-layer-details[data-layerid="' +
+              layer.layerid +
+              '"] .layerdisplay-subtitle'
+          )
+          ?.remove();
       }
 
-      var li = $(".mv-nav-item[data-layerid='" + layer.layerid + "']");
-      li.find("a span").removeClass("mv-unchecked").addClass("mv-checked");
-      li.find("input").val(true);
+      var li = document.querySelector(
+        ".mv-nav-item[data-layerid='" + layer.layerid + "']"
+      );
+      li.querySelector("a span")?.classList.replace("mv-unchecked", "mv-checked");
+      li.querySelector("input").value = true;
       // activate custom controls
       if (layer.customcontrol && mviewer.customControls[layer.layerid]) {
         mviewer.customControls[layer.layerid].init();
       }
       if (layer.type === "customlayer" && layer.tooltip && layer.tooltipenabled) {
         info.toggleTooltipLayer(
-          $('.layer-tooltip[data-layerid="' + layer.layerid + '"]')[0]
+          document.querySelector('.layer-tooltip[data-layerid="' + layer.layerid + '"]')
         );
       }
       if (layer.expanded) {
         this.toggleLayerOptions(
-          $('.mv-layer-details[data-layerid="' + layer.layerid + '"]')[0]
+          document.querySelector(
+            '.mv-layer-details[data-layerid="' + layer.layerid + '"]'
+          )
         );
       }
-      $("#legend").removeClass("empty");
+      document.querySelector("#legend")?.classList.remove("empty");
       if (
         configuration.getConfiguration().application.togglealllayersfromtheme === "true"
       ) {
@@ -3690,18 +3881,18 @@ mviewer = (function () {
     },
     removeLayer: function (el) {
       var item;
-      if (!$(el).is("li")) {
-        item = $(el).closest("li");
+      if (!el.matches("li")) {
+        item = el.closest("li");
       } else {
-        item = $(el);
+        item = el;
       }
-      var layerid = item.attr("data-layerid");
+      var layerid = item.getAttribute("data-layerid");
       var layer = _overLayers[layerid];
       item.remove();
       layer.layer.setVisible(false);
-      var li = $(".mv-nav-item[data-layerid='" + layerid + "']");
-      li.find("a span").removeClass("mv-checked").addClass("mv-unchecked");
-      li.find("input").val(false);
+      var li = document.querySelector(".mv-nav-item[data-layerid='" + layerid + "']");
+      li.querySelector("a span")?.classList.replace("mv-checked", "mv-unchecked");
+      li.querySelector("input").value = false;
       // deactivate custom controls
       if (layer.customcontrol && mviewer.customControls[layer.layerid]) {
         mviewer.customControls[layer.layerid].destroy();
@@ -3709,8 +3900,8 @@ mviewer = (function () {
       //Remove Layer infos in info panels
       mviewer.removeLayerInfo(layer.layerid);
       //check if layers-container is empty
-      if ($("#layers-container .list-group-item").length === 0) {
-        $("#legend").addClass("empty");
+      if (!document.querySelector("#layers-container .list-group-item")) {
+        document.querySelector("#legend")?.classList.add("empty");
       }
       if (
         configuration.getConfiguration().application.togglealllayersfromtheme === "true"
@@ -3719,46 +3910,55 @@ mviewer = (function () {
         _setThemeStatus(layer.theme, newStatus);
       }
       // clear tooltip
-      $(".mv-tooltip").remove();
+      document.querySelectorAll(".mv-tooltip").forEach((element) => element.remove());
     },
     removeAllLayers: function () {
-      $("#layers-container .list-group-item").each(function (id, item) {
-        mviewer.removeLayer(item);
-      });
+      document
+        .querySelectorAll("#layers-container .list-group-item")
+        .forEach((item) => mviewer.removeLayer(item));
     },
     toggleLayer: function (el) {
-      var li = $(el).closest("li");
-      if (li.find("input").val() === "false") {
-        mviewer.addLayer(_overLayers[$(li).data("layerid")]);
+      var li = el.closest("li");
+      if (li.querySelector("input").value === "false") {
+        mviewer.addLayer(_overLayers[li.dataset.layerid]);
       } else {
-        var el = $(".mv-layer-details[data-layerid='" + li.data("layerid") + "']");
-        mviewer.removeLayer(el);
+        mviewer.removeLayer(
+          document.querySelector(
+            ".mv-layer-details[data-layerid='" + li.dataset.layerid + "']"
+          )
+        );
       }
     },
     toggleMenu: function (transition) {
       if (transition) {
-        $("#wrapper, #sidebar-wrapper, #page-content-wrapper").removeClass(
-          "notransition"
-        );
+        document
+          .querySelectorAll("#wrapper, #sidebar-wrapper, #page-content-wrapper")
+          .forEach((element) => element.classList.remove("notransition"));
       } else {
-        $("#wrapper, #sidebar-wrapper, #page-content-wrapper").addClass("notransition");
+        document
+          .querySelectorAll("#wrapper, #sidebar-wrapper, #page-content-wrapper")
+          .forEach((element) => element.classList.add("notransition"));
       }
-      $("#wrapper").toggleClass("toggled-2");
-      $("#menu-toggle-2,.menu-toggle").toggleClass("closed");
-      $("#menu ul").hide();
+      document.querySelector("#wrapper")?.classList.toggle("toggled-2");
+      document
+        .querySelectorAll("#menu-toggle-2,.menu-toggle")
+        .forEach((element) => element.classList.toggle("closed"));
+      document.querySelectorAll("#menu ul").forEach((element) => {
+        element.style.display = "none";
+      });
     },
 
     toggleLegend: function () {
-      $("#legend").toggleClass("active");
+      document.querySelector("#legend")?.classList.toggle("active");
     },
     toggleParameter: function (li) {
-      var span = $(li).find("span");
+      var span = li.querySelector("span");
       var parameter = false;
-      if (span.hasClass("mv-unchecked") === true) {
-        span.removeClass("mv-unchecked").addClass("mv-checked");
+      if (span.classList.contains("mv-unchecked")) {
+        span.classList.replace("mv-unchecked", "mv-checked");
         parameter = true;
       } else {
-        span.removeClass("mv-checked").addClass("mv-unchecked");
+        span.classList.replace("mv-checked", "mv-unchecked");
       }
       switch (li.id) {
         case "param_search_bbox":
@@ -3773,19 +3973,17 @@ mviewer = (function () {
       }
     },
     toggleLayerOptions: function (el) {
-      $(el).closest("li").find(".mv-layer-options").slideToggle();
+      const layerOptions = el.closest("li")?.querySelector(".mv-layer-options");
+      if (layerOptions) {
+        utils.slideToogle(layerOptions);
+      }
       //hack slider js
       $(el).closest("li").find(".mv-slider-timer").slider("relayout");
-      if ($(el).find("i.state-icon").hasClass("ri-arrow-down-line")) {
-        $(el)
-          .find("i.state-icon")
-          .removeClass("ri-arrow-down-line")
-          .addClass("ri-arrow-up-line");
+      const stateIcon = el.querySelector("i.state-icon");
+      if (stateIcon?.classList.contains("ri-arrow-down-line")) {
+        stateIcon.classList.replace("ri-arrow-down-line", "ri-arrow-up-line");
       } else {
-        $(el)
-          .find("i.state-icon")
-          .removeClass("ri-arrow-up-line")
-          .addClass("ri-arrow-down-line");
+        stateIcon?.classList.replace("ri-arrow-up-line", "ri-arrow-down-line");
       }
     },
 
@@ -3802,7 +4000,7 @@ mviewer = (function () {
         //var attributeValue = $("#"+ layerid + "-attributes-selector").val();
         var attributeValue = "all";
         var styleBase = style.split("@")[0];
-        var selectCtrl = $("#" + layerid + "-attributes-selector")[0];
+        var selectCtrl = document.querySelector("#" + layerid + "-attributes-selector");
         if (selectCtrl && selectCtrl.selectedIndex >= 0) {
           attributeValue = selectCtrl.options[selectCtrl.selectedIndex].value;
         } else {
@@ -3845,24 +4043,33 @@ mviewer = (function () {
       }
       _source.updateParams({ dc: new Date().valueOf() });
       _source.changed();
-      var styleLabel = $(selectCtrl)
-        .find("option[value='" + styleBase + "'], option[value='" + styleRef + "']")
-        .attr("label");
-      $(
+      var styleLabel = selectCtrl
+        .querySelector(
+          "option[value='" + styleBase + "'], option[value='" + styleRef + "']"
+        )
+        ?.getAttribute("label");
+      document.querySelector(
         '.mv-layer-details[data-layerid="' +
           layerid +
           '"] .layerdisplay-subtitle .selected-sld span'
-      ).text(styleLabel);
+      ).textContent = styleLabel;
       var legendUrl = _getlegendurl(_layerDefinition);
-      $("#legend-" + layerid).fadeOut("slow", function () {
-        // Animation complete
-        $("#legend-" + layerid)
-          .attr("src", legendUrl)
-          .fadeIn();
-      });
-      $('.mv-nav-item[data-layerid="' + layerid + '"]')
-        .attr("data-legendurl", legendUrl)
-        .data("legendurl", legendUrl);
+      const legend = document.querySelector("#legend-" + layerid);
+      legend.style.opacity = 0;
+      legend.addEventListener(
+        "load",
+        () => {
+          legend.style.opacity = 1;
+        },
+        { once: true }
+      );
+      legend.src = legendUrl;
+      document
+        .querySelectorAll('.mv-nav-item[data-layerid="' + layerid + '"]')
+        .forEach((element) => {
+          element.setAttribute("data-legendurl", legendUrl);
+          element.dataset.legendurl = legendUrl;
+        });
     },
 
     getWmsFilterParamKey: function (layerDefinition) {
@@ -3950,26 +4157,33 @@ mviewer = (function () {
           _layerDefinition.style = newStyle;
         }
         var legendUrl = _getlegendurl(_layerDefinition);
-        $("#legend-" + layerid).fadeOut("slow", function () {
-          // Animation complete
-          $("#legend-" + layerid)
-            .attr("src", legendUrl)
-            .fadeIn();
-        });
-        $('.mv-nav-item[data-layerid="' + layerid + '"]')
-          .attr("data-legendurl", legendUrl)
-          .data("legendurl", legendUrl);
+        const legend = document.querySelector("#legend-" + layerid);
+        legend.style.opacity = 0;
+        legend.addEventListener(
+          "load",
+          () => {
+            legend.style.opacity = 1;
+          },
+          { once: true }
+        );
+        legend.src = legendUrl;
+        document
+          .querySelectorAll('.mv-nav-item[data-layerid="' + layerid + '"]')
+          .forEach((element) => {
+            element.setAttribute("data-legendurl", legendUrl);
+            element.dataset.legendurl = legendUrl;
+          });
       }
       _source.updateParams({ dc: new Date().valueOf() });
       if (typeof _source.refresh === "function") {
         _source.refresh();
       }
       _source.changed();
-      $(
+      document.querySelector(
         '.mv-layer-details[data-layerid="' +
           layerid +
           '"] .layerdisplay-subtitle .selected-attribute span'
-      ).text(selectCtrl.options[selectCtrl.selectedIndex].label);
+      ).textContent = selectCtrl.options[selectCtrl.selectedIndex].label;
     },
 
     setLayerTime: function (layerid, filter_time) {
@@ -3994,10 +4208,18 @@ mviewer = (function () {
         return;
       }
       sourceParams["TIME"] = filter_time;
-      $(".mv-time-player-selection[data-layerid='" + layerid + "']").text("Patientez...");
+      document
+        .querySelectorAll(".mv-time-player-selection[data-layerid='" + layerid + "']")
+        .forEach((element) => {
+          element.textContent = "Patientez...";
+        });
       var key = _source.on("imageloadend", function () {
         ol.Observable.unByKey(key);
-        $(".mv-time-player-selection[data-layerid='" + layerid + "']").text(filter_time);
+        document
+          .querySelectorAll(".mv-time-player-selection[data-layerid='" + layerid + "']")
+          .forEach((element) => {
+            element.textContent = filter_time;
+          });
       });
       _source.changed();
 
@@ -4014,7 +4236,7 @@ mviewer = (function () {
 
       function play() {
         if (
-          $(ctrl).hasClass("active") &&
+          ctrl.classList.contains("active") &&
           $("#" + layerid + "-layer-timefilter").length > 0
         ) {
           var nextvalue = (t.slider("getValue") + 1) % timevalues.length;
@@ -4035,31 +4257,35 @@ mviewer = (function () {
         layer_picker_container_selector = "#thematic-modal";
       }
 
-      layer_picker_container = $(layer_picker_container_selector);
+      layer_picker_container = document.querySelector(layer_picker_container_selector);
 
-      if (layer_picker_container.length === 0) {
+      if (!layer_picker_container) {
         throw new Error("sidebar-wrapper not found");
       }
       // get the corresponding layer from i18n id
-      const layer_title_el = layer_picker_container.find(`[i18n="${new_i18n}"]`);
-      if (layer_title_el.length > 1) {
+      const layerTitleElements = layer_picker_container.querySelectorAll(
+        `[i18n="${new_i18n}"]`
+      );
+      if (layerTitleElements.length > 1) {
         throw new Error("same i18n id has been used in more than one layer");
-      } else if (layer_title_el.length === 0) {
+      } else if (layerTitleElements.length === 0) {
         throw new Error("No element found with the given i18n id");
       }
 
-      var title = layer_title_el.text();
-      $("#" + panel + " .mv-header h6").text(title);
+      var title = layerTitleElements[0].textContent;
+      document.querySelector("#" + panel + " .mv-header h6").textContent = title;
 
       // also update the panel's title's i18n attribute
       if (new_i18n) {
-        $("#" + panel + " .mv-header h6").attr("i18n", new_i18n);
+        document
+          .querySelector("#" + panel + " .mv-header h6")
+          .setAttribute("i18n", new_i18n);
       }
 
       // update the title of the element and its parent too
-      $(el).parent().attr("title", title);
-      $(el).attr("data-original-title", title);
-      $(el).attr("title", title);
+      el.parentElement?.setAttribute("title", title);
+      el.setAttribute("data-original-title", title);
+      el.setAttribute("title", title);
     },
 
     nextBackgroundLayer: function () {
@@ -4082,9 +4308,12 @@ mviewer = (function () {
       var thumb =
         configuration.getConfiguration().baselayers.baselayer[nexid].thumbgallery;
       var title = configuration.getConfiguration().baselayers.baselayer[nexid].label;
-      $("#backgroundlayersbtn").css("background-image", 'url("' + thumb + '")');
+      document.querySelector("#backgroundlayersbtn").style.backgroundImage =
+        'url("' + thumb + '")';
       if (!configuration.getConfiguration().mobile) {
-        $("#backgroundlayersbtn").attr("data-bs-original-title", title);
+        document
+          .querySelector("#backgroundlayersbtn")
+          .setAttribute("data-bs-original-title", title);
         $("#backgroundlayersbtn").tooltip("hide").tooltip({
           placement: "top",
           trigger: "hover",
@@ -4105,10 +4334,7 @@ mviewer = (function () {
     },
 
     removeLayerInfo: function (layerid) {
-      var tab = $('.nav-tabs li[data-layerid="' + layerid + '"]');
-      var panel = tab.closest(".popup-content").parent();
-      var tabs = tab.parent().find("li");
-      var info = $(tab.find("a").attr("href"));
+      var tab = document.querySelector('.nav-tabs li[data-layerid="' + layerid + '"]');
 
       _sourceSelectOverlay.getFeatures().forEach((feature) => {
         if (feature.get("mviewerid") === layerid) {
@@ -4130,21 +4356,30 @@ mviewer = (function () {
       });
       // remove pin on last layer with pin
       if (pinLayers.length === 0) {
-        $("#mv_marker").hide();
+        document.querySelector("#mv_marker")?.style.setProperty("display", "none");
       }
+
+      // A layer can be visible in the legend without having generated an info tab.
+      if (!tab) {
+        return;
+      }
+
+      var panel = tab.closest(".popup-content").parentElement;
+      var tabs = tab.parentElement.querySelectorAll("li");
+      var info = document.querySelector(tab.querySelector("a").getAttribute("href"));
 
       if (tabs.length === 1) {
         tab.remove();
         info.remove();
-        if (panel.hasClass("active")) {
-          panel.toggleClass("active");
+        if (panel.classList.contains("active")) {
+          panel.classList.toggle("active");
         }
-        $("#mv_marker").hide();
+        document.querySelector("#mv_marker")?.style.setProperty("display", "none");
       } else {
-        if (tab.hasClass("active")) {
+        if (tab.classList.contains("active")) {
           //Activation de l'item suivant
-          var _next_tab = tab.next();
-          _next_tab.find("a").click();
+          var _next_tab = tab.nextElementSibling;
+          _next_tab.querySelector("a")?.click();
           tab.remove();
           info.remove();
         } else {
@@ -4165,21 +4400,23 @@ mviewer = (function () {
     legendSize: function (img) {
       if (img.width > 220) {
         //$(img).addClass("big-legend");
-        $(img).closest("div").addClass("big-legend");
-        $(img)
-          .parent()
-          .append(
-            '<span onclick="mviewer.popupPhoto(' +
-              "this.parentElement.getElementsByTagName('img')[0].src)\" " +
-              'class="text-big-legend"><span><i class="ri-expand-diagonal-line"></i>' +
-              "Agrandir la légende</span></span>"
-          );
+        img.closest("div")?.classList.add("big-legend");
+        img.parentElement?.insertAdjacentHTML(
+          "beforeend",
+          '<span onclick="mviewer.popupPhoto(' +
+            "this.parentElement.getElementsByTagName('img')[0].src)\" " +
+            'class="text-big-legend"><span><i class="ri-expand-diagonal-line"></i>' +
+            "Agrandir la légende</span></span>"
+        );
       }
     },
 
     toggleAllThemeLayers: function (e) {
       e.preventDefault;
-      var themeid = $(e.currentTarget).closest("li").attr("id").split("theme-layers-")[1];
+      var themeid = e.currentTarget
+        .closest("li")
+        .getAttribute("id")
+        .split("theme-layers-")[1];
       var theme = _themes[themeid];
       var status = _getThemeStatus(themeid);
       var visibility = false;
@@ -4207,14 +4444,18 @@ mviewer = (function () {
           Object.values(theme.groups).forEach(function (group) {
             for (const [key, layer] of Object.entries(group.layers)) {
               if (layer.layer.getVisible()) {
-                mviewer.removeLayer($(".mv-layer-details[data-layerid='" + key + "']"));
+                mviewer.removeLayer(
+                  document.querySelector(".mv-layer-details[data-layerid='" + key + "']")
+                );
               }
             }
           });
         } else {
           for (const [key, layer] of Object.entries(theme.layers)) {
             if (layer.layer.getVisible()) {
-              mviewer.removeLayer($(".mv-layer-details[data-layerid='" + key + "']"));
+              mviewer.removeLayer(
+                document.querySelector(".mv-layer-details[data-layerid='" + key + "']")
+              );
             }
           }
         }

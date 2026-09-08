@@ -280,19 +280,28 @@ var addlayers = (function () {
         .then((json) => {
           _config = json;
           json.csw.map((x) => {
-            $("#addLayers_service_url_csw_select").append(
-              `<option value="${x.url}">${x.label}</option>`
-            );
+            document
+              .querySelector("#addLayers_service_url_csw_select")
+              ?.insertAdjacentHTML(
+                "beforeend",
+                `<option value="${x.url}">${x.label}</option>`
+              );
           });
           json.ogc.map((x) => {
-            $("#addLayers_service_url_select").append(
-              `<option value="${x.url}">${x.label}</option>`
-            );
+            document
+              .querySelector("#addLayers_service_url_select")
+              ?.insertAdjacentHTML(
+                "beforeend",
+                `<option value="${x.url}">${x.label}</option>`
+              );
           });
           json.api_features.map((x) => {
-            $("#addLayers_service_url_api_features_select").append(
-              `<option value="${x.url}">${x.label}</option>`
-            );
+            document
+              .querySelector("#addLayers_service_url_api_features_select")
+              ?.insertAdjacentHTML(
+                "beforeend",
+                `<option value="${x.url}">${x.label}</option>`
+              );
           });
         });
       //Add html elements to the DOM
@@ -304,28 +313,36 @@ var addlayers = (function () {
             </span>Ajouter des données</a>
             </li>`;
 
-      $("#menu").append("<hr>").append(button);
+      document.querySelector("#menu")?.insertAdjacentHTML("beforeend", `<hr>${button}`);
 
-      $("#addLayerpanel").on("hidden.bs.modal", function (e) {
-        _addlayersEnabled = false;
-      });
+      document
+        .querySelector("#addLayerpanel")
+        ?.addEventListener("hidden.bs.modal", function () {
+          _addlayersEnabled = false;
+        });
 
-      $("#addLayers_service_url_select").change(function () {
-        _url = $("#addLayers_service_url_select").val();
-        $("#addLayers_service_url").val(_url);
-        _connectServer();
-      });
-      $("#addLayers_service_url_csw_select").change(function () {
-        _url = $("#addLayers_service_url_csw_select").val();
-        $("#addLayers_service_url_csw").val(_url);
-        _connectCsw();
-      });
-      $("#addLayers_service_url_api_features_select").change(function () {
-        _url = $("#addLayers_service_url_api_features_select").val();
-        $("#addLayers_service_url_api_features_select").val(_url);
-        apiFeatures.clearErrorMessage();
-        apiFeatures.connect(_url);
-      });
+      document
+        .querySelector("#addLayers_service_url_select")
+        ?.addEventListener("change", function () {
+          _url = this.value;
+          document.querySelector("#addLayers_service_url").value = _url;
+          _connectServer();
+        });
+      document
+        .querySelector("#addLayers_service_url_csw_select")
+        ?.addEventListener("change", function () {
+          _url = this.value;
+          document.querySelector("#addLayers_service_url_csw").value = _url;
+          _connectCsw();
+        });
+      document
+        .querySelector("#addLayers_service_url_api_features_select")
+        ?.addEventListener("change", function () {
+          _url = this.value;
+          this.value = _url;
+          apiFeatures.clearErrorMessage();
+          apiFeatures.connect(_url);
+        });
     }
     _loaded = true;
 
@@ -342,6 +359,7 @@ var addlayers = (function () {
 
     const btnConnectWms = document.getElementById("addLayers_service_url");
     const btnConnectCsw = document.getElementById("addLayers_service_url_csw");
+    const filterCsw = document.getElementById("addLayers_service_filter_csw");
 
     if (btnConnectWms) {
       btnConnectWms.addEventListener("keypress", function (e) {
@@ -350,12 +368,18 @@ var addlayers = (function () {
         }
       });
     }
+    const triggerCswSearch = function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        _pagingInfos.currentPage = 0;
+        _connectCsw();
+      }
+    };
     if (btnConnectCsw) {
-      btnConnectCsw.addEventListener("keypress", function (e) {
-        if (e.key === "Enter") {
-          _connectCsw(btnConnectCsw.value);
-        }
-      });
+      btnConnectCsw.addEventListener("keydown", triggerCswSearch);
+    }
+    if (filterCsw) {
+      filterCsw.addEventListener("keydown", triggerCswSearch);
     }
   };
 
@@ -366,7 +390,9 @@ var addlayers = (function () {
   var _toggle = function () {
     _addlayersEnabled = !_addlayersEnabled;
     if (_addlayersEnabled) {
-      $("#addLayerpanel").modal("show");
+      bootstrap.Modal.getOrCreateInstance(
+        document.querySelector("#addLayerpanel")
+      ).show();
     }
   };
 
@@ -445,33 +471,43 @@ var addlayers = (function () {
    * @returns {void}
    */
   var _showLayerList = function (layerList, parentDiv) {
-    parentDiv.empty();
+    parentDiv.replaceChildren();
     layerList.forEach(function (layer) {
-      let btn = $('<button class="vcenter"><i class="ri-add-circle-line"></i></button>');
+      const btn = document.createElement("button");
+      btn.className = "vcenter";
+      btn.insertAdjacentHTML("beforeend", '<i class="ri-add-circle-line"></i>');
 
-      let childContainerRow = $(`<div class="row"></div>`);
-      let childContainerCol = $(`<div class="col-md-12"></div>`);
+      const childContainerRow = document.createElement("div");
+      childContainerRow.className = "row";
+      const childContainerCol = document.createElement("div");
+      childContainerCol.className = "col-md-12";
       childContainerRow.append(childContainerCol);
-      btn.click(function () {
+      btn.addEventListener("click", function () {
         _addLayer(layer, this);
       });
       let rowClass = layer.Layer && layer.Layer.length > 0 ? "" : "layer-result-row";
-      const layerContentRow = $(`<div class="pl-1 ${rowClass} list-group-item"></div>`);
-      let layerContent = $(`<div class="col-md-8"> </div>`);
-      const btnContent = $(`<div class="col-md-1"> </div>`);
+      const layerContentRow = document.createElement("div");
+      layerContentRow.className = `pl-1 ${rowClass} list-group-item`;
+      let layerContent = document.createElement("div");
+      layerContent.className = "col-md-8";
+      const btnContent = document.createElement("div");
+      btnContent.className = "col-md-1";
 
-      let title = $(
-        `<span class="layer-result" title="${layer.Title}">${layer.Title}</span>`
-      );
+      let title = document.createElement("span");
+      title.className = "layer-result";
+      title.title = layer.Title;
+      title.textContent = layer.Title;
       if (layer.Abstract == undefined) {
         layer.Abstract = "";
       }
       // if layer is a layer list, recursive call
       if (layer.Layer && layer.Layer.length > 0) {
-        layerContent = $(`<div class="col-md-12"> </div>`);
-        title = $(
-          `<div class="layer-result layerGroup" title="${layer.Title}">${layer.Title}</div>`
-        );
+        layerContent = document.createElement("div");
+        layerContent.className = "col-md-12";
+        title = document.createElement("div");
+        title.className = "layer-result layerGroup";
+        title.title = layer.Title;
+        title.textContent = layer.Title;
         layerContentRow.append(layerContent);
         layerContent.append(title);
         layerContent.append(childContainerRow);
@@ -483,17 +519,25 @@ var addlayers = (function () {
 
         layerContentRow.append(layerContent);
         layerContent.append(title);
-        layerContent.append(
-          `<div class="layer-result-descr" title="${layer.Abstract}">${layer.Abstract}</div>`
-        );
+        const description = document.createElement("div");
+        description.className = "layer-result-descr";
+        description.title = layer.Abstract;
+        description.textContent = layer.Abstract;
+        layerContent.append(description);
         if (layer.Thumbnail) {
-          layerContentRow.append(
-            $(
-              `<div class="col-md-3"><img class="thumb_csw" width="200" src="${layer.Thumbnail}" title="${layer.Title}"/></div>`
-            )
-          );
+          const thumbnailContainer = document.createElement("div");
+          thumbnailContainer.className = "col-md-3";
+          const thumbnail = document.createElement("img");
+          thumbnail.className = "thumb_csw";
+          thumbnail.width = 200;
+          thumbnail.src = layer.Thumbnail;
+          thumbnail.title = layer.Title;
+          thumbnailContainer.append(thumbnail);
+          layerContentRow.append(thumbnailContainer);
         } else {
-          layerContentRow.append($(`<div class="col-md-3"></div>`));
+          const thumbnailContainer = document.createElement("div");
+          thumbnailContainer.className = "col-md-3";
+          layerContentRow.append(thumbnailContainer);
         }
 
         btnContent.append(btn);
@@ -553,7 +597,9 @@ var addlayers = (function () {
    * @returns {void}
    */
   var _getCapabilities = function (url) {
-    $("#addlayers_results_loading").show();
+    document
+      .querySelector("#addlayers_results_loading")
+      ?.style.setProperty("display", "block");
     _ajaxPromise({
       url: url,
       type: "get",
@@ -565,9 +611,11 @@ var addlayers = (function () {
           _resultList = capabilities;
           if (_resultList !== null) {
             _layerList = _resultList.layers;
-            _showLayerList(_layerList, $("#addlayers_results"));
+            _showLayerList(_layerList, document.querySelector("#addlayers_results"));
           }
-          $("#addlayers_results_loading").hide();
+          document
+            .querySelector("#addlayers_results_loading")
+            ?.style.setProperty("display", "none");
         },
         function onError(jqXHR, textStatus, errorThrown) {
           var message = `Problème réseau pour intérroger <strong>${url}</strong><br>`;
@@ -575,13 +623,17 @@ var addlayers = (function () {
             message += jqXHR.responseText;
           }
           _error(message);
-          $("#addlayers_results_loading").hide();
+          document
+            .querySelector("#addlayers_results_loading")
+            ?.style.setProperty("display", "none");
         }
       )
       .catch(function errorHandler(error) {
         var message = `Problème réseau pour intérroger <strong>${url}</strong><br>`;
         _error(message);
-        $("#addlayers_results_loading").hide();
+        document
+          .querySelector("#addlayers_results_loading")
+          ?.style.setProperty("display", "none");
       });
   };
   /**
@@ -726,7 +778,8 @@ var addlayers = (function () {
    * @returns {void}
    */
   var _addPager = function () {
-    $("#addlayers_results_pager").empty();
+    const pagerContainer = document.querySelector("#addlayers_results_pager");
+    pagerContainer?.replaceChildren();
     const previousDisabled = _pagingInfos.currentPage == 0 ? "disabled" : "";
     const nextDisabled =
       _pagingInfos.currentPage == _pagingInfos.nbPages - 1 ? "disabled" : "";
@@ -740,7 +793,7 @@ var addlayers = (function () {
                     </li>
                   </ul>
                 </nav>`;
-    $("#addlayers_results_pager").append(pager);
+    pagerContainer?.insertAdjacentHTML("beforeend", pager);
   };
 
   /**

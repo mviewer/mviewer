@@ -130,21 +130,28 @@ var info = (function () {
   ) {
     //manipulate html to activate first item.
     var tmp = document.createElement("div");
-    $(tmp).append(html);
+    const htmlItems = Array.isArray(html) ? html : [html];
+    htmlItems.forEach((item) => {
+      if (typeof item === "string") {
+        tmp.insertAdjacentHTML("beforeend", item);
+      } else {
+        tmp.append(item);
+      }
+    });
 
     // activate first item, except when multiple langs, activate the first one of the active lang
-    $(tmp).find("li.item").first().addClass("active");
+    tmp.querySelector("li.item")?.classList.add("active");
 
     switch (template_to_use) {
       case "none":
-        $(tmp).find("li.item").first().addClass("active");
+        tmp.querySelector("li.item")?.classList.add("active");
 
         break;
 
       case "one":
         // activate first element
         // for retrocompatibility reasons we ignore the number of langs
-        $(tmp).find("li.item").first().addClass("active");
+        tmp.querySelector("li.item")?.classList.add("active");
 
         break;
 
@@ -152,32 +159,40 @@ var info = (function () {
         // some quick checks
         if (lang_to_add != "" || configuration.getLanguages().includes(lang_to_add)) {
           //mark current lang elements
-          $(tmp).find("li.item").slice(0, featurescount).addClass(`mst_${lang_to_add}`);
+          tmp.querySelectorAll("li.item").forEach((item, index) => {
+            if (index < featurescount) item.classList.add(`mst_${lang_to_add}`);
+          });
         }
 
         // hide all items
-        $(tmp).find("li.item").hide();
+        tmp.querySelectorAll("li.item").forEach((item) => {
+          item.style.display = "none";
+        });
 
-        $(tmp)
-          .find(`li.item.mst_${configuration.getLang()}`)
-          .slice(0, featurescount)
-          .css("display", "");
+        tmp
+          .querySelectorAll(`li.item.mst_${configuration.getLang()}`)
+          .forEach((item, index) => {
+            if (index < featurescount) item.style.display = "";
+          });
 
         // do NOT use .show() as it will set display to something we dont want
-        $(tmp).find(`li.item.mst_${configuration.getLang()}`).first().addClass("active");
+        tmp
+          .querySelector(`li.item.mst_${configuration.getLang()}`)
+          ?.classList.add("active");
 
         // hide other languages slides
-        $(tmp)
-          .find("li.item")
-          .not(`.mst_${configuration.getLang()}`)
-          .addClass("hidden-item")
-          .removeClass("item");
+        tmp.querySelectorAll("li.item").forEach((item) => {
+          if (!item.matches(`.mst_${configuration.getLang()}`)) {
+            item.classList.add("hidden-item");
+            item.classList.remove("item");
+          }
+        });
 
         break;
 
       default:
         // weird cases, only activate first element
-        $(tmp).find("li.item").first().addClass("active");
+        tmp.querySelector("li.item")?.classList.add("active");
         break;
     }
 
@@ -188,22 +203,18 @@ var info = (function () {
         lang_to_add !== "" &&
         configuration.getLanguages().includes(lang_to_add)
       ) {
-        $(tmp)
-          .find(`li.item.mst_${lang_to_add}`)
-          .each(function (i, item) {
-            $(item).attr("data-counter", `${i + 1}/${featurescount}`);
-            $(item).addClass("carousel-item");
-          });
+        tmp.querySelectorAll(`li.item.mst_${lang_to_add}`).forEach((item, index) => {
+          item.setAttribute("data-counter", `${index + 1}/${featurescount}`);
+          item.classList.add("carousel-item");
+        });
       } else {
-        $(tmp)
-          .find("li.item")
-          .each(function (i, item) {
-            $(item).attr("data-counter", `${i + 1}/${featurescount}`);
-            $(item).addClass("carousel-item");
-          });
+        tmp.querySelectorAll("li.item").forEach((item, index) => {
+          item.setAttribute("data-counter", `${index + 1}/${featurescount}`);
+          item.classList.add("carousel-item");
+        });
       }
     }
-    return [$(tmp).html()];
+    return [tmp.innerHTML];
   };
 
   /**
@@ -212,7 +223,7 @@ var info = (function () {
    */
 
   var _clickOnMap = function (evt) {
-    $("#loading-indicator").show();
+    document.querySelector("#loading-indicator")?.style.setProperty("display", "");
     // TODO : Clear search results
     //_clearSearchResults();
     _queryMap(evt);
@@ -229,7 +240,9 @@ var info = (function () {
     var isClick = evt.type === "singleclick";
     var requests = [];
     var sensorPromises = [];
-    $(".popup-content").html("");
+    document
+      .querySelectorAll(".popup-content")
+      .forEach((element) => element.replaceChildren());
     _queriedFeatures = [];
     _firstlayerFeatures = [];
     _hasQueryResult = false;
@@ -266,7 +279,8 @@ var info = (function () {
       let hdms = coordAsText(coord, coordPrec);
       hdms =
         _typeCoordinates === "xy" ? hdms : hdms.replace(/ /g, "").replace("N", "N - ");
-      $("#coordinates span").text(hdms);
+      const coordinates = document.querySelector("#coordinates span");
+      if (coordinates) coordinates.textContent = hdms;
     }
     // read snapping interaction
     const snapInter = mviewer
@@ -426,7 +440,9 @@ var info = (function () {
     } else {
       visibleLayers = _queryableLayers.filter((l) => l.getVisible());
     }
-    $(".popup-content").html("");
+    document
+      .querySelectorAll(".popup-content")
+      .forEach((element) => element.replaceChildren());
     _clickCoordinates = evt.coordinate;
     var urls = [];
     var params;
@@ -606,17 +622,22 @@ var info = (function () {
           //test si présence d'une classe .feature eg template geoserver.
           //Chaque élément trouvé est une feature avec ses propriétés
           // Be carefull .carrousel renamed to mv-features
-          var features = $(layerResponse).find(".mv-features li").addClass("item");
+          const responseDocument =
+            typeof layerResponse === "string"
+              ? new DOMParser().parseFromString(layerResponse, "text/html")
+              : layerResponse;
+          var features = Array.from(responseDocument.querySelectorAll(".mv-features li"));
+          features.forEach((feature) => feature.classList.add("item"));
           if (features.length == 0) {
             html_result.push(`<li class="item active">${layerResponse}</li>`);
           } else {
-            $(features).each(function (i, feature) {
+            features.forEach(function (feature) {
               html_result.push(feature);
             });
 
             var t = [];
 
-            $(features).each(function (i, feature) {
+            features.forEach(function (feature) {
               t.push(feature);
             });
 
@@ -765,7 +786,9 @@ var info = (function () {
               view
             );
           }
-          $(`#${panel} .popup-content`).append(template);
+          document
+            .querySelector(`#${panel} .popup-content`)
+            ?.insertAdjacentHTML("beforeend", template);
 
           // the following code is to link the information panel's title to the layer name, so that a translation is always possible without having to retireve dictionnary
 
@@ -778,13 +801,13 @@ var info = (function () {
                 : firstLayer.layerid;
           }
 
-          let panel_header = $(`#${panel} .mv-header h6`);
+          const panelHeader = document.querySelector(`#${panel} .mv-header h6`);
 
           if (
             _panelsTemplate[panel] === "allintabs" ||
             _panelsTemplate[panel] === "default"
           ) {
-            panel_header.attr("i18n", `layers.${firstlayer_id}`);
+            panelHeader?.setAttribute("i18n", `layers.${firstlayer_id}`);
           }
 
           // default
@@ -794,39 +817,40 @@ var info = (function () {
             layer_picker_container_selector = "#thematic-modal";
           }
 
-          layer_picker_container = $(layer_picker_container_selector);
+          layer_picker_container = document.querySelector(
+            layer_picker_container_selector
+          );
 
           // some error detection
-          if (layer_picker_container.length === 0) {
+          if (!layer_picker_container) {
             throw new Error("sidebar-wrapper not found");
           }
           // get the i18n id from the corresponding layer, the link here is the i18n tag set using setInfoPanelTitle
-          const layer_title_el = layer_picker_container.find(
-            `[i18n="${panel_header.attr("i18n")}"]`
+          const layerTitleElements = layer_picker_container.querySelectorAll(
+            `[i18n="${panelHeader?.getAttribute("i18n")}"]`
           );
 
-          if (layer_title_el.length > 1) {
+          if (layerTitleElements.length > 1) {
             throw new Error("i18n layers id has been used in more than one html element");
-          } else if (layer_title_el.length === 0) {
+          } else if (layerTitleElements.length === 0) {
             // simplified mode, no layer picker
           }
 
-          var title = layer_title_el.text();
+          var title = layerTitleElements[0]?.textContent || "";
 
           // info panel title
-          panel_header.text(title);
+          if (panelHeader) panelHeader.textContent = title;
 
           // info panel layer selection onhover's text
           if (configuration.getLanguages().length > 1) {
             // update every tab in the layer's selection title according to the layer selection left tab title, with reverse in order to keep the panel's title same as first layer
-            $(`#${panel} .nav-tabs li`)
-              .toArray()
+            Array.from(document.querySelectorAll(`#${panel} .nav-tabs li`))
               .reverse()
-              .forEach(function (item, index) {
+              .forEach(function (item) {
                 mviewer.setInfoPanelTitle(
-                  $(item).find("a"),
+                  item.querySelector("a"),
                   panel,
-                  `layers.${$(item).attr("data-layerid")}`
+                  `layers.${item.getAttribute("data-layerid")}`
                 );
               });
           }
@@ -839,75 +863,88 @@ var info = (function () {
           document.dispatchEvent(infoPanelReadyEvent);
 
           if (configuration.getConfiguration().mobile) {
-            $("#modal-panel").modal("show");
+            bootstrap.Modal.getOrCreateInstance(
+              document.querySelector("#modal-panel")
+            ).show();
             if (_featureTooltip && _featureTooltip.getElement().children.length) {
-              $(_featureTooltip.getElement()).popover("hide");
+              bootstrap.Popover.getInstance(_featureTooltip.getElement())?.hide();
             }
           } else {
-            if (!$(`#${panel}`).hasClass("active")) {
-              $(`#${panel}`).toggleClass("active");
+            const panelElement = document.querySelector(`#${panel}`);
+            if (!panelElement?.classList.contains("active")) {
+              panelElement?.classList.add("active");
             }
           }
-          $(`#${panel} .popup-content iframe[class!='chartjs-hidden-iframe']`).each(
-            function (index) {
-              $(this).on("load", function () {
-                $(this).closest("li").find(".mv-iframe-indicator").hide();
+          document
+            .querySelectorAll(
+              `#${panel} .popup-content iframe:not(.chartjs-hidden-iframe)`
+            )
+            .forEach((iframe) => {
+              iframe.addEventListener("load", () => {
+                iframe
+                  .closest("li")
+                  ?.querySelector(".mv-iframe-indicator")
+                  ?.style.setProperty("display", "none");
               });
-              $(this)
+              iframe
                 .closest("li")
-                .append(
-                  [
-                    '<div class="mv-iframe-indicator" >',
-                    '<div class="loader">Loading...</div>',
-                    "</div>",
-                  ].join("")
+                ?.insertAdjacentHTML(
+                  "beforeend",
+                  '<div class="mv-iframe-indicator"><div class="loader">Loading...</div></div>'
                 );
-            }
-          );
-          $(`#${panel} .popup-content img`).click(function () {
-            mviewer.popupPhoto($(this).attr("src"));
+            });
+          document.querySelectorAll(`#${panel} .popup-content img`).forEach((image) => {
+            image.addEventListener("click", () =>
+              mviewer.popupPhoto(image.getAttribute("src"))
+            );
+            image.style.cursor = "pointer";
+            image.setAttribute("title", "Cliquez pour agrandir cette image");
           });
-          $(`#${panel} .popup-content img`)
-            .on("vmouseover", function () {
-              $(this).css("cursor", "pointer");
-            })
-            .attr("title", "Cliquez pour agrandir cette image");
-          $(".popup-content .nav-tabs li>a").tooltip("dispose").tooltip({
-            animation: false,
-            trigger: "hover",
-            container: "body",
-            placement: "right",
-            html: true,
-            template: mviewer.templates.tooltip,
+          document.querySelectorAll(".popup-content .nav-tabs li > a").forEach((link) => {
+            bootstrap.Tooltip.getInstance(link)?.dispose();
+            new bootstrap.Tooltip(link, {
+              animation: false,
+              trigger: "hover",
+              container: "body",
+              placement: "right",
+              html: true,
+              template: mviewer.templates.tooltip,
+            });
           });
           // init sub selection
           _firstlayerFeatures = _queriedFeatures.filter((feature) => {
             return feature.get("mviewerid") == view.layers[0].layerid;
           });
           // change feature of sub selection
-          $(".carousel.slide").on("slide.bs.carousel", function (e) {
-            $(e.currentTarget)
-              .find(".counter-slide")
-              .text($(e.relatedTarget).attr("data-counter"));
-            var selectedFeature = _queriedFeatures.filter((feature) => {
-              return feature.ol_uid == e.relatedTarget.id;
+          document.querySelectorAll(".carousel.slide").forEach((carousel) => {
+            carousel.addEventListener("slide.bs.carousel", function (e) {
+              const counter = e.currentTarget.querySelector(".counter-slide");
+              if (counter)
+                counter.textContent = e.relatedTarget.getAttribute("data-counter");
+              var selectedFeature = _queriedFeatures.filter((feature) => {
+                return feature.ol_uid == e.relatedTarget.id;
+              });
+              if (!_.isEmpty(_queriedFeatures) && !_queriedFeatures[0].get("features")) {
+                mviewer.highlightSubFeature(selectedFeature[0]);
+              }
             });
-            if (!_.isEmpty(_queriedFeatures) && !_queriedFeatures[0].get("features")) {
-              mviewer.highlightSubFeature(selectedFeature[0]);
-            }
           });
           // change layer of sub selection
           if (configuration.getConfiguration().mobile) {
-            $(".panel-heading").on("click", function (e) {
-              changeSubFeatureLayer(e);
-            });
+            document.querySelectorAll(".panel-heading").forEach((heading) =>
+              heading.addEventListener("click", function (e) {
+                changeSubFeatureLayer(e);
+              })
+            );
           } else {
-            $(".nav-tabs li").on("click", function (e) {
-              changeSubFeatureLayer(e);
-            });
+            document.querySelectorAll(".nav-tabs li").forEach((tab) =>
+              tab.addEventListener("click", function (e) {
+                changeSubFeatureLayer(e);
+              })
+            );
           }
         } else {
-          $(`#${panel}`).removeClass("active");
+          document.querySelector(`#${panel}`)?.classList.remove("active");
         }
         // highlight features and sub feature
         if (_queriedFeatures[0] && _queriedFeatures[0].get("features")) {
@@ -929,10 +966,10 @@ var info = (function () {
             !showPin ? search.options.marker : showPin
           );
         } else {
-          $("#mv_marker").hide();
+          document.querySelector("#mv_marker")?.style.setProperty("display", "none");
         }
       }
-      $("#loading-indicator").hide();
+      document.querySelector("#loading-indicator")?.style.setProperty("display", "none");
       search.clearSearchField();
       _mvReady = true;
     };
@@ -995,8 +1032,8 @@ var info = (function () {
 
     var pixel = mviewer.getMap().getEventPixel(evt.originalEvent);
     // default tooltip state or reset tooltip
-    $(popup).popover("dispose");
-    $("#map").css("cursor", "");
+    bootstrap.Popover.getInstance(popup)?.dispose();
+    document.querySelector("#map")?.style.setProperty("cursor", "");
     var feature = mviewer
       .getMap()
       .forEachFeatureAtPixel(pixel, function (feature, layer) {
@@ -1044,7 +1081,7 @@ var info = (function () {
     //hack to check if feature is yet overlayed
     var newFeature = false;
     if (!feature) {
-      $("#map").css("cursor", "");
+      document.querySelector("#map")?.style.setProperty("cursor", "");
       _sourceOverlay.clear();
       return;
     }
@@ -1063,7 +1100,7 @@ var info = (function () {
         ? _overLayers[feature.get("mviewerid")]
         : false;
     if (l && l.tooltip && ((l.fields && l.fields.length) || l.tooltipcontent)) {
-      $("#map").css("cursor", "pointer");
+      document.querySelector("#map")?.style.setProperty("cursor", "pointer");
       if (newFeature && !l.nohighlight) {
         _sourceOverlay.clear();
         _sourceOverlay.addFeature(feature);
@@ -1202,7 +1239,7 @@ var info = (function () {
         }
       });
       li += "</div></li>";
-      html += `${$(li)[0].outerHTML}\n`;
+      html += `${li}\n`;
     });
     return _customizeHTML(html, features.length);
   };
@@ -1321,7 +1358,7 @@ var info = (function () {
   var _getAlias = function (value, aliases, fields) {
     var alias = "";
     if (aliases) {
-      alias = aliases[$.inArray(value, fields)];
+      alias = aliases[fields.indexOf(value)];
     } else {
       alias = value.substring(0, 1).toUpperCase() + value.substring(1, 50).toLowerCase();
     }
@@ -1344,7 +1381,7 @@ var info = (function () {
     (x, y, 16);
     var pt = utils.transformCoordinateSafe([x, y], proj, _projection.getCode());
     var p = _map.getPixelFromCoordinate(pt);
-    $("#loading-indicator").show();
+    document.querySelector("#loading-indicator")?.style.setProperty("display", "");
     _queryMap(
       { coordinate: [pt[0], pt[1]] },
       { type: "feature", layer: layer, featureid: featureid }
@@ -1362,11 +1399,9 @@ var info = (function () {
     _overLayers = mviewer.getLayers();
     _captureCoordinatesOnClick = configuration.getCaptureCoordinates();
     _typeCoordinates = configuration.getTypeCoordinates();
-    _tocsortedlayers = $(".mv-nav-item")
-      .map(function () {
-        return $(this).attr("data-layerid");
-      })
-      .get();
+    _tocsortedlayers = Array.from(document.querySelectorAll(".mv-nav-item")).map((item) =>
+      item.getAttribute("data-layerid")
+    );
     if (configuration.getConfiguration().application.templaterightinfopanel) {
       _panelsTemplate["right-panel"] =
         configuration.getConfiguration().application.templaterightinfopanel;
@@ -1436,20 +1471,28 @@ var info = (function () {
    */
 
   var toggleTooltipLayer = function (el) {
-    var a = $(el);
-    if (a.find("input").val() === "false") {
+    const input = el.querySelector("input");
+    if (input?.value === "false") {
       //On désactive l'ancien tooltip
-      $(".layer-tooltip span.mv-checked").closest("a").find("input").val(false);
-      $(".layer-tooltip span.mv-checked")
-        .removeClass("mv-checked")
-        .addClass("mv-unchecked");
+      document.querySelectorAll(".layer-tooltip span.mv-checked").forEach((checked) => {
+        const checkedInput = checked.closest("a")?.querySelector("input");
+        if (checkedInput) checkedInput.value = "false";
+        checked.classList.remove("mv-checked");
+        checked.classList.add("mv-unchecked");
+      });
       //On active le nouveau tooltip
-      a.find("span").removeClass("mv-unchecked").addClass("mv-checked");
-      a.find("input").val(true);
-      _activeTooltipLayer = a.attr("data-layerid");
+      el.querySelectorAll("span").forEach((span) => {
+        span.classList.remove("mv-unchecked");
+        span.classList.add("mv-checked");
+      });
+      input.value = "true";
+      _activeTooltipLayer = el.getAttribute("data-layerid");
     } else {
-      a.find("span").removeClass("mv-checked").addClass("mv-unchecked");
-      a.find("input").val(false);
+      el.querySelectorAll("span").forEach((span) => {
+        span.classList.remove("mv-checked");
+        span.classList.add("mv-unchecked");
+      });
+      if (input) input.value = "false";
       _activeTooltipLayer = false;
     }
   };
