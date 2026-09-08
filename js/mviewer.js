@@ -928,15 +928,18 @@ mviewer = (function () {
 
   var _initPanelsPopup = function () {
     if (configuration.getConfiguration().application.help) {
-      $.ajax({
-        url: configuration.getConfiguration().application.help,
-        dataType: "text",
-        success: function (html) {
+      fetch(configuration.getConfiguration().application.help)
+        .then((response) => {
+          if (!response.ok)
+            throw new Error(`HTTP ${response.status} ${response.statusText}`);
+          return response.text();
+        })
+        .then(function (html) {
           document
             .querySelector("#help .modal-body")
             ?.insertAdjacentHTML("beforeend", html);
-        },
-      });
+        })
+        .catch((error) => console.error(error));
     }
   };
 
@@ -1021,11 +1024,20 @@ mviewer = (function () {
     _overLayers[oLayer.id] = oLayer;
 
     if (oLayer.metadatacsw && oLayer.metadatacsw.search("http") >= 0) {
-      $.ajax({
-        dataType: "xml",
-        layer: oLayer.id,
-        url: _ajaxURL(oLayer.metadatacsw),
-        success: function (result) {
+      fetch(_ajaxURL(oLayer.metadatacsw), {
+        headers: { Accept: "application/xml, text/xml, */*; q=0.01" },
+      })
+        .then((response) => {
+          if (!response.ok)
+            throw new Error(`HTTP ${response.status} ${response.statusText}`);
+          return response.text();
+        })
+        .then((text) => {
+          const xml = new DOMParser().parseFromString(text, "text/xml");
+          if (xml.querySelector("parsererror")) throw new Error("Invalid XML response");
+          return xml;
+        })
+        .then(function (result) {
           var summary = "";
           const getXmlText = (selector) =>
             result.querySelector(selector)?.textContent || "";
@@ -1034,33 +1046,33 @@ mviewer = (function () {
           } else {
             summary = `<p>${getXmlText("gmd\\:identificationInfo gmd\\:MD_DataIdentification gmd\\:abstract gco\\:CharacterString, identificationInfo MD_DataIdentification abstract CharacterString")}</p>`;
           }
-          if (_overLayers[this.layer].metadata) {
+          if (_overLayers[oLayer.id].metadata) {
             summary += `<a href="${
-              _overLayers[this.layer].metadata
+              _overLayers[oLayer.id].metadata
             }" i18n="legend.moreinfo" target="_blank">En savoir plus</a>`;
           }
-          _overLayers[this.layer].summary = summary;
+          _overLayers[oLayer.id].summary = summary;
 
           var modifiedDate =
             getXmlText("dct\\:modified, modified") ||
             getXmlText("dct\\:created, created");
-          _overLayers[this.layer].modifiedDate = modifiedDate;
+          _overLayers[oLayer.id].modifiedDate = modifiedDate;
 
           //use source from metadata as attribution if conf is set to "metadata"
-          if (_overLayers[this.layer].attribution === "metadata") {
+          if (_overLayers[oLayer.id].attribution === "metadata") {
             var source = getXmlText("dc\\:source, source");
-            _overLayers[this.layer].attribution = `Source : ${source}`;
-            document.querySelector(`#${this.layer}-attribution`).textContent =
+            _overLayers[oLayer.id].attribution = `Source : ${source}`;
+            document.querySelector(`#${oLayer.id}-attribution`).textContent =
               `Source : ${source}`;
           }
 
           //update visible layers on the map
           document
-            .querySelector(`#${this.layer}-layer-summary`)
+            .querySelector(`#${oLayer.id}-layer-summary`)
             ?.setAttribute("data-bs-content", summary);
-          document.querySelector(`#${this.layer}-date`).textContent = modifiedDate;
-        },
-      });
+          document.querySelector(`#${oLayer.id}-date`).textContent = modifiedDate;
+        })
+        .catch((error) => console.error(error));
     }
     _map.addLayer(l);
     if (oLayer.type === "customlayer" && mviewer.customLayers[oLayer.id]) {
@@ -1678,15 +1690,27 @@ mviewer = (function () {
           _map.addLayer(l);
           _backgroundLayers.push(l);
         } else {
-          $.ajax({
-            url: _ajaxURL(baselayer.url),
-            dataType: "xml",
-            data: {
-              SERVICE: "WMTS",
-              VERSION: "1.0.0",
-              REQUEST: "GetCapabilities",
-            },
-            success: function (xml) {
+          const capabilitiesUrl = new URL(_ajaxURL(baselayer.url), document.baseURI);
+          new URLSearchParams({
+            SERVICE: "WMTS",
+            VERSION: "1.0.0",
+            REQUEST: "GetCapabilities",
+          }).forEach((value, key) => capabilitiesUrl.searchParams.append(key, value));
+          fetch(capabilitiesUrl, {
+            headers: { Accept: "application/xml, text/xml, */*; q=0.01" },
+          })
+            .then((response) => {
+              if (!response.ok)
+                throw new Error(`HTTP ${response.status} ${response.statusText}`);
+              return response.text();
+            })
+            .then((text) => {
+              const xml = new DOMParser().parseFromString(text, "text/xml");
+              if (xml.querySelector("parsererror"))
+                throw new Error("Invalid XML response");
+              return xml;
+            })
+            .then(function (xml) {
               var getCapabilitiesResult = new ol.format.WMTSCapabilities().read(xml);
               var WMTSOptions = ol.source.WMTS.optionsFromCapabilities(
                 getCapabilitiesResult,
@@ -1709,8 +1733,8 @@ mviewer = (function () {
               } else {
                 l.setVisible(false);
               }
-            },
-          });
+            })
+            .catch((error) => console.error(error));
         }
         break;
 
@@ -2391,14 +2415,18 @@ mviewer = (function () {
       var extraFile = configuration.getConfiguration().application.langfile;
       var defaultFile = "mviewer.i18n.json";
       if (!extraFile) {
-        $.ajax({
-          url: defaultFile,
-          dataType: "json",
-          success: _configureTranslate,
-          error: function () {
+        fetch(defaultFile, {
+          headers: { Accept: "application/json, text/javascript, */*; q=0.01" },
+        })
+          .then((response) => {
+            if (!response.ok)
+              throw new Error(`HTTP ${response.status} ${response.statusText}`);
+            return response.json();
+          })
+          .then(_configureTranslate)
+          .catch(function (error) {
             console.log("Error: can't load JSON lang file!");
-          },
-        });
+          });
       } else {
         Promise.all([
           fetch(defaultFile).then((r) => r.json()),

@@ -454,14 +454,33 @@ var addlayers = (function () {
     // parentDiv.append(item);
   };
   /**
-   * Wrap an AJAX call in a Promise.
-   * @param {Object} options - jQuery AJAX options.
-   * @returns {Promise} Promise resolved or rejected with the AJAX result.
+   * Fetch capabilities as text, preserving HTTP error details for the UI.
+   * @param {string} url - Capabilities URL to request.
+   * @returns {Promise<string>} Response text.
    */
-  var _ajaxPromise = function (options) {
-    return new Promise(function (resolve, reject) {
-      $.ajax(options).done(resolve).fail(reject);
+  var _fetchText = function (url) {
+    return fetch(url).then(async (response) => {
+      const text = await response.text();
+      if (!response.ok) {
+        const error = new Error(`HTTP ${response.status} ${response.statusText}`);
+        error.responseText = text;
+        throw error;
+      }
+      return text;
     });
+  };
+
+  /**
+   * Display a WMS or CSW request error with any details returned by the server.
+   * @param {Error|{responseText: string}} error - Request error or service report.
+   * @param {string} url - Requested service URL.
+   */
+  var _onRequestError = function (error, url) {
+    var message = `Problème réseau pour interroger <strong>${url}</strong><br>`;
+    if (error.responseText) {
+      message += error.responseText;
+    }
+    _error(message);
   };
 
   /**
@@ -600,37 +619,17 @@ var addlayers = (function () {
     document
       .querySelector("#addlayers_results_loading")
       ?.style.setProperty("display", "block");
-    _ajaxPromise({
-      url: url,
-      type: "get",
-      dataType: "text",
-    })
-      .then(
-        function onSuccess(data) {
-          const capabilities = capabilitiesParser.parse(data, url);
-          _resultList = capabilities;
-          if (_resultList !== null) {
-            _layerList = _resultList.layers;
-            _showLayerList(_layerList, document.querySelector("#addlayers_results"));
-          }
-          document
-            .querySelector("#addlayers_results_loading")
-            ?.style.setProperty("display", "none");
-        },
-        function onError(jqXHR, textStatus, errorThrown) {
-          var message = `Problème réseau pour intérroger <strong>${url}</strong><br>`;
-          if (jqXHR.responseText) {
-            message += jqXHR.responseText;
-          }
-          _error(message);
-          document
-            .querySelector("#addlayers_results_loading")
-            ?.style.setProperty("display", "none");
+    _fetchText(url)
+      .then(function onSuccess(data) {
+        const capabilities = capabilitiesParser.parse(data, url);
+        _resultList = capabilities;
+        if (_resultList !== null) {
+          _layerList = _resultList.layers;
+          _showLayerList(_layerList, document.querySelector("#addlayers_results"));
         }
-      )
-      .catch(function errorHandler(error) {
-        var message = `Problème réseau pour intérroger <strong>${url}</strong><br>`;
-        _error(message);
+      })
+      .catch((error) => _onRequestError(error, url))
+      .finally(function () {
         document
           .querySelector("#addlayers_results_loading")
           ?.style.setProperty("display", "none");
@@ -670,46 +669,25 @@ var addlayers = (function () {
     const url = `${_urlCsw}${params}&constraintLanguage=CQL_TEXT&CONSTRAINT_LANGUAGE_VERSION=1.1.0&CONSTRAINT=${filter}`;
     // Show
     addLayersResultsLoading.style.display = "block";
-    _ajaxPromise({
-      url: url,
-      type: "get",
-      dataType: "text",
-    })
-      .then(
-        function onSuccess(data) {
-          if (data.indexOf("ExceptionReport") > 0) {
-            let message = `Problème réseau pour intérroger <strong>${url}</strong><br>`;
-            message += data;
-            _error(message);
-            return;
-          }
-          const capabilities = capabilitiesParser.parseCSW(data, url);
-          _resultList = capabilities;
-          if (_resultList !== null) {
-            _layerList = _resultList.layers;
-            _pagingInfos.nbPages = Math.ceil(
-              _resultList.nbTotalResults / _pagingInfos.pageSize
-            );
-            _showLayerList(_layerList, addLayersResults);
-            _addPager();
-          }
-          // Hide
-          addLayersResultsLoading.style.display = "none";
-        },
-        function onError(jqXHR, textStatus, errorThrown) {
-          var message = `Problème réseau pour intérroger <strong>${url}</strong><br>`;
-          if (jqXHR.responseText) {
-            message += jqXHR.responseText;
-          }
-          _error(message);
-          // Hide
-          addLayersResultsLoading.style.display = "none";
+    _fetchText(url)
+      .then(function onSuccess(data) {
+        if (data.indexOf("ExceptionReport") >= 0) {
+          _onRequestError({ responseText: data }, url);
+          return;
         }
-      )
-      .catch(function errorHandler(error) {
-        var message = `Problème réseau pour intérroger <strong>${url}<strong><br>`;
-        _error(message);
-        // Hide
+        const capabilities = capabilitiesParser.parseCSW(data, url);
+        _resultList = capabilities;
+        if (_resultList !== null) {
+          _layerList = _resultList.layers;
+          _pagingInfos.nbPages = Math.ceil(
+            _resultList.nbTotalResults / _pagingInfos.pageSize
+          );
+          _showLayerList(_layerList, addLayersResults);
+          _addPager();
+        }
+      })
+      .catch((error) => _onRequestError(error, url))
+      .finally(function () {
         addLayersResultsLoading.style.display = "none";
       });
   };
