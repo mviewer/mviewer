@@ -188,10 +188,11 @@ Paramètres pour les couches non WMS
     * ``geojson`` : couche vectorielle au format GeoJSON.
     * ``kml`` : couche vectorielle au format KML.
     * ``vector-tms`` : couche vectorielle au format tuilé vectoriel (VectorTile) avec un style au format JSON.
-    * ``csv`` : couche vectorielle au format CSV. Certains CSV peuvent utiliser une authentification (e.g grist et le mode secure="apikey" à utiliser de préférence avec un proxy !)
+    * ``csv`` : couche vectorielle au format CSV. L'encodage par défaut est UTF-8 et peut être modifié avec l'attribut ``encoding``. Certains CSV peuvent utiliser une authentification (e.g grist et le mode secure="apikey" à utiliser de préférence avec un proxy !)
     * ``sensorthings`` : couche de type OGC SensorThings.
     * ``customlayer`` : couche vectorielle personnalisée. Si customlayer est défini, il faut instancier un Layer OpenLayers dans un fichier javascript ayant pour nom l'id de la couche (voir ":ref:`configfuse`"). Ce fichier js doit être placé dans le répertoire customlayers/.
     * ``import`` : couche vectorielle importée par l'utilisateur. Le format de la couche importée peut être GeoJSON, KML ou GPX. Le style de la couche importée est défini dans le fichier featurestyles.js. L’extension fileimport doit être obligatoirement activée.
+* ``encoding`` : Encodage du fichier pour les couches de type ``csv``. Si cet attribut est absent ou vide, le fichier est lu avec ``response.text()``, qui décode toujours en UTF-8, indépendamment de l'encodage du système et du charset indiqué dans l'en-tête HTTP ``Content-Type``. Si cet attribut est renseigné, utiliser un encodage reconnu par ``TextDecoder``, par exemple ``utf8``, ``windows-1252`` ou ``iso-8859-1``. Exemple : ``<layer type="csv" encoding="windows-1252" ...></layer>``.
 * ``tooltip``: Pour les couches de type vecteur uniquement. Booléen précisant si les entités de la couche sont affichées sous forme d'infobulle au survol de la souris. (Les infobulles ne fonctionnent qu'avec une seule couche à la fois). Valeur par défaut = false.
 * ``tooltipenabled``: Précise la couche prioritaire pour l'affichage des infobulles.
 * ``tooltipcontent``: Chaîne de caractères décrivant l'information à afficher dans les infobulles. Cette chaîne contient soit le nom d'un champ de la couche soit un template Mustache (code html) combinant plusieurs noms de champs. Exemple : ``tooltipcontent="{{name}} - ({{city}})"``.
@@ -279,6 +280,7 @@ L'attribut ``url`` de la couche reste l'URL Grist d'origine.
        :linenos:
 
        <layer type="csv" id="csvType" name="Couche Grist"
+           encoding="utf8"
            visible="true"
            queryable="true"
            useproxy="true"

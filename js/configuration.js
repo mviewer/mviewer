@@ -1013,7 +1013,15 @@ var configuration = (function () {
                           error.status = response.status;
                           throw error;
                         }
-                        return response.text();
+                        if (!layer.encoding) {
+                          // default fetch UTF-8 encoding
+                          return response.text();
+                        }
+                        return response
+                          .arrayBuffer()
+                          .then((buffer) =>
+                            new TextDecoder(layer.encoding).decode(buffer)
+                          );
                       })
                       .then((csv) => {
                         if (!csv.trim()) {
