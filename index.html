@@ -488,22 +488,37 @@
                 <form>
                   <input type="hidden" id="service-url" />
                   <input type="hidden" id="layer-id" />
-                  <div class="form-floating mb-3">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="user"
-                      placeholder="Login" />
-                    <label for="user" i18n="layer.authent.login">Login</label>
+                  <div id="login-credentials">
+                    <div class="form-floating mb-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="user"
+                        placeholder="Login" />
+                      <label for="user" i18n="layer.authent.login">Login</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="pass"
+                        placeholder="Mot de passe"
+                        autocomplete="off" />
+                      <label for="pass" i18n="layer.authent.password">Mot de passe</label>
+                    </div>
                   </div>
-                  <div class="form-floating mb-3">
+                  <div
+                    id="api-key-group"
+                    class="form-floating mb-3"
+                    style="display: none">
                     <input
                       type="password"
                       class="form-control"
-                      id="pass"
-                      placeholder="Mot de passe"
+                      id="api-key"
+                      placeholder="Clé API"
+                      i18n="layer.authent.api_key"
                       autocomplete="off" />
-                    <label for="pass" i18n="layer.authent.password">Mot de passe</label>
+                    <label for="api-key" i18n="layer.authent.api_key">Clé API</label>
                   </div>
                   <input
                     type="button"
@@ -1169,5 +1184,13 @@
     </script>
     <script type="text/javascript" src="lib/jquery.easyDrag.min.js"></script>
     <script type="text/javascript" src="lib/simple-slidebar/slidebar_menu.js"></script>
+    <script type="text/javascript" src="lib/papaparse/papaparse.min.js"></script>
+    <script type="module">
+      import SldStyleParser from "https://esm.sh/geostyler-sld-parser";
+      import OpenLayersParser from "https://esm.sh/geostyler-openlayers-parser";
+
+      window.SldStyleParser = SldStyleParser;
+      window.OpenLayersParser = OpenLayersParser;
+    </script>
   </body>
 </html>

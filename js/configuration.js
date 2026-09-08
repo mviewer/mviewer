@@ -59,6 +59,7 @@ var configuration = (function () {
   const _blankSrc =
     "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
 
+  const vectorLayerType = ["csv", "geojson", "kml"];
   /**
    * Usefull to decode string encoded hex code
    * @param {string} str
@@ -983,18 +984,188 @@ var configuration = (function () {
             if (oLayer.type === "wms") {
               _processWmsLayer(oLayer);
             } //end wms
-            if (oLayer.type === "geojson") {
+            if (oLayer.type === "geojson" || (oLayer.type === "csv" && Papa?.parse)) {
+              let geoJsonVectorOptions = {
+                url: layer.url,
+                format: new ol.format.GeoJSON(),
+              };
+              // if CSV type, we need to parse it and convert to GeoJSON
+              if (oLayer.type === "csv") {
+                geoJsonVectorOptions = {
+                  loader: function (extent, resolution, projection) {
+                    const fetchOptions = {};
+                    if (layer.secure === "apikey") {
+                      const apiKey = sessionStorage.getItem(`${layer.url}:api-key`);
+                      if (apiKey)
+                        fetchOptions.headers = { Authorization: `Bearer ${apiKey}` };
+                    }
+                    let requestUrl = layer.url;
+                    const proxyUrl =
+                      layer.proxyurl || (layer.useproxy === "true" ? _proxy : "");
+                    if (proxyUrl) {
+                      const externalUrl = new URL(layer.url);
+                      requestUrl = `${proxyUrl.replace(/\/$/, "")}${externalUrl.pathname}${externalUrl.search}`;
+                    }
+                    fetch(requestUrl, fetchOptions)
+                      .then((response) => {
+                        if (!response.ok) {
+                          const error = new Error(`HTTP ${response.status}`);
+                          error.status = response.status;
+                          throw error;
+                        }
+                        if (!layer.encoding) {
+                          // default fetch UTF-8 encoding
+                          return response.text();
+                        }
+                        return response
+                          .arrayBuffer()
+                          .then((buffer) =>
+                            new TextDecoder(layer.encoding).decode(buffer)
+                          );
+                      })
+                      .then((csv) => {
+                        if (!csv.trim()) {
+                          const error = new Error("Empty CSV");
+                          error.code = "empty-csv";
+                          throw error;
+                        }
+                        Papa.parse(csv, {
+                          header: true,
+                          skipEmptyLines: true,
+
+                          complete: (result) => {
+                            const geoJSON = new ol.format.GeoJSON();
+                            const wkt = new ol.format.WKT();
+                            const features = [];
+                            const dataProjection = oLayer.srs || "EPSG:4326";
+                            result.data.forEach((row) => {
+                              let geometry;
+                              if (!layer.geojsonField) {
+                                const lon = parseFloat(row[layer.xfield || "longitude"]);
+                                const lat = parseFloat(row[layer.yfield || "latitude"]);
+                                if (Number.isFinite(lon) && Number.isFinite(lat)) {
+                                  geometry = new ol.geom.Point(
+                                    ol.proj.transform(
+                                      [lon, lat],
+                                      dataProjection,
+                                      projection
+                                    )
+                                  );
+                                }
+                              } else {
+                                // Read geometry from a GeoJSON or WKT field
+                                const geomField = row[layer.geojsonField];
+                                if (geomField) {
+                                  try {
+                                    // automatic geojson ok WKT format detection from field content
+                                    geometry = geomField.trim().startsWith("{")
+                                      ? geoJSON.readGeometry(geomField, {
+                                          dataProjection: dataProjection,
+                                          featureProjection: projection,
+                                        })
+                                      : wkt.readGeometry(geomField, {
+                                          dataProjection: dataProjection,
+                                          featureProjection: projection,
+                                        });
+                                  } catch (error) {
+                                    console.warn("Unable to read CSV geometry", error);
+                                  }
+                                }
+                              }
+                              // create feature only if geometry is valid
+                              if (geometry) {
+                                const properties = { ...row };
+                                // reserved openLayers field name
+                                delete properties.geometry;
+                                const feature = new ol.Feature(properties);
+                                feature.setGeometry(geometry);
+                                features.push(feature);
+                              }
+                            });
+                            if (features.length === 0) {
+                              mviewer.toast(
+                                "<i class='fas fa-exclamation-triangle'></i> " +
+                                  mviewer.tr("layer.csv.error.empty.title"),
+                                mviewer.tr("layer.csv.error.empty.message") +
+                                  ` <strong>${oLayer.id}</strong>`,
+                                "text-bg-warning"
+                              );
+                              return;
+                            }
+                            // add features to the vector source
+                            this.addFeatures(features);
+                          },
+                        });
+                      })
+                      .catch((error) => {
+                        console.error("Error occurred while fetching CSV data:", error);
+                        if (error.status === 404) {
+                          mviewer.toast(
+                            "<i class='fas fa-exclamation-triangle'></i> " +
+                              mviewer.tr("layer.csv.error.not_found.title"),
+                            mviewer.tr("layer.csv.error.not_found.message") +
+                              ` <strong>${oLayer.id}</strong>`,
+                            "text-bg-warning"
+                          );
+                          return;
+                        } else if (error.code === "empty-csv") {
+                          mviewer.toast(
+                            "<i class='fas fa-exclamation-triangle'></i> " +
+                              mviewer.tr("layer.csv.error.empty.title"),
+                            mviewer.tr("layer.csv.error.empty.message") +
+                              ` <strong>${oLayer.id}</strong>`,
+                            "text-bg-warning"
+                          );
+                          return;
+                        } else if (error.status === 403) {
+                          mviewer.toast(
+                            "<i class='fas fa-ban'></i> " +
+                              mviewer.tr("layer.csv.error.access.title"),
+                            mviewer.tr("layer.csv.error.access.message") +
+                              ` <strong>${oLayer.id}</strong>`,
+                            "text-bg-danger"
+                          );
+                          return;
+                        } else if (!error.status && error instanceof TypeError) {
+                          mviewer.toast(
+                            "<i class='fas fa-exclamation-triangle'></i> " +
+                              mviewer.tr("layer.csv.error.cors.title"),
+                            mviewer.tr("layer.csv.error.cors.message") +
+                              ` <strong>${oLayer.id}</strong>`,
+                            "text-bg-danger"
+                          );
+                        } else {
+                          mviewer.toast(
+                            "<i class='fas fa-exclamation-triangle'></i> " +
+                              mviewer.tr("layer.csv.error.title"),
+                            mviewer.tr("layer.csv.error.message") +
+                              ` <strong>${oLayer.id}</strong>`,
+                            "text-bg-warning"
+                          );
+                        }
+                      });
+                  },
+                };
+              }
+              // create vector layer with geojson source
               l = new ol.layer.Vector({
-                source: new ol.source.Vector({
-                  url: layer.url,
-                  format: new ol.format.GeoJSON(),
-                }),
+                source: new ol.source.Vector(geoJsonVectorOptions),
                 declutter: configurationUtils.normalizeDeclutter(oLayer.declutter, false),
               });
+              // set default style if defined in configuration
               if (oLayer.style && mviewer.featureStyles[oLayer.style]) {
                 l.setStyle(mviewer.featureStyles[oLayer.style]);
               }
               mviewer.processLayer(oLayer, l);
+              if (vectorLayerType.includes(oLayer.type) && oLayer.sld) {
+                oLayer.sldStylePromise = utils.sldFile2VectorLayer(oLayer.sld, oLayer.id);
+                oLayer.sldStylePromise.catch((error) => {
+                  console.error(
+                    `Unable to apply SLD style for layer ${oLayer.id}:`,
+                    error
+                  );
+                });
+              }
             } // end geojson
             // ->- sensortings layer
             if (oLayer.type === "sensorthings") {
@@ -1010,6 +1181,15 @@ var configuration = (function () {
                 declutter: configurationUtils.normalizeDeclutter(oLayer.declutter, false),
               });
               mviewer.processLayer(oLayer, l);
+              if (oLayer.sld) {
+                oLayer.sldStylePromise = utils.sldFile2VectorLayer(oLayer.sld, oLayer.id);
+                oLayer.sldStylePromise.catch((error) => {
+                  console.error(
+                    `Unable to apply SLD style for layer ${oLayer.id}:`,
+                    error
+                  );
+                });
+              }
             } // end kml
 
             if (oLayer.type === "import") {
@@ -1114,8 +1294,14 @@ var configuration = (function () {
       var _service_url = $("#service-url").val();
       var _layer_id = $("#layer-id").val();
       sessionStorage.removeItem(_service_url);
-      if ($("#user").val() != "" && $("#pass").val() != "")
+      if (mviewer.getLayers()[_layer_id].secure === "apikey") {
+        const apiKey = $("#api-key").val();
+        const apiKeyStorageKey = `${_service_url}:api-key`;
+        sessionStorage.removeItem(apiKeyStorageKey);
+        if (apiKey) sessionStorage.setItem(apiKeyStorageKey, apiKey);
+      } else if ($("#user").val() != "" && $("#pass").val() != "") {
         sessionStorage.setItem(_service_url, `${$("#user").val()}:${$("#pass").val()}`);
+      }
 
       $("#loginpanel").modal("hide");
       // Refresh du layer

@@ -498,11 +498,13 @@ mviewer = (function () {
    * _messageToast Show toast method.
    * @param {String} title
    * @param {String} msg
+   * @param {Number} delay
+   * @param {String} cls Bootstrap color utility class (for example, text-bg-danger)
    */
 
-  var _messageToast = function (title, msg, delay) {
+  var _messageToast = function (title, msg, delay, cls) {
     const toast = document.createElement("div");
-    toast.className = "toast";
+    toast.className = `toast ${cls || ""}`;
     toast.setAttribute("role", "alert");
     toast.setAttribute("aria-live", "assertive");
     toast.setAttribute("aria-atomic", "true");
@@ -510,7 +512,7 @@ mviewer = (function () {
     toast.innerHTML = `
         <div class="toast-header">
           <strong class="me-auto">${title}</strong>
-          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fermer"></button>
+          <button type="button" class="btn-close${cls ? " btn-close-white" : ""}" data-bs-dismiss="toast" aria-label="${mviewer.tr("toast.close")}"></button>
         </div>
         <div class="toast-body">
           ${msg}
@@ -565,7 +567,7 @@ mviewer = (function () {
       legendUrl = layer.legendurl;
     } else if (layer.xyz) {
       legendUrl = "";
-    } else if (layer.type !== "vector-tms") {
+    } else if (!["vector-tms", "csv", "geojson"].includes(layer.type)) {
       legendUrl = getLegendGraphicUrl(layer.url, _getLegendParams(layer));
     }
     if (layer.dynamiclegend) {
@@ -582,13 +584,47 @@ mviewer = (function () {
   /**
    * _drawVectorLegend draw vector legend  method.
    * @param {String} layerid
-   * @param {Array} items. Array of {styles:ol.styles , label: string, geometry: Point|Polygon|LineString)
+   * @param {Array} [items] Array of {styles:ol.styles , label: string, geometry: Point|Polygon|LineString).
+   * When a CSV, GeoJSON or KML layer has an SLD, its cached SLD content is used
+   * to render the legend instead of drawing OpenLayers styles.
    */
 
   var _drawVectorLegend = function (layerid, items) {
     //Remove classic getLegendUrl
     $(`#legend-${layerid}`).remove();
     var canvas = document.getElementById(`vector-legend-${layerid}`);
+    var layer = _overLayers[layerid];
+    if (canvas && layer?.sld && ["csv", "geojson", "kml"].includes(layer.type)) {
+      var sldContent = layer.layer?.get("sldContent");
+      var sldContentPromise;
+      if (sldContent) {
+        sldContentPromise = Promise.resolve(sldContent);
+      } else if (layer.sldStylePromise) {
+        sldContentPromise = layer.sldStylePromise.then((vectorLayer) =>
+          vectorLayer.get("sldContent")
+        );
+      } else {
+        sldContentPromise = fetch(layer.sld).then((response) => {
+          if (!response.ok) {
+            throw new Error(`Unable to load SLD file: ${layer.sld}`);
+          }
+          return response.text();
+        });
+      }
+
+      sldContentPromise
+        .then(utils.sld2Legend)
+        .then((sldCanvas) => {
+          canvas.width = sldCanvas.width;
+          canvas.height = sldCanvas.height;
+          canvas.getContext("2d").drawImage(sldCanvas, 0, 0);
+        })
+        .catch((error) =>
+          console.error(`Unable to draw SLD legend for ${layerid}:`, error)
+        );
+      return;
+    }
+
     if (canvas) {
       var marginTop = 15;
       var marginLeft = 15;
@@ -3121,11 +3157,20 @@ mviewer = (function () {
     setLoginInfo: function (ctx) {
       var _layer_id = ctx.id.split("#")[1];
       var _service_url = mviewer.getLayers()[_layer_id].url;
+      var isApiKey = mviewer.getLayers()[_layer_id].secure === "apikey";
       $("#login-panel-service-url").html("<small><i>" + _service_url + "</i></small>");
       $("#service-url").val(_service_url);
       $("#layer-id").val(_layer_id);
-      if (sessionStorage.getItem(_service_url))
+      $("#login-credentials").toggle(!isApiKey);
+      $("#api-key-group").toggle(isApiKey);
+      $("#pass").val("");
+      // API key authentication is stored for the session and prefilled when available.
+      if (isApiKey) {
+        $("#api-key").val(sessionStorage.getItem(`${_service_url}:api-key`) || "");
+      } else if (sessionStorage.getItem(_service_url)) {
+        // basic auth case, we store user:pass in sessionStorage
         $("#user").val(sessionStorage.getItem(_service_url).split(":")[0]);
+      }
     },
 
     /**
@@ -3222,7 +3267,7 @@ mviewer = (function () {
 
       if (layer.secure) {
         view.secure = layer.secure === "true" ? "global" : layer.secure;
-        if (layer.secure == "layer") view.secure_layer = true;
+        if (layer.secure == "layer" || layer.secure == "apikey") view.secure_layer = true;
       }
 
       var item = _renderHTMLFromTemplate(mviewer.templates.layerControl, view);
@@ -3258,6 +3303,10 @@ mviewer = (function () {
       //Dynamic vector Legend
       if (layer.vectorlegend && layer.legend && layer.legend.items) {
         _drawVectorLegend(layer.layerid, layer.legend.items);
+      }
+
+      if (layer.sld && ["csv", "geojson", "kml"].includes(layer.type)) {
+        _drawVectorLegend(layer.layerid);
       }
 
       _setLayerScaleStatus(layer, _calculateScale(_map.getView().getResolution()));
@@ -4109,8 +4158,8 @@ mviewer = (function () {
       (_message(msg, cls), ms);
     },
 
-    toast: function (title, msg) {
-      _messageToast(title, msg);
+    toast: function (title, msg, cls, delay) {
+      _messageToast(title, msg, delay, cls);
     },
 
     legendSize: function (img) {
