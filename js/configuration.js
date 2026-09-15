@@ -18,7 +18,7 @@ var configuration = (function () {
 
   var _typecoordinate = "";
 
-  var _lang = false;
+  var _lang = "fr";
 
   var _languages = [];
 
