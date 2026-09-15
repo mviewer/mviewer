@@ -3315,8 +3315,6 @@ mviewer = (function () {
       var _layer_id = ctx.id.split("#")[1];
       var _service_url = mviewer.getLayers()[_layer_id].url;
       var isApiKey = mviewer.getLayers()[_layer_id].secure === "apikey";
-      document.querySelector("#login-panel-service-url").innerHTML =
-        "<small><i>" + _service_url + "</i></small>";
       document.querySelector("#service-url").value = _service_url;
       document.querySelector("#layer-id").value = _layer_id;
       document.querySelector("#login-credentials").style.display = isApiKey ? "none" : "";
