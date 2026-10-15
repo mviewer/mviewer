@@ -984,20 +984,17 @@ var info = (function () {
     urls.forEach(function (request) {
       var _ba_ident = sessionStorage.getItem(request.layerinfos.url);
       requests.push(
-        $.ajax({
-          url: mviewer.ajaxURL(request.url),
-          layer: request.layerinfos,
-          beforeSend: function (req) {
-            if (_ba_ident)
-              req.setRequestHeader("Authorization", `Basic ${btoa(_ba_ident)}`);
-          },
-          success: function (response, textStatus, request) {
-            featureInfoByLayer.push({
-              response: response,
-              layerinfos: this.layer,
-              contenttype: request.getResponseHeader("Content-Type"),
-            });
-          },
+        fetch(mviewer.ajaxURL(request.url), {
+          headers: _ba_ident ? { Authorization: `Basic ${btoa(_ba_ident)}` } : {},
+        }).then(async (response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status} ${response.statusText}`);
+          }
+          featureInfoByLayer.push({
+            response: await response.text(),
+            layerinfos: request.layerinfos,
+            contenttype: response.headers.get("Content-Type") || "",
+          });
         })
       );
     });
@@ -1005,9 +1002,9 @@ var info = (function () {
     // in case of mobile, translate
 
     // wait all request before show info panel
-    Promise.all(requests).then(() => {
-      callback();
-    });
+    Promise.all(requests)
+      .then(() => callback())
+      .catch((error) => console.error(error));
   }
 
   /**

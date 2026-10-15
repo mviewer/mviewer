@@ -787,16 +787,20 @@ var search = (function () {
         contentType = "application/json; charset=utf-8";
       }
       if (sendQuery) {
-        // Fix IE9 "No transport error" with cors
-        jQuery.support.cors = true;
-        $.ajax({
-          type: "POST",
-          url: _elasticSearchUrl,
-          crossDomain: true,
-          data: JSON.stringify(queryFilter),
-          dataType: "json",
-          contentType: contentType,
-          success: function (data) {
+        fetch(_elasticSearchUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": contentType,
+            Accept: "application/json, text/javascript, */*; q=0.01",
+          },
+          body: JSON.stringify(queryFilter),
+        })
+          .then((response) => {
+            if (!response.ok)
+              throw new Error(`HTTP ${response.status} ${response.statusText}`);
+            return response.json();
+          })
+          .then(function (data) {
             _sourceEls.clear();
             var str = "";
             var format = new ol.format.GeoJSON();
@@ -840,8 +844,8 @@ var search = (function () {
             if (nb > 0) {
               _showResults(str, "entities");
             }
-          },
-          error: function (xhr, ajaxOptions, thrownError) {
+          })
+          .catch(function (thrownError) {
             mviewer.alert(
               `Problème avec l'instance Elasticsearch.\n${thrownError}\n Désactivation du service.`,
               "alert-warning"
@@ -854,8 +858,7 @@ var search = (function () {
                 element.classList.remove("mv-checked");
                 element.classList.add("mv-unchecked");
               });
-          },
-        });
+          });
       }
     }
   };
@@ -936,16 +939,20 @@ var search = (function () {
           }
           contentType = "application/json; charset=utf-8";
           if (sendQuery) {
-            // Fix IE9 "No transport error" with cors
-            jQuery.support.cors = true;
-            $.ajax({
-              type: "POST",
-              url: _elasticSearchUrl.get(layerId),
-              crossDomain: true,
-              data: JSON.stringify(queryFilter),
-              dataType: "json",
-              contentType: contentType,
-              success: function (data) {
+            fetch(_elasticSearchUrl.get(layerId), {
+              method: "POST",
+              headers: {
+                "Content-Type": contentType,
+                Accept: "application/json, text/javascript, */*; q=0.01",
+              },
+              body: JSON.stringify(queryFilter),
+            })
+              .then((response) => {
+                if (!response.ok)
+                  throw new Error(`HTTP ${response.status} ${response.statusText}`);
+                return response.json();
+              })
+              .then(function (data) {
                 let str = "";
                 let indexId = "";
                 let mouseOverField = "";
@@ -1039,8 +1046,8 @@ var search = (function () {
                 if (nb > 0) {
                   _showResults(str, "entities");
                 }
-              },
-              error: function (xhr, ajaxOptions, thrownError) {
+              })
+              .catch(function (thrownError) {
                 mviewer.alert(
                   `Problème avec l'instance Elasticsearch.\n${thrownError}\n Désactivation du service.`,
                   "alert-warning"
@@ -1053,8 +1060,7 @@ var search = (function () {
                     element.classList.remove("mv-checked");
                     element.classList.add("mv-unchecked");
                   });
-              },
-            });
+              });
           }
         }
       }
