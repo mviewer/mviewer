@@ -1,6 +1,7 @@
 name: Check submodule releases from develop
 
 on:
+  workflow_dispatch:
   pull_request_target:
     branches:
       - develop
@@ -15,7 +16,7 @@ permissions:
 
 jobs:
   sync-submodule-releases:
-    if: contains(github.event.pull_request.labels.*.name, 'check_release')
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.pull_request.labels.*.name, 'check_release')
     runs-on: ubuntu-latest
 
     steps:

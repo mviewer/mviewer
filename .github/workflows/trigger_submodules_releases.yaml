@@ -1,6 +1,12 @@
 name: Propagate release to submodules
 
 on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Tag de release à propager
+        required: true
+        type: string
   release:
     types: [published]
 
@@ -16,11 +22,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.event.inputs.release_tag || github.ref }}
 
       - name: Validate release tag is on master
         id: validate
+        env:
+          RELEASE_TAG: ${{ github.event.inputs.release_tag || github.event.release.tag_name }}
         run: |
-          TAG="${{ github.event.release.tag_name }}"
+          TAG="${RELEASE_TAG}"
 
           git fetch origin master --tags
 
@@ -40,17 +49,19 @@ jobs:
       - name: Trigger mviewer-addons release workflow
         env:
           GH_TOKEN: ${{ secrets.MVIEWER_ORG_SECRET_1 }}
+          RELEASE_TAG: ${{ github.event.inputs.release_tag || github.event.release.tag_name }}
         run: |
           gh workflow run release_from_mviewer.yml \
             --repo mviewer/mviewer-addons \
             --ref main \
-            -f version="${{ github.event.release.tag_name }}"
+            -f version="${RELEASE_TAG}"
 
       - name: Trigger mviewer-demo release workflow
         env:
           GH_TOKEN: ${{ secrets.MVIEWER_ORG_SECRET_1 }}
+          RELEASE_TAG: ${{ github.event.inputs.release_tag || github.event.release.tag_name }}
         run: |
           gh workflow run release_from_mviewer.yml \
             --repo mviewer/mviewer-demo \
             --ref main \
-            -f version="${{ github.event.release.tag_name }}"
+            -f version="${RELEASE_TAG}"

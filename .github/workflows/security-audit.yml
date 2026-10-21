@@ -1,6 +1,7 @@
 name: "Security Audit of JS Libraries"
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - develop
