@@ -1,49 +1,7 @@
-export const sld2VectorLayer = async (sldString, vectorLayerId) => {
-  const vectorLayer = _map
-    .getLayers()
-    .getArray()
-    .find((layer) => layer.get("mviewerid") === vectorLayerId);
-
-  if (!vectorLayer) {
-    throw new Error(`Vector layer "${vectorLayerId}" was not found.`);
-  }
-
-  const { output: geoStylerStyle, errors } = await new SldStyleParser().readStyle(
-    sldString
-  );
-  if (errors) {
-    throw errors[0];
-  }
-
-  const { output: olStyle } = await new OpenLayersParser().writeStyle(geoStylerStyle);
-  vectorLayer.setStyle(() => olStyle);
-  return vectorLayer;
-};
-
 /**
- * Loads an SLD file, applies it to a vector layer and keeps its content on the
- * layer for consumers such as the legend renderer.
- *
- * @param {string} sldPath URL of the SLD file.
- * @param {string} vectorLayerId mviewer identifier of the target vector layer.
- * @returns {Promise<ol.layer.Vector>} Styled vector layer with `sldContent` set.
- */
-export const sldFile2VectorLayer = async (sldPath, vectorLayerId) => {
-  const response = await fetch(sldPath);
-  if (!response.ok) {
-    throw new Error(`Unable to load SLD file: ${sldPath}`);
-  }
-  const sldString = await response.text();
-  const vectorLayer = await sld2VectorLayer(sldString, vectorLayerId);
-  vectorLayer.set("sldContent", sldString);
-  return vectorLayer;
-};
-
-/**
- * Creates a canvas legend from an SLD document.
- *
- * @param {string} sldString SLD document content.
- * @returns {Promise<HTMLCanvasElement>} Canvas containing one symbol per SLD rule.
+ * Draws Line, Fill and Mark symbols; skips labels, filters and scale limits.
+ * @param {string} sldString SLD XML content.
+ * @returns {Promise<HTMLCanvasElement>} Legend with one 24 px row per rule.
  */
 export const sld2Legend = async function (sldString) {
   const { output: style, errors } = await new SldStyleParser().readStyle(sldString);
@@ -61,6 +19,7 @@ export const sld2Legend = async function (sldString) {
     const y = index * rowHeight + rowHeight / 2;
 
     rule.symbolizers.forEach((symbolizer) => {
+      // Isolate each symbolizer's canvas state.
       context.save();
       context.globalAlpha = symbolizer.opacity ?? 1;
 
@@ -77,6 +36,7 @@ export const sld2Legend = async function (sldString) {
         context.fillStyle = symbolizer.color ?? "transparent";
         context.fillRect(4, y - 8, canvas.width - 8, 16);
         if (symbolizer.outlineColor) {
+          // Use independent outline opacity.
           context.globalAlpha = symbolizer.outlineOpacity ?? 1;
           context.strokeStyle = symbolizer.outlineColor;
           context.lineWidth = symbolizer.outlineWidth ?? 1;

@@ -1407,7 +1407,14 @@ var configuration = (function () {
     // Use owsoptions to overload default Getmap params
     Object.assign(wms_params, getParamsFromOwsOptionsString(oLayer.owsoptions));
 
-    function customWmsImageLoader(image, src) {
+    async function customWmsImageLoader(image, src) {
+      try {
+        src = await utils.resolveLocalWmsSld(src);
+      } catch (error) {
+        console.error("Unable to load SLD for layer " + oLayer.id, error);
+        image.getImage().src = _blankSrc;
+        return;
+      }
       if (oLayer.useproxy) {
         src = _proxy + encodeURIComponent(src);
       }
