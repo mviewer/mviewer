@@ -24,25 +24,6 @@ var utils = (function () {
 
   var _tests = {};
 
-  _tests.sld = function (layers) {
-    var regexp = /^(?:http(s)?:\/\/)?[\w-./@]+.(sld|SLD)$/i;
-    var test = 1;
-    layers.forEach(function (layer) {
-      if (layer && layer.sld) {
-        var name = layer.name;
-        var slds = layer.sld.split(",");
-        slds = slds.map((sld) => configuration.renderEnvPath(sld));
-        slds.forEach(function (sld, i) {
-          if (!regexp.test(sld)) {
-            test = 0;
-            console.log(`sld ${sld}\nnon valide pour la couche ${name}`);
-          }
-        });
-      }
-    });
-    return test;
-  };
-
   _tests.wildcardpattern = function (layers) {
     var test = 1;
     const allowedwilcards = ["%", "%%"];
@@ -148,7 +129,7 @@ var utils = (function () {
     nbtests += 1;
 
     // test validité sld
-    score += _tests.sld(layers);
+    score += utils.testSld(layers);
     nbtests += 1;
 
     // test validité pattern like operator
