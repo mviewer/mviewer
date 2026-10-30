@@ -1365,12 +1365,28 @@ li.mv-nav-item {
 
 #right-panel .featureInfo__default .item.active {
 	overflow-y: auto;
-	padding-bottom: 10em;
+	padding-bottom: 10px;
 	padding-right: 10px;
 }
 
 #right-panel .carousel-inner {
 	padding: 0 0 0 5px;
+}
+
+#right-panel {
+	display: flex;
+	flex-direction: column;
+}
+
+#right-panel > .mv-header {
+	flex-shrink: 0;
+}
+
+#right-panel > .popup-content {
+	position: relative;
+	flex: 1;
+	min-height: 0;
+	height: auto;
 }
 
 #right-panel-selector,
@@ -1387,9 +1403,18 @@ li.mv-nav-item {
 	height: 100%;
 }
 
+#right-panel-selector:has(.featureInfo__brut),
+#right-panel-selector .featureInfo__brut,
+#right-panel-selector .featureInfo__brut .col-md-12,
+#right-panel .featureInfo__brut .item.active {
+	height: auto;
+}
+
 /* Bottom */
 
 #bottom-panel {
+	display: flex;
+	flex-direction: column;
 	bottom: 0px;
 	opacity: 0;
 	height: 0;
@@ -1414,21 +1439,32 @@ li.mv-nav-item {
 	-ms-transform: translateX(200px);
 }
 
-#bottom-panel .popup-content {
-	width: calc(100% - 255px);
+#bottom-panel > .mv-header {
+	flex-shrink: 0;
 }
 
-#bottom-panel-selector .featureInfo__default .carousel,
-#bottom-panel-selector .featureInfo_allintabs .carousel,
+#bottom-panel > .popup-content {
+	position: relative;
+	flex: 1;
+	min-height: 0;
+	height: auto;
+}
+
 #bottom-panel-selector .featureInfo__brut .carousel {
 	height: calc(var(--mv-bottompanel-size) - 10px);
+}
+
+#bottom-panel-selector,
+#bottom-panel-selector :is(.featureInfo__default, .featureInfo_allintabs),
+#bottom-panel-selector :is(.featureInfo__default, .featureInfo_allintabs)
+	:is(.col-md-12, .tabs-left, .tab-content, .tab-pane.active, .carousel) {
+	height: 100%;
 }
 
 #bottom-panel .featureInfo__default .carousel-inner,
 #bottom-panel .featureInfo_allintabs .carousel-inner {
 	height: 100%;
 	overflow-y: auto;
-	padding-bottom: 5em;
 }
 
 /* Modes de template */
@@ -1454,10 +1490,6 @@ li.mv-nav-item {
 	margin-bottom: 1em;
 }
 
-.featureInfo__brut .card:last-child {
-	margin-bottom: 10em;
-}
-
 .accordion-button:not(.collapsed) {
 	color: #212529;
 	background-color: #21252908;
@@ -1478,8 +1510,7 @@ li.mv-nav-item {
 
 #right-panel .featureInfo__accordion .accordion,
 #bottom-panel .featureInfo__accordion .accordion {
-	padding: 0 12px;
-	margin-bottom: 10em;
+	margin-bottom: 10px;
 }
 
 .featureInfo__accordion .accordion-body {
@@ -1491,7 +1522,7 @@ li.mv-nav-item {
 }
 
 .featureInfo_allintabs .carousel-inner li {
-	padding: 0px 10px 0 0;
+	padding: 0px 10px 10px 0;
 }
 
 /* Template - Accordion + carousel */
