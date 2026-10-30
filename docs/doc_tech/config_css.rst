@@ -170,8 +170,8 @@ Ces variables rendent le thème facilement modifiable et cohérent, sans avoir �
 **Navbar (barre de navigation)**
 
 * ``--mvcustom-navbar-h`` : hauteur de la navbar (px)
-* ``--mvcustom-navbar-color`` : couleur du texte et des icônes (HEX)
-* ``--mvcustom-navbar-colorbody`` : couleur de fond (HEX)
+* ``--mvcustom-navbar-color`` : couleur de fond de la navbar (HEX)
+* ``--mvcustom-navbar-colorbody`` : couleur du texte et des icônes (HEX)
 
 Remarques
 ^^^^^^^^^
