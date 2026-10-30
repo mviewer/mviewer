@@ -1117,16 +1117,25 @@ img.mv-logo {
 
 #menu .menu-theme-layers-name {
 	display: flex;
-	flex-wrap: nowrap;
-	align-content: center;
 	align-items: center;
 	justify-content: flex-start;
+	flex: 1;
+	min-width: 0;
+	gap: 12px;
+	padding: 12px;
+	box-sizing: border-box;
 	line-height: 1.2;
 	color: var(--mv-color-body);
 }
 
-#menu .menu-theme-layers-name span {
-	margin: 12px;
+
+#menu .menu-theme-layers-name > .fa-stack {
+	flex-shrink: 0;
+}
+
+#menu .menu-theme-layers-name > span[i18n] {
+	flex: 1;
+	min-width: 0;
 }
 
 #menu .opened .badge {
