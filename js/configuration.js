@@ -640,7 +640,7 @@ var configuration = (function () {
                 ...layerConfig,
                 url: _renderEnvPath(layerConfig.url),
                 legendurl: _renderEnvPath(layerConfig.legendurl),
-                metadata_csw: _renderEnvPath(layerConfig.metadata_csw),
+                "metadata-csw": _renderEnvPath(layerConfig["metadata-csw"]),
                 metadata: _renderEnvPath(layerConfig.metadata),
                 sld:
                   layerConfig.sld &&
@@ -821,7 +821,7 @@ var configuration = (function () {
             }
             oLayer.customcontrol = layer.customcontrol === "true" ? true : false;
             oLayer.customcontrolpath = layer.customcontrolpath || "demo/customcontrols";
-            oLayer.metadatacsw = layer["metadata_csw"];
+            oLayer.metadatacsw = layer["metadata-csw"];
             if (oLayer.metadata) {
               oLayer.summary =
                 '<a href="' + oLayer.metadata + '" target="_blank">En savoir plus</a>';
