@@ -786,9 +786,18 @@ var info = (function () {
               view
             );
           }
-          document
-            .querySelector(`#${panel} .popup-content`)
-            ?.insertAdjacentHTML("beforeend", template);
+          const popupContent = document.querySelector(`#${panel} .popup-content`);
+          popupContent?.insertAdjacentHTML("beforeend", template);
+
+          // Scripts inserted as HTML are inert; recreate them once the template is in the DOM.
+          popupContent?.querySelectorAll("script").forEach((templateScript) => {
+            const script = document.createElement("script");
+            for (const attribute of templateScript.attributes) {
+              script.setAttribute(attribute.name, attribute.value);
+            }
+            script.textContent = templateScript.textContent;
+            templateScript.replaceWith(script);
+          });
 
           // the following code is to link the information panel's title to the layer name, so that a translation is always possible without having to retireve dictionnary
 
