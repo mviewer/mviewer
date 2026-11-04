@@ -128,6 +128,7 @@ Cette section propose les informations nécessaires pour migrer votre installati
    :caption: Guides de migration
 
    doc_migration/v4.0.rst
+   doc_migration/v4.2.rst
 
 Sécurité et scan de vulnérabilités
 ----------------------------------

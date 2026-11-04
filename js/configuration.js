@@ -1260,7 +1260,8 @@ var configuration = (function () {
                 })
                 .then((source) => {
                   const script = document.createElement("script");
-                  script.textContent = source;
+                  // Keep each custom layer local without requiring a wrapper in its file.
+                  script.textContent = `(function () {\n${source}\n}).call(window);`;
                   document.head.appendChild(script);
                   script.remove();
                 })
