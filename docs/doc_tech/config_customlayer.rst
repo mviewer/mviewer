@@ -29,7 +29,8 @@ Un custom layer est une couche personnalisée s'appuyant sur la librairie ``Open
 * ``type="customlayer"``: paramètre précisant qu'il s'agit d'une couche de type customlayer.
 * ``url``: paramètre qui indique où mviewer doit charger le fichier customlayer.js.
 
-
+.. Note::
+    Les URLs utilisées dans un custom layer doivent être encodées lorsqu'elles contiennent des paramètres sensibles comme un filtre CQL, en particulier derrière geOrchestra Gateway (Spring). Par exemple, ``CQL_FILTER=CODE_INSEE_DU_DEPARTEMENT='77'`` doit être transmis dans l'URL sous la forme ``CQL_FILTER=CODE_INSEE_DU_DEPARTEMENT%3D%2777%27``.
 
 
 **Exemple**

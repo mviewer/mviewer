@@ -58,13 +58,49 @@ Il est possible d'instancier un mviewer avec des **paramètres** de configuratio
 * ``title`` : Titre à utiliser. Seulement exploité en mode défault et simplifié.
 * ``topics`` : Thèmes à filtrer à partir du fichier XML.
 * ``q``  et ``qtype``: Rechercher une localité. Exemple pour centrer au démarrage la carte sur une adresse en utilisant la BAN (base adresse nationale) : ``mviewer/?q=71 rue dupont des loges Rennes&qtype=ban``
-* ``addLayer`` : pour ajouter une couche WMS à la carte. ce paramètre prends comme valeur un objet **JSON** contenant
+* ``addLayer`` : permet de charger automatiquement une couche WMS à partir d'un objet **JSON**. Voir la section :ref:`addlayer_tool` ci-dessous pour les détails d'utilisation.
 
-  * ``url`` : url du service
-  * ``name`` : nom de la couche (layername)
-  * ``title`` : label/titre à afficher dans mviewer
+.. _addlayer_tool:
 
-exemple pour le paramètre **addLayer** : ``&addLayer={\%22url\%22:\%22https://www.geo2france.fr/geoserver/hdf_common/ows\%22,\%22name\%22:\%22Antennes__HdF_EnService_Agreg\%22,\%22title\%22:\%22Antennes_test\%22}`` 
+addLayer (Outil d'ajout de données)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+L'outil d'ajout de données permet d'ajouter rapidement des couches à la carte depuis un service WMS ou une API features. Il peut être utilisé de deux manières :
+
+* depuis l'interface, en activant le bouton "Ajouter des données" dans le menu ;
+* automatiquement, via le paramètre d'URL ``addLayer`` pour charger une couche au démarrage de l'application.
+
+Pour afficher le panneau d'ajout de données dans l'interface, il faut activer l'option dans la configuration de l'application :
+
+.. code-block:: xml
+
+   <application addlayerstools="true" />
+
+Le fichier XML peut également préciser un autre fichier JSON pour la liste des serveurs proposés par l'outil :
+
+.. code-block:: xml
+
+   <application addlayerstools="true" addlayerconfig="apps/data/mes_flux.json" />
+
+Dans un fichier de configuration, cette option active l'outil pour l'application concernée. Le fichier XML ne contient pas la définition des couches à charger ; il sert surtout à rendre l'outil disponible dans l'interface.
+Une fois l'outil activé, l'utilisateur peut choisir une couche depuis le panneau, ou bien une couche peut être ajoutée automatiquement au chargement de la carte grâce au paramètre d'URL ``addLayer``.
+
+Si aucun fichier n'est précisé, l'outil utilise par défaut le fichier ``demo/data/ogc_csw_server.json``. Lorsque l'attribut ``addlayerconfig`` est défini, l'outil charge ce fichier à la place.
+
+Le paramètre d'URL ``addLayer`` accepte un objet JSON encodé contenant les informations suivantes :
+
+* ``url`` : URL du service WMS à interroger ;
+* ``name`` : nom de la couche à charger (layername) ;
+* ``title`` : libellé affiché dans mviewer ;
+* ``filter`` : filtre optionnel à appliquer à la couche.
+
+Exemple d'utilisation du paramètre ``addLayer`` :
+
+.. code-block:: text
+
+   &addLayer={%22url%22:%22https://www.geo2france.fr/geoserver/hdf_common/ows%22,%22name%22:%22Antennes__HdF_EnService_Agreg%22,%22title%22:%22Antennes_test%22}
+
+Cet exemple charge automatiquement la couche ``Antennes__HdF_EnService_Agreg`` depuis le service WMS indiqué, avec le titre ``Antennes_test`` dans l'interface.
 
 Paramètres d'URL utilisés pour les permaliens
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -11,7 +11,7 @@ Développer un customLayer
               :alt: Exemple de customlayer
               :align: center
 
-L'ojectif est ici de créer une couche personnalisée de type ``heatmap`` à partir d'un fichier **KML** en utilisant la librairie ``Openlayers`` et en s'inspirant de cet `exemple. <https://openlayers.org/en/latest/examples/heatmap-earthquakes.html>`_.  Avant tout, il faut préparer la structure de fichiers qui convient.
+L'objectif est ici de créer une couche personnalisée de type ``heatmap`` à partir d'un fichier **KML** en utilisant la librairie ``Openlayers`` et en s'inspirant de cet `exemple. <https://openlayers.org/en/latest/examples/heatmap-earthquakes.html>`_.  Avant tout, il faut préparer la structure de fichiers qui convient.
 
 .. sidebar:: Créez un répertoire avec :
 
@@ -42,9 +42,12 @@ L'exemple complet est disponible sur `github. <https://github.com/mviewer/mviewe
 Ecrire le customLayer
 *********************
 
+Chaque fichier JavaScript est récupéré avec ``fetch`` puis exécuté dans une fonction créée automatiquement par ``configuration.js``. Le chargeur donne ainsi une portée locale à chaque custom layer : il n'est pas nécessaire d'ajouter une IIFE dans vos fichiers. Les déclarations ``const``, ``let``, ``var`` et les classes restent locales à cette fonction, ce qui évite les collisions entre scripts.
+
+Utilisez ``const`` pour les références non réaffectées et ``let`` pour l'état modifiable. Enregistrez la couche avec ``new CustomLayer(...)`` ou ``mviewer.customLayers[layerid]``. Depuis un autre script, accédez à la couche enregistrée via ``mviewer.customLayers["heatmap"].layer``.
+
 .. Tip::
-   L'ancienne méthode fonctionne toujours mais est plus verbeuse que la nouvelle. Les 3 lignes mises en surbrillance sont remplacées par une seule ligne,
-   également mise en surbrillance, dans la nouvelle version.
+   L'ancienne méthode fonctionne toujours mais est plus verbeuse que la nouvelle. Les lignes surlignées montrent les différences de déclaration et d'enregistrement entre les deux méthodes.
 
 
 Ancienne méthode
@@ -78,7 +81,6 @@ Ancienne méthode
     });
     // Set the openlayers layer to the customLayer object layer
     mviewer.customLayers[layerid].layer = layer;
-
 
 
 Nouvelle méthode
@@ -143,38 +145,37 @@ customlayer ArcGis REST Feature
     :caption: test_esri_college_80.js - ancienne version
     :linenos:
 
-    {
-        mviewer.customLayers.test_esri_college_80 = {};
+    mviewer.customLayers.test_esri_college_80 = {};
 
-        var esrijsonFormat = new ol.format.EsriJSON();
+    const esrijsonFormat = new ol.format.EsriJSON();
 
-        mviewer.customLayers.test_esri_college_80.layer = new ol.layer.Vector({
-            source: new ol.source.Vector({
-                url: 'https://services2.arcgis.com/aYGUaoapooTe49i1/arcgis/rest/services/COLLEGES_PUBLICS_avec_Liens/FeatureServer/0/query?where=&objectIds=&time=&geometry=154415%2C6384802%2C345565%2C6494181&geometryType=esriGeometryEnvelope&inSR=3857&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&featureEncoding=esriDefault&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=2154&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnQueryGeometry=false&returnDistinctValues=false&cacheHint=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=pjson&token=',
-                format: esrijsonFormat
-            }),
-            style: new ol.style.Style({
-                image: new ol.style.Circle({
-                    fill: new ol.style.Fill({
-                        color: 'rgba(255, 118, 117,1.0)'
-                    }),
-                    stroke: new ol.style.Stroke({
-                        color: "#ffffff",
-                        width: 4
-                    }),
-                    radius: 9
-                })
+    mviewer.customLayers.test_esri_college_80.layer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            url: 'https://services2.arcgis.com/aYGUaoapooTe49i1/arcgis/rest/services/COLLEGES_PUBLICS_avec_Liens/FeatureServer/0/query?where=&objectIds=&time=&geometry=154415%2C6384802%2C345565%2C6494181&geometryType=esriGeometryEnvelope&inSR=3857&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&featureEncoding=esriDefault&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=2154&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnQueryGeometry=false&returnDistinctValues=false&cacheHint=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=pjson&token=',
+            format: esrijsonFormat
+        }),
+        style: new ol.style.Style({
+            image: new ol.style.Circle({
+                fill: new ol.style.Fill({
+                    color: 'rgba(255, 118, 117,1.0)'
+                }),
+                stroke: new ol.style.Stroke({
+                    color: "#ffffff",
+                    width: 4
+                }),
+                radius: 9
             })
-        });
-        mviewer.customLayers.test_esri_college_80.handle = false;
+        })
+    });
+    mviewer.customLayers.test_esri_college_80.handle = false;
 
-    }
+
 
 .. code-block:: javascript
     :caption: test_esri_college_80.js - nouvelle version
     :linenos:
 
-    let esrijsonFormat = new ol.format.EsriJSON();
+    const esrijsonFormat = new ol.format.EsriJSON();
 
     const layer =  new ol.layer.Vector({
         source: new ol.source.Vector({
@@ -196,9 +197,6 @@ customlayer ArcGis REST Feature
     });
 
     new CustomLayer('test_esri_college_80', layer);
-
-
-
 
 
 .. Note::

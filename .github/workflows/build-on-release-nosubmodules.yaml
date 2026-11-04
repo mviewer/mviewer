@@ -4,6 +4,12 @@ permissions:
   contents: read
 
 on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Tag de release à publier
+        required: true
+        type: string
   release:
     types:
       - published
@@ -16,12 +22,16 @@ jobs:
     steps:
       - name: "Checkout repository"
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.release_tag || github.ref }}
 
       - name: "Determine Docker tag"
         id: version
         if: github.repository == 'mviewer/mviewer'
+        env:
+          RELEASE_TAG: ${{ github.event.inputs.release_tag || github.event.release.tag_name || github.ref_name }}
         run: |
-          DOCKER_TAG=$(echo "${GITHUB_REF}" | cut -d'/' -f3)
+          DOCKER_TAG="${RELEASE_TAG}"
           echo "VERSION=${DOCKER_TAG}-lite" >> $GITHUB_ENV
           echo "Docker tag will be: ${DOCKER_TAG}-lite"
 

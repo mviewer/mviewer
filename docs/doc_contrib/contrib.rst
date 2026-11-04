@@ -19,6 +19,12 @@ Cependant vous pouvez ressentir le besoin de modifier mviewer pour créer vos pr
 Vous trouverez ici une présentation et des recommandations pour créer vos cartes et vos fonctionnalités sans modifier le cœur (ou presque).
 Vous obtiendrez un mviewer maintenable et vous n'aurez plus l'appréhension de toucher aux mauvais fichiers.
 
+.. warning::
+    Une contribution doit toujours cibler la branche develop.
+    Pensez à prendre connaissance du worflow Git suivi par mviewer pour les explications.
+
+
+
 Code style
 ---------------------
 
@@ -172,7 +178,7 @@ Pour proposer une correction d'anomalie ou une évolution, suivez ensuite ces é
 
 #. Créer une issue sur Github en suivant la page :ref:`issue`.
 #. Faire un fork du code (si ce n'est pas encore fait) en suivant la page :ref:`fork`.
-#. Créer une branche portant le numéro de l'issue (ex: ``issue-2287``).
+#. Créer une branche portant le numéro de l'issue (ex: ``issue-2287``) à partir de la branche ``develop`` (à jour !)
 #. Apporter vos modifications sur cette branche en incluant :
    - le code du cœur dans ``mviewer`` ;
    - la démonstration dans le dépôt ``mviewer-demo`` si nécessaire (branche nommée de la même manière) ;
@@ -180,10 +186,11 @@ Pour proposer une correction d'anomalie ou une évolution, suivez ensuite ces é
    - le nouvel addon dans le dépôt ``mviewer-addons`` avec un ``README.md`` dédié le cas échéant.
 #. Partager vos problématiques rencontrés ou vos propositions dans l'issue directement pour que les autres puissent tester et donner des avis. Vous pouvez auss epxpliquer la solution proposée dans le pull request.
 #. Réaliser une ou plusieurs pull requests via GitHub en suivant la page :ref:`pr` :
-   - une PR par dépôt (``mviewer``, ``mviewer-demo``, ``mviewer-addons``) si plusieurs dépôts sont concernés ;
-   - indiquez dans chaque PR les liens vers les autres PR associées pour faciliter la revue.
+   - une PR ciblera toujours la branche ``develop``
+   - une PR par dépôt (``mviewer``, ``mviewer-demo``, ``mviewer-addons``) si plusieurs dépôts sont concernés
+   - indiquez dans chaque PR les liens vers les autres PR associées pour faciliter la revue
 
-La pull request permettra d'importer votre modification dans le code natif et dans les sous-dépôts concernés. Vous disposerez alors de votre modification de manière native sans vous en préoccuper ultérieurement.
+La pull request (ciblant ``develop``) permettra d'importer votre modification dans le code natif et dans les sous-dépôts concernés. Vous disposerez alors de votre modification de manière native sans vous en préoccuper ultérieurement.
 
 Contribuer avec les sous-dépôts (mviewer ≥ 4)
 --------------------------------------------
