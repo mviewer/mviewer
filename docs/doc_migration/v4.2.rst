@@ -1,0 +1,79 @@
+.. Authors :
+.. mviewer team
+
+.. _migrationv4_2:
+
+Mviewer 4.1 vers 4.2
+=======================================
+
+Custom controls et custom layers : portée des variables JavaScript
+------------------------------------------------------------------
+
+Le chargement des custom controls et des custom layers dans ``configuration.js`` utilise désormais ``fetch`` puis un élément ``<script>`` classique, à la place du chargement jQuery.
+
+Le code chargé s'exécute dans la portée globale du navigateur : le callback de ``fetch`` ne crée pas de portée locale pour ce code. Retirer l'élément ``<script>`` après exécution ne supprime donc pas les déclarations globales.
+
+Ces scripts partagent la même portée globale. Si plusieurs fichiers déclarent ``const layerid``, ``const cc`` ou ``const layer`` au niveau global, le chargement peut échouer avec une erreur de redéclaration, par exemple ``SyntaxError: Identifier 'layerid' has already been declared``. Le risque concerne aussi les déclarations avec ``let`` et les collisions entre un custom control et un custom layer.
+
+Remplacer ``const`` par ``var`` ne crée pas de portée locale : les variables restent globales et peuvent être écrasées par un autre script. Pour les isoler, enveloppez chaque script dans une IIFE (*Immediately Invoked Function Expression*, ou fonction immédiatement invoquée), comme dans les exemples ci-dessous. Un simple bloc ``{ ... }`` n'isole pas les variables déclarées avec ``var``.
+
+Adaptation des contrôles existants
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Enveloppez tout le contenu de chaque fichier JavaScript de custom control dans une fonction immédiatement invoquée (IIFE), y compris la déclaration de ``layerid`` et l'enregistrement du contrôle :
+
+.. code-block:: javascript
+
+    (function() {
+        const layerid = "heatmap";
+        const cc = {
+            init: function () {
+                // Initialiser le contrôle et ajouter ses écouteurs.
+            },
+            destroy: function () {
+                // Retirer les écouteurs et libérer les références conservées.
+            }
+        };
+
+        new CustomControl(layerid, cc.init, cc.destroy);
+    }());
+
+Cette isolation s'applique également à l'ancienne méthode d'enregistrement via ``mviewer.customControls[layerid]``. Conservez les variables internes dans l'IIFE, avec ``const`` pour les références non réaffectées et ``let`` pour l'état modifiable.
+
+Pour exposer des méthodes publiques supplémentaires, ajoutez-les au contrôle enregistré dans ``mviewer.customControls[layerid]``. Avec ``CustomControl``, conservez l'instance créée dans une variable locale et ajoutez-y ces méthodes. Adaptez les appels qui utilisaient une variable globale telle que ``cc`` pour passer par ``mviewer.customControls["heatmap"]``.
+
+Adaptation des custom layers existants
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Enveloppez également tout le contenu de chaque fichier JavaScript de custom layer dans une IIFE, y compris la création de la couche et son enregistrement avec ``new CustomLayer(...)`` :
+
+.. code-block:: javascript
+
+    (function() {
+        const layerid = "heatmap";
+        const layer = new ol.layer.Heatmap({
+            source: new ol.source.Vector({
+                url: "demo/heatmap/data/2012_Earthquakes_Mag5.kml",
+                format: new ol.format.KML({
+                    extractStyles: false
+                })
+            }),
+            blur: 10,
+            radius: 10
+        });
+
+        new CustomLayer(layerid, layer);
+    }());
+
+Cette isolation s'applique aussi à l'ancienne méthode d'enregistrement via ``mviewer.customLayers[layerid]``. Pour accéder à la couche depuis un autre script, utilisez ``mviewer.customLayers["heatmap"].layer`` plutôt qu'une variable globale ``layer``. La création et l'enregistrement d'une couche personnalisée sont décrits dans :ref:`customlayer`.
+
+Par exemple, les scripts ``demo/heatmap/customlayer.js`` et ``demo/customlayers/cluster.js`` déclarent respectivement ``const layer`` et ``let layer`` au niveau global. Leur chargement dans une même application provoque une erreur de redéclaration tant qu'ils ne sont pas isolés.
+
+Custom controls : nettoyage lors de la fermeture du panneau
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Les exemples de la documentation retirent désormais dans ``destroy()`` les écouteurs ajoutés par ``init()``, avec les mêmes fonctions de rappel, puis remettent à ``null`` les références aux éléments DOM et à la couche. Le drapeau ``_initialized`` est réinitialisé pour permettre la réouverture du contrôle. Reportez ce nettoyage dans vos contrôles personnalisés.
+
+Les deux exemples complets sont disponibles dans :ref:`customcontrol`. Après adaptation, vérifiez le chargement simultané de plusieurs contrôles ainsi que la fermeture et la réouverture de leur panneau, sans erreur de redéclaration ni écouteur restant actif après destruction.
+
+Vérifiez également une configuration chargeant plusieurs custom layers et leurs custom controls : toutes les couches doivent être enregistrées et affichées, sans erreur de redéclaration dans la console du navigateur.
