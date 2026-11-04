@@ -1039,8 +1039,7 @@ mviewer = (function () {
         })
         .then(function (result) {
           var summary = "";
-          const getXmlText = (selector) =>
-            result.querySelector(selector)?.textContent || "";
+          const getXmlText = (selector) => result.querySelector(selector)?.textContent || "";
           if (result.querySelector("dct\\:abstract, abstract")) {
             summary = `<p>${getXmlText("dct\\:abstract, abstract")}</p>`;
           } else {
@@ -1062,15 +1061,18 @@ mviewer = (function () {
           if (_overLayers[oLayer.id].attribution === "metadata") {
             var source = getXmlText("dc\\:source, source");
             _overLayers[oLayer.id].attribution = `Source : ${source}`;
-            document.querySelector(`#${oLayer.id}-attribution`).textContent =
-              `Source : ${source}`;
+            const attributionElement = document.getElementById(
+              `${oLayer.id}-attribution`
+            );
+            if (attributionElement) attributionElement.textContent = `Source : ${source}`;
           }
 
           //update visible layers on the map
           document
-            .querySelector(`#${oLayer.id}-layer-summary`)
+            .getElementById(`${oLayer.id}-layer-summary`)
             ?.setAttribute("data-bs-content", summary);
-          document.querySelector(`#${oLayer.id}-date`).textContent = modifiedDate;
+          const dateElement = document.getElementById(`${oLayer.id}-date`);
+          if (dateElement) dateElement.textContent = modifiedDate;
         })
         .catch((error) => console.error(error));
     }
