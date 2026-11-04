@@ -1,6 +1,10 @@
 import { deepExtend } from "./deepExtend.js";
 import { xmlToJson } from "./xml2json.js";
-import { sld2VectorLayer, sldFile2VectorLayer, sld2Legend } from "./geostyler.js";
+import { sld2VectorLayer, sldFile2VectorLayer } from "./geostyler/geostyler.js";
+import { sld2Legend } from "./geostyler/geostylerLegend.js";
+import { resolveLocalWmsSld, testSld } from "./sld.js";
+utils.resolveLocalWmsSld = resolveLocalWmsSld;
+utils.testSld = testSld;
 utils.deepExtend = deepExtend;
 utils.xmlToJson = xmlToJson;
 utils.sld2VectorLayer = sld2VectorLayer;
