@@ -1039,7 +1039,8 @@ mviewer = (function () {
         })
         .then(function (result) {
           var summary = "";
-          const getXmlText = (selector) => result.querySelector(selector)?.textContent || "";
+          const getXmlText = (selector) =>
+            result.querySelector(selector)?.textContent || "";
           if (result.querySelector("dct\\:abstract, abstract")) {
             summary = `<p>${getXmlText("dct\\:abstract, abstract")}</p>`;
           } else {
