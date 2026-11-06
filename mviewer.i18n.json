@@ -153,7 +153,8 @@
     "layer.sld.error.invalid": "SLD didalvoudek evit ar gwiskad :",
     "layer.sld.error.apply": "N'haller ket arloañ ar stil SLD d'ar gwiskad :",
     "layer.cluster.error.options": "Ret eo da hedoù ha da skin PointStacker bezañ niveroù pozitivel pe nul.",
-    "layer.cluster.error.expression": "N’eo ket skoret ar jedad ment PointStacker-mañ. Implijit niveroù, count, al liesaat pe sqrt."
+    "layer.cluster.error.expression": "N’eo ket skoret ar jedad ment PointStacker-mañ. Implijit niveroù, count, al liesaat pe sqrt.",
+    "info.featureclick.error.layer": "N’eo ket bet kavet ar gwiskad vektorel da atersiñ."
   },
   "de": {
     "btn.copy": "Kopieren",
@@ -296,7 +297,8 @@
     "layer.sld.error.invalid": "Ungültige SLD-Datei für die Ebene:",
     "layer.sld.error.apply": "Der SLD-Stil konnte nicht auf die Ebene angewendet werden:",
     "layer.cluster.error.options": "PointStacker-Abstände und Radius müssen nichtnegative Zahlen sein.",
-    "layer.cluster.error.expression": "Dieser PointStacker-Größenausdruck wird nicht unterstützt. Verwenden Sie Zahlen, count, Multiplikation oder sqrt."
+    "layer.cluster.error.expression": "Dieser PointStacker-Größenausdruck wird nicht unterstützt. Verwenden Sie Zahlen, count, Multiplikation oder sqrt.",
+    "info.featureclick.error.layer": "Die abzufragende Vektorebene wurde nicht gefunden."
   },
   "en": {
     "btn.copy": "Copy",
@@ -452,7 +454,8 @@
     "layer.sld.error.invalid": "Invalid SLD for layer:",
     "layer.sld.error.apply": "Unable to apply SLD style for layer:",
     "layer.cluster.error.options": "PointStacker distances and radius must be non-negative numbers.",
-    "layer.cluster.error.expression": "This PointStacker size expression is not supported. Use numbers, count, multiplication or sqrt."
+    "layer.cluster.error.expression": "This PointStacker size expression is not supported. Use numbers, count, multiplication or sqrt.",
+    "info.featureclick.error.layer": "The vector layer to query could not be found."
   },
   "fr": {
     "btn.copy": "Copier",
@@ -608,7 +611,8 @@
     "layer.sld.error.invalid": "SLD non valide pour la couche :",
     "layer.sld.error.apply": "Impossible d’appliquer le style SLD à la couche :",
     "layer.cluster.error.options": "Les distances et le rayon PointStacker doivent être des nombres positifs ou nuls.",
-    "layer.cluster.error.expression": "Cette expression de taille PointStacker n’est pas prise en charge. Utilisez des nombres, count, la multiplication ou sqrt."
+    "layer.cluster.error.expression": "Cette expression de taille PointStacker n’est pas prise en charge. Utilisez des nombres, count, la multiplication ou sqrt.",
+    "info.featureclick.error.layer": "La couche vectorielle à interroger est introuvable."
   },
   "sk": {
     "btn.copy": "Kopírovať",
@@ -719,6 +723,7 @@
     "layer.sld.error.invalid": "Neplatný súbor SLD pre vrstvu:",
     "layer.sld.error.apply": "Nepodarilo sa použiť štýl SLD pre vrstvu:",
     "layer.cluster.error.options": "Vzdialenosti a polomer PointStacker musia byť nezáporné čísla.",
-    "layer.cluster.error.expression": "Tento výraz veľkosti PointStacker nie je podporovaný. Použite čísla, count, násobenie alebo sqrt."
+    "layer.cluster.error.expression": "Tento výraz veľkosti PointStacker nie je podporovaný. Použite čísla, count, násobenie alebo sqrt.",
+    "info.featureclick.error.layer": "Vektorová vrstva na dopytovanie sa nenašla."
   }
 }
