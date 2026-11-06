@@ -1,4 +1,5 @@
 import { createStyleWithLabels } from "./geostylerLabels.js";
+import { readSldWithPointStacker } from "./geostylerPointStacker.js";
 
 /**
  * Applies SLD symbols and labels to a vector layer.
@@ -16,9 +17,7 @@ export const sld2VectorLayer = async (sldString, vectorLayerId) => {
     throw new Error(`Vector layer "${vectorLayerId}" was not found.`);
   }
 
-  const { output: geoStylerStyle, errors } = await new SldStyleParser().readStyle(
-    sldString
-  );
+  const { output: geoStylerStyle, errors } = await readSldWithPointStacker(sldString);
   if (errors?.length) {
     throw errors[0];
   }

@@ -79,7 +79,7 @@
     "layer.csv.error.access.title": "Moned nac'het",
     "layer.csv.error.access.message": "Moned nac'het evit anaouder ar gwiskad :",
     "layer.csv.error.cors.title": "Fazi CORS",
-    "layer.csv.error.cors.message": "Stanket eo bet karg ar gwiskad gant ar merdeer. Gwiriit hag aotreet a ra ar servij ar rekedoù CORS :",
+    "layer.csv.error.cors.message": "N’haller ket kargañ ar roadennoù. Gwiriit an URL, ar c’hennask rouedad ha kefluniadur CORS ar servijer pe ar proksi. Gwiskad :",
     "layer.csv.error.title": "Fazi",
     "layer.csv.error.message": "Ur fazi a zo c'hoarvezet pa oa bet karget ar gwiskad :",
     "layer.csv.error.not_found.title": "Restr CSV ket kavet",
@@ -148,7 +148,12 @@
     "theme.layers.options": "Dibarzhioù",
     "theme.layers.remove": "Dilemel",
     "theme.layers.restricted": "Roadennoù gant moned bevennet",
-    "toast.close": "Serriñ"
+    "toast.close": "Serriñ",
+    "layer.sld.error.read": "N'haller ket lenn ar restr SLD lec'hel :",
+    "layer.sld.error.invalid": "SLD didalvoudek evit ar gwiskad :",
+    "layer.sld.error.apply": "N'haller ket arloañ ar stil SLD d'ar gwiskad :",
+    "layer.cluster.error.options": "Ret eo da hedoù ha da skin PointStacker bezañ niveroù pozitivel pe nul.",
+    "layer.cluster.error.expression": "N’eo ket skoret ar jedad ment PointStacker-mañ. Implijit niveroù, count, al liesaat pe sqrt."
   },
   "de": {
     "btn.copy": "Kopieren",
@@ -218,7 +223,7 @@
     "layer.csv.error.access.title": "Zugriff verweigert",
     "layer.csv.error.access.message": "Zugriff auf die Ebene verweigert:",
     "layer.csv.error.cors.title": "CORS-Fehler",
-    "layer.csv.error.cors.message": "Das Laden der Ebene wurde vom Browser blockiert. Prüfen Sie, ob der Dienst CORS-Anfragen zulässt:",
+    "layer.csv.error.cors.message": "Die Daten konnten nicht geladen werden. Prüfen Sie die URL, die Netzwerkverbindung und die CORS-Einstellungen des Servers oder Proxys. Ebene:",
     "layer.csv.error.title": "Fehler",
     "layer.csv.error.message": "Beim Laden der Ebene ist ein Fehler aufgetreten:",
     "layer.csv.error.not_found.title": "CSV-Datei nicht gefunden",
@@ -286,7 +291,12 @@
     "theme.layers.options": "Optionen",
     "theme.layers.remove": "Löschen",
     "theme.layers.restricted": "Daten zum eingeschränkten Zugriff",
-    "toast.close": "Schließen"
+    "toast.close": "Schließen",
+    "layer.sld.error.read": "Die lokale SLD-Datei konnte nicht gelesen werden:",
+    "layer.sld.error.invalid": "Ungültige SLD-Datei für die Ebene:",
+    "layer.sld.error.apply": "Der SLD-Stil konnte nicht auf die Ebene angewendet werden:",
+    "layer.cluster.error.options": "PointStacker-Abstände und Radius müssen nichtnegative Zahlen sein.",
+    "layer.cluster.error.expression": "Dieser PointStacker-Größenausdruck wird nicht unterstützt. Verwenden Sie Zahlen, count, Multiplikation oder sqrt."
   },
   "en": {
     "btn.copy": "Copy",
@@ -368,7 +378,7 @@
     "layer.csv.error.access.title": "Access denied",
     "layer.csv.error.access.message": "Access denied for layer:",
     "layer.csv.error.cors.title": "CORS error",
-    "layer.csv.error.cors.message": "The browser blocked the layer loading. Check that the service allows CORS requests:",
+    "layer.csv.error.cors.message": "Unable to load the data. Check the URL, network connection and CORS settings of the server or proxy. Layer:",
     "layer.csv.error.title": "Error",
     "layer.csv.error.message": "An error occurred while loading the layer:",
     "layer.csv.error.not_found.title": "CSV file not found",
@@ -437,7 +447,12 @@
     "theme.layers.options": "Options",
     "theme.layers.remove": "Remove",
     "theme.layers.restricted": "Restricted data",
-    "toast.close": "Close"
+    "toast.close": "Close",
+    "layer.sld.error.read": "Unable to read local SLD:",
+    "layer.sld.error.invalid": "Invalid SLD for layer:",
+    "layer.sld.error.apply": "Unable to apply SLD style for layer:",
+    "layer.cluster.error.options": "PointStacker distances and radius must be non-negative numbers.",
+    "layer.cluster.error.expression": "This PointStacker size expression is not supported. Use numbers, count, multiplication or sqrt."
   },
   "fr": {
     "btn.copy": "Copier",
@@ -519,7 +534,7 @@
     "layer.csv.error.access.title": "Accès refusé",
     "layer.csv.error.access.message": "Accès refusé pour l’identifiant de couche :",
     "layer.csv.error.cors.title": "Erreur CORS",
-    "layer.csv.error.cors.message": "Le chargement de la couche a été bloqué par le navigateur. Vérifiez que le service autorise les requêtes CORS :",
+    "layer.csv.error.cors.message": "Impossible de charger les données. Vérifiez l’URL, la connexion réseau et la configuration CORS du serveur ou du proxy. Couche :",
     "layer.csv.error.title": "Erreur",
     "layer.csv.error.message": "Une erreur est survenue lors du chargement de la couche :",
     "layer.csv.error.not_found.title": "Fichier CSV introuvable",
@@ -588,7 +603,12 @@
     "theme.layers.options": "Options",
     "theme.layers.remove": "Supprimer",
     "theme.layers.restricted": "Données accès restreint",
-    "toast.close": "Fermer"
+    "toast.close": "Fermer",
+    "layer.sld.error.read": "Impossible de lire le SLD local :",
+    "layer.sld.error.invalid": "SLD non valide pour la couche :",
+    "layer.sld.error.apply": "Impossible d’appliquer le style SLD à la couche :",
+    "layer.cluster.error.options": "Les distances et le rayon PointStacker doivent être des nombres positifs ou nuls.",
+    "layer.cluster.error.expression": "Cette expression de taille PointStacker n’est pas prise en charge. Utilisez des nombres, count, la multiplication ou sqrt."
   },
   "sk": {
     "btn.copy": "Kopírovať",
@@ -629,7 +649,7 @@
     "layer.csv.error.access.title": "Prístup zamietnutý",
     "layer.csv.error.access.message": "Prístup k vrstve bol zamietnutý:",
     "layer.csv.error.cors.title": "Chyba CORS",
-    "layer.csv.error.cors.message": "Prehliadač zablokoval načítanie vrstvy. Overte, či služba povoľuje požiadavky CORS:",
+    "layer.csv.error.cors.message": "Údaje sa nepodarilo načítať. Skontrolujte URL, sieťové pripojenie a nastavenia CORS servera alebo proxy. Vrstva:",
     "layer.csv.error.title": "Chyba",
     "layer.csv.error.message": "Pri načítaní vrstvy došlo k chybe:",
     "layer.csv.error.not_found.title": "Súbor CSV sa nenašiel",
@@ -694,6 +714,11 @@
     "theme.layers.options": "Možnosti",
     "theme.layers.remove": "Odstrániť",
     "theme.layers.restricted": "Obmedzené údaje",
-    "toast.close": "Zavrieť"
+    "toast.close": "Zavrieť",
+    "layer.sld.error.read": "Nepodarilo sa načítať lokálny súbor SLD:",
+    "layer.sld.error.invalid": "Neplatný súbor SLD pre vrstvu:",
+    "layer.sld.error.apply": "Nepodarilo sa použiť štýl SLD pre vrstvu:",
+    "layer.cluster.error.options": "Vzdialenosti a polomer PointStacker musia byť nezáporné čísla.",
+    "layer.cluster.error.expression": "Tento výraz veľkosti PointStacker nie je podporovaný. Použite čísla, count, násobenie alebo sqrt."
   }
 }
