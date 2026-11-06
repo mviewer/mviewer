@@ -30,6 +30,7 @@ Configurer - Les couches
                 aliases=""
                 jsonfields=""
                 type=""
+                format=""
                 filter=""
                 filterstyle=""
                 searchable=""
@@ -107,7 +108,7 @@ Paramètres pour gérer l'affichage de la couche
 * ``styleurl`` :guilabel:`studio` : pour les couches de type vector-tms uniquement, il indique l'URL vers le fichier de style au format JSON.
 * ``styletitle`` :guilabel:`studio` : Titres à utiliser pour la liste des styles associés.
 * ``stylesalias`` :guilabel:`studio` : Titres à utiliser pour chaques style. Utiliser la virgule comme séparateur si plusieurs styles.
-* ``sld`` :guilabel:`studio` : Lien vers un SLD stocké sur le web. Dans ce fichier SLD, la balise sld:Name contenue dans sld:NamedLayer doit être égale au nom de la couche sans mention du namespace. Exemple <sld:Name>aeroports</sld:Name>. Si plusieurs styles , utiliser la virgule comme séparateur. S'applique uniquement aux layers WMS. Il faut indiquer l'URL résolvable par le serveur WMS du ou des sld.
+* ``sld`` :guilabel:`studio` : URL d’un fichier SLD. Pour une couche WMS, cette URL doit être accessible au serveur WMS et la balise sld:Name contenue dans sld:NamedLayer doit être égale au nom de la couche sans mention du namespace, par exemple <sld:Name>aeroports</sld:Name>. Si plusieurs styles sont proposés, utiliser la virgule comme séparateur. Pour les couches vectorielles ``csv``, ``geojson``, ``kml`` et ``cluster``, le SLD est chargé par le navigateur et converti en style OpenLayers. Voir :ref:`configlayerscluster` pour les transformations PointStacker.
 * ``index`` :guilabel:`studio` : Ordre d'affichage de la couche sur la carte et dans la légende au démarrage. Les couches avec ce paramètre seront visibles sous les toplayers. Les couches sans ce paramètre ni toplayer seront affichées dans l'ordre d'écriture dans le XML.
 * ``scalemin`` :guilabel:`studio` : Échelle minimum de la couche.
 * ``scalemax`` :guilabel:`studio` : Échelle maximum de la couche.
@@ -183,16 +184,18 @@ Plus d'informations sur le type de couche OGC SensorThings :
 Paramètres pour les couches non WMS
 =======================================
 
-* ``type``: Type de la couche (wms|geojson|kml|vector-tms|sensorthings|customlayer|import|csv) default=wms.
+* ``type``: Type de la couche (wms|geojson|kml|vector-tms|sensorthings|customlayer|import|csv|cluster) default=wms.
     * ``wms`` : couche WMS classique (OGC).
     * ``geojson`` : couche vectorielle au format GeoJSON.
     * ``kml`` : couche vectorielle au format KML.
     * ``vector-tms`` : couche vectorielle au format tuilé vectoriel (VectorTile) avec un style au format JSON.
     * ``csv`` : couche vectorielle au format CSV. L'encodage par défaut est UTF-8 et peut être modifié avec l'attribut ``encoding``. Certains CSV peuvent utiliser une authentification (e.g grist et le mode secure="apikey" à utiliser de préférence avec un proxy !)
+    * ``cluster`` : couche vectorielle regroupant les points proches à partir de données CSV ou GeoJSON. Le regroupement est réalisé dans le navigateur, sans serveur WMS. Voir :ref:`configlayerscluster`. Pour un WMS, utiliser le SLD ou l'URL selon le type de serveur (e.g outil PointStacker du service WPS GeoServer). Il est possible que seul GeoServer propose cette capacité.
     * ``sensorthings`` : couche de type OGC SensorThings.
     * ``customlayer`` : couche vectorielle personnalisée. Si customlayer est défini, il faut instancier un Layer OpenLayers dans un fichier javascript ayant pour nom l'id de la couche (voir ":ref:`configfuse`"). Ce fichier js doit être placé dans le répertoire customlayers/.
     * ``import`` : couche vectorielle importée par l'utilisateur. Le format de la couche importée peut être GeoJSON, KML ou GPX. Le style de la couche importée est défini dans le fichier featurestyles.js. L’extension fileimport doit être obligatoirement activée.
-* ``encoding`` : Encodage du fichier pour les couches de type ``csv``. Si cet attribut est absent ou vide, le fichier est lu avec ``response.text()``, qui décode toujours en UTF-8, indépendamment de l'encodage du système et du charset indiqué dans l'en-tête HTTP ``Content-Type``. Si cet attribut est renseigné, utiliser un encodage reconnu par ``TextDecoder``, par exemple ``utf8``, ``windows-1252`` ou ``iso-8859-1``. Exemple : ``<layer type="csv" encoding="windows-1252" ...></layer>``.
+* ``format`` : Pour une couche ``cluster``, permet de forcer le format de la source : ``csv``, ``geojson`` ou ``json`` (alias de ``geojson``). Sans cet attribut, une URL dont le chemin se termine par ``.csv`` utilise le chargeur CSV ; les autres URL utilisent le chargeur GeoJSON. Les paramètres de requête et le fragment de l’URL ne participent pas à cette détection. Les données JSON doivent respecter le format GeoJSON.
+* ``encoding`` : Encodage du fichier pour les couches de type ``csv`` et ``cluster`` utilisant une source CSV. Si cet attribut est absent ou vide, le fichier est lu avec ``response.text()``, qui décode toujours en UTF-8, indépendamment de l'encodage du système et du charset indiqué dans l'en-tête HTTP ``Content-Type``. Si cet attribut est renseigné, utiliser un encodage reconnu par ``TextDecoder``, par exemple ``utf8``, ``windows-1252`` ou ``iso-8859-1``. Exemple : ``<layer type="csv" encoding="windows-1252" ...></layer>``.
 * ``tooltip``: Pour les couches de type vecteur uniquement. Booléen précisant si les entités de la couche sont affichées sous forme d'infobulle au survol de la souris. (Les infobulles ne fonctionnent qu'avec une seule couche à la fois). Valeur par défaut = false.
 * ``tooltipenabled``: Précise la couche prioritaire pour l'affichage des infobulles.
 * ``tooltipcontent``: Chaîne de caractères décrivant l'information à afficher dans les infobulles. Cette chaîne contient soit le nom d'un champ de la couche soit un template Mustache (code html) combinant plusieurs noms de champs. Exemple : ``tooltipcontent="{{name}} - ({{city}})"``.
@@ -258,6 +261,134 @@ Autres paramètres
 * ``owsoptions`` : Pour une couche WMS, permet de forcer certains paramètres des requêtes GetMap. Exemple : "VERSION:1.1.1,EXCEPTIONS:application/vnd.ogc.se_inimage".
 * ``owslegendoptions`` : Pour une couche WMS, Permet de personnaliser certains paramètres des requêtes GetLegend. Exemple Qgis serveur : "LAYERTITLE:false,ITEMFONTSIZE:15".
 * ``infopanel`` : Permet d'indiquer quel panel d'interrogation utiliser parmis top-panel ou bottom-panel ou modal-panel. Exemple: `infopanel="bottom-panel"`.
+
+.. _configlayerscluster:
+
+Regrouper des points avec une couche cluster
+=======================================================
+
+Source WMS
+----------
+
+L'afficahge en cluster est géré par le serveur cartographique.
+
+- GeoServer
+
+Pour GeoServer, vous pouvez utiliser l'outil PointStacker du service WPS pour générer un SLD de regroupement de points :
+https://docs.geoserver.org/main/en/user/styling/ysld/reference/transforms/#point-stacker
+
+Cette syntaxe est une extension du SLD via le service WPS est sort du standard OGC SLD.
+
+.. note::
+
+    Les WMS GeoServer ne doivent pas être tuilés pour fonctionner (utiliser `tiled="true"`).
+
+- MapServer
+
+Non compatible. 
+
+MapServer utilise un mapfile pour réaliser des regroupements de points et n'est pas compatible avec notre système basé sur le SLD.
+
+Voir : https://mapserver.org/mapfile/cluster.html
+
+- Qgis Server
+
+Non compatible.
+
+Il n'existe pas de transformation SLD standard permettant de demander à QGIS Server de créer un QgsPointClusterRenderer. Le moteur de regroupement natif existe, mais n'est pas exposé par ce mécanisme SLD.
+
+Une extension QGIS Server permettrai de supporter le regroupement de points via SLD (`vec:PointStacker` vers `QgsPointClusterRenderer`). Mais cette extension n'existe actuellement pas.
+
+Source GeoJSON et style PointStacker
+-----------------------------------
+
+Le type ``cluster`` conserve les points dans une source vectorielle et les regroupe selon leur proximité à l’écran.
+Il accepte un CSV contenant des coordonnées ou une source GeoJSON.
+Un fichier SLD est optionnel : sans style personnalisé, les groupes sont représentés par un cercle de rayon 10 pixels affichant leur effectif, avec une distance de regroupement de 20 pixels.
+
+Source CSV
+----------
+
+.. code-block:: xml
+
+    <layer id="points_csv"
+           name="Points regroupés depuis un CSV"
+           type="cluster"
+           format="csv"
+           url="data/points.csv"
+           xfield="longitude"
+           yfield="latitude"
+           srs="EPSG:4326"
+           queryable="true"
+           visible="true"/>
+
+Les attributs ``xfield`` et ``yfield`` désignent les colonnes de coordonnées (``longitude`` et ``latitude`` par défaut).
+L’attribut ``srs`` indique leur projection, par défaut ``EPSG:4326``.
+Pour des coordonnées Lambert-93, utiliser ``srs="EPSG:2154"`` et renseigner ``xfield`` et ``yfield`` avec les noms des colonnes X et Y.
+Les points sont reprojetés vers la projection de la carte avant le regroupement.
+Les paramètres CSV existants, notamment ``encoding`` et ``geojsonField`` pour une géométrie GeoJSON ou WKT, restent utilisables.
+Pour une URL sans extension, par exemple un export de service, indiquer explicitement ``format="csv"``.
+
+Source GeoJSON et style PointStacker
+-----------------------------------
+
+.. code-block:: xml
+
+    <layer id="points_json"
+           name="Points regroupés depuis un GeoJSON"
+           type="cluster"
+           format="geojson"
+           url="data/points.geojson"
+           sld="demo/sld/cluster.sld"
+           queryable="true"
+           visible="true"/>
+
+Le même attribut ``sld`` peut être ajouté à l’exemple CSV.
+Pour une source GeoJSON dont les coordonnées sont en Lambert-93, ajouter ``srs="EPSG:2154"`` à la couche car sans cet attribut, la projection par défaut est ``EPSG:4326``.
+
+Le chargeur va alors reprojetter les géométries GeoJSON vers la projection de la carte avant leur regroupement.
+
+Vous trouverez un exemple transformation ``vec:PointStacker`` dans le fichier ``demo/sld/cluster.sld`` :
+
+* ``cellSize`` définit la distance de regroupement en pixels ;
+* ``count`` contient le nombre de points du groupe ;
+* la taille ``8 * sqrt(count)`` définit le diamètre du cercle, converti en rayon pour OpenLayers ;
+* le filtre ``count > 1`` réserve l’affichage de l’effectif aux groupes de plusieurs points.
+
+Les expressions de taille prises en charge sont les constantes numériques, ``count``, la multiplication et ``sqrt``.
+
+L'ensemble du fichier est compatible standard ``sld`` et doit donc être un SLD XML. Le chargement direct d’un fichier YSLD n’est donc pas pris en charge.
+
+A noter que l'alias ``gs:PointStacker`` est également reconnu.
+
+Pour le type de couche, vous pouvez utiliser le ``type="csv"`` ou ``type="geojson"`` associée à un SLD PointStacker pour obtenir un regroupement de points (cluster).
+
+.. note::
+
+    OpenLayers regroupe les points selon une distance, tandis que PointStacker utilise une grille côté serveur.
+    Les groupes obtenus peuvent donc différer de ceux produits par GeoServer avec la même valeur de ``cellSize``.
+
+Interroger un cluster
+--------------------
+
+Avec ``queryable="true"``, un clic sur un cluster interroge toutes les entités qu’il contient dans ``feature.get("features")`` :
+
+- un groupe de plusieurs points produit plusieurs fiches d’information (le compteur indique logiquement le nombre d’entités du groupe)
+- un cluster contenant un seul point produit une seule fiche
+
+L'interrogation va donc fonctionner comme avec les autres types de couches.
+
+Utiliser l'interrogation
+=======================
+
+Un contrôle, un résultat de recherche ou un autre script peut déclencher le même traitement sans simuler un clic sur la carte :
+
+.. code-block:: javascript
+
+    await info.queryFeatures(clusterFeature, "points_csv");
+
+Voir :ref:`featureclick` pour les paramètres et les exemples d’utilisation de cette API.
+Pour les custom layers et custom controls, ils disposent d’un gestionnaire ``handle`` continuent à recevoir le cluster d’origine pour conserver leur traitement personnalisé.
 
 Zoom sur le paramétrage d'une couche provenant de Grist
 =======================================================
