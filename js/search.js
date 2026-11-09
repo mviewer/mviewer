@@ -151,11 +151,15 @@ var search = (function () {
    */
 
   var _clearSearchResults = function () {
-    $("#searchresults .list-group-item")
-      .not(".search-header, .searchresults-title")
-      .remove();
-    $("#searchresults .search-header").addClass("hidden");
-    $("#searchresults").hide();
+    document
+      .querySelectorAll(
+        "#searchresults .list-group-item:not(.search-header, .searchresults-title)"
+      )
+      .forEach((element) => element.remove());
+    document.querySelectorAll("#searchresults .search-header").forEach((element) => {
+      element.classList.add("hidden");
+    });
+    document.querySelector("#searchresults")?.style.setProperty("display", "none");
   };
 
   /**
@@ -163,16 +167,18 @@ var search = (function () {
    */
   var _initSearchMarker = function (searchparams) {
     if (searchparams && searchparams.imgurl) {
-      $(".mv_marker_svg").remove();
-      $(".mv_marker_img").attr("style", `max-width:${searchparams.imgwidth || "50px"}`);
-      $(".mv_marker_img").attr("src", searchparams.imgurl || "");
+      document.querySelectorAll(".mv_marker_svg").forEach((element) => element.remove());
+      document.querySelectorAll(".mv_marker_img").forEach((element) => {
+        element.style.maxWidth = searchparams.imgwidth || "50px";
+        element.setAttribute("src", searchparams.imgurl || "");
+      });
     } else {
-      $(".mv_marker_img").remove();
-      var defaultPath = $("#mv_marker").children("path");
-      defaultPath.css(
-        "fill",
-        (searchparams && searchparams.svgcolor) || defaultPath.css("fill")
-      );
+      document.querySelectorAll(".mv_marker_img").forEach((element) => element.remove());
+      const defaultPath = document.querySelector("#mv_marker path");
+      if (defaultPath) {
+        defaultPath.style.fill =
+          (searchparams && searchparams.svgcolor) || getComputedStyle(defaultPath).fill;
+      }
     }
   };
 
@@ -183,7 +189,8 @@ var search = (function () {
 
   var _clearSearchField = function () {
     _clearSearchResults();
-    $("#searchfield").val("");
+    const searchField = document.querySelector("#searchfield");
+    if (searchField) searchField.value = "";
   };
 
   /**
@@ -194,18 +201,20 @@ var search = (function () {
    */
   var _showResults = function (results, resultsType) {
     if (resultsType) {
-      var searchHeader = $(`.search-${resultsType}`);
-      searchHeader.removeClass("hidden");
-      searchHeader.after(results);
+      const searchHeader = document.querySelector(`.search-${resultsType}`);
+      searchHeader?.classList.remove("hidden");
+      searchHeader?.insertAdjacentHTML("afterend", results);
     } else {
-      $("#searchresults").append(results);
+      document.querySelector("#searchresults")?.insertAdjacentHTML("beforeend", results);
     }
     if (_searchparams.closeafterclick) {
-      $("#searchresults .list-group-item").click(function () {
-        $(".searchresults-title .btn-close").trigger("click");
+      document.querySelectorAll("#searchresults .list-group-item").forEach((item) => {
+        item.addEventListener("click", () => {
+          document.querySelector(".searchresults-title .btn-close")?.click();
+        });
       });
     }
-    $("#searchresults").show();
+    document.querySelector("#searchresults")?.style.setProperty("display", "block");
   };
 
   /**
@@ -215,7 +224,9 @@ var search = (function () {
   var _initSearch = function () {
     let timeoutId;
     const timeoutToWait = 500;
-    $("#searchtool a").attr("title", "Effacer");
+    document.querySelectorAll("#searchtool a").forEach((element) => {
+      element.setAttribute("title", "Effacer");
+    });
     if (_searchparams.features || _searchparams.static) {
       _sourceEls = new ol.source.Vector();
       var vector = new ol.layer.Vector({
@@ -226,23 +237,25 @@ var search = (function () {
       _map.addLayer(vector);
     }
 
-    $(".searchresults-title .btn-close").click(function () {
-      _clearSearchField();
-      if (_sourceEls) {
-        _sourceEls.clear();
-      }
+    document.querySelectorAll(".searchresults-title .btn-close").forEach((button) => {
+      button.addEventListener("click", function () {
+        _clearSearchField();
+        if (_sourceEls) {
+          _sourceEls.clear();
+        }
+      });
     });
 
     // isPasting and keydown are here to avoid Ctrl+V to trigger the keyup function TWICE
     let isPasting = false;
 
-    $(document).on("keydown", (event) => {
+    document.addEventListener("keydown", (event) => {
       if (event.ctrlKey && event.key === "v") {
         isPasting = true;
       }
     });
 
-    $(document).on("keyup", "#searchfield", function (e) {
+    document.querySelector("#searchfield")?.addEventListener("keyup", function (e) {
       // TIMEOUT will avoid one request by keyup
       clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
@@ -254,24 +267,30 @@ var search = (function () {
         }
 
         // Detect entrer key
-        if (e.keyCode == 13 && $("#searchresults a").length > 1) {
-          let firstitem = $("#searchresults").find("a")[1];
-          $(firstitem).trigger("click");
+        const resultLinks = document.querySelectorAll("#searchresults a");
+        if (e.keyCode == 13 && resultLinks.length > 1) {
+          resultLinks[1].click();
           return;
         }
-        let chars = $(this).val().trim().length;
+        let chars = this.value.trim().length;
         if (!chars) {
           return;
           // Do not launch search if less than x chars
         } else if (chars < 3) {
-          $("#searchresults .list-group-item")
-            .not(".search-header, .searchresults-title")
-            .remove();
-          $("#searchresults .search-header").addClass("hidden");
+          document
+            .querySelectorAll(
+              "#searchresults .list-group-item:not(.search-header, .searchresults-title)"
+            )
+            .forEach((element) => element.remove());
+          document
+            .querySelectorAll("#searchresults .search-header")
+            .forEach((element) => {
+              element.classList.add("hidden");
+            });
         }
         // Launch search
         else {
-          _search($(this).val());
+          _search(this.value);
         }
       }, timeoutToWait);
     });
@@ -330,12 +349,12 @@ var search = (function () {
                   ${_searchparams.querymaponclick}
               );
               mviewer.showLocation('${_proj4326}', ${coords[0]}, ${coords[1]}, ${
-        _searchparams.marker
-      });">
+                _searchparams.marker
+              });">
               ${props?.label || res[i].fulltext}
           </a>`;
     }
-    $(searchType).remove();
+    document.querySelectorAll(searchType).forEach((element) => element.remove());
     _showResults(str, "locations");
   };
   /**
@@ -353,7 +372,7 @@ var search = (function () {
         };
         if (_searchparams.bbox) {
           const extent = _map.getView().calculateExtent(_map.getSize());
-          const extent4326 = ol.proj.transformExtent(
+          const extent4326 = utils.transformExtentSafe(
             extent,
             _projection.getCode(),
             _proj4326
@@ -374,7 +393,7 @@ var search = (function () {
         var parameters = { q: value, limit: 5 };
         if (_searchparams.bbox) {
           var extent = _map.getView().calculateExtent(_map.getSize());
-          var extent4326 = ol.proj.transformExtent(
+          var extent4326 = utils.transformExtentSafe(
             extent,
             _projection.getCode(),
             _proj4326
@@ -444,7 +463,7 @@ var search = (function () {
    *
    */
   var _sendFuseRequest = function (val) {
-    $(".fuse").remove();
+    document.querySelectorAll(".fuse").forEach((element) => element.remove());
 
     var searchableLayers = _searchableFuseLayers.filter(
       (e) => e.getVisible() && _fuseSearchData[e.get("mviewerid")]
@@ -494,12 +513,12 @@ var search = (function () {
             <a class="fuse list-group-item list-group-item-action" title="${result_label}" 
                 href="#" onclick="
                   mviewer.animateToFeature(${JSON.stringify([xyz.lon, xyz.lat])}, ${
-            xyz.zoom
-          }, ${JSON.stringify(extentCenter)}, ${_searchparams.querymaponclick}); 
+                    xyz.zoom
+                  }, ${JSON.stringify(extentCenter)}, ${_searchparams.querymaponclick}); 
                   mviewer.showLocation('${_proj4326}', ${xyz.lon}, ${xyz.lat}, false);" 
                 onmouseover="mviewer.flash('${_proj4326}', ${xyz.lon}, ${
-            xyz.lat
-          }, false);">
+                  xyz.lat
+                }, false);">
               ${result_label}
             </a>`;
         });
@@ -638,14 +657,18 @@ var search = (function () {
    * @deprecated
    */
   var _sendPrevious6ElasticsearchRequest = function (val, versionELS) {
-    var sendQuery = true;
-    var searchableLayers = $.grep(_searchableElasticsearchLayers, function (l, i) {
+    let sendQuery = true;
+    const searchableLayers = _searchableElasticsearchLayers.filter(function (l) {
       return l.getVisible();
     });
     if (searchableLayers.length > 0 || (_searchparams.static && _elasticSearchDocTypes)) {
       var queryLayers = [];
       var currentExtent = _map.getView().calculateExtent(_map.getSize());
-      var pe = ol.proj.transformExtent(currentExtent, _projection.getCode(), "EPSG:4326");
+      var pe = utils.transformExtentSafe(
+        currentExtent,
+        _projection.getCode(),
+        "EPSG:4326"
+      );
       for (var i = 0; i < searchableLayers.length; i++) {
         queryLayers.push({
           type: { value: searchableLayers[i].getSource().getParams()["LAYERS"] },
@@ -764,16 +787,20 @@ var search = (function () {
         contentType = "application/json; charset=utf-8";
       }
       if (sendQuery) {
-        // Fix IE9 "No transport error" with cors
-        jQuery.support.cors = true;
-        $.ajax({
-          type: "POST",
-          url: _elasticSearchUrl,
-          crossDomain: true,
-          data: JSON.stringify(queryFilter),
-          dataType: "json",
-          contentType: contentType,
-          success: function (data) {
+        fetch(_elasticSearchUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": contentType,
+            Accept: "application/json, text/javascript, */*; q=0.01",
+          },
+          body: JSON.stringify(queryFilter),
+        })
+          .then((response) => {
+            if (!response.ok)
+              throw new Error(`HTTP ${response.status} ${response.statusText}`);
+            return response.json();
+          })
+          .then(function (data) {
             _sourceEls.clear();
             var str = "";
             var format = new ol.format.GeoJSON();
@@ -789,7 +816,7 @@ var search = (function () {
               var title = data.hits.hits[i]._source.title;
               if (geomtype !== "Point") {
                 var feature = new ol.Feature({
-                  geometry: geom.transform("EPSG:4326", "EPSG:3857"),
+                  geometry: utils.transformGeometrySafe(geom, "EPSG:4326", "EPSG:3857"),
                   title: title,
                 });
                 action_click = `mviewer.zoomToFeature('feature.${i}');`;
@@ -807,29 +834,31 @@ var search = (function () {
 
               str += `<a class="elasticsearch list-group-item  list-group-item-action" href="#" onclick="${action_click}" onmouseover="${action_over}" title="(${
                 data.hits.hits[i]._type
-              }) ${$.map(data.hits.hits[i]._source, function (el) {
-                if (typeof el === "string") {
-                  return el;
-                }
-              }).join(", \n")}">${title}</a>`;
+              }) ${Object.values(data.hits.hits[i]._source)
+                .filter((el) => typeof el === "string")
+                .join(", \n")}}">${title}</a>`;
             }
-            $(".elasticsearch").remove();
+            document
+              .querySelectorAll(".elasticsearch")
+              .forEach((element) => element.remove());
             if (nb > 0) {
               _showResults(str, "entities");
             }
-          },
-          error: function (xhr, ajaxOptions, thrownError) {
+          })
+          .catch(function (thrownError) {
             mviewer.alert(
               `Problème avec l'instance Elasticsearch.\n${thrownError}\n Désactivation du service.`,
               "alert-warning"
             );
             _searchparams.features = false;
             _searchparams.static = false;
-            $("#param_search_features span")
-              .removeClass("mv-checked")
-              .addClass("mv-unchecked");
-          },
-        });
+            document
+              .querySelectorAll("#param_search_features span")
+              .forEach((element) => {
+                element.classList.remove("mv-checked");
+                element.classList.add("mv-unchecked");
+              });
+          });
       }
     }
   };
@@ -853,14 +882,14 @@ var search = (function () {
     else {
       let sendQuery = true;
       // We can have several layers with one elk index each
-      let searchableLayers = $.grep(_searchableElasticsearchLayers, function (l, i) {
-        return l.getVisible();
-      });
+      let searchableLayers = _searchableElasticsearchLayers.filter((l) => l.getVisible());
 
       // send request only if at least one layer is searcheable or elastic search in standalone mode
       if (searchableLayers.length > 0 || _searchparams.static) {
         // clean previous search and feature
-        $(".elasticsearch").remove();
+        document
+          .querySelectorAll(".elasticsearch")
+          .forEach((element) => element.remove());
         _sourceEls.clear();
 
         // for each layer searcheable and visible layer launch elk search
@@ -889,7 +918,7 @@ var search = (function () {
           // Only add geofilter if required in search params
           if (_searchparams.bbox) {
             var currentExtent = _map.getView().calculateExtent(_map.getSize());
-            var projectedMapExtent = ol.proj.transformExtent(
+            var projectedMapExtent = utils.transformExtentSafe(
               currentExtent,
               _projection.getCode(),
               _proj4326
@@ -910,16 +939,20 @@ var search = (function () {
           }
           contentType = "application/json; charset=utf-8";
           if (sendQuery) {
-            // Fix IE9 "No transport error" with cors
-            jQuery.support.cors = true;
-            $.ajax({
-              type: "POST",
-              url: _elasticSearchUrl.get(layerId),
-              crossDomain: true,
-              data: JSON.stringify(queryFilter),
-              dataType: "json",
-              contentType: contentType,
-              success: function (data) {
+            fetch(_elasticSearchUrl.get(layerId), {
+              method: "POST",
+              headers: {
+                "Content-Type": contentType,
+                Accept: "application/json, text/javascript, */*; q=0.01",
+              },
+              body: JSON.stringify(queryFilter),
+            })
+              .then((response) => {
+                if (!response.ok)
+                  throw new Error(`HTTP ${response.status} ${response.statusText}`);
+                return response.json();
+              })
+              .then(function (data) {
                 let str = "";
                 let indexId = "";
                 let mouseOverField = "";
@@ -948,20 +981,26 @@ var search = (function () {
 
                   let extentCenter = _getCenterWithExtent(geom, _proj4326);
 
-                  var title = "";
-                  title += $.map(currentFeature._source, function (value, key) {
-                    if (!mouseOverField.length || mouseOverField.includes(key)) {
-                      if (typeof value === "string") {
-                        return value;
-                      }
-                    }
-                  }).join(" - ");
+                  let title = "";
+                  title += Object.entries(currentFeature._source)
+                    .filter(([key, value]) => {
+                      return (
+                        (!mouseOverField.length || mouseOverField.includes(key)) &&
+                        typeof value === "string"
+                      );
+                    })
+                    .map(([_, value]) => value)
+                    .join(" - ");
 
                   let action_click = "";
 
                   // always zoom on feature
                   let feature = new ol.Feature({
-                    geometry: geom.transform(_proj4326, _map.getView().getProjection()),
+                    geometry: utils.transformGeometrySafe(
+                      geom,
+                      _proj4326,
+                      _map.getView().getProjection()
+                    ),
                     title: title,
                   });
                   feature.setId(`feature.${indexId}.${j}`);
@@ -991,34 +1030,37 @@ var search = (function () {
                   }
 
                   action_over += `mviewer.flash('${_proj4326}',${xyz.lon},${xyz.lat});`;
-                  str += `<a class="elasticsearch list-group-item" href="#" onclick="${action_click}" onmouseover="${action_over}" title="${$.map(
-                    currentFeature._source,
-                    function (value, key) {
-                      if (!titleDisplayKey.length || titleDisplayKey.includes(key)) {
-                        if (typeof value === "string") {
-                          return value;
-                        }
-                      }
-                    }
-                  ).join(" \n")}">${title}</a>`;
+                  str += `<a class="elasticsearch list-group-item" href="#" onclick="${action_click}" onmouseover="${action_over}" title="${Object.entries(
+                    currentFeature._source
+                  )
+                    .filter(([key, value]) => {
+                      return (
+                        (!titleDisplayKey.length || titleDisplayKey.includes(key)) &&
+                        typeof value === "string"
+                      );
+                    })
+                    .map(([key, value]) => value)
+                    .join(" \n")}">${title}</a>`;
                 }
 
                 if (nb > 0) {
                   _showResults(str, "entities");
                 }
-              },
-              error: function (xhr, ajaxOptions, thrownError) {
+              })
+              .catch(function (thrownError) {
                 mviewer.alert(
                   `Problème avec l'instance Elasticsearch.\n${thrownError}\n Désactivation du service.`,
                   "alert-warning"
                 );
                 _searchparams.features = false;
                 _searchparams.static = false;
-                $("#param_search_features span")
-                  .removeClass("mv-checked")
-                  .addClass("mv-unchecked");
-              },
-            });
+                document
+                  .querySelectorAll("#param_search_features span")
+                  .forEach((element) => {
+                    element.classList.remove("mv-checked");
+                    element.classList.add("mv-unchecked");
+                  });
+              });
           }
         }
       }
@@ -1074,10 +1116,11 @@ var search = (function () {
                 var geojsonFeature = geojsonFormat.writeFeatureObject(feature);
                 var prop = geojsonFeature.properties;
                 if (feature.getGeometry()) {
-                  var wgs84Geom = feature
-                    .getGeometry()
-                    .clone()
-                    .transform(mapProj, "EPSG:4326");
+                  var wgs84Geom = utils.transformGeometrySafe(
+                    feature.getGeometry(),
+                    mapProj,
+                    "EPSG:4326"
+                  );
                   prop.geometry = geojsonFormat.writeGeometryObject(wgs84Geom);
                   prop.fusesearchresult = oLayer.fusesearchresult;
                 } else {
@@ -1089,9 +1132,7 @@ var search = (function () {
                 j.push(prop);
               });
 
-              var list = $.map(j, function (el) {
-                return el;
-              });
+              const list = [...j];
               _fuseSearchData[oLayer.id] = new Fuse(list, options);
               //remove listener when data is loaded
               ol.Observable.unByKey(_listener);
@@ -1119,7 +1160,9 @@ var search = (function () {
     };
     if (configuration.olscompletion) {
       _olsCompletionUrl = configuration.olscompletion.url;
-      $("#adresse-attribution").text(configuration.olscompletion.attribution);
+      const addressAttribution = document.querySelector("#adresse-attribution");
+      if (addressAttribution)
+        addressAttribution.textContent = configuration.olscompletion.attribution;
       _olsCompletionType = configuration.olscompletion.type || "geoportail";
     }
     // only one elastic index to stay compatible with older version
@@ -1228,30 +1271,43 @@ var search = (function () {
     }
 
     if (_searchparams.localities === false && _searchparams.features === false) {
-      $("#searchtool").remove();
+      document.querySelector("#searchtool")?.remove();
     }
     if (_searchparams.bbox) {
-      $("#param_search_bbox span").removeClass("mv-unchecked").addClass("mv-checked");
+      document.querySelectorAll("#param_search_bbox span").forEach((element) => {
+        element.classList.remove("mv-unchecked");
+        element.classList.add("mv-checked");
+      });
     }
     if (_searchparams.localities) {
-      $("#param_search_localities span")
-        .removeClass("mv-unchecked")
-        .addClass("mv-checked");
+      document.querySelectorAll("#param_search_localities span").forEach((element) => {
+        element.classList.remove("mv-unchecked");
+        element.classList.add("mv-checked");
+      });
     } else {
-      $("#param_search_localities").remove();
+      document.querySelector("#param_search_localities")?.remove();
     }
     if (_searchparams.features) {
-      $("#param_search_features span").removeClass("mv-unchecked").addClass("mv-checked");
+      document.querySelectorAll("#param_search_features span").forEach((element) => {
+        element.classList.remove("mv-unchecked");
+        element.classList.add("mv-checked");
+      });
     } else {
-      $("#param_search_features").remove();
+      document.querySelector("#param_search_features")?.remove();
     }
 
     if (_searchparams.features === false) {
-      $("#searchparameters .searchfeatures").remove(".searchfeatures");
+      document
+        .querySelectorAll("#searchparameters .searchfeatures")
+        .forEach((element) => element.remove());
     }
     if (sparams.inputlabel) {
       var label = configuration.searchparameters.inputlabel;
-      $("#searchfield").attr("placeholder", label).attr("title", label);
+      const searchField = document.querySelector("#searchfield");
+      if (searchField) {
+        searchField.setAttribute("placeholder", label);
+        searchField.setAttribute("title", label);
+      }
     }
     _searchparams.marker = sparams.marker ? sparams.marker === "true" || false : true;
     _initSearch();
@@ -1262,13 +1318,15 @@ var search = (function () {
    * @param {*} li
    */
   var _toggleParameter = function (li) {
-    var span = $(li).find("span");
+    const span = li.querySelector("span");
     var parameter = false;
-    if (span.hasClass("mv-unchecked") === true) {
-      span.removeClass("mv-unchecked").addClass("mv-checked");
+    if (span?.classList.contains("mv-unchecked") === true) {
+      span.classList.remove("mv-unchecked");
+      span.classList.add("mv-checked");
       parameter = true;
     } else {
-      span.removeClass("mv-checked").addClass("mv-unchecked");
+      span?.classList.remove("mv-checked");
+      span?.classList.add("mv-unchecked");
     }
     switch (li.id) {
       case "param_search_bbox":
@@ -1317,7 +1375,7 @@ var search = (function () {
 
     _map.getView().fit(boundingExtent, {
       size: _map.getSize(),
-      padding: [0, $("#sidebar-wrapper").width(), 0, 0],
+      padding: [0, document.querySelector("#sidebar-wrapper").offsetWidth, 0, 0],
       duration: duration,
     });
 
@@ -1365,7 +1423,11 @@ var search = (function () {
 
     let mapView = _map.getView();
     let mapProjection = mapView.getProjection().getCode();
-    let coordsForQueryMap = ol.proj.transform([lon, lat], _proj4326, mapProjection);
+    let coordsForQueryMap = utils.transformCoordinateSafe(
+      [lon, lat],
+      _proj4326,
+      mapProjection
+    );
 
     let duration = 2000;
 
@@ -1410,7 +1472,7 @@ var search = (function () {
     let extent = geom.getExtent();
     let viewExtent =
       sourceProj && sourceProj !== mapProjection
-        ? ol.proj.transformExtent(extent, sourceProj, mapProjection)
+        ? utils.transformExtentSafe(extent, sourceProj, mapProjection)
         : extent;
 
     let center = ol.extent.getCenter(viewExtent);

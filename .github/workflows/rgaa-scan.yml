@@ -1,0 +1,57 @@
+name: RGAA static scan
+
+on:
+  pull_request:
+    paths:
+      - "index.html"
+      - "js/**"
+      - "addons/**"
+      - "pages/**"
+      - "scans/rgaa-scan.js"
+      - "scans/rgaa_criteres_ara.csv"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/rgaa-scan.yml"
+  push:
+    branches: [develop]
+    paths:
+      - "index.html"
+      - "js/**"
+      - "addons/**"
+      - "pages/**"
+      - "scans/rgaa-scan.js"
+      - "scans/rgaa_criteres_ara.csv"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/rgaa-scan.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  rgaa-scan:
+    name: Generate RGAA report
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate RGAA JSON report
+        run: npm run scan:rgaa -- --format json --output mviewer-rgaa-report.json
+
+      - name: Upload RGAA report
+        uses: actions/upload-artifact@v4
+        with:
+          name: mviewer-rgaa-report.json
+          path: mviewer-rgaa-report.json
+          if-no-files-found: error

@@ -135,7 +135,7 @@ const apiFeatures = (function () {
     // Empty parentDiv
     parentDiv.innerHTML = "";
 
-    $.each(layerList, function (id, layer) {
+    layerList.forEach(function (layer) {
       let btn = document.createElement("button");
       btn.className = "vcenter";
 

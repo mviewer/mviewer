@@ -89,6 +89,7 @@ Paramètres secondaires
 * ``langfile``: URL du fichier de traduction supplémentaire à utiliser en complément de mviewer.i18n.json.
 * ``favicon`` :guilabel:`studio` : URL du fichier image à utiliser comme favicon de l'application.
 * ``addlayerstools`` :guilabel:`studio` : paramètre optionnel de type booléen (true/false) activant le panneau pour ajouter des couches WMS ou API features à la carte.
+* ``addlayerconfig`` : paramètre optionnel de type texte permettant de préciser le fichier JSON contenant la liste des serveurs OGC/CSW/API features proposés par l'outil d'ajout de données. Valeur par défaut **demo/data/ogc_csw_server.json**.
 * ``sortlayersinfopanel``: mode de tri des couches dans le panneau d'information en suivant la légende qui suit l'ordre des couches de la map (valeur **default**) ou la toc (valeur **toc**). Valeur par défaut **default**.
 
 Modes de templates

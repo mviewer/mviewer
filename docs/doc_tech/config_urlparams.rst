@@ -6,6 +6,8 @@
 Configurer - Les paramètres d'URL
 =================================
 
+Pour rappel, les différents paramètres d'URL sont disponibles ici : https://mviewerdoc.readthedocs.io/fr/stable/doc_tech/config_intro.html#parametres-d-url
+
 Notions d'encodage
 ------------------
 

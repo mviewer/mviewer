@@ -4,14 +4,14 @@
 
 .. _customlayerdev:
 
-Appronfondir - Custom Layer
+Approfondir - Custom Layer
 ===========================
 
 Les **Customs Layers** permettent de personnaliser la représentation et les interactions que l'on a avec les layers de façon plus avancée que ce que l'on peut faire avec le fichier de configuration XML.
 
 Dans chacune des deux méthodes présentées dans la suite de cette page les customs layers ont pour base commune la classe ``CustomLayer`` présente dans le fichier ``custom.js``.
 
-Les méthodes suivantes sont à utiliser dans le fichier  ``maLayer.js`` qui est dans l'arborescence suivante : ::
+Les méthodes suivantes sont à utiliser dans le fichier  ``malayer.js`` qui est dans l'arborescence suivante : ::
 
     /apps
             ├── ma_carte1
@@ -31,15 +31,22 @@ Les méthodes suivantes sont à utiliser dans le fichier  ``maLayer.js`` qui est
             │   └── ma_carte1.xml
             └── ma_carte2
 
-Première Méthode : Définition Simple
-------------------------------------
+Portée des exemples
+--------------------
 
-Cette solution permet de rapidement mettre en place un custom layer mais ne permet pas de travailler avec des variables ou des méthodes privées.
+Les fichiers JavaScript des custom layers sont récupérés avec ``fetch``, puis exécutés dans une fonction créée automatiquement par ``configuration.js``. Le chargeur isole les variables et les classes de chaque fichier, sans IIFE à ajouter dans les custom layers. L'instance reste accessible depuis les autres scripts grâce à son enregistrement dans ``mviewer.customLayers``.
+
+Les exemples sont des alternatives : choisissez celui qui correspond à votre besoin et adaptez l'identifiant de couche à votre configuration XML. Remplacez ``VOTRE_CLE_MAPTILER`` par votre clé MapTiler. Utilisez ``const`` pour les références non réaffectées et ``let`` pour l'état modifiable dans la portée locale du fichier.
+
+Première méthode : définition simple
+-------------------------------------
+
+Cette solution crée directement une instance de ``CustomLayer``. La portée créée par le chargeur permet aussi de conserver des variables et des fonctions locales, accessibles aux méthodes de la couche personnalisée que vous définissez dans cette portée.
 
 .. code-block:: javascript
-  :linenos:
+    :linenos:
 
-    // Définition de la couche représentant le custom layer
+    const key = "VOTRE_CLE_MAPTILER";
     const aerial = new ol.layer.Tile({
         source: new ol.source.XYZ({
             url: 'https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=' + key,
@@ -47,209 +54,165 @@ Cette solution permet de rapidement mettre en place un custom layer mais ne perm
         })
     });
 
-    // Votre code ici
-    ...
+    new CustomLayer("monLayer", aerial);
 
-    /* Créer le custom layer à partir du code ci-dessus */
-    // Le custom layer aura pour id "monCustomLayer" et pour couche aerial définit dans l'exemple
-    new CustomLayer("monCustomLayer", aerial);
 
-Tous les paramètres de la classe ``CustomLayer`` ne sont pas nécessaires seul **l'ID** et **la couche (layer)** sont indispensables.
+Seuls **l'identifiant** et **la couche OpenLayers** sont obligatoires dans le constructeur de ``CustomLayer``. Les paramètres ``legend`` et ``handle`` sont optionnels.
 
-Ajouter des fonctions et des variables
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ajouter des propriétés publiques
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Une fonction privée ne sera pas accessible en dehors du code de la classe alors qu'une fonction publique sera accessible depuis n'importe où ce qui peut entrainer des conflits avec d'autres fonctions
-de l'application si l'on ne fait pas attention.
-
-Pour les variables et fonctions de classe publique
-**************************************************
-
-Il faut définir un nouvel attribut pour la classe ``CustomControl`` de la manière suivante :
+Ajoutez les propriétés à l'instance de ``CustomLayer``. La variable ``monLayer`` reste locale au fichier, mais ses propriétés publiques sont accessibles depuis un autre script via ``mviewer.customLayers["monLayer"]``.
 
 .. code-block:: javascript
-  :linenos:
+    :linenos:
 
-    ...
-    // Initialiser l'objet avec les fonctions init() et destroy() et l'id de couche "monLayer".
-    var monLayer = new CustomLayer("monLayer",aerial);
+    const key = "VOTRE_CLE_MAPTILER";
+    const aerial = new ol.layer.Tile({
+        source: new ol.source.XYZ({
+            url: 'https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=' + key,
+            maxZoom: 20
+        })
+    });
 
-    // Une fois créé on peut ajouter des propriétés (une propriété peut être une fonction ou une variable)
-
-    // Ajouter une fonction
-    monLayer.maNouvelleFonction = function(){
-        // Votre Code ici
-        ...
-    }
-
-    // Ajouter une variable
+    const monLayer = new CustomLayer("monLayer", aerial);
+    monLayer.maNouvelleFonction = function() {
+        return this.maNouvelleVariable;
+    };
     monLayer.maNouvelleVariable = "je suis un exemple";
 
 
-Ces attributs seront alors publics et accessibles depuis l'extérieur.
+Par exemple, ``mviewer.customLayers["monLayer"].maNouvelleFonction()`` renvoie la valeur de ``maNouvelleVariable``. Contrairement à ``CustomControl``, le constructeur de ``CustomLayer`` ne reçoit pas de méthodes ``init()`` et ``destroy()``.
 
-Deuxième Méthode : Création d'une sous-classe
----------------------------------------------
+Deuxième méthode : création d'une sous-classe
+----------------------------------------------
 
-La création d'une sous-classe permet de mieux structurer le code et de faciliter l'ajout de fonctions et variables privées sans avoir à modifier la classe parent ``CustomLayer``. Ell se présente comme suit :
+Une sous-classe permet de structurer le code et d'ajouter des membres publics ou privés sans modifier la classe parent ``CustomLayer``. Le chargeur conserve aussi la classe dans la portée locale du fichier pour éviter les collisions de noms entre fichiers.
 
 .. code-block:: javascript
-  :linenos:
+    :linenos:
 
+    const key = "VOTRE_CLE_MAPTILER";
     const aerial = new ol.layer.Tile({
         source: new ol.source.XYZ({
             url: 'https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=' + key,
             maxZoom: 20
         })
     });
-    // Classe qui étend la classe 'CustomLayer' et décrit le custom Layer
-    class MonCustomLayer extends CustomLayer {
 
-        // Initialiser le custom layer
+    class MonCustomLayer extends CustomLayer {
         constructor(id, layer, legend, handle = false) {
-
-            // Initialiser les attributs de la classe parent
             super(id, layer, legend, handle);
-
         }
     }
-    // Créer le Custom Layer
-    new MonCustomLayer("monCustomLayer",aerial);
 
-La classe ``MonCustomLayer`` hérite de la classe ``CustomLayer`` et doit donc utiliser le ``constructor()`` parent pour créer un objet en spécifiant au minimum **l'ID** et **la layer**.
+    new MonCustomLayer("monLayer", aerial);
 
-Ajouter des fonctions et des variables
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Pour empêcher de potentiels bugs on peut ajouter à la classe ``MonCustomLayer`` (vue dans la partie précédente) des fonctions privées ou publiques.
+Le constructeur de la sous-classe appelle ``super(...)`` avant d'utiliser ``this``. L'appel au constructeur parent enregistre l'instance dans ``mviewer.customLayers``.
 
-Une fonction privée ne sera pas accessible en dehors du code de la classe alors qu'une fonction publique sera accessible depuis n'importe où ce qui peut entraîner des conflits avec d'autres fonctions
-de l'application si l'on ne fait pas attention.
+Ajouter des membres publics
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Pour les variables et fonctions de classe publique
-**************************************************
-
-Directement en ajoutant dans le code de la classe ``MonCustomLayer`` :
+Les propriétés et méthodes publiques appartiennent à l'instance. Elles restent accessibles via le registre, même si la classe et les variables restent locales au fichier.
 
 .. code-block:: javascript
-  :linenos:
+    :linenos:
 
-    // Classe qui étend la classe et décrit le custom Layer
+    const key = "VOTRE_CLE_MAPTILER";
+    const aerial = new ol.layer.Tile({
+        source: new ol.source.XYZ({
+            url: 'https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=' + key,
+            maxZoom: 20
+        })
+    });
+
     class MonCustomLayer extends CustomLayer {
-         constructor(id, layer, legend, handle = false, nouvelleVariable) {
-
-            // Initialiser les attributs de la classe parent
+        constructor(id, layer, legend, handle = false, nouvelleVariable = "exemple") {
             super(id, layer, legend, handle);
-
-            // Ajout d'une variable publique qui prend en valeur le paramètre de constructor "nouvelleVariable"
             this.nouvelleVariable = nouvelleVariable;
-
         }
-        maFonctionPublique(){
-            // Votre code ici
-            ...
+
+        maFonctionPublique() {
+            return this.nouvelleVariable;
         }
     }
-    // Créer l'objet layer avec l'id 'monLayer' qui est le nom de la couche
-    new MonCustomLayer("monLayer",aerial);
 
-Cette fonction sera appelable grâce à ``monobjet.maFonctionPublique()`` et l'on peut bien sûr y passer des paramètres.
+    new MonCustomLayer("monLayer", aerial);
 
-Concernant la variable elle est de la même façon accessible grâce à ``monobjet.nouvelleVariable``.
 
-Pour les variables et fonctions de classe privée
-************************************************
+Appelez la méthode avec ``mviewer.customLayers["monLayer"].maFonctionPublique()`` et accédez à la propriété avec ``mviewer.customLayers["monLayer"].nouvelleVariable``.
 
-Une fonction privée est définie en dehors du code de la classe ``MonCustomLayer`` et déclarée comme une ``constante`` :
+Conserver une fonction locale au fichier
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Déclarer une fonction avec ``const`` ne la rend pas privée. C'est la portée locale créée par le chargeur qui la rend inaccessible depuis les autres scripts. Les méthodes définies dans la même portée peuvent l'appeler grâce à la fermeture lexicale.
 
 .. code-block:: javascript
-  :linenos:
+    :linenos:
 
-    // Fonction privée non utilisable en dehors de ce code
-    const maFonctionPrivée = function(){
-        // Votre code ici
-        ...
-    }
-    // Classe qui étend la classe et décrit le custom Layer
+    const key = "VOTRE_CLE_MAPTILER";
+    const aerial = new ol.layer.Tile({
+        source: new ol.source.XYZ({
+            url: 'https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=' + key,
+            maxZoom: 20
+        })
+    });
+
+    const maFonctionLocale = function() {
+        return "résultat du calcul local";
+    };
+
     class MonCustomLayer extends CustomLayer {
-        ...
-        maFonctionPublique(){
-            maFonctionPrivée();
-            // Votre code ici
-            ...
+        maFonctionPublique() {
+            return maFonctionLocale();
         }
     }
-    // Créer l'objet layer avec l'id 'monLayer' qui est le nom de la couche
-    new MonCustomLayer("monLayer",aerial);
 
-Cette fonction sera appelable grâce à ``maFonctionPrivée()`` seulement dans ce bout de code et donc on peut par exemple l'utiliser dans une fonction publique (ici ``maFonctionPublique()``).
+    new MonCustomLayer("monLayer", aerial);
 
-----
 
-Pour ajouter une variable de classe privée il faut ajouter le **"#"** avant le nom de la variable et la déclarer avant la fonction ``constructor()`` :
+La méthode ``mviewer.customLayers["monLayer"].maFonctionPublique()`` peut appeler ``maFonctionLocale()``, mais cette fonction locale n'est ni une variable globale ni une méthode publique de l'instance.
 
-::
+Définir un champ privé de classe
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    ...
-    // Classe qui étend la classe et décrit le custom Layer
+Un champ préfixé par ``#`` est privé à la classe. Déclarez-le dans le corps de la classe et initialisez-le dans le constructeur. Pour autoriser sa lecture et sa modification depuis l'extérieur, exposez des méthodes publiques :
+
+.. code-block:: javascript
+    :linenos:
+
+    const key = "VOTRE_CLE_MAPTILER";
+    const aerial = new ol.layer.Tile({
+        source: new ol.source.XYZ({
+            url: 'https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=' + key,
+            maxZoom: 20
+        })
+    });
+
     class MonCustomLayer extends CustomLayer {
-
-        // Déclaration de la variable Privée
-        #maVariablePrivee;
-        constructor(id, layer, legend, handle = false,maVariablePrivee = "valeurParDefaut") {
-
-            // Initialiser les attributs de la classe parent
-            super(id, layer, legend, handle);
-
-            // Initialiser #maVariablePrivee
-            this.#maVariablePrivee = maVariablePrivee
-
-            ...
-        }
-        ...
-    }
-    // Initialiser un objet avec la chaine de caractères "maVariablePrivee" dans la variable de classe privée #maVariablePrivee et l'id de couche "monLayer".
-    new MonCustomLayer("monLayer",aerial);
-
-Si vous voulez quand pouvoir accéder et modifier la valeur de cette variable en dehors de ce code mais de manière plus sécuriser il faut déclarer une fonction ``get()`` pour récupérer la valeur et une fonction
-``set(valeur)`` pour la modifier :
-
-::
-
-    ...
-    // Classe qui étend la classe et décrit le custom Layer
-    class MonCustomLayer extends CustomLayer {
-
-        // Déclaration de la variable Privée
         #maVariablePrivee;
 
-        constructor(id, layer, legend, handle = false,maVariablePrivee = "valeurParDefaut") {
-
-            // Initialiser les attributs de la classe parent
+        constructor(id, layer, legend, handle = false, valeur = "valeurParDefaut") {
             super(id, layer, legend, handle);
-
-            // Initialiser #maVariablePrivee
-            this.#maVariablePrivee = maVariablePrivee
-
-            ...
+            this.#maVariablePrivee = valeur;
         }
 
-        // Fonction pour récupérer la valeur de #maVariablePrivee
-        getMaVariablePrivee(){
+        getMaVariablePrivee() {
             return this.#maVariablePrivee;
         }
 
-        // Fonction pour modifier la valeur de #maVariablePrivee
-        setMaVariablePrivee(valeur){
+        setMaVariablePrivee(valeur) {
             this.#maVariablePrivee = valeur;
         }
     }
-    // Initialiser un objet avec la chaîne de caractères "maVariablePrivee" dans la variable de classe privée #maVariablePrivee et l'id de couche "monLayer".
-    new MonCustomLayer("monLayer",aerial);
+
+    new MonCustomLayer("monLayer", aerial);
+
+
+Utilisez ``mviewer.customLayers["monLayer"].getMaVariablePrivee()`` pour lire la valeur et ``mviewer.customLayers["monLayer"].setMaVariablePrivee("nouvelle valeur")`` pour la modifier. Le champ ``#maVariablePrivee`` est accessible uniquement dans le corps de la classe.
 
 Interactions customLayer et mviewer
 -----------------------------------
 
-Depuis le customLayer il est possible de communiquer et d'interagir avec la carte et d'une façon plus générale avec mviewer.
-Vous pouvez ainsi mobiliser toutes les méthodes publiques dans votre développement.
-Pour en savoir plus, consultez, dans la documentation développeur, la partie ":ref:`publicfonctions`".
+Depuis un custom layer, vous pouvez utiliser les méthodes publiques de mviewer pour interagir avec la carte. Depuis un autre script, accédez à l'instance via ``mviewer.customLayers["monLayer"]`` et à sa couche OpenLayers via ``mviewer.customLayers["monLayer"].layer``. Pour en savoir plus, consultez :ref:`publicfonctions` et :ref:`customlayer`.

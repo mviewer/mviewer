@@ -67,7 +67,7 @@ class Component {
     this.load();
   }
 
-  load() {
+  async load() {
     const that = this;
 
     const handleErrors = function (response) {
@@ -94,11 +94,35 @@ class Component {
     };
 
     const getScripts = function (config) {
-      if (config) {
+      if (config && config.js) {
         const requests = config.js.map((url) =>
           loadScript(that.path + url, config?.type)
         );
-        return Promise.all(requests);
+        return Promise.allSettled(requests).then((results) => {
+          const failed = results
+            .map((result, index) => ({
+              index,
+              status: result.status,
+              reason: result.reason,
+              url: config.js[index],
+            }))
+            .filter((r) => r.status === "rejected");
+
+          if (failed.length === 1) {
+            mviewer.toast(
+              "Erreur",
+              `Le script <b>${failed[0].url}</b> n'a pas pu être chargé pour le composant ${that.id} :<br />
+              <i>${failed[0].reason}</i>`
+            );
+          } else if (failed.length > 1) {
+            mviewer.toast(
+              "Erreur",
+              `${failed.length} scripts n'ont pu être chargés pour le composant ${that.id} :
+              <i>${failed.map((f) => `<i><br />${f.url} - ${f.reason}</i>`)}`
+            );
+          }
+          return results;
+        });
       }
     };
 
@@ -108,7 +132,9 @@ class Component {
         document.body.appendChild(script);
         script.type = type;
         script.onload = resolve;
-        script.onerror = reject;
+        script.onerror = () => {
+          reject(new Error(`Failed to load script: ${src}`));
+        };
         script.async = true;
         script.src = src;
       });
@@ -189,27 +215,29 @@ class Component {
       });
     };
 
-    getConfig(this.path) /* get config.json file */
-      .then((json) => setConfig(json)) /* store json body in config variable */
-      .then((config) =>
-        getScripts(config)
-      ) /* download all scripts from config.js array */
-      .then((loadEvents) => getHTML()) /* download html file from config.html */
-      .then((text) => setHTML(text))
-      .catch((e) => console.log(e)) /* store html body in config variable */
-      .then((html) => render(html))
-      .catch((e) =>
-        console.log(e)
-      ) /* render html body in target element from config.target */
-      .then((target) => dispatch())
-      .catch((e) => console.log(e)) /* dispatch componentLoaded event */
-      .then((event) => {
-        if (event) {
-          console.log(`${that.id} is successfully loaded`);
-        } else {
-          console.log(`Error : ${that.id} is not loaded`);
-        }
-      });
+    try {
+      /* get config.json file */
+      const json = await getConfig(this.path);
+      /* store json body in config variable */
+      const config = await setConfig(json);
+      /* download all scripts from config.js array */
+      await getScripts(config);
+      /* download html file from config.html */
+      const text = await getHTML();
+      /* store html body in config variable */
+      const html = await setHTML(text);
+      /* render html body in target element from config.target */
+      const target = await render(html);
+      /* dispatch componentLoaded event */
+      const event = await dispatch();
+      if (event) {
+        console.log(`${that.id} is successfully loaded`);
+      } else {
+        console.log(`Error : ${that.id} is not loaded`);
+      }
+    } catch (e) {
+      console.error(`Error loading component ${that.id}:`, e);
+    }
   }
 }
 

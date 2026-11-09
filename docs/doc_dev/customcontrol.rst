@@ -73,47 +73,41 @@ Si vous souhaitez utiliser une infobulle (tooltip), vous pouvez utiliser les par
 Ecrire le code - JavaScript
 ********************************
 
+Les fichiers JavaScript des custom controls sont récupérés avec ``fetch``, puis exécutés par des éléments ``<script>`` classiques dans ``configuration.js``. Le callback de ``fetch`` ne donne pas de portée locale au code chargé, et retirer l'élément ``<script>`` après exécution ne supprime pas ses déclarations globales.
+
+Chaque exemple enveloppe donc tout le contrôle dans une fonction immédiatement invoquée (IIFE). Les variables ``layerid`` et ``cc`` restent locales : plusieurs contrôles peuvent utiliser ces noms sans provoquer d'erreur de redéclaration. Utiliser ``var`` au niveau global conserverait un risque d'écrasement entre scripts. Dans cette portée locale, on utilise ``const`` pour les références non réaffectées et ``let`` pour l'état modifiable.
+
+La méthode ``destroy()`` retire les écouteurs ajoutés par ``init()`` et libère les références aux éléments DOM et à la couche. Le contrôle peut ensuite être initialisé à nouveau lors de la réouverture du panneau.
+
 Ancienne méthode
 ======================
 
-La ligne 2 surlignée indique la notation propre à l'ancienne méthode.
-
+La ligne surlignée enregistre directement le contrôle dans ``mviewer.customControls``.
 
 .. code-block:: javascript
     :caption: customcontrol.js
     :linenos:
-    :emphasize-lines: 2
+    :emphasize-lines: 17
 
-    const layerid = "heatmap";
-    mviewer.customControls[layerid] = (function() {
+    (function() {
+        const layerid = "heatmap";
 
-        /*
-        * Private
-        */
+        let _initialized = false;
+        let _layer;
+        let _blurElement = null;
+        let _radiusElement = null;
 
-        var _initialized = false;
-
-        var _layer;
-
-        var _blurElement = false;
-
-        var _radiusElement = false;
-
-        var _blurHandler = function(e) {
+        const _blurHandler = function(e) {
             _layer.setBlur(parseInt(e.target.value, 10));
         };
 
-        var _radiusHandler = function(e) {
+        const _radiusHandler = function(e) {
             _layer.setRadius(parseInt(e.target.value, 10));
         };
 
-        return {
-            /*
-            * Public
-            */
-
+        mviewer.customControls[layerid] = {
             init: function () {
-                // mandatory - code executed when layer is added to legend panel
+                // Code exécuté lorsque la couche est ajoutée à la légende.
                 if (!_initialized) {
                     _layer = mviewer.getLayer(layerid).layer;
                     _blurElement = document.getElementById('heatmap-blur');
@@ -123,60 +117,55 @@ La ligne 2 surlignée indique la notation propre à l'ancienne méthode.
                         _radiusElement.addEventListener('change', _radiusHandler);
                         _initialized = true;
                     }
-
                 }
             },
 
             destroy: function () {
-                // mandatory - code executed when layer panel is closed
+                // Code exécuté lorsque le panneau de la couche est fermé.
+                if (_blurElement) {
+                    _blurElement.removeEventListener('change', _blurHandler);
+                }
+                if (_radiusElement) {
+                    _radiusElement.removeEventListener('change', _radiusHandler);
+                }
+                _blurElement = null;
+                _radiusElement = null;
+                _layer = null;
                 _initialized = false;
             }
         };
-
     }());
-
 
 
 Nouvelle méthode
 ======================
 
-Depuis la version **3.2** de mviewer, une classe ``CustomControl`` a été développée afin de faciliter la saisie de nouveaux customControls. Les 2 lignes surlignées (2, 51) indiquent les lignes modifiées par rapport à l'ancienne méthode.
+Depuis la version **3.2** de mviewer, la classe ``CustomControl`` permet d'enregistrer les méthodes ``init`` et ``destroy`` du contrôle. Les lignes surlignées montrent la définition de l'objet local ``cc`` et son enregistrement.
 
 .. code-block:: javascript
     :caption: customcontrol.js
     :linenos:
-    :emphasize-lines: 2,51
+    :emphasize-lines: 17,47
 
-    const layerid = "heatmap";
-    const cc = (function() {
+    (function() {
+        const layerid = "heatmap";
 
-        /*
-        * Private
-        */
+        let _initialized = false;
+        let _layer;
+        let _blurElement = null;
+        let _radiusElement = null;
 
-        var _initialized = false;
-
-        var _layer;
-
-        var _blurElement = false;
-
-        var _radiusElement = false;
-
-        var _blurHandler = function(e) {
+        const _blurHandler = function(e) {
             _layer.setBlur(parseInt(e.target.value, 10));
         };
 
-        var _radiusHandler = function(e) {
+        const _radiusHandler = function(e) {
             _layer.setRadius(parseInt(e.target.value, 10));
         };
 
-        return {
-            /*
-            * Public
-            */
-
+        const cc = {
             init: function () {
-                // mandatory - code executed when layer is added to legend panel
+                // Code exécuté lorsque la couche est ajoutée à la légende.
                 if (!_initialized) {
                     _layer = mviewer.getLayer(layerid).layer;
                     _blurElement = document.getElementById('heatmap-blur');
@@ -186,23 +175,30 @@ Depuis la version **3.2** de mviewer, une classe ``CustomControl`` a été déve
                         _radiusElement.addEventListener('change', _radiusHandler);
                         _initialized = true;
                     }
-
                 }
             },
 
             destroy: function () {
-                // mandatory - code executed when layer panel is closed
+                // Code exécuté lorsque le panneau de la couche est fermé.
+                if (_blurElement) {
+                    _blurElement.removeEventListener('change', _blurHandler);
+                }
+                if (_radiusElement) {
+                    _radiusElement.removeEventListener('change', _radiusHandler);
+                }
+                _blurElement = null;
+                _radiusElement = null;
+                _layer = null;
                 _initialized = false;
             }
         };
 
+        new CustomControl(layerid, cc.init, cc.destroy);
     }());
-    new CustomControl(layerid, cc.init, cc.destroy);
 
 
-.. WARNING:: Si on souhaite disposer d'un bloc de code public, il faut remplacer la ligne
-    ``const cc = (function() {`` par ``var cc = (function() {``
-
+.. note::
+    Pour exposer une méthode publique supplémentaire, ajoutez-la explicitement au contrôle enregistré dans ``mviewer.customControls[layerid]``. Avec la nouvelle méthode, conservez l'instance retournée par ``new CustomControl(...)`` dans une variable locale et ajoutez-y cette méthode. Elle sera accessible via ``mviewer.customControls["heatmap"].maMethode()``. Il n'est pas nécessaire d'exposer ``cc`` comme variable globale.
 
 
 Ecrire le config.xml

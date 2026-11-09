@@ -24,7 +24,7 @@ export const requestApiCartoCadastre = async (url, duration = 2000) => {
 
     _map.getView().fit(boundingExtent, {
       size: _map.getSize(),
-      padding: [0, $("#sidebar-wrapper").width(), 0, 0],
+      padding: [0, document.querySelector("#sidebar-wrapper").offsetWidth, 0, 0],
       duration: duration,
     });
   } else {
