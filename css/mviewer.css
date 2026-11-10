@@ -725,6 +725,8 @@ img.mv-logo {
 }
 
 .layerdisplay-titleLabel {
+	flex: 1;
+	min-width: 0;
 	font-weight: 500;
 	display: flex;
 	flex-direction: row;
@@ -734,11 +736,21 @@ img.mv-logo {
 	align-items: baseline;
 }
 
+.layerdisplay-titleLabel > div {
+	min-width: 0;
+	overflow-wrap: anywhere;
+}
+
+.layerdisplay-title > .mv-layer-remove {
+	flex-shrink: 0;
+}
+
 .layerdisplay-titleLabel i {
 	margin-right: 5px;
 }
 
 .layerdisplay-titleLabel .mv-grip {
+	flex-shrink: 0;
 	cursor: grabbing;
 }
 
@@ -836,6 +848,7 @@ img.mv-logo {
 }
 
 .btn__login {
+	flex-shrink: 0;
 	padding: 0 2px;
 }
 
