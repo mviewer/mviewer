@@ -20,9 +20,12 @@ export class Cluster {
       source,
       distance: parseInt(distance, 10),
       minDistance: parseInt(minDistance, 10),
-      // PointStacker SLD filters and labels refer to the count property.
-      createCluster: (geometry, features) =>
-        new ol.Feature({ geometry, features, count: features.length }),
+      // Singletons retain source fields for labels; groups expose their generated count.
+      createCluster: (geometry, features) => {
+        let properties = {};
+        if (features.length === 1) properties = features[0].getProperties();
+        return new ol.Feature({ ...properties, geometry, features, count: features.length });
+      },
     });
     /** @type {Map<number, ol.style.Style>} */
     this._styleCache = new Map();

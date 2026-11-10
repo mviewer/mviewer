@@ -22,7 +22,10 @@ export const sld2VectorLayer = async (sldString, vectorLayerId) => {
     throw errors[0];
   }
 
-  const olStyle = await createStyleWithLabels(geoStylerStyle);
+  const olStyle = await createStyleWithLabels(
+    geoStylerStyle,
+    _map.getView().getProjection().getMetersPerUnit()
+  );
   // Let OpenLayers evaluate dynamic styles.
   vectorLayer.setStyle(olStyle);
   return vectorLayer;
