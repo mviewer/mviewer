@@ -24,7 +24,12 @@ export class Cluster {
       createCluster: (geometry, features) => {
         let properties = {};
         if (features.length === 1) properties = features[0].getProperties();
-        return new ol.Feature({ ...properties, geometry, features, count: features.length });
+        return new ol.Feature({
+          ...properties,
+          geometry,
+          features,
+          count: features.length,
+        });
       },
     });
     /** @type {Map<number, ol.style.Style>} */
