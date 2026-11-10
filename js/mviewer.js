@@ -598,7 +598,11 @@ mviewer = (function () {
     document.querySelector(`#legend-${layerid}`)?.remove();
     var canvas = document.getElementById(`vector-legend-${layerid}`);
     var layer = _overLayers[layerid];
-    if (canvas && layer?.sld && ["csv", "geojson", "kml", "cluster"].includes(layer.type)) {
+    if (
+      canvas &&
+      layer?.sld &&
+      ["csv", "geojson", "kml", "cluster"].includes(layer.type)
+    ) {
       var sldContent = layer.layer?.get("sldContent");
       var sldContentPromise;
       if (sldContent) {
