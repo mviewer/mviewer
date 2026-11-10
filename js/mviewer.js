@@ -598,7 +598,7 @@ mviewer = (function () {
     document.querySelector(`#legend-${layerid}`)?.remove();
     var canvas = document.getElementById(`vector-legend-${layerid}`);
     var layer = _overLayers[layerid];
-    if (canvas && layer?.sld && ["csv", "geojson", "kml"].includes(layer.type)) {
+    if (canvas && layer?.sld && ["csv", "geojson", "kml", "cluster"].includes(layer.type)) {
       var sldContent = layer.layer?.get("sldContent");
       var sldContentPromise;
       if (sldContent) {
@@ -3506,7 +3506,7 @@ mviewer = (function () {
         _drawVectorLegend(layer.layerid, layer.legend.items);
       }
 
-      if (layer.sld && ["csv", "geojson", "kml"].includes(layer.type)) {
+      if (layer.sld && ["csv", "geojson", "kml", "cluster"].includes(layer.type)) {
         _drawVectorLegend(layer.layerid);
       }
 
