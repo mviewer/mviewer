@@ -299,8 +299,8 @@ Il n'existe pas de transformation SLD standard permettant de demander à QGIS Se
 
 Une extension QGIS Server permettrai de supporter le regroupement de points via SLD (`vec:PointStacker` vers `QgsPointClusterRenderer`). Mais cette extension n'existe actuellement pas.
 
-Source GeoJSON et style PointStacker
------------------------------------
+Sources vectorielles
+--------------------
 
 Le type ``cluster`` conserve les points dans une source vectorielle et les regroupe selon leur proximité à l’écran.
 Il accepte un CSV contenant des coordonnées ou une source GeoJSON.
@@ -367,6 +367,58 @@ Pour le type de couche, vous pouvez utiliser le ``type="csv"`` ou ``type="geojso
 
     OpenLayers regroupe les points selon une distance, tandis que PointStacker utilise une grille côté serveur.
     Les groupes obtenus peuvent donc différer de ceux produits par GeoServer avec la même valeur de ``cellSize``.
+
+Étiquettes et limites d’échelle
+------------------------------
+
+Pour un cluster contenant un seul point, les attributs de l’entité source restent disponibles dans les filtres et les étiquettes du SLD.
+Pour un groupe de plusieurs points, utiliser la propriété ``count`` ; les attributs individuels ne sont pas agrégés.
+La propriété ``count`` est réservée au regroupement et vaut ``1`` pour un point isolé, même si la source contient déjà un attribut de ce nom.
+
+Par exemple, ajouter la règle suivante dans le ``FeatureTypeStyle`` pour afficher le champ ``nom`` des points isolés uniquement aux échelles inférieures à 1:50 000.
+Remplacer ``nom`` par le champ à afficher dans votre source.
+
+.. code-block:: xml
+
+    <Rule>
+        <Name>noms_points_isoles</Name>
+        <ogc:Filter>
+            <ogc:PropertyIsEqualTo>
+                <ogc:PropertyName>count</ogc:PropertyName>
+                <ogc:Literal>1</ogc:Literal>
+            </ogc:PropertyIsEqualTo>
+        </ogc:Filter>
+        <MaxScaleDenominator>50000</MaxScaleDenominator>
+        <TextSymbolizer>
+            <Label>
+                <ogc:PropertyName>nom</ogc:PropertyName>
+            </Label>
+            <Font>
+                <CssParameter name="font-family">Arial</CssParameter>
+                <CssParameter name="font-size">12</CssParameter>
+            </Font>
+            <Fill>
+                <CssParameter name="fill">#333333</CssParameter>
+            </Fill>
+        </TextSymbolizer>
+    </Rule>
+
+Pour afficher les effectifs des groupes, utiliser une autre règle avec le filtre ``count > 1`` et une étiquette portant sur ``count``, comme dans ``demo/sld/cluster.sld``.
+
+Les limites ``MinScaleDenominator`` (incluse) et ``MaxScaleDenominator`` (exclue) des règles de texte sont évaluées selon la résolution et les unités de la projection de la carte.
+Les symboles peuvent ainsi rester visibles lorsque les étiquettes sont masquées, en les plaçant dans une règle distincte avec ses propres limites d’échelle.
+Ce traitement des étiquettes s’applique aussi aux couches ``csv``, ``geojson`` et ``kml`` utilisant un SLD.
+
+Légende du style SLD
+-------------------
+
+Pour les couches ``csv``, ``geojson``, ``kml`` et ``cluster`` utilisant un SLD, la légende est générée à partir de ses règles graphiques : lignes, surfaces et marques ponctuelles.
+Chaque ligne de légende affiche le symbole et le nom de la règle issu de la lecture du SLD.
+Les règles contenant uniquement du texte ne créent pas de ligne de légende.
+La légende présente les règles graphiques sans appliquer leurs filtres ni leurs limites d’échelle.
+
+Les cercles de rayon constant sont réduits si nécessaire avec un facteur commun pour tenir dans la légende tout en conservant leurs proportions.
+Les tailles calculées à partir d’expressions, comme ``8 * sqrt(count)``, sont représentées par un symbole de taille fixe : la légende ne calcule pas un effectif représentatif.
 
 Interroger un cluster
 --------------------
