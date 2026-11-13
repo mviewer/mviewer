@@ -256,7 +256,7 @@ Autres paramètres
 * ``authorization`` : Permet d'indiquer des identifiants par défaut si secure est à "layer"
 * ``useproxy`` :guilabel:`studio` : Booléen précisant s'il faut passer par le proxy ajax (nécessaire pour fixer les erreurs de crossOrigin lorsque CORS n'est pas activé sur le serveur distant.
 * ``owsoptions`` : Pour une couche WMS, permet de forcer certains paramètres des requêtes GetMap. Exemple : "VERSION:1.1.1,EXCEPTIONS:application/vnd.ogc.se_inimage".
-* ``owslegendoptions`` : Pour une couche WMS, Permet de personnaliser certains paramètres des requêtes GetLegend. Exemple Qgis serveur : "LAYERTITLE:false,ITEMFONTSIZE:15".
+* ``owslegendoptions`` : Pour une couche WMS, Permet de personnaliser certains paramètres des requêtes GetLegend. En lien avec l'option `servertype`. Exemple Qgis serveur : "LAYERTITLE:false,ITEMFONTSIZE:15". Exemple GEOSERVER : en combinaison avec l'option `dynamiclegend`, il est possible de n'afficher que les éléments de la légende qui sont représentés sur la carte. L'option est : `owslegendoptions="hideEmptyRules:true"`.
 * ``infopanel`` : Permet d'indiquer quel panel d'interrogation utiliser parmis top-panel ou bottom-panel ou modal-panel. Exemple: `infopanel="bottom-panel"`.
 
 Zoom sur le paramétrage d'une couche provenant de Grist
