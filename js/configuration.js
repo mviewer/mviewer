@@ -1121,6 +1121,7 @@ var configuration = (function () {
                           throw error;
                         }
                         Papa.parse(csv, {
+                          delimiter: layer.delimiter || "",
                           header: true,
                           skipEmptyLines: true,
 

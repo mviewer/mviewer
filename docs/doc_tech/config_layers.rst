@@ -195,6 +195,7 @@ Paramètres pour les couches non WMS
     * ``customlayer`` : couche vectorielle personnalisée. Si customlayer est défini, il faut instancier un Layer OpenLayers dans un fichier javascript ayant pour nom l'id de la couche (voir ":ref:`configfuse`"). Ce fichier js doit être placé dans le répertoire customlayers/.
     * ``import`` : couche vectorielle importée par l'utilisateur. Le format de la couche importée peut être GeoJSON, KML ou GPX. Le style de la couche importée est défini dans le fichier featurestyles.js. L’extension fileimport doit être obligatoirement activée.
 * ``format`` : Pour une couche ``cluster``, permet de forcer le format de la source : ``csv``, ``geojson`` ou ``json`` (alias de ``geojson``). Sans cet attribut, une URL dont le chemin se termine par ``.csv`` utilise le chargeur CSV ; les autres URL utilisent le chargeur GeoJSON. Les paramètres de requête et le fragment de l’URL ne participent pas à cette détection. Les données JSON doivent respecter le format GeoJSON.
+* ``delimiter`` : Séparateur des colonnes pour les couches de type ``csv`` et ``cluster`` utilisant une source CSV. Exemple : ``delimiter=";"`` pour un point-virgule ou ``delimiter=","`` pour une virgule. Si cet attribut est absent ou vide, le séparateur est détecté automatiquement. Pour une tabulation, utiliser ``delimiter="&#9;"`` dans le XML.
 * ``encoding`` : Encodage du fichier pour les couches de type ``csv`` et ``cluster`` utilisant une source CSV. Si cet attribut est absent ou vide, le fichier est lu avec ``response.text()``, qui décode toujours en UTF-8, indépendamment de l'encodage du système et du charset indiqué dans l'en-tête HTTP ``Content-Type``. Si cet attribut est renseigné, utiliser un encodage reconnu par ``TextDecoder``, par exemple ``utf8``, ``windows-1252`` ou ``iso-8859-1``. Exemple : ``<layer type="csv" encoding="windows-1252" ...></layer>``.
 * ``tooltip``: Pour les couches de type vecteur uniquement. Booléen précisant si les entités de la couche sont affichées sous forme d'infobulle au survol de la souris. (Les infobulles ne fonctionnent qu'avec une seule couche à la fois). Valeur par défaut = false.
 * ``tooltipenabled``: Précise la couche prioritaire pour l'affichage des infobulles.
@@ -315,6 +316,7 @@ Source CSV
            name="Points regroupés depuis un CSV"
            type="cluster"
            format="csv"
+           delimiter=";"
            url="data/points.csv"
            xfield="longitude"
            yfield="latitude"
@@ -323,6 +325,7 @@ Source CSV
            visible="true"/>
 
 Les attributs ``xfield`` et ``yfield`` désignent les colonnes de coordonnées (``longitude`` et ``latitude`` par défaut).
+L’attribut ``delimiter=";"`` indique que les colonnes du CSV sont séparées par un point-virgule. Omettre cet attribut pour détecter automatiquement le séparateur.
 L’attribut ``srs`` indique leur projection, par défaut ``EPSG:4326``.
 Pour des coordonnées Lambert-93, utiliser ``srs="EPSG:2154"`` et renseigner ``xfield`` et ``yfield`` avec les noms des colonnes X et Y.
 Les points sont reprojetés vers la projection de la carte avant le regroupement.
