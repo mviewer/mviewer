@@ -1,4 +1,5 @@
 import { readSldWithPointStacker } from "./geostylerPointStacker.js";
+import { getLegendRules } from "./geostylerLegendRules.js";
 
 /**
  * Draws graphic rule symbols and class names; excludes text-only rules.
@@ -11,9 +12,11 @@ export const sld2Legend = async function (sldString) {
     throw errors[0];
   }
 
-  const rules = style.rules.filter((rule) =>
-    rule.symbolizers.some((symbolizer) =>
-      ["Line", "Fill", "Mark"].includes(symbolizer.kind)
+  const rules = getLegendRules(
+    style.rules.filter((rule) =>
+      rule.symbolizers.some((symbolizer) =>
+        ["Line", "Fill", "Mark"].includes(symbolizer.kind)
+      )
     )
   );
   const rowHeight = 24;
@@ -25,7 +28,10 @@ export const sld2Legend = async function (sldString) {
   context.font = font;
   const textWidth = Math.max(
     0,
-    ...rules.map((rule) => context.measureText(rule.name || "").width)
+    ...rules.map((rule) => {
+      context.font = rule.heading ? `bold ${font}` : font;
+      return context.measureText(rule.name || "").width;
+    })
   );
   canvas.width = Math.ceil(textX + textWidth + 8);
   canvas.height = Math.max(rowHeight, rules.length * rowHeight);
@@ -95,7 +101,8 @@ export const sld2Legend = async function (sldString) {
       context.restore();
     });
     context.fillStyle = "#333333";
-    context.fillText(rule.name || "", textX, y);
+    context.font = rule.heading ? `bold ${font}` : font;
+    context.fillText(rule.name || "", rule.heading ? 4 : textX, y);
   });
 
   return canvas;
