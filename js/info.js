@@ -230,12 +230,33 @@ var info = (function () {
   };
 
   /**
-   * Private Method: _queryMap()
-   * @param evt {ol.MapBrowserEvent}
-   * @param options {type: 'feature' || 'map', layer: {ol.layer.Layer}, featureid:'featureid'}
-   *
+   * Opens the usual information panels for selected vector features or clusters.
+   * The layer must be registered and queryable, as for a map click.
+   * @param {ol.Feature|ol.Feature[]} features Features in the map projection.
+   * @param {string|ol.layer.BaseVector} layer Layer identifier or OpenLayers layer.
+   * @param {object} [options={}] Optional click context.
+   * @param {ol.coordinate.Coordinate} [options.coordinate] Position in the map projection.
+   * @returns {Promise<void>} Resolves after the information panels are updated.
+   * @throws {Error} If the requested vector layer is not registered.
    */
+  async function _queryFeatures(features, layer, options = {}) {
+    const layerId = typeof layer === "string" ? layer : layer?.get("mviewerid");
+    const definition = _overLayers[layerId];
+    if (!definition || !(definition.layer instanceof ol.layer.BaseVector)) {
+      throw new Error(mviewer.tr("info.featureclick.error.layer"));
+    }
+    const selection = utils.getClickedFeatures(features, false);
+    if (!selection.length) return;
+    const event = utils.createFeatureClickEvent(selection, _map, options.coordinate);
+    return _queryMap(event, { type: "features", layer: layerId, features: selection });
+  }
 
+  /**
+   * Queries vector hits, explicit vector selections or WMS features.
+   * @param {object} evt Map click context, with coordinates in the map projection.
+   * @param {object} [options] Optional query type, layer and selected features.
+   * @returns {Promise<void>} Resolves after the information panels are updated.
+   */
   async function _queryMap(evt, options) {
     var isClick = evt.type === "singleclick";
     var requests = [];
@@ -268,7 +289,7 @@ var info = (function () {
       queryType = options.type;
     }
     if (!_mvReady) {
-      return False;
+      return;
     }
     if (_captureCoordinatesOnClick && _typeCoordinates) {
       const coordAsText =
@@ -290,48 +311,57 @@ var info = (function () {
       .filter((w) => w instanceof ol.interaction.Snap)[0];
     const snapActive = snapInter && snapInter?.getActive?.();
     //Request vector layers only if snaping interaction doesn't exists
-    if (queryType === "map" && !snapActive) {
+    if (queryType === "features" || (queryType === "map" && !snapActive)) {
       var pixel = evt.pixel;
       var vectorLayers = {};
       var format = new ol.format.GeoJSON();
       var f_idx = 0;
 
-      _map.forEachFeatureAtPixel(
-        pixel,
-        function (feature, layer) {
-          var l = layer.get("mviewerid");
-          if (
-            l &&
-            l != "featureoverlay" &&
-            l != "selectoverlay" &&
-            l != "subselectoverlay" &&
-            l != "elasticsearch"
-          ) {
-            var queryable = _overLayers[l].queryable;
-            if (queryable) {
-              if (layer.get("infohighlight")) {
-                _queriedFeatures.push(feature);
-              } else {
-                showPin = true;
-              }
-              if (vectorLayers[l] && vectorLayers[l].features) {
-                vectorLayers[l].features.push(feature);
-              } else {
-                if (
-                  _overLayers[l] &&
-                  _panelsTemplate[_overLayers[l].infospanel] == "allintabs"
-                ) {
-                  l = `${l}_#${f_idx}`;
-                  f_idx++;
-                }
-                vectorLayers[l] = { features: [] };
-                vectorLayers[l].features.push(feature);
-              }
-            }
+      /** Collects map hits and explicit selections through the same query path. */
+      const collectFeatures = (features, vectorLayer) => {
+        const layerId = vectorLayer?.get("mviewerid");
+        const definition = _overLayers[layerId];
+        if (
+          [
+            "featureoverlay",
+            "selectoverlay",
+            "subselectoverlay",
+            "elasticsearch",
+          ].includes(layerId)
+        )
+          return;
+        if (!definition?.queryable) return;
+        const customHandler =
+          mviewer.customLayers[layerId]?.handle ||
+          mviewer.customControls[layerId]?.handle;
+        // Existing custom handlers receive cluster wrappers and expand them themselves.
+        const expandCluster =
+          !customHandler && vectorLayer.getSource() instanceof ol.source.Cluster;
+        utils.getClickedFeatures(features, expandCluster).forEach((selectedFeature) => {
+          // Silent metadata updates avoid triggering cluster recalculation during a click.
+          if (selectedFeature instanceof ol.Feature) {
+            selectedFeature.set("mviewerid", layerId, true);
           }
-        },
-        { hitTolerance: VECTOR_HIT_TOLERANCE }
-      );
+          if (vectorLayer.get("infohighlight")) {
+            _queriedFeatures.push(selectedFeature);
+          } else {
+            showPin = true;
+          }
+          const separateTab =
+            !customHandler && _panelsTemplate[definition.infospanel] === "allintabs";
+          const targetId = separateTab ? `${layerId}_#${f_idx++}` : layerId;
+          if (!vectorLayers[targetId]) vectorLayers[targetId] = { features: [] };
+          vectorLayers[targetId].features.push(selectedFeature);
+        });
+      };
+
+      if (queryType === "features") {
+        collectFeatures(options.features, _overLayers[layer].layer);
+      } else {
+        _map.forEachFeatureAtPixel(pixel, collectFeatures, {
+          hitTolerance: VECTOR_HIT_TOLERANCE,
+        });
+      }
 
       for (var layerid in vectorLayers) {
         var originLayer =
@@ -342,7 +372,7 @@ var info = (function () {
           mviewer.customLayers[originLayer] &&
           mviewer.customLayers[originLayer].handle
         ) {
-          mviewer.customLayers[originLayer].handle(
+          await mviewer.customLayers[originLayer].handle(
             vectorLayers[originLayer].features,
             views
           );
@@ -350,7 +380,9 @@ var info = (function () {
           mviewer.customControls[originLayer] &&
           mviewer.customControls[originLayer].handle
         ) {
-          mviewer.customControls[originLayer].handle(vectorLayers[originLayer].features);
+          await mviewer.customControls[originLayer].handle(
+            vectorLayers[originLayer].features
+          );
         } else {
           var l = _overLayers[originLayer];
           let features = vectorLayers[layerid]?.features;
@@ -435,7 +467,10 @@ var info = (function () {
     //Request wms layers
     var featureInfoByLayer = [];
     var visibleLayers = [];
-    if (layer) {
+    if (queryType === "features") {
+      // An explicit vector selection must not query unrelated WMS layers.
+      visibleLayers = [];
+    } else if (layer) {
       visibleLayers.push(_overLayers[layer].layer);
     } else {
       visibleLayers = _queryableLayers.filter((l) => l.getVisible());
@@ -1011,7 +1046,7 @@ var info = (function () {
     // in case of mobile, translate
 
     // wait all request before show info panel
-    Promise.all(requests)
+    return Promise.all(requests)
       .then(() => callback())
       .catch((error) => console.error(error));
   }
@@ -1205,7 +1240,7 @@ var info = (function () {
       var fields = olayer.fields
         ? olayer.fields
         : Object.entries(attributes)
-            .filter(([_, value]) => typeof value !== "object")
+            .filter(([key, value]) => key !== "mviewerid" && typeof value !== "object")
             .map(([key]) => key);
       var featureTitle =
         feature.getProperties().title ||
@@ -1556,6 +1591,7 @@ var info = (function () {
     toggleTooltipLayer: toggleTooltipLayer,
     queryLayer: queryLayer,
     queryMap: _queryMap,
+    queryFeatures: _queryFeatures,
     formatHTMLContent: createContentHtml,
     templateHTMLContent: applyTemplate,
     addQueryableLayer: _addQueryableLayer,

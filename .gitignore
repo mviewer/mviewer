@@ -5,3 +5,6 @@ apps/*
 node*
 package-*
 *.tmp*
+AGENTS.md
+AGNENTS.md
+/tests/

@@ -58,14 +58,16 @@ mviewer.templates.layerControl = `
         <div class="layerdisplay-titleLabel">
             <i class="mv-grip ri-draggable" title="Déplacer" aria-hidden="true" i18n="theme.layers.move"></i></i><div i18n="{{layerid}}.legend.title">{{title}}</div>
         {{#secure_layer}}
-        <a data-bs-toggle="modal"
-                data-bs-target="#loginpanel"'
-                onclick="mviewer.setLoginInfo(this);"'
-                id="ar#{{layerid}}"'
-                title="Données accès restreint"'
-                i18n="theme.layers.restricted
-                tabindex="111" accesskey="11" class="btn__login">
-            <i class="ri-lock-line"></i>
+        <a href="#loginpanel" role="button"
+                data-bs-toggle="modal"
+                data-bs-target="#loginpanel"
+                onclick="mviewer.setLoginInfo(this);"
+                id="ar#{{layerid}}"
+                title="Données accès restreint"
+                i18n="theme.layers.restricted"
+                tabindex="0" class="btn__login">
+            <i class="ri-lock-line" aria-hidden="true"></i>
+            <span class="visually-hidden" i18n="theme.layers.restricted">Données accès restreint</span>
         </a>
         {{/secure_layer}}
         </div>

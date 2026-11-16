@@ -59,7 +59,32 @@ var configuration = (function () {
   const _blankSrc =
     "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
 
-  const vectorLayerType = ["csv", "geojson", "kml"];
+  const vectorLayerType = ["csv", "geojson", "kml", "cluster"];
+
+  /**
+   * Applies the SLD style and wraps vector data when it uses PointStacker.
+   * @param {object} oLayer Layer configuration.
+   * @param {string} oLayer.sld SLD URL.
+   * @param {string} oLayer.id Registered mviewer layer identifier.
+   * @returns {Promise<ol.layer.Vector>} Styled layer, optionally using a cluster source.
+   */
+  function _applyVectorSld(oLayer) {
+    return utils.sldFile2VectorLayer(oLayer.sld, oLayer.id).then((vectorLayer) => {
+      const source = vectorLayer.getSource();
+      const isCluster = source instanceof ol.source.Cluster;
+      // Reuse the raw vector data to avoid nesting clusters when applying an SLD.
+      const cluster = utils.pointStackerToOlCluster(
+        utils.xmlToJson(vectorLayer.get("sldContent")),
+        isCluster ? source.getSource() : source
+      );
+      if (cluster) {
+        vectorLayer.setSource(cluster.source);
+        // Release the previous cluster's listeners on the shared vector source.
+        if (isCluster) source.setSource(null);
+      }
+      return vectorLayer;
+    });
+  }
   /**
    * Usefull to decode string encoded hex code
    * @param {string} str
@@ -1035,13 +1060,28 @@ var configuration = (function () {
             if (oLayer.type === "wms") {
               _processWmsLayer(oLayer);
             } //end wms
-            if (oLayer.type === "geojson" || (oLayer.type === "csv" && Papa?.parse)) {
+            // Cluster sources default to GeoJSON; CSV is selected by format or URL.
+            const isCsvLayer =
+              oLayer.type === "csv" ||
+              (oLayer.type === "cluster" &&
+                (layer.format
+                  ? layer.format.toLowerCase() === "csv"
+                  : /\.csv$/i.test(layer.url.split(/[?#]/)[0])));
+            const isGeoJsonLayer =
+              oLayer.type === "geojson" || (oLayer.type === "cluster" && !isCsvLayer);
+            if (
+              isGeoJsonLayer ||
+              (isCsvLayer && typeof Papa !== "undefined" && Papa?.parse)
+            ) {
               let geoJsonVectorOptions = {
                 url: layer.url,
-                format: new ol.format.GeoJSON(),
+                // The source loader reprojects data into the map projection.
+                format: new ol.format.GeoJSON({
+                  dataProjection: oLayer.srs || "EPSG:4326",
+                }),
               };
-              // if CSV type, we need to parse it and convert to GeoJSON
-              if (oLayer.type === "csv") {
+              // CSV data uses the same loader for plain and clustered layers.
+              if (isCsvLayer) {
                 geoJsonVectorOptions = {
                   loader: function (extent, resolution, projection) {
                     const fetchOptions = {};
@@ -1081,6 +1121,7 @@ var configuration = (function () {
                           throw error;
                         }
                         Papa.parse(csv, {
+                          delimiter: layer.delimiter || "",
                           header: true,
                           skipEmptyLines: true,
 
@@ -1198,9 +1239,13 @@ var configuration = (function () {
                   },
                 };
               }
-              // create vector layer with geojson source
+              const vectorSource = new ol.source.Vector(geoJsonVectorOptions);
+              const cluster =
+                oLayer.type === "cluster" ? new utils.Cluster(vectorSource) : null;
+              // Wrap either vector source format when clustering is requested.
               l = new ol.layer.Vector({
-                source: new ol.source.Vector(geoJsonVectorOptions),
+                source: cluster ? cluster.source : vectorSource,
+                style: cluster ? cluster.style : undefined,
                 declutter: configurationUtils.normalizeDeclutter(oLayer.declutter, false),
               });
               // set default style if defined in configuration
@@ -1209,12 +1254,9 @@ var configuration = (function () {
               }
               mviewer.processLayer(oLayer, l);
               if (vectorLayerType.includes(oLayer.type) && oLayer.sld) {
-                oLayer.sldStylePromise = utils.sldFile2VectorLayer(oLayer.sld, oLayer.id);
+                oLayer.sldStylePromise = _applyVectorSld(oLayer);
                 oLayer.sldStylePromise.catch((error) => {
-                  console.error(
-                    `Unable to apply SLD style for layer ${oLayer.id}:`,
-                    error
-                  );
+                  console.error(mviewer.tr("layer.sld.error.apply"), oLayer.id, error);
                 });
               }
             } // end geojson
@@ -1233,7 +1275,7 @@ var configuration = (function () {
               });
               mviewer.processLayer(oLayer, l);
               if (oLayer.sld) {
-                oLayer.sldStylePromise = utils.sldFile2VectorLayer(oLayer.sld, oLayer.id);
+                oLayer.sldStylePromise = _applyVectorSld(oLayer);
                 oLayer.sldStylePromise.catch((error) => {
                   console.error(
                     `Unable to apply SLD style for layer ${oLayer.id}:`,
@@ -1370,7 +1412,11 @@ var configuration = (function () {
       // Refresh du layer
       _map.getLayers().forEach(function (lyr) {
         if (_layer_id == lyr.get("mviewerid")) {
-          lyr.getSource().refresh();
+          // Refresh the data loader underneath a cluster after credentials change.
+          const source = lyr.getSource();
+          const dataSource =
+            source instanceof ol.source.Cluster ? source.getSource() : source;
+          dataSource.refresh();
         }
       });
     });
@@ -1462,8 +1508,19 @@ var configuration = (function () {
     Object.assign(wms_params, getParamsFromOwsOptionsString(oLayer.owsoptions));
 
     async function customWmsImageLoader(image, src) {
+      var requestBody = null;
       try {
         src = await utils.resolveLocalWmsSld(src);
+        var requestUrl = new URL(src, window.location.href);
+        for (const key of Array.from(requestUrl.searchParams.keys())) {
+          if (key.toLowerCase() === "sld_body") {
+            // Send inline styles in the body to avoid exceeding URL length limits.
+            requestBody = new URLSearchParams();
+            requestBody.set("SLD_BODY", requestUrl.searchParams.get(key));
+            requestUrl.searchParams.delete(key);
+          }
+        }
+        if (requestBody) src = requestUrl.href;
       } catch (error) {
         console.error("Unable to load SLD for layer " + oLayer.id, error);
         image.getImage().src = _blankSrc;
@@ -1475,24 +1532,41 @@ var configuration = (function () {
 
       // S'il existe des idenfiants d'accès pour ce layer, on les injecte
       var _ba_ident = sessionStorage.getItem(oLayer.url);
-      if (_ba_ident && _ba_ident != "") {
+      if (requestBody || (_ba_ident && _ba_ident != "")) {
         var xhr = new XMLHttpRequest();
         xhr.responseType = "blob";
-        xhr.open("GET", src);
-
-        xhr.setRequestHeader("Authorization", `Basic ${window.btoa(_ba_ident)}`);
-        xhr.addEventListener("loadend", function (evt) {
-          var data = this.response;
-          if (this.status == "401") {
-            image.getImage().src = _blankSrc;
-          } else if (data && data !== undefined) {
-            image.getImage().src = URL.createObjectURL(data);
-          }
-        });
+        xhr.open(requestBody ? "POST" : "GET", src);
+        if (requestBody) {
+          xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        }
+        if (_ba_ident && _ba_ident != "") {
+          xhr.setRequestHeader("Authorization", `Basic ${window.btoa(_ba_ident)}`);
+        }
         xhr.onload = function () {
-          image.getImage().src = src;
+          const imageElement = image.getImage();
+          if (
+            this.status < 200 ||
+            this.status >= 300 ||
+            !this.response?.type.startsWith("image/")
+          ) {
+            console.error("Unable to load WMS image for layer " + oLayer.id);
+            imageElement.src = _blankSrc;
+            return;
+          }
+          const objectUrl = URL.createObjectURL(this.response);
+          const releaseObjectUrl = function () {
+            URL.revokeObjectURL(objectUrl);
+            imageElement.removeEventListener("load", releaseObjectUrl);
+            imageElement.removeEventListener("error", releaseObjectUrl);
+          };
+          imageElement.addEventListener("load", releaseObjectUrl, { once: true });
+          imageElement.addEventListener("error", releaseObjectUrl, { once: true });
+          imageElement.src = objectUrl;
         };
-        xhr.send();
+        xhr.onerror = function () {
+          image.getImage().src = _blankSrc;
+        };
+        xhr.send(requestBody ? requestBody.toString() : null);
       } else {
         image.getImage().src = src;
       }
