@@ -554,6 +554,10 @@ mviewer = (function () {
     } else {
       legendParams["STYLE"] = encodeURIComponent(layer.style);
     }
+    // Controlling GEOSERVER legend appearance with LEGEND_OPTIONS
+    if (layer.owslegendoptions && layer.servertype == "geoserver") {
+      legendParams["LEGEND_OPTIONS"] = encodeURIComponent(layer.owslegendoptions);
+    }
     return legendParams;
   };
 
@@ -578,8 +582,17 @@ mviewer = (function () {
       if (!scale) {
         scale = _calculateScale(_map.getView().getResolution());
       }
-      // TODO: this line of code is not robust since OGC parameter names are not case sensitive
-      legendUrl = `${legendUrl.split("&scale=")[0]}&scale=${scale}`;
+      // Controlling GEOSERVER legend appearance with LEGEND_OPTIONS - CHECK HIDEEMPTYRULES option
+      if (layer.owslegendoptions?.toUpperCase().includes("HIDEEMPTYRULES")) {
+        // calculate BBOX for GEOSERVER
+        const extent = _map.getView().calculateExtent(_map.getSize());
+        const bbox = extent.join(",");
+        const proj = _projection.getCode();
+        legendUrl = `${legendUrl.split("&scale=")[0]}&scale=${scale}&bbox=${bbox}&crs=${proj}`;
+      } else {
+        // TODO: this line of code is not robust since OGC parameter names are not case sensitive
+        legendUrl = `${legendUrl.split("&scale=")[0]}&scale=${scale}`;
+      }
     }
     return legendUrl;
   };
